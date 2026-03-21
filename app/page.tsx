@@ -1,9 +1,17 @@
+import { HeroSection } from "@/components/sections/hero";
+import { AboutBriefSection } from "@/components/sections/about-brief";
+import { VideosSection } from "@/components/sections/videos-section";
+import { ProjectsSection } from "@/components/sections/projects-section";
+import { NewsletterSection } from "@/components/sections/newsletter-section";
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center">
-      <h1 className="text-4xl font-bold text-foreground">I BUILD AI</h1>
-      <p className="mt-4 text-lg text-muted-foreground">Damon Guan</p>
-      <p className="mt-2 text-sm text-muted-foreground">Coming soon...</p>
-    </main>
+    <>
+      <HeroSection />
+      <AboutBriefSection />
+      <VideosSection />
+      <ProjectsSection />
+      <NewsletterSection />
+    </>
   );
 }
