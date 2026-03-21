@@ -26,17 +26,17 @@ export default function Hero() {
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 pt-16">
         <div className="mx-auto max-w-4xl text-center">
           {/* Eyebrow */}
-          <p className="mb-6 inline-block rounded-full border border-zinc-700 bg-zinc-800/50 px-4 py-2 text-sm text-zinc-400">
+          <p className="mb-8 inline-block rounded-full border border-zinc-700 bg-zinc-800/50 px-5 py-2 text-base text-zinc-300">
             Hi, I'm Damon
           </p>
 
           {/* Main Title with Vaporize Effect */}
-          <div className="mb-6 h-20 md:h-28">
+          <div className="mb-8 h-32 md:h-44 lg:h-52">
             <VaporizeTextCycle
               texts={['I Build AI', 'I Share AI', 'I Love AI']}
               font={{
                 fontFamily: 'Inter, sans-serif',
-                fontSize: '48px',
+                fontSize: 'clamp(48px, 10vw, 120px)',
                 fontWeight: 700,
               }}
               color="rgb(255, 255, 255)"
@@ -47,7 +47,7 @@ export default function Hero() {
           <TextShimmer
             as="p"
             duration={3}
-            className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto mb-10"
+            className="text-xl md:text-2xl text-zinc-300 max-w-2xl mx-auto mb-12 leading-relaxed"
           >
             Product builder, writer, and creator. I share practical ideas about productivity, AI workflows, and online business.
           </TextShimmer>
