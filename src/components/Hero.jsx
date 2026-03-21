@@ -49,8 +49,7 @@ export default function Hero() {
             duration={3}
             className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto mb-10"
           >
-            Product builder, writer, and creator. I share practical ideas about
-            productivity, AI workflows, and online business.
+            Product builder, writer, and creator. I share practical ideas about productivity, AI workflows, and online business.
           </TextShimmer>
 
           {/* CTA Buttons */}

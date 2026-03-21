@@ -216,7 +216,7 @@ export function VaporizeTextCycle({
           const vaporizeX =
             direction === 'left-to-right'
               ? (canvas.width - textWidth) / 2 + textWidth * (progress / 100)
-              : (canvas.width + textWidth) / 2) - textWidth * (1 - progress / 100);
+              : (canvas.width + textWidth) / 2 - textWidth * (1 - progress / 100);
 
           let allVaporized = true;
 
@@ -343,13 +343,13 @@ export function VaporizeTextCycle({
     };
   }, [
     animationState,
-    texts.length
-    direction
-    globalDpr
-    spread
-    transformedDensity
-    animationDurations.FADE_IN_DURATION
-    animationDurations.WAIT_DURATION
+    texts.length,
+    direction,
+    globalDpr,
+    spread,
+    transformedDensity,
+    animationDurations.FADE_IN_DURATION,
+    animationDurations.WAIT_DURATION,
     renderCanvas
   ]);
 
