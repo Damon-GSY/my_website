@@ -1,73 +1,41 @@
-import styled from 'styled-components';
-
-const links = [
-  { label: 'How I Help', href: '#help' },
-  { label: 'Writing', href: '#writing' },
-  { label: 'Newsletter', href: '#newsletter' },
-];
-
 export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <StyledWrapper>
-      <footer className="footer">
-        <div className="container footer-inner">
-          <p className="brand">Damon</p>
-
-          <nav className="footer-links" aria-label="Footer">
-            {links.map((link) => (
-              <a key={link.href} href={link.href}>{link.label}</a>
-            ))}
-          </nav>
-
-          <p className="copyright">© {year} Damon. All rights reserved.</p>
+    <footer className="bg-zinc-950 border-t border-zinc-800 py-12">
+      <div className="container">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-zinc-500 text-sm">
+            © {year} Damon. All rights reserved.
+          </p>
+          <div className="flex gap-6">
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-zinc-500 hover:text-white transition-colors"
+            >
+              Twitter
+            </a>
+            <a
+              href="https://youtube.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-zinc-500 hover:text-white transition-colors"
+            >
+              YouTube
+            </a>
+            <a
+              href="https://github.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-zinc-500 hover:text-white transition-colors"
+            >
+              GitHub
+            </a>
+          </div>
         </div>
-      </footer>
-    </StyledWrapper>
+      </div>
+    </footer>
   );
 }
-
-const StyledWrapper = styled.div`
-  .footer {
-    margin-top: 2.5rem;
-    border-top: 1px solid var(--line);
-  }
-
-  .footer-inner {
-    padding-top: 1.25rem;
-    padding-bottom: 1.6rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .brand {
-    margin: 0;
-    font-weight: 700;
-    color: var(--text);
-  }
-
-  .footer-links {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .footer-links a {
-    color: var(--muted);
-    font-size: 0.9rem;
-  }
-
-  .footer-links a:hover {
-    color: var(--text);
-  }
-
-  .copyright {
-    margin: 0;
-    color: var(--muted);
-    font-size: 0.84rem;
-  }
-`;
