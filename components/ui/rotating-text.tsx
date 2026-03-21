@@ -10,7 +10,7 @@ interface RotatingTextProps {
   interval?: number;
 }
 
-export function RotatingText({ texts, className, interval = 2000 }: RotatingPropsProps) {
+export function RotatingText({ texts, className, interval = 2000 }: RotatingTextProps) {
   const [index, setIndex] = React.useState(0);
 
   React.useEffect(() => {

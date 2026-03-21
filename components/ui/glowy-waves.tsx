@@ -38,10 +38,10 @@ export const GlowyWaves = () => {
       return {
         bg: get(["--background", "--muted", "--background"]),
         waves: [
-          { offset: 0, amplitude: 70, frequency: 0.003, color: get(["--primary", "--accent"]), opacity: 0.4 },
-          { offset: Math.PI / 2, amplitude: 90, frequency: 0.0026, color: get(["--accent", "--primary"]), opacity: 0.3 },
-          { offset: Math.PI, amplitude: 60, frequency: 0.0034, color: get(["--foreground"]), opacity: 0.2 },
-          { offset: Math.PI * 1.5, amplitude: 80, frequency: 0.0022, color: get(["--foreground"]), opacity: 0.15 },
+          { offset: 0, amplitude: 80, frequency: 0.003, color: get(["--primary", "--accent"]), opacity: 0.5 },
+          { offset: Math.PI / 2, amplitude: 100, frequency: 0.0026, color: get(["--accent", "--primary"]), opacity: 0.4 },
+          { offset: Math.PI, amplitude: 70, frequency: 0.0034, color: get(["--foreground"]), opacity: 0.25 },
+          { offset: Math.PI * 1.5, amplitude: 90, frequency: 0.0022, color: get(["--foreground"]), opacity: 0.2 },
         ],
       };
     };

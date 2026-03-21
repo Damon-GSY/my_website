@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect, useMemo, useCallback, memo, createElement } from "react";
+import React, { useRef, useEffect, useMemo, useCallback, memo, createElement, useState } from "react";
 
 export enum Tag {
   H1 = "h1",
@@ -71,7 +71,7 @@ function useIsInView(ref: React.RefObject<HTMLElement | null>) {
     observer.observe(ref.current);
     return () => observer.disconnect();
   }, [ref]);
-  return isInInView;
+  return isInView;
 }
 
 function calculateVaporizeSpread(fontSize: number) {
@@ -229,7 +229,7 @@ export default function VaporizeTextCycle({
           const progress = Math.min(100, vaporizeProgressRef.current);
           const vaporizeX = direction === "left-to-right" ? tb.left + tb.width * progress / 100 : tb.right - tb.width * progress / 100;
           const allVaporized = updateParticles(particlesRef.current, vaporizeX, deltaTime, fontConfig.MULTIPLIED_SPREAD, animationDurations.VAPORIZE_DURATION, direction, transformedDensity);
-          renderParticles(ctx, particlesRef.current);
+          renderParticles(ctx, particlesRef.current, globalDpr);
           if (vaporizeProgressRef.current >= 100 && allVaporized) { setCurrentTextIndex((p) => (p + 1) % texts.length); setAnimationState("fadingIn"); fadeOpacityRef.current = 0; }
           break;
         case "fadingIn":
@@ -238,7 +238,7 @@ export default function VaporizeTextCycle({
           particlesRef.current.forEach((p) => {
             p.x = p.originalX; p.y = p.originalY;
             const o = Math.min(fadeOpacityRef.current, 1) * p.originalAlpha;
-            ctx.fillStyle = p.color.replace(/[\d.]+\)$/, `${o})`;
+            ctx.fillStyle = p.color.replace(/[\d.]+\)$/, `${o})`);
             ctx.fillRect(p.x / globalDpr, p.y / globalDpr, 1.5, 1.5);
           });
           ctx.restore();
