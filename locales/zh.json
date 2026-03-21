@@ -1,0 +1,55 @@
+{
+  "nav": {
+    "about": "关于",
+    "videos": "视频",
+    "projects": "项目",
+    "blog": "博客",
+    "links": "链接",
+    "contact": "联系"
+  },
+  "hero": {
+    "tagline_pre": "我构建",
+    "highlight": "AI",
+    "popover_title": "构建 Agent 基础模型",
+    "popover_desc": "我正在研发下一代 AI Agent 和基础模型，让它们能够自主推理、规划和执行复杂任务。",
+    "popover_link": "了解更多",
+    "subtitle": "科技爱好者，分享 AI 如何改变我们的工作和学习方式",
+    "cta_primary": "观看视频",
+    "cta_secondary": "联系我",
+    "stat_subscribers": "订阅者",
+    "stat_videos": "视频",
+    "stat_university": "NUS"
+  },
+  "about_brief": {
+    "title": "你好，我是 Damon。",
+    "description": "NUS 硕士在读，UNSW 毕业。科技爱好者、终身学习者，也是 gdamon 背后的人——在这里分享 AI 工具如何让你更高效、更有创造力。",
+    "read_more": "查看完整介绍 →"
+  },
+  "videos": {
+    "title": "最新视频",
+    "view_all": "查看全部 →",
+    "all": "全部",
+    "ai_tools": "AI 工具",
+    "productivity": "生产力",
+    "academic": "学术",
+    "tech": "科技"
+  },
+  "projects": {
+    "title": "项目",
+    "view_project": "查看项目 →"
+  },
+  "newsletter": {
+    "title": "保持联系",
+    "description": "获取我最新的 AI 洞察、工具评测和生产力技巧，直接送到你的邮箱。",
+    "placeholder": "your@email.com",
+    "subscribe": "订阅 →",
+    "trust": "已有 500+ 读者 · 无垃圾邮件 · 随时退订"
+  },
+  "footer": {
+    "explore": "探索",
+    "content": "内容",
+    "social": "社交",
+    "more": "更多",
+    "copyright": "© 2025 Damon Guan. 用 Next.js & ❤️ 构建"
+  }
+}

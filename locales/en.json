@@ -1,0 +1,55 @@
+{
+  "nav": {
+    "about": "About",
+    "videos": "Videos",
+    "projects": "Projects",
+    "blog": "Blog",
+    "links": "Links",
+    "contact": "Contact"
+  },
+  "hero": {
+    "tagline_pre": "I BUILD",
+    "highlight": "AI",
+    "popover_title": "Building Agent Foundation Model",
+    "popover_desc": "I'm working on the next generation of AI agents and foundation models that can reason, plan, and execute complex tasks autonomously.",
+    "popover_link": "Learn More",
+    "subtitle": "Tech enthusiast sharing how AI transforms the way we work and learn",
+    "cta_primary": "Watch Videos",
+    "cta_secondary": "Get in Touch",
+    "stat_subscribers": "Subscribers",
+    "stat_videos": "Videos",
+    "stat_university": "NUS"
+  },
+  "about_brief": {
+    "title": "Hi, I'm Damon.",
+    "description": "NUS Master's student, UNSW graduate. Tech lover, lifelong learner, and the person behind gdamon — where I share how AI tools can make you more productive and creative.",
+    "read_more": "Read Full Story →"
+  },
+  "videos": {
+    "title": "Latest Videos",
+    "view_all": "View All →",
+    "all": "All",
+    "ai_tools": "AI Tools",
+    "productivity": "Productivity",
+    "academic": "Academic",
+    "tech": "Tech"
+  },
+  "projects": {
+    "title": "Projects",
+    "view_project": "View Project →"
+  },
+  "newsletter": {
+    "title": "Stay in the loop",
+    "description": "Get my latest AI insights, tool reviews, and productivity tips delivered to your inbox.",
+    "placeholder": "your@email.com",
+    "subscribe": "Subscribe →",
+    "trust": "Join 500+ readers · No spam · Unsubscribe anytime"
+  },
+  "footer": {
+    "explore": "Explore",
+    "content": "Content",
+    "social": "Social",
+    "more": "More",
+    "copyright": "© 2025 Damon Guan. Built with Next.js & ❤️"
+  }
+}
