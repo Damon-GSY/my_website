@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "skills": {
+    "openclaw-tavily-search": {
+      "version": "0.1.0",
+      "installedAt": 1773912162484
+    },
+    "summarize": {
+      "version": "1.0.0",
+      "installedAt": 1773912164132
+    },
+    "agent-browser": {
+      "version": "0.2.0",
+      "installedAt": 1773912165765
+    },
+    "find-skills": {
+      "version": "0.1.0",
+      "installedAt": 1773912167356
+    },
+    "github": {
+      "version": "1.0.0",
+      "installedAt": 1773912169321
+    },
+    "obsidian": {
+      "version": "1.0.0",
+      "installedAt": 1773912170903
+    },
+    "weather": {
+      "version": "1.0.0",
+      "installedAt": 1773912172523
+    },
+    "tencentcloud-lighthouse-skill": {
+      "version": "1.0.0",
+      "installedAt": 1773912174665
+    },
+    "tencent-docs": {
+      "version": "1.0.16",
+      "installedAt": 1773912178085
+    },
+    "tencent-cos-skill": {
+      "version": "1.0.6",
+      "installedAt": 1773912180318
+    },
+    "pdf-text-extractor": {
+      "version": "1.0.0",
+      "installedAt": 1774068658979
+    },
+    "vision": {
+      "version": "1.0.6",
+      "installedAt": 1774069303103
+    }
+  }
+}

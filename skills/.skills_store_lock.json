@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "pdf-text-extractor": {
+      "name": "PDF Text Extractor",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=pdf-text-extractor",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "vision": {
+      "name": "Vision",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=vision",
+      "source": "skillhub",
+      "version": "1.0.6"
+    }
+  }
+}
