@@ -1,25 +1,44 @@
 import styled from 'styled-components';
-import { SocialButtons } from './index';
+import { BlurFade } from './ui/blur-fade';
+
+const socials = [
+  { label: 'GitHub', href: 'https://github.com' },
+  { label: 'YouTube', href: 'https://youtube.com' },
+  { label: 'Bilibili', href: 'https://bilibili.com' },
+];
 
 export default function Contact() {
   return (
     <StyledWrapper>
-      <section className="contact-section">
-        <h2 className="section-title">Get in Touch</h2>
-        <p className="contact-text">
-          Feel free to reach out. I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
-        </p>
-        <div className="contact-content">
-          <a href="mailto:hello@example.com" className="contact-btn">
-            <span className="btn-icon">✉️</span>
-            Say Hello
-          </a>
-          <div className="divider">
-            <span>or connect with me</span>
-          </div>
-          <div className="social-container">
-            <SocialButtons />
-          </div>
+      <section className="section" id="contact">
+        <div className="container">
+          <BlurFade delay={0.1} inView>
+            <div className="contact-card">
+              <p className="kicker">Get in Touch</p>
+              <h2>Let's build something together.</h2>
+              <p className="subtitle">
+                I'm always open to discussing new projects, creative ideas, or opportunities to
+                collaborate on AI and productivity tools.
+              </p>
+
+              <div className="contact-actions">
+                <a href="mailto:hello@damon.dev" className="contact-button">
+                  Say Hello
+                </a>
+              </div>
+
+              <div className="social-section">
+                <p className="social-hint">Or find me on</p>
+                <div className="social-links">
+                  {socials.map((social) => (
+                    <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer">
+                      {social.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </BlurFade>
         </div>
       </section>
     </StyledWrapper>
@@ -27,119 +46,112 @@ export default function Contact() {
 }
 
 const StyledWrapper = styled.div`
-  .contact-section {
-    padding: 6rem 0;
+  .contact-card {
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--line);
+    background: linear-gradient(140deg, #ffffff, #f8fcfb);
+    box-shadow: var(--shadow-soft);
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    max-width: 600px;
+    margin: 0 auto;
     text-align: center;
   }
 
-  .section-title {
-    font-size: 2rem;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 1rem;
-    font-family: 'Cartograph CF', "Poppins", system-ui, sans-serif;
-    color: #1a1a1a;
+  .kicker {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
   }
 
-  .contact-text {
-    color: #64748b;
-    font-size: 1rem;
-    margin-bottom: 2.5rem;
-    max-width: 500px;
+  h2 {
+    margin: 0.65rem 0 0;
+    font-size: clamp(1.5rem, 2.7vw, 2.25rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .subtitle {
+    margin: 1rem 0 0;
+    max-width: 50ch;
     margin-left: auto;
     margin-right: auto;
-    line-height: 1.6;
+    color: var(--muted);
+    line-height: 1.7;
   }
 
-  .contact-content {
+  .contact-actions {
+    margin-top: 1.5rem;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+    justify-content: center;
   }
 
-  .contact-btn {
+  .contact-button {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 1rem 2.5rem;
-    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    justify-content: center;
+    background: var(--primary);
     color: #fff;
-    text-decoration: none;
-    border-radius: 50px;
+    padding: 0.85rem 1.8rem;
+    border-radius: 12px;
     font-weight: 600;
-    font-family: 'Cartograph CF', "Poppins", system-ui, sans-serif;
-    font-size: 1rem;
-    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
-    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-
-    &:hover {
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
-    }
-
-    &:active {
-      transform: translateY(-1px) scale(0.98);
-    }
-
-    .btn-icon {
-      font-size: 1.2rem;
-    }
+    font-size: 0.95rem;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(16, 114, 90, 0.3);
+    transition: all 0.3s ease;
+    cursor: pointer;
   }
 
-  .divider {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    width: 100%;
-    max-width: 400px;
+  .contact-button:hover {
+    background: var(--primary-strong);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 114, 90, 0.4);
+  }
+
+  .social-section {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .social-hint {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  .social-links {
     margin-top: 1rem;
-
-    &::before,
-    &::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
-    }
-
-    span {
-      color: #94a3b8;
-      font-size: 0.875rem;
-      white-space: nowrap;
-    }
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
   }
 
-  .social-container {
-    background: linear-gradient(145deg, #ffffff, #f8fafc);
-    border-radius: 24px;
-    padding: 0.5rem 2rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    margin-top: 0.5rem;
+  .social-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border: 1px solid var(--line);
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    color: var(--text);
+    background: var(--surface);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .social-links a:hover {
+    color: var(--primary-strong);
+    border-color: var(--primary);
+    transform: translateY(-2px);
   }
 
   @media (prefers-color-scheme: dark) {
-    .section-title {
-      color: #f1f5f9;
-    }
-
-    .contact-text {
-      color: #94a3b8;
-    }
-
-    .divider {
-      &::before,
-      &::after {
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-      }
-
-      span {
-        color: #64748b;
-      }
-    }
-
-    .social-container {
-      background: linear-gradient(145deg, #1e293b, #0f172a);
+    .contact-card {
+      background: linear-gradient(140deg, #1e293b, #0f172a);
     }
   }
 `;

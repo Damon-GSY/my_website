@@ -1,43 +1,54 @@
 import styled from 'styled-components';
+import { BlurFade } from './ui/blur-fade';
 
-const blogPosts = [
+const posts = [
   {
-    title: 'Building AI Agents',
-    excerpt: 'A deep dive into creating autonomous systems...',
-    date: 'Coming Soon',
-    tag: 'AI',
+    category: 'Productivity',
+    title: 'The 3-layer weekly review I use to stay focused',
+    excerpt: 'A lightweight planning rhythm that keeps your priorities clear even when your week gets messy.',
+    meta: 'March 18, 2026 · 6 min read',
   },
   {
-    title: 'Understanding LLMs',
-    excerpt: 'Exploring the foundations of large language models...',
-    date: 'Coming Soon',
-    tag: 'Research',
+    category: 'AI Workflow',
+    title: 'How I use AI to turn rough ideas into publishable drafts',
+    excerpt: 'A practical end-to-end writing workflow that balances speed with quality and personal voice.',
+    meta: 'March 6, 2026 · 8 min read',
   },
   {
-    title: 'Prompt Engineering',
-    excerpt: 'Best practices for effective prompt design...',
-    date: 'Coming Soon',
-    tag: 'Tutorial',
+    category: 'Creator Business',
+    title: 'From notes to assets: building a tiny content product system',
+    excerpt: 'How to repurpose one core idea into newsletter posts, short videos, and a paid digital asset.',
+    meta: 'February 26, 2026 · 7 min read',
   },
 ];
 
 export default function Blog() {
   return (
     <StyledWrapper>
-      <section className="blog-section">
-        <h2 className="section-title">Latest Writing</h2>
-        <div className="blog-grid">
-          {blogPosts.map((post, index) => (
-            <article key={index} className="blog-card">
-              <span className="blog-tag">{post.tag}</span>
-              <h3 className="blog-title">{post.title}</h3>
-              <p className="blog-excerpt">{post.excerpt}</p>
-              <div className="blog-footer">
-                <span className="blog-date">{post.date}</span>
-                <span className="blog-arrow">→</span>
+      <section className="section" id="writing">
+        <div className="container">
+          <BlurFade delay={0.1} inView>
+            <div className="heading-row">
+              <div>
+                <p className="kicker">Latest Writing</p>
+                <h2>Thoughtful ideas, practical actions.</h2>
               </div>
-            </article>
-          ))}
+              <a href="#" className="view-all">View all posts</a>
+            </div>
+          </BlurFade>
+
+          <div className="post-grid">
+            {posts.map((post, index) => (
+              <BlurFade key={post.title} delay={0.2 + index * 0.1} inView>
+                <article className="post-card">
+                  <p className="category">{post.category}</p>
+                  <h3>{post.title}</h3>
+                  <p className="excerpt">{post.excerpt}</p>
+                  <p className="meta">{post.meta}</p>
+                </article>
+              </BlurFade>
+            ))}
+          </div>
         </div>
       </section>
     </StyledWrapper>
@@ -45,142 +56,103 @@ export default function Blog() {
 }
 
 const StyledWrapper = styled.div`
-  .blog-section {
-    padding: 6rem 0;
-  }
-
-  .section-title {
-    font-size: 2rem;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 3rem;
-    font-family: 'Cartograph CF', "Poppins", system-ui, sans-serif;
-    color: #1a1a1a;
-  }
-
-  .blog-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .blog-card {
-    background: linear-gradient(145deg, #ffffff, #f8fafc);
-    border-radius: 20px;
-    padding: 1.75rem;
-    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
-    }
-
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-
-      &::before {
-        transform: scaleX(1);
-      }
-
-      .blog-arrow {
-        transform: translateX(5px);
-      }
-    }
-  }
-
-  .blog-tag {
-    display: inline-block;
-    background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
-    color: #64748b;
-    font-size: 0.7rem;
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-weight: 500;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .blog-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    font-family: 'Cartograph CF', "Poppins", system-ui, sans-serif;
-    color: #1a1a1a;
-  }
-
-  .blog-excerpt {
-    font-size: 0.9rem;
-    color: #64748b;
-    line-height: 1.6;
-    margin-bottom: 1.25rem;
-  }
-
-  .blog-footer {
+  .heading-row {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    align-items: end;
+    gap: 1rem;
+    margin-bottom: 1.6rem;
   }
 
-  .blog-date {
+  .kicker {
+    margin: 0;
+    color: var(--muted);
     font-size: 0.8rem;
-    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
   }
 
-  .blog-arrow {
-    font-size: 1.2rem;
-    color: #3b82f6;
-    transition: transform 0.3s ease;
+  h2 {
+    margin: 0.65rem 0 0;
+    font-size: clamp(1.65rem, 2.8vw, 2.3rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
   }
 
-  @media (prefers-color-scheme: dark) {
-    .section-title {
-      color: #f1f5f9;
+  .view-all {
+    color: var(--primary-strong);
+    font-weight: 600;
+    font-size: 0.92rem;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+  }
+
+  .view-all:hover {
+    color: var(--primary);
+  }
+
+  .post-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .post-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 1.3rem;
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+
+  .post-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-soft), 0 12px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  .category {
+    margin: 0;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  h3 {
+    margin: 0.7rem 0 0;
+    font-size: 1.16rem;
+    line-height: 1.35;
+    transition: color 0.2s ease;
+  }
+
+  .post-card:hover h3 {
+    color: var(--primary-strong);
+  }
+
+  .excerpt {
+    margin: 0.8rem 0 0;
+    color: var(--muted);
+    line-height: 1.65;
+    font-size: 0.94rem;
+  }
+
+  .meta {
+    margin: 0.9rem 0 0;
+    color: var(--muted-strong);
+    font-size: 0.84rem;
+  }
+
+  @media (max-width: 980px) {
+    .post-grid {
+      grid-template-columns: 1fr;
     }
 
-    .blog-card {
-      background: linear-gradient(145deg, #1e293b, #0f172a);
-      border-color: rgba(255, 255, 255, 0.05);
-
-      &:hover {
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-      }
-    }
-
-    .blog-tag {
-      background: linear-gradient(135deg, #334155, #1e293b);
-      color: #94a3b8;
-    }
-
-    .blog-title {
-      color: #f1f5f9;
-    }
-
-    .blog-excerpt {
-      color: #94a3b8;
-    }
-
-    .blog-footer {
-      border-top-color: rgba(255, 255, 255, 0.05);
-    }
-
-    .blog-date {
-      color: #64748b;
+    .heading-row {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 1.2rem;
     }
   }
 `;

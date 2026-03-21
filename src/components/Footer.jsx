@@ -1,12 +1,28 @@
 import styled from 'styled-components';
 
+const links = [
+  { label: 'How I Help', href: '#help' },
+  { label: 'Writing', href: '#writing' },
+  { label: 'Newsletter', href: '#newsletter' },
+];
+
 export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
     <StyledWrapper>
       <footer className="footer">
-        <p>&copy; {year} All rights reserved.</p>
+        <div className="container footer-inner">
+          <p className="brand">Damon</p>
+
+          <nav className="footer-links" aria-label="Footer">
+            {links.map((link) => (
+              <a key={link.href} href={link.href}>{link.label}</a>
+            ))}
+          </nav>
+
+          <p className="copyright">© {year} Damon. All rights reserved.</p>
+        </div>
       </footer>
     </StyledWrapper>
   );
@@ -14,20 +30,44 @@ export default function Footer() {
 
 const StyledWrapper = styled.div`
   .footer {
-    padding: 3rem 0;
-    text-align: center;
-    color: #94a3b8;
-    font-size: 0.875rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--line);
   }
 
-  p {
+  .footer-inner {
+    padding-top: 1.25rem;
+    padding-bottom: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .brand {
     margin: 0;
+    font-weight: 700;
+    color: var(--text);
   }
 
-  @media (prefers-color-scheme: dark) {
-    .footer {
-      border-top-color: rgba(255, 255, 255, 0.05);
-    }
+  .footer-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .footer-links a:hover {
+    color: var(--text);
+  }
+
+  .copyright {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.84rem;
   }
 `;

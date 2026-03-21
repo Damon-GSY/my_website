@@ -1,0 +1,2 @@
+cat > .agent/feature_list.json << 'EOF'
+# Restore original feature_list.json

@@ -1,30 +1,44 @@
 import styled from 'styled-components';
+
 import TopicCard from './TopicCard';
 
-const topics = [
+const offers = [
   {
-    icon: '🤖',
-    title: 'AI Agents',
-    description: 'Building intelligent autonomous systems that can reason, plan, and execute complex tasks.',
-    tags: ['LLM', 'RAG', 'Tool Use'],
+    eyebrow: '01',
+    title: 'Build your personal operating system',
+    description: 'Frameworks and templates to manage goals, tasks, and energy without burnout.',
+    cta: 'See the framework',
   },
   {
-    icon: '🧠',
-    title: 'Foundation Models',
-    description: 'Working with LLMs and large-scale models to create transformative applications.',
-    tags: ['Claude', 'GPT', 'Fine-tuning'],
+    eyebrow: '02',
+    title: 'Use AI as a practical thinking partner',
+    description: 'Real workflows for research, planning, writing, and decision making using AI tools.',
+    cta: 'Explore workflows',
+  },
+  {
+    eyebrow: '03',
+    title: 'Create meaningful content online',
+    description: 'A clear system for turning your expertise into articles, videos, and digital products.',
+    cta: 'Read the playbook',
   },
 ];
 
 export default function Topics() {
   return (
     <StyledWrapper>
-      <section className="topics-section">
-        <h2 className="section-title">What I Focus On</h2>
-        <div className="topics-grid">
-          {topics.map((topic) => (
-            <TopicCard key={topic.title} {...topic} />
-          ))}
+      <section className="section" id="help">
+        <div className="container">
+          <p className="section-kicker">How I can help</p>
+          <h2 className="section-title">Practical systems for ambitious builders.</h2>
+          <p className="section-intro">
+            Everything here is designed to be applied in real life, not just admired in theory.
+          </p>
+
+          <div className="topics-grid">
+            {offers.map((offer) => (
+              <TopicCard key={offer.title} {...offer} />
+            ))}
+          </div>
         </div>
       </section>
     </StyledWrapper>
@@ -32,28 +46,38 @@ export default function Topics() {
 }
 
 const StyledWrapper = styled.div`
-  .topics-section {
-    padding: 4rem 0;
+  .section-kicker {
+    margin: 0;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
   }
 
   .section-title {
-    font-size: 2rem;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 3rem;
-    font-family: 'Cartograph CF', "Poppins", system-ui, sans-serif;
-    color: #1a1a1a;
+    margin: 0.65rem 0 0;
+    font-size: clamp(1.7rem, 3vw, 2.45rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .section-intro {
+    margin: 1rem 0 0;
+    max-width: 62ch;
+    color: var(--muted);
+    font-size: 1.02rem;
   }
 
   .topics-grid {
+    margin-top: 2rem;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
   }
 
-  @media (prefers-color-scheme: dark) {
-    .section-title {
-      color: #f1f5f9;
+  @media (max-width: 980px) {
+    .topics-grid {
+      grid-template-columns: 1fr;
     }
   }
 `;

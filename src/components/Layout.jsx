@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export default function Layout({ children }) {
   return (
     <StyledWrapper>
-      <div className="layout">
+      <div className="site-shell">
         {children}
       </div>
     </StyledWrapper>
@@ -11,18 +11,10 @@ export default function Layout({ children }) {
 }
 
 const StyledWrapper = styled.div`
-  .layout {
+  .site-shell {
     min-height: 100vh;
-    background: #fff;
-    color: #1a1a1a;
-    font-family: 'Cartograph CF', "Poppins", system-ui, -apple-system, sans-serif;
+    background: radial-gradient(circle at 15% -20%, #f2f9f7 0%, transparent 40%), var(--bg);
+    color: var(--text);
     line-height: 1.6;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .layout {
-      background: #0f172a;
-      color: #f1f5f9;
-    }
   }
 `;
