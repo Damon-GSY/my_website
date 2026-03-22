@@ -1,12 +1,9 @@
 import { forwardRef } from 'react';
 import {
-  ArrowUpRight,
   BrainCircuit,
-  Linkedin,
   Network,
   Sparkles,
   Wrench,
-  Youtube,
 } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
 
@@ -29,7 +26,7 @@ const cards = [
     order: 0,
     tone: 'main',
     accent: 'cyan',
-    cta: { label: 'Explore research', href: '#about' },
+    cta: { label: 'Explore research', href: '/about' },
   },
   {
     id: 'stack',
@@ -54,7 +51,7 @@ const cards = [
     order: 1,
     tone: 'main',
     accent: 'amber',
-    cta: { label: 'See delivery model', href: '#about' },
+    cta: { label: 'See delivery model', href: '/about' },
   },
   {
     id: 'philosophy',
@@ -67,7 +64,7 @@ const cards = [
     order: 3,
     tone: 'sub',
     accent: 'emerald',
-    cta: { label: 'Read principle', href: '#about' },
+    cta: { label: 'Read principle', href: '/about' },
   },
 ];
 
@@ -113,24 +110,6 @@ const accentStyles = {
     ctaFg: '#0f6b4a',
   },
 };
-
-const socialLinks = [
-  {
-    name: 'YouTube',
-    href: 'https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA',
-    icon: Youtube,
-  },
-  {
-    name: 'Bilibili',
-    href: 'https://space.bilibili.com/358541297',
-    icon: ArrowUpRight,
-  },
-  {
-    name: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/shengyue-guan-1a7b3226b/',
-    icon: Linkedin,
-  },
-];
 
 function StackBackground({ reduceMotion }) {
   return (
@@ -238,28 +217,6 @@ const WhatIDo = forwardRef(function WhatIDo(props, ref) {
 
                 {card.id === 'stack' ? <StackBackground reduceMotion={reduceMotion} /> : null}
               </motion.article>
-            );
-          })}
-        </div>
-
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-          {socialLinks.map((link) => {
-            const Icon = link.icon;
-            return (
-              <motion.a
-                key={link.name}
-                href={link.href}
-                target="_blank"
-                rel="noreferrer"
-                whileHover={reduceMotion ? undefined : { y: -2, scale: 1.02 }}
-                transition={spring}
-                className="group inline-flex items-center gap-2 rounded-full border border-zinc-300 bg-white/90 px-4 py-2 text-sm font-medium text-zinc-700 transition-all hover:border-cyan-500 hover:text-cyan-700 hover:shadow-[0_10px_26px_-16px_rgba(8,145,178,0.45)] focus-visible:outline-2 focus-visible:outline-cyan-500 focus-visible:outline-offset-2"
-                aria-label={link.name}
-                title={link.name}
-              >
-                <Icon className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
-                {link.name}
-              </motion.a>
             );
           })}
         </div>

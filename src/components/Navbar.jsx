@@ -1,20 +1,28 @@
+import { Link, useLocation } from 'react-router-dom';
+
 export default function Navbar() {
+  const { pathname } = useLocation();
+  const isHomePage = pathname === '/';
+
+  const homeHref = isHomePage ? '#home' : '/#home';
+  const whatIDoHref = isHomePage ? '#whatido' : '/#whatido';
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-200/70 bg-white/80 backdrop-blur-xl">
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex h-16 items-center justify-between">
-          <a href="#home" className="text-xl font-bold tracking-tight text-zinc-950">
+          <a href={homeHref} className="text-xl font-bold tracking-tight text-zinc-950">
             Damon.AI
           </a>
 
           <div className="hidden sm:flex gap-6 text-sm font-medium text-zinc-600">
-            <a href="#home" className="transition-colors hover:text-zinc-900">
+            <a href={homeHref} className="transition-colors hover:text-zinc-900">
               Home
             </a>
-            <a href="#about" className="transition-colors hover:text-zinc-900">
+            <Link to="/about" className="transition-colors hover:text-zinc-900">
               About
-            </a>
-            <a href="#whatido" className="transition-colors hover:text-zinc-900">
+            </Link>
+            <a href={whatIDoHref} className="transition-colors hover:text-zinc-900">
               What I Do
             </a>
           </div>

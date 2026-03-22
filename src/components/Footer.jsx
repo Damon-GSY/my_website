@@ -58,11 +58,8 @@ export default function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="mt-12 pt-8 border-t border-zinc-200 dark:border-zinc-800 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="mt-12 pt-8 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-center md:justify-start">
           <p className="text-zinc-500 text-sm">© {year} Shengyue Guan. All rights reserved.</p>
-          <p className="text-zinc-400 text-xs">
-            Built with ❤️ using React + Tailwind CSS
-          </p>
         </div>
       </div>
     </footer>
