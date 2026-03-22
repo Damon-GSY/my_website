@@ -1,26 +1,14 @@
-import { ShaderAnimation } from './ui/shader-animation';
-import { WavyBackground } from './ui/wavy-background';
 import { TextShimmer } from './ui/text-shimmer';
 import { VaporizeTextCycle } from './ui/vaporize-text';
 
 export default function Hero() {
   return (
     <section className="relative min-h-screen w-full overflow-hidden" id="home">
-      {/* Layer 1: Shader Background */}
-      <div className="absolute inset-0 z-0 opacity-30">
-        <ShaderAnimation />
-      </div>
+      {/* Subtle gradient background */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950" />
 
-      {/* Layer 2: Wavy Background */}
-      <div className="absolute inset-0 z-[1]">
-        <WavyBackground
-          colors={['#3b82f6', '#8b5cf6', '#06b6d4']}
-          waveWidth={60}
-          blur={15}
-          speed="slow"
-          waveOpacity={0.3}
-        />
-      </div>
+      {/* Subtle glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
 
       {/* Layer 3: Content */}
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 pt-16">
