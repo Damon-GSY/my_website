@@ -10,8 +10,8 @@ function App() {
     <Layout>
       <Navbar />
       <Hero />
-      <About />
       <WhatIDo />
+      <About />
       <Footer />
     </Layout>
   );
