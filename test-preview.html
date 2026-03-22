@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preview - Damon</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif; }
+  </style>
+</head>
+<body class="min-h-screen bg-zinc-50 text-zinc-900 selection:bg-zinc-200 antialiased">
+
+  <!-- 1. Navbar -->
+  <nav class="sticky top-0 z-50 w-full backdrop-blur-md bg-zinc-50/80 border-b border-zinc-200">
+    <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+      <span class="font-bold text-lg tracking-tight">Damon.</span>
+      <div class="flex gap-6 text-sm font-medium text-zinc-600">
+        <a href="#about" class="hover:text-black transition-colors">About</a>
+        <a href="#research" class="hover:text-black transition-colors">Research</a>
+        <a href="#content" class="hover:text-black transition-colors">Content</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 2. Hero Section -->
+  <section id="about" class="max-w-5xl mx-auto px-6 pt-32 pb-24 flex flex-col md:flex-row items-center gap-12">
+    <div class="flex-1 space-y-6">
+      <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight text-zinc-900">
+        Hi, I'm Shengyue 👋
+      </h1>
+      <p class="text-xl text-zinc-600 leading-relaxed max-w-2xl">
+        I am a researcher bridging the gap between <strong class="text-zinc-900 font-semibold">Artificial Intelligence</strong>, <strong class="text-zinc-900 font-semibold">Machine Learning</strong>, and real-world economic applications. I also share my journey and tech insights on YouTube and Bilibili.
+      </p>
+      <div class="pt-4 flex gap-4 flex-wrap">
+        <a href="mailto:your-email@example.com" class="px-6 py-3 bg-black text-white rounded-full font-medium hover:bg-zinc-800 transition-colors">
+          Get in Touch
+        </a>
+        <a href="https://www.linkedin.com/in/shengyue-guan-1a7b3226b/" target="_blank" rel="noreferrer" class="px-6 py-3 bg-white border border-zinc-200 text-black rounded-full font-medium hover:bg-zinc-50 transition-colors">
+          LinkedIn
+        </a>
+      </div>
+    </div>
+
+    <!-- Avatar -->
+    <div class="w-64 h-64 shrink-0 rounded-full bg-zinc-200 border-4 border-white shadow-xl overflow-hidden flex items-center justify-center text-zinc-400">
+      <span class="text-sm">Profile Image</span>
+    </div>
+  </section>
+
+  <!-- 3. Bento Grid -->
+  <section id="research" class="max-w-5xl mx-auto px-6 py-12">
+    <h2 class="text-2xl font-bold mb-8 text-zinc-900">Currently Working On</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[220px]">
+
+      <!-- Large: Research -->
+      <div class="col-span-1 md:col-span-2 rounded-3xl bg-white border border-zinc-200 p-8 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-center">
+        <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-4 text-lg">
+          📊
+        </div>
+        <h3 class="text-xl font-bold mb-2">Master's Thesis & Research</h3>
+        <p class="text-zinc-600 text-sm leading-relaxed">
+          Investigating the impact of industrial structure optimization on total factor energy efficiency, with a specific focus on the Chengdu-Chongqing economic circle.
+        </p>
+      </div>
+
+      <!-- Small: Workflow -->
+      <div class="col-span-1 rounded-3xl bg-zinc-900 text-white p-8 shadow-sm flex flex-col justify-center">
+        <div class="w-10 h-10 bg-zinc-800 rounded-full flex items-center justify-center mb-4 text-lg">
+          💻
+        </div>
+        <h3 class="text-xl font-bold mb-2">Workflow</h3>
+        <p class="text-zinc-400 text-sm">
+          Heavy terminal user. Building and coding with Next.js, customized tmux environments, and modern web tools.
+        </p>
+      </div>
+
+      <!-- Media: YouTube -->
+      <a href="https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA" target="_blank" rel="noreferrer"
+         class="col-span-1 rounded-3xl bg-red-50 border border-red-100 p-8 flex flex-col justify-center group hover:bg-red-100 transition-colors">
+        <h3 class="text-xl font-bold text-red-600 mb-1 group-hover:underline">YouTube →</h3>
+        <p class="text-sm text-red-900/60">English tech explorations & algorithms.</p>
+      </a>
+
+      <!-- Media: Bilibili -->
+      <a href="https://space.bilibili.com/358541297" target="_blank" rel="noreferrer"
+         class="col-span-1 md:col-span-2 rounded-3xl bg-pink-50 border border-pink-100 p-8 flex flex-col justify-center group hover:bg-pink-100 transition-colors">
+        <h3 class="text-xl font-bold text-pink-600 mb-1 group-hover:underline">Bilibili 哔哩哔哩 →</h3>
+        <p class="text-sm text-pink-900/60">硬核技术分享、机器学习教程与日常 Vlog。</p>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- 4. Footer -->
+  <footer class="max-w-5xl mx-auto px-6 py-12 mt-12 border-t border-zinc-200">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-zinc-500">
+      <p>© 2026 Shengyue Guan. Built with Next.js.</p>
+      <div class="flex gap-4">
+        <a href="https://www.linkedin.com/in/shengyue-guan-1a7b3226b/" target="_blank" class="hover:text-black">LinkedIn</a>
+        <a href="https://space.bilibili.com/358541297" target="_blank" class="hover:text-black">Bilibili</a>
+        <a href="https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA" target="_blank" class="hover:text-black">YouTube</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
