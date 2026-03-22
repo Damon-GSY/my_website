@@ -98,6 +98,73 @@ a {
   padding: clamp(2.25rem, 5vw, 4.4rem) 0;
 }
 
+.card-cta {
+  position: relative;
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: fit-content;
+  padding: 0.75rem 1.05rem;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.card-cta::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 9999px;
+  background: var(--cta-bg, #b9ebf6);
+  transition: all 0.3s ease;
+}
+
+.card-cta-label {
+  position: relative;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--cta-fg, #0e5f79);
+}
+
+.card-cta-arrow {
+  position: relative;
+  top: 0;
+  margin-left: 0.1rem;
+  fill: none;
+  stroke: var(--cta-fg, #0e5f79);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform: translateX(-5px);
+  transition: all 0.3s ease;
+}
+
+.card-cta:hover::before {
+  width: 100%;
+}
+
+.card-cta:hover .card-cta-arrow {
+  transform: translateX(0);
+}
+
+.card-cta:active {
+  transform: scale(0.96);
+}
+
+.card-cta:focus-visible {
+  outline: 2px solid var(--cta-fg, #0e5f79);
+  outline-offset: 2px;
+  border-radius: 9999px;
+}
+
 @theme {
   --font-cartograph: 'Cartograph CF', Georgia, serif;
 }
