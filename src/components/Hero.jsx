@@ -1,59 +1,47 @@
-import { TextShimmer } from './ui/text-shimmer';
-import { VaporizeTextCycle } from './ui/vaporize-text';
-
 export default function Hero() {
   return (
-    <section className="relative min-h-screen w-full overflow-hidden" id="home">
-      {/* Subtle gradient background */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950" />
+    <section className="relative min-h-screen w-full overflow-hidden bg-zinc-50 dark:bg-zinc-950" id="home">
+      <div className="max-w-5xl mx-auto px-6 pt-32 pb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          {/* Left: Text Content */}
+          <div>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 text-zinc-900 dark:text-zinc-100">
+              Hey Friends 👋
+              <br />
+              <span className="text-blue-600 dark:text-blue-400">I'm Damon.</span>
+            </h1>
+            <p className="text-lg md:text-xl text-zinc-600 dark:text-zinc-400 mb-8 leading-relaxed">
+              I'm an AI & Machine Learning researcher. I make videos on YouTube and Bilibili exploring tech, algorithms, and how AI is transforming industries.
+            </p>
 
-      {/* Subtle glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
-
-      {/* Layer 3: Content */}
-      <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 pt-16">
-        <div className="mx-auto max-w-4xl text-center">
-          {/* Eyebrow */}
-          <p className="mb-8 inline-block rounded-full border border-zinc-700 bg-zinc-800/50 px-5 py-2 text-base text-zinc-300">
-            Hi, I'm Damon
-          </p>
-
-          {/* Main Title with Vaporize Effect */}
-          <div className="mb-8 h-32 md:h-44 lg:h-52">
-            <VaporizeTextCycle
-              texts={['I Build AI', 'I Share AI', 'I Love AI']}
-              font={{
-                fontFamily: 'Inter, sans-serif',
-                fontSize: 'clamp(48px, 10vw, 120px)',
-                fontWeight: 700,
-              }}
-              color="rgb(255, 255, 255)"
-            />
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <a
+                href="https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA"
+                target="_blank"
+                rel="noreferrer"
+                className="px-6 py-3 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-black font-semibold text-center hover:scale-105 transition-transform"
+              >
+                Watch on YouTube
+              </a>
+              <a
+                href="https://space.bilibili.com/358541297"
+                target="_blank"
+                rel="noreferrer"
+                className="px-6 py-3 rounded-lg border border-zinc-300 dark:border-zinc-700 font-semibold text-center hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors text-zinc-900 dark:text-zinc-100"
+              >
+                Follow on Bilibili
+              </a>
+            </div>
           </div>
 
-          {/* Subtitle */}
-          <TextShimmer
-            as="p"
-            duration={3}
-            className="text-xl md:text-2xl text-zinc-300 max-w-2xl mx-auto mb-12 leading-relaxed"
-          >
-            Product builder, writer, and creator. I share practical ideas about productivity, AI workflows, and online business.
-          </TextShimmer>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="#projects"
-              className="inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-medium text-black transition-all hover:bg-zinc-200"
-            >
-              View Projects
-            </a>
-            <a
-              href="#about"
-              className="inline-flex items-center justify-center rounded-full border border-zinc-700 bg-transparent px-8 py-3 text-sm font-medium text-white transition-all hover:bg-zinc-800"
-            >
-              About Me
-            </a>
+          {/* Right: Avatar */}
+          <div className="flex justify-center md:justify-end">
+            <div className="w-64 h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-2xl rotate-3 shadow-xl overflow-hidden border-4 border-white dark:border-zinc-800">
+              <div className="w-full h-full flex items-center justify-center text-zinc-400 dark:text-zinc-500 text-lg">
+                [Your Photo]
+              </div>
+            </div>
           </div>
         </div>
       </div>

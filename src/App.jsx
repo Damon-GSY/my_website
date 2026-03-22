@@ -3,7 +3,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Hero from './components/Hero';
 import About from './components/About';
-import Projects from './components/sections/Projects';
+import WhatIDo from './components/sections/WhatIDo';
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <Navbar />
       <Hero />
       <About />
-      <Projects />
+      <WhatIDo />
       <Footer />
     </Layout>
   );
