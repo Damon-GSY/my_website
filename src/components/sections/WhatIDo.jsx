@@ -1,4 +1,83 @@
 import { forwardRef } from 'react';
+import { motion } from 'framer-motion';
+
+// Shared hover animation config with spring physics
+const cardHover = {
+  whileHover: {
+    scale: 1.02,
+    y: -4,
+    transition: { type: "spring", stiffness: 300, damping: 20 }
+  },
+  transition: { type: "spring", stiffness: 400, damping: 25 }
+};
+
+// Noise texture overlay component
+const NoiseOverlay = () => (
+  <div
+    className="absolute inset-0 opacity-[0.03] pointer-events-none rounded-2xl"
+    style={{
+      backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+    }}
+  />
+);
+
+// Animated progress ring for the 94% card
+const ProgressRing = ({ progress = 94, size = 100, strokeWidth = 4 }) => {
+  const radius = (size - strokeWidth) / 2;
+  const circumference = radius * 2 * Math.PI;
+  const offset = circumference - (progress / 100) * circumference;
+
+  return (
+    <div className="relative" style={{ width: size, height: size }}>
+      <svg className="absolute inset-0 -rotate-90" width={size} height={size}>
+        {/* Background circle */}
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={strokeWidth}
+          className="text-zinc-700/50"
+        />
+        {/* Progress circle */}
+        <motion.circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="none"
+          stroke="url(#progressGradient)"
+          strokeWidth={strokeWidth}
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          initial={{ strokeDashoffset: circumference }}
+          animate={{ strokeDashoffset: offset }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+        />
+        {/* Gradient definition */}
+        <defs>
+          <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#60a5fa" />
+            <stop offset="100%" stopColor="#3b82f6" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  );
+};
+
+// Animated model tag for background
+const ModelTag = ({ name, color, index = 0 }) => (
+  <motion.span
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: index * 0.1, duration: 0.5 }}
+    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-medium bg-white/80 dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400"
+  >
+    <span className={`w-1.5 h-1.5 ${color} rounded-full`} />
+    {name}
+  </motion.span>
+)
 
 const WhatIDo = forwardRef(function WhatIDo(props, ref) {
   return (
@@ -8,11 +87,27 @@ const WhatIDo = forwardRef(function WhatIDo(props, ref) {
           What I Do
         </h2>
 
-        {/* Bento Grid - 核心能力展示 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[200px] md:auto-rows-[240px]">
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[200px] md:auto-rows-[280px]">
 
-          {/* 卡片1: Multi-Agent Systems (大卡片，带技术栈) */}
-          <div className="md:col-span-2 bg-white dark:bg-zinc-800/50 rounded-2xl p-6 md:p-8 border border-zinc-200 dark:border-zinc-700 group overflow-hidden flex flex-col justify-between hover:border-blue-500/30 hover:shadow-lg transition-all">
+          {/* 卡片1: Multi-Agent Systems - With floating tech tags */}
+          <motion.div
+            className="md:col-span-2 relative bg-zinc-50 dark:bg-zinc-800/50 rounded-2xl p-6 md:p-8 border border-zinc-200 dark:border-zinc-700 group overflow-hidden"
+            {...cardHover}
+          >
+            {/* Floating tech tags background - positioned at not overlap content */}
+            <div className="absolute bottom-6 left-8 right-8 flex flex-wrap gap-2 opacity-30 dark:opacity-20 pointer-events-none">
+              <ModelTag name="GPT-4o" color="bg-emerald-500" index={0} />
+              <ModelTag name="Claude 3.5" color="bg-orange-500" index={1} />
+              <ModelTag name="Qwen" color="bg-blue-500" index={2} />
+              <ModelTag name="LLaMA 3" color="bg-cyan-500" index={3} />
+              <ModelTag name="Gemini" color="bg-purple-500" index={4} />
+              <ModelTag name="Mistral" color="bg-rose-500" index={5} />
+              <ModelTag name="DeepSeek" color="bg-indigo-500" index={6} />
+              <ModelTag name="Agent Workflow" color="bg-amber-500" index={7} />
+              <ModelTag name="RAG Pipeline" color="bg-teal-500" index={8} />
+            </div>
+
             <div className="relative z-10">
               <div className="flex justify-between items-start mb-4">
                 <span className="text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest">
@@ -25,47 +120,67 @@ const WhatIDo = forwardRef(function WhatIDo(props, ref) {
               <h3 className="text-2xl md:text-3xl font-bold mb-3 text-zinc-900 dark:text-zinc-100">
                 Multi-Agent Systems
               </h3>
-              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed text-sm md:text-base mb-5">
+              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed text-sm md:text-base max-w-lg mb-4">
                 Designing collaborative AI environments where specialized agents negotiate and solve complex multi-step tasks autonomously.
               </p>
-
-              {/* Tech Stack Pills */}
-              <div className="flex flex-wrap gap-2">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 rounded-full text-xs font-medium border border-emerald-200 dark:border-emerald-800/50">
-                  <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
-                  GPT-4o
-                </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-orange-50 dark:bg-orange-950/50 text-orange-700 dark:text-orange-400 rounded-full text-xs font-medium border border-orange-200 dark:border-orange-800/50">
-                  <span className="w-1.5 h-1.5 bg-orange-500 rounded-full"></span>
-                  Claude
-                </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-400 rounded-full text-xs font-medium border border-blue-200 dark:border-blue-800/50">
-                  <span className="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>
-                  Qwen
-                </span>
-              </div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* 卡片2: 效率数据 (深色小卡片) */}
-          <div className="bg-gradient-to-br from-[#1e3a4a] to-[#0f172a] rounded-2xl p-6 flex flex-col items-center justify-center text-center">
-            <h3 className="text-5xl md:text-6xl font-bold text-[#60a5fa] mb-2">94%</h3>
-            <p className="text-xs font-bold tracking-widest text-zinc-400 uppercase">Efficiency Gain</p>
-          </div>
+          {/* 卡片2: 94% - Animated Progress Ring */}
+          <motion.div
+            className="relative bg-gradient-to-br from-[#0f172a] to-[#1e293b] rounded-2xl p-6 flex flex-col items-center justify-center text-center overflow-hidden group"
+            {...cardHover}
+          >
+            {/* Ambient glow */}
+            <div className="absolute inset-0 bg-gradient-radial from-blue-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-          {/* 卡片3: Industrial Optimization (横向大卡片，带技术栈) */}
-          <div className="md:col-span-2 bg-gradient-to-br from-zinc-50 to-zinc-100 dark:from-zinc-800 dark:to-zinc-900 rounded-2xl p-6 md:p-8 border border-zinc-200 dark:border-zinc-700 group overflow-hidden flex flex-col md:flex-row gap-6 hover:border-zinc-300 dark:hover:border-zinc-600 hover:shadow-lg transition-all">
-            <div className="flex-1">
+            <ProgressRing progress={94} size={100} />
+
+            <h3 className="text-4xl font-bold text-blue-400 mt-4 relative z-10">94%</h3>
+            <p className="text-xs font-bold tracking-widest text-zinc-400 uppercase relative z-10 mt-1">Efficiency Gain</p>
+          </motion.div>
+
+          {/* 卡片3: Industrial Optimization - With code snippet */}
+          <motion.div
+            className="md:col-span-2 relative bg-gradient-to-br from-zinc-50 to-zinc-100 dark:from-zinc-800 dark:to-zinc-900 rounded-2xl p-6 md:p-8 border border-zinc-200 dark:border-zinc-700 group overflow-hidden"
+            {...cardHover}
+          >
+            {/* Code snippet background - positioned to not overlap content */}
+            <div className="absolute right-0 bottom-0 w-1/2 h-full overflow-hidden opacity-10 dark:opacity-20 pointer-events-none">
+              <pre className="text-[8px] md:text-[10px] font-mono text-zinc-600 dark:text-zinc-400 whitespace-pre p-4">
+{`def optimize_workflow(data):
+    model = Qwen72B(lora_adapter)
+    context = rag_pipeline.query(data)
+    return model.generate(context)
+
+# LoRA fine-tuning config
+lora_config = {
+    "r": 16,
+    "target_modules": [
+        "q_proj", "v_proj",
+        "k_proj", "o_proj"
+    ]
+}
+
+# RAG Pipeline
+def build_rag(docs):
+    embeddings = encode(docs)
+    index = faiss.Index(embeddings)
+    return Retriever(index)`}</pre>
+            </div>
+
+            <div className="relative z-10">
               <span className="text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/50 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest inline-block mb-4">
                 Vertical Model
               </span>
               <h3 className="text-2xl md:text-3xl font-bold mb-3 text-zinc-900 dark:text-zinc-100">
                 Industrial Optimization
               </h3>
-              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed text-sm md:text-base mb-4">
+              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed text-sm md:text-base max-w-lg mb-4">
                 A bespoke neural framework developed for the Chengdu-Chongqing economic circle, optimizing industrial workflows with domain-specific LLMs.
               </p>
-              {/* Tech Stack for Vertical Model */}
+
+              {/* Tech Stack */}
               <div className="flex flex-wrap gap-2">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-purple-50 dark:bg-purple-950/50 text-purple-700 dark:text-purple-400 rounded-full text-xs font-medium border border-purple-200 dark:border-purple-800/50">
                   <span className="w-1.5 h-1.5 bg-purple-500 rounded-full"></span>
@@ -81,23 +196,52 @@ const WhatIDo = forwardRef(function WhatIDo(props, ref) {
                 </span>
               </div>
             </div>
-            {/* 右侧图片区域 */}
-            <div className="w-full md:w-48 h-32 md:h-auto rounded-xl overflow-hidden bg-gradient-to-br from-zinc-200 to-zinc-300 dark:from-zinc-700 dark:to-zinc-800 flex-shrink-0 flex items-center justify-center">
-              <svg className="w-12 h-12 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-              </svg>
-            </div>
-          </div>
+          </motion.div>
 
-          {/* 卡片4: 效率提升 */}
-          <div className="bg-gradient-to-br from-violet-500 to-purple-600 rounded-2xl p-6 flex flex-col items-center justify-center text-center">
-            <h3 className="text-5xl md:text-6xl font-bold text-white mb-2">10x</h3>
-            <p className="text-xs font-bold tracking-widest text-white/70 uppercase">Faster Iteration</p>
-          </div>
+          {/* 卡片4: 10x - Gradient text with subtle animated background */}
+          <motion.div
+            className="relative bg-white dark:bg-zinc-800 rounded-2xl p-6 flex flex-col items-center justify-center text-center border border-zinc-200 dark:border-zinc-700 overflow-hidden group"
+            {...cardHover}
+          >
+            {/* Animated gradient orbs */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              <motion.div
+                className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-violet-500/20 via-purple-500/10 to-transparent rounded-full blur-3xl"
+                animate={{
+                  x: [0, 20, 0],
+                  y: [0, 10, 0],
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+              <motion.div
+                className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-rose-500/20 via-pink-500/10 to-transparent rounded-full blur-3xl"
+                animate={{
+                  x: [0, -20, 0],
+                  y: [0, -10, 0],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+            </div>
+
+            <h3 className="text-5xl md:text-6xl font-bold mb-2 relative z-10 bg-gradient-to-r from-violet-500 via-purple-500 to-rose-500 bg-clip-text text-transparent">
+              10x
+            </h3>
+            <p className="text-xs font-bold tracking-widest text-zinc-500 dark:text-zinc-400 uppercase relative z-10">
+              Faster Iteration
+            </p>
+          </motion.div>
 
         </div>
 
-        {/* Social Links - 简洁的图标链接行 */}
+        {/* Social Links */}
         <div className="mt-12 flex items-center justify-center gap-8">
           <a
             href="https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA"
@@ -107,7 +251,7 @@ const WhatIDo = forwardRef(function WhatIDo(props, ref) {
             title="YouTube"
           >
             <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
             </svg>
           </a>
           <a
