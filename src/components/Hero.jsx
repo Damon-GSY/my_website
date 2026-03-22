@@ -1,55 +1,56 @@
 import { ShimmerButton } from './ui/shimmer-button';
-import { Marquee } from './ui/magicui/marquee';
-
-const techStack = [
-  { name: 'PyTorch', icon: '🔥' },
-  { name: 'TensorFlow', icon: '🧠' },
-  { name: 'Next.js', icon: '▲' },
-  { name: 'React', icon: '⚛️' },
-  { name: 'Python', icon: '🐍' },
-  { name: 'TypeScript', icon: '📘' },
-  { name: 'Tailwind', icon: '🎨' },
-  { name: 'LLM', icon: '🤖' },
-];
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-zinc-50 dark:bg-zinc-950" id="home">
+    <section className="relative min-h-screen w-full overflow-hidden" id="home">
       {/* Main Content */}
-      <div className="max-w-5xl mx-auto px-6 pt-32 pb-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* Left: Text Content */}
-          <div>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 text-zinc-900 dark:text-zinc-100">
-              Hey Friends{' '}
-              <span className="inline-block animate-wiggle">👋</span>
+      <div className="max-w-7xl mx-auto px-6 md:px-8 pt-24 pb-12 lg:py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* Left: Text Content - 7 columns */}
+          <div className="lg:col-span-7 space-y-8">
+            {/* Label */}
+            <span className="text-xs uppercase tracking-[0.2em] text-primary font-bold font-[Cartograph_CF,Georgia,serif]">
+              Based in London - Available for Scale
+            </span>
+
+            {/* Headline */}
+            <h1 className="text-5xl md:text-6xl lg:text-[5rem] font-bold leading-[1.1] tracking-tight font-[Cartograph_CF,Georgia,serif] text-[var(--text)]">
+              Hi, I'm Damon.
               <br />
-              <span className="text-blue-600 dark:text-blue-400">I'm Damon.</span>
+              <span className="hover-trigger inline-block relative group">
+                <span className="text-shimmer italic">I Build AI</span>
+                {/* Tooltip / Popover */}
+                <div className="popover-reveal absolute bottom-full left-0 mb-4 w-64 bg-[var(--surface-soft)] dark:bg-zinc-800 border border-[var(--line)] dark:border-zinc-700 p-4 rounded-xl shadow-2xl backdrop-blur-md z-50">
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center gap-2">
+                      <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                      <span className="text-xs font-bold uppercase tracking-widest text-[var(--text)]">Agent Architecture</span>
+                    </div>
+                    <div className="h-px bg-[var(--line)] dark:bg-zinc-700" />
+                    <div className="flex items-center gap-2">
+                      <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                      </svg>
+                      <span className="text-xs font-bold uppercase tracking-widest text-[var(--text)]">Vertical Models</span>
+                    </div>
+                  </div>
+                  {/* Arrow pointer */}
+                  <div className="absolute -bottom-2 left-8 w-4 h-4 bg-[var(--surface-soft)] dark:bg-zinc-800 border-b border-r border-[var(--line)] dark:border-zinc-700 rotate-45" />
+                </div>
+              </span>
             </h1>
-            <p className="text-lg md:text-xl text-zinc-600 dark:text-zinc-400 mb-8 leading-relaxed">
-              I'm an AI & Machine Learning researcher. I make videos on{' '}
-              <a
-                href="https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA"
-                target="_blank"
-                rel="noreferrer"
-                className="text-blue-600 dark:text-blue-400 hover:underline"
-              >
-                YouTube
-              </a>{' '}
-              and{' '}
-              <a
-                href="https://space.bilibili.com/358541297"
-                target="_blank"
-                rel="noreferrer"
-                className="text-pink-600 dark:text-pink-400 hover:underline"
-              >
-                Bilibili
-              </a>{' '}
-              exploring tech, algorithms, and how AI is reshaping our world.
+
+            {/* Description */}
+            <p className="text-base md:text-lg text-[var(--muted)] max-w-xl leading-relaxed">
+              I bridge the gap between human intuition and machine intelligence.
+              I help founders and enterprise teams deploy custom LLM architectures
+              that don't just process data - they generate value.
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <a
                 href="https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA?sub_confirmation=1"
                 target="_blank"
@@ -58,7 +59,7 @@ export default function Hero() {
                 <ShimmerButton
                   shimmerColor="#ffffff"
                   background="linear-gradient(135deg, #dc2626, #ef4444)"
-                  borderRadius="12px"
+                  borderRadius="9999px"
                   className="px-8 py-4 text-white font-semibold"
                 >
                   Subscribe on YouTube
@@ -68,58 +69,74 @@ export default function Hero() {
                 href="https://space.bilibili.com/358541297"
                 target="_blank"
                 rel="noreferrer"
-                className="px-8 py-4 rounded-xl border-2 border-zinc-300 dark:border-zinc-700 font-semibold text-center hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors text-zinc-900 dark:text-zinc-100"
+                className="px-8 py-4 rounded-full border border-[var(--line)] dark:border-zinc-700 font-semibold text-center hover:bg-[var(--surface-soft)] dark:hover:bg-zinc-800 transition-colors text-[var(--text)]"
               >
-                关注 Bilibili
+                Read My Newsletter
               </a>
             </div>
           </div>
 
-          {/* Right: Avatar */}
-          <div className="flex justify-center md:justify-end">
-            <div className="relative">
-              <div className="w-64 h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100 dark:from-blue-900/30 dark:via-purple-900/20 dark:to-pink-900/30 rounded-3xl rotate-3 shadow-2xl overflow-hidden border-4 border-white dark:border-zinc-800 transition-transform hover:rotate-0 duration-300">
-                <div className="w-full h-full flex items-center justify-center text-zinc-400 dark:text-zinc-500">
-                  <div className="text-center">
-                    <div className="text-6xl mb-2">👨‍💻</div>
-                    <p className="text-sm">Your Photo Here</p>
-                  </div>
+          {/* Right: Avatar - 5 columns */}
+          <div className="lg:col-span-5 relative">
+            {/* Main Photo Card */}
+            <div className="aspect-[4/5] rounded-lg overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-700 bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100 dark:from-blue-900/30 dark:via-purple-900/20 dark:to-pink-900/30">
+              <div className="w-full h-full flex items-center justify-center text-[var(--muted)]">
+                <div className="text-center">
+                  <div className="text-6xl mb-2">👨‍💻</div>
+                  <p className="text-sm">Your Photo Here</p>
                 </div>
               </div>
-              {/* Decorative elements */}
-              <div className="absolute -top-4 -right-4 w-24 h-24 bg-yellow-400/20 rounded-full blur-2xl" />
-              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-blue-400/20 rounded-full blur-2xl" />
+            </div>
+
+            {/* Floating Current Project Card */}
+            <div className="absolute -bottom-8 -left-8 bg-[var(--surface)] dark:bg-zinc-900 p-6 rounded-lg shadow-xl max-w-[200px] hidden md:block border border-[var(--line)] dark:border-zinc-800">
+              <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">Current Project</p>
+              <p className="text-sm font-[Cartograph_CF,Georgia,serif] italic text-[var(--text)]">
+                Architecting 'Lumina'-the next generation of neural UI frameworks.
+              </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Tech Stack Marquee */}
-      <div className="border-t border-b border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/50 py-6 mt-12">
-        <Marquee className="[--duration:30s]" pauseOnHover>
-          {techStack.map((tech, index) => (
-            <div
-              key={index}
-              className="flex items-center gap-2 px-6 py-2 bg-zinc-100 dark:bg-zinc-800 rounded-full"
-            >
-              <span className="text-xl">{tech.icon}</span>
-              <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-                {tech.name}
-              </span>
-            </div>
-          ))}
-        </Marquee>
-      </div>
-
-      {/* Add wiggle animation */}
+      {/* Styles */}
       <style>{`
-        @keyframes wiggle {
-          0%, 100% { transform: rotate(0deg); }
-          25% { transform: rotate(10deg); }
-          75% { transform: rotate(-10deg); }
+        /* Text Shimmer Effect - matches test-preview.html */
+        .text-shimmer {
+          background: linear-gradient(90deg, #00677f 0%, #5dcdf1 50%, #00677f 100%);
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          display: inline-block;
+          animation: shimmer 2.5s linear infinite;
         }
-        .animate-wiggle {
-          animation: wiggle 1s ease-in-out infinite;
+
+        .dark .text-shimmer {
+          background: linear-gradient(90deg, #00677f 0%, #5dcdf1 50%, #00677f 100%);
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        @keyframes shimmer {
+          from { background-position: 0 0; }
+          to { background-position: -200% 0; }
+        }
+
+        /* Popover Animation */
+        .popover-reveal {
+          opacity: 0;
+          transform: translateY(10px) scale(0.95);
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          pointer-events: none;
+        }
+
+        .hover-trigger:hover .popover-reveal {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+          pointer-events: auto;
         }
       `}</style>
     </section>
