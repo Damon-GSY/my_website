@@ -1,228 +1,327 @@
-import { forwardRef } from 'react';
-import {
-  BrainCircuit,
-  Network,
-  Sparkles,
-  Wrench,
-} from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import heroImage from '@/assets/hero.png';
 
-const spring = {
-  type: 'spring',
-  stiffness: 260,
-  damping: 20,
-  mass: 0.8,
+const reveal = {
+  duration: 0.5,
+  ease: [0.16, 1, 0.3, 1],
 };
 
-const cards = [
+const services = [
   {
-    id: 'research',
-    title: 'Research Systems',
-    eyebrow: 'Research',
+    title: 'Agent System Design',
     description:
-      'I design agent environments and evaluation loops for multi-step reasoning tasks.',
-    className: 'md:col-span-2',
-    icon: BrainCircuit,
-    order: 0,
-    tone: 'main',
-    accent: 'cyan',
-    cta: { label: 'Explore research', href: '/about' },
+      'I design robust agent workflows with planning, tool orchestration, memory, and safety boundaries.',
   },
   {
-    id: 'stack',
-    title: 'Stack',
-    eyebrow: 'Core Stack',
-    description: 'Core tools for building agent systems and production-ready AI workflows.',
-    className: 'md:col-span-1',
-    icon: Network,
-    order: 2,
-    tone: 'sub',
-    accent: 'violet',
-    cta: { label: 'View stack', href: '#whatido' },
+    title: 'Post-Training & Evaluation',
+    description:
+      'I build benchmarks, run SFT and RL loops, and align model behavior with measurable business outcomes.',
   },
   {
-    id: 'build',
-    title: 'Build & Deployment',
-    eyebrow: 'Engineering',
+    title: 'Production Deployment',
     description:
-      'I ship research into production workflows with clear guardrails, speed, and reliability.',
-    className: 'md:col-span-2',
-    icon: Wrench,
-    order: 1,
-    tone: 'main',
-    accent: 'amber',
-    cta: { label: 'See delivery model', href: '/about' },
-  },
-  {
-    id: 'philosophy',
-    title: 'Philosophy',
-    eyebrow: 'Principle',
-    description:
-      'Build practical intelligence first. Elegant systems should make hard decisions easier.',
-    className: 'md:col-span-1',
-    icon: Sparkles,
-    order: 3,
-    tone: 'sub',
-    accent: 'emerald',
-    cta: { label: 'Read principle', href: '/about' },
+      'I ship systems with observability, rollback strategy, and clear operating constraints for real teams.',
   },
 ];
 
-const accentStyles = {
-  cyan: {
-    chip: 'border-cyan-200 bg-cyan-50 text-cyan-700',
-    iconWrap:
-      'border-cyan-200 bg-cyan-50 text-cyan-700 group-hover:border-cyan-300 group-hover:bg-cyan-100',
-    icon: 'text-cyan-700',
-    hoverBorder: 'hover:border-cyan-300',
-    glow: 'bg-[radial-gradient(circle_at_86%_8%,rgba(34,211,238,0.18),transparent_42%)]',
-    ctaBg: '#b9ebf6',
-    ctaFg: '#0e5f79',
+const nowItems = [
+  {
+    title: 'Research',
+    description: 'Training and evaluating agent systems for real supply-chain workflows at Alibaba.',
   },
-  violet: {
-    chip: 'border-violet-200 bg-violet-50 text-violet-700',
-    iconWrap:
-      'border-violet-200 bg-violet-50 text-violet-700 group-hover:border-violet-300 group-hover:bg-violet-100',
-    icon: 'text-violet-700',
-    hoverBorder: 'hover:border-violet-300',
-    glow: 'bg-[radial-gradient(circle_at_86%_8%,rgba(167,139,250,0.18),transparent_42%)]',
-    ctaBg: '#ded3ff',
-    ctaFg: '#5a2ec9',
+  {
+    title: 'Build',
+    description: 'Turning post-training and RL insights into deployable systems with measurable outcomes.',
   },
-  amber: {
-    chip: 'border-amber-200 bg-amber-50 text-amber-700',
-    iconWrap:
-      'border-amber-200 bg-amber-50 text-amber-700 group-hover:border-amber-300 group-hover:bg-amber-100',
-    icon: 'text-amber-700',
-    hoverBorder: 'hover:border-amber-300',
-    glow: 'bg-[radial-gradient(circle_at_86%_8%,rgba(251,191,36,0.18),transparent_42%)]',
-    ctaBg: '#fde3b0',
-    ctaFg: '#8b4f00',
+  {
+    title: 'Share',
+    description: 'Publishing practical AI content and lessons learned for builders and researchers.',
   },
-  emerald: {
-    chip: 'border-emerald-200 bg-emerald-50 text-emerald-700',
-    iconWrap:
-      'border-emerald-200 bg-emerald-50 text-emerald-700 group-hover:border-emerald-300 group-hover:bg-emerald-100',
-    icon: 'text-emerald-700',
-    hoverBorder: 'hover:border-emerald-300',
-    glow: 'bg-[radial-gradient(circle_at_86%_8%,rgba(16,185,129,0.18),transparent_42%)]',
-    ctaBg: '#c9f2e2',
-    ctaFg: '#0f6b4a',
-  },
-};
+];
 
-function StackBackground({ reduceMotion }) {
-  return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      <motion.div
-        className="absolute -left-8 top-8 h-18 w-44 rounded-full bg-cyan-200/45 blur-2xl"
-        animate={reduceMotion ? undefined : { x: [-10, 12, -10] }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-      />
-    </div>
-  );
-}
+const proof = [
+  {
+    title: 'Industry',
+    detail: 'LLM Algorithm Engineer at Alibaba, building and shipping supply-chain AI systems.',
+    href: '/about',
+    cta: 'See work timeline',
+  },
+  {
+    title: 'Research',
+    detail: 'Published work in multi-turn agent evaluation and benchmark design.',
+    href: '/about',
+    cta: 'Read research timeline',
+  },
+  {
+    title: 'Education',
+    detail: 'NUS Statistics (QS #8) and UNSW Computer Science (QS #19).',
+    href: '/about',
+    cta: 'View education timeline',
+  },
+  {
+    title: 'Platforms',
+    detail: 'I share ideas and experiments on YouTube, Bilibili, and LinkedIn.',
+    href: 'https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA',
+    cta: 'Visit channels',
+    external: true,
+  },
+];
 
-const WhatIDo = forwardRef(function WhatIDo(props, ref) {
+export default function WhatIDo() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section
-      className="w-full bg-[linear-gradient(180deg,#ffffff_0%,#f7fcff_100%)] py-16 lg:py-24"
-      id="whatido"
-    >
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="mb-10 md:mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-zinc-950">
-            What I Do
-          </h2>
+    <>
+      <section id="whatido" className="bg-[var(--color-background)] pt-16 md:pt-20">
+        <div className="mx-auto max-w-7xl px-6 md:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={reveal}
+            className="max-w-3xl"
+          >
+            <h2 className="type-headline text-3xl font-semibold tracking-tight text-[var(--color-text-primary)] md:text-4xl">
+              What I&apos;m doing now
+            </h2>
+            <p className="mt-3 text-base text-[var(--color-text-muted)] md:text-lg">
+              Researching, building, and sharing practical AI systems every week.
+            </p>
+          </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[220px] md:auto-rows-[290px]">
-          {cards.map((card) => {
-            const Icon = card.icon;
-            const mainTone = card.tone === 'main';
-            const accent = accentStyles[card.accent];
+        <div className="mx-auto mt-7 grid max-w-7xl gap-3 px-6 md:grid-cols-3 md:px-8">
+          {nowItems.map((item, index) => (
+            <motion.article
+              key={item.title}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-90px' }}
+              transition={{ ...reveal, delay: 0.06 + index * 0.05 }}
+              className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-surface)] p-5"
+            >
+              <p className="type-caption text-xs font-semibold uppercase tracking-[0.14em] text-blue-700">
+                {item.title}
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-[var(--color-text-muted)]">{item.description}</p>
+            </motion.article>
+          ))}
+        </div>
 
-            return (
+        <div className="mx-auto mt-8 grid max-w-7xl gap-3 px-6 md:grid-cols-3 md:px-8">
+          {[
+            { title: 'Research', position: 'object-[32%_35%]' },
+            { title: 'Build', position: 'object-[55%_42%]' },
+            { title: 'Share', position: 'object-[70%_34%]' },
+          ].map((item, index) => (
+            <motion.figure
+              key={item.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-90px' }}
+              transition={{ ...reveal, delay: 0.08 + index * 0.06 }}
+              className="relative overflow-hidden rounded-2xl border border-[var(--color-line)] bg-white"
+            >
+              <motion.img
+                src={heroImage}
+                alt={`${item.title} visual context`}
+                className={`h-44 w-full ${item.position} object-cover md:h-56`}
+                animate={reduceMotion ? undefined : { scale: [1, 1.025, 1] }}
+                transition={{ duration: 9 + index, repeat: Infinity, ease: 'easeInOut' }}
+              />
+              <figcaption className="type-caption absolute left-4 top-4 rounded-full bg-white/86 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-zinc-700 backdrop-blur-sm">
+                {item.title}
+              </figcaption>
+            </motion.figure>
+          ))}
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-90px' }}
+          transition={{ ...reveal, delay: 0.14 }}
+          className="mx-auto mt-6 flex max-w-7xl flex-wrap gap-3 px-6 md:px-8"
+        >
+          <a
+            href="https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA"
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm font-semibold text-zinc-700 transition-colors hover:border-zinc-400 hover:text-zinc-900"
+          >
+            YouTube
+          </a>
+          <a
+            href="https://space.bilibili.com/358541297"
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm font-semibold text-zinc-700 transition-colors hover:border-zinc-400 hover:text-zinc-900"
+          >
+            Bilibili
+          </a>
+          <a
+            href="https://www.linkedin.com/in/shengyue-guan-1a7b3226b/"
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm font-semibold text-zinc-700 transition-colors hover:border-zinc-400 hover:text-zinc-900"
+          >
+            LinkedIn
+          </a>
+        </motion.div>
+      </section>
+
+      <section className="bg-[var(--color-background)] py-20 md:py-24">
+        <div className="mx-auto max-w-6xl px-6 md:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-110px' }}
+            transition={reveal}
+            className="max-w-3xl"
+          >
+            <h2 className="type-headline text-3xl font-semibold tracking-tight text-[var(--color-text-primary)] md:text-4xl">
+              What I do
+            </h2>
+            <p className="mt-3 text-base text-[var(--color-text-muted)] md:text-lg">
+              Three ways I create value for teams building serious AI products.
+            </p>
+          </motion.div>
+
+          <div className="mt-10 border-y border-[var(--color-line)]">
+            {services.map((item, index) => (
               <motion.article
-                key={card.id}
-                initial={{ opacity: 0, y: 24 }}
+                key={item.title}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{
-                  duration: 0.42,
-                  delay: card.order * 0.09,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                whileHover={
-                  reduceMotion
-                    ? undefined
-                    : mainTone
-                      ? { y: -6, scale: 1.013 }
-                      : { y: -4, scale: 1.01 }
-                }
-                className={`group relative overflow-hidden rounded-2xl border border-zinc-200/85 bg-white p-6 md:p-7 shadow-[0_22px_45px_-35px_rgba(15,23,42,0.45)] transition-colors duration-300 ${accent.hoverBorder} ${card.className}`}
+                viewport={{ once: true, margin: '-100px' }}
+                transition={{ ...reveal, delay: index * 0.08 }}
+                className={`grid gap-4 py-7 md:grid-cols-[220px_1fr] md:gap-8 ${
+                  index < services.length - 1 ? 'border-b border-[var(--color-line)]' : ''
+                }`}
               >
-                <div className="relative z-10 flex h-full flex-col">
-                  <div className="mb-4 flex items-center justify-between">
-                    <span className={`rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.13em] ${accent.chip}`}>
-                      {card.eyebrow}
-                    </span>
-                    <div
-                      className={`inline-flex h-11 w-11 items-center justify-center rounded-xl border transition-all duration-300 ${accent.iconWrap}`}
-                    >
-                      <Icon className={`h-5 w-5 transition-transform duration-300 group-hover:scale-110 ${accent.icon}`} />
-                    </div>
-                  </div>
-
-                  <h3
-                    className={`font-semibold tracking-tight text-zinc-950 ${
-                      card.id === 'stack' ? 'text-2xl md:text-[2.35rem]' : 'text-2xl md:text-3xl'
-                    }`}
-                  >
-                    {card.title}
-                  </h3>
-                  <p
-                    className={`mt-3 max-w-xl leading-relaxed text-zinc-600 ${
-                      card.id === 'stack' ? 'text-[0.96rem]' : 'text-sm'
-                    }`}
-                  >
-                    {card.description}
-                  </p>
-
-                  <a
-                    href={card.cta.href}
-                    className="card-cta mt-auto"
-                    style={{
-                      '--cta-bg': accent.ctaBg,
-                      '--cta-fg': accent.ctaFg,
-                    }}
-                  >
-                    <span className="card-cta-label">{card.cta.label}</span>
-                    <svg className="card-cta-arrow" width="15" height="10" viewBox="0 0 13 10" aria-hidden="true">
-                      <path d="M1,5 L11,5" />
-                      <polyline points="8 1 12 5 8 9" />
-                    </svg>
-                  </a>
-                </div>
-
-                <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <div className={`absolute inset-0 ${accent.glow}`} />
-                </div>
-
-                {card.id === 'stack' ? <StackBackground reduceMotion={reduceMotion} /> : null}
+                <h3 className="type-caption text-sm font-semibold uppercase tracking-[0.16em] text-blue-700">
+                  {item.title}
+                </h3>
+                <p className="text-base leading-relaxed text-[var(--color-text-muted)]">{item.description}</p>
               </motion.article>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-});
+            ))}
+          </div>
 
-export default WhatIDo;
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ ...reveal, delay: 0.14 }}
+            className="mt-8"
+          >
+            <Link
+              to="/about"
+              className="inline-flex items-center gap-2 text-base font-semibold text-blue-700 transition-colors hover:text-blue-800"
+            >
+              Explore my full education and work timeline
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="bg-[var(--color-surface)] py-20 md:py-24">
+        <div className="mx-auto max-w-6xl px-6 md:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={reveal}
+            className="max-w-3xl"
+          >
+            <h2 className="type-headline text-3xl font-semibold tracking-tight text-[var(--color-text-primary)] md:text-4xl">
+              Proof of work
+            </h2>
+            <p className="mt-3 text-base text-[var(--color-text-muted)] md:text-lg">
+              A snapshot of outcomes across industry, research, and education.
+            </p>
+          </motion.div>
+
+          <div className="mt-10 space-y-6">
+            {proof.map((item, index) => (
+              <motion.article
+                key={item.title}
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-100px' }}
+                transition={{ ...reveal, delay: index * 0.07 }}
+                className="border-l-2 border-blue-300 pl-5"
+              >
+                <p className="type-caption text-xs font-semibold uppercase tracking-[0.14em] text-blue-700">
+                  {item.title}
+                </p>
+                <p className="mt-2 text-base leading-relaxed text-[var(--color-text-primary)]">{item.detail}</p>
+                <a
+                  href={item.href}
+                  target={item.external ? '_blank' : undefined}
+                  rel={item.external ? 'noreferrer' : undefined}
+                  className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-blue-700 transition-colors hover:text-blue-800"
+                >
+                  {item.cta}
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </a>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[linear-gradient(180deg,#f9f6f0_0%,#f1ebe1_100%)] py-20 md:py-24">
+        <div className="mx-auto max-w-5xl px-6 text-center md:px-8">
+          <motion.h2
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={reveal}
+            className="type-headline text-3xl font-semibold tracking-tight text-[var(--color-text-primary)] md:text-5xl"
+          >
+            Let&apos;s build together
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ ...reveal, delay: 0.08 }}
+            className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[var(--color-text-muted)] md:text-lg"
+          >
+            If your team is building with agent systems, I&apos;m open to collaboration, advising, and knowledge sharing.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ ...reveal, delay: 0.14 }}
+            className="mt-8 flex flex-wrap items-center justify-center gap-3"
+          >
+            <a
+              href="https://www.linkedin.com/in/shengyue-guan-1a7b3226b/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-blue-700"
+            >
+              Start a conversation
+              <ArrowUpRight className="h-4 w-4" />
+            </a>
+            <a
+              href="https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white px-6 py-3 text-sm font-semibold text-blue-700 transition-colors hover:border-blue-300 hover:text-blue-800"
+            >
+              Watch on YouTube
+              <ArrowUpRight className="h-4 w-4" />
+            </a>
+          </motion.div>
+        </div>
+      </section>
+    </>
+  );
+}

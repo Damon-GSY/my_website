@@ -27,15 +27,30 @@
 }
 
 :root {
-  --bg: #fafafa;
-  --surface: #ffffff;
-  --surface-soft: #f4f4f5;
-  --text: #18181b;
-  --muted: #71717a;
-  --muted-strong: #3f3f46;
-  --line: #e4e4e7;
-  --primary: #3b82f6;
-  --primary-strong: #2563eb;
+  --color-background: #faf7f2;
+  --color-surface: #fffdf9;
+  --color-surface-soft: #f3ede4;
+  --color-text-primary: #111827;
+  --color-text-muted: #4b5563;
+  --color-text-muted-strong: #1f2937;
+  --color-line: #e8dfd3;
+  --color-accent: #2563eb;
+  --color-accent-strong: #1d4ed8;
+
+  --font-display: 'Cartograph CF', 'Iowan Old Style', 'Times New Roman', serif;
+  --font-headline: 'Geist Variable', 'Avenir Next', 'Helvetica Neue', sans-serif;
+  --font-body: 'Geist Variable', 'Avenir Next', 'Helvetica Neue', sans-serif;
+  --font-caption: 'Geist Variable', 'Avenir Next', 'Helvetica Neue', sans-serif;
+
+  --bg: var(--color-background);
+  --surface: var(--color-surface);
+  --surface-soft: var(--color-surface-soft);
+  --text: var(--color-text-primary);
+  --muted: var(--color-text-muted);
+  --muted-strong: var(--color-text-muted-strong);
+  --line: var(--color-line);
+  --primary: var(--color-accent);
+  --primary-strong: var(--color-accent-strong);
 
   --radius-md: 0.85rem;
   --radius-lg: 1.2rem;
@@ -76,7 +91,7 @@ html {
 
 body {
   margin: 0;
-  font-family: 'Cartograph CF', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-body);
   color: var(--text);
   background: var(--bg);
   text-rendering: optimizeLegibility;
@@ -98,71 +113,20 @@ a {
   padding: clamp(2.25rem, 5vw, 4.4rem) 0;
 }
 
-.card-cta {
-  position: relative;
-  margin-top: auto;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  width: fit-content;
-  padding: 0.75rem 1.05rem;
-  border: 0;
-  background: none;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 0.2s ease;
+.type-display {
+  font-family: var(--font-display);
 }
 
-.card-cta::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
-  width: 2.8rem;
-  height: 2.8rem;
-  border-radius: 9999px;
-  background: var(--cta-bg, #b9ebf6);
-  transition: all 0.3s ease;
+.type-headline {
+  font-family: var(--font-headline);
 }
 
-.card-cta-label {
-  position: relative;
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: var(--cta-fg, #0e5f79);
+.type-body {
+  font-family: var(--font-body);
 }
 
-.card-cta-arrow {
-  position: relative;
-  top: 0;
-  margin-left: 0.1rem;
-  fill: none;
-  stroke: var(--cta-fg, #0e5f79);
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transform: translateX(-5px);
-  transition: all 0.3s ease;
-}
-
-.card-cta:hover::before {
-  width: 100%;
-}
-
-.card-cta:hover .card-cta-arrow {
-  transform: translateX(0);
-}
-
-.card-cta:active {
-  transform: scale(0.96);
-}
-
-.card-cta:focus-visible {
-  outline: 2px solid var(--cta-fg, #0e5f79);
-  outline-offset: 2px;
-  border-radius: 9999px;
+.type-caption {
+  font-family: var(--font-caption);
 }
 
 @theme {

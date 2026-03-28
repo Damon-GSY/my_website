@@ -12,34 +12,34 @@ import { Timeline } from './ui/timeline';
 
 const TRACK_STYLES = {
   'Full-time': {
-    chip: 'border-cyan-200 bg-cyan-50 text-cyan-700',
-    iconWrap: 'border-cyan-200 bg-cyan-50 text-cyan-700',
-    dot: 'bg-cyan-500/80',
-    edge: 'from-cyan-300/70 to-transparent',
+    chip: 'border-blue-200 bg-blue-50 text-blue-700',
+    iconWrap: 'border-blue-200 bg-blue-50 text-blue-700',
+    dot: 'bg-blue-500/80',
+    edge: 'from-blue-300/70 to-transparent',
   },
   Internship: {
-    chip: 'border-amber-200 bg-amber-50 text-amber-700',
-    iconWrap: 'border-amber-200 bg-amber-50 text-amber-700',
-    dot: 'bg-amber-500/80',
-    edge: 'from-amber-300/70 to-transparent',
-  },
-  Education: {
-    chip: 'border-emerald-200 bg-emerald-50 text-emerald-700',
-    iconWrap: 'border-emerald-200 bg-emerald-50 text-emerald-700',
-    dot: 'bg-emerald-500/80',
-    edge: 'from-emerald-300/70 to-transparent',
-  },
-  Research: {
     chip: 'border-sky-200 bg-sky-50 text-sky-700',
     iconWrap: 'border-sky-200 bg-sky-50 text-sky-700',
     dot: 'bg-sky-500/80',
     edge: 'from-sky-300/70 to-transparent',
   },
+  Education: {
+    chip: 'border-indigo-200 bg-indigo-50 text-indigo-700',
+    iconWrap: 'border-indigo-200 bg-indigo-50 text-indigo-700',
+    dot: 'bg-indigo-500/80',
+    edge: 'from-indigo-300/70 to-transparent',
+  },
+  Research: {
+    chip: 'border-blue-200 bg-blue-50 text-blue-700',
+    iconWrap: 'border-blue-200 bg-blue-50 text-blue-700',
+    dot: 'bg-blue-500/80',
+    edge: 'from-blue-300/70 to-transparent',
+  },
   'Project / Competition': {
-    chip: 'border-violet-200 bg-violet-50 text-violet-700',
-    iconWrap: 'border-violet-200 bg-violet-50 text-violet-700',
-    dot: 'bg-violet-500/80',
-    edge: 'from-violet-300/70 to-transparent',
+    chip: 'border-sky-200 bg-sky-50 text-sky-700',
+    iconWrap: 'border-sky-200 bg-sky-50 text-sky-700',
+    dot: 'bg-sky-500/80',
+    edge: 'from-sky-300/70 to-transparent',
   },
 };
 
@@ -254,10 +254,10 @@ export default function About() {
   ];
 
   return (
-    <main className="relative overflow-hidden bg-[linear-gradient(180deg,#f8fbff_0%,#f5f8fc_42%,#f8fafc_100%)] pt-24 pb-16 lg:pt-28 lg:pb-24">
+    <main className="relative overflow-hidden bg-[linear-gradient(180deg,var(--color-background)_0%,var(--color-surface-soft)_46%,var(--color-background)_100%)] pt-24 pb-16 lg:pt-28 lg:pb-24">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-24 left-[8%] h-64 w-64 rounded-full bg-cyan-200/35 blur-3xl" />
-        <div className="absolute top-[28%] right-[2%] h-64 w-64 rounded-full bg-violet-200/30 blur-3xl" />
+        <div className="absolute -top-24 left-[8%] h-64 w-64 rounded-full bg-blue-200/35 blur-3xl" />
+        <div className="absolute top-[28%] right-[2%] h-64 w-64 rounded-full bg-sky-200/30 blur-3xl" />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-6">
@@ -280,7 +280,7 @@ export default function About() {
           </p>
         </div>
 
-        <div className="mb-16 grid max-w-5xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mb-16 grid max-w-5xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {aboutProfile.facts.map((fact) => (
             <div key={fact.label} className="rounded-xl border border-zinc-200/90 bg-white/90 p-4 shadow-[0_16px_32px_-28px_rgba(15,23,42,0.55)]">
               <p className="text-xs uppercase tracking-[0.12em] text-zinc-500 mb-1.5">{fact.label}</p>

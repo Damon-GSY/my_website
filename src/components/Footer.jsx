@@ -10,20 +10,20 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
+    <footer className="border-t border-[var(--color-line)] bg-[var(--color-surface)]">
       <div className="max-w-5xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* Brand */}
           <div>
-            <h3 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">Damon</h3>
-            <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed">
-              AI researcher, content creator, and lifelong learner. Building at the intersection of technology and creativity.
+            <h3 className="type-display mb-4 text-2xl font-bold text-[var(--color-text-primary)]">Damon</h3>
+            <p className="text-sm leading-relaxed text-[var(--color-text-muted)]">
+              AI researcher and builder documenting the journey from ideas to deployed systems.
             </p>
           </div>
 
           {/* Links */}
           <div>
-            <h4 className="font-semibold text-zinc-900 dark:text-zinc-100 mb-4">Connect</h4>
+            <h4 className="mb-4 font-semibold text-[var(--color-text-primary)]">Connect</h4>
             <ul className="space-y-3">
               {links.map((link) => (
                 <li key={link.name}>
@@ -31,7 +31,7 @@ export default function Footer() {
                     href={link.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors text-sm"
+                    className="text-sm text-[var(--color-text-muted)] transition-colors hover:text-blue-700"
                   >
                     {link.name}
                   </a>
@@ -40,25 +40,25 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Newsletter CTA */}
+          {/* Follow CTA */}
           <div>
-            <h4 className="font-semibold text-zinc-900 dark:text-zinc-100 mb-4">Stay Updated</h4>
-            <p className="text-zinc-600 dark:text-zinc-400 text-sm mb-4">
-              Subscribe to get the latest updates on AI, productivity, and building online.
+            <h4 className="mb-4 font-semibold text-[var(--color-text-primary)]">Follow</h4>
+            <p className="mb-4 text-sm text-[var(--color-text-muted)]">
+              Follow my latest thoughts and experiments on AI systems.
             </p>
             <a
               href="https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA?sub_confirmation=1"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 rounded-lg text-sm font-medium hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors"
+              className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-700"
             >
-              Subscribe ↗
+              Follow on YouTube ↗
             </a>
           </div>
         </div>
 
         {/* Copyright */}
-        <div className="mt-12 pt-8 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-center md:justify-start">
+        <div className="mt-12 flex items-center justify-center border-t border-[var(--color-line)] pt-8 md:justify-start">
           <p className="text-zinc-500 text-sm">© {year} Shengyue Guan. All rights reserved.</p>
         </div>
       </div>

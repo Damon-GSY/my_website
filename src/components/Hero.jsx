@@ -6,7 +6,7 @@ import { BlurFade } from './ui/blur-fade';
 import { AnimatedGradientText } from './ui/animated-gradient-text';
 import { Spotlight } from './ui/spotlight';
 
-const Hero = forwardRef(function Hero(props, ref) {
+const Hero = forwardRef(function Hero() {
   return (
     <section className="relative w-full overflow-hidden" id="home">
       <div className="pointer-events-none absolute inset-0 -z-10">
@@ -37,13 +37,19 @@ const Hero = forwardRef(function Hero(props, ref) {
               </h1>
             </BlurFade>
 
-            <BlurFade delay={0.16}>
-              <p className="max-w-2xl text-xs md:text-sm font-medium tracking-[0.08em] uppercase text-zinc-500">
-                Agent Systems · Agentic RL · Reinforcement Learning · Post-Training
-              </p>
-            </BlurFade>
+          <BlurFade delay={0.16}>
+            <p className="max-w-2xl text-xs md:text-sm font-medium tracking-[0.08em] uppercase text-zinc-500">
+              Agent Systems · Agentic RL · Reinforcement Learning · Post-Training
+            </p>
+          </BlurFade>
 
-            <BlurFade delay={0.24}>
+          <BlurFade delay={0.2}>
+            <p className="max-w-2xl text-sm md:text-base leading-relaxed text-zinc-700">
+              I research and ship agent systems at Alibaba, and share practical AI breakdowns on YouTube, Bilibili, and LinkedIn.
+            </p>
+          </BlurFade>
+
+            <BlurFade delay={0.26}>
               <div className="flex flex-wrap items-center gap-3">
                 <a
                   href="https://www.linkedin.com/in/shengyue-guan-1a7b3226b/"
