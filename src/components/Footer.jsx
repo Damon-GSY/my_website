@@ -10,20 +10,20 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="border-t border-[var(--color-line)] bg-[var(--color-surface)]">
+    <footer className="border-t border-[var(--line)] bg-[var(--surface)]">
       <div className="max-w-5xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* Brand */}
           <div>
-            <h3 className="type-display mb-4 text-2xl font-bold text-[var(--color-text-primary)]">Damon</h3>
-            <p className="text-sm leading-relaxed text-[var(--color-text-muted)]">
+            <h3 className="type-display mb-4 text-2xl font-bold text-[var(--text)]">Damon</h3>
+            <p className="text-sm leading-relaxed text-[var(--muted)]">
               AI researcher and builder documenting the journey from ideas to deployed systems.
             </p>
           </div>
 
           {/* Links */}
           <div>
-            <h4 className="mb-4 font-semibold text-[var(--color-text-primary)]">Connect</h4>
+            <h4 className="mb-4 font-semibold text-[var(--text)]">Connect</h4>
             <ul className="space-y-3">
               {links.map((link) => (
                 <li key={link.name}>
@@ -31,7 +31,7 @@ export default function Footer() {
                     href={link.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-sm text-[var(--color-text-muted)] transition-colors hover:text-blue-700"
+                    className="text-sm text-[var(--muted)] transition-colors hover:text-[var(--text)]"
                   >
                     {link.name}
                   </a>
@@ -42,15 +42,15 @@ export default function Footer() {
 
           {/* Follow CTA */}
           <div>
-            <h4 className="mb-4 font-semibold text-[var(--color-text-primary)]">Follow</h4>
-            <p className="mb-4 text-sm text-[var(--color-text-muted)]">
+            <h4 className="mb-4 font-semibold text-[var(--text)]">Follow</h4>
+            <p className="mb-4 text-sm text-[var(--muted)]">
               Follow my latest thoughts and experiments on AI systems.
             </p>
             <a
               href="https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA?sub_confirmation=1"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+              className="inline-flex items-center gap-2 rounded-full bg-[var(--surface-soft)] px-5 py-2.5 text-sm font-semibold text-[var(--muted-strong)] transition-[box-shadow] [box-shadow:0_0_0_1px_var(--ring)] hover:[box-shadow:0_0_0_1px_var(--ring-strong)]"
             >
               Follow on YouTube ↗
             </a>
@@ -58,8 +58,8 @@ export default function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="mt-12 flex items-center justify-center border-t border-[var(--color-line)] pt-8 md:justify-start">
-          <p className="text-zinc-500 text-sm">© {year} Shengyue Guan. All rights reserved.</p>
+        <div className="mt-12 flex items-center justify-center border-t border-[var(--line)] pt-8 md:justify-start">
+          <p className="text-[var(--muted)] text-sm">© {year} Shengyue Guan. All rights reserved.</p>
         </div>
       </div>
     </footer>

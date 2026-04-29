@@ -12,34 +12,34 @@ import { Timeline } from './ui/timeline';
 
 const TRACK_STYLES = {
   'Full-time': {
-    chip: 'border-blue-200 bg-blue-50 text-blue-700',
-    iconWrap: 'border-blue-200 bg-blue-50 text-blue-700',
-    dot: 'bg-blue-500/80',
-    edge: 'from-blue-300/70 to-transparent',
+    chip: 'border-[var(--primary)]/30 bg-[var(--primary)]/10 text-[var(--primary)]',
+    iconWrap: 'border-[var(--primary)]/30 bg-[var(--primary)]/10 text-[var(--primary)]',
+    dot: 'bg-[var(--primary)]/80',
+    edge: 'from-[var(--primary)]/70 to-transparent',
   },
   Internship: {
-    chip: 'border-sky-200 bg-sky-50 text-sky-700',
-    iconWrap: 'border-sky-200 bg-sky-50 text-sky-700',
-    dot: 'bg-sky-500/80',
-    edge: 'from-sky-300/70 to-transparent',
+    chip: 'border-[var(--sage)]/30 bg-[var(--sage)]/10 text-[var(--sage)]',
+    iconWrap: 'border-[var(--sage)]/30 bg-[var(--sage)]/10 text-[var(--sage)]',
+    dot: 'bg-[var(--sage)]/80',
+    edge: 'from-[var(--sage)]/70 to-transparent',
   },
   Education: {
-    chip: 'border-indigo-200 bg-indigo-50 text-indigo-700',
-    iconWrap: 'border-indigo-200 bg-indigo-50 text-indigo-700',
-    dot: 'bg-indigo-500/80',
-    edge: 'from-indigo-300/70 to-transparent',
+    chip: 'border-[var(--taupe)]/30 bg-[var(--taupe)]/10 text-[var(--taupe)]',
+    iconWrap: 'border-[var(--taupe)]/30 bg-[var(--taupe)]/10 text-[var(--taupe)]',
+    dot: 'bg-[var(--taupe)]/80',
+    edge: 'from-[var(--taupe)]/70 to-transparent',
   },
   Research: {
-    chip: 'border-blue-200 bg-blue-50 text-blue-700',
-    iconWrap: 'border-blue-200 bg-blue-50 text-blue-700',
-    dot: 'bg-blue-500/80',
-    edge: 'from-blue-300/70 to-transparent',
+    chip: 'border-[var(--primary)]/30 bg-[var(--primary)]/10 text-[var(--primary)]',
+    iconWrap: 'border-[var(--primary)]/30 bg-[var(--primary)]/10 text-[var(--primary)]',
+    dot: 'bg-[var(--primary)]/80',
+    edge: 'from-[var(--primary)]/70 to-transparent',
   },
   'Project / Competition': {
-    chip: 'border-sky-200 bg-sky-50 text-sky-700',
-    iconWrap: 'border-sky-200 bg-sky-50 text-sky-700',
-    dot: 'bg-sky-500/80',
-    edge: 'from-sky-300/70 to-transparent',
+    chip: 'border-[var(--sage)]/30 bg-[var(--sage)]/10 text-[var(--sage)]',
+    iconWrap: 'border-[var(--sage)]/30 bg-[var(--sage)]/10 text-[var(--sage)]',
+    dot: 'bg-[var(--sage)]/80',
+    edge: 'from-[var(--sage)]/70 to-transparent',
   },
 };
 
@@ -56,7 +56,7 @@ function TimelineCard({ track, title, location, points }) {
   const TrackIcon = TRACK_ICONS[track] ?? Sparkles;
 
   return (
-    <article className="group relative overflow-hidden rounded-2xl border border-zinc-200/90 bg-white p-6 shadow-[0_24px_54px_-42px_rgba(15,23,42,0.45)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_30px_66px_-42px_rgba(15,23,42,0.52)]">
+    <article className="group relative overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6 [box-shadow:0_0_0_1px_var(--ring)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_30px_66px_-42px_rgba(0,0,0,0.4)]">
       <div className={`pointer-events-none absolute inset-y-0 left-0 w-1 bg-gradient-to-b ${style.edge}`} />
       <div className="mb-4 flex items-center justify-between gap-3">
         <span className={`inline-flex rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] ${style.chip}`}>
@@ -67,14 +67,14 @@ function TimelineCard({ track, title, location, points }) {
         </div>
       </div>
 
-      <h4 className="text-xl md:text-2xl font-bold tracking-tight text-zinc-950 mb-2">
+      <h4 className="text-xl md:text-2xl font-bold tracking-tight text-[var(--text)] mb-2">
         {title}
       </h4>
-      <p className="text-sm text-zinc-500 mb-4">{location}</p>
+      <p className="text-sm text-[var(--muted)] mb-4">{location}</p>
 
       <ul className="space-y-2.5">
         {points.map((point) => (
-          <li key={point} className="flex gap-2.5 text-zinc-600 leading-relaxed">
+          <li key={point} className="flex gap-2.5 text-[var(--muted)] leading-relaxed">
             <span className={`mt-2 h-1.5 w-1.5 shrink-0 rounded-full ${style.dot}`} />
             <span>{point}</span>
           </li>
@@ -254,46 +254,46 @@ export default function About() {
   ];
 
   return (
-    <main className="relative overflow-hidden bg-[linear-gradient(180deg,var(--color-background)_0%,var(--color-surface-soft)_46%,var(--color-background)_100%)] pt-24 pb-16 lg:pt-28 lg:pb-24">
+    <main className="relative overflow-hidden bg-[linear-gradient(180deg,var(--bg)_0%,var(--surface-soft)_46%,var(--bg)_100%)] pt-24 pb-16 lg:pt-28 lg:pb-24">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-24 left-[8%] h-64 w-64 rounded-full bg-blue-200/35 blur-3xl" />
-        <div className="absolute top-[28%] right-[2%] h-64 w-64 rounded-full bg-sky-200/30 blur-3xl" />
+        <div className="absolute -top-24 left-[8%] h-64 w-64 rounded-full bg-[var(--primary)]/20 blur-3xl" />
+        <div className="absolute top-[28%] right-[2%] h-64 w-64 rounded-full bg-[var(--primary)]/15 blur-3xl" />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="mb-12 max-w-3xl">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 rounded-full border border-zinc-300 bg-white/80 px-4 py-2 text-sm font-medium text-zinc-600 transition-colors hover:text-zinc-900"
+            className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)]/80 px-4 py-2 text-sm font-medium text-[var(--muted)] transition-colors hover:text-[var(--text)]"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Home
           </Link>
-          <h1 className="mt-5 text-4xl md:text-5xl font-bold tracking-tight text-zinc-950">
+          <h1 className="mt-5 text-4xl md:text-5xl font-bold tracking-tight text-[var(--text)]">
             {aboutProfile.title}
           </h1>
-          <p className="mt-4 max-w-2xl text-zinc-600 leading-relaxed">
+          <p className="mt-4 max-w-2xl text-[var(--muted)] leading-relaxed">
             {aboutProfile.intro}
           </p>
-          <p className="mt-3 max-w-2xl text-zinc-700 font-medium leading-relaxed">
+          <p className="mt-3 max-w-2xl text-[var(--muted-strong)] font-medium leading-relaxed">
             {aboutProfile.focus}
           </p>
         </div>
 
         <div className="mb-16 grid max-w-5xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {aboutProfile.facts.map((fact) => (
-            <div key={fact.label} className="rounded-xl border border-zinc-200/90 bg-white/90 p-4 shadow-[0_16px_32px_-28px_rgba(15,23,42,0.55)]">
-              <p className="text-xs uppercase tracking-[0.12em] text-zinc-500 mb-1.5">{fact.label}</p>
-              <p className="font-semibold text-zinc-900">{fact.value}</p>
+            <div key={fact.label} className="rounded-xl border border-[var(--line)] bg-[var(--surface)]/90 p-4 [box-shadow:0_0_0_1px_var(--ring)]">
+              <p className="text-xs uppercase tracking-[0.12em] text-[var(--muted)] mb-1.5">{fact.label}</p>
+              <p className="font-semibold text-[var(--text)]">{fact.value}</p>
             </div>
           ))}
         </div>
 
         <div className="mb-4 max-w-4xl">
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-zinc-950">
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-[var(--text)]">
             Education & Experience Timeline
           </h2>
-          <p className="mt-2 text-zinc-600">
+          <p className="mt-2 text-[var(--muted)]">
             A detailed timeline of education, internships, full-time work, and key projects.
           </p>
         </div>

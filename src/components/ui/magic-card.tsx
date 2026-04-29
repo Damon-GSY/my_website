@@ -165,7 +165,7 @@ export function MagicCard(props: MagicCardProps) {
       onPointerEnter={() => reset("enter")}
       style={{
         background: useMotionTemplate`
-          linear-gradient(var(--color-background) 0 0) padding-box,
+          linear-gradient(var(--bg) 0 0) padding-box,
           radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px,
             ${gradientFrom},
             ${gradientTo},
