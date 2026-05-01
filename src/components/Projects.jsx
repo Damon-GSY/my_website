@@ -35,7 +35,7 @@ function ProjectCard({ project, index }) {
 
   const isExternal = project.href.startsWith('http');
 
-  const background = useMotionTemplate`radial-gradient(320px circle at ${mouseX}px ${mouseY}px, rgba(14,165,233,0.08), transparent 70%)`;
+  const background = useMotionTemplate`radial-gradient(320px circle at ${mouseX}px ${mouseY}px, rgba(201,100,66,0.08), transparent 70%)`;
 
   return (
     <motion.article
@@ -59,6 +59,7 @@ function ProjectCard({ project, index }) {
             href={project.href}
             target={isExternal ? '_blank' : undefined}
             rel={isExternal ? 'noreferrer' : undefined}
+            aria-label={`View ${project.title}`}
             className="ml-2 shrink-0 text-[var(--muted)] transition-colors hover:text-[var(--primary-strong)]"
           >
             <ArrowUpRight className="h-4 w-4" />

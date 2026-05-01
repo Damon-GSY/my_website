@@ -22,7 +22,7 @@ export default function Footer() {
           </div>
 
           {/* Links */}
-          <div>
+          <nav aria-label="Social links">
             <h4 className="mb-4 font-semibold text-[var(--text)]">Connect</h4>
             <ul className="space-y-3">
               {links.map((link) => (
@@ -38,7 +38,7 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           {/* Follow CTA */}
           <div>

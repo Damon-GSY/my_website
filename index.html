@@ -4,13 +4,51 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Damon — Agent Systems & AI Research</title>
     <meta
       name="description"
-      content="Damon's personal website on productivity, AI workflows, and creator systems."
+      content="Damon is an AI researcher building agent systems, agentic RL, and post-training methods at Alibaba. Sharing practical AI breakdowns on YouTube, Bilibili, and LinkedIn."
     />
-    <title>Damon | Productivity, AI, and Creator Systems</title>
+    <link rel="canonical" href="https://damon.ai/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Damon — Agent Systems & AI Research" />
+    <meta property="og:description" content="AI researcher building agent systems, agentic RL, and post-training methods. Sharing practical AI breakdowns." />
+    <meta property="og:url" content="https://damon.ai/" />
+    <meta property="og:image" content="https://damon.ai/og-image.png" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Damon — Agent Systems & AI Research" />
+    <meta name="twitter:description" content="AI researcher building agent systems, agentic RL, and post-training methods." />
+    <meta name="twitter:image" content="https://damon.ai/og-image.png" />
+
+    <!-- JSON-LD Person Profile -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Shengyue Guan",
+        "alternateName": "Damon",
+        "url": "https://damon.ai",
+        "jobTitle": "AI Researcher",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Alibaba"
+        },
+        "sameAs": [
+          "https://www.linkedin.com/in/shengyue-guan-1a7b3226b/",
+          "https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA",
+          "https://space.bilibili.com/358541297",
+          "https://github.com/Damon-GSY"
+        ]
+      }
+    </script>
+
+    <!-- FOUC prevention with prefers-color-scheme fallback -->
     <script>
-      (function(){try{var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.classList.remove('dark')}else{document.documentElement.classList.add('dark')}}catch(e){document.documentElement.classList.add('dark')}})()
+      (function(){try{var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.classList.remove('dark')}else if(t==='dark'){document.documentElement.classList.add('dark')}else{document.documentElement.classList.add(window.matchMedia('(prefers-color-scheme: light)').matches?'':'dark')}}catch(e){document.documentElement.classList.add('dark')}})()
     </script>
   </head>
   <body>

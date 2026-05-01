@@ -54,7 +54,7 @@ export default function Blog() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search articles..."
-
+              aria-label="Search articles"
               className="w-full rounded-xl bg-[var(--surface)] py-3 pl-10 pr-4 text-sm text-[var(--text)] placeholder:text-[var(--muted)]/60 outline-none transition-[box-shadow] [box-shadow:0_0_0_1px_var(--ring)] focus:ring-[var(--focus)]"
             />
           </div>

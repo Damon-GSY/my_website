@@ -2,15 +2,15 @@ import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
 function FloatingPaths({ position }: { position: number }) {
-  const paths = Array.from({ length: 36 }, (_, i) => ({
+  const paths = Array.from({ length: 12 }, (_, i) => ({
     id: i,
-    d: `M-${380 - i * 5 * position} -${189 + i * 6}C-${
-      380 - i * 5 * position
-    } -${189 + i * 6} -${312 - i * 5 * position} ${216 - i * 6} ${
-      152 - i * 5 * position
-    } ${343 - i * 6}C${616 - i * 5 * position} ${470 - i * 6} ${
-      684 - i * 5 * position
-    } ${875 - i * 6} ${684 - i * 5 * position} ${875 - i * 6}`,
+    d: `M-${380 - i * 15 * position} -${189 + i * 18}C-${
+      380 - i * 15 * position
+    } -${189 + i * 18} -${312 - i * 15 * position} ${216 - i * 18} ${
+      152 - i * 15 * position
+    } ${343 - i * 18}C${616 - i * 15 * position} ${470 - i * 18} ${
+      684 - i * 15 * position
+    } ${875 - i * 18} ${684 - i * 15 * position} ${875 - i * 18}`,
   }));
 
   return (
@@ -26,7 +26,7 @@ function FloatingPaths({ position }: { position: number }) {
             d={path.d}
             stroke="var(--line)"
             strokeWidth={0.5 + path.id * 0.03}
-            strokeOpacity={0.15 + path.id * 0.02}
+            strokeOpacity={0.15 + path.id * 0.03}
             initial={{ pathLength: 0.3, opacity: 0.6 }}
             animate={{
               pathLength: 1,
@@ -109,12 +109,10 @@ export function BackgroundPathsCTA() {
             className="mt-8 flex flex-wrap items-center justify-center gap-3"
           >
             <a
-              href="https://www.linkedin.com/in/shengyue-guan-1a7b3226b/"
-              target="_blank"
-              rel="noreferrer"
+              href="mailto:hello@damon.ai"
               className="inline-flex items-center gap-2 rounded-full bg-[var(--primary)] px-6 py-3 text-sm font-semibold text-[var(--bg)] transition-[box-shadow] [box-shadow:0_0_0_1px_var(--ring-accent)] hover:[box-shadow:0_0_0_2px_var(--ring-accent)]"
             >
-              Start a conversation
+              Get in touch
               <ArrowUpRight className="h-4 w-4" />
             </a>
             <a

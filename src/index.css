@@ -34,8 +34,9 @@
   --color-text-muted: #4b5563;
   --color-text-muted-strong: #1f2937;
   --color-line: #e8dfd3;
-  --color-accent: #2563eb;
-  --color-accent-strong: #1d4ed8;
+  /* Terracotta accent family (warm, no blue) */
+  --color-accent: #9a4e2e;
+  --color-accent-strong: #9a4e2e;
 
   --font-display: 'Cartograph CF', 'Iowan Old Style', 'Times New Roman', serif;
   --font-headline: 'Geist Variable', 'Avenir Next', 'Helvetica Neue', sans-serif;
@@ -71,10 +72,15 @@
   --color-text-muted: #97968f;
   --color-text-muted-strong: #b0aea5;
   --color-line: #3d3c3a;
-  --color-accent: #a8785c;
-  --color-accent-strong: #b88a72;
-
-  /* Secondary accent colors for timeline tracks */
+  /*
+   * Accent usage policy (dark theme):
+   * --color-accent (#c96442): CTA buttons, brand moments, large text only (>=3:1).
+   * --color-accent-strong (#d97757): Text accents, links on ALL dark surfaces (>=4.5:1).
+   * #a8785c / #b88a72: decorative-only (ambient glow <=25% opacity, image frame accents).
+   *   Never used for interactive elements or gradient text.
+   */
+  --color-accent: #c96442;
+  --color-accent-strong: #d97757;
   --color-sage: #6b9e8f;
   --color-taupe: #8a7e65;
 
@@ -95,7 +101,7 @@
   /* Ring shadow tokens (from DESIGN.md: Ring Warm #d1cfc5, Ring Deep #c2c0b6) */
   --ring: #d1cfc5;
   --ring-strong: #c2c0b6;
-  --ring-accent: #a8785c;
+  --ring-accent: rgba(201,100,66,0.42);
 
   /* Shadow depth model */
   --shadow-soft: rgba(0,0,0,0.15) 0px 4px 24px;
@@ -233,8 +239,8 @@ a {
     --muted: #555;
     --muted-strong: #333;
     --line: #ddd;
-    --primary: #a8785c;
-    --primary-strong: #b88a72;
+    --primary: #9a4e2e;
+    --primary-strong: #9a4e2e;
     --ring: #ccc;
     --ring-strong: #bbb;
   }

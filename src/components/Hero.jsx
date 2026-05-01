@@ -8,10 +8,10 @@ import { Spotlight } from './ui/spotlight';
 
 const Hero = forwardRef(function Hero() {
   return (
-    <section className="relative w-full overflow-hidden" id="home">
+    <section className="relative w-full overflow-hidden" id="home" aria-labelledby="hero-heading">
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -top-28 left-[-10%] h-[28rem] w-[28rem] rounded-full bg-[#a8785c]/10 blur-3xl" />
-        <div className="absolute top-[20%] right-[-15%] h-[30rem] w-[30rem] rounded-full bg-[#b88a72]/8 blur-3xl" />
+        <div className="absolute -top-28 left-[-10%] h-[28rem] w-[28rem] rounded-full bg-[var(--primary)]/10 blur-3xl" />
+        <div className="absolute top-[20%] right-[-15%] h-[30rem] w-[30rem] rounded-full bg-[var(--primary-strong)]/8 blur-3xl" />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,var(--bg)/90,var(--bg)/82)]" />
       </div>
 
@@ -26,11 +26,11 @@ const Hero = forwardRef(function Hero() {
             </BlurFade>
 
             <BlurFade delay={0.08}>
-              <h1 className="max-w-2xl text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-[var(--text)] leading-[1.06]">
+              <h1 id="hero-heading" className="max-w-2xl text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-[var(--text)] leading-[1.06]">
                 Hi, I&apos;m Damon.
                 <br />
                 <span className="mt-2 block">
-                  <AnimatedGradientText speed={1.15} colorFrom="#a8785c" colorTo="#b88a72">
+                  <AnimatedGradientText speed={1.15} colorFrom="var(--primary)" colorTo="var(--primary-strong)">
                     I build AI.
                   </AnimatedGradientText>
                 </span>
@@ -110,7 +110,7 @@ const Hero = forwardRef(function Hero() {
               <div className="group relative overflow-hidden rounded-[2rem] border border-[var(--line)] bg-[var(--surface-soft)] shadow-[0_50px_100px_-60px_rgba(0,0,0,0.6)]">
                 <Spotlight
                   size={280}
-                  className="from-[#a8785c]/15 via-[var(--surface-soft)] to-transparent opacity-70"
+                  className="from-[var(--primary)]/15 via-[var(--surface-soft)] to-transparent opacity-70"
                 />
                 <img
                   src={heroImage}

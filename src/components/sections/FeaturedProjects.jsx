@@ -50,6 +50,7 @@ export default function FeaturedProjects() {
                     href={project.href}
                     target={isExternal ? '_blank' : undefined}
                     rel={isExternal ? 'noreferrer' : undefined}
+                    aria-label={`View ${project.title}`}
                     className="ml-2 shrink-0 text-[var(--muted)] transition-colors hover:text-[var(--primary)]"
                   >
                     <ArrowUpRight className="h-4 w-4" />
