@@ -2,10 +2,21 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Github, Linkedin, Youtube, Send } from "lucide-react";
+import { Mail, Github, Linkedin, Youtube, Send, Loader2 } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+
+const contactSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email("Please enter a valid email"),
+  message: z.string().min(10, "Message must be at least 10 characters"),
+});
+
+type ContactForm = z.infer<typeof contactSchema>;
 
 const socialLinks = [
   { icon: Mail, label: "contact@damonguan.com", href: "mailto:contact@damonguan.com" },
@@ -16,10 +27,36 @@ const socialLinks = [
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<ContactForm>({
+    resolver: zodResolver(contactSchema),
+  });
+
+  const onSubmit = async (data: ContactForm) => {
+    setSubmitError("");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) {
+        const body = await res.json();
+        throw new Error(body.error || "Failed to send message");
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      setSubmitError(
+        err instanceof Error ? err.message : "Something went wrong. Please try again.",
+      );
+    }
   };
 
   return (
@@ -76,20 +113,59 @@ export default function ContactPage() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="flex h-full min-h-[300px] items-center justify-center rounded-2xl border border-border/40 bg-card/60 p-8 text-center"
+                className="flex h-full min-h-[300px] flex-col items-center justify-center rounded-2xl border border-border/40 bg-card/60 p-8 text-center"
               >
                 <div className="text-4xl mb-3">✉️</div>
                 <p className="text-lg font-medium text-foreground">Message Sent!</p>
                 <p className="text-sm text-muted-foreground">I&apos;ll get back to you soon.</p>
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <Input placeholder="Name" className="h-11 rounded-xl border-border/40 bg-secondary/50" />
-                <Input type="email" placeholder="Email" className="h-11 rounded-xl border-border/40 bg-secondary/50" />
-                <Textarea placeholder="Your message..." rows={5} className="min-h-[120px] rounded-xl border-border/40 bg-secondary/50 resize-none" />
-                <Button type="submit" size="lg" className="w-full rounded-xl bg-gradient-to-r from-indigo-500 to-violet-500 font-medium text-white hover:from-indigo-400 hover:to-violet-400">
-                  <Send className="mr-2 h-4 w-4" />
-                  Send Message
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                <div>
+                  <Input
+                    placeholder="Name"
+                    className="h-11 rounded-xl border-border/40 bg-secondary/50"
+                    {...register("name")}
+                  />
+                  {errors.name && (
+                    <p className="mt-1 text-xs text-destructive">{errors.name.message}</p>
+                  )}
+                </div>
+                <div>
+                  <Input
+                    type="email"
+                    placeholder="Email"
+                    className="h-11 rounded-xl border-border/40 bg-secondary/50"
+                    {...register("email")}
+                  />
+                  {errors.email && (
+                    <p className="mt-1 text-xs text-destructive">{errors.email.message}</p>
+                  )}
+                </div>
+                <div>
+                  <Textarea
+                    placeholder="Your message..."
+                    rows={5}
+                    className="min-h-[120px] rounded-xl border-border/40 bg-secondary/50 resize-none"
+                    {...register("message")}
+                  />
+                  {errors.message && (
+                    <p className="mt-1 text-xs text-destructive">{errors.message.message}</p>
+                  )}
+                </div>
+                {submitError && <p className="text-sm text-destructive">{submitError}</p>}
+                <Button
+                  type="submit"
+                  size="lg"
+                  disabled={isSubmitting}
+                  className="w-full rounded-xl bg-gradient-to-r from-indigo-500 to-violet-500 font-medium text-white hover:from-indigo-400 hover:to-violet-400"
+                >
+                  {isSubmitting ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  ) : (
+                    <Send className="mr-2 h-4 w-4" />
+                  )}
+                  {isSubmitting ? "Sending..." : "Send Message"}
                 </Button>
               </form>
             )}
