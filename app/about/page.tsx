@@ -2,8 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { useI18n } from "@/lib/i18n";
-import { Github, Youtube, Linkedin, Mail, ExternalLink } from "lucide-react";
+import { Github, Youtube, Linkedin, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
@@ -35,8 +34,6 @@ const skills = [
 ];
 
 export default function AboutPage() {
-  const { t } = useI18n();
-
   return (
     <div className="pt-24 pb-16">
       <div className="mx-auto max-w-4xl px-6">
