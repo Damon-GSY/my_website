@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Github, Linkedin, Youtube, Send } from "lucide-react";
+import { Mail, Github, Linkedin, Youtube, Send, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -14,12 +14,57 @@ const socialLinks = [
   { icon: Linkedin, label: "Shengyue Guan", href: "https://www.linkedin.com/in/shengyue-guan-1a7b3226b/" },
 ];
 
+interface FormErrors {
+  name?: string;
+  email?: string;
+  message?: string;
+  _root?: string;
+}
+
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<FormErrors>({});
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    setErrors({});
+
+    const form = e.currentTarget;
+    const data = {
+      name: (form.elements.namedItem("name") as HTMLInputElement).value.trim(),
+      email: (form.elements.namedItem("email") as HTMLInputElement).value.trim(),
+      message: (form.elements.namedItem("message") as HTMLTextAreaElement).value.trim(),
+    };
+
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+
+      if (!result.success) {
+        const fieldErrors: FormErrors = {};
+        for (const err of result.errors ?? []) {
+          if (err.field === "name" || err.field === "email" || err.field === "message" || err.field === "_root") {
+            fieldErrors[err.field as keyof FormErrors] = err.message;
+          }
+        }
+        setErrors(fieldErrors);
+        return;
+      }
+
+      setSubmitted(true);
+    } catch {
+      setErrors({ _root: "Something went wrong. Please try again later." });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -76,20 +121,36 @@ export default function ContactPage() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="flex h-full min-h-[300px] items-center justify-center rounded-2xl border border-border/40 bg-card/60 p-8 text-center"
+                className="flex h-full min-h-[300px] flex-col items-center justify-center rounded-2xl border border-border/40 bg-card/60 p-8 text-center"
               >
-                <div className="text-4xl mb-3">✉️</div>
+                <div className="text-4xl mb-3">&#9993;&#65039;</div>
                 <p className="text-lg font-medium text-foreground">Message Sent!</p>
                 <p className="text-sm text-muted-foreground">I&apos;ll get back to you soon.</p>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
-                <Input placeholder="Name" className="h-11 rounded-xl border-border/40 bg-secondary/50" />
-                <Input type="email" placeholder="Email" className="h-11 rounded-xl border-border/40 bg-secondary/50" />
-                <Textarea placeholder="Your message..." rows={5} className="min-h-[120px] rounded-xl border-border/40 bg-secondary/50 resize-none" />
-                <Button type="submit" size="lg" className="w-full rounded-xl bg-gradient-to-r from-indigo-500 to-violet-500 font-medium text-white hover:from-indigo-400 hover:to-violet-400">
-                  <Send className="mr-2 h-4 w-4" />
-                  Send Message
+                {errors._root && (
+                  <p className="text-sm text-destructive rounded-xl bg-destructive/10 px-4 py-2">{errors._root}</p>
+                )}
+                <div>
+                  <Input name="name" placeholder="Name" disabled={loading} className="h-11 rounded-xl border-border/40 bg-secondary/50" />
+                  {errors.name && <p className="mt-1 text-xs text-destructive">{errors.name}</p>}
+                </div>
+                <div>
+                  <Input name="email" type="email" placeholder="Email" disabled={loading} className="h-11 rounded-xl border-border/40 bg-secondary/50" />
+                  {errors.email && <p className="mt-1 text-xs text-destructive">{errors.email}</p>}
+                </div>
+                <div>
+                  <Textarea name="message" placeholder="Your message..." rows={5} disabled={loading} className="min-h-[120px] rounded-xl border-border/40 bg-secondary/50 resize-none" />
+                  {errors.message && <p className="mt-1 text-xs text-destructive">{errors.message}</p>}
+                </div>
+                <Button type="submit" size="lg" disabled={loading} className="w-full rounded-xl bg-gradient-to-r from-indigo-500 to-violet-500 font-medium text-white hover:from-indigo-400 hover:to-violet-400">
+                  {loading ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  ) : (
+                    <Send className="mr-2 h-4 w-4" />
+                  )}
+                  {loading ? "Sending..." : "Send Message"}
                 </Button>
               </form>
             )}
