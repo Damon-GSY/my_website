@@ -59,7 +59,7 @@ export default function VideosPage() {
 
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((video, i) => (
-            <motion.div
+            <motion.button
               key={video.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -67,7 +67,8 @@ export default function VideosPage() {
               transition={{ duration: 0.5, delay: i * 0.05 }}
               whileHover={{ y: -4 }}
               onClick={() => setSelectedVideo(video.id)}
-              className="group cursor-pointer overflow-hidden rounded-xl border border-border/40 bg-card/60 backdrop-blur-sm transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
+              aria-label={video.title}
+              className="group cursor-pointer overflow-hidden rounded-xl border border-border/40 bg-card/60 backdrop-blur-sm text-left transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
             >
               <div className="relative aspect-video bg-secondary/50">
                 <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-indigo-500/10 to-violet-500/10">
@@ -86,7 +87,7 @@ export default function VideosPage() {
                   <span>{video.ago}</span>
                 </div>
               </div>
-            </motion.div>
+            </motion.button>
           ))}
         </div>
 

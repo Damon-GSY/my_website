@@ -76,6 +76,7 @@ export function Footer() {
                 href="https://github.com/Damon-GSY"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="GitHub"
                 className="rounded-md p-2 text-muted-foreground transition-colors hover:text-foreground"
               >
                 <Github className="h-4 w-4" />
@@ -84,6 +85,7 @@ export function Footer() {
                 href="https://www.youtube.com/@gd.amon"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="YouTube"
                 className="rounded-md p-2 text-muted-foreground transition-colors hover:text-foreground"
               >
                 <Youtube className="h-4 w-4" />
@@ -92,12 +94,14 @@ export function Footer() {
                 href="https://www.linkedin.com/in/shengyue-guan-1a7b3226b/"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="LinkedIn"
                 className="rounded-md p-2 text-muted-foreground transition-colors hover:text-foreground"
               >
                 <Linkedin className="h-4 w-4" />
               </a>
               <a
                 href="mailto:contact@damonguan.com"
+                aria-label="Email"
                 className="rounded-md p-2 text-muted-foreground transition-colors hover:text-foreground"
               >
                 <Mail className="h-4 w-4" />
