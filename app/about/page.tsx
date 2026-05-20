@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useI18n } from "@/lib/i18n";
-import { Github, Youtube, Linkedin, Mail, ExternalLink } from "lucide-react";
+import { Github, Youtube, Linkedin, Mail, ExternalLink, UserCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
@@ -62,7 +62,7 @@ export default function AboutPage() {
           <div className="relative">
             <div className="h-64 w-64 rounded-2xl border border-border/40 bg-gradient-to-br from-indigo-500/10 via-violet-500/10 to-cyan-500/10 p-[1px]">
               <div className="flex h-full w-full items-center justify-center rounded-2xl bg-card/80 text-6xl">
-                🧑‍💻
+                <UserCircle className="h-40 w-40 text-muted-foreground/50" strokeWidth={1} />
               </div>
             </div>
           </div>
