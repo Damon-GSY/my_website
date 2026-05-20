@@ -6,7 +6,7 @@ const AboutBriefSection = dynamic(
     import("@/components/sections/about-brief").then(
       (mod) => mod.AboutBriefSection
     ),
-  { loading: () => <SectionPlaceholder /> }
+  { loading: () => <SectionPlaceholder />, ssr: false }
 );
 
 const VideosSection = dynamic(
@@ -14,7 +14,7 @@ const VideosSection = dynamic(
     import("@/components/sections/videos-section").then(
       (mod) => mod.VideosSection
     ),
-  { loading: () => <SectionPlaceholder /> }
+  { loading: () => <SectionPlaceholder />, ssr: false }
 );
 
 const ProjectsSection = dynamic(
@@ -22,7 +22,7 @@ const ProjectsSection = dynamic(
     import("@/components/sections/projects-section").then(
       (mod) => mod.ProjectsSection
     ),
-  { loading: () => <SectionPlaceholder /> }
+  { loading: () => <SectionPlaceholder />, ssr: false }
 );
 
 const NewsletterSection = dynamic(
@@ -30,7 +30,7 @@ const NewsletterSection = dynamic(
     import("@/components/sections/newsletter-section").then(
       (mod) => mod.NewsletterSection
     ),
-  { loading: () => <SectionPlaceholder /> }
+  { loading: () => <SectionPlaceholder />, ssr: false }
 );
 
 function SectionPlaceholder() {
