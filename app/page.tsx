@@ -1,8 +1,41 @@
+import dynamic from "next/dynamic";
 import { HeroSection } from "@/components/sections/hero";
-import { AboutBriefSection } from "@/components/sections/about-brief";
-import { VideosSection } from "@/components/sections/videos-section";
-import { ProjectsSection } from "@/components/sections/projects-section";
-import { NewsletterSection } from "@/components/sections/newsletter-section";
+
+const AboutBriefSection = dynamic(
+  () =>
+    import("@/components/sections/about-brief").then(
+      (mod) => mod.AboutBriefSection
+    ),
+  { loading: () => <SectionPlaceholder /> }
+);
+
+const VideosSection = dynamic(
+  () =>
+    import("@/components/sections/videos-section").then(
+      (mod) => mod.VideosSection
+    ),
+  { loading: () => <SectionPlaceholder /> }
+);
+
+const ProjectsSection = dynamic(
+  () =>
+    import("@/components/sections/projects-section").then(
+      (mod) => mod.ProjectsSection
+    ),
+  { loading: () => <SectionPlaceholder /> }
+);
+
+const NewsletterSection = dynamic(
+  () =>
+    import("@/components/sections/newsletter-section").then(
+      (mod) => mod.NewsletterSection
+    ),
+  { loading: () => <SectionPlaceholder /> }
+);
+
+function SectionPlaceholder() {
+  return <div className="min-h-[50vh]" />;
+}
 
 export default function Home() {
   return (
