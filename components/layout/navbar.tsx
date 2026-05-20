@@ -49,6 +49,7 @@ function LanguageSwitcher() {
   return (
     <button
       onClick={() => setLocale(locale === "en" ? "zh" : "en")}
+      aria-label="Switch language"
       className="flex items-center gap-1.5 rounded-full border border-border/40 bg-background/60 px-3 py-1.5 text-xs font-medium text-muted-foreground backdrop-blur transition-all hover:border-border/60 hover:text-foreground"
     >
       <Languages className="h-3.5 w-3.5" />
@@ -106,7 +107,7 @@ export function Navbar() {
           {/* Mobile Menu */}
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild className="md:hidden">
-              <button className="rounded-md p-2 text-muted-foreground hover:text-foreground">
+              <button aria-label="Toggle navigation menu" className="rounded-md p-2 text-muted-foreground hover:text-foreground">
                 <Menu className="h-5 w-5" />
               </button>
             </SheetTrigger>

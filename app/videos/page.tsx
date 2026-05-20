@@ -61,12 +61,21 @@ export default function VideosPage() {
           {filtered.map((video, i) => (
             <motion.div
               key={video.id}
+              role="button"
+              tabIndex={0}
+              aria-label={`Play ${video.title}`}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.05 }}
               whileHover={{ y: -4 }}
               onClick={() => setSelectedVideo(video.id)}
+              onKeyDown={(e: React.KeyboardEvent) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setSelectedVideo(video.id);
+                }
+              }}
               className="group cursor-pointer overflow-hidden rounded-xl border border-border/40 bg-card/60 backdrop-blur-sm transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
             >
               <div className="relative aspect-video bg-secondary/50">
