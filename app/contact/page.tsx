@@ -46,16 +46,19 @@ export default function ContactPage() {
         body: JSON.stringify(data),
       });
 
-      const result = await res.json();
-
-      if (!result.success) {
-        const fieldErrors: FormErrors = {};
-        for (const err of result.errors ?? []) {
-          if (err.field === "name" || err.field === "email" || err.field === "message" || err.field === "_root") {
-            fieldErrors[err.field as keyof FormErrors] = err.message;
+      if (!res.ok) {
+        try {
+          const result = await res.json();
+          const fieldErrors: FormErrors = {};
+          for (const err of result.errors ?? []) {
+            if (err.field === "name" || err.field === "email" || err.field === "message" || err.field === "_root") {
+              fieldErrors[err.field as keyof FormErrors] = err.message;
+            }
           }
+          setErrors(fieldErrors);
+        } catch {
+          setErrors({ _root: "Something went wrong. Please try again later." });
         }
-        setErrors(fieldErrors);
         return;
       }
 
