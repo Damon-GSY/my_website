@@ -61,8 +61,24 @@ export default function AboutPage() {
         >
           <div className="relative">
             <div className="h-64 w-64 rounded-2xl border border-border/40 bg-gradient-to-br from-indigo-500/10 via-violet-500/10 to-cyan-500/10 p-[1px]">
-              <div className="flex h-full w-full items-center justify-center rounded-2xl bg-card/80 text-6xl">
-                🧑‍💻
+              <div className="flex h-full w-full items-center justify-center rounded-2xl bg-card/80">
+                <svg
+                  viewBox="0 0 128 128"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-32 w-32"
+                  aria-hidden="true"
+                >
+                  <defs>
+                    <linearGradient id="avatar-gradient" x1="0" y1="0" x2="128" y2="128" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stopColor="#6366f1" />
+                      <stop offset="50%" stopColor="#8b5cf6" />
+                      <stop offset="100%" stopColor="#06b6d4" />
+                    </linearGradient>
+                  </defs>
+                  <circle cx="64" cy="44" r="24" fill="url(#avatar-gradient)" />
+                  <path d="M20 112c0-24.15 19.69-43.74 44-43.74S108 87.85 108 112" fill="url(#avatar-gradient)" />
+                </svg>
               </div>
             </div>
           </div>
