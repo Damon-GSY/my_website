@@ -18,7 +18,10 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Damon Guan | I Build AI",
+  title: {
+    template: "%s | Damon Guan",
+    default: "Damon Guan | I Build AI",
+  },
   description:
     "Tech enthusiast sharing how AI transforms the way we work and learn. NUS Master's student, UNSW graduate, and the person behind gdamon.",
   keywords: [
@@ -31,11 +34,12 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Damon Guan" }],
   openGraph: {
-    title: "Damon Guan | I Build AI",
-    description:
-      "Tech enthusiast sharing how AI transforms the way we work and learn.",
     type: "website",
     locale: "en_US",
+    siteName: "Damon Guan",
+  },
+  twitter: {
+    card: "summary_large_image",
   },
 };
 
