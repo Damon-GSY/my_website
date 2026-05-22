@@ -1,7 +1,8 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
-import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { projects } from '@/data/projects';
+import SpotlightCard from './ui/spotlight-card';
 
 const reveal = {
   duration: 0.5,
@@ -16,41 +17,15 @@ const filters = [
 ];
 
 function ProjectCard({ project, index }) {
-  const mouseX = useMotionValue(-200);
-  const mouseY = useMotionValue(-200);
-
-  const handlePointerMove = useCallback(
-    (e) => {
-      const rect = e.currentTarget.getBoundingClientRect();
-      mouseX.set(e.clientX - rect.left);
-      mouseY.set(e.clientY - rect.top);
-    },
-    [mouseX, mouseY]
-  );
-
-  const handlePointerLeave = useCallback(() => {
-    mouseX.set(-200);
-    mouseY.set(-200);
-  }, [mouseX, mouseY]);
-
   const isExternal = project.href.startsWith('http');
 
-  const background = useMotionTemplate`radial-gradient(320px circle at ${mouseX}px ${mouseY}px, rgba(201,100,66,0.08), transparent 70%)`;
-
   return (
-    <motion.article
+    <motion.div
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ ...reveal, delay: 0.06 + index * 0.05 }}
-      onPointerMove={handlePointerMove}
-      onPointerLeave={handlePointerLeave}
-      className="group relative rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-5 transition-shadow hover:[box-shadow:0_0_0_1px_var(--ring-strong)]"
     >
-      <motion.div
-        className="pointer-events-none absolute inset-0 rounded-2xl"
-        style={{ background }}
-      />
-      <div className="relative z-10">
+      <SpotlightCard className="p-5" as="article">
         <div className="flex items-start justify-between">
           <h2 className="type-headline text-lg font-semibold text-[var(--text)]">
             {project.title}
@@ -78,8 +53,8 @@ function ProjectCard({ project, index }) {
             </span>
           ))}
         </div>
-      </div>
-    </motion.article>
+      </SpotlightCard>
+    </motion.div>
   );
 }
 
@@ -88,7 +63,7 @@ export default function Projects() {
   const filtered = active === 'all' ? projects : projects.filter((p) => p.category === active);
 
   return (
-    <main className="min-h-screen bg-[var(--bg)] pt-28 pb-20">
+    <section className="min-h-screen bg-[var(--bg)] pt-28 pb-20">
       <div className="mx-auto max-w-6xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -131,6 +106,6 @@ export default function Projects() {
           ))}
         </div>
       </div>
-    </main>
+    </section>
   );
 }

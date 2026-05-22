@@ -37,10 +37,10 @@ const Hero = forwardRef(function Hero() {
             </BlurFade>
 
             <BlurFade delay={0.08}>
-              <h1 id="hero-heading" className="max-w-2xl text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-[var(--text)] leading-[1.06]">
+              <h1 id="hero-heading" className="max-w-2xl text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-[var(--text)] leading-[1.06]">
                 Hi, I&apos;m Damon.
                 <br />
-                <span className="mt-2 block">
+                <span className="mt-2 block font-bold">
                   <AnimatedGradientText speed={1.15} colorFrom="var(--primary)" colorTo="var(--primary-strong)">
                     I build AI.
                   </AnimatedGradientText>

@@ -82,7 +82,7 @@ const categories = [
 
 export default function Uses() {
   return (
-    <main className="min-h-screen bg-[var(--bg)] pt-28 pb-20">
+    <section className="min-h-screen bg-[var(--bg)] pt-28 pb-20">
       <div className="mx-auto max-w-4xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -148,6 +148,6 @@ export default function Uses() {
           ))}
         </div>
       </div>
-    </main>
+    </section>
   );
 }

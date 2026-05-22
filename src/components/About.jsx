@@ -141,7 +141,7 @@ function YearAccordion({ year, entries, defaultOpen }) {
 
 export default function About() {
   return (
-    <main className="relative overflow-hidden bg-[linear-gradient(180deg,var(--bg)_0%,var(--surface-soft)_46%,var(--bg)_100%)] pt-24 pb-16 lg:pt-28 lg:pb-24">
+    <section className="relative overflow-hidden bg-[linear-gradient(180deg,var(--bg)_0%,var(--surface-soft)_46%,var(--bg)_100%)] pt-24 pb-16 lg:pt-28 lg:pb-24">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -top-24 left-[8%] h-64 w-64 rounded-full bg-[var(--primary)]/20 blur-3xl" />
         <div className="absolute top-[28%] right-[2%] h-64 w-64 rounded-full bg-[var(--primary)]/15 blur-3xl" />
@@ -196,6 +196,6 @@ export default function About() {
           ))}
         </div>
       </div>
-    </main>
+    </section>
   );
 }

@@ -44,11 +44,22 @@ export default function Navbar() {
 
   const solid = !isHomePage || scrolled;
 
+  const isActive = (path) => path === '/' ? isHomePage : pathname === path;
+
+  const navLinkClass = (path) =>
+    `transition-colors ${isActive(path) ? 'text-[var(--text)]' : 'text-[var(--muted)] hover:text-[var(--text)]'}`;
+
   const mobileLinkClass =
     'block rounded-lg px-4 py-3 text-base font-medium text-[var(--muted)] transition-colors hover:bg-[var(--surface-soft)] hover:text-[var(--text)]';
 
   return (
     <>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-[var(--primary)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white focus:outline-none"
+      >
+        Skip to content
+      </a>
       <nav
         aria-label="Main navigation"
         className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-300 ${
@@ -63,20 +74,20 @@ export default function Navbar() {
               Damon.
             </a>
 
-            <div className="hidden gap-6 text-sm font-medium text-[var(--muted)] sm:flex">
-              <a href={homeHref} className="transition-colors hover:text-[var(--text)]">
+            <div className="hidden gap-6 text-sm font-medium sm:flex">
+              <a href={homeHref} className={navLinkClass('/')}>
                 Home
               </a>
-              <Link to="/projects" className="transition-colors hover:text-[var(--text)]">
+              <Link to="/projects" className={navLinkClass('/projects')}>
                 Projects
               </Link>
-              <Link to="/blog" className="transition-colors hover:text-[var(--text)]">
+              <Link to="/blog" className={navLinkClass('/blog')}>
                 Blog
               </Link>
-              <Link to="/about" className="transition-colors hover:text-[var(--text)]">
+              <Link to="/about" className={navLinkClass('/about')}>
                 About
               </Link>
-              <Link to="/uses" className="transition-colors hover:text-[var(--text)]">
+              <Link to="/uses" className={navLinkClass('/uses')}>
                 Uses
               </Link>
             </div>

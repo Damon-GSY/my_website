@@ -25,7 +25,7 @@ export default function Blog() {
     : posts;
 
   return (
-    <main className="min-h-screen bg-[var(--bg)] pt-28 pb-20">
+    <section className="min-h-screen bg-[var(--bg)] pt-28 pb-20">
       <div className="mx-auto max-w-6xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -104,6 +104,6 @@ export default function Blog() {
           )}
         </div>
       </div>
-    </main>
+    </section>
   );
 }
