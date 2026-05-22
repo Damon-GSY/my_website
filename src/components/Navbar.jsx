@@ -76,6 +76,9 @@ export default function Navbar() {
               <Link to="/about" className="transition-colors hover:text-[var(--text)]">
                 About
               </Link>
+              <Link to="/uses" className="transition-colors hover:text-[var(--text)]">
+                Uses
+              </Link>
             </div>
 
             <div className="flex items-center gap-3">
@@ -138,6 +141,9 @@ export default function Navbar() {
               </Link>
               <Link to="/about" onClick={closeMobile} className={mobileLinkClass}>
                 About
+              </Link>
+              <Link to="/uses" onClick={closeMobile} className={mobileLinkClass}>
+                Uses
               </Link>
               <a
                 href="https://www.linkedin.com/in/shengyue-guan-1a7b3226b/"

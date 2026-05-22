@@ -29,42 +29,27 @@ export default function WritingPreview() {
           </p>
         </motion.div>
 
-        <div className="mt-10 space-y-8">
+        <div className="mt-8 divide-y divide-[var(--line)] border-y border-[var(--line)]">
           {latest.map((post, index) => (
-            <motion.article
+            <motion.div
               key={post.slug}
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-90px' }}
+              viewport={{ once: true, margin: '-60px' }}
               transition={{ ...reveal, delay: index * 0.06 }}
             >
               <Link
                 to={`/blog/${post.slug}`}
-                className="group block rounded-2xl border border-[var(--line)] bg-[var(--bg)] p-5 transition-shadow hover:[box-shadow:0_0_0_1px_var(--ring-strong)]"
+                className="group flex items-baseline justify-between gap-4 py-5 transition-colors"
               >
-                <div className="flex items-baseline justify-between gap-4">
-                  <span className="type-headline text-base font-semibold text-[var(--text)] transition-colors group-hover:text-[var(--primary)]">
-                    {post.title}
-                  </span>
-                  <span className="shrink-0 font-mono text-xs text-[var(--muted)]">
-                    {post.date}
-                  </span>
-                </div>
-                <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
-                  {post.excerpt}
-                </p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {post.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full border border-[var(--line)] px-2.5 py-0.5 text-xs font-medium text-[var(--muted)]"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+                <span className="type-headline text-base font-medium text-[var(--text)] transition-colors group-hover:text-[var(--primary)]">
+                  {post.title}
+                </span>
+                <span className="shrink-0 font-mono text-xs text-[var(--muted)]">
+                  {post.date}
+                </span>
               </Link>
-            </motion.article>
+            </motion.div>
           ))}
         </div>
 
@@ -73,7 +58,7 @@ export default function WritingPreview() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-90px' }}
           transition={{ ...reveal, delay: 0.14 }}
-          className="mt-8"
+          className="mt-6"
         >
           <Link
             to="/blog"

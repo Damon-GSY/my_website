@@ -11,6 +11,7 @@ import { BackgroundPathsCTA } from './components/ui/background-paths';
 import Projects from './components/Projects';
 import Blog from './components/Blog';
 import BlogPost from './components/BlogPost';
+import Uses from './components/Uses';
 
 function HomePage() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/projects" element={<Projects />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route path="/uses" element={<Uses />} />
       </Routes>
       <Footer />
     </Layout>

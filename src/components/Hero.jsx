@@ -1,5 +1,6 @@
-import { forwardRef } from 'react';
+import { forwardRef, useRef } from 'react';
 import { ArrowUpRight, Linkedin, PlayCircle } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import heroImage from '@/assets/hero.png';
 import { ShimmerButton } from './ui/shimmer-button';
 import { BlurFade } from './ui/blur-fade';
@@ -7,8 +8,18 @@ import { AnimatedGradientText } from './ui/animated-gradient-text';
 import { Spotlight } from './ui/spotlight';
 
 const Hero = forwardRef(function Hero() {
+  const sectionRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end start'],
+  });
+
+  const photoY = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const photoScale = useTransform(scrollYProgress, [0, 1], [1, 1.06]);
+  const photoOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.3]);
+
   return (
-    <section className="relative w-full overflow-hidden" id="home" aria-labelledby="hero-heading">
+    <section ref={sectionRef} className="relative w-full overflow-hidden" id="home" aria-labelledby="hero-heading">
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -top-28 left-[-10%] h-[28rem] w-[28rem] rounded-full bg-[var(--primary)]/10 blur-3xl" />
         <div className="absolute top-[20%] right-[-15%] h-[30rem] w-[30rem] rounded-full bg-[var(--primary-strong)]/8 blur-3xl" />
@@ -107,7 +118,10 @@ const Hero = forwardRef(function Hero() {
             <div className="relative mx-auto max-w-[27rem]">
               <div className="absolute -inset-8 rounded-[2.5rem] bg-[radial-gradient(circle_at_20%_15%,rgba(168,120,92,0.25),transparent_55%),radial-gradient(circle_at_80%_85%,rgba(184,138,114,0.24),transparent_50%)] blur-2xl" />
 
-              <div className="group relative overflow-hidden rounded-[2rem] border border-[var(--line)] bg-[var(--surface-soft)] shadow-[0_50px_100px_-60px_rgba(0,0,0,0.6)]">
+              <motion.div
+                style={{ y: photoY, scale: photoScale, opacity: photoOpacity }}
+                className="group relative overflow-hidden rounded-[2rem] border border-[var(--line)] bg-[var(--surface-soft)] shadow-[0_50px_100px_-60px_rgba(0,0,0,0.6)]"
+              >
                 <Spotlight
                   size={280}
                   className="from-[var(--primary)]/15 via-[var(--surface-soft)] to-transparent opacity-70"
@@ -118,7 +132,7 @@ const Hero = forwardRef(function Hero() {
                   className="h-full w-full object-cover grayscale-[18%] transition duration-700 group-hover:grayscale-0 group-hover:scale-[1.02]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-              </div>
+              </motion.div>
             </div>
           </BlurFade>
         </div>

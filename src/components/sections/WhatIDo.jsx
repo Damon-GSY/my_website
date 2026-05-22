@@ -1,4 +1,4 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Bot, BarChart3, Rocket } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
@@ -12,16 +12,19 @@ const capabilities = [
     title: 'Agent System Design',
     description:
       'I design robust agent workflows with planning, tool orchestration, memory, and safety boundaries.',
+    icon: Bot,
   },
   {
     title: 'Post-Training & Evaluation',
     description:
       'I build benchmarks, run SFT and RL loops, and align model behavior with measurable business outcomes.',
+    icon: BarChart3,
   },
   {
     title: 'Production Deployment',
     description:
       'I ship systems with observability, rollback strategy, and clear operating constraints for real teams.',
+    icon: Rocket,
   },
 ];
 
@@ -44,7 +47,7 @@ export default function WhatIDo() {
           </p>
         </motion.div>
 
-        <div className="mt-10 border-y border-[var(--line)]">
+        <div className="mt-10 grid gap-4 sm:grid-cols-3">
           {capabilities.map((item, index) => (
             <motion.article
               key={item.title}
@@ -52,14 +55,15 @@ export default function WhatIDo() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-100px' }}
               transition={{ ...reveal, delay: index * 0.08 }}
-              className={`grid gap-4 py-7 md:grid-cols-[220px_1fr] md:gap-8 ${
-                index < capabilities.length - 1 ? 'border-b border-[var(--line)]' : ''
-              }`}
+              className="group rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6 transition-shadow hover:[box-shadow:0_0_0_1px_var(--ring-strong)]"
             >
-              <h3 className="type-caption text-sm font-semibold uppercase tracking-[0.16em] text-[var(--primary)]">
+              <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--line)] bg-[var(--surface-soft)] text-[var(--primary)]">
+                <item.icon className="h-5 w-5" />
+              </div>
+              <h3 className="type-headline text-base font-semibold text-[var(--text)]">
                 {item.title}
               </h3>
-              <p className="text-base leading-relaxed text-[var(--muted)]">{item.description}</p>
+              <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{item.description}</p>
             </motion.article>
           ))}
         </div>
