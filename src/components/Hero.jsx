@@ -6,6 +6,7 @@ import { ShimmerButton } from './ui/shimmer-button';
 import { BlurFade } from './ui/blur-fade';
 import { AnimatedGradientText } from './ui/animated-gradient-text';
 import { Spotlight } from './ui/spotlight';
+import FlipWords from './ui/flip-words';
 
 const Hero = forwardRef(function Hero() {
   const sectionRef = useRef(null);
@@ -49,7 +50,11 @@ const Hero = forwardRef(function Hero() {
                 <br />
                 <span className="mt-2 block font-bold">
                   <AnimatedGradientText speed={1.15} colorFrom="var(--primary)" colorTo="var(--primary-strong)">
-                    I build AI.
+                    I build{' '}
+                    <FlipWords
+                      words={['AI.', 'Agents.', 'Systems.']}
+                      duration={2400}
+                    />
                   </AnimatedGradientText>
                 </span>
               </h1>

@@ -15,6 +15,7 @@ import Blog from './components/Blog';
 import BlogPost from './components/BlogPost';
 import Uses from './components/Uses';
 import NotFound from './components/NotFound';
+import ScrollProgress from './components/ui/scroll-progress';
 
 const pageTransition = {
   initial: { opacity: 0, y: 8 },
@@ -48,6 +49,7 @@ function App() {
 
   return (
     <Layout>
+      <ScrollProgress />
       <Navbar />
       <main id="main-content">
         <AnimatePresence mode="wait">

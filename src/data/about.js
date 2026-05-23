@@ -151,7 +151,7 @@ export const aboutProfile = {
     'I bridge research and production: from benchmark design and training pipelines to deployable agent systems in real business scenarios.',
   facts: [
     { label: 'Current Role', value: 'Alibaba · LLM Engineer' },
-    { label: 'Graduate School', value: 'NUS (QS #8)' },
-    { label: 'Undergraduate', value: 'UNSW (QS #19)' },
+    { label: 'Graduate School', prefix: 'NUS · QS #', ticker: 8 },
+    { label: 'Undergraduate', prefix: 'UNSW · QS #', ticker: 19 },
   ],
 };

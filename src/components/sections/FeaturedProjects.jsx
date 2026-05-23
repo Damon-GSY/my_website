@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { projects } from '@/data/projects';
 import SpotlightCard from '../ui/spotlight-card';
+import BorderBeam from '../ui/border-beam';
 
 const reveal = {
   duration: 0.5,
@@ -19,8 +20,10 @@ function FeaturedHeroCard({ project }) {
       viewport={{ once: true, margin: '-90px' }}
       transition={{ ...reveal, delay: 0.06 }}
     >
-      <SpotlightCard className="p-6 md:p-8" gradientSize={480}>
-        <div className="flex flex-col justify-between h-full min-h-[220px]">
+      <div className="relative">
+        <BorderBeam size={120} duration={15} />
+        <SpotlightCard className="p-6 md:p-8" gradientSize={480}>
+          <div className="flex flex-col justify-between h-full min-h-[220px]">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--primary)] mb-3">
               Featured Project
@@ -56,6 +59,7 @@ function FeaturedHeroCard({ project }) {
           </div>
         </div>
       </SpotlightCard>
+      </div>
     </motion.div>
   );
 }

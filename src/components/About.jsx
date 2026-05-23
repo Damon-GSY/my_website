@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { Timeline } from './ui/timeline';
 import { aboutProfile, timelineData } from '@/data/about';
+import NumberTicker from './ui/number-ticker';
 
 const TRACK_STYLES = {
   'Full-time': {
@@ -171,7 +172,13 @@ export default function About() {
           {aboutProfile.facts.map((fact) => (
             <div key={fact.label} className="rounded-xl border border-[var(--line)] bg-[var(--surface)]/90 p-4 [box-shadow:0_0_0_1px_var(--ring)]">
               <p className="text-xs uppercase tracking-[0.12em] text-[var(--muted)] mb-1.5">{fact.label}</p>
-              <p className="font-semibold text-[var(--text)]">{fact.value}</p>
+              <p className="font-semibold text-[var(--text)]">
+                {fact.ticker != null ? (
+                  <>{fact.prefix}<NumberTicker value={fact.ticker} /></>
+                ) : (
+                  fact.value
+                )}
+              </p>
             </div>
           ))}
         </div>
