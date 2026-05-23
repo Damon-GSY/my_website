@@ -55,7 +55,7 @@ export default function WhatIDo() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-100px' }}
               transition={{ ...reveal, delay: index * 0.08 }}
-              className="group rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6 transition-shadow hover:[box-shadow:0_0_0_1px_var(--ring-strong)]"
+              className="group rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6 transition-all duration-300 hover:[box-shadow:0_0_0_1px_var(--ring-strong)] hover:-translate-y-1 hover:shadow-lg"
             >
               <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--line)] bg-[var(--surface-soft)] text-[var(--primary)]">
                 <item.icon className="h-5 w-5" />

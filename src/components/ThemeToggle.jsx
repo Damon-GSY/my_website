@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Sun, Moon } from 'lucide-react';
 
 function getStoredTheme() {
@@ -35,14 +36,27 @@ export default function ThemeToggle() {
     setStoredTheme(dark ? 'dark' : 'light');
   }, [dark]);
 
+  const toggle = useCallback(() => setDark((v) => !v), []);
+
   return (
     <button
-      onClick={() => setDark(!dark)}
-      className="rounded-full bg-[var(--surface-soft)] p-2 text-[var(--muted)] transition-colors hover:text-[var(--text)] [box-shadow:0_0_0_1px_var(--line)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus)]"
+      onClick={toggle}
+      className="relative rounded-full bg-[var(--surface-soft)] p-2 text-[var(--muted)] transition-colors hover:text-[var(--text)] [box-shadow:0_0_0_1px_var(--line)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus)]"
       aria-label={dark ? 'Switch to light theme' : 'Switch to dark theme'}
       aria-pressed={dark}
     >
-      {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.span
+          key={dark ? 'sun' : 'moon'}
+          initial={{ y: -10, opacity: 0, rotate: -90 }}
+          animate={{ y: 0, opacity: 1, rotate: 0 }}
+          exit={{ y: 10, opacity: 0, rotate: 90 }}
+          transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="block"
+        >
+          {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+        </motion.span>
+      </AnimatePresence>
     </button>
   );
 }

@@ -14,9 +14,16 @@ const Hero = forwardRef(function Hero() {
     offset: ['start start', 'end start'],
   });
 
-  const photoY = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const photoY = useTransform(scrollYProgress, [0, 1], [0, 120]);
   const photoScale = useTransform(scrollYProgress, [0, 1], [1, 1.06]);
   const photoOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.3]);
+
+  const floatTransition = {
+    duration: 6,
+    repeat: Infinity,
+    repeatType: 'reverse',
+    ease: 'easeInOut',
+  };
 
   return (
     <section ref={sectionRef} className="relative w-full overflow-hidden" id="home" aria-labelledby="hero-heading">
@@ -71,7 +78,7 @@ const Hero = forwardRef(function Hero() {
                     shimmerColor="#ffffff"
                     background="linear-gradient(135deg, var(--surface), var(--surface-soft))"
                     borderRadius="9999px"
-                    className="px-6 py-3 text-[var(--text)] font-semibold text-sm border-[var(--line)]"
+                    className="px-6 py-3 text-[var(--text)] font-semibold text-sm border-[var(--line)] active:scale-[0.97] transition-transform"
                   >
                     Work With Me
                     <ArrowUpRight className="ml-2 h-4 w-4" />
@@ -81,7 +88,7 @@ const Hero = forwardRef(function Hero() {
                   href="https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA?sub_confirmation=1"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-[var(--surface-soft)] px-5 py-3 text-sm font-semibold text-[var(--muted-strong)] transition-[box-shadow] [box-shadow:0_0_0_1px_var(--ring)] hover:[box-shadow:0_0_0_1px_var(--ring-strong)]"
+                  className="inline-flex items-center gap-2 rounded-full bg-[var(--surface-soft)] px-5 py-3 text-sm font-semibold text-[var(--muted-strong)] transition-all duration-200 [box-shadow:0_0_0_1px_var(--ring)] hover:[box-shadow:0_0_0_1px_var(--ring-strong)] active:scale-[0.97]"
                 >
                   <PlayCircle className="h-4 w-4 text-[var(--primary)]" />
                   Watch on YouTube
@@ -96,7 +103,7 @@ const Hero = forwardRef(function Hero() {
                   href="https://www.linkedin.com/in/shengyue-guan-1a7b3226b/"
                   target="_blank"
                   rel="noreferrer"
-                  className="group inline-flex items-center gap-1.5 rounded-full bg-transparent px-3 py-1.5 font-medium text-[var(--muted)] transition-all duration-200 [box-shadow:0_0_0_1px_var(--ring)] hover:bg-[var(--primary)] hover:text-[var(--surface)]"
+                  className="group inline-flex items-center gap-1.5 rounded-full bg-transparent px-3 py-1.5 font-medium text-[var(--muted)] transition-all duration-200 [box-shadow:0_0_0_1px_var(--ring)] hover:bg-[var(--primary)] hover:text-[var(--surface)] active:scale-[0.97]"
                 >
                   <Linkedin className="h-3.5 w-3.5" />
                   LinkedIn
@@ -105,7 +112,7 @@ const Hero = forwardRef(function Hero() {
                   href="https://space.bilibili.com/358541297"
                   target="_blank"
                   rel="noreferrer"
-                  className="group inline-flex items-center gap-1.5 rounded-full bg-transparent px-3 py-1.5 font-medium text-[var(--muted)] transition-all duration-200 [box-shadow:0_0_0_1px_var(--ring)] hover:bg-[var(--primary)] hover:text-[var(--surface)]"
+                  className="group inline-flex items-center gap-1.5 rounded-full bg-transparent px-3 py-1.5 font-medium text-[var(--muted)] transition-all duration-200 [box-shadow:0_0_0_1px_var(--ring)] hover:bg-[var(--primary)] hover:text-[var(--surface)] active:scale-[0.97]"
                 >
                   <span className="h-1.5 w-1.5 rounded-full bg-[var(--primary)] group-hover:bg-[var(--primary-strong)]" />
                   Bilibili
@@ -122,16 +129,21 @@ const Hero = forwardRef(function Hero() {
                 style={{ y: photoY, scale: photoScale, opacity: photoOpacity }}
                 className="group relative overflow-hidden rounded-[2rem] border border-[var(--line)] bg-[var(--surface-soft)] shadow-[0_50px_100px_-60px_rgba(0,0,0,0.6)]"
               >
-                <Spotlight
-                  size={280}
-                  className="from-[var(--primary)]/15 via-[var(--surface-soft)] to-transparent opacity-70"
-                />
-                <img
-                  src={heroImage}
-                  alt="Portrait of Damon, AI researcher and creator"
-                  className="h-full w-full object-cover grayscale-[18%] transition duration-700 group-hover:grayscale-0 group-hover:scale-[1.02]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                <motion.div
+                  animate={{ y: [-6, 6] }}
+                  transition={floatTransition}
+                >
+                  <Spotlight
+                    size={280}
+                    className="from-[var(--primary)]/15 via-[var(--surface-soft)] to-transparent opacity-70"
+                  />
+                  <img
+                    src={heroImage}
+                    alt="Portrait of Damon, AI researcher and creator"
+                    className="h-full w-full object-cover grayscale-[18%] transition duration-700 group-hover:grayscale-0 group-hover:scale-[1.02]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                </motion.div>
               </motion.div>
             </div>
           </BlurFade>

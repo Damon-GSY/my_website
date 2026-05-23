@@ -13,7 +13,7 @@ export default function BlogPost() {
 
   if (!post) {
     return (
-      <main className="min-h-screen bg-[var(--bg)] pt-28 pb-20">
+      <section className="min-h-screen bg-[var(--bg)] pt-28 pb-20">
         <div className="mx-auto max-w-2xl px-6 text-center">
           <h1 className="type-headline text-3xl font-semibold text-[var(--text)]">
             Post not found
@@ -25,12 +25,12 @@ export default function BlogPost() {
             &larr; Back to Blog
           </Link>
         </div>
-      </main>
+      </section>
     );
   }
 
   return (
-    <main className="min-h-screen bg-[var(--bg)] pt-28 pb-20">
+    <section className="min-h-screen bg-[var(--bg)] pt-28 pb-20">
       <article className="mx-auto max-w-2xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -74,6 +74,6 @@ export default function BlogPost() {
           </Link>
         </div>
       </article>
-    </main>
+    </section>
   );
 }

@@ -1,7 +1,16 @@
 import { startTransition, useEffect, useState, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import { motion } from 'framer-motion';
 import ThemeToggle from './ThemeToggle';
+
+const navLinks = [
+  { label: 'Home', to: '/', isHash: true },
+  { label: 'Projects', to: '/projects' },
+  { label: 'Blog', to: '/blog' },
+  { label: 'About', to: '/about' },
+  { label: 'Uses', to: '/uses' },
+];
 
 export default function Navbar() {
   const { pathname } = useLocation();
@@ -46,9 +55,6 @@ export default function Navbar() {
 
   const isActive = (path) => path === '/' ? isHomePage : pathname === path;
 
-  const navLinkClass = (path) =>
-    `transition-colors ${isActive(path) ? 'text-[var(--text)]' : 'text-[var(--muted)] hover:text-[var(--text)]'}`;
-
   const mobileLinkClass =
     'block rounded-lg px-4 py-3 text-base font-medium text-[var(--muted)] transition-colors hover:bg-[var(--surface-soft)] hover:text-[var(--text)]';
 
@@ -74,22 +80,36 @@ export default function Navbar() {
               Damon.
             </a>
 
-            <div className="hidden gap-6 text-sm font-medium sm:flex">
-              <a href={homeHref} className={navLinkClass('/')}>
-                Home
-              </a>
-              <Link to="/projects" className={navLinkClass('/projects')}>
-                Projects
-              </Link>
-              <Link to="/blog" className={navLinkClass('/blog')}>
-                Blog
-              </Link>
-              <Link to="/about" className={navLinkClass('/about')}>
-                About
-              </Link>
-              <Link to="/uses" className={navLinkClass('/uses')}>
-                Uses
-              </Link>
+            <div className="hidden gap-1 text-sm font-medium sm:flex">
+              {navLinks.map((link) => {
+                const active = isActive(link.to);
+                const href = link.isHash ? homeHref : link.to;
+                const Wrapper = link.isHash ? 'a' : Link;
+                const wrapperProps = link.isHash
+                  ? { href }
+                  : { to: link.to };
+
+                return (
+                  <Wrapper
+                    key={link.to}
+                    {...wrapperProps}
+                    className={`relative px-3 py-1.5 rounded-lg transition-colors ${
+                      active
+                        ? 'text-[var(--text)]'
+                        : 'text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--surface-soft)]/50'
+                    }`}
+                  >
+                    {link.label}
+                    {active && (
+                      <motion.div
+                        layoutId="nav-underline"
+                        className="absolute inset-x-1.5 -bottom-[1px] h-[2px] rounded-full bg-[var(--primary)]"
+                        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                      />
+                    )}
+                  </Wrapper>
+                );
+              })}
             </div>
 
             <div className="flex items-center gap-3">
@@ -107,7 +127,7 @@ export default function Navbar() {
                 href="https://www.linkedin.com/in/shengyue-guan-1a7b3226b/"
                 target="_blank"
                 rel="noreferrer"
-                className="hidden sm:inline-flex rounded-full bg-[var(--surface-soft)] px-4 py-1.5 text-xs font-semibold tracking-wide text-[var(--muted-strong)] transition-[box-shadow] [box-shadow:0_0_0_1px_var(--ring)] hover:[box-shadow:0_0_0_1px_var(--ring-strong)]"
+                className="hidden sm:inline-flex rounded-full bg-[var(--surface-soft)] px-4 py-1.5 text-xs font-semibold tracking-wide text-[var(--muted-strong)] transition-all duration-200 [box-shadow:0_0_0_1px_var(--ring)] hover:[box-shadow:0_0_0_1px_var(--ring-strong)] active:scale-[0.97]"
               >
                 Connect
               </a>

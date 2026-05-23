@@ -1,4 +1,6 @@
+import { useLocation } from 'react-router-dom';
 import { Routes, Route } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import Layout from './components/Layout';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -14,32 +16,51 @@ import BlogPost from './components/BlogPost';
 import Uses from './components/Uses';
 import NotFound from './components/NotFound';
 
+const pageTransition = {
+  initial: { opacity: 0, y: 8 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -8 },
+  transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
+};
+
+function PageTransition({ children }) {
+  return (
+    <motion.div {...pageTransition}>
+      {children}
+    </motion.div>
+  );
+}
+
 function HomePage() {
   return (
-    <>
+    <PageTransition>
       <Hero />
       <WhatIDo />
       <FeaturedProjects />
       <WritingPreview />
       <BackgroundPathsCTA />
-    </>
+    </PageTransition>
   );
 }
 
 function App() {
+  const location = useLocation();
+
   return (
     <Layout>
       <Navbar />
       <main id="main-content">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/uses" element={<Uses />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<PageTransition><About /></PageTransition>} />
+            <Route path="/projects" element={<PageTransition><Projects /></PageTransition>} />
+            <Route path="/blog" element={<PageTransition><Blog /></PageTransition>} />
+            <Route path="/blog/:slug" element={<PageTransition><BlogPost /></PageTransition>} />
+            <Route path="/uses" element={<PageTransition><Uses /></PageTransition>} />
+            <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
+          </Routes>
+        </AnimatePresence>
       </main>
       <Footer />
     </Layout>
