@@ -2,6 +2,7 @@ import { startTransition, useEffect, useState, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { motion } from 'framer-motion';
+import gsap from 'gsap';
 import ThemeToggle from './ThemeToggle';
 
 const navLinks = [
@@ -18,7 +19,6 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const isHomePage = pathname === '/';
   const homeHref = isHomePage ? '#home' : '/#home';
-
   useEffect(() => {
     const handleScroll = () => {
       startTransition(() => {
@@ -31,6 +31,17 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Entrance animation — runs immediately, preloader covers it
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+    gsap.fromTo(
+      '.nav-inner',
+      { y: -16 },
+      { y: 0, duration: 0.5, delay: 0.1, ease: 'power3.out' }
+    );
+  }, []);
+
   const closeMobile = useCallback(() => setMobileOpen(false), []);
 
   useEffect(() => {
@@ -41,18 +52,13 @@ export default function Navbar() {
   }, [mobileOpen, closeMobile]);
 
   useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [mobileOpen]);
 
   useEffect(() => { setMobileOpen(false); }, [pathname]);
 
   const solid = !isHomePage || scrolled;
-
   const isActive = (path) => path === '/' ? isHomePage : pathname === path;
 
   const mobileLinkClass =
@@ -68,13 +74,13 @@ export default function Navbar() {
       </a>
       <nav
         aria-label="Main navigation"
-        className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-300 ${
+        className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-500 ${
           solid
             ? 'border-[var(--line)] bg-[var(--bg)]/86 shadow-[var(--shadow-nav)] backdrop-blur-xl'
             : 'border-transparent bg-[var(--bg)]/24 backdrop-blur-sm'
         }`}
       >
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="nav-inner mx-auto max-w-7xl px-6">
           <div className="flex h-16 items-center justify-between">
             <a href={homeHref} className="type-display text-xl font-bold tracking-tight text-[var(--text)]">
               Damon.
@@ -85,9 +91,7 @@ export default function Navbar() {
                 const active = isActive(link.to);
                 const href = link.isHash ? homeHref : link.to;
                 const Wrapper = link.isHash ? 'a' : Link;
-                const wrapperProps = link.isHash
-                  ? { href }
-                  : { to: link.to };
+                const wrapperProps = link.isHash ? { href } : { to: link.to };
 
                 return (
                   <Wrapper
@@ -161,21 +165,11 @@ export default function Navbar() {
               </button>
             </div>
             <nav className="flex flex-col gap-1 p-4">
-              <a href={homeHref} onClick={closeMobile} className={mobileLinkClass}>
-                Home
-              </a>
-              <Link to="/projects" onClick={closeMobile} className={mobileLinkClass}>
-                Projects
-              </Link>
-              <Link to="/blog" onClick={closeMobile} className={mobileLinkClass}>
-                Blog
-              </Link>
-              <Link to="/about" onClick={closeMobile} className={mobileLinkClass}>
-                About
-              </Link>
-              <Link to="/uses" onClick={closeMobile} className={mobileLinkClass}>
-                Uses
-              </Link>
+              <a href={homeHref} onClick={closeMobile} className={mobileLinkClass}>Home</a>
+              <Link to="/projects" onClick={closeMobile} className={mobileLinkClass}>Projects</Link>
+              <Link to="/blog" onClick={closeMobile} className={mobileLinkClass}>Blog</Link>
+              <Link to="/about" onClick={closeMobile} className={mobileLinkClass}>About</Link>
+              <Link to="/uses" onClick={closeMobile} className={mobileLinkClass}>Uses</Link>
               <a
                 href="https://www.linkedin.com/in/shengyue-guan-1a7b3226b/"
                 target="_blank"
