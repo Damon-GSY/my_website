@@ -1,350 +1,214 @@
-import { useEffect, useRef, forwardRef } from 'react';
-import { ArrowDown, Command } from 'lucide-react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { forwardRef } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowUpRight, MapPin, Cpu, FileText, Github, Sparkles, PenLine } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import heroImage from '@/assets/hero.png';
+import { AnimatedGradientText } from './ui/animated-gradient-text';
+import NumberTicker from './ui/number-ticker';
+import { posts } from '@/data/posts';
 
-gsap.registerPlugin(ScrollTrigger);
+const ease = [0.16, 1, 0.3, 1];
+
+const cellVariants = {
+  hidden: { opacity: 0, y: 16, scale: 0.98 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.6, delay: i * 0.06, ease },
+  }),
+};
 
 const Hero = forwardRef(function Hero() {
-  const sectionRef = useRef(null);
-  const introRef = useRef(null);
-  const gridRef = useRef(null);
-  const imageWrapRef = useRef(null);
-  const imageInnerRef = useRef(null);
-  const focusRef = useRef(null);
-  const commandRef = useRef(null);
-  const scrollHintRef = useRef(null);
+  const latestPost = posts[0];
 
-  useEffect(() => {
-    let ctx;
-    let cleanupPointer;
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (prefersReducedMotion) {
-      gsap.set(imageWrapRef.current, { clipPath: 'inset(0% 0% 0% 0%)' });
-      gsap.set(imageInnerRef.current, { scale: 1, y: 0 });
-      gsap.set(focusRef.current, { opacity: 1, y: 0 });
-      gsap.set(commandRef.current, { opacity: 1, y: 0 });
-      gsap.set(scrollHintRef.current, { opacity: 1, y: 0 });
-      return undefined;
-    }
-
-    const timer = requestAnimationFrame(() => {
-      ctx = gsap.context(() => {
-        const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
-
-        tl.fromTo(
-          '.meta-item',
-          { y: 20, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.6, stagger: 0.1 },
-          0.1
-        );
-
-        tl.fromTo(
-          '.hero-rule',
-          { scaleX: 0, transformOrigin: 'left center' },
-          { scaleX: 1, duration: 1.1, ease: 'power4.out' },
-          0.15
-        );
-
-        const words = introRef.current?.querySelectorAll('.headline-word');
-        if (words) {
-          tl.fromTo(
-            words,
-            { yPercent: 110 },
-            { yPercent: 0, duration: 1.05, stagger: 0.035 },
-            0.3
-          );
-        }
-
-        tl.fromTo(
-          '.intro-sub',
-          { y: 20, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.6 },
-          0.9
-        );
-
-        tl.fromTo(
-          '.focus-row',
-          { y: 18, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.55, stagger: 0.08 },
-          1.0
-        );
-
-        tl.fromTo(
-          imageWrapRef.current,
-          { clipPath: 'inset(100% 0% 0% 0%)' },
-          { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'power3.inOut' },
-          0.4
-        );
-
-        tl.fromTo(
-          imageInnerRef.current,
-          { scale: 1.4 },
-          { scale: 1, duration: 1.4, ease: 'power3.out' },
-          0.4
-        );
-
-        tl.fromTo(
-          '.focus-marker',
-          { scaleX: 0, transformOrigin: 'left center' },
-          { scaleX: 1, duration: 0.65, stagger: 0.08, ease: 'power3.out' },
-          0.95
-        );
-
-        tl.fromTo(
-          commandRef.current,
-          { y: 16, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' },
-          1.25
-        );
-
-        tl.fromTo(
-          scrollHintRef.current,
-          { opacity: 0, y: 10 },
-          { opacity: 1, y: 0, duration: 0.5 },
-          1.2
-        );
-
-        gsap.to(introRef.current, {
-          opacity: 0,
-          y: -40,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top top',
-            end: '50% top',
-            scrub: 1,
-          },
-        });
-
-        gsap.to(gridRef.current, {
-          yPercent: 10,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top top',
-            end: 'bottom top',
-            scrub: 1.2,
-          },
-        });
-
-        gsap.to(imageInnerRef.current, {
-          y: 60,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top top',
-            end: 'bottom top',
-            scrub: 1.5,
-          },
-        });
-
-        gsap.to(focusRef.current, {
-          y: -18,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top top',
-            end: 'bottom top',
-            scrub: 1.4,
-          },
-        });
-
-        gsap.to(commandRef.current, {
-          opacity: 0,
-          y: -20,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: '20% top',
-            end: '55% top',
-            scrub: 1,
-          },
-        });
-      }, sectionRef);
-
-      const section = sectionRef.current;
-      const grid = gridRef.current;
-      const canTrackPointer = window.matchMedia('(pointer: fine)').matches;
-      if (section && canTrackPointer) {
-        const gridX = grid ? gsap.quickTo(grid, 'x', { duration: 0.7, ease: 'power3.out' }) : null;
-        const gridY = grid ? gsap.quickTo(grid, 'y', { duration: 0.7, ease: 'power3.out' }) : null;
-
-        const handlePointerMove = (event) => {
-          const rect = section.getBoundingClientRect();
-          const x = (event.clientX - rect.left) / rect.width - 0.5;
-          const y = (event.clientY - rect.top) / rect.height - 0.5;
-          gridX?.(x * 18);
-          gridY?.(y * 14);
-        };
-
-        const handlePointerLeave = () => {
-          gridX?.(0);
-          gridY?.(0);
-        };
-
-        section.addEventListener('pointermove', handlePointerMove);
-        section.addEventListener('pointerleave', handlePointerLeave);
-        cleanupPointer = () => {
-          section.removeEventListener('pointermove', handlePointerMove);
-          section.removeEventListener('pointerleave', handlePointerLeave);
-        };
-      }
-    });
-
-    return () => {
-      cancelAnimationFrame(timer);
-      cleanupPointer?.();
-      ctx?.revert();
-    };
-  }, []);
-
-  const headline = 'Building agent systems that ship — not demos.';
-  const focusItems = [
-    { label: 'Research', value: 'Agentic RL' },
-    { label: 'Production', value: 'Alibaba systems' },
-    { label: 'Writing', value: 'YouTube / Bilibili' },
+  const stats = [
+    { value: 4, label: 'papers', suffix: '' },
+    { value: 3, label: 'prod systems', suffix: '' },
+    { value: 90, label: 'automation', suffix: '%' },
   ];
+
+  const techStack = ['Python', 'PyTorch', 'React', 'GSAP', 'Docker', 'vLLM'];
 
   return (
     <section
-      ref={sectionRef}
-      className="relative min-h-[100dvh] w-full overflow-hidden flex flex-col"
+      className="relative min-h-[100dvh] w-full overflow-hidden pt-16"
       id="home"
       aria-labelledby="hero-heading"
     >
-      <div
-        ref={gridRef}
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.18]"
-        style={{
-          backgroundImage:
-            'linear-gradient(to right, var(--line) 1px, transparent 1px), linear-gradient(to bottom, var(--line) 1px, transparent 1px)',
-          backgroundSize: '72px 72px',
-          maskImage: 'linear-gradient(to bottom, transparent, black 18%, black 72%, transparent)',
-        }}
-      />
-      <div
-        aria-hidden="true"
-        className="hero-rule pointer-events-none absolute left-6 right-6 top-20 h-px bg-[var(--line)] md:left-10 md:right-10"
-      />
-
-      {/* Top metadata bar */}
-      <div className="relative z-10 pt-24 md:pt-28 px-6 md:px-10">
-        <div className="flex items-center justify-between text-[11px] font-medium uppercase tracking-[0.2em] text-[var(--muted)]">
-          <span className="meta-item inline-flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-[var(--primary)] animate-pulse" />
-            Available for Work
-          </span>
-          <span className="meta-item hidden sm:inline">Hangzhou · 30.27°N</span>
-          <span className="meta-item type-mono">©2026</span>
-        </div>
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute inset-0 grid-bg grid-bg-fade opacity-30" />
+        <div className="absolute left-1/4 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-[var(--primary)]/8 blur-[120px]" />
+        <div className="absolute right-0 bottom-0 h-[400px] w-[400px] rounded-full bg-[var(--primary)]/5 blur-[100px]" />
       </div>
 
-      {/* Main content */}
-      <div className="relative z-10 flex-1 flex items-center px-6 md:px-10 py-10 md:py-16">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          {/* Headline + intro */}
-          <div ref={introRef} className="lg:col-span-7 order-2 lg:order-1">
-            <p className="meta-item text-xs font-semibold uppercase tracking-[0.25em] text-[var(--primary)] mb-5 md:mb-7">
-              AI Researcher / Agent Systems
-            </p>
-            <h1
-              id="hero-heading"
-              className="type-display font-medium leading-[1.02] tracking-[-0.02em] text-[var(--text)] text-4xl sm:text-5xl md:text-6xl lg:text-7xl"
-            >
-              {headline.split(' ').map((word, i) => (
-                <span key={i} className="inline-block overflow-hidden align-bottom mr-[0.25em]">
-                  <span className="headline-word inline-block">
-                    {word === 'ship' || word === 'demos.' ? (
-                      <em className="not-italic text-[var(--primary)]">{word}</em>
-                    ) : word === 'not' ? (
-                      <span className="text-[var(--muted)]">{word}</span>
-                    ) : (
-                      word
-                    )}
-                  </span>
-                </span>
-              ))}
-            </h1>
-            <p className="intro-sub mt-7 md:mt-9 text-sm md:text-base leading-relaxed text-[var(--muted)] max-w-md">
-              Researching and deploying agentic RL, post-training, and evaluation
-              frameworks at Alibaba. Sharing practical AI on YouTube & Bilibili.
-            </p>
-            <div
-              ref={focusRef}
-              className="mt-8 grid max-w-xl grid-cols-1 gap-3 sm:grid-cols-3"
-              style={{ willChange: 'transform, opacity' }}
-            >
-              {focusItems.map((item) => (
-                <div
-                  key={item.label}
-                  className="focus-row border-t border-[var(--line)] pt-3"
-                >
-                  <span className="focus-marker mb-3 block h-px w-10 bg-[var(--primary)]" />
-                  <p className="text-[10px] font-mono uppercase tracking-[0.22em] text-[var(--muted)]">
-                    {item.label}
-                  </p>
-                  <p className="mt-1 text-sm font-semibold text-[var(--text)]">
-                    {item.value}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
+      <div className="mx-auto max-w-7xl px-4 md:px-6 py-4 md:py-6">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-12 gap-3 md:gap-4 auto-rows-min"
+        >
+          {/* Main headline cell — spans 8 cols, 2 rows */}
+          <motion.div
+            variants={cellVariants}
+            custom={0}
+            className="col-span-12 lg:col-span-8 lg:row-span-2 relative rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6 md:p-8 lg:p-10 overflow-hidden min-h-[360px] md:min-h-[420px] flex flex-col justify-between"
+          >
+            <div className="pointer-events-none absolute right-0 top-0 h-[200px] w-[200px] rounded-full bg-[var(--primary)]/8 blur-[80px]" />
 
-          {/* Portrait */}
-          <div className="lg:col-span-5 order-1 lg:order-2 flex justify-center lg:justify-end">
-            <div className="relative w-full max-w-[420px] [perspective:900px]">
-              <div
-                ref={imageWrapRef}
-                className="relative mx-auto h-[340px] w-[260px] overflow-hidden md:h-[400px] md:w-[320px] lg:ml-auto lg:mr-0 lg:h-[460px] lg:w-[360px]"
-                style={{ clipPath: 'inset(100% 0% 0% 0%)', willChange: 'clip-path' }}
+            <div className="relative">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface-soft)] px-3 py-1 text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--muted)]">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                Online · Available for Work
+              </div>
+
+              <h1
+                id="hero-heading"
+                className="mt-5 font-display font-medium leading-[1.0] tracking-[-0.025em] text-[var(--text)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl"
               >
-                <div
-                  ref={imageInnerRef}
-                  className="absolute inset-0"
-                  style={{ willChange: 'transform' }}
-                >
-                  <img
-                    src={heroImage}
-                    alt="Portrait of Damon"
-                    className="h-full w-full object-cover grayscale-[15%]"
-                    fetchPriority="high"
-                    decoding="async"
-                    loading="eager"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white/90 text-[10px] font-mono uppercase tracking-wider">
-                    <span>Damon G.</span>
-                    <span>2026</span>
+                Building agent<br />
+                systems that{' '}
+                <AnimatedGradientText speed={2} className="font-display italic">
+                  actually ship
+                </AnimatedGradientText>
+                .
+              </h1>
+
+              <p className="mt-4 max-w-lg text-sm md:text-base leading-relaxed text-[var(--muted)]">
+                AI researcher & engineer at Alibaba. Working on agentic RL,
+                post-training, and evaluation frameworks for production LLM systems.
+              </p>
+            </div>
+
+            <div className="relative mt-6 flex flex-wrap items-center gap-2.5">
+              <a href="mailto:hello@damon.ai"
+                className="inline-flex items-center gap-2 rounded-lg bg-[var(--primary)] px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-[var(--primary-strong)] active:scale-[0.97]">
+                Get in touch
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
+              <a href="https://github.com/Damon-GSY" target="_blank" rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg border border-[var(--line)] bg-[var(--surface-soft)] px-5 py-2.5 text-sm font-semibold text-[var(--text)] transition-all hover:border-[var(--line-strong)] active:scale-[0.97]">
+                <Github className="h-4 w-4" />
+                GitHub
+              </a>
+              <span className="ml-auto hidden md:flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider text-[var(--muted)]">
+                <Sparkles className="h-3 w-3" />
+                v3.0
+              </span>
+            </div>
+          </motion.div>
+
+          {/* Profile cell — 4 cols, 1 row */}
+          <motion.div
+            variants={cellVariants}
+            custom={1}
+            className="col-span-7 lg:col-span-4 rounded-2xl border border-[var(--line)] bg-[var(--surface)] overflow-hidden glow-accent"
+          >
+            <div className="flex items-center gap-3 p-3 border-b border-[var(--line)]">
+              <div className="relative h-11 w-11 rounded-lg overflow-hidden border border-[var(--line)] shrink-0">
+                <img src={heroImage} alt="Damon" className="h-full w-full object-cover" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="font-display text-sm font-semibold text-[var(--text)] truncate">Damon G.</p>
+                <p className="text-[10px] text-[var(--muted)] font-mono truncate">@damon · AI researcher</p>
+              </div>
+              <span className="text-[9px] font-mono text-emerald-400 shrink-0">● online</span>
+            </div>
+            <div className="p-3 space-y-1.5 text-[11px] font-mono">
+              {[
+                { icon: MapPin, k: 'location', v: 'Hangzhou, CN' },
+                { icon: Cpu, k: 'role', v: 'LLM @ Alibaba' },
+                { icon: FileText, k: 'status', v: 'shipping' },
+              ].map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div key={item.k} className="flex items-center justify-between">
+                    <span className="flex items-center gap-1.5 text-[var(--muted)]">
+                      <Icon className="h-3 w-3" /> {item.k}
+                    </span>
+                    <span className="text-[var(--text)]">{item.v}</span>
                   </div>
-                </div>
+                );
+              })}
+            </div>
+          </motion.div>
+
+          {/* Now widget — 5 cols on mobile (stacks), 4 cols lg */}
+          <motion.div
+            variants={cellVariants}
+            custom={2}
+            className="col-span-5 lg:col-span-4 rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-4 flex flex-col justify-between"
+          >
+            <div>
+              <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--primary)] mb-2">
+                // now
+              </p>
+              <p className="text-sm font-semibold text-[var(--text)] leading-tight">
+                Multi-turn agent<br />evaluation taxonomy
+              </p>
+            </div>
+            <p className="mt-3 text-[11px] text-[var(--muted)] font-mono">
+              research · 2025
+            </p>
+          </motion.div>
+
+          {/* Stats cells — 3 cells in a row */}
+          {stats.map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              variants={cellVariants}
+              custom={3 + i}
+              className="col-span-4 lg:col-span-2 rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-4 md:p-5"
+            >
+              <p className="text-[9px] font-mono uppercase tracking-wider text-[var(--muted)] mb-1">
+                {stat.label}
+              </p>
+              <p className="font-display text-3xl md:text-4xl font-bold text-[var(--text)] tabular-nums leading-none">
+                <NumberTicker value={stat.value} />{stat.suffix}
+              </p>
+              <div className="mt-2 h-0.5 w-full bg-[var(--line)] rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-[var(--primary)] rounded-full"
+                  style={{ width: `${Math.min(stat.value * 10, 100)}%` }}
+                />
+              </div>
+            </motion.div>
+          ))}
+
+          {/* Latest post + tech stack — spans remaining 6 cols */}
+          <motion.div
+            variants={cellVariants}
+            custom={6}
+            className="col-span-12 lg:col-span-6 rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-4 md:p-5 flex flex-col sm:flex-row gap-4 sm:items-center"
+          >
+            <div className="flex-1 min-w-0">
+              <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--primary)] mb-1.5">
+                // latest_note
+              </p>
+              <Link to={`/blog/${latestPost.slug}`} className="group block">
+                <h3 className="font-display text-base font-medium text-[var(--text)] group-hover:text-[var(--primary)] transition-colors leading-tight">
+                  {latestPost.title}
+                </h3>
+                <p className="text-[11px] text-[var(--muted)] mt-1 font-mono">
+                  {latestPost.date} · {latestPost.category}
+                </p>
+              </Link>
+            </div>
+            <div className="shrink-0 sm:border-l sm:border-[var(--line)] sm:pl-4">
+              <p className="text-[9px] font-mono uppercase tracking-wider text-[var(--muted)] mb-1.5 flex items-center gap-1">
+                <PenLine className="h-3 w-3" /> stack
+              </p>
+              <div className="flex flex-wrap gap-1 max-w-[160px]">
+                {techStack.map((tech) => (
+                  <span key={tech}
+                    className="text-[9px] font-mono text-[var(--muted)] border border-[var(--line)] rounded px-1 py-0.5">
+                    {tech}
+                  </span>
+                ))}
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom command surface */}
-      <div className="relative z-10 px-6 md:px-10 pb-6 md:pb-8">
-        <div className="flex items-end justify-between border-t border-[var(--line)] pt-4">
-          <div
-            ref={commandRef}
-            className="hidden min-w-0 items-center gap-3 border border-[var(--line)] bg-[var(--surface)]/82 px-3 py-2 text-[11px] text-[var(--muted)] backdrop-blur md:inline-flex"
-            style={{ willChange: 'transform, opacity' }}
-          >
-            <Command className="h-3.5 w-3.5 text-[var(--primary)]" />
-            <span className="font-mono uppercase tracking-[0.2em]">K</span>
-            <span className="h-3 w-px bg-[var(--line)]" />
-            <span className="truncate">Search agent systems, evals, post-training</span>
-          </div>
-          <div
-            ref={scrollHintRef}
-            className="flex flex-col items-center gap-1 text-[var(--muted)]"
-            style={{ opacity: 0 }}
-          >
-            <span className="text-[10px] font-mono uppercase tracking-[0.3em]">Scroll</span>
-            <ArrowDown className="h-3 w-3 animate-bounce" />
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
