@@ -1,46 +1,42 @@
-import { startTransition, useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
 import { motion } from 'framer-motion';
-import gsap from 'gsap';
+import { Menu, X } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 
 const navLinks = [
   { label: 'Home', to: '/', isHash: true },
-  { label: 'Projects', to: '/projects' },
-  { label: 'Blog', to: '/blog' },
+  { label: 'Work', to: '/projects' },
+  { label: 'Notes', to: '/blog' },
   { label: 'About', to: '/about' },
   { label: 'Uses', to: '/uses' },
 ];
 
+function LiveTime() {
+  const [time, setTime] = useState('');
+  useEffect(() => {
+    const update = () => {
+      const now = new Date();
+      setTime(now.toLocaleTimeString('en-US', {
+        timeZone: 'Asia/Shanghai',
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+      }));
+    };
+    update();
+    const id = setInterval(update, 1000);
+    return () => clearInterval(id);
+  }, []);
+  return <span className="font-mono tabular-nums">{time}</span>;
+}
+
 export default function Navbar() {
   const { pathname } = useLocation();
-  const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const isHomePage = pathname === '/';
   const homeHref = isHomePage ? '#home' : '/#home';
-  useEffect(() => {
-    const handleScroll = () => {
-      startTransition(() => {
-        setScrolled(window.scrollY > 20);
-      });
-    };
-
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Entrance animation — runs immediately, preloader covers it
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
-    gsap.fromTo(
-      '.nav-inner',
-      { y: -16 },
-      { y: 0, duration: 0.5, delay: 0.1, ease: 'power3.out' }
-    );
-  }, []);
 
   const closeMobile = useCallback(() => setMobileOpen(false), []);
 
@@ -58,127 +54,111 @@ export default function Navbar() {
 
   useEffect(() => { setMobileOpen(false); }, [pathname]);
 
-  const solid = !isHomePage || scrolled;
   const isActive = (path) => path === '/' ? isHomePage : pathname === path;
-
-  const mobileLinkClass =
-    'block rounded-lg px-4 py-3 text-base font-medium text-[var(--muted)] transition-colors hover:bg-[var(--surface-soft)] hover:text-[var(--text)]';
 
   return (
     <>
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-[var(--primary)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white focus:outline-none"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[80] focus:rounded-lg focus:bg-[var(--primary)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
       >
         Skip to content
       </a>
-      <nav
-        aria-label="Main navigation"
-        className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-500 ${
-          solid
-            ? 'border-[var(--line)] bg-[var(--bg)]/86 shadow-[var(--shadow-nav)] backdrop-blur-xl'
-            : 'border-transparent bg-[var(--bg)]/24 backdrop-blur-sm'
-        }`}
-      >
-        <div className="nav-inner mx-auto max-w-7xl px-6">
-          <div className="flex h-16 items-center justify-between">
-            <a href={homeHref} className="type-display text-xl font-bold tracking-tight text-[var(--text)]">
-              Damon.
+
+      <header className="absolute inset-x-0 top-3 z-50 px-3 md:fixed md:top-4">
+        <div className="mx-auto max-w-7xl">
+          <div className="glass flex h-12 items-center justify-between gap-3 rounded-full border border-[var(--line)] px-2.5 shadow-[0_18px_70px_-45px_var(--primary)] md:px-3">
+            <a href={homeHref} className="flex items-center gap-2.5 shrink-0">
+              <span className="relative flex h-8 w-8 items-center justify-center rounded-full bg-[var(--primary)] text-[var(--bg)] font-display font-bold text-sm">
+                D
+                <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-emerald-400 ring-2 ring-[var(--bg)] animate-pulse" />
+              </span>
+              <span className="hidden sm:inline font-display font-semibold tracking-tight text-[var(--text)]">
+                Damon
+              </span>
             </a>
 
-            <div className="hidden gap-1 text-sm font-medium sm:flex">
+            <nav className="hidden md:flex items-center gap-0.5" aria-label="Main navigation">
               {navLinks.map((link) => {
                 const active = isActive(link.to);
-                const href = link.isHash ? homeHref : link.to;
                 const Wrapper = link.isHash ? 'a' : Link;
-                const wrapperProps = link.isHash ? { href } : { to: link.to };
-
+                const props = link.isHash ? { href: homeHref } : { to: link.to };
                 return (
                   <Wrapper
                     key={link.to}
-                    {...wrapperProps}
-                    className={`relative px-3 py-1.5 rounded-lg transition-colors ${
+                    {...props}
+                    className={`relative px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
                       active
                         ? 'text-[var(--text)]'
-                        : 'text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--surface-soft)]/50'
+                        : 'text-[var(--muted)] hover:text-[var(--text)]'
                     }`}
                   >
                     {link.label}
                     {active && (
-                      <motion.div
-                        layoutId="nav-underline"
-                        className="absolute inset-x-1.5 -bottom-[1px] h-[2px] rounded-full bg-[var(--primary)]"
-                        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                      <motion.span
+                        layoutId="nav-pill"
+                        className="absolute inset-0 -z-10 rounded-full bg-[var(--surface-strong)]"
+                        transition={{ type: 'spring', stiffness: 400, damping: 35 }}
                       />
                     )}
                   </Wrapper>
                 );
               })}
-            </div>
+            </nav>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <div className="hidden lg:flex items-center gap-2 rounded-full border border-[var(--line)] px-2.5 py-1 text-[10px] font-mono uppercase tracking-wider text-[var(--muted)]">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>CST</span>
+                <LiveTime />
+              </div>
+              <ThemeToggle />
+              <a
+                href="mailto:hello@damon.ai"
+                className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-[var(--primary)] px-3.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[var(--primary-strong)] active:scale-[0.97]"
+              >
+                Contact
+              </a>
               <button
-                className="sm:hidden rounded-full bg-[var(--surface-soft)] p-2 text-[var(--muted)] transition-colors hover:text-[var(--text)] [box-shadow:0_0_0_1px_var(--line)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus)]"
+                className="rounded-full border border-[var(--line)] p-2 text-[var(--muted)] hover:text-[var(--text)] md:hidden"
                 aria-expanded={mobileOpen}
-                aria-controls="mobile-nav-sheet"
+                aria-controls="mobile-nav"
                 aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-                onClick={() => setMobileOpen((v) => !v)}
+                onClick={() => setMobileOpen(v => !v)}
               >
                 {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
               </button>
-              <ThemeToggle />
-              <a
-                href="https://www.linkedin.com/in/shengyue-guan-1a7b3226b/"
-                target="_blank"
-                rel="noreferrer"
-                className="hidden sm:inline-flex rounded-full bg-[var(--surface-soft)] px-4 py-1.5 text-xs font-semibold tracking-wide text-[var(--muted-strong)] transition-all duration-200 [box-shadow:0_0_0_1px_var(--ring)] hover:[box-shadow:0_0_0_1px_var(--ring-strong)] active:scale-[0.97]"
-              >
-                Connect
-              </a>
             </div>
           </div>
         </div>
-      </nav>
+      </header>
 
       {mobileOpen && (
         <>
+          <div className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm" onClick={closeMobile} aria-hidden="true" />
           <div
-            className="fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm"
-            onClick={closeMobile}
-            aria-hidden="true"
-          />
-          <div
-            id="mobile-nav-sheet"
+            id="mobile-nav"
             role="dialog"
             aria-modal="true"
-            aria-label="Navigation menu"
-            className="fixed right-0 top-0 z-[60] h-full w-72 border-l border-[var(--line)] bg-[var(--bg)] shadow-2xl"
+            className="fixed left-3 right-3 top-20 z-[60] overflow-hidden rounded-[1.5rem] border border-[var(--line)] bg-[var(--surface)] shadow-[0_24px_90px_-45px_var(--primary)]"
           >
-            <div className="flex items-center justify-between border-b border-[var(--line)] px-6 py-4">
-              <span className="type-display text-lg font-bold text-[var(--text)]">Damon.</span>
-              <button
-                onClick={closeMobile}
-                aria-label="Close navigation menu"
-                className="rounded-full p-2 text-[var(--muted)] transition-colors hover:text-[var(--text)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus)]"
-              >
-                <X className="h-5 w-5" />
+            <div className="flex items-center justify-between border-b border-[var(--line)] px-5 py-4">
+              <span className="font-display font-bold">Menu</span>
+              <button onClick={closeMobile} aria-label="Close" className="rounded-md p-2 text-[var(--muted)] hover:text-[var(--text)]">
+                <X className="h-4 w-4" />
               </button>
             </div>
-            <nav className="flex flex-col gap-1 p-4">
-              <a href={homeHref} onClick={closeMobile} className={mobileLinkClass}>Home</a>
-              <Link to="/projects" onClick={closeMobile} className={mobileLinkClass}>Projects</Link>
-              <Link to="/blog" onClick={closeMobile} className={mobileLinkClass}>Blog</Link>
-              <Link to="/about" onClick={closeMobile} className={mobileLinkClass}>About</Link>
-              <Link to="/uses" onClick={closeMobile} className={mobileLinkClass}>Uses</Link>
-              <a
-                href="https://www.linkedin.com/in/shengyue-guan-1a7b3226b/"
-                target="_blank"
-                rel="noreferrer"
-                onClick={closeMobile}
-                className={`${mobileLinkClass} mt-2 border-t border-[var(--line)] pt-4`}
-              >
-                Connect on LinkedIn
-              </a>
+            <nav className="flex flex-col p-3" aria-label="Mobile navigation">
+              {navLinks.map((link) => {
+                const Wrapper = link.isHash ? 'a' : Link;
+                const props = link.isHash ? { href: homeHref } : { to: link.to };
+                return (
+                  <Wrapper key={link.to} {...props} onClick={closeMobile}
+                    className="rounded-md px-3 py-2.5 text-sm font-medium text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--text)]">
+                    {link.label}
+                  </Wrapper>
+                );
+              })}
             </nav>
           </div>
         </>

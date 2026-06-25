@@ -46,10 +46,21 @@
       }
     </script>
 
-    <!-- FOUC prevention with prefers-color-scheme fallback -->
+    <!-- FOUC prevention — dark-first default, honor an explicit light choice -->
     <script>
-      (function(){try{var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.classList.remove('dark')}else if(t==='dark'){document.documentElement.classList.add('dark')}else{document.documentElement.classList.add(window.matchMedia('(prefers-color-scheme: light)').matches?'':'dark')}}catch(e){document.documentElement.classList.add('dark')}})()
+      (function(){try{var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.classList.remove('dark')}else{document.documentElement.classList.add('dark')}}catch(e){document.documentElement.classList.add('dark')}})()
     </script>
+
+    <!-- Pre-paint the dark surface on html/body/#root so the empty #root never
+         flashes white before React + CSS mount. Vite injects styles via JS, so
+         without this the browser paints its default white for a frame. The
+         :not(.dark) override mirrors an explicit light choice (see script above). -->
+    <meta name="theme-color" content="#0a0a0c" />
+    <style>
+      html { color-scheme: dark; background-color: #0a0a0c; }
+      html:not(.dark) { color-scheme: light; background-color: #f8f7f4; }
+      body, #root { background-color: inherit; }
+    </style>
   </head>
   <body>
     <div id="root"></div>

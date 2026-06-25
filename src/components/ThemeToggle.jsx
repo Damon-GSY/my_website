@@ -2,14 +2,6 @@ import { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sun, Moon } from 'lucide-react';
 
-function getStoredTheme() {
-  try {
-    return localStorage.getItem('theme');
-  } catch {
-    return null;
-  }
-}
-
 function setStoredTheme(theme) {
   try {
     localStorage.setItem('theme', theme);
@@ -21,9 +13,8 @@ function setStoredTheme(theme) {
 export default function ThemeToggle() {
   const [dark, setDark] = useState(() => {
     if (typeof window === 'undefined') return true;
-    const stored = getStoredTheme();
-    if (stored) return stored === 'dark';
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // sync with the class the inline FOUC script already applied before paint
+    return document.documentElement.classList.contains('dark');
   });
 
   useEffect(() => {

@@ -3,8 +3,12 @@ import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import heroImage from '@/assets/hero.png';
 import { posts } from '@/data/posts';
+import ParticleField from '@/components/ui/particle-field';
+import EncryptedText from '@/components/ui/encrypted-text';
+import HeroKineticWord from '@/components/ui/hero-kinetic-word';
+import MagneticButton from './MagneticButton';
+import MorphContact from '@/components/ui/morph-contact';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,7 +28,7 @@ const Hero = forwardRef(function Hero() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (prefersReducedMotion) {
-      gsap.set(imageWrapRef.current, { clipPath: 'inset(0% 0% 0% 0%)' });
+      gsap.set(imageWrapRef.current, { opacity: 1, y: 0 });
       gsap.set(imageInnerRef.current, { scale: 1, y: 0 });
       gsap.set(focusRef.current, { opacity: 1, y: 0 });
       gsap.set(stripRef.current, { opacity: 1, y: 0 });
@@ -79,13 +83,6 @@ const Hero = forwardRef(function Hero() {
           { y: 14, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.5, stagger: 0.06 },
           1.0
-        );
-
-        tl.fromTo(
-          imageWrapRef.current,
-          { clipPath: 'inset(100% 0% 0% 0%)' },
-          { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'power3.inOut' },
-          0.35
         );
 
         tl.fromTo(
@@ -205,7 +202,6 @@ const Hero = forwardRef(function Hero() {
     };
   }, []);
 
-  const headline = 'Building agent systems that ship.';
   const focusItems = [
     { label: 'Research', value: 'Agentic RL · Eval' },
     { label: 'Production', value: 'Alibaba · Shipping' },
@@ -218,20 +214,35 @@ const Hero = forwardRef(function Hero() {
     { k: 'based', v: 'Hangzhou' },
     { k: 'papers', v: '4' },
   ];
+  const dashboardSignals = [
+    { k: 'eval suite', v: '42 axes' },
+    { k: 'tool pool', v: '100+' },
+    { k: 'handoff', v: '<1s' },
+  ];
+  const deskItems = [
+    'multi-turn eval taxonomy',
+    'tool resolver traces',
+    'post-training reward notes',
+  ];
   const latestPost = posts[0];
   const techStack = ['Python', 'PyTorch', 'React', 'GSAP'];
 
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-[100dvh] w-full overflow-hidden flex flex-col"
+      className="relative min-h-[86dvh] w-full overflow-hidden flex flex-col"
       id="home"
       aria-labelledby="hero-heading"
     >
       <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-[5%] h-[460px] w-[680px] max-w-[92%] -translate-x-1/2 rounded-full bg-[var(--primary)]/[0.08] blur-[130px]"
+      />
+      <ParticleField />
+      <div
         ref={gridRef}
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.18]"
+        className="pointer-events-none absolute inset-0 opacity-[0.12]"
         style={{
           backgroundImage:
             'linear-gradient(to right, var(--line) 1px, transparent 1px), linear-gradient(to bottom, var(--line) 1px, transparent 1px)',
@@ -245,7 +256,7 @@ const Hero = forwardRef(function Hero() {
       />
 
       {/* Top metadata bar */}
-      <div className="relative z-10 pt-24 md:pt-28 px-6 md:px-10 shrink-0">
+      <div className="relative z-10 pt-20 px-6 md:px-10 md:pt-24 shrink-0">
         <div className="flex items-center justify-between text-[11px] font-medium uppercase tracking-[0.2em] text-[var(--muted)]">
           <span className="meta-item inline-flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-[var(--primary)] animate-pulse" />
@@ -257,27 +268,28 @@ const Hero = forwardRef(function Hero() {
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 px-6 md:px-10 py-8 md:py-10 items-stretch">
+      <div className="relative z-10 flex-1 grid grid-cols-1 gap-8 px-6 py-8 md:px-10 md:py-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.78fr)] lg:items-center">
         {/* Left: headline + focus + CTAs */}
-        <div ref={introRef} className="lg:col-span-7 flex flex-col justify-center order-2 lg:order-1">
-          <p className="meta-item text-xs font-semibold uppercase tracking-[0.25em] text-[var(--primary)] mb-4 md:mb-6">
-            AI Researcher / Agent Systems
-          </p>
+        <div ref={introRef} className="order-1 flex flex-col justify-center">
+          <div className="meta-item mb-4 md:mb-6">
+            <EncryptedText
+              as="p"
+              text="AI Researcher / Agent Systems"
+              className="text-xs font-semibold uppercase tracking-[0.25em] text-[var(--primary)]"
+            />
+          </div>
           <h1
             id="hero-heading"
-            className="type-display font-medium leading-[1.0] tracking-[-0.03em] text-[var(--text)] text-[2.75rem] sm:text-6xl md:text-7xl lg:text-[5.5rem]"
+            className="type-display max-w-4xl text-[2.55rem] font-medium leading-[0.96] tracking-[-0.03em] text-[var(--text)] sm:text-5xl md:text-6xl lg:text-[4.7rem] xl:text-[5.35rem]"
           >
-            {headline.split(' ').map((word, i) => (
-              <span key={i} className="inline-block overflow-hidden align-bottom mr-[0.25em]">
-                <span className="headline-word inline-block">
-                  {word === 'ship.' ? (
-                    <em className="not-italic text-[var(--primary)]">{word}</em>
-                  ) : (
-                    word
-                  )}
-                </span>
+            {['Building', 'agent', 'systems', 'that'].map((word) => (
+              <span key={word} className="inline-block overflow-hidden align-bottom mr-[0.25em]">
+                <span className="headline-word inline-block">{word}</span>
               </span>
             ))}
+            <span className="headline-word inline-block overflow-visible align-bottom">
+              <HeroKineticWord />.
+            </span>
           </h1>
           <p className="intro-sub mt-6 md:mt-8 text-sm md:text-base leading-relaxed text-[var(--muted)] max-w-md">
             Researching and deploying agentic RL, post-training, and evaluation
@@ -303,38 +315,117 @@ const Hero = forwardRef(function Hero() {
           </div>
 
           <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2">
-            <a href="mailto:hello@damon.ai"
-              className="meta-item inline-flex items-center gap-2 rounded-full bg-[var(--text)] text-[var(--bg)] px-5 py-2.5 text-sm font-semibold transition-transform active:scale-[0.97]">
-              Get in touch
-            </a>
-            <a href="https://github.com/Damon-GSY" target="_blank" rel="noreferrer"
-              className="meta-item inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)]/60 px-5 py-2.5 text-sm font-semibold text-[var(--text)] transition-colors hover:border-[var(--line-strong)]">
-              GitHub ↗
-            </a>
+            <MagneticButton strength={0.35}>
+              <MorphContact
+                triggerClassName="meta-item inline-flex items-center gap-2 rounded-full bg-[var(--primary)] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--primary-strong)] active:scale-[0.97]"
+                triggerAriaLabel="Get in touch — open contact overlay"
+              >
+                Get in touch
+              </MorphContact>
+            </MagneticButton>
+            <MagneticButton strength={0.35}>
+              <a href="https://github.com/Damon-GSY" target="_blank" rel="noreferrer"
+                className="meta-item inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--surface)]/60 px-5 py-2.5 text-sm font-semibold text-[var(--text)] transition-colors hover:border-[var(--line-strong)]">
+                GitHub ↗
+              </a>
+            </MagneticButton>
           </div>
         </div>
 
         {/* Right: portrait + credential caption */}
-        <div className="lg:col-span-5 order-1 lg:order-2 flex flex-col gap-4">
-          <div className="relative flex-1 min-h-[280px] [perspective:900px]">
+        <div className="order-2 flex flex-col gap-4 lg:min-h-[520px]">
+          <div className="relative min-h-[340px] flex-1 overflow-hidden rounded-[2rem] border border-[var(--line)] bg-[var(--surface-soft)] shadow-[0_24px_80px_-48px_var(--primary)] [perspective:900px]">
             <div
               ref={imageWrapRef}
-              className="relative h-full w-full overflow-hidden"
-              style={{ clipPath: 'inset(100% 0% 0% 0%)', willChange: 'clip-path' }}
+              className="absolute inset-2 overflow-hidden rounded-[1.45rem] border border-[var(--line)] bg-[var(--bg)]"
+              style={{ willChange: 'transform, opacity' }}
             >
-              <div ref={imageInnerRef} className="absolute inset-0" style={{ willChange: 'transform' }}>
-                <img
-                  src={heroImage}
-                  alt="Portrait of Damon"
-                  className="h-full w-full object-cover grayscale-[15%]"
-                  fetchPriority="high"
-                  decoding="async"
-                  loading="eager"
+              <div ref={imageInnerRef} className="absolute inset-0 p-4 md:p-5" style={{ willChange: 'transform' }}>
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-[radial-gradient(circle_at_25%_20%,var(--primary)_0%,transparent_18%),radial-gradient(circle_at_80%_70%,var(--primary)_0%,transparent_16%)] opacity-20"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white/90 text-[10px] font-mono uppercase tracking-wider">
-                  <span>Damon G.</span>
-                  <span>2026</span>
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 opacity-[0.16]"
+                  style={{
+                    backgroundImage:
+                      'linear-gradient(to right, var(--line) 1px, transparent 1px), linear-gradient(to bottom, var(--line) 1px, transparent 1px)',
+                    backgroundSize: '42px 42px',
+                  }}
+                />
+                <div className="absolute left-4 right-4 top-4 flex items-center justify-between rounded-full border border-white/10 bg-black/25 px-3 py-2 text-[9px] font-mono uppercase tracking-[0.16em] text-white/75 backdrop-blur-md">
+                  <span>research desk</span>
+                  <span>hangzhou / 2026</span>
+                </div>
+
+                <div className="relative flex h-full flex-col justify-between pt-12 text-white">
+                  <div className="grid gap-3">
+                    <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.06] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+                      <div
+                        aria-hidden="true"
+                        className="absolute -right-10 -top-10 h-32 w-32 rounded-full border border-[var(--primary)]/25"
+                      />
+                      <div className="relative flex items-start gap-4">
+                        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/10 font-display text-xl font-semibold shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+                          D
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/50">
+                            active profile
+                          </p>
+                          <p className="mt-2 font-display text-3xl font-semibold leading-none tracking-tight md:text-4xl">
+                            Damon Guo-Siyi
+                          </p>
+                          <div className="mt-3 flex flex-wrap gap-2">
+                            {['Alibaba', 'Hangzhou', 'AI creator'].map((item) => (
+                              <span key={item} className="rounded-md border border-white/10 bg-black/20 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-white/55">
+                                {item}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      <p className="relative mt-4 max-w-sm text-sm leading-6 text-white/62">
+                        I write the eval before I train the model, then turn the
+                        trace into a tool surface people can actually operate.
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-2">
+                      {dashboardSignals.map((item) => (
+                        <div key={item.k} className="rounded-xl border border-white/10 bg-black/20 p-3">
+                          <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-white/45">
+                            {item.k}
+                          </p>
+                          <p className="mt-2 font-display text-xl font-semibold tracking-tight text-white">
+                            {item.v}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="rounded-2xl border border-white/10 bg-black/25 p-3 backdrop-blur-md">
+                    <div className="mb-2 flex items-center justify-between">
+                      <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-white/38">
+                        desk queue
+                      </span>
+                      <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-[var(--primary)]">
+                        public notes soon
+                      </span>
+                    </div>
+                    {deskItems.map((item, index) => (
+                      <div key={item} className="flex items-center gap-3 border-b border-white/10 py-2 last:border-b-0">
+                        <span className="font-mono text-[9px] text-[var(--primary)]">
+                          0{index + 1}
+                        </span>
+                        <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-white/65">
+                          {item}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

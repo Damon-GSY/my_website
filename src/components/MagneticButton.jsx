@@ -1,7 +1,9 @@
 import { useRef, useCallback } from 'react';
+import { useReducedMotion } from 'framer-motion';
 import gsap from 'gsap';
 
 export default function MagneticButton({ children, className = '', strength = 0.3, ...props }) {
+  const prefersReducedMotion = useReducedMotion();
   const ref = useRef(null);
   const tweenRef = useRef(null);
 
@@ -40,8 +42,10 @@ export default function MagneticButton({ children, className = '', strength = 0.
     <span
       ref={ref}
       className={`inline-block ${className}`}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      {...(!prefersReducedMotion && {
+        onMouseMove: handleMouseMove,
+        onMouseLeave: handleMouseLeave,
+      })}
       {...props}
     >
       {children}

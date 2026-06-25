@@ -1,114 +1,110 @@
-import { useEffect, useRef } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { posts } from '@/data/posts';
 
-gsap.registerPlugin(ScrollTrigger);
+const fadeUp = {
+  hidden: { opacity: 0, y: 14 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
+};
 
 export default function Journal() {
-  const sectionRef = useRef(null);
   const latest = posts.slice(0, 4);
-
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return undefined;
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.journal-header',
-        { y: 40, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: 'power4.out',
-          scrollTrigger: { trigger: sectionRef.current, start: 'top 75%', once: true },
-        }
-      );
-
-      gsap.fromTo(
-        '.journal-row',
-        { y: 30, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.7,
-          stagger: 0.08,
-          ease: 'power4.out',
-          scrollTrigger: { trigger: '.journal-list', start: 'top 82%', once: true },
-        }
-      );
-
-      const rows = gsap.utils.toArray('.journal-row');
-      rows.forEach((row) => {
-        const title = row.querySelector('.journal-title');
-        const indicator = row.querySelector('.journal-indicator');
-        row.addEventListener('mouseenter', () => {
-          gsap.to(title, { x: 12, color: 'var(--primary)', duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
-          gsap.to(indicator, { width: '100%', duration: 0.5, ease: 'power3.out', overwrite: 'auto' });
-        });
-        row.addEventListener('mouseleave', () => {
-          gsap.to(title, { x: 0, color: 'var(--text)', duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
-          gsap.to(indicator, { width: '0%', duration: 0.5, ease: 'power3.out', overwrite: 'auto' });
-        });
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+  const reducedMotion = useReducedMotion();
 
   return (
-    <section ref={sectionRef} className="bg-[var(--surface)] py-24 md:py-32">
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
-        <div className="journal-header mb-12 md:mb-16 flex items-end justify-between flex-wrap gap-4">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[var(--primary)] mb-2">
-              (04) Writing
-            </p>
-            <h2 className="type-display text-3xl md:text-4xl font-medium tracking-tight text-[var(--text)]">
-              Recent journal
-            </h2>
+    <section
+      id="journal"
+      className="agent-os-section border-t border-[var(--line)] pb-20 pt-8 md:pb-24 md:pt-8"
+      aria-labelledby="journal-title"
+      data-hide-launcher
+      data-hide-mobile-launcher
+    >
+      <div className="agent-os-inner">
+        <motion.header
+          variants={fadeUp}
+          initial={reducedMotion ? false : 'hidden'}
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+          className="mb-6 flex flex-col gap-3 md:grid md:grid-cols-[0.72fr_1.28fr] md:items-end md:gap-5"
+        >
+          <div className="flex items-end justify-between gap-4">
+            <div className="mr-auto">
+              <p className="agent-os-inline-label">[04] event log</p>
+              <h2
+                id="journal-title"
+                className="font-display text-2xl font-medium tracking-tight text-[var(--text)] md:text-3xl"
+              >
+                Field notes
+              </h2>
+            </div>
+            <Link
+              to="/blog"
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-lg px-1 py-1 text-sm font-semibold text-[var(--text)] transition-colors hover:text-[var(--primary)] md:hidden"
+            >
+              All posts
+              <ArrowUpRight className="h-3.5 w-3.5" />
+            </Link>
           </div>
-          <Link
-            to="/blog"
-            className="text-sm font-semibold text-[var(--text)] border-b border-[var(--text)] pb-0.5 hover:text-[var(--primary)] hover:border-[var(--primary)] transition-colors"
-          >
-            All posts →
-          </Link>
-        </div>
+          <div className="flex items-end justify-between gap-5">
+            <p className="max-w-xl text-sm leading-7 text-[var(--muted)]">
+              Research and production observations appended to the same system.
+            </p>
+            <Link
+              to="/blog"
+              className="hidden shrink-0 items-center gap-1.5 rounded-lg px-2 py-1 text-sm font-semibold text-[var(--text)] transition-colors hover:text-[var(--primary)] md:inline-flex"
+            >
+              All posts
+              <ArrowUpRight className="h-3.5 w-3.5" />
+            </Link>
+          </div>
+        </motion.header>
 
-        <div className="journal-list border-t border-[var(--line)]">
-          {latest.map((post) => (
-            <div key={post.slug} className="journal-row border-b border-[var(--line)] last:border-b-0">
+        <motion.ol
+          initial={reducedMotion ? false : 'hidden'}
+          whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+          variants={{ visible: { transition: { staggerChildren: 0.06 } } }}
+          className="m-0 list-none border-b border-[var(--line)] p-0"
+          aria-label="Latest journal events"
+        >
+          {latest.map((post, index) => (
+            <motion.li
+              key={post.slug}
+              variants={fadeUp}
+              className="border-t border-[var(--line)]"
+            >
               <Link
                 to={`/blog/${post.slug}`}
-                className="block py-6 md:py-8 relative overflow-hidden"
+                className="group grid gap-3 py-5 transition-colors hover:bg-[var(--surface)]/55 sm:grid-cols-[5.5rem_7rem_minmax(0,1fr)_auto] sm:items-center sm:px-3 md:py-6"
               >
-                <div className="grid grid-cols-12 gap-4 items-baseline">
-                  <div className="col-span-3 md:col-span-2">
-                    <span className="type-mono text-xs text-[var(--muted)]">
-                      {post.date}
-                    </span>
-                  </div>
-                  <div className="col-span-9 md:col-span-8">
-                    <h3 className="journal-title type-display text-xl md:text-3xl font-medium tracking-tight text-[var(--text)]">
-                      {post.title}
-                    </h3>
-                    <p className="mt-1.5 text-xs md:text-sm text-[var(--muted)]">
-                      {post.excerpt}
-                    </p>
-                  </div>
-                  <div className="col-span-12 md:col-span-2 flex md:justify-end">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--muted)] border border-[var(--line)] rounded-full px-2.5 py-0.5">
-                      {post.category}
-                    </span>
-                  </div>
-                </div>
-                <div className="journal-indicator absolute bottom-0 left-0 h-[1px] w-0 bg-[var(--primary)]" />
+                <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--primary)]">
+                  event {String(index + 1).padStart(2, '0')}
+                </span>
+                <time
+                  dateTime={post.date}
+                  className="font-mono text-[11px] tabular-nums text-[var(--muted-strong)]"
+                >
+                  {post.date}
+                </time>
+                <span className="min-w-0">
+                  <span className="block font-display text-base font-medium text-[var(--text)] transition-colors group-hover:text-[var(--primary)] md:text-lg">
+                    {post.title}
+                  </span>
+                  <span className="mt-1 block truncate text-xs text-[var(--muted)]">
+                    {post.excerpt}
+                  </span>
+                </span>
+                <span className="flex items-center justify-between gap-3 sm:justify-end">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--muted-strong)]">
+                    {post.readingTime}
+                  </span>
+                  <ArrowUpRight className="h-4 w-4 shrink-0 text-[var(--muted)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--primary)]" />
+                </span>
               </Link>
-            </div>
+            </motion.li>
           ))}
-        </div>
+        </motion.ol>
       </div>
     </section>
   );

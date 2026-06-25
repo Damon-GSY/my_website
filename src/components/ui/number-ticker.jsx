@@ -9,11 +9,14 @@ export default function NumberTicker({
 }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-50px' });
-  const [display, setDisplay] = useState(direction === 'up' ? 0 : value);
+  const hasAnimated = useRef(false);
+  const [display, setDisplay] = useState(value);
 
   useEffect(() => {
-    if (!inView) return;
+    if (!inView || hasAnimated.current) return;
+    hasAnimated.current = true;
 
+    let rafId;
     const timeout = setTimeout(() => {
       const start = direction === 'up' ? 0 : value;
       const end = direction === 'up' ? value : 0;
@@ -25,20 +28,23 @@ export default function NumberTicker({
         const progress = Math.min(elapsed / duration, 1);
         const eased = 1 - Math.pow(1 - progress, 3);
         setDisplay(Math.round(start + (end - start) * eased));
-        if (progress < 1) requestAnimationFrame(tick);
+        if (progress < 1) rafId = requestAnimationFrame(tick);
       }
 
-      requestAnimationFrame(tick);
+      rafId = requestAnimationFrame(tick);
     }, delay * 1000);
 
-    return () => clearTimeout(timeout);
+    return () => {
+      clearTimeout(timeout);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, [inView, value, direction, delay]);
 
   return (
     <motion.span
       ref={ref}
-      initial={{ opacity: 0, y: 10 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
+      initial={false}
+      animate={inView ? { opacity: 1, y: 0 } : undefined}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay }}
       className={`tabular-nums ${className}`}
     >

@@ -1,121 +1,116 @@
-import { useEffect, useRef } from 'react';
-import { ArrowUpRight } from 'lucide-react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { motion } from 'framer-motion';
+import { Mail, Linkedin, Youtube, Github } from 'lucide-react';
 import MagneticButton from '../MagneticButton';
+import AuroraBackground from '../ui/aurora-background';
 
-gsap.registerPlugin(ScrollTrigger);
+// Bilibili has no lucide glyph — a compact stroke mark (TV + antennae + eyes)
+// kept in the same weight as the lucide brand icons so the strip reads uniform.
+function BilibiliMark({ className }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M7.5 3.5 10 6M16.5 3.5 14 6" />
+      <rect x="3" y="7" width="18" height="13" rx="3.5" />
+      <path d="M9 12h0M15 12h0" strokeWidth="2.6" />
+    </svg>
+  );
+}
+
+const channels = [
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/shengyue-guan-1a7b3226b/', Mark: Linkedin },
+  { label: 'GitHub', href: 'https://github.com/Damon-GSY', Mark: Github },
+  { label: 'YouTube', href: 'https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA', Mark: Youtube },
+  { label: 'Bilibili', href: 'https://space.bilibili.com/358541297', Mark: BilibiliMark },
+  { label: 'Email', href: 'mailto:hello@damon.ai', Mark: Mail },
+];
+
+function ChannelStrip() {
+  return (
+    <ul className="flex flex-wrap items-center justify-center gap-1">
+      {channels.map((item) => {
+        const { label, href } = item;
+        const Mark = item.Mark;
+        const external = href.startsWith('http');
+        return (
+          <li key={label}>
+            <a
+              href={href}
+              target={external ? '_blank' : undefined}
+              rel={external ? 'noreferrer' : undefined}
+              className="group relative flex h-11 items-center gap-2 rounded-full border border-transparent px-3.5 text-[var(--muted)] transition-colors duration-300 hover:border-[var(--line)] hover:bg-[var(--surface)] hover:text-[var(--primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus)]"
+              aria-label={label}
+            >
+              <Mark className="h-4 w-4 transition-colors duration-300" />
+              <span className="max-w-0 overflow-hidden whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.16em] opacity-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:max-w-[8rem] group-hover:opacity-100 group-focus-visible:max-w-[8rem] group-focus-visible:opacity-100">
+                {label}
+              </span>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
 
 export default function Contact() {
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return undefined;
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.contact-letter',
-        { yPercent: 110 },
-        {
-          yPercent: 0,
-          duration: 1,
-          stagger: 0.04,
-          ease: 'power4.out',
-          scrollTrigger: { trigger: sectionRef.current, start: 'top 70%', once: true },
-        }
-      );
-
-      gsap.fromTo(
-        '.contact-cta',
-        { y: 30, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: 'power4.out',
-          scrollTrigger: { trigger: '.contact-cta', start: 'top 85%', once: true },
-        }
-      );
-
-      gsap.fromTo(
-        '.contact-meta',
-        { y: 20, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.6,
-          stagger: 0.1,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: '.contact-meta', start: 'top 88%', once: true },
-        }
-      );
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  const phrase = "LET'S TALK";
-
   return (
-    <section ref={sectionRef} className="bg-[var(--bg)] pt-24 md:pt-32 pb-12 md:pb-16">
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[var(--primary)] mb-6 md:mb-10">
-          (05) Get in touch
-        </p>
+    <section
+      id="contact"
+      data-hide-launcher
+      className="border-t border-[var(--line)] py-20 md:py-28"
+    >
+      <div className="mx-auto max-w-7xl px-4 md:px-6">
+        <motion.div
+          initial={false}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="relative overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--surface)]"
+        >
+          <AuroraBackground />
 
-        <div className="overflow-hidden">
-          <h2 className="type-display font-medium leading-[0.9] tracking-[-0.04em] text-[var(--text)]"
-            style={{ fontSize: 'clamp(3.5rem, 16vw, 16rem)' }}
-          >
-            {phrase.split('').map((letter, i) => (
-              <span key={i} className="inline-block overflow-hidden">
-                <span className="contact-letter inline-block" style={{ willChange: 'transform' }}>
-                  {letter === ' ' ? ' ' : letter}
-                </span>
-              </span>
-            ))}
-          </h2>
-        </div>
+          <div className="relative p-8 text-center md:p-14">
+            <p className="mb-4 text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--primary)]">
+              [05] initiate_contact
+            </p>
+            <h2 className="font-display text-balance text-4xl font-medium tracking-tight text-[var(--text)] md:text-6xl">
+              Let&rsquo;s build something
+              <br />
+              worth <span className="text-[var(--primary)]">shipping.</span>
+            </h2>
+            <p className="mx-auto mt-5 max-w-md text-sm text-[var(--muted)] md:text-base">
+              Open to collaborations on agent systems, evaluation research,
+              and AI content production.
+            </p>
 
-        <div className="contact-cta mt-10 md:mt-14 flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
-          <MagneticButton strength={0.2}>
-            <a
-              href="mailto:hello@damon.ai"
-              className="inline-flex items-center gap-3 bg-[var(--text)] text-[var(--bg)] rounded-full px-7 py-4 text-sm font-semibold transition-transform"
-            >
-              hello@damon.ai
-              <ArrowUpRight className="h-4 w-4" />
-            </a>
-          </MagneticButton>
-          <p className="text-sm text-[var(--muted)] max-w-sm">
-            Open to collaborations on agent systems, evaluation research, and
-            AI content production.
-          </p>
-        </div>
+            <div className="mt-8 flex justify-center">
+              <MagneticButton strength={0.4}>
+                <a
+                  href="mailto:hello@damon.ai"
+                  className="inline-flex items-center gap-2 rounded-lg bg-[var(--primary)] px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[var(--primary-strong)] active:scale-[0.97]"
+                >
+                  <Mail className="h-4 w-4" />
+                  hello@damon.ai
+                </a>
+              </MagneticButton>
+            </div>
 
-        <div className="contact-meta mt-16 md:mt-24 grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-[var(--line)]">
-          {[
-            { label: 'LinkedIn', href: 'https://www.linkedin.com/in/shengyue-guan-1a7b3226b/', value: '@shengyue-guan' },
-            { label: 'YouTube', href: 'https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA', value: '@damon-ai' },
-            { label: 'Bilibili', href: 'https://space.bilibili.com/358541297', value: '@damon' },
-            { label: 'GitHub', href: 'https://github.com/Damon-GSY', value: '@Damon-GSY' },
-          ].map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              target="_blank"
-              rel="noreferrer"
-              className="group block"
-            >
-              <p className="text-[10px] font-mono uppercase tracking-wider text-[var(--muted)] mb-1">
-                {item.label}
+            <div className="mt-12 border-t border-[var(--line)] pt-8">
+              <p className="mb-5 text-[10px] font-mono uppercase tracking-[0.22em] text-[var(--muted)]">
+                Elsewhere
               </p>
-              <p className="text-sm font-semibold text-[var(--text)] group-hover:text-[var(--primary)] transition-colors">
-                {item.value} ↗
-              </p>
-            </a>
-          ))}
-        </div>
+              <ChannelStrip />
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

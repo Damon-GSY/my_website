@@ -47,16 +47,16 @@ export default function Marquee({ items = [], speed = 30 }) {
   return (
     <section
       ref={sectionRef}
-      className="relative py-8 md:py-12 border-y border-[var(--line)] overflow-hidden bg-[var(--bg)]"
+      className="relative py-3 md:py-4 border-y border-[var(--line)] overflow-hidden bg-[var(--bg)]"
     >
       <div className="overflow-hidden">
         <div ref={trackRef} className="flex items-center gap-8 whitespace-nowrap will-change-transform">
           {[...items, ...items].map((item, i) => (
             <span key={i} className="flex items-center gap-8">
-              <span className="type-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-[var(--text)]">
+              <span className="type-display text-xl md:text-3xl lg:text-4xl font-semibold tracking-tight text-[var(--text)]">
                 {item}
               </span>
-              <span className="text-3xl md:text-5xl text-[var(--primary)]">✦</span>
+              <span className="text-xl md:text-3xl text-[var(--primary)]">✦</span>
             </span>
           ))}
         </div>
