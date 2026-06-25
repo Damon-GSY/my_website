@@ -1,0 +1,213 @@
+{
+  "project": "Personal Website",
+  "reference": "https://aliabdaal.com/",
+  "created": "2026-03-19T15:45:00Z",
+  "tech_stack": ["Vite", "React 19", "styled-components", "Tailwind CSS"],
+  "excluded": ["Lead Magnet", "Paid Products/Resources"],
+  "features": [
+    {
+      "id": "F001",
+      "category": "hero",
+      "description": "Hero section displays 'I build AI' with interactive tooltip",
+      "steps": [
+        "Visit homepage",
+        "See large headline text",
+        "Observe 'AI' text has visual indicator (underline/color)",
+        "Hover over 'AI' text",
+        "See tooltip/popover appear with 'Agent' and 'Foundation Model' options"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F002",
+      "category": "hero",
+      "description": "Hero has polished visual design matching Ali Abdaal style",
+      "steps": [
+        "See clean, uncluttered layout",
+        "Observe professional typography (Cartograph CF font)",
+        "Notice subtle animations/transitions",
+        "View on mobile - responsive layout works"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F003",
+      "category": "hero",
+      "description": "RingLoader animation adds visual interest",
+      "steps": [
+        "See animated loader element",
+        "Animation is smooth (60fps)",
+        "Does not distract from main content"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F004",
+      "category": "topics",
+      "description": "Topics section displays 2 focus area cards",
+      "steps": [
+        "Scroll to Topics section",
+        "See section title",
+        "See 2 cards side by side (or stacked on mobile)",
+        "Card 1: AI Agents with icon and description",
+        "Card 2: Foundation Models with icon and description"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F005",
+      "category": "topics",
+      "description": "Topic cards have Ali Abdaal-style polish",
+      "steps": [
+        "Cards have clean design with subtle shadows",
+        "Hover effect is smooth and professional",
+        "Icons are visually appealing",
+        "Description text is readable"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F006",
+      "category": "topics",
+      "description": "Topic cards use SVG icons instead of emoji",
+      "steps": [
+        "No emoji used as icons",
+        "SVG icons are clean and professional",
+        "Dark mode works"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F007",
+      "category": "about",
+      "description": "About section displays personal story placeholder",
+      "steps": [
+        "Scroll to About section",
+        "See section title",
+        "See avatar/image area",
+        "See description text",
+        "See stats/achievements display"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F008",
+      "category": "about",
+      "description": "About section has clean, minimal design without emojis",
+      "steps": [
+        "See text avatar initials instead of emoji",
+        "Avatar ring animation is smooth and subtle",
+        "Dark mode works"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F009",
+      "category": "blog",
+      "description": "Blog section displays placeholder cards",
+      "steps": [
+        "Scroll to Blog/Writing section",
+        "See section title",
+        "See 3 placeholder blog cards",
+        "Each card has title, excerpt, date, tag",
+        "Cards show 'Coming Soon' status"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F010",
+      "category": "blog",
+      "description": "Blog cards have hover interactions",
+      "steps": [
+        "Hover on blog card",
+        "Card lifts with shadow",
+        "Top gradient bar animates in",
+        "Arrow icon moves"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F011",
+      "category": "contact",
+      "description": "Contact section displays email and social links",
+      "steps": [
+        "Scroll to Contact section",
+        "See section title",
+        "See 'Say Hello' button with email link",
+        "See social media buttons",
+        "Click email button opens mail client"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F012",
+      "category": "contact",
+      "description": "Contact button uses SVG mail icon instead of emoji",
+      "steps": [
+        "No emoji used as icon",
+        "SVG mail icon is clean",
+        "Hover effect is professional"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F013",
+      "category": "global",
+      "description": "Dark mode works across all sections",
+      "steps": [
+        "System in dark mode",
+        "All sections have dark color scheme",
+        "Text is readable (contrast is good)",
+        "No flash of wrong theme on load"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F014",
+      "category": "global",
+      "description": "Responsive design works on all screen sizes",
+      "steps": [
+        "Mobile (375px): single column, stacked layout",
+        "Tablet (768px): adjusted grid",
+        "Desktop (1440px): full layout",
+        "No horizontal scroll on any size"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F015",
+      "category": "global",
+      "description": "Page performance is optimized",
+      "steps": [
+        "Lighthouse score > 90",
+        "First contentful paint < 1s",
+        "No layout shift",
+        "Animations are smooth"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F016",
+      "category": "global",
+      "description": "Typography and spacing matches Ali Abdaal style",
+      "steps": [
+        "Consistent spacing rhythm (8px base)",
+        "Section padding is generous (80-120px)",
+        "Font sizes follow hierarchy",
+        "Line heights are readable (1.6+)"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F017",
+      "category": "global",
+      "description": "Footer displays copyright and minimal info",
+      "steps": [
+        "See footer at bottom",
+        "Copyright text is present",
+        "Design is clean and minimal"
+      ],
+      "passes": true
+    }
+  ]
+}

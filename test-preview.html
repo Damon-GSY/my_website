@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Damon.AI | AI Architect</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary-fixed-dim": "#e9c25b",
+              "on-primary-fixed": "#001f28",
+              "inverse-surface": "#31302f",
+              "surface-dim": "#dcdad7",
+              "surface-container-lowest": "#ffffff",
+              "secondary-container": "#fed56c",
+              "on-primary-fixed-variant": "#004e60",
+              "surface-container-highest": "#e5e2df",
+              "on-secondary-fixed": "#241a00",
+              "outline-variant": "#bdc8ce",
+              "on-secondary-container": "#775b00",
+              "tertiary-fixed-dim": "#ccc3d6",
+              "tertiary-container": "#c5bccf",
+              "surface-tint": "#00677f",
+              "surface-container-low": "#f6f3f0",
+              "error": "#ba1a1a",
+              "on-tertiary": "#ffffff",
+              "primary": "#00677f",
+              "on-tertiary-fixed": "#1e1927",
+              "surface-variant": "#e5e2df",
+              "surface-container": "#f0edea",
+              "on-secondary-fixed-variant": "#594400",
+              "error-container": "#ffdad6",
+              "inverse-primary": "#65d4f8",
+              "on-tertiary-container": "#514b5b",
+              "primary-fixed": "#b6eaff",
+              "secondary": "#765b00",
+              "tertiary": "#625b6c",
+              "on-tertiary-fixed-variant": "#4a4454",
+              "surface-container-high": "#eae8e5",
+              "on-background": "#1c1c1a",
+              "inverse-on-surface": "#f3f0ed",
+              "tertiary-fixed": "#e9dff3",
+              "primary-container": "#5dcdf1",
+              "background": "#fcf9f6",
+              "secondary-fixed": "#ffdf94",
+              "on-secondary": "#ffffff",
+              "surface-bright": "#fcf9f6",
+              "on-error": "#ffffff",
+              "outline": "#6e797e",
+              "surface": "#fcf9f6",
+              "on-primary": "#ffffff",
+              "on-surface": "#1c1c1a",
+              "on-error-container": "#93000a",
+              "primary-fixed-dim": "#65d4f8",
+              "on-primary-container": "#005569",
+              "on-surface-variant": "#3e484d"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif", "serif"],
+              "body": ["Plus Jakarta Sans", "sans-serif"],
+              "label": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #fcf9f6;
+            color: #1c1c1a;
+            overflow-x: hidden;
+        }
+        .editorial-shadow {
+            box-shadow: 0 20px 50px -12px rgba(28, 28, 26, 0.06);
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        /* Leading Lines Simulation */
+        .beam-container {
+            position: absolute;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .beam-svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+        @keyframes dash {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        .animate-beam {
+            stroke-dasharray: 12;
+            animation: dash 20s linear infinite;
+        }
+    </style>
+</head>
+<body class="selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl shadow-sm">
+<div class="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
+<div class="text-xl font-bold font-headline text-zinc-900 tracking-tight">Damon.AI</div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-cyan-600 font-semibold border-b border-cyan-500/30 font-headline tracking-tight text-sm uppercase" href="#">Projects</a>
+<a class="text-zinc-600 hover:text-cyan-500 transition-colors duration-300 font-headline tracking-tight text-sm uppercase" href="#">Services</a>
+<a class="text-zinc-600 hover:text-cyan-500 transition-colors duration-300 font-headline tracking-tight text-sm uppercase" href="#">About</a>
+<a class="text-zinc-600 hover:text-cyan-500 transition-colors duration-300 font-headline tracking-tight text-sm uppercase" href="#">Philosophy</a>
+</div>
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-6 py-3 rounded-full font-label text-sm font-semibold transition-transform duration-200 active:scale-95 shadow-md">
+                Let's Connect
+            </button>
+</div>
+</nav>
+<main class="relative pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto overflow-visible">
+<!-- Hero Section -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-32 relative">
+<div class="lg:col-span-7 z-20">
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant text-xs font-semibold mb-6 uppercase tracking-widest">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                    Available for Research
+                </div>
+<h1 class="text-6xl md:text-8xl font-headline font-bold text-on-surface leading-[1.1] tracking-tight mb-8">
+                    Hi, I'm Damon.<br/>
+<span class="italic text-primary">I Build AI.</span>
+</h1>
+<p class="text-lg md:text-xl text-on-surface-variant font-body max-w-xl leading-relaxed mb-10">
+                    Architecting the future of intelligence through multi-agent systems and vertical-specific models. Focused on high-impact industrial optimization.
+                </p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-on-surface text-surface px-8 py-4 rounded-full font-label font-bold tracking-tight hover:opacity-90 transition-opacity">
+                        View Portfolio
+                    </button>
+<button class="px-8 py-4 rounded-full border border-outline-variant font-label font-bold tracking-tight hover:bg-surface-container-low transition-colors">
+                        Read Research
+                    </button>
+</div>
+</div>
+<!-- Image & Floating Card Wrapper -->
+<div class="lg:col-span-5 relative">
+<!-- Main Image -->
+<div class="relative rounded-lg overflow-hidden editorial-shadow transform md:rotate-2 group">
+<img alt="Damon AI Architect Portrait" class="w-full h-[600px] object-cover grayscale hover:grayscale-0 transition-all duration-700" data-alt="Professional portrait of a male AI architect in a minimalist setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGTiprHd_2vQNvgqpGutHEIkbD-I4CXQauLIz26a4Et5EeG1Ph8vK_fWsnVRrEC4bknFtib9MNENR7suTAFRZZNaVYljd4vBhnOJvG7x0GyDDj9PBBz6W4JtqUoHfsXT3y8h8L5essH3AwGVd_n9mv1ONBhL_p1RF75bGFq3V8-U_x2poawU1t-Ki1eLUczAuER3ZQMf0MQmIM2XGSaLXAKSv4l8riHvF5p6yJbffOJmFTQTbIw3ZTwx-jL2AQCxkSiL7MJG8nErM"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent"></div>
+</div>
+<!-- Floating Architecture Card -->
+<div class="absolute -left-12 top-1/4 glass p-6 rounded-lg editorial-shadow border border-white/40 z-30 max-w-[240px] transform -rotate-3" id="source-container">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">architecture</span>
+</div>
+<span class="font-headline font-bold text-lg tracking-tight">I BUILD AI</span>
+</div>
+<div class="space-y-3">
+<div class="px-4 py-2 rounded-full bg-primary text-on-primary text-xs font-bold text-center transition-all hover:scale-105 cursor-pointer" id="pill-agent">
+                            Agent Architecture
+                        </div>
+<div class="px-4 py-2 rounded-full bg-secondary text-on-secondary text-xs font-bold text-center transition-all hover:scale-105 cursor-pointer" id="pill-vertical">
+                            Vertical Models
+                        </div>
+</div>
+</div>
+<!-- Decorative Spotlight Effect -->
+<div class="absolute -top-20 -right-20 w-64 h-64 bg-primary/10 blur-[100px] rounded-full pointer-events-none"></div>
+</div>
+</section>
+<!-- Bento Grid Section -->
+<section class="mt-40 relative">
+<div class="flex justify-between items-end mb-16">
+<div>
+<h2 class="text-4xl md:text-5xl font-headline font-bold mb-4">Selected Works</h2>
+<p class="text-on-surface-variant max-w-md">Orchestrating complex datasets into streamlined, intelligent solutions.</p>
+</div>
+<div class="hidden md:block h-px flex-grow mx-12 bg-outline-variant/30 mb-4"></div>
+<button class="text-primary font-bold flex items-center gap-2 group mb-4">
+                    Explore All <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+<!-- Visual Leading Lines (Beams) - Simulated for HTML -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none overflow-visible" xmlns="http://www.w3.org/2000/svg">
+<!-- Beam 1: Agent Architecture to Multi-Agent Card -->
+<path class="animate-beam opacity-40" d="M 300 450 Q 400 650 150 850" fill="none" id="beam1" stroke="url(#grad1)" stroke-linecap="round" stroke-width="3"></path>
+<!-- Beam 2: Vertical Models to Industrial Card -->
+<path class="animate-beam opacity-40" d="M 350 500 Q 800 600 950 850" fill="none" id="beam2" stroke="url(#grad2)" stroke-linecap="round" stroke-width="3"></path>
+<defs>
+<lineargradient id="grad1" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" style="stop-color:#00677f;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#5dcdf1;stop-opacity:1"></stop>
+</lineargradient>
+<lineargradient id="grad2" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" style="stop-color:#ba1a1a;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#e9c25b;stop-opacity:1"></stop>
+</lineargradient>
+</defs>
+</svg>
+<div class="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-6 h-auto md:h-[800px]">
+<!-- Card 1: Multi-Agent Systems (Destination of Beam 1) -->
+<div class="md:col-span-2 md:row-span-1 bg-surface-container-lowest rounded-lg p-8 editorial-shadow group overflow-hidden flex flex-col justify-between border border-transparent hover:border-primary/20 transition-all" id="target-agent">
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-6">
+<span class="text-primary-container bg-primary/5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest">Architecture</span>
+<span class="material-symbols-outlined text-outline-variant">bolt</span>
+</div>
+<h3 class="text-3xl font-headline font-bold mb-4">Multi-Agent Systems</h3>
+<p class="text-on-surface-variant leading-relaxed">Designing collaborative AI environments where specialized agents negotiate and solve complex multi-step tasks autonomously.</p>
+</div>
+<div class="mt-8 relative h-32 rounded-lg overflow-hidden">
+<img alt="AI Network Visualization" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" data-alt="Abstract glowing network of interconnected nodes representing AI agents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAX8KeVWt8sRRxvY2KfXClH7ZRqpH4vSgjKdLCZ2hNijvAOLZp-fC74tGxFo1mDZysSLpEKsB1dqlXnCXE8MnA9Yndx-1jmpKjDjMuprjo9Qi-gLrcxafOTAlKBa79V400lZr4kXdeJD36x7ZdrO9nrLfILy8pbi2eARhmvY7F3zhyt1zstPUClGPfyQFGhj85pG-jDDAp4knho1Tu7BEKixZROHAnCgAHSk9vCSlkbmAzjOUztBoXx2fFjDuwugOKWE9YbrsbyxFo"/>
+</div>
+</div>
+<!-- Card 2: Small Info Card -->
+<div class="md:col-span-1 md:row-span-1 bg-surface-container-high rounded-lg p-8 flex flex-col justify-center items-center text-center">
+<div class="text-5xl font-headline font-bold text-primary mb-2">94%</div>
+<div class="text-xs font-bold uppercase tracking-tighter text-on-surface-variant">Efficiency Gain In Legacy Stack Integration</div>
+</div>
+<!-- Card 3: Philosophy -->
+<div class="md:col-span-1 md:row-span-1 bg-primary text-on-primary rounded-lg p-8 flex flex-col justify-between">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<div>
+<h3 class="text-xl font-headline font-bold mb-2 italic">Intelligence is the new infrastructure.</h3>
+<p class="text-sm opacity-80">Building for permanence, not for trends.</p>
+</div>
+</div>
+<!-- Card 4: Industrial Optimization (Destination of Beam 2) -->
+<div class="md:col-span-4 md:row-span-1 bg-surface-container-low rounded-lg p-8 md:p-12 editorial-shadow group flex flex-col md:flex-row gap-8 items-center border border-transparent hover:border-error/20 transition-all" id="target-vertical">
+<div class="flex-1">
+<div class="inline-block px-3 py-1 rounded-full bg-error-container text-on-error-container text-xs font-bold mb-6">Vertical Model</div>
+<h3 class="text-4xl font-headline font-bold mb-6">Industrial Optimization</h3>
+<p class="text-on-surface-variant text-lg leading-relaxed mb-8">
+                            A bespoke neural framework developed for the <span class="text-on-surface font-semibold underline decoration-error/30">Chengdu-Chongqing economic circle</span>, optimizing supply chain logistics for high-precision manufacturing.
+                        </p>
+<div class="flex gap-3">
+<span class="px-4 py-1.5 rounded-full bg-surface-container-lowest text-xs font-bold">Logistics</span>
+<span class="px-4 py-1.5 rounded-full bg-surface-container-lowest text-xs font-bold">Supply Chain</span>
+<span class="px-4 py-1.5 rounded-full bg-surface-container-lowest text-xs font-bold">Neural Nets</span>
+</div>
+</div>
+<div class="w-full md:w-1/3 h-64 md:h-full rounded-lg overflow-hidden">
+<img alt="Industrial Port Logistics" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="Modern high-tech industrial container terminal with blue lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQmk-HTlcltUR9W7kWvH9ui7I8OOAI5vxdUV2yotCWFIoLvJMbGmx6y9Mz-Q-SbcelXdPo3Mg7ayPBa2BUovodLi6NGZWlzzHYpMImqkOPMofQSfCa6ve4S-CaPeoCKBdJxl-BSC3PnlvNyH7f4tGJe2OD3Oe4yvsxEZyUAPjHjN-rQdpvH_GBiWXHvf4N2E-kUFBhjHQJr8NZjG6d8r9AbZJSI9pJbR9V3JgHGe2WoDIuY2V0oEt6vp5nyLf8mV23LyAcgxsduqg"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Marquee / Social Proof -->
+<section class="mt-40 text-center">
+<h4 class="text-xs font-bold uppercase tracking-[0.2em] text-on-surface-variant mb-12">Collaborating with Global Leaders</h4>
+<div class="flex flex-wrap justify-center gap-12 opacity-40 hover:opacity-100 transition-opacity duration-500 items-center">
+<span class="text-2xl font-headline font-bold grayscale">NEURALINK</span>
+<span class="text-2xl font-headline font-bold grayscale">ANTHROPIC</span>
+<span class="text-2xl font-headline font-bold grayscale">DEEPMIND</span>
+<span class="text-2xl font-headline font-bold grayscale">NVIDIA</span>
+<span class="text-2xl font-headline font-bold grayscale">MITSUI &amp; CO.</span>
+</div>
+</section>
+<!-- Newsletter / CTA -->
+<section class="mt-40 bg-zinc-950 text-zinc-50 rounded-lg p-12 md:p-24 relative overflow-hidden">
+<div class="relative z-10 max-w-2xl">
+<h2 class="text-5xl font-headline font-bold mb-6">Think with AI.</h2>
+<p class="text-zinc-400 text-lg mb-10 leading-relaxed">Join 24,000+ researchers and builders receiving my weekly breakdown of the multi-agent frontier.</p>
+<div class="flex flex-col sm:flex-row gap-4">
+<input class="bg-zinc-900 border-none rounded-full px-8 py-4 flex-grow focus:ring-1 focus:ring-primary text-zinc-100" placeholder="email@address.com" type="email"/>
+<button class="bg-primary text-on-primary px-8 py-4 rounded-full font-bold hover:bg-primary-container transition-colors">Subscribe</button>
+</div>
+</div>
+<!-- Abstract background shape -->
+<div class="absolute -right-20 -bottom-20 w-[500px] h-[500px] bg-primary/20 blur-[120px] rounded-full"></div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-zinc-200/50 bg-zinc-50">
+<div class="flex flex-col md:flex-row justify-between items-center px-8 py-12 max-w-7xl mx-auto gap-6">
+<div class="flex flex-col gap-2">
+<div class="font-headline text-lg font-bold text-zinc-900">Damon.AI</div>
+<div class="font-label text-xs tracking-wider uppercase text-zinc-500">© 2024 Damon. AI Architect. All rights reserved.</div>
+</div>
+<div class="flex gap-8">
+<a class="font-label text-xs tracking-wider uppercase text-zinc-500 hover:text-zinc-900 transition-all opacity-80 hover:opacity-100" href="#">LinkedIn</a>
+<a class="font-label text-xs tracking-wider uppercase text-zinc-500 hover:text-zinc-900 transition-all opacity-80 hover:opacity-100" href="#">GitHub</a>
+<a class="font-label text-xs tracking-wider uppercase text-zinc-500 hover:text-zinc-900 transition-all opacity-80 hover:opacity-100" href="#">ReadCV</a>
+<a class="font-label text-xs tracking-wider uppercase text-cyan-600 font-bold opacity-100" href="#">Status: Available for Research</a>
+</div>
+</div>
+</footer>
+</body></html>
