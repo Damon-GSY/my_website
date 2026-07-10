@@ -68,3 +68,13 @@ US-002 quality-review follow-up (2026-07-10):
 - A live resize/motion Playwright smoke check kept all three cases visible throughout: desktop active tracking worked; at 390x844 the marker was hidden, observer-driven state stopped changing, and scrollWidth/clientWidth stayed 390/390; restoring 1440x1000 restored active tracking; enabling reduced motion hid and paused the marker; restoring motion reinstated it. Desktop scrollWidth/clientWidth stayed 1440/1440.
 - A temporary missing-ID fault injection rendered the two remaining configured real projects, kept the Selected Work heading and page mounted, emitted exactly `[Work] Missing selected project IDs: missing-project-smoke-test`, and produced zero page or console errors. The real supply-chain ID was restored immediately after the check.
 - US-002 passes remains false pending main-agent live visual and required Codex screenshot acceptance.
+
+US-003 implementation started (2026-07-10):
+- Damon explicitly authorized continued editing and committing after the previously reported usage-limit gate.
+- Added the Research & experience narrative between Selected work and Journal. It derives four chronology nodes from `timelineData`, the section framing from `aboutProfile`, and exactly four research-index entries from `projects.filter(category === 'research')`.
+- Current Alibaba work is the strongest node; MSRA, NUS, and UNSW progressively quiet along one continuous scientific-editorial path. The entries visibly retain Hangzhou, M365 GPT-4o, the NUS Statistics Top 5% / QS #8 evidence, and the UNSW Computer Science Top 3% / QS #19 evidence.
+- Only the first chronology entry receives a short Framer Motion stagger. Reduced-motion mode renders it immediately with opacity 1 and transform none; there is no scrubbed or continuous section motion.
+- Fresh `npm run lint`, `npm run build`, and `git diff --check` passed.
+- Live browser checks found 4 chronology items, 4 research works, a `/about` link, and every required data-backed claim. At 1440x1000 and 390x844, `document.scrollWidth` equaled `document.clientWidth`; the 390px article grid resolved to one column. Browser page errors were empty.
+- Self-reviewed screenshots: `/private/tmp/research-path-desktop.png`, `/private/tmp/research-path-mobile.png`, `/private/tmp/research-path-reduced.png`, and `/private/tmp/research-path-index-desktop.png`.
+- US-003 remains false pending the deferred Codex screenshot acceptance gate.
