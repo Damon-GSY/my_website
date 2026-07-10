@@ -44,8 +44,10 @@ function useScrollProgress() {
     const tick = () => {
       if (!reduced.matches) {
         const delta = target.current - current.current
-        current.current += delta * 0.35
-        if (Math.abs(delta) > 0.00008) setProgress(current.current)
+        if (Math.abs(delta) > 0.00008) {
+          current.current = target.current // instant: no lag, no reversal overshoot
+          setProgress(target.current)
+        }
       }
       frame.current = requestAnimationFrame(tick)
     }
@@ -122,11 +124,11 @@ export default function App() {
   })), [])
 
   const sceneOne = 1 - smooth(0.1, 0.17, progress)
-  const research = band(0.12, 0.18, 0.25, 0.31, progress)
-  const production = band(0.27, 0.34, 0.41, 0.47, progress)
-  const papers = band(0.43, 0.5, 0.6, 0.66, progress)
-  const trajectory = band(0.63, 0.7, 0.78, 0.84, progress)
-  const contact = smooth(0.82, 0.93, progress)
+  const research = band(0.12, 0.18, 0.22, 0.26, progress)
+  const production = band(0.27, 0.33, 0.38, 0.42, progress)
+  const papers = band(0.43, 0.49, 0.58, 0.62, progress)
+  const trajectory = band(0.63, 0.69, 0.76, 0.80, progress)
+  const contact = smooth(0.81, 0.9, progress)
   const core = smooth(0.52, 0.94, progress)
   const chapter = progress < 0.63 ? '01 / LANDSCAPE' : progress < 0.84 ? '02 / CORE' : '02 / MINIMUM'
 
