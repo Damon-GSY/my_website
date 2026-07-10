@@ -7,7 +7,7 @@ const lightUrl = '/assets/optimization-light.webp'
 
 const ACCENT = '#d97757'
 const INK = '#f3eee9'
-const MUTED = 'rgba(243,238,233,.52)'
+const MUTED = 'rgba(243,238,233,.72)'
 const LINE = 'rgba(243,238,233,.16)'
 
 const identity = {
@@ -171,7 +171,7 @@ export default function App() {
           <div className="max-w-[48rem] md:max-w-[58rem]">
             <div style={{ display: 'flex', alignItems: 'center', gap: '.75rem', marginBottom: '1.4rem' }}><span style={{ width: 34, height: 1, background: ACCENT }} /><p style={{ ...meta, margin: 0, color: ACCENT }}>Optimization Landscape · 01</p></div>
             <h1 style={{ margin: 0, maxWidth: '12ch', color: INK, fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(3.3rem,8.8vw,9.2rem)', fontWeight: 400, letterSpacing: '-.045em', lineHeight: .84, textShadow: '0 8px 40px rgba(0,0,0,.55)' }}>Find the path before the answer.</h1>
-            <p style={{ maxWidth: '34rem', margin: 'clamp(1.4rem,3vw,2.5rem) 0 0', color: 'rgba(243,238,233,.68)', fontFamily: "'Imprima',sans-serif", fontSize: 'clamp(.88rem,1.15vw,1.03rem)', lineHeight: 1.7 }}>I build evaluation systems, post-training methods, and production agents—mapping the terrain before asking a model to move through it.</p>
+            <p style={{ maxWidth: '34rem', margin: 'clamp(1.4rem,3vw,2.5rem) 0 0', color: 'rgba(243,238,233,.86)', fontFamily: "'Imprima',sans-serif", fontSize: 'clamp(.88rem,1.15vw,1.03rem)', lineHeight: 1.7 }}>I build evaluation systems, post-training methods, and production agents—mapping the terrain before asking a model to move through it.</p>
           </div>
         </article>
 
@@ -214,7 +214,7 @@ export default function App() {
               ].map(([title, copy]) => (
                 <div key={title} style={{ minHeight: '6.4rem', padding: '1rem', borderRight: `1px solid ${LINE}`, borderBottom: `1px solid ${LINE}`, background: 'rgba(7,7,9,.22)', backdropFilter: 'blur(3px)' }}>
                   <p style={{ ...meta, margin: 0, color: 'rgba(243,238,233,.82)' }}>{title}</p>
-                  <p style={{ margin: '.65rem 0 0', color: 'rgba(243,238,233,.61)', fontFamily: "'Imprima',sans-serif", fontSize: '.76rem', lineHeight: 1.5 }}>{copy}</p>
+                  <p style={{ margin: '.65rem 0 0', color: 'rgba(243,238,233,.82)', fontFamily: "'Imprima',sans-serif", fontSize: '.76rem', lineHeight: 1.5 }}>{copy}</p>
                 </div>
               ))}
             </div>
@@ -233,7 +233,7 @@ export default function App() {
             </div>
             <div style={{ marginTop: '1.4rem', padding: '.9rem 1rem', border: `1px solid ${LINE}`, background: 'rgba(7,7,9,.28)' }}>
               <p style={{ ...meta, margin: 0, color: ACCENT }}>Field notes · forthcoming</p>
-              <p style={{ margin: '.5rem 0 0', color: 'rgba(243,238,233,.55)', fontFamily: "'Imprima',sans-serif", fontSize: '.78rem', lineHeight: 1.55 }}>A reserved slot for ongoing writing on agents, evaluation, and post-training — publishing soon.</p>
+              <p style={{ margin: '.5rem 0 0', color: 'rgba(243,238,233,.78)', fontFamily: "'Imprima',sans-serif", fontSize: '.78rem', lineHeight: 1.55 }}>A reserved slot for ongoing writing on agents, evaluation, and post-training — publishing soon.</p>
             </div>
           </div>
         </article>
@@ -242,14 +242,14 @@ export default function App() {
           <div style={{ maxWidth: '59rem' }}>
             <p style={{ ...meta, margin: '0 0 1.25rem', color: ACCENT }}>Loss minimum reached · Δ 0.0001</p>
             <h2 style={{ margin: 0, color: INK, fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(3.7rem,9vw,9.4rem)', fontWeight: 400, letterSpacing: '-.045em', lineHeight: .86, textShadow: '0 10px 42px rgba(0,0,0,.7)' }}>Continue the search.</h2>
-            <p style={{ margin: '1.7rem auto 0', maxWidth: '33rem', color: 'rgba(243,238,233,.68)', fontFamily: "'Imprima',sans-serif", fontSize: 'clamp(.86rem,1.2vw,1rem)', lineHeight: 1.65 }}>Open to collaborations on agent systems, evaluation research, and practical AI communication.</p>
+            <p style={{ margin: '1.7rem auto 0', maxWidth: '33rem', color: 'rgba(243,238,233,.86)', fontFamily: "'Imprima',sans-serif", fontSize: 'clamp(.86rem,1.2vw,1rem)', lineHeight: 1.65 }}>Open to collaborations on agent systems, evaluation research, and practical AI communication.</p>
             <a href={`mailto:${identity.email}`} style={{ display: 'inline-flex', alignItems: 'center', gap: '1.2rem', marginTop: '2rem', padding: '.95rem 0', borderBottom: `1px solid ${ACCENT}`, color: INK, fontFamily: "'Imprima',sans-serif", fontSize: 'clamp(.88rem,1.5vw,1.1rem)', letterSpacing: '.06em', textDecoration: 'none' }}>{identity.email} <span style={{ color: ACCENT }}>↗</span></a>
           </div>
         </article>
 
         <footer style={{ position: 'absolute', zIndex: 30, right: 'clamp(3.2rem,7vw,7rem)', bottom: 'clamp(1.15rem,2.8vw,2.5rem)', left: 'clamp(1.15rem,4vw,4.5rem)', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '1rem' }}>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '.9rem clamp(1rem,2.5vw,2.2rem)' }}>{identity.links.map(([label, href]) => <a key={label} href={href} target="_blank" rel="noreferrer" style={linkStyle}>{label} ↗</a>)}</div>
-          <div className="hidden md:block" style={{ textAlign: 'right' }}><p style={{ ...meta, margin: 0, color: 'rgba(243,238,233,.72)' }}>{identity.role}</p><p style={{ ...meta, margin: '.28rem 0 0' }}>{identity.company} · 2026</p></div>
+          <div className="hidden md:block" style={{ textAlign: 'right' }}><p style={{ ...meta, margin: 0, color: 'rgba(243,238,233,.88)' }}>{identity.role}</p><p style={{ ...meta, margin: '.28rem 0 0' }}>{identity.company} · 2026</p></div>
         </footer>
 
         <div aria-hidden="true" className="hidden sm:block" style={{ position: 'absolute', zIndex: 29, left: 'clamp(1.15rem,4vw,4.5rem)', bottom: 'clamp(5.1rem,7.5vw,7rem)', opacity: sceneOne * (1 - smooth(.1, .22, progress)) }}><p style={{ ...meta, margin: 0 }}>Scroll to descend</p><div style={{ width: 72, height: 1, marginTop: '.7rem', background: `linear-gradient(90deg,${ACCENT},transparent)` }} /></div>
