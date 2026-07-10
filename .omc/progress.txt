@@ -27,3 +27,9 @@ US-001 implementation notes (2026-07-10):
 - Fresh npm run build passed and emitted the 13.74 kB mobile WebP and 52.55 kB desktop WebP. The p5 implementation remains in a separately requested runtime chunk rather than the initial entry.
 - git diff --check passed. The unrelated untracked tools/_diag_lab.cjs and tools/_verify_lab.cjs files remain untouched.
 - In-app Browser discovery returned no available browser instance, so desktop/mobile/reduced-motion screenshots, live DOM overflow checks, console checks, and Codex visual acceptance remain pending for the main agent. US-001 passes remains false until that evidence is recorded.
+
+US-001 specification follow-up (2026-07-10):
+- Narrowed the scoped anime.js entrance to four explicit targets only: the eyebrow, the two independently staggered name-line spans inside one semantic h1, the main description, and the action row.
+- Decorative index copy, the role line, focus list, factual proof, and landscape caption are no longer anime.js targets and remain immediately visible.
+- Added a separate compact repository-backed proof line: 4 research works; NUS Statistics, Top 5%; and UNSW Computer Science, Top 3%. These facts are grounded in src/data/about.js and are presented as editorial evidence rather than dashboard metrics.
+- US-001 remains false until the pending browser screenshots and Codex visual acceptance are completed.
