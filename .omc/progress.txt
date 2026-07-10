@@ -1,0 +1,7 @@
+Editorial portfolio redesign progress
+
+Branch: feature/site-redesign
+Baseline: npm run build passed before redesign work; npm run lint passed before redesign work.
+Supplied source image: /Users/damon/Downloads/gdamon0208_A_scientific_visualization_of_an_optimization_land_83636679-68fb-428b-a208-a08ad142daab_1.png
+Source image SHA-256: fe8f717fa83332050cdbb98d123caf087ecb7857b86e301f041d4aa37abbe711
+Next story: US-001 — Build the identity-first optimization landscape hero.

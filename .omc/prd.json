@@ -1,0 +1,95 @@
+{
+  "project": "Editorial Portfolio Redesign",
+  "branchName": "feature/site-redesign",
+  "description": "Replace the dashboard-like homepage with an information-first editorial portfolio anchored by a scroll-driven optimization landscape and Damon's real work, research, writing, and contact details.",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Build the identity-first optimization landscape hero",
+      "description": "As a visitor, I can immediately understand who Damon is, what he does, and where to go next while the supplied landscape guides attention without obscuring the content.",
+      "acceptanceCriteria": [
+        "The first viewport clearly presents Damon Guo-Shiyu, LLM Engineer at Alibaba in Hangzhou, and his focus on agent systems, post-training, evaluation, and agentic RL using real repository information.",
+        "Visible actions link to selected work and contact; no terminal, live clock, fake runtime state, synthetic metrics, or dashboard copy remains in the hero.",
+        "At 1440x1000, identity, current role, focus, and both primary actions are visible above the fold and the supplied optimization landscape reads as a layered 2.5D scene.",
+        "At 390x844, primary text is unclipped, the landscape does not cover content or block touch scrolling, and document.scrollWidth is no greater than document.clientWidth.",
+        "With prefers-reduced-motion: reduce, the same information and actions remain visible, the landscape is composed as a static image, and continuous GSAP/p5 motion is skipped.",
+        "The landscape keeps the original image visible if p5 fails, dynamically loads p5 when motion is allowed, and cleans up p5, GSAP contexts, listeners, and ScrollTriggers on unmount.",
+        "Desktop, mobile, and reduced-motion screenshots are reviewed by Codex; the review first literally describes what is visible, then judges information clarity, visual harmony, and whether the light/3D effect guides rather than distracts, and records PASS.",
+        "npm run build and npm run lint exit successfully with no new errors."
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": "First pending story."
+    },
+    {
+      "id": "US-002",
+      "title": "Present selected work as editorial case studies",
+      "description": "As a visitor, I can scan three representative projects and understand their context, Damon's contribution, and the outcome without operating a carousel or dashboard.",
+      "acceptanceCriteria": [
+        "The homepage shows exactly three representative entries sourced from src/data/projects.js, each with its real title, truthful context or problem, contribution, outcome, and category.",
+        "All project information is readable without interaction, a clear link reaches /projects, keyboard focus is visible, and no horizontal carousel is required.",
+        "At 1440x1000, the selected-work hierarchy and at least the active project outcome are legible while the restrained light marker supports the reading order.",
+        "At 390x844, entries follow DOM order in one readable column and document.scrollWidth is no greater than document.clientWidth.",
+        "With prefers-reduced-motion: reduce, all project content remains visible and the section light marker does not use continuous or scroll-scrubbed motion.",
+        "Desktop, mobile, and reduced-motion screenshots are reviewed by Codex; the review first literally describes the visible project titles and outcomes, then judges clarity, hierarchy, and whether the light effect supports or obscures them, and records PASS.",
+        "npm run build and npm run lint exit successfully with no new errors."
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": "Depends on the foundation hero."
+    },
+    {
+      "id": "US-003",
+      "title": "Tell the research and experience story",
+      "description": "As a visitor, I can understand Damon's career and research trajectory as a chronological editorial narrative grounded in the existing profile data.",
+      "acceptanceCriteria": [
+        "The section uses timelineData and aboutProfile from src/data/about.js and visibly includes Alibaba, MSRA, NUS, UNSW, and the real research or publication count.",
+        "Chronology is understandable without opening cards: the current role is emphasized, earlier entries are progressively quieter, and education and research remain factually clear.",
+        "At 1440x1000, the current role and relationship between research and experience are visually legible without simulated control-surface UI.",
+        "At 390x844, reading order matches chronology, institution names and dates are unclipped, and document.scrollWidth is no greater than document.clientWidth.",
+        "With prefers-reduced-motion: reduce, the entire career path remains visible and any entrance stagger resolves immediately without scroll-scrubbed motion.",
+        "Desktop, mobile, and reduced-motion screenshots are reviewed by Codex; the review first literally describes the institutions, dates, and emphasis visible, then states Damon's inferred career path and judges clarity and visual harmony, and records PASS.",
+        "npm run build and npm run lint exit successfully with no new errors."
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": "Uses existing about data without inventing claims."
+    },
+    {
+      "id": "US-004",
+      "title": "Unify writing, contact, navigation, and footer",
+      "description": "As a visitor, I can discover Damon's latest writing and reach him through a coherent editorial conclusion and accessible navigation.",
+      "acceptanceCriteria": [
+        "The writing section uses real entries from src/data/posts.js and visibly preserves each shown title, date, excerpt, reading time, and a working link to /blog.",
+        "The contact conclusion shows the existing email address and working LinkedIn, GitHub, YouTube, and Bilibili channels with meaningful link names and no dead # links.",
+        "Navigation preserves the skip link, theme toggle, active-route indication, mobile menu, Escape-to-close behavior, and visible keyboard focus while removing the live clock, online pulse, and dashboard capsule language.",
+        "At 1440x1000 section screenshots, writing and contact read as the conclusion of one personal portfolio rather than unrelated product cards.",
+        "At 390x844, post metadata and contact channels remain readable, the mobile menu is usable, and document.scrollWidth is no greater than document.clientWidth.",
+        "With prefers-reduced-motion: reduce, writing, contact, navigation, and footer retain their full hierarchy without required motion or delayed content.",
+        "Desktop, mobile, and reduced-motion screenshots are reviewed by Codex; the review first literally describes visible posts, dates, contact channels, and navigation, then judges information clarity, cohesion, and visual harmony, and records PASS.",
+        "npm run build and npm run lint exit successfully with no new errors."
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": "Preserves existing routes and accessibility contracts."
+    },
+    {
+      "id": "US-005",
+      "title": "Complete full-site regression and visual acceptance",
+      "description": "As Damon, I can ship the editorial homepage knowing its real information, routes, responsiveness, accessibility, and attention-guiding motion work together without regressions.",
+      "acceptanceCriteria": [
+        "The complete homepage clearly communicates identity, selected work, research and experience, writing, and contact using only real repository data and no fake dashboard state.",
+        "Existing /about, /projects, /blog, /blog/:slug, and /uses routes load and retain their expected content, links, theme behavior, and navigation contracts.",
+        "A full scroll pass at 1440x1000 covers hero, selected work, research, writing, and contact with no clipped content, console errors, broken images, or interaction regressions.",
+        "A full scroll pass at 390x844 has no blocked scrolling or clipped primary text, all touch targets remain usable, and document.scrollWidth is no greater than document.clientWidth.",
+        "With prefers-reduced-motion: reduce, every section and action remains available, the landscape is static, and no continuous or scroll-scrubbed animation is required to understand the page.",
+        "Final desktop, mobile, and reduced-motion screenshot sets are reviewed by Codex; for every screenshot the review first literally describes what is visible, then judges information clarity, visual harmony, personal-portfolio cohesion, and whether light/3D guidance distracts, and records PASS.",
+        "Browser verification finds no console errors during mount, full scroll, route changes, mobile menu interaction, or unmount.",
+        "npm run build and npm run lint exit successfully, and Ralph marks all five stories passes true only after their criteria and screenshot reviews are satisfied."
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": "Final regression and acceptance story."
+    }
+  ]
+}
