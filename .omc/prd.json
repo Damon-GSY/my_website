@@ -13,7 +13,10 @@
         "At 1440x1000, identity, current role, focus, and both primary actions are visible above the fold and the supplied optimization landscape reads as a layered 2.5D scene.",
         "At 390x844, primary text is unclipped, the landscape does not cover content or block touch scrolling, and document.scrollWidth is no greater than document.clientWidth.",
         "With prefers-reduced-motion: reduce, the same information and actions remain visible, the landscape is composed as a static image, and continuous GSAP/p5 motion is skipped.",
-        "The landscape keeps the original image visible if p5 fails, dynamically loads p5 when motion is allowed, and cleans up p5, GSAP contexts, listeners, and ScrollTriggers on unmount.",
+        "The responsive landscape base image remains visible if p5 fails, dynamically loads p5 when motion is allowed, and cleans up p5, GSAP contexts, listeners, and ScrollTriggers on unmount.",
+        "The original 2944x1648 PNG remains unchanged as provenance with SHA-256 fe8f717fa83332050cdbb98d123caf087ecb7857b86e301f041d4aa37abbe711; production markup uses optimization-landscape-2200.webp for desktop and optimization-landscape-1100.webp for mobile rather than downloading the 5.4 MB PNG by default.",
+        "The 2200px desktop WebP is no larger than 128000 bytes and the 1100px mobile WebP is no larger than 48000 bytes, and both preserve the source's black negative space, copper ridge, light path, and terrain silhouette in visual review.",
+        "Task 1 foundation verification proves npm run build and npm run lint pass after dependency installation and verifies source and derivative identity, dimensions, and byte budgets; Vite asset emission is deferred until this story imports the responsive derivatives, after which the production build must emit the referenced image assets.",
         "Desktop, mobile, and reduced-motion screenshots are reviewed by Codex; the review first literally describes what is visible, then judges information clarity, visual harmony, and whether the light/3D effect guides rather than distracts, and records PASS.",
         "npm run build and npm run lint exit successfully with no new errors."
       ],
@@ -61,7 +64,9 @@
       "description": "As a visitor, I can discover Damon's latest writing and reach him through a coherent editorial conclusion and accessible navigation.",
       "acceptanceCriteria": [
         "The writing section uses real entries from src/data/posts.js and visibly preserves each shown title, date, excerpt, reading time, and a working link to /blog.",
-        "The contact conclusion shows the existing email address and working LinkedIn, GitHub, YouTube, and Bilibili channels with meaningful link names and no dead # links.",
+        "The contact conclusion shows the existing email address plus only personal social URLs verified as belonging to Damon through an authoritative source or Damon's direct confirmation; a reachable URL alone is not identity verification.",
+        "Every displayed personal social URL has recorded identity-verification evidence; any unverified channel is removed or omitted rather than preserved, and no replacement identity or URL is invented.",
+        "The currently configured LinkedIn slug shengyue-guan-1a7b3226b is treated as suspicious and must not be accepted as Damon's or displayed unless independent identity verification is obtained.",
         "Navigation preserves the skip link, theme toggle, active-route indication, mobile menu, Escape-to-close behavior, and visible keyboard focus while removing the live clock, online pulse, and dashboard capsule language.",
         "At 1440x1000 section screenshots, writing and contact read as the conclusion of one personal portfolio rather than unrelated product cards.",
         "At 390x844, post metadata and contact channels remain readable, the mobile menu is usable, and document.scrollWidth is no greater than document.clientWidth.",

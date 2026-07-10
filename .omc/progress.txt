@@ -1,7 +1,18 @@
 Editorial portfolio redesign progress
 
 Branch: feature/site-redesign
-Baseline: npm run build passed before redesign work; npm run lint passed before redesign work.
-Supplied source image: /Users/damon/Downloads/gdamon0208_A_scientific_visualization_of_an_optimization_land_83636679-68fb-428b-a208-a08ad142daab_1.png
-Source image SHA-256: fe8f717fa83332050cdbb98d123caf087ecb7857b86e301f041d4aa37abbe711
+Pre-redesign baseline: npm run build and npm run lint passed before dependency or asset changes.
+
+Task 1 post-install verification (2026-07-10):
+- npm install p5 animejs completed without peer dependency errors.
+- A fresh npm run build passed after dependency installation.
+- A fresh npm run lint passed after dependency installation.
+- The checked-in source PNG is 2944x1648, 5,394,451 bytes, and retains SHA-256 fe8f717fa83332050cdbb98d123caf087ecb7857b86e301f041d4aa37abbe711.
+- The desktop derivative is 2200x1232, 52,546 bytes, and retains SHA-256 b796829c5d92ceea0e6cf5746d4735efaa6f221c13c5b3b716a7ecd5a3b31e8e.
+- The mobile derivative is 1100x616, 13,736 bytes, and retains SHA-256 91514bb81f51a083d741fd5f8b0451d331b1ff469f845bd49014d56b8c41c214.
+- Both WebP derivatives are within their PRD byte budgets and visually preserve the source composition.
+- The image assets are not imported by application code yet, so Vite emission is intentionally deferred to US-001.
+
+Source provenance: gdamon0208_A_scientific_visualization_of_an_optimization_land_83636679-68fb-428b-a208-a08ad142daab_1.png, identified by the SHA-256 above.
+Local-only import location: the source was supplied from the user's Downloads directory; that absolute path is not a portable project reference.
 Next story: US-001 — Build the identity-first optimization landscape hero.
