@@ -26,3 +26,7 @@ dist-ssr
 # Generated motion-review artifacts (Playwright webm/mp4/gif + frame sequences + audits)
 tools/out/
 motion-audit/
+
+# Optimization-landscape source PNGs (heavy; regenerable via
+# tools/preprocess-assets.py). Deployed webp is committed in public/assets/.
+src/assets/optimization-*.png
