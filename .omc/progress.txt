@@ -49,3 +49,13 @@ US-001 live visual evidence (2026-07-10):
 - Codex screenshot review could not run because the account usage limit was exhausted. The first artifact is `.omc/artifacts/ask/codex-read-these-images-by-absolute-path-private-tmp-my-website-he-2026-07-10T03-42-48-470Z.md`; the required escalated retry was rejected with a retry time of 15:55 on 2026-07-10.
 - Damon explicitly authorized implementation to continue while this external Codex gate is deferred. US-001 remains false and must receive the required Codex screenshot PASS before final Ralph completion.
 - Next implementation story: US-002 — Present selected work as editorial case studies.
+
+US-002 implementation notes (2026-07-10):
+- Replaced the homepage work carousel with an information-first editorial ordered list using exactly supply-chain-agent-system, dynamic-tool-resolution-agents, and multi-turn-agent-evaluation from src/data/projects.js.
+- Each case exposes its real title, kicker, category, year, stage, description, first details contribution, and outcome without requiring hover, expansion, or carousel interaction. A visible keyboard-focusable link routes to /projects.
+- Added a restrained IntersectionObserver-driven case marker on desktop. It follows section reading position rather than the cursor, does not alter content visibility, and is omitted on mobile and under prefers-reduced-motion: reduce.
+- Simplified HomePage composition to Hero, Work, Journal, and Contact. Marquee, Capabilities, SystemShowcase, Agent OS chapter state, navigation rail, and their homepage wrappers no longer render; all routes and global components remain intact.
+- Fresh npm run lint passed, fresh npm run build passed, and git diff --check passed.
+- A local Playwright smoke check at 1440x1000 and 390x844 found exactly three requested cases and their outcomes. document.scrollWidth equaled document.clientWidth at both sizes (1440/1440 and 390/390); the case grid resolved to three columns on desktop and one DOM-order column on mobile.
+- Desktop marker checks confirmed the active state advances from the supply-chain case to dynamic tool resolution and then multi-turn evaluation as each row reaches the reading position.
+- Local screenshots `/private/tmp/selected-work-desktop.png` and `/private/tmp/selected-work-mobile.png` were inspected for implementation self-review only. Main-agent live visual evidence and the required Codex screenshot review remain pending, so US-002 passes remains false.

@@ -1,66 +1,145 @@
-import { motion, useReducedMotion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { projects } from '@/data/projects';
-import ProjectCarousel from '../ui/project-carousel';
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] } },
-};
+const selectedProjectIds = [
+  'supply-chain-agent-system',
+  'dynamic-tool-resolution-agents',
+  'multi-turn-agent-evaluation',
+];
+
+const selectedProjects = selectedProjectIds.map((id) => {
+  const project = projects.find((item) => item.id === id);
+
+  if (!project) {
+    throw new Error(`Selected project not found: ${id}`);
+  }
+
+  return project;
+});
 
 export default function Work() {
-  const featured = projects.filter((project) => project.featured).slice(0, 6);
-  const reducedMotion = useReducedMotion();
+  const [activeProject, setActiveProject] = useState(selectedProjectIds[0]);
+  const projectRefs = useRef([]);
+
+  useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 64rem)');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    if (!desktop.matches || reducedMotion.matches) return undefined;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntry = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visibleEntry?.target.dataset.projectId) {
+          setActiveProject(visibleEntry.target.dataset.projectId);
+        }
+      },
+      {
+        rootMargin: '-28% 0px -48% 0px',
+        threshold: [0, 0.2, 0.5, 0.8],
+      },
+    );
+
+    projectRefs.current.forEach((project) => {
+      if (project) observer.observe(project);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section
       id="work"
-      className="agent-os-section border-t border-[var(--line)] pb-8 pt-4 md:pb-8 md:pt-4"
-      aria-labelledby="work-title"
+      className="selected-work"
+      aria-labelledby="selected-work-title"
       data-hide-launcher
       data-hide-mobile-launcher
     >
-      <div className="agent-os-inner">
-        <motion.div
-          variants={fadeUp}
-          initial={reducedMotion ? false : 'hidden'}
-          whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-          className="mb-6 grid gap-5 md:grid-cols-[0.72fr_1.28fr] md:items-end"
-        >
-          <div>
-            <p className="agent-os-inline-label">[03] work objects</p>
-            <h2
-              id="work-title"
-              className="font-display text-2xl font-medium leading-tight tracking-tight text-[var(--text)] md:text-3xl"
-            >
-              Cases from the same surface.
-            </h2>
+      <div className="selected-work__frame">
+        <header className="selected-work__header">
+          <div className="selected-work__index" aria-hidden="true">
+            <span>01</span>
+            <span>Selected work</span>
           </div>
-          <div className="flex flex-col gap-5 md:items-start">
-            <p className="max-w-2xl text-sm leading-7 text-[var(--muted)] md:text-base">
-              These projects keep the same operating grammar: traces, gates,
-              metrics, and case details surfaced as inspectable work objects.
+
+          <div className="selected-work__heading">
+            <p className="selected-work__eyebrow">Systems in practice</p>
+            <h2 id="selected-work-title">From research question to working system.</h2>
+          </div>
+
+          <div className="selected-work__introduction">
+            <p>
+              Three cases across production agents, agentic reinforcement
+              learning, and evaluation research. Each starts with a concrete
+              failure mode and ends with evidence.
             </p>
-            <Link
-              to="/projects"
-              className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-[var(--line)] bg-[var(--surface)] px-3.5 py-2 text-sm font-semibold text-[var(--text)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[var(--primary)] hover:text-[var(--primary)] active:scale-[0.98]"
-            >
-              View all
-              <ArrowUpRight className="h-3.5 w-3.5" />
+            <Link className="selected-work__all-link" to="/projects">
+              <span>View all projects</span>
+              <ArrowUpRight aria-hidden="true" />
             </Link>
           </div>
-        </motion.div>
+        </header>
 
-        <motion.div
-          variants={fadeUp}
-          initial={reducedMotion ? false : 'hidden'}
-          whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-        >
-          <ProjectCarousel projects={featured} />
-        </motion.div>
+        <ol className="selected-work__list" aria-label="Selected project case studies">
+          {selectedProjects.map((project, index) => {
+            const isActive = activeProject === project.id;
+
+            return (
+              <li
+                key={project.id}
+                ref={(node) => {
+                  projectRefs.current[index] = node;
+                }}
+                className="selected-work__item"
+                data-project-id={project.id}
+                data-active={isActive ? 'true' : 'false'}
+              >
+                <span className="selected-work__marker" aria-hidden="true" />
+
+                <article className="selected-work__case">
+                  <div className="selected-work__number" aria-hidden="true">
+                    {String(index + 1).padStart(2, '0')}
+                  </div>
+
+                  <div className="selected-work__identity">
+                    <p className="selected-work__meta">
+                      <span>{project.kicker}</span>
+                      <span>{project.category}</span>
+                    </p>
+                    <h3>{project.title}</h3>
+                    <p className="selected-work__provenance">
+                      <time dateTime={project.year}>{project.year}</time>
+                      <span>{project.stage}</span>
+                    </p>
+                  </div>
+
+                  <div className="selected-work__narrative">
+                    <div>
+                      <p className="selected-work__label">Context / problem</p>
+                      <p className="selected-work__description">{project.description}</p>
+                    </div>
+
+                    <div className="selected-work__evidence">
+                      <div>
+                        <p className="selected-work__label">My contribution</p>
+                        <p>{project.details[0]}</p>
+                      </div>
+                      <div>
+                        <p className="selected-work__label">Outcome</p>
+                        <p>{project.outcome}</p>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </li>
+            );
+          })}
+        </ol>
       </div>
     </section>
   );
