@@ -3,7 +3,7 @@ import { clamp, smooth, band } from './landscape/math'
 const foregroundUrl = '/assets/optimization-foreground.webp'
 const landscapeUrl = '/assets/optimization-landscape.webp'
 // const depthUrl = '/assets/optimization-depth.webp'  // perf: depth layer dropped
-const lightUrl = '/assets/optimization-light.webp'
+// const lightUrl = '/assets/optimization-light.webp'  // perf: baked into landscape
 
 const ACCENT = '#d97757'
 const INK = '#f3eee9'
@@ -141,7 +141,7 @@ export default function App() {
           <Layer src={landscapeUrl} style={{ zIndex: 1, opacity: .88, transform: `translate3d(${-progress * 3.5}vw,${5 - progress * 10}vh,0) scale(${1.04 + progress * .38})`, filter: 'brightness(.64) saturate(.9) contrast(1.18)', objectPosition: '52% 54%' }} />
           <div style={{ position: 'absolute', zIndex: 2, inset: 0, background: 'linear-gradient(180deg,rgba(3,4,4,.94),rgba(3,4,4,.34) 39%,rgba(3,4,4,.04) 72%,rgba(3,4,4,.44))' }} />
           {/* perf: dropped depth layer (fullscreen screen-blend+mask composite per frame) */}
-          <Layer src={lightUrl} style={{ zIndex: 4, opacity: .07 + core * .42, transform: `translate3d(${5 - progress * 10}vw,${12 - progress * 14}vh,0) scale(${1.05 + progress * .72})`, mixBlendMode: 'screen', filter: 'blur(2.4px) brightness(1.2) saturate(1.12)', maskImage: 'radial-gradient(ellipse at 56% 70%,black 0%,black 42%,transparent 82%)', WebkitMaskImage: 'radial-gradient(ellipse at 56% 70%,black 0%,black 42%,transparent 82%)' }} />
+          {/* perf: light glow baked into landscape (tools/bake-light-into-landscape.py); dropped per-frame screen+mask composite */}
           <Layer src={foregroundUrl} style={{ zIndex: 5, opacity: .17 + (1 - progress) * .15, transform: `translate3d(${-5 - progress * 8}vw,${18 - progress * 30}vh,0) scale(${1.22 + progress * .84})`, mixBlendMode: 'screen', filter: 'blur(1px) brightness(.48) contrast(1.16)', maskImage: 'linear-gradient(to bottom,transparent 8%,transparent 32%,black 71%,black)', WebkitMaskImage: 'linear-gradient(to bottom,transparent 8%,transparent 32%,black 71%,black)', objectPosition: '43% 68%' }} />
           {/* perf: dropped scan-lines (fullscreen masked composite every frame) */}
           {particles.map((p) => (
