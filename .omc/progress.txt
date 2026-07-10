@@ -33,3 +33,9 @@ US-001 specification follow-up (2026-07-10):
 - Decorative index copy, the role line, focus list, factual proof, and landscape caption are no longer anime.js targets and remain immediately visible.
 - Added a separate compact repository-backed proof line: 4 research works; NUS Statistics, Top 5%; and UNSW Computer Science, Top 3%. These facts are grounded in src/data/about.js and are presented as editorial evidence rather than dashboard metrics.
 - US-001 remains false until the pending browser screenshots and Codex visual acceptance are completed.
+
+US-001 performance follow-up (2026-07-10):
+- Deferred the p5 dynamic import to requestIdleCallback with a 700 ms timeout and a 160 ms setTimeout fallback for browsers without the idle API; pending scheduling is cancelled during cleanup and the responsive image remains immediate.
+- Added a p5-owned IntersectionObserver on the landscape scene. The sketch starts paused, resumes only while the scene intersects, and returns to noLoop when offscreen; observer callbacks and setup guard against disposal races.
+- Cleanup now disconnects both p5 observers, removes the p5 instance, cancels pending idle/timer work, and reverts the GSAP context. Redundant manual ScrollTrigger killing was removed because the triggers are owned by that context.
+- US-001 remains false pending live browser and Codex visual acceptance.

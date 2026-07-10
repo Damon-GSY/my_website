@@ -45,10 +45,12 @@ export default function OptimizationLandscape() {
     let disposed = false;
     let p5Instance;
     let resizeObserver;
-    const scrollTriggers = [];
+    let visibilityObserver;
+    let idleCallbackId;
+    let fallbackTimerId;
 
     const gsapContext = gsap.context(() => {
-      const terrainTween = gsap.to(planeRef.current, {
+      gsap.to(planeRef.current, {
         rotateX: 7,
         scale: 1.075,
         yPercent: 4.5,
@@ -65,7 +67,7 @@ export default function OptimizationLandscape() {
         },
       });
 
-      const beaconTween = gsap.to(beaconRef.current, {
+      gsap.to(beaconRef.current, {
         x: () => Math.min(window.innerWidth * 0.29, 390),
         y: () => Math.min(window.innerHeight * 0.31, 300),
         scale: 0.72,
@@ -79,8 +81,6 @@ export default function OptimizationLandscape() {
           invalidateOnRefresh: true,
         },
       });
-
-      scrollTriggers.push(terrainTween.scrollTrigger, beaconTween.scrollTrigger);
     }, scene);
 
     const mountParticles = async () => {
@@ -112,6 +112,11 @@ export default function OptimizationLandscape() {
           };
 
           p.setup = () => {
+            if (disposed) {
+              p.noLoop();
+              return;
+            }
+
             const host = particlesRef.current;
             if (!host) return;
             const canvas = p.createCanvas(host.clientWidth, host.clientHeight);
@@ -120,9 +125,24 @@ export default function OptimizationLandscape() {
             p.frameRate(30);
             p.noStroke();
             createParticles();
+            p.noLoop();
 
             resizeObserver = new ResizeObserver(resizeCanvas);
             resizeObserver.observe(host);
+
+            visibilityObserver = new IntersectionObserver(
+              ([entry]) => {
+                if (disposed) return;
+
+                if (entry.isIntersecting) {
+                  p.loop();
+                } else {
+                  p.noLoop();
+                }
+              },
+              { threshold: 0.01 },
+            );
+            visibilityObserver.observe(scene);
           };
 
           p.draw = () => {
@@ -152,13 +172,25 @@ export default function OptimizationLandscape() {
       }
     };
 
-    mountParticles();
+    if ('requestIdleCallback' in window) {
+      idleCallbackId = window.requestIdleCallback(mountParticles, {
+        timeout: 700,
+      });
+    } else {
+      fallbackTimerId = window.setTimeout(mountParticles, 160);
+    }
 
     return () => {
       disposed = true;
+      if (idleCallbackId !== undefined) {
+        window.cancelIdleCallback(idleCallbackId);
+      }
+      if (fallbackTimerId !== undefined) {
+        window.clearTimeout(fallbackTimerId);
+      }
+      visibilityObserver?.disconnect();
       resizeObserver?.disconnect();
       p5Instance?.remove();
-      scrollTriggers.forEach((trigger) => trigger?.kill());
       gsapContext.revert();
     };
   }, [reducedMotion]);
