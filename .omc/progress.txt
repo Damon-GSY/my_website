@@ -16,3 +16,14 @@ Task 1 post-install verification (2026-07-10):
 Source provenance: gdamon0208_A_scientific_visualization_of_an_optimization_land_83636679-68fb-428b-a208-a08ad142daab_1.png, identified by the SHA-256 above.
 Local-only import location: the source was supplied from the user's Downloads directory; that absolute path is not a portable project reference.
 Next story: US-001 — Build the identity-first optimization landscape hero.
+
+US-001 implementation notes (2026-07-10):
+- Replaced the dashboard-style Hero with an identity-first editorial first viewport containing Damon Guo-Shiyu, LLM Engineer at Alibaba, Hangzhou, the four required research focus areas, and direct links to #work and #contact.
+- Added OptimizationLandscape with a responsive picture using only optimization-landscape-2200.webp and optimization-landscape-1100.webp; the provenance PNG is not imported by runtime code.
+- Added scoped GSAP/ScrollTrigger terrain depth and copper beacon motion, plus a mutable scroll-progress ref consumed by a dynamically imported p5 ridge-particle overlay.
+- Motion cleanup covers the p5 instance, ResizeObserver, GSAP context, owned ScrollTriggers, and the motion-preference listener. Reduced-motion mode skips GSAP, p5, and anime.js entrance motion while leaving the complete image and content visible.
+- anime.js v4 createScope/animate provides the short hero entrance; the scope is created after declaration and reverted on unmount.
+- Fresh npm run lint passed.
+- Fresh npm run build passed and emitted the 13.74 kB mobile WebP and 52.55 kB desktop WebP. The p5 implementation remains in a separately requested runtime chunk rather than the initial entry.
+- git diff --check passed. The unrelated untracked tools/_diag_lab.cjs and tools/_verify_lab.cjs files remain untouched.
+- In-app Browser discovery returned no available browser instance, so desktop/mobile/reduced-motion screenshots, live DOM overflow checks, console checks, and Codex visual acceptance remain pending for the main agent. US-001 passes remains false until that evidence is recorded.
