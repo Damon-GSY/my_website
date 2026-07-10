@@ -18,7 +18,7 @@ SRC = ROOT / "src" / "assets"
 DST = ROOT / "public" / "assets"
 DST.mkdir(parents=True, exist_ok=True)
 
-TARGET_W = 2560  # covers a 2560px screen at scale 1.0 + parallax/dolly overscan
+TARGET_W = 2048  # perf: was 2560; smaller textures cut GPU composite bandwidth
 
 # (quality, budget_KB). Alpha layers (foreground/light) carry soft edges, so a
 # slightly higher budget. Hero world (landscape) gets the biggest allowance.

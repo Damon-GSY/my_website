@@ -2,7 +2,7 @@ import { type CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
 import { clamp, smooth, band } from './landscape/math'
 const foregroundUrl = '/assets/optimization-foreground.webp'
 const landscapeUrl = '/assets/optimization-landscape.webp'
-const depthUrl = '/assets/optimization-depth.webp'
+// const depthUrl = '/assets/optimization-depth.webp'  // perf: depth layer dropped
 const lightUrl = '/assets/optimization-light.webp'
 
 const ACCENT = '#d97757'
@@ -44,7 +44,7 @@ function useScrollProgress() {
     const tick = () => {
       if (!reduced.matches) {
         const delta = target.current - current.current
-        current.current += delta * 0.075
+        current.current += delta * 0.35
         if (Math.abs(delta) > 0.00008) setProgress(current.current)
       }
       frame.current = requestAnimationFrame(tick)
@@ -112,7 +112,7 @@ function DataRow({ label, value, at, progress }: { label: string; value: string;
 
 export default function App() {
   const progress = useScrollProgress()
-  const particles = useMemo(() => Array.from({ length: 36 }, (_, i) => ({
+  const particles = useMemo(() => Array.from({ length: 14 }, (_, i) => ({
     id: i,
     x: 4 + ((i * 29) % 93),
     y: 18 + ((i * 47) % 76),
@@ -140,15 +140,15 @@ export default function App() {
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
           <Layer src={landscapeUrl} style={{ zIndex: 1, opacity: .88, transform: `translate3d(${-progress * 3.5}vw,${5 - progress * 10}vh,0) scale(${1.04 + progress * .38})`, filter: 'brightness(.64) saturate(.9) contrast(1.18)', objectPosition: '52% 54%' }} />
           <div style={{ position: 'absolute', zIndex: 2, inset: 0, background: 'linear-gradient(180deg,rgba(3,4,4,.94),rgba(3,4,4,.34) 39%,rgba(3,4,4,.04) 72%,rgba(3,4,4,.44))' }} />
-          <Layer src={depthUrl} style={{ zIndex: 3, opacity: .2 + core * .2, transform: `translate3d(${progress * 5.5}vw,${8 - progress * 15}vh,0) scale(${1.11 + progress * .55})`, mixBlendMode: 'screen', filter: 'blur(1.1px) brightness(.64)', maskImage: 'linear-gradient(to bottom,transparent 5%,black 35%,black 82%,transparent)', WebkitMaskImage: 'linear-gradient(to bottom,transparent 5%,black 35%,black 82%,transparent)' }} />
+          {/* perf: dropped depth layer (fullscreen screen-blend+mask composite per frame) */}
           <Layer src={lightUrl} style={{ zIndex: 4, opacity: .07 + core * .42, transform: `translate3d(${5 - progress * 10}vw,${12 - progress * 14}vh,0) scale(${1.05 + progress * .72})`, mixBlendMode: 'screen', filter: 'blur(2.4px) brightness(1.2) saturate(1.12)', maskImage: 'radial-gradient(ellipse at 56% 70%,black 0%,black 42%,transparent 82%)', WebkitMaskImage: 'radial-gradient(ellipse at 56% 70%,black 0%,black 42%,transparent 82%)' }} />
           <Layer src={foregroundUrl} style={{ zIndex: 5, opacity: .17 + (1 - progress) * .15, transform: `translate3d(${-5 - progress * 8}vw,${18 - progress * 30}vh,0) scale(${1.22 + progress * .84})`, mixBlendMode: 'screen', filter: 'blur(1px) brightness(.48) contrast(1.16)', maskImage: 'linear-gradient(to bottom,transparent 8%,transparent 32%,black 71%,black)', WebkitMaskImage: 'linear-gradient(to bottom,transparent 8%,transparent 32%,black 71%,black)', objectPosition: '43% 68%' }} />
-          <div style={{ position: 'absolute', zIndex: 6, inset: 0, opacity: .13 + core * .12, backgroundImage: 'repeating-linear-gradient(106deg,transparent 0 46px,rgba(217,119,87,.16) 47px,transparent 48px)', transform: `translateX(${-progress * 42}px)`, maskImage: 'linear-gradient(to bottom,transparent,black 58%,transparent)', WebkitMaskImage: 'linear-gradient(to bottom,transparent,black 58%,transparent)' }} />
+          {/* perf: dropped scan-lines (fullscreen masked composite every frame) */}
           {particles.map((p) => (
             <i key={p.id} style={{ position: 'absolute', zIndex: 7, left: `${p.x}%`, top: `${p.y}%`, width: p.size, height: p.size, borderRadius: '50%', background: p.id % 4 === 0 ? '#ffd5bf' : ACCENT, boxShadow: `0 0 7px ${p.id % 4 === 0 ? 'rgba(255,205,180,.68)' : 'rgba(217,119,87,.55)'}`, opacity: p.alpha * (.72 + core), transform: `translate3d(${progress * 110 * p.depth}px,${-progress * 150 * p.depth}px,0) scale(${.8 + progress * p.depth})` }} />
           ))}
-          <div style={{ position: 'absolute', zIndex: 8, inset: 0, background: `radial-gradient(ellipse at ${50 + progress * 8}% ${61 - progress * 8}%,transparent ${16 + progress * 7}%,rgba(6,6,8,${.08 + progress * .1}) 48%,rgba(4,4,6,.72))`, boxShadow: 'inset 0 0 14vw rgba(0,0,0,.75)' }} />
-          <div style={{ position: 'absolute', zIndex: 9, inset: 0, opacity: .045, backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%270 0 180 180%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cfilter id=%27n%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%27.82%27 numOctaves=%273%27 stitchTiles=%27stitch%27/%3E%3C/filter%3E%3Crect width=%27100%25%27 height=%27100%25%27 filter=%27url(%23n)%27 opacity=%27.55%27/%3E%3C/svg%3E")', mixBlendMode: 'soft-light' }} />
+          <div style={{ position: 'absolute', zIndex: 8, inset: 0, background: 'radial-gradient(ellipse at 54% 55%,transparent 20%,rgba(6,6,8,.14) 48%,rgba(4,4,6,.72))', boxShadow: 'inset 0 0 14vw rgba(0,0,0,.75)' }} />
+          {/* perf: dropped noise grain (fullscreen soft-light blend every frame) */}
         </div>
 
         <header style={{ position: 'absolute', zIndex: 30, inset: '0 0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'clamp(1.15rem,2.8vw,2.4rem) clamp(1.15rem,4vw,4.5rem)' }}>
@@ -212,7 +212,7 @@ export default function App() {
                 ['03 · VisualDeltas', 'Preference learning from visual-quality-induced reasoning; gains up to +8.2%.'],
                 ['04 · Multi-turn Evaluation', 'Cross-turn recovery, intent shifts, and dependency-aware intermediate scoring.'],
               ].map(([title, copy]) => (
-                <div key={title} style={{ minHeight: '6.4rem', padding: '1rem', borderRight: `1px solid ${LINE}`, borderBottom: `1px solid ${LINE}`, background: 'rgba(7,7,9,.22)', backdropFilter: 'blur(3px)' }}>
+                <div key={title} style={{ minHeight: '6.4rem', padding: '1rem', borderRight: `1px solid ${LINE}`, borderBottom: `1px solid ${LINE}`, background: 'rgba(7,7,9,.5)' }}>
                   <p style={{ ...meta, margin: 0, color: 'rgba(243,238,233,.82)' }}>{title}</p>
                   <p style={{ margin: '.65rem 0 0', color: 'rgba(243,238,233,.82)', fontFamily: "'Imprima',sans-serif", fontSize: '.76rem', lineHeight: 1.5 }}>{copy}</p>
                 </div>
