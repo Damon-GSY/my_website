@@ -59,3 +59,12 @@ US-002 implementation notes (2026-07-10):
 - A local Playwright smoke check at 1440x1000 and 390x844 found exactly three requested cases and their outcomes. document.scrollWidth equaled document.clientWidth at both sizes (1440/1440 and 390/390); the case grid resolved to three columns on desktop and one DOM-order column on mobile.
 - Desktop marker checks confirmed the active state advances from the supply-chain case to dynamic tool resolution and then multi-turn evaluation as each row reaches the reading position.
 - Local screenshots `/private/tmp/selected-work-desktop.png` and `/private/tmp/selected-work-mobile.png` were inspected for implementation self-review only. Main-agent live visual evidence and the required Codex screenshot review remain pending, so US-002 passes remains false.
+
+US-002 quality-review follow-up (2026-07-10):
+- Removed the module-evaluation throw for a missing configured project ID. Available configured projects now render in order, a DEV-only warning names every missing ID, and a neutral archive-directed message is shown if none remain; no project claims are invented.
+- Reworked the case IntersectionObserver lifecycle to react to desktop-width and reduced-motion media-query changes. The observer disconnects when either desktop eligibility is lost or reduced motion is enabled, and reinstalls when eligibility returns.
+- Intersection ratios are retained for every observed row across callback batches before the active case is selected, preventing a partial callback batch from incorrectly overriding a more visible row. Content rendering remains fully independent of observer state.
+- Fresh npm run lint passed, fresh npm run build passed, and git diff --check passed.
+- A live resize/motion Playwright smoke check kept all three cases visible throughout: desktop active tracking worked; at 390x844 the marker was hidden, observer-driven state stopped changing, and scrollWidth/clientWidth stayed 390/390; restoring 1440x1000 restored active tracking; enabling reduced motion hid and paused the marker; restoring motion reinstated it. Desktop scrollWidth/clientWidth stayed 1440/1440.
+- A temporary missing-ID fault injection rendered the two remaining configured real projects, kept the Selected Work heading and page mounted, emitted exactly `[Work] Missing selected project IDs: missing-project-smoke-test`, and produced zero page or console errors. The real supply-chain ID was restored immediately after the check.
+- US-002 passes remains false pending main-agent live visual and required Codex screenshot acceptance.

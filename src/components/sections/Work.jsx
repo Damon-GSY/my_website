@@ -9,47 +9,80 @@ const selectedProjectIds = [
   'multi-turn-agent-evaluation',
 ];
 
-const selectedProjects = selectedProjectIds.map((id) => {
-  const project = projects.find((item) => item.id === id);
+const projectsById = new Map(projects.map((project) => [project.id, project]));
+const missingProjectIds = selectedProjectIds.filter(
+  (id) => !projectsById.has(id),
+);
+const selectedProjects = selectedProjectIds
+  .map((id) => projectsById.get(id))
+  .filter(Boolean);
 
-  if (!project) {
-    throw new Error(`Selected project not found: ${id}`);
-  }
-
-  return project;
-});
+if (import.meta.env.DEV && missingProjectIds.length > 0) {
+  console.warn(
+    `[Work] Missing selected project IDs: ${missingProjectIds.join(', ')}`,
+  );
+}
 
 export default function Work() {
-  const [activeProject, setActiveProject] = useState(selectedProjectIds[0]);
+  const [activeProject, setActiveProject] = useState(
+    selectedProjects[0]?.id ?? null,
+  );
   const projectRefs = useRef([]);
 
   useEffect(() => {
     const desktop = window.matchMedia('(min-width: 64rem)');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const intersectionRatios = new Map();
+    let observer;
 
-    if (!desktop.matches || reducedMotion.matches) return undefined;
+    const configureObserver = () => {
+      observer?.disconnect();
+      observer = undefined;
+      intersectionRatios.clear();
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleEntry = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!desktop.matches || reducedMotion.matches) return;
 
-        if (visibleEntry?.target.dataset.projectId) {
-          setActiveProject(visibleEntry.target.dataset.projectId);
-        }
-      },
-      {
-        rootMargin: '-28% 0px -48% 0px',
-        threshold: [0, 0.2, 0.5, 0.8],
-      },
-    );
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const projectId = entry.target.dataset.projectId;
+            if (projectId) {
+              intersectionRatios.set(
+                projectId,
+                entry.isIntersecting ? entry.intersectionRatio : 0,
+              );
+            }
+          });
 
-    projectRefs.current.forEach((project) => {
-      if (project) observer.observe(project);
-    });
+          const activeEntry = [...intersectionRatios.entries()]
+            .filter(([, ratio]) => ratio > 0)
+            .sort(([, ratioA], [, ratioB]) => ratioB - ratioA)[0];
 
-    return () => observer.disconnect();
+          if (activeEntry) setActiveProject(activeEntry[0]);
+        },
+        {
+          rootMargin: '-28% 0px -48% 0px',
+          threshold: [0, 0.2, 0.5, 0.8],
+        },
+      );
+
+      projectRefs.current.forEach((project) => {
+        if (!project) return;
+
+        intersectionRatios.set(project.dataset.projectId, 0);
+        observer.observe(project);
+      });
+    };
+
+    configureObserver();
+    desktop.addEventListener('change', configureObserver);
+    reducedMotion.addEventListener('change', configureObserver);
+
+    return () => {
+      observer?.disconnect();
+      desktop.removeEventListener('change', configureObserver);
+      reducedMotion.removeEventListener('change', configureObserver);
+    };
   }, []);
 
   return (
@@ -69,14 +102,16 @@ export default function Work() {
 
           <div className="selected-work__heading">
             <p className="selected-work__eyebrow">Systems in practice</p>
-            <h2 id="selected-work-title">From research question to working system.</h2>
+            <h2 id="selected-work-title">
+              From research question to working system.
+            </h2>
           </div>
 
           <div className="selected-work__introduction">
             <p>
-              Three cases across production agents, agentic reinforcement
-              learning, and evaluation research. Each starts with a concrete
-              failure mode and ends with evidence.
+              Cases across production agents, agentic reinforcement learning,
+              and evaluation research. Each starts with a concrete failure mode
+              and ends with evidence.
             </p>
             <Link className="selected-work__all-link" to="/projects">
               <span>View all projects</span>
@@ -85,61 +120,73 @@ export default function Work() {
           </div>
         </header>
 
-        <ol className="selected-work__list" aria-label="Selected project case studies">
-          {selectedProjects.map((project, index) => {
-            const isActive = activeProject === project.id;
+        {selectedProjects.length > 0 ? (
+          <ol
+            className="selected-work__list"
+            aria-label="Selected project case studies"
+          >
+            {selectedProjects.map((project, index) => {
+              const isActive = activeProject === project.id;
 
-            return (
-              <li
-                key={project.id}
-                ref={(node) => {
-                  projectRefs.current[index] = node;
-                }}
-                className="selected-work__item"
-                data-project-id={project.id}
-                data-active={isActive ? 'true' : 'false'}
-              >
-                <span className="selected-work__marker" aria-hidden="true" />
+              return (
+                <li
+                  key={project.id}
+                  ref={(node) => {
+                    projectRefs.current[index] = node;
+                  }}
+                  className="selected-work__item"
+                  data-project-id={project.id}
+                  data-active={isActive ? 'true' : 'false'}
+                >
+                  <span className="selected-work__marker" aria-hidden="true" />
 
-                <article className="selected-work__case">
-                  <div className="selected-work__number" aria-hidden="true">
-                    {String(index + 1).padStart(2, '0')}
-                  </div>
-
-                  <div className="selected-work__identity">
-                    <p className="selected-work__meta">
-                      <span>{project.kicker}</span>
-                      <span>{project.category}</span>
-                    </p>
-                    <h3>{project.title}</h3>
-                    <p className="selected-work__provenance">
-                      <time dateTime={project.year}>{project.year}</time>
-                      <span>{project.stage}</span>
-                    </p>
-                  </div>
-
-                  <div className="selected-work__narrative">
-                    <div>
-                      <p className="selected-work__label">Context / problem</p>
-                      <p className="selected-work__description">{project.description}</p>
+                  <article className="selected-work__case">
+                    <div className="selected-work__number" aria-hidden="true">
+                      {String(index + 1).padStart(2, '0')}
                     </div>
 
-                    <div className="selected-work__evidence">
+                    <div className="selected-work__identity">
+                      <p className="selected-work__meta">
+                        <span>{project.kicker}</span>
+                        <span>{project.category}</span>
+                      </p>
+                      <h3>{project.title}</h3>
+                      <p className="selected-work__provenance">
+                        <time dateTime={project.year}>{project.year}</time>
+                        <span>{project.stage}</span>
+                      </p>
+                    </div>
+
+                    <div className="selected-work__narrative">
                       <div>
-                        <p className="selected-work__label">My contribution</p>
-                        <p>{project.details[0]}</p>
+                        <p className="selected-work__label">Context / problem</p>
+                        <p className="selected-work__description">
+                          {project.description}
+                        </p>
                       </div>
-                      <div>
-                        <p className="selected-work__label">Outcome</p>
-                        <p>{project.outcome}</p>
+
+                      <div className="selected-work__evidence">
+                        <div>
+                          <p className="selected-work__label">My contribution</p>
+                          <p>{project.details[0]}</p>
+                        </div>
+                        <div>
+                          <p className="selected-work__label">Outcome</p>
+                          <p>{project.outcome}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </article>
-              </li>
-            );
-          })}
-        </ol>
+                  </article>
+                </li>
+              );
+            })}
+          </ol>
+        ) : (
+          <p className="selected-work__empty">
+            Selected case studies are being updated. The complete project archive
+            remains available above.
+          </p>
+        )}
       </div>
     </section>
   );

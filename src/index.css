@@ -1050,6 +1050,15 @@ html {
   list-style: none;
 }
 
+.selected-work__empty {
+  margin: 0;
+  padding-block: 3rem;
+  border-block: 1px solid var(--work-line);
+  color: var(--work-muted);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
 .selected-work__item {
   position: relative;
   min-width: 0;
