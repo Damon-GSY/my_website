@@ -172,46 +172,47 @@ export default function App() {
               </div>
             ))}
           </div>
-          <div className="max-w-[48rem] md:max-w-[58rem]">
+          <div className="max-w-[64rem]">
             <div style={{ display: 'flex', alignItems: 'center', gap: '.75rem', marginBottom: '1.4rem' }}><span style={{ width: 34, height: 1, background: ACCENT }} /><p style={{ ...meta, margin: 0, color: ACCENT }}>Optimization Landscape · 01</p></div>
             <h1 style={{ margin: 0, maxWidth: '12ch', fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(3.3rem,8.8vw,9.2rem)', fontWeight: 400, letterSpacing: '-.045em', lineHeight: .84, background: 'linear-gradient(90deg,#f3eee9,#d97757,#ffd5bf,#f3eee9)', backgroundSize: '200% auto', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent', animation: 'shimmer 4s linear infinite' }}>I map the terrain.</h1>
             <p style={{ maxWidth: '34rem', margin: 'clamp(1.4rem,3vw,2.5rem) 0 0', color: 'rgba(243,238,233,.86)', fontFamily: "'Imprima',sans-serif", fontSize: 'clamp(.88rem,1.15vw,1.03rem)', lineHeight: 1.7 }}>I'm Damon. I orchestrate AI agents to explore problems that resist single-pass solutions — mapping the terrain before any model moves through it.</p>
           </div>
         </article>
 
-        <article style={{ position: 'absolute', zIndex: 21, inset: 0, display: 'flex', alignItems: 'center', padding: '7rem clamp(3.4rem,9vw,10rem) 7rem clamp(1.2rem,6vw,6rem)', opacity: research, transform: `translateY(${(.2 - progress) * 70}px)`, pointerEvents: research > .15 ? 'auto' : 'none' }}>
-          <div className="w-full max-w-[31rem] md:w-[40vw]">
+        <article style={{ position: 'absolute', zIndex: 21, inset: 0, display: 'grid', gridTemplateColumns: 'minmax(13rem, 0.35fr) minmax(0, 0.65fr)', gap: 'clamp(2rem,5vw,4rem)', alignItems: 'center', padding: '7rem clamp(3rem,7vw,6rem)', opacity: research, transform: `translateY(${(.2 - progress) * 70}px)`, pointerEvents: research > .15 ? 'auto' : 'none' }}>
+            <div>
             <p style={{ ...meta, margin: '0 0 1.2rem', color: ACCENT }}>Work · 02</p>
             <h2 style={{ margin: 0, color: INK, fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(3rem,6.2vw,6.8rem)', fontWeight: 400, letterSpacing: '-.035em', lineHeight: .9, textShadow: '0 8px 38px rgba(0,0,0,.66)' }}>{enc('Four axes. One agent.')}</h2>
-            <div style={{ marginTop: 'clamp(1.5rem,3vw,2.5rem)', borderBottom: `1px solid ${LINE}` }}>
+            </div>
+            <div style={{ borderBottom: `1px solid ${LINE}` }}>
               <DataRow label="01" value="Planning · dynamic decomposition and cross-turn replanning" at={.13} progress={progress} />
               <DataRow label="02" value="Tool use · execution accuracy across 100+ tools" at={.15} progress={progress} />
               <DataRow label="03" value="Memory · session, persistent, and retrieval horizons" at={.17} progress={progress} />
               <DataRow label="04" value="Evaluation · judge intermediate steps, not just final answers" at={.19} progress={progress} />
             </div>
-          </div>
         </article>
 
-        <article style={{ position: 'absolute', zIndex: 21, inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '7rem clamp(3.4rem,9vw,10rem) 7rem clamp(1.2rem,6vw,6rem)', opacity: production, transform: `translateY(${(.36 - progress) * 70}px)`, pointerEvents: production > .15 ? 'auto' : 'none' }}>
-          <div className="w-full max-w-[29rem] md:w-[38vw]">
+        <article style={{ position: 'absolute', zIndex: 21, inset: 0, display: 'grid', gridTemplateColumns: 'minmax(13rem, 0.35fr) minmax(0, 0.65fr)', gap: 'clamp(2rem,5vw,4rem)', alignItems: 'center', padding: '7rem clamp(3rem,7vw,6rem)', opacity: production, transform: `translateY(${(.36 - progress) * 70}px)`, pointerEvents: production > .15 ? 'auto' : 'none' }}>
+            <div>
             <p style={{ ...meta, margin: '0 0 1.2rem', color: ACCENT }}>Projects · 03</p>
             <h2 style={{ margin: 0, color: INK, fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(2.9rem,5.8vw,6.4rem)', fontWeight: 400, letterSpacing: '-.035em', lineHeight: .91, textShadow: '0 8px 38px rgba(0,0,0,.66)' }}>{enc('Systems that survive contact with reality.')}</h2>
-            <div style={{ marginTop: 'clamp(1.6rem,4vw,3.2rem)', borderBottom: `1px solid ${LINE}` }}>
+            </div>
+            <div style={{ borderBottom: `1px solid ${LINE}` }}>
               <DataRow label="Agent System" value="Risk-tiered multi-turn decisions across 12 supply-chain scenarios; 90% fewer misoperations, sub-second handoff." at={.28} progress={progress} />
               <DataRow label="Agentic RL" value="Ticket-resolution agents over 100+ dynamically registered tools; 90% less manual handling." at={.3} progress={progress} />
               <DataRow label="Domain LLM" value="Continual pretraining + integrated SFT/RL; internal SOTA on a dual-axis knowledge + tool-use benchmark." at={.32} progress={progress} />
               <DataRow label="Reward Design" value="Multi-objective GRPO stabilized via conditional rewards, variance control, and hierarchical rewards." at={.34} progress={progress} />
             </div>
-          </div>
         </article>
 
-        <article style={{ position: 'absolute', zIndex: 22, inset: 0, display: 'flex', alignItems: 'center', padding: '6.5rem clamp(3.4rem,8vw,9rem) 6.5rem clamp(1.2rem,7vw,8rem)', opacity: papers, transform: `translateY(${(.53 - progress) * 70}px)`, pointerEvents: papers > .15 ? 'auto' : 'none' }}>
-          <div className="w-full max-w-[48rem] md:w-[58vw]">
+        <article style={{ position: 'absolute', zIndex: 22, inset: 0, display: 'grid', gridTemplateColumns: 'minmax(13rem, 0.35fr) minmax(0, 0.65fr)', gap: 'clamp(2rem,5vw,4rem)', alignItems: 'center', padding: '6.5rem clamp(3rem,7vw,6rem)', opacity: papers, transform: `translateY(${(.53 - progress) * 70}px)`, pointerEvents: papers > .15 ? 'auto' : 'none' }}>
+            <div>
             <p style={{ ...meta, margin: '0 0 1rem', color: ACCENT }}>Research · 04</p>
             <h2 style={{ margin: 0, color: INK, fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(2.7rem,5.5vw,6rem)', fontWeight: 400, letterSpacing: '-.035em', lineHeight: .9, textShadow: '0 8px 38px rgba(0,0,0,.66)' }}>{enc('Claims must survive the benchmark.')}</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2" style={{ marginTop: 'clamp(1.35rem,3vw,2.4rem)', borderTop: `1px solid ${LINE}`, borderLeft: `1px solid ${LINE}` }}>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2" style={{ borderTop: `1px solid ${LINE}`, borderLeft: `1px solid ${LINE}` }}>
               {[
-                ['01 · Agent Evaluation', 'A taxonomy built from ~250 papers across planning, tools, memory, and Agent-as-Judge.'],
+                ['01 · Agent Evaluation', 'A taxonomy built from ~250 Papers across planning, tools, memory, and Agent-as-Judge.'],
                 ['02 · SupChain-Bench', '530 real-world samples spanning logistics, fulfillment, finance, and customs.'],
                 ['03 · VisualDeltas', 'Preference learning from visual-quality-induced reasoning; gains up to +8.2%.'],
                 ['04 · Multi-turn Evaluation', 'Cross-turn recovery, intent shifts, and dependency-aware intermediate scoring.'],
@@ -224,16 +225,17 @@ export default function App() {
                 </div>
               ))}
             </div>
-          </div>
         </article>
 
-        <article style={{ position: 'absolute', zIndex: 22, inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '7rem clamp(3.4rem,9vw,10rem) 7rem clamp(1.2rem,6vw,6rem)', opacity: trajectory, transform: `translateY(${(.72 - progress) * 70}px)`, pointerEvents: trajectory > .15 ? 'auto' : 'none' }}>
-          <div className="w-full max-w-[31rem] md:w-[40vw]">
+        <article style={{ position: 'absolute', zIndex: 22, inset: 0, display: 'grid', gridTemplateColumns: 'minmax(13rem, 0.35fr) minmax(0, 0.65fr)', gap: 'clamp(2rem,5vw,4rem)', alignItems: 'center', padding: '7rem clamp(3rem,7vw,6rem)', opacity: trajectory, transform: `translateY(${(.72 - progress) * 70}px)`, pointerEvents: trajectory > .15 ? 'auto' : 'none' }}>
+          <div>
             <p style={{ ...meta, margin: '0 0 1.2rem', color: ACCENT }}>Path · 05</p>
             <h2 style={{ margin: 0, color: INK, fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(3rem,6vw,6.5rem)', fontWeight: 400, letterSpacing: '-.035em', lineHeight: .9, textShadow: '0 8px 38px rgba(0,0,0,.66)' }}>{enc('Evolution of the search.')}</h2>
-            <div style={{ marginTop: 'clamp(1.5rem,3vw,2.6rem)' }}>
+          </div>
+          <div>
+            <div>
               {[
-                { label: '2019—22', value: 'UNSW · Computer Science · Dean’s List', detail: 'GPA 85/100 · Academic Scholarship · Dean’s List 2019–2022 · QS #19.' },
+                { label: '2019—22', value: 'UNSW · Computer Science · Dean\'s List', detail: 'GPA 85/100 · Academic Scholarship · Dean\'s List 2019–2022 · QS #19.' },
                 { label: '2023—25', value: 'NUS · Statistics · top 5%', detail: 'GPA 4.0/5.0 · top 5% in major · QS #8.' },
                 { label: '2024—25', value: 'MSRA · M365 Copilot', detail: 'GPT-4o production rollout · 3-layer memory + tree-structured retrieval · multi-turn eval framework.' },
                 { label: '2025—now', value: 'Alibaba · LLM systems', detail: 'Agentic RL + post-training · 12 supply-chain scenarios · 100+ dynamic tools · Hangzhou.' },
