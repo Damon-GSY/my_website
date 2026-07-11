@@ -3,8 +3,8 @@ import { clamp, smooth, band } from './landscape/math'
 import { createLandscapeRenderer } from './landscape/renderer'
 const foregroundUrl = '/assets/optimization-foreground.webp'
 const landscapeUrl = '/assets/optimization-landscape.webp'
-// const depthUrl = '/assets/optimization-depth.webp'  // perf: depth layer dropped
-// const lightUrl = '/assets/optimization-light.webp'  // perf: baked into landscape
+const depthUrl = '/assets/optimization-depth.webp'
+const lightUrl = '/assets/optimization-light.webp'
 
 const ACCENT = '#d97757'
 const INK = '#f3eee9'
@@ -100,7 +100,7 @@ export default function App() {
   const bgCanvasRef = useRef<HTMLCanvasElement>(null)
   useEffect(() => {
     if (!bgCanvasRef.current) return
-    const r = createLandscapeRenderer(bgCanvasRef.current, { landscape: landscapeUrl, foreground: foregroundUrl })
+    const r = createLandscapeRenderer(bgCanvasRef.current, { landscape: landscapeUrl, depth: depthUrl, light: lightUrl, foreground: foregroundUrl })
     return () => r.dispose()
   }, [])
   const particles = useMemo(() => Array.from({ length: 14 }, (_, i) => ({
