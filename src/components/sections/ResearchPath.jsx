@@ -34,7 +34,7 @@ const chronologyConfig = [
     year: '2023',
     track: 'Education',
     title: 'National University of Singapore (NUS)',
-    evidenceKeywords: ['Statistics', 'Top 5%'],
+    evidenceKeywords: ['Statistics', 'QS Global Rank #8', 'Top 5%'],
     annotation: 'Graduate study',
   },
   {
@@ -42,7 +42,7 @@ const chronologyConfig = [
     year: '2019',
     track: 'Education',
     title: 'University of New South Wales (UNSW)',
-    evidenceKeywords: ['Computer Science', 'Top 3%'],
+    evidenceKeywords: ['Computer Science', 'QS Global Rank #19', 'Top 3%'],
     annotation: 'Foundation',
   },
 ];
