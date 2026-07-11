@@ -147,6 +147,7 @@ export default function App() {
         <header style={{ position: 'absolute', zIndex: 30, inset: '0 0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'clamp(1.15rem,2.8vw,2.4rem) clamp(1.15rem,4vw,4.5rem)' }}>
           <a href={`mailto:${identity.email}`} style={{ display: 'flex', alignItems: 'center', gap: '.8rem', textDecoration: 'none' }}>
             <span style={{ display: 'grid', width: 29, height: 29, placeItems: 'center', border: `1px solid ${LINE}`, borderRadius: '50%', color: INK, fontFamily: "'Viaoda Libre',serif", fontSize: '.96rem' }}>D</span>
+            <span style={{ ...meta, color: INK }}>Damon</span><span style={{ ...meta, margin: '0 -.3rem' }}>·</span><span style={meta}>AI Engineer · Alibaba</span>
           </a>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(1rem,3vw,3rem)' }}>
             <span className="hidden sm:inline" style={meta}>{identity.location}</span>
@@ -180,7 +181,7 @@ export default function App() {
 
         <article style={{ position: 'absolute', zIndex: 21, inset: 0, display: 'flex', alignItems: 'center', padding: '7rem clamp(3.4rem,9vw,10rem) 7rem clamp(1.2rem,6vw,6rem)', opacity: research, transform: `translateY(${(.2 - progress) * 70}px)`, pointerEvents: research > .15 ? 'auto' : 'none' }}>
           <div className="w-full max-w-[31rem] md:w-[40vw]">
-            <p style={{ ...meta, margin: '0 0 1.2rem', color: ACCENT }}>Multi-agent engine · 02</p>
+            <p style={{ ...meta, margin: '0 0 1.2rem', color: ACCENT }}>Work · 02</p>
             <h2 style={{ margin: 0, color: INK, fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(3rem,6.2vw,6.8rem)', fontWeight: 400, letterSpacing: '-.035em', lineHeight: .9, textShadow: '0 8px 38px rgba(0,0,0,.66)' }}>{enc('Four axes. One agent.')}</h2>
             <div style={{ marginTop: 'clamp(1.5rem,3vw,2.5rem)', borderBottom: `1px solid ${LINE}` }}>
               <DataRow label="01" value="Planning · dynamic decomposition and cross-turn replanning" at={.13} progress={progress} />
@@ -193,7 +194,7 @@ export default function App() {
 
         <article style={{ position: 'absolute', zIndex: 21, inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '7rem clamp(3.4rem,9vw,10rem) 7rem clamp(1.2rem,6vw,6rem)', opacity: production, transform: `translateY(${(.36 - progress) * 70}px)`, pointerEvents: production > .15 ? 'auto' : 'none' }}>
           <div className="w-full max-w-[29rem] md:w-[38vw]">
-            <p style={{ ...meta, margin: '0 0 1.2rem', color: ACCENT }}>Directions explored · 03</p>
+            <p style={{ ...meta, margin: '0 0 1.2rem', color: ACCENT }}>Projects · 03</p>
             <h2 style={{ margin: 0, color: INK, fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(2.9rem,5.8vw,6.4rem)', fontWeight: 400, letterSpacing: '-.035em', lineHeight: .91, textShadow: '0 8px 38px rgba(0,0,0,.66)' }}>{enc('Systems that survive contact with reality.')}</h2>
             <div style={{ marginTop: 'clamp(1.6rem,4vw,3.2rem)', borderBottom: `1px solid ${LINE}` }}>
               <DataRow label="Agent System" value="Risk-tiered multi-turn decisions across 12 supply-chain scenarios; 90% fewer misoperations, sub-second handoff." at={.28} progress={progress} />
@@ -206,7 +207,7 @@ export default function App() {
 
         <article style={{ position: 'absolute', zIndex: 22, inset: 0, display: 'flex', alignItems: 'center', padding: '6.5rem clamp(3.4rem,8vw,9rem) 6.5rem clamp(1.2rem,7vw,8rem)', opacity: papers, transform: `translateY(${(.53 - progress) * 70}px)`, pointerEvents: papers > .15 ? 'auto' : 'none' }}>
           <div className="w-full max-w-[48rem] md:w-[58vw]">
-            <p style={{ ...meta, margin: '0 0 1rem', color: ACCENT }}>Evaluator record · 04</p>
+            <p style={{ ...meta, margin: '0 0 1rem', color: ACCENT }}>Research · 04</p>
             <h2 style={{ margin: 0, color: INK, fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(2.7rem,5.5vw,6rem)', fontWeight: 400, letterSpacing: '-.035em', lineHeight: .9, textShadow: '0 8px 38px rgba(0,0,0,.66)' }}>{enc('Claims must survive the benchmark.')}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2" style={{ marginTop: 'clamp(1.35rem,3vw,2.4rem)', borderTop: `1px solid ${LINE}`, borderLeft: `1px solid ${LINE}` }}>
               {[
@@ -228,7 +229,7 @@ export default function App() {
 
         <article style={{ position: 'absolute', zIndex: 22, inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '7rem clamp(3.4rem,9vw,10rem) 7rem clamp(1.2rem,6vw,6rem)', opacity: trajectory, transform: `translateY(${(.72 - progress) * 70}px)`, pointerEvents: trajectory > .15 ? 'auto' : 'none' }}>
           <div className="w-full max-w-[31rem] md:w-[40vw]">
-            <p style={{ ...meta, margin: '0 0 1.2rem', color: ACCENT }}>Evolution · 05</p>
+            <p style={{ ...meta, margin: '0 0 1.2rem', color: ACCENT }}>Path · 05</p>
             <h2 style={{ margin: 0, color: INK, fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(3rem,6vw,6.5rem)', fontWeight: 400, letterSpacing: '-.035em', lineHeight: .9, textShadow: '0 8px 38px rgba(0,0,0,.66)' }}>{enc('Evolution of the search.')}</h2>
             <div style={{ marginTop: 'clamp(1.5rem,3vw,2.6rem)' }}>
               {[
