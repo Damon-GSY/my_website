@@ -12,35 +12,77 @@ const timelineEntries = (Array.isArray(timelineData) ? timelineData : []).flatMa
     })),
 );
 
-const findTimelineEntry = (titleFragment) =>
-  timelineEntries.find((entry) => entry?.title?.includes(titleFragment));
-
-const chronology = [
+const chronologyConfig = [
   {
-    entry: findTimelineEntry('LLM Algorithm Engineer @ Alibaba'),
-    pointIndexes: [0, 2],
+    id: 'alibaba-llm-engineer',
+    year: '2025',
+    track: 'Full-time',
+    title: 'LLM Algorithm Engineer @ Alibaba',
+    evidenceKeywords: ['supply-chain domain LLM', 'dynamic tool registration'],
     annotation: 'Current / production',
   },
   {
-    entry: findTimelineEntry('Microsoft Research Asia'),
-    pointIndexes: [0, 1],
+    id: 'msra-llm-intern',
+    year: '2024',
+    track: 'Internship',
+    title: 'LLM Intern @ Microsoft Research Asia (MSRA)',
+    evidenceKeywords: ['GPT-4o', 'memory architecture'],
     annotation: 'Industry research',
   },
   {
-    entry: findTimelineEntry('National University of Singapore'),
-    pointIndexes: [0, 1, 2],
+    id: 'nus-graduate-study',
+    year: '2023',
+    track: 'Education',
+    title: 'National University of Singapore (NUS)',
+    evidenceKeywords: ['Statistics', 'Top 5%'],
     annotation: 'Graduate study',
   },
   {
-    entry: findTimelineEntry('University of New South Wales'),
-    pointIndexes: [0, 1, 2, 3],
+    id: 'unsw-undergraduate-study',
+    year: '2019',
+    track: 'Education',
+    title: 'University of New South Wales (UNSW)',
+    evidenceKeywords: ['Computer Science', 'Top 3%'],
     annotation: 'Foundation',
   },
-].filter(({ entry }) => Boolean(entry));
+];
+
+const describeTimelineNode = ({ id, year, track, title }) =>
+  `"${id}" (year "${year}", track "${track}", title "${title}")`;
+
+const chronology = chronologyConfig.flatMap((config) => {
+  const matches = timelineEntries.filter(
+    (entry) =>
+      entry?.year === config.year &&
+      entry?.track === config.track &&
+      entry?.title === config.title,
+  );
+
+  if (import.meta.env.DEV && matches.length === 0) {
+    console.warn(`[ResearchPath] Missing configured timeline node ${describeTimelineNode(config)}.`);
+  }
+
+  if (import.meta.env.DEV && matches.length > 1) {
+    console.warn(
+      `[ResearchPath] Duplicate configured timeline node ${describeTimelineNode(config)}: found ${matches.length} exact matches; the node was omitted.`,
+    );
+  }
+
+  if (matches.length !== 1) {
+    return [];
+  }
+
+  const entry = matches[0];
+  const points = Array.isArray(entry?.points) ? entry.points.filter(Boolean) : [];
+  const evidence = points.filter((point) =>
+    config.evidenceKeywords.some((keyword) => point.toLowerCase().includes(keyword.toLowerCase())),
+  );
+
+  return [{ ...config, entry, evidence }];
+});
 
 const researchWorks = (Array.isArray(projects) ? projects : [])
-  .filter((project) => project?.category === 'research')
-  .slice(0, 4);
+  .filter((project) => project?.category === 'research');
 
 const firstEntryContainer = {
   hidden: { opacity: 0 },
@@ -113,10 +155,8 @@ export default function ResearchPath() {
             </div>
 
             <ol className="research-path__list" aria-label="Research and experience chronology">
-              {chronology.map(({ entry, pointIndexes, annotation }, index) => {
-                const points = pointIndexes
-                  .map((pointIndex) => entry.points?.[pointIndex])
-                  .filter(Boolean);
+              {chronology.map(({ id, entry, evidence, annotation }, index) => {
+                const fallbackEvidence = entry.location || aboutProfile?.focus || aboutProfile?.intro;
                 const isCurrent = index === 0;
                 const articleContent = (
                   <>
@@ -132,12 +172,14 @@ export default function ResearchPath() {
                     </EntryColumn>
 
                     <EntryColumn animate={isCurrent} className="research-path__evidence">
-                      {points.length > 0 ? (
+                      {evidence.length > 0 ? (
                         <ul>
-                          {points.map((point) => (
+                          {evidence.map((point) => (
                             <li key={point}>{point}</li>
                           ))}
                         </ul>
+                      ) : fallbackEvidence ? (
+                        <p className="research-path__unavailable">{fallbackEvidence}</p>
                       ) : (
                         <p className="research-path__unavailable">Details available on the full profile.</p>
                       )}
@@ -149,7 +191,7 @@ export default function ResearchPath() {
                   <li
                     className="research-path__item"
                     data-depth={index}
-                    key={`${entry.year}-${entry.title}`}
+                    key={id}
                   >
                     {isCurrent ? (
                       <motion.article
@@ -177,10 +219,13 @@ export default function ResearchPath() {
             <p className="research-path__eyebrow">
               Research index / {String(researchWorks.length).padStart(2, '0')}
             </p>
-            <h3>{researchWorks.length} research works, one applied through-line.</h3>
+            <h3>
+              {researchWorks.length} current research {researchWorks.length === 1 ? 'work' : 'works'},
+              indexed from the portfolio.
+            </h3>
             <p>
-              Agent evaluation, supply-chain benchmarks, visual preference learning,
-              and memory systems—different settings, the same concern for evidence.
+              Each entry retains its source category, year, and stage so papers and applied
+              research remain distinct.
             </p>
             <Link className="research-path__about-link" to="/about">
               <span>Full background</span>
@@ -193,7 +238,10 @@ export default function ResearchPath() {
               {researchWorks.map((work, index) => (
                 <li key={work.id ?? `${work.title}-${index}`}>
                   <span>{String(index + 1).padStart(2, '0')}</span>
-                  <strong>{work.title}</strong>
+                  <div className="research-path__work-identity">
+                    {work.kicker ? <span>{work.kicker}</span> : null}
+                    <strong>{work.title}</strong>
+                  </div>
                   <span>
                     <time dateTime={work.year}>{work.year}</time>
                     {work.stage ? ` / ${work.stage}` : ''}
