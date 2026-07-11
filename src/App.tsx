@@ -1,7 +1,7 @@
 import { type CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
 import { clamp, smooth, band } from './landscape/math'
 import { createLandscapeRenderer } from './landscape/renderer'
-import { EncryptedText, NumberTicker, MagneticButton, Signature, AgentConsole } from './landscape/effects'
+import { EncryptedText, NumberTicker, MagneticButton, Signature, AgentNetwork } from './landscape/effects'
 const foregroundUrl = '/assets/optimization-foreground.webp'
 const landscapeUrl = '/assets/optimization-landscape.webp'
 const depthUrl = '/assets/optimization-depth.webp'
@@ -192,7 +192,7 @@ export default function App() {
             <h1 style={{ margin: 0, maxWidth: '12ch', fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(3.3rem,8.8vw,9.2rem)', fontWeight: 400, letterSpacing: '-.045em', lineHeight: .84, background: 'linear-gradient(90deg,#f3eee9,#d97757,#ffd5bf,#f3eee9)', backgroundSize: '200% auto', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent', animation: 'shimmer 4s linear infinite' }}>I map the terrain.</h1>
             <p style={{ maxWidth: '34rem', margin: 'clamp(1.4rem,3vw,2.5rem) 0 0', color: 'rgba(243,238,233,.86)', fontFamily: "'Imprima',sans-serif", fontSize: 'clamp(.88rem,1.15vw,1.03rem)', lineHeight: 1.7 }}>I'm Damon. I orchestrate AI agents to explore problems that resist single-pass solutions — mapping the terrain before any model moves through it.</p>
           </div>
-          <div className="hidden md:block" style={{ position: 'absolute', right: 'clamp(4.5rem,9vw,8rem)', top: '52%', transform: 'translateY(-50%)', zIndex: 20, pointerEvents: 'none' }}><AgentConsole /></div>
+          <div className="hidden md:block" style={{ position: 'absolute', right: 'clamp(4.5rem,9vw,8rem)', top: '52%', transform: 'translateY(-50%)', zIndex: 20, pointerEvents: 'none' }}><AgentNetwork /></div>
         </article>
 
         <article style={{ position: 'absolute', zIndex: 21, inset: 0, display: 'grid', gridTemplateColumns: 'minmax(13rem, 0.35fr) minmax(0, 0.65fr)', gap: 'clamp(2rem,5vw,4rem)', alignItems: 'center', padding: '7rem clamp(3rem,7vw,6rem)', opacity: research, transform: `translateY(${(.2 - progress) * 70}px)`, pointerEvents: research > .15 ? 'auto' : 'none' }}>

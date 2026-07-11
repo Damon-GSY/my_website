@@ -300,6 +300,57 @@ export function AgentConsole({ style }: { style?: CSSProperties }) {
   )
 }
 
+/** Animated agent-network graph — the hero visual centerpiece. Nodes (agents)
+ *  + edges (communication) + pulses traveling along edges (live agent comms) +
+ *  a breathing central hub. SVG + animateMotion (no JS per-frame). */
+const NODES = [
+  { x: 220, y: 170, r: 7, hub: true },
+  { x: 78, y: 78, r: 3.5 }, { x: 362, y: 68, r: 3.5 },
+  { x: 58, y: 222, r: 3.5 }, { x: 382, y: 242, r: 3.5 },
+  { x: 148, y: 48, r: 3 }, { x: 300, y: 46, r: 3 },
+  { x: 138, y: 282, r: 3 }, { x: 312, y: 292, r: 3 }, { x: 220, y: 28, r: 3 },
+]
+const EDGES: [number, number][] = [
+  [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [0, 8], [0, 9],
+  [1, 5], [2, 6], [3, 7], [4, 8], [5, 9], [6, 9],
+]
+export function AgentNetwork({ style }: { style?: CSSProperties }) {
+  return (
+    <div style={{
+      background: 'rgba(7,7,9,.55)', border: '1px solid rgba(243,238,233,.14)', borderRadius: 14,
+      padding: '1rem 1.1rem .7rem', WebkitBackdropFilter: 'blur(5px)', backdropFilter: 'blur(5px)',
+      ...style,
+    }}>
+      <div style={{ display: 'flex', gap: '.45rem', marginBottom: '.2rem', alignItems: 'center' }}>
+        <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#d97757', boxShadow: '0 0 6px rgba(217,119,87,.8)' }} />
+        <span style={{ color: 'rgba(243,238,233,.55)', fontSize: '.58rem', letterSpacing: '.18em', textTransform: 'uppercase' }}>agent_network · live</span>
+      </div>
+      <svg viewBox="0 0 440 320" style={{ width: 'clamp(17rem,22vw,21rem)', height: 'auto', overflow: 'visible', display: 'block' }} aria-hidden>
+        {EDGES.map(([a, b], i) => (
+          <line key={`e${i}`} x1={NODES[a].x} y1={NODES[a].y} x2={NODES[b].x} y2={NODES[b].y} stroke="rgba(217,119,87,.4)" strokeWidth="1.3" />
+        ))}
+        {EDGES.map(([a, b], i) => (
+          <circle key={`p${i}`} r="3" fill="#ffd5bf" style={{ filter: 'drop-shadow(0 0 5px rgba(255,213,191,.95))' }}>
+            <animateMotion dur={`${1.8 + (i % 5) * 0.4}s`} begin={`${(i % 7) * 0.32}s`} repeatCount="indefinite" path={`M${NODES[a].x},${NODES[a].y} L${NODES[b].x},${NODES[b].y}`} />
+          </circle>
+        ))}
+        {NODES.map((n, i) => (
+          <g key={`n${i}`}>
+            {n.hub && (
+              <circle cx={n.x} cy={n.y} r={n.r + 6} fill="rgba(217,119,87,.22)">
+                <animate attributeName="r" values={`${n.r + 4};${n.r + 13};${n.r + 4}`} dur="2.6s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.4;0.9;0.4" dur="2.6s" repeatCount="indefinite" />
+              </circle>
+            )}
+            <circle cx={n.x} cy={n.y} r={n.r + 1.5} fill={n.hub ? '#d97757' : 'rgba(243,238,233,.9)'} style={{ filter: n.hub ? 'drop-shadow(0 0 10px rgba(217,119,87,1))' : 'drop-shadow(0 0 4px rgba(243,238,233,.6))' }} />
+            {n.hub && <circle cx={n.x} cy={n.y} r={n.r - 1} fill="#ffd5bf" />}
+          </g>
+        ))}
+      </svg>
+    </div>
+  )
+}
+
 export function Accordion({
   items,
   accent,
