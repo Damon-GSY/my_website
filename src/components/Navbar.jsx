@@ -15,11 +15,12 @@ export default function Navbar() {
   const { pathname } = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const closeButtonRef = useRef(null);
+  const dialogRef = useRef(null);
   const menuButtonRef = useRef(null);
   const isHomePage = pathname === '/';
   const homeHref = isHomePage ? '#home' : '/#home';
 
-  const closeMobile = useCallback((restoreFocus = false) => {
+  const closeMobile = useCallback((restoreFocus = true) => {
     setMobileOpen(false);
     if (restoreFocus) requestAnimationFrame(() => menuButtonRef.current?.focus());
   }, []);
@@ -28,7 +29,30 @@ export default function Navbar() {
     if (!mobileOpen) return undefined;
 
     const handleKeyDown = (event) => {
-      if (event.key === 'Escape') closeMobile(true);
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeMobile();
+        return;
+      }
+
+      if (event.key !== 'Tab') return;
+
+      const focusable = Array.from(dialogRef.current?.querySelectorAll(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      ) ?? []).filter((element) => !element.hasAttribute('hidden'));
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+
+      if (event.shiftKey && (active === first || !dialogRef.current?.contains(active))) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && (active === last || !dialogRef.current?.contains(active))) {
+        event.preventDefault();
+        first.focus();
+      }
     };
 
     document.addEventListener('keydown', handleKeyDown);
@@ -37,8 +61,27 @@ export default function Navbar() {
   }, [mobileOpen, closeMobile]);
 
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+    if (!mobileOpen) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    const background = [document.querySelector('main'), document.querySelector('footer')]
+      .filter(Boolean)
+      .map((element) => ({
+        element,
+        wasInert: element.inert,
+        hadInertAttribute: element.hasAttribute('inert'),
+      }));
+
+    document.body.style.overflow = 'hidden';
+    background.forEach(({ element }) => { element.inert = true; });
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      background.forEach(({ element, wasInert, hadInertAttribute }) => {
+        element.inert = wasInert;
+        if (!hadInertAttribute) element.removeAttribute('inert');
+      });
+    };
   }, [mobileOpen]);
 
   useEffect(() => { setMobileOpen(false); }, [pathname]);
@@ -112,7 +155,7 @@ export default function Navbar() {
               aria-expanded={mobileOpen}
               aria-controls="mobile-nav"
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-              onClick={() => setMobileOpen((open) => !open)}
+              onClick={() => (mobileOpen ? closeMobile() : setMobileOpen(true))}
             >
               {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
@@ -122,13 +165,13 @@ export default function Navbar() {
 
       {mobileOpen && (
         <>
-          <button
-            type="button"
+          <div
             className="fixed inset-0 z-[55] cursor-default bg-black/55"
             onClick={() => closeMobile()}
-            aria-label="Close menu overlay"
+            aria-hidden="true"
           />
           <div
+            ref={dialogRef}
             id="mobile-nav"
             role="dialog"
             aria-modal="true"
@@ -140,7 +183,7 @@ export default function Navbar() {
               <button
                 ref={closeButtonRef}
                 type="button"
-                onClick={() => closeMobile(true)}
+                onClick={() => closeMobile()}
                 aria-label="Close menu"
                 className="p-2 text-[var(--muted)] hover:text-[var(--text)]"
               >

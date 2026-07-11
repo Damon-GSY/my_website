@@ -1,10 +1,4 @@
-import { ArrowUpRight, Mail } from 'lucide-react';
-
-const channels = [
-  { label: 'GitHub', href: 'https://github.com/Damon-GSY' },
-  { label: 'YouTube', href: 'https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA' },
-  { label: 'Bilibili', href: 'https://space.bilibili.com/358541297' },
-];
+import { Mail } from 'lucide-react';
 
 const collaborationAreas = [
   'Agent systems and tool use',
@@ -60,26 +54,10 @@ export default function Contact() {
             </ul>
           </div>
 
-          <nav aria-label="Elsewhere">
-            <h3 className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-[var(--primary)]">
-              Elsewhere
-            </h3>
-            <ul className="mt-4 m-0 list-none p-0">
-              {channels.map((channel) => (
-                <li key={channel.label} className="border-t border-[var(--line)] first:border-t-0">
-                  <a
-                    href={channel.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="group flex items-center justify-between gap-4 py-3 text-sm text-[var(--muted)] transition-colors hover:text-[var(--text)]"
-                  >
-                    <span>{channel.label}</span>
-                    <ArrowUpRight className="h-4 w-4 text-[var(--primary)] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <p className="max-w-sm border-t border-[var(--line)] pt-5 text-sm leading-6 text-[var(--muted)]">
+            Email is the confirmed contact channel for research, engineering,
+            speaking, and technical collaboration enquiries.
+          </p>
         </div>
       </div>
     </section>

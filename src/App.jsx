@@ -1,6 +1,6 @@
 import { Suspense, lazy } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import Layout from './components/Layout';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -18,16 +18,23 @@ const BlogPost = lazy(() => import('./components/BlogPost'));
 const Uses = lazy(() => import('./components/Uses'));
 const NotFound = lazy(() => import('./components/NotFound'));
 
-const PageTransition = ({ children }) => (
-  <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-  >
-    {children}
-  </motion.div>
-);
+const PageTransition = ({ children }) => {
+  const reducedMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      data-page-transition
+      initial={reducedMotion ? false : { opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={reducedMotion ? { opacity: 1 } : { opacity: 0 }}
+      transition={reducedMotion
+        ? { duration: 0 }
+        : { duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+};
 
 function HomePage() {
   return (
