@@ -16,13 +16,15 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const closeButtonRef = useRef(null);
   const dialogRef = useRef(null);
+  const headerRef = useRef(null);
   const menuButtonRef = useRef(null);
+  const restoreMenuFocusRef = useRef(false);
   const isHomePage = pathname === '/';
   const homeHref = isHomePage ? '#home' : '/#home';
 
   const closeMobile = useCallback((restoreFocus = true) => {
+    restoreMenuFocusRef.current = restoreFocus;
     setMobileOpen(false);
-    if (restoreFocus) requestAnimationFrame(() => menuButtonRef.current?.focus());
   }, []);
 
   useEffect(() => {
@@ -64,7 +66,7 @@ export default function Navbar() {
     if (!mobileOpen) return undefined;
 
     const previousOverflow = document.body.style.overflow;
-    const background = [document.querySelector('main'), document.querySelector('footer')]
+    const background = [headerRef.current, document.querySelector('main'), document.querySelector('footer')]
       .filter(Boolean)
       .map((element) => ({
         element,
@@ -82,6 +84,15 @@ export default function Navbar() {
         if (!hadInertAttribute) element.removeAttribute('inert');
       });
     };
+  }, [mobileOpen]);
+
+  useEffect(() => {
+    if (mobileOpen || !restoreMenuFocusRef.current) return;
+
+    // The inert effect's cleanup runs before this effect, so the trigger is
+    // interactive again before focus is restored.
+    restoreMenuFocusRef.current = false;
+    menuButtonRef.current?.focus();
   }, [mobileOpen]);
 
   useEffect(() => { setMobileOpen(false); }, [pathname]);
@@ -121,7 +132,7 @@ export default function Navbar() {
         Skip to content
       </a>
 
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--line)] bg-[color-mix(in_srgb,var(--bg)_88%,transparent)] backdrop-blur-md">
+      <header ref={headerRef} className="fixed inset-x-0 top-0 z-50 border-b border-[var(--line)] bg-[color-mix(in_srgb,var(--bg)_88%,transparent)] backdrop-blur-md">
         <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 md:px-6">
           <a
             href={homeHref}
