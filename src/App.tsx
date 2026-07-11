@@ -1,5 +1,6 @@
 import { type CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
 import { clamp, smooth, band } from './landscape/math'
+import { createLandscapeRenderer } from './landscape/renderer'
 const foregroundUrl = '/assets/optimization-foreground.webp'
 const landscapeUrl = '/assets/optimization-landscape.webp'
 // const depthUrl = '/assets/optimization-depth.webp'  // perf: depth layer dropped
@@ -82,25 +83,7 @@ const linkStyle: CSSProperties = {
   textTransform: 'uppercase',
 }
 
-function Layer({ src, style }: { src: string; style: CSSProperties }) {
-  return (
-    <img
-      src={src}
-      alt=""
-      draggable={false}
-      style={{
-        position: 'absolute',
-        inset: '-5%',
-        width: '110%',
-        height: '110%',
-        objectFit: 'cover',
-        userSelect: 'none',
-        willChange: 'transform, opacity, filter',
-        ...style,
-      }}
-    />
-  )
-}
+// (Layer component removed — parallax layers now drawn in renderer.ts canvas)
 
 function DataRow({ label, value, at, progress }: { label: string; value: string; at: number; progress: number }) {
   const reveal = smooth(at, at + 0.045, progress)
@@ -114,6 +97,12 @@ function DataRow({ label, value, at, progress }: { label: string; value: string;
 
 export default function App() {
   const progress = useScrollProgress()
+  const bgCanvasRef = useRef<HTMLCanvasElement>(null)
+  useEffect(() => {
+    if (!bgCanvasRef.current) return
+    const r = createLandscapeRenderer(bgCanvasRef.current, { landscape: landscapeUrl, foreground: foregroundUrl })
+    return () => r.dispose()
+  }, [])
   const particles = useMemo(() => Array.from({ length: 14 }, (_, i) => ({
     id: i,
     x: 4 + ((i * 29) % 93),
@@ -140,11 +129,10 @@ export default function App() {
 
       <section id="experience" aria-label="Optimization landscape experience" style={{ position: 'sticky', top: 0, height: '100svh', minHeight: '38rem', overflow: 'hidden', isolation: 'isolate', background: '#0a0a0c' }}>
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
-          <Layer src={landscapeUrl} style={{ zIndex: 1, opacity: .88, transform: `translate3d(${-progress * 3.5}vw,${5 - progress * 10}vh,0) scale(${1.04 + progress * .38})`, filter: 'brightness(.64) saturate(.9) contrast(1.18)', objectPosition: '52% 54%' }} />
-          <div style={{ position: 'absolute', zIndex: 2, inset: 0, background: 'linear-gradient(180deg,rgba(3,4,4,.94),rgba(3,4,4,.34) 39%,rgba(3,4,4,.04) 72%,rgba(3,4,4,.44))' }} />
+          <canvas ref={bgCanvasRef} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', zIndex: 1, display: 'block' }} />
           {/* perf: dropped depth layer (fullscreen screen-blend+mask composite per frame) */}
           {/* perf: light glow baked into landscape (tools/bake-light-into-landscape.py); dropped per-frame screen+mask composite */}
-          <Layer src={foregroundUrl} style={{ zIndex: 5, opacity: .17 + (1 - progress) * .15, transform: `translate3d(${-5 - progress * 8}vw,${18 - progress * 30}vh,0) scale(${1.22 + progress * .84})`, mixBlendMode: 'screen', filter: 'blur(1px) brightness(.48) contrast(1.16)', maskImage: 'linear-gradient(to bottom,transparent 8%,transparent 32%,black 71%,black)', WebkitMaskImage: 'linear-gradient(to bottom,transparent 8%,transparent 32%,black 71%,black)', objectPosition: '43% 68%' }} />
+          {/* foreground now drawn inside the canvas above (renderer.ts) */}
           {/* perf: dropped scan-lines (fullscreen masked composite every frame) */}
           {particles.map((p) => (
             <i key={p.id} style={{ position: 'absolute', zIndex: 7, left: `${p.x}%`, top: `${p.y}%`, width: p.size, height: p.size, borderRadius: '50%', background: p.id % 4 === 0 ? '#ffd5bf' : ACCENT, boxShadow: `0 0 7px ${p.id % 4 === 0 ? 'rgba(255,205,180,.68)' : 'rgba(217,119,87,.55)'}`, opacity: p.alpha * (.72 + core), transform: `translate3d(${progress * 110 * p.depth}px,${-progress * 150 * p.depth}px,0) scale(${.8 + progress * p.depth})` }} />
