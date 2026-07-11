@@ -234,6 +234,23 @@ export function MagneticButton({
 }
 
 /** Accordion row: click to expand a detail panel (grid-rows 0fr->1fr height anim, no measuring). */
+/** Handwritten-style signature that "writes itself" (clip reveal L→R) when in view. */
+export function Signature({ text = 'Damon', color = '#d97757', style }: { text?: string; color?: string; style?: CSSProperties }) {
+  const { ref, inView } = useInViewOnce<HTMLSpanElement>()
+  return (
+    <span ref={ref} aria-label={text} style={{
+      fontFamily: "'Caveat', cursive",
+      fontSize: 'clamp(3rem,6vw,4.5rem)',
+      color,
+      display: 'inline-block',
+      clipPath: inView ? 'inset(0 0 0 0)' : 'inset(0 100% 0 0)',
+      WebkitClipPath: inView ? 'inset(0 0 0 0)' : 'inset(0 100% 0 0)',
+      transition: 'clip-path 1.6s cubic-bezier(0.65,0,0.35,1) .2s',
+      ...style,
+    }}>{text}</span>
+  )
+}
+
 export function Accordion({
   items,
   accent,

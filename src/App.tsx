@@ -1,7 +1,7 @@
 import { type CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
 import { clamp, smooth, band } from './landscape/math'
 import { createLandscapeRenderer } from './landscape/renderer'
-import { EncryptedText, NumberTicker, MagneticButton } from './landscape/effects'
+import { EncryptedText, NumberTicker, MagneticButton, Signature } from './landscape/effects'
 const foregroundUrl = '/assets/optimization-foreground.webp'
 const landscapeUrl = '/assets/optimization-landscape.webp'
 const depthUrl = '/assets/optimization-depth.webp'
@@ -174,8 +174,8 @@ export default function App() {
           </div>
           <div className="max-w-[48rem] md:max-w-[58rem]">
             <div style={{ display: 'flex', alignItems: 'center', gap: '.75rem', marginBottom: '1.4rem' }}><span style={{ width: 34, height: 1, background: ACCENT }} /><p style={{ ...meta, margin: 0, color: ACCENT }}>Optimization Landscape · 01</p></div>
-            <h1 style={{ margin: 0, maxWidth: '12ch', fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(3.3rem,8.8vw,9.2rem)', fontWeight: 400, letterSpacing: '-.045em', lineHeight: .84, background: 'linear-gradient(90deg,#f3eee9,#d97757,#ffd5bf,#f3eee9)', backgroundSize: '200% auto', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent', animation: 'shimmer 4s linear infinite' }}>Find the path before the answer.</h1>
-            <p style={{ maxWidth: '34rem', margin: 'clamp(1.4rem,3vw,2.5rem) 0 0', color: 'rgba(243,238,233,.86)', fontFamily: "'Imprima',sans-serif", fontSize: 'clamp(.88rem,1.15vw,1.03rem)', lineHeight: 1.7 }}>I orchestrate AI agents to explore problems that resist single-pass solutions — mapping the terrain before any model moves through it.</p>
+            <h1 style={{ margin: 0, maxWidth: '12ch', fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(3.3rem,8.8vw,9.2rem)', fontWeight: 400, letterSpacing: '-.045em', lineHeight: .84, background: 'linear-gradient(90deg,#f3eee9,#d97757,#ffd5bf,#f3eee9)', backgroundSize: '200% auto', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent', animation: 'shimmer 4s linear infinite' }}>I map the terrain.</h1>
+            <p style={{ maxWidth: '34rem', margin: 'clamp(1.4rem,3vw,2.5rem) 0 0', color: 'rgba(243,238,233,.86)', fontFamily: "'Imprima',sans-serif", fontSize: 'clamp(.88rem,1.15vw,1.03rem)', lineHeight: 1.7 }}>I'm Damon. I orchestrate AI agents to explore problems that resist single-pass solutions — mapping the terrain before any model moves through it.</p>
           </div>
         </article>
 
@@ -265,6 +265,7 @@ export default function App() {
             <p style={{ margin: 'clamp(1.2rem,2vw,1.7rem) auto 0', maxWidth: '33rem', color: 'rgba(243,238,233,.72)', fontFamily: "'Imprima',sans-serif", fontSize: 'clamp(.8rem,1.1vw,.94rem)', lineHeight: 1.65 }}>I design systems where intelligence emerges from exploration, verification, and iteration.</p>
             <p style={{ margin: '1.7rem auto 0', maxWidth: '33rem', color: 'rgba(243,238,233,.86)', fontFamily: "'Imprima',sans-serif", fontSize: 'clamp(.86rem,1.2vw,1rem)', lineHeight: 1.65 }}>Open to collaborations on agent systems, evaluation research, and practical AI communication.</p>
             <MagneticButton strength={0.4}><a href={`mailto:${identity.email}`} style={{ display: 'inline-flex', alignItems: 'center', gap: '1.2rem', marginTop: '2rem', padding: '.95rem 0', borderBottom: `1px solid ${ACCENT}`, color: INK, fontFamily: "'Imprima',sans-serif", fontSize: 'clamp(.88rem,1.5vw,1.1rem)', letterSpacing: '.06em', textDecoration: 'none' }}>{identity.email} <span style={{ color: ACCENT }}>↗</span></a></MagneticButton>
+            <div style={{ marginTop: '1.8rem' }}><Signature text="Damon" color={ACCENT} /></div>
           </div>
         </article>
 
