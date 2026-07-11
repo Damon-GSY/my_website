@@ -1,50 +1,39 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 
 const navLinks = [
-  { label: 'Home', to: '/', isHash: true },
+  { label: 'Home', to: '/', homeAnchor: true },
   { label: 'Work', to: '/projects' },
-  { label: 'Notes', to: '/blog' },
+  { label: 'Writing', to: '/blog' },
   { label: 'About', to: '/about' },
   { label: 'Uses', to: '/uses' },
 ];
 
-function LiveTime() {
-  const [time, setTime] = useState('');
-  useEffect(() => {
-    const update = () => {
-      const now = new Date();
-      setTime(now.toLocaleTimeString('en-US', {
-        timeZone: 'Asia/Shanghai',
-        hour12: false,
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-      }));
-    };
-    update();
-    const id = setInterval(update, 1000);
-    return () => clearInterval(id);
-  }, []);
-  return <span className="font-mono tabular-nums">{time}</span>;
-}
-
 export default function Navbar() {
   const { pathname } = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const closeButtonRef = useRef(null);
+  const menuButtonRef = useRef(null);
   const isHomePage = pathname === '/';
   const homeHref = isHomePage ? '#home' : '/#home';
 
-  const closeMobile = useCallback(() => setMobileOpen(false), []);
+  const closeMobile = useCallback((restoreFocus = false) => {
+    setMobileOpen(false);
+    if (restoreFocus) requestAnimationFrame(() => menuButtonRef.current?.focus());
+  }, []);
 
   useEffect(() => {
-    if (!mobileOpen) return;
-    const handleEsc = (e) => { if (e.key === 'Escape') closeMobile(); };
-    document.addEventListener('keydown', handleEsc);
-    return () => document.removeEventListener('keydown', handleEsc);
+    if (!mobileOpen) return undefined;
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') closeMobile(true);
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    closeButtonRef.current?.focus();
+    return () => document.removeEventListener('keydown', handleKeyDown);
   }, [mobileOpen, closeMobile]);
 
   useEffect(() => {
@@ -54,112 +43,120 @@ export default function Navbar() {
 
   useEffect(() => { setMobileOpen(false); }, [pathname]);
 
-  const isActive = (path) => path === '/' ? isHomePage : pathname === path;
+  const isActive = (path) => {
+    if (path === '/') return isHomePage;
+    if (path === '/blog') return pathname === '/blog' || pathname.startsWith('/blog/');
+    return pathname === path;
+  };
+
+  const renderLink = (link, mobile = false) => {
+    const active = isActive(link.to);
+    const Wrapper = link.homeAnchor ? 'a' : Link;
+    const props = link.homeAnchor ? { href: homeHref } : { to: link.to };
+
+    return (
+      <Wrapper
+        key={link.to}
+        {...props}
+        onClick={mobile ? () => closeMobile() : undefined}
+        aria-current={active ? 'page' : undefined}
+        className={mobile
+          ? `border-b border-[var(--line)] py-4 font-display text-3xl tracking-[-0.03em] transition-colors ${active ? 'text-[var(--primary)]' : 'text-[var(--text)] hover:text-[var(--primary)]'}`
+          : `relative py-1 text-sm transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:bg-[var(--primary)] after:transition-transform ${active ? 'text-[var(--text)] after:scale-x-100' : 'text-[var(--muted)] after:scale-x-0 hover:text-[var(--text)] hover:after:scale-x-100'}`}
+      >
+        {link.label}
+      </Wrapper>
+    );
+  };
 
   return (
     <>
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[80] focus:rounded-lg focus:bg-[var(--primary)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[80] focus:bg-[var(--primary)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
       >
         Skip to content
       </a>
 
-      <header className="absolute inset-x-0 top-3 z-50 px-3 md:fixed md:top-4">
-        <div className="mx-auto max-w-7xl">
-          <div className="glass flex h-12 items-center justify-between gap-3 rounded-full border border-[var(--line)] px-2.5 shadow-[0_18px_70px_-45px_var(--primary)] md:px-3">
-            <a href={homeHref} className="flex items-center gap-2.5 shrink-0">
-              <span className="relative flex h-8 w-8 items-center justify-center rounded-full bg-[var(--primary)] text-[var(--bg)] font-display font-bold text-sm">
-                D
-                <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-emerald-400 ring-2 ring-[var(--bg)] animate-pulse" />
-              </span>
-              <span className="hidden sm:inline font-display font-semibold tracking-tight text-[var(--text)]">
-                Damon
-              </span>
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--line)] bg-[color-mix(in_srgb,var(--bg)_88%,transparent)] backdrop-blur-md">
+        <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 md:px-6">
+          <a
+            href={homeHref}
+            className="group shrink-0 leading-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus)]"
+            aria-label="Damon Guo-Shiyu — home"
+          >
+            <span className="block font-display text-lg font-medium tracking-[-0.025em] text-[var(--text)] transition-colors group-hover:text-[var(--primary)]">
+              Damon Guo-Shiyu
+            </span>
+            <span className="mt-1 hidden font-mono text-[0.58rem] uppercase tracking-[0.16em] text-[var(--muted)] sm:block">
+              LLM engineer · researcher
+            </span>
+          </a>
+
+          <nav className="hidden items-center gap-6 md:flex" aria-label="Main navigation">
+            {navLinks.map((link) => renderLink(link))}
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <a
+              href={isHomePage ? '#contact' : '/#contact'}
+              className="hidden border-l border-[var(--line)] pl-4 text-sm font-medium text-[var(--text)] transition-colors hover:text-[var(--primary)] sm:inline-flex"
+            >
+              Start a conversation
             </a>
-
-            <nav className="hidden md:flex items-center gap-0.5" aria-label="Main navigation">
-              {navLinks.map((link) => {
-                const active = isActive(link.to);
-                const Wrapper = link.isHash ? 'a' : Link;
-                const props = link.isHash ? { href: homeHref } : { to: link.to };
-                return (
-                  <Wrapper
-                    key={link.to}
-                    {...props}
-                    className={`relative px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                      active
-                        ? 'text-[var(--text)]'
-                        : 'text-[var(--muted)] hover:text-[var(--text)]'
-                    }`}
-                  >
-                    {link.label}
-                    {active && (
-                      <motion.span
-                        layoutId="nav-pill"
-                        className="absolute inset-0 -z-10 rounded-full bg-[var(--surface-strong)]"
-                        transition={{ type: 'spring', stiffness: 400, damping: 35 }}
-                      />
-                    )}
-                  </Wrapper>
-                );
-              })}
-            </nav>
-
-            <div className="flex items-center gap-2">
-              <div className="hidden lg:flex items-center gap-2 rounded-full border border-[var(--line)] px-2.5 py-1 text-[10px] font-mono uppercase tracking-wider text-[var(--muted)]">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span>CST</span>
-                <LiveTime />
-              </div>
-              <ThemeToggle />
-              <a
-                href="mailto:hello@damon.ai"
-                className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-[var(--primary)] px-3.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[var(--primary-strong)] active:scale-[0.97]"
-              >
-                Contact
-              </a>
-              <button
-                className="rounded-full border border-[var(--line)] p-2 text-[var(--muted)] hover:text-[var(--text)] md:hidden"
-                aria-expanded={mobileOpen}
-                aria-controls="mobile-nav"
-                aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-                onClick={() => setMobileOpen(v => !v)}
-              >
-                {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-              </button>
-            </div>
+            <button
+              ref={menuButtonRef}
+              type="button"
+              className="p-2 text-[var(--muted)] transition-colors hover:text-[var(--text)] md:hidden"
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-nav"
+              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+              onClick={() => setMobileOpen((open) => !open)}
+            >
+              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
           </div>
         </div>
       </header>
 
       {mobileOpen && (
         <>
-          <div className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm" onClick={closeMobile} aria-hidden="true" />
+          <button
+            type="button"
+            className="fixed inset-0 z-[55] cursor-default bg-black/55"
+            onClick={() => closeMobile()}
+            aria-label="Close menu overlay"
+          />
           <div
             id="mobile-nav"
             role="dialog"
             aria-modal="true"
-            className="fixed left-3 right-3 top-20 z-[60] overflow-hidden rounded-[1.5rem] border border-[var(--line)] bg-[var(--surface)] shadow-[0_24px_90px_-45px_var(--primary)]"
+            aria-label="Mobile navigation"
+            className="fixed inset-x-0 top-0 z-[60] max-h-dvh overflow-y-auto border-b border-[var(--line)] bg-[var(--bg)] px-4 pb-8 pt-4"
           >
-            <div className="flex items-center justify-between border-b border-[var(--line)] px-5 py-4">
-              <span className="font-display font-bold">Menu</span>
-              <button onClick={closeMobile} aria-label="Close" className="rounded-md p-2 text-[var(--muted)] hover:text-[var(--text)]">
-                <X className="h-4 w-4" />
+            <div className="flex items-center justify-between border-b border-[var(--line)] pb-4">
+              <span className="font-display text-lg text-[var(--text)]">Damon Guo-Shiyu</span>
+              <button
+                ref={closeButtonRef}
+                type="button"
+                onClick={() => closeMobile(true)}
+                aria-label="Close menu"
+                className="p-2 text-[var(--muted)] hover:text-[var(--text)]"
+              >
+                <X className="h-5 w-5" />
               </button>
             </div>
-            <nav className="flex flex-col p-3" aria-label="Mobile navigation">
-              {navLinks.map((link) => {
-                const Wrapper = link.isHash ? 'a' : Link;
-                const props = link.isHash ? { href: homeHref } : { to: link.to };
-                return (
-                  <Wrapper key={link.to} {...props} onClick={closeMobile}
-                    className="rounded-md px-3 py-2.5 text-sm font-medium text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--text)]">
-                    {link.label}
-                  </Wrapper>
-                );
-              })}
+            <nav className="flex flex-col" aria-label="Mobile navigation links">
+              {navLinks.map((link) => renderLink(link, true))}
             </nav>
+            <a
+              href={isHomePage ? '#contact' : '/#contact'}
+              onClick={() => closeMobile()}
+              className="mt-7 inline-flex border-b border-[var(--primary)] pb-1 text-sm font-medium text-[var(--text)]"
+            >
+              Start a conversation
+            </a>
           </div>
         </>
       )}

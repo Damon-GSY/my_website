@@ -1,64 +1,17 @@
-import { motion } from 'framer-motion';
-import { Mail, Linkedin, Youtube, Github } from 'lucide-react';
-import MagneticButton from '../MagneticButton';
-import AuroraBackground from '../ui/aurora-background';
-
-// Bilibili has no lucide glyph — a compact stroke mark (TV + antennae + eyes)
-// kept in the same weight as the lucide brand icons so the strip reads uniform.
-function BilibiliMark({ className }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className={className}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M7.5 3.5 10 6M16.5 3.5 14 6" />
-      <rect x="3" y="7" width="18" height="13" rx="3.5" />
-      <path d="M9 12h0M15 12h0" strokeWidth="2.6" />
-    </svg>
-  );
-}
+import { ArrowUpRight, Mail } from 'lucide-react';
 
 const channels = [
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/shengyue-guan-1a7b3226b/', Mark: Linkedin },
-  { label: 'GitHub', href: 'https://github.com/Damon-GSY', Mark: Github },
-  { label: 'YouTube', href: 'https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA', Mark: Youtube },
-  { label: 'Bilibili', href: 'https://space.bilibili.com/358541297', Mark: BilibiliMark },
-  { label: 'Email', href: 'mailto:hello@damon.ai', Mark: Mail },
+  { label: 'GitHub', href: 'https://github.com/Damon-GSY' },
+  { label: 'YouTube', href: 'https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA' },
+  { label: 'Bilibili', href: 'https://space.bilibili.com/358541297' },
 ];
 
-function ChannelStrip() {
-  return (
-    <ul className="flex flex-wrap items-center justify-center gap-1">
-      {channels.map((item) => {
-        const { label, href } = item;
-        const Mark = item.Mark;
-        const external = href.startsWith('http');
-        return (
-          <li key={label}>
-            <a
-              href={href}
-              target={external ? '_blank' : undefined}
-              rel={external ? 'noreferrer' : undefined}
-              className="group relative flex h-11 items-center gap-2 rounded-full border border-transparent px-3.5 text-[var(--muted)] transition-colors duration-300 hover:border-[var(--line)] hover:bg-[var(--surface)] hover:text-[var(--primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus)]"
-              aria-label={label}
-            >
-              <Mark className="h-4 w-4 transition-colors duration-300" />
-              <span className="max-w-0 overflow-hidden whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.16em] opacity-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:max-w-[8rem] group-hover:opacity-100 group-focus-visible:max-w-[8rem] group-focus-visible:opacity-100">
-                {label}
-              </span>
-            </a>
-          </li>
-        );
-      })}
-    </ul>
-  );
-}
+const collaborationAreas = [
+  'Agent systems and tool use',
+  'Evaluation and benchmark design',
+  'Post-training for real workflows',
+  'Technical research and communication',
+];
 
 export default function Contact() {
   return (
@@ -66,51 +19,68 @@ export default function Contact() {
       id="contact"
       data-hide-launcher
       className="border-t border-[var(--line)] py-20 md:py-28"
+      aria-labelledby="contact-title"
     >
-      <div className="mx-auto max-w-7xl px-4 md:px-6">
-        <motion.div
-          initial={false}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="relative overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--surface)]"
-        >
-          <AuroraBackground />
+      <div className="mx-auto grid w-full max-w-7xl gap-12 px-4 md:grid-cols-[minmax(0,1.15fr)_minmax(17rem,0.85fr)] md:px-6">
+        <div>
+          <p className="mb-4 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[var(--primary)]">
+            05 / Contact
+          </p>
+          <h2
+            id="contact-title"
+            className="max-w-3xl font-display text-4xl font-normal leading-[0.98] tracking-[-0.045em] text-[var(--text)] md:text-6xl"
+          >
+            Good systems begin with a precise problem.
+          </h2>
+          <p className="mt-6 max-w-2xl text-base leading-8 text-[var(--muted)] md:text-lg">
+            I am open to thoughtful collaborations where research quality and production
+            constraints matter equally. If that describes the problem you are working on,
+            write directly.
+          </p>
+          <a
+            href="mailto:hello@damon.ai"
+            className="mt-9 inline-flex items-center gap-3 border-b border-[var(--primary)] pb-2 font-display text-2xl text-[var(--text)] transition-colors hover:text-[var(--primary)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus)] md:text-3xl"
+          >
+            <Mail className="h-5 w-5 text-[var(--primary)]" aria-hidden="true" />
+            hello@damon.ai
+          </a>
+        </div>
 
-          <div className="relative p-8 text-center md:p-14">
-            <p className="mb-4 text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--primary)]">
-              [05] initiate_contact
-            </p>
-            <h2 className="font-display text-balance text-4xl font-medium tracking-tight text-[var(--text)] md:text-6xl">
-              Let&rsquo;s build something
-              <br />
-              worth <span className="text-[var(--primary)]">shipping.</span>
-            </h2>
-            <p className="mx-auto mt-5 max-w-md text-sm text-[var(--muted)] md:text-base">
-              Open to collaborations on agent systems, evaluation research,
-              and AI content production.
-            </p>
-
-            <div className="mt-8 flex justify-center">
-              <MagneticButton strength={0.4}>
-                <a
-                  href="mailto:hello@damon.ai"
-                  className="inline-flex items-center gap-2 rounded-lg bg-[var(--primary)] px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[var(--primary-strong)] active:scale-[0.97]"
-                >
-                  <Mail className="h-4 w-4" />
-                  hello@damon.ai
-                </a>
-              </MagneticButton>
-            </div>
-
-            <div className="mt-12 border-t border-[var(--line)] pt-8">
-              <p className="mb-5 text-[10px] font-mono uppercase tracking-[0.22em] text-[var(--muted)]">
-                Elsewhere
-              </p>
-              <ChannelStrip />
-            </div>
+        <div className="grid content-start gap-10 border-t border-[var(--line)] pt-6 md:border-l md:border-t-0 md:pl-10 md:pt-0">
+          <div>
+            <h3 className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-[var(--primary)]">
+              Collaboration areas
+            </h3>
+            <ul className="mt-4 m-0 list-none p-0">
+              {collaborationAreas.map((area) => (
+                <li key={area} className="border-t border-[var(--line)] py-3 text-sm text-[var(--text)] first:border-t-0">
+                  {area}
+                </li>
+              ))}
+            </ul>
           </div>
-        </motion.div>
+
+          <nav aria-label="Elsewhere">
+            <h3 className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-[var(--primary)]">
+              Elsewhere
+            </h3>
+            <ul className="mt-4 m-0 list-none p-0">
+              {channels.map((channel) => (
+                <li key={channel.label} className="border-t border-[var(--line)] first:border-t-0">
+                  <a
+                    href={channel.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group flex items-center justify-between gap-4 py-3 text-sm text-[var(--muted)] transition-colors hover:text-[var(--text)]"
+                  >
+                    <span>{channel.label}</span>
+                    <ArrowUpRight className="h-4 w-4 text-[var(--primary)] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
       </div>
     </section>
   );

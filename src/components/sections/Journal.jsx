@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { posts } from '@/data/posts';
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 14 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
+  hidden: { opacity: 0, y: 12 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] } },
 };
 
 export default function Journal() {
@@ -15,47 +15,41 @@ export default function Journal() {
   return (
     <section
       id="journal"
-      className="agent-os-section border-t border-[var(--line)] pb-20 pt-8 md:pb-24 md:pt-8"
+      className="border-t border-[var(--line)] bg-[#0b0c0c] py-20 text-[#f1eee8] md:py-28"
       aria-labelledby="journal-title"
       data-hide-launcher
       data-hide-mobile-launcher
     >
-      <div className="agent-os-inner">
+      <div className="mx-auto w-full max-w-7xl px-4 md:px-6">
         <motion.header
           variants={fadeUp}
           initial={reducedMotion ? false : 'hidden'}
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
-          className="mb-6 flex flex-col gap-3 md:grid md:grid-cols-[0.72fr_1.28fr] md:items-end md:gap-5"
+          className="grid gap-7 border-b border-white/15 pb-8 md:grid-cols-[minmax(0,0.8fr)_minmax(20rem,1.2fr)] md:items-end"
         >
-          <div className="flex items-end justify-between gap-4">
-            <div className="mr-auto">
-              <p className="agent-os-inline-label">[04] event log</p>
-              <h2
-                id="journal-title"
-                className="font-display text-2xl font-medium tracking-tight text-[var(--text)] md:text-3xl"
-              >
-                Field notes
-              </h2>
-            </div>
-            <Link
-              to="/blog"
-              className="inline-flex shrink-0 items-center gap-1.5 rounded-lg px-1 py-1 text-sm font-semibold text-[var(--text)] transition-colors hover:text-[var(--primary)] md:hidden"
+          <div>
+            <p className="mb-3 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[#d4936d]">
+              04 / Writing
+            </p>
+            <h2
+              id="journal-title"
+              className="font-display text-4xl font-normal tracking-[-0.04em] md:text-6xl"
             >
-              All posts
-              <ArrowUpRight className="h-3.5 w-3.5" />
-            </Link>
+              Notes from the work.
+            </h2>
           </div>
-          <div className="flex items-end justify-between gap-5">
-            <p className="max-w-xl text-sm leading-7 text-[var(--muted)]">
-              Research and production observations appended to the same system.
+          <div className="flex flex-col items-start gap-5 md:flex-row md:items-end md:justify-between">
+            <p className="max-w-xl text-sm leading-7 text-[#aaa39a] md:text-base">
+              Practical essays on agent evaluation, production systems, post-training,
+              and the interfaces that make model behavior dependable.
             </p>
             <Link
               to="/blog"
-              className="hidden shrink-0 items-center gap-1.5 rounded-lg px-2 py-1 text-sm font-semibold text-[var(--text)] transition-colors hover:text-[var(--primary)] md:inline-flex"
+              className="inline-flex shrink-0 items-center gap-2 border-b border-[#d4936d]/70 pb-1 text-sm font-medium text-[#f1eee8] transition-colors hover:text-[#d4936d] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#d4936d]"
             >
-              All posts
-              <ArrowUpRight className="h-3.5 w-3.5" />
+              Read all notes
+              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
         </motion.header>
@@ -64,42 +58,46 @@ export default function Journal() {
           initial={reducedMotion ? false : 'hidden'}
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
-          variants={{ visible: { transition: { staggerChildren: 0.06 } } }}
-          className="m-0 list-none border-b border-[var(--line)] p-0"
-          aria-label="Latest journal events"
+          variants={reducedMotion ? undefined : { visible: { transition: { staggerChildren: 0.055 } } }}
+          className="m-0 list-none p-0"
+          aria-label="Latest writing"
         >
           {latest.map((post, index) => (
-            <motion.li
-              key={post.slug}
-              variants={fadeUp}
-              className="border-t border-[var(--line)]"
-            >
+            <motion.li key={post.slug} variants={reducedMotion ? undefined : fadeUp}>
               <Link
                 to={`/blog/${post.slug}`}
-                className="group grid gap-3 py-5 transition-colors hover:bg-[var(--surface)]/55 sm:grid-cols-[5.5rem_7rem_minmax(0,1fr)_auto] sm:items-center sm:px-3 md:py-6"
+                className="group grid gap-4 border-b border-white/15 py-7 transition-colors hover:border-[#d4936d]/60 md:grid-cols-[3.5rem_8.5rem_minmax(0,1fr)_7rem] md:items-start md:gap-6 md:py-8"
               >
-                <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--primary)]">
-                  event {String(index + 1).padStart(2, '0')}
+                <span className="font-mono text-[0.68rem] tabular-nums tracking-[0.18em] text-[#d4936d]">
+                  {String(index + 1).padStart(2, '0')}
                 </span>
-                <time
-                  dateTime={post.date}
-                  className="font-mono text-[11px] tabular-nums text-[var(--muted-strong)]"
-                >
-                  {post.date}
-                </time>
+                <span className="flex items-center justify-between gap-4 md:block">
+                  <time
+                    dateTime={post.date}
+                    className="font-mono text-[0.68rem] tabular-nums tracking-[0.08em] text-[#aaa39a]"
+                  >
+                    {post.date}
+                  </time>
+                  <span className="font-mono text-[0.66rem] uppercase tracking-[0.1em] text-[#8c867f] md:mt-2 md:block">
+                    {post.category}
+                  </span>
+                </span>
                 <span className="min-w-0">
-                  <span className="block font-display text-base font-medium text-[var(--text)] transition-colors group-hover:text-[var(--primary)] md:text-lg">
+                  <span className="block font-display text-xl font-normal leading-tight tracking-[-0.02em] transition-colors group-hover:text-[#d4936d] md:text-2xl">
                     {post.title}
                   </span>
-                  <span className="mt-1 block truncate text-xs text-[var(--muted)]">
+                  <span className="mt-2 block max-w-2xl text-sm leading-6 text-[#aaa39a]">
                     {post.excerpt}
                   </span>
                 </span>
-                <span className="flex items-center justify-between gap-3 sm:justify-end">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--muted-strong)]">
+                <span className="flex items-center justify-between gap-3 md:justify-end">
+                  <span className="font-mono text-[0.66rem] uppercase tracking-[0.08em] text-[#aaa39a]">
                     {post.readingTime}
                   </span>
-                  <ArrowUpRight className="h-4 w-4 shrink-0 text-[var(--muted)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--primary)]" />
+                  <ArrowUpRight
+                    className="h-4 w-4 shrink-0 text-[#d4936d] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    aria-hidden="true"
+                  />
                 </span>
               </Link>
             </motion.li>

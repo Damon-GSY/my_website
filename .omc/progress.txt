@@ -1,6 +1,6 @@
 Editorial portfolio redesign progress
 
-Branch: feature/site-redesign
+Branch: codex/editorial-portfolio-clean
 Pre-redesign baseline: npm run build and npm run lint passed before dependency or asset changes.
 
 Task 1 post-install verification (2026-07-10):
@@ -78,6 +78,23 @@ US-003 implementation started (2026-07-10):
 - Live browser checks found 4 chronology items, 4 research works, a `/about` link, and every required data-backed claim. At 1440x1000 and 390x844, `document.scrollWidth` equaled `document.clientWidth`; the 390px article grid resolved to one column. Browser page errors were empty.
 - Self-reviewed screenshots: `/private/tmp/research-path-desktop.png`, `/private/tmp/research-path-mobile.png`, `/private/tmp/research-path-reduced.png`, and `/private/tmp/research-path-index-desktop.png`.
 - US-003 remains false pending the deferred Codex screenshot acceptance gate.
+
+US-004 implementation and verification (2026-07-11):
+- Damon explicitly authorized continued editing after the previously disclosed write gate. All work was performed only in the clean `/private/tmp/my_website-editorial-clean` worktree on `codex/editorial-portfolio-clean`.
+- Replaced the homepage event-log treatment with a dark scientific-editorial Writing section. The latest four real posts expose title, date, category, complete excerpt, and reading time; every entry links to `/blog/:slug`, and the section links to `/blog`.
+- Replaced the Aurora/Magnetic contact card with a direct editorial conclusion, four collaboration areas, visible `hello@damon.ai`, and text-forward channel links.
+- Retained the user-approved existing site/handoff URLs for GitHub `Damon-GSY`, YouTube `UCEizqDJOPFfjRdQbat0DMmA`, and Bilibili `358541297`. LinkedIn was omitted because the existing `shengyue-guan` identity did not match Damon; no replacement was invented.
+- Rebuilt the navbar as a restrained fixed editorial rule with Damon Guo-Shiyu's identity, route-aware text links, theme control, and a conversation link. Removed LiveTime/CST, status pulses, circular D status mark, dashboard capsule, and animated nav pill.
+- Preserved the skip link, mobile body scroll lock, route-close behavior, Escape dismissal, and ARIA state. Escape now restores focus to the menu trigger; blog-detail routes correctly retain Writing as active.
+- Replaced the map/presence footer with a quiet closing signature and corrected the wrong `Shengyue Guan` attribution to Damon Guo-Shiyu. Removed FootprintMap, pings, fake status, and dashboard language.
+- Removed FloatingWindow from App while preserving routes, ScrollProgress, Suspense, and page transitions.
+- Fresh `git diff --check`, `npm run lint`, and `npm run build` passed. The build retains only the pre-existing large-chunk advisory.
+- Live browser checks found exactly four Writing entries with all required metadata, exact email/GitHub/YouTube/Bilibili URLs, and no LinkedIn, live clock, pulse/ping classes, or FloatingWindow rendering. Browser page errors were empty.
+- At 1440x1000 and 390x844, `document.scrollWidth` equaled `document.clientWidth` (1440/1440 and 390/390). At 390px, the menu locked body scroll and focused Close; Escape removed the dialog, cleared the lock, and restored focus to Open menu.
+- Active-route checks returned Writing for `/blog` and `/blog/why-agent-evaluation-is-hard`, and Work for `/projects`.
+- Reduced-motion emulation reported zero running animations, all four Writing rows at opacity 1 with transform none, and no horizontal overflow.
+- Self-reviewed screenshots: `/private/tmp/editorial-home-desktop.png`, `/private/tmp/editorial-home-mobile.png`, `/private/tmp/editorial-home-mobile-menu.png`, `/private/tmp/editorial-home-reduced.png`, `/private/tmp/editorial-writing-contact-desktop.png`, `/private/tmp/editorial-writing-mobile.png`, and `/private/tmp/editorial-contact-light.png`.
+- US-004 remains false pending the deferred Codex screenshot acceptance gate.
 
 US-003 quality-review follow-up (2026-07-11):
 - Replaced substring title matching and point-array indices with four explicit timeline-node configs. Every config now has a stable logical ID plus exact year, track, and title fields; only one exact match may render, so similar titles are never silently selected.

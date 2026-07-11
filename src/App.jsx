@@ -10,7 +10,6 @@ import ResearchPath from './components/sections/ResearchPath';
 import Journal from './components/sections/Journal';
 import Contact from './components/sections/Contact';
 import ScrollProgress from './components/ui/scroll-progress';
-import FloatingWindow from './components/FloatingWindow';
 
 const About = lazy(() => import('./components/About'));
 const Projects = lazy(() => import('./components/Projects'));
@@ -64,7 +63,6 @@ export default function App() {
         </Suspense>
       </main>
       <Footer />
-      <FloatingWindow />
     </Layout>
   );
 }
