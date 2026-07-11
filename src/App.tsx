@@ -183,10 +183,10 @@ export default function App() {
             <p style={{ ...meta, margin: '0 0 1.2rem', color: ACCENT }}>Production trace · waypoint 03</p>
             <h2 style={{ margin: 0, color: INK, fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(2.9rem,5.8vw,6.4rem)', fontWeight: 400, letterSpacing: '-.035em', lineHeight: .91, textShadow: '0 8px 38px rgba(0,0,0,.66)' }}>Systems that survive contact with reality.</h2>
             <div style={{ marginTop: 'clamp(1.6rem,4vw,3.2rem)', borderBottom: `1px solid ${LINE}` }}>
-              <DataRow label="Current" value={`${identity.company} · ${identity.role}`} at={.28} progress={progress} />
-              <DataRow label="Tool pool" value="100+ dynamically registered tools" at={.3} progress={progress} />
-              <DataRow label="Impact" value="90% less manual ticket handling · 95% fewer interventions" at={.32} progress={progress} />
-              <DataRow label="Handoff" value="Under one second across 12 supply-chain scenarios" at={.34} progress={progress} />
+              <DataRow label="Agent System" value="Risk-tiered multi-turn decisions across 12 supply-chain scenarios; 90% fewer misoperations, sub-second handoff." at={.28} progress={progress} />
+              <DataRow label="Agentic RL" value="Ticket-resolution agents over 100+ dynamically registered tools; 90% less manual handling." at={.3} progress={progress} />
+              <DataRow label="Domain LLM" value="Continual pretraining + integrated SFT/RL; internal SOTA on a dual-axis knowledge + tool-use benchmark." at={.32} progress={progress} />
+              <DataRow label="Reward Design" value="Multi-objective GRPO stabilized via conditional rewards, variance control, and hierarchical rewards." at={.34} progress={progress} />
             </div>
           </div>
         </article>
@@ -221,9 +221,13 @@ export default function App() {
               <DataRow label="2024—25" value="Microsoft Research Asia · M365 Copilot" at={.68} progress={progress} />
               <DataRow label="2025—now" value="Alibaba · LLM systems · Hangzhou" at={.7} progress={progress} />
             </div>
-            <div style={{ marginTop: '1.4rem', padding: '.9rem 1rem', border: `1px solid ${LINE}`, background: 'rgba(7,7,9,.28)' }}>
-              <p style={{ ...meta, margin: 0, color: ACCENT }}>Field notes · forthcoming</p>
-              <p style={{ margin: '.5rem 0 0', color: 'rgba(243,238,233,.78)', fontFamily: "'Imprima',sans-serif", fontSize: '.78rem', lineHeight: 1.55 }}>A reserved slot for ongoing writing on agents, evaluation, and post-training — publishing soon.</p>
+            <div style={{ marginTop: '1.4rem', padding: '.9rem 1rem', border: `1px solid ${LINE}`, background: 'rgba(7,7,9,.42)' }}>
+              <p style={{ ...meta, margin: 0, color: ACCENT }}>Field notes · recent writing</p>
+              <div style={{ marginTop: '.6rem', display: 'grid', gap: '.5rem' }}>
+                <p style={{ margin: 0, color: 'rgba(243,238,233,.88)', fontFamily: "'Imprima',sans-serif", fontSize: '.78rem', lineHeight: 1.4 }}><span style={{ color: 'rgba(243,238,233,.5)' }}>2026 · </span>Why Agent Evaluation Is Hard — lessons from multi-turn eval benchmarks.</p>
+                <p style={{ margin: 0, color: 'rgba(243,238,233,.88)', fontFamily: "'Imprima',sans-serif", fontSize: '.78rem', lineHeight: 1.4 }}><span style={{ color: 'rgba(243,238,233,.5)' }}>2026 · </span>Building Agents That Actually Work — patterns for production agent systems.</p>
+                <p style={{ margin: 0, color: 'rgba(243,238,233,.88)', fontFamily: "'Imprima',sans-serif", fontSize: '.78rem', lineHeight: 1.4 }}><span style={{ color: 'rgba(243,238,233,.5)' }}>2026 · </span>Post-Training Lessons From Production — what shipped, what broke.</p>
+              </div>
             </div>
           </div>
         </article>
