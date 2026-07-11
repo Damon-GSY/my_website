@@ -9,6 +9,57 @@ import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 
 const prefersReduced = () =>
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
+/** Text with continuous sparkle particles (always-visible, not one-time). */
+export function SparklesText({
+  text,
+  count = 16,
+  colors = ['#d97757', '#ffd5bf'],
+  style,
+}: {
+  text: string
+  count?: number
+  colors?: [string, string]
+  style?: CSSProperties
+}) {
+  const [sparkles] = useState(() =>
+    prefersReduced()
+      ? []
+      : Array.from({ length: count }, (_, i) => ({
+          id: i,
+          x: Math.random() * 100,
+          y: Math.random() * 100,
+          color: colors[Math.random() > 0.5 ? 0 : 1],
+          delay: Math.random() * 3,
+          dur: 0.9 + Math.random() * 1.4,
+        })),
+  )
+  return (
+    <span style={{ position: 'relative', display: 'inline-block', ...style }} aria-label={text}>
+      {sparkles.map((s) => (
+        <span
+          key={s.id}
+          aria-hidden
+          style={{
+            position: 'absolute',
+            left: `${s.x}%`,
+            top: `${s.y}%`,
+            width: 5,
+            height: 5,
+            marginLeft: -2.5,
+            marginTop: -2.5,
+            borderRadius: '50%',
+            background: s.color,
+            boxShadow: `0 0 10px ${s.color}`,
+            animation: `sparkle ${s.dur}s ease-in-out ${s.delay}s infinite`,
+            pointerEvents: 'none',
+          }}
+        />
+      ))}
+      <span style={{ position: 'relative', zIndex: 1 }}>{text}</span>
+    </span>
+  )
+}
+
 function useInViewOnce<T extends HTMLElement>(margin = '-50px') {
   const ref = useRef<T>(null)
   const [inView, setInView] = useState(false)
