@@ -122,7 +122,16 @@ export default function App() {
   const trajectory = band(0.63, 0.69, 0.76, 0.80, progress)
   const contact = smooth(0.81, 0.9, progress)
   const core = smooth(0.52, 0.94, progress)
-  const chapter = progress < 0.63 ? '01 / LANDSCAPE' : progress < 0.84 ? '02 / CORE' : '02 / MINIMUM'
+
+  const navDots = [
+    { label: 'Hero', center: 0.05 },
+    { label: 'Work', center: 0.20 },
+    { label: 'Projects', center: 0.35 },
+    { label: 'Research', center: 0.52 },
+    { label: 'Path', center: 0.72 },
+    { label: 'Contact', center: 0.90 },
+  ]
+  const activeIdx = navDots.reduce((bi, s, i, arr) => Math.abs(progress - s.center) < Math.abs(progress - arr[bi].center) ? i : bi, 0)
 
   return (
     <main style={{ minHeight: '520svh', background: '#0a0a0c', color: INK }}>
@@ -155,14 +164,20 @@ export default function App() {
           </div>
         </header>
 
-        <aside aria-label={`Scroll progress ${Math.round(progress * 100)} percent`} style={{ position: 'absolute', zIndex: 28, top: '50%', right: 'clamp(1rem,2.8vw,2.8rem)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '.8rem', transform: 'translateY(-50%)' }}>
-          <span style={{ ...meta, writingMode: 'vertical-rl', fontSize: '.55rem' }}>{chapter}</span>
-          <span style={{ position: 'relative', width: 1, height: '22vh', minHeight: 100, background: LINE }}><span style={{ position: 'absolute', inset: '0 0 auto', width: 1, height: `${progress * 100}%`, background: ACCENT, boxShadow: '0 0 12px rgba(217,119,87,.75)' }} /></span>
+        <aside aria-label="Section navigation" style={{ position: 'absolute', zIndex: 40, top: '50%', right: 'clamp(1rem,2.8vw,2.8rem)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '.8rem', transform: 'translateY(-50%)' }}>
           <span style={{ ...meta, color: INK, fontVariantNumeric: 'tabular-nums' }}>{String(Math.round(progress * 100)).padStart(2, '0')}</span>
+          <nav style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px' }}>
+            {navDots.map((sec, i) => (
+              <button key={sec.label} onClick={() => window.scrollTo({ top: Math.round(sec.center * (document.documentElement.scrollHeight - window.innerHeight)), behavior: 'smooth' })} aria-label={`Jump to ${sec.label}`} className="group" style={{ position: 'relative', display: 'flex', alignItems: 'center', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+                <span className="opacity-0 group-hover:opacity-100" style={{ ...meta, position: 'absolute', right: '100%', marginRight: '.5rem', whiteSpace: 'nowrap', fontSize: '.55rem', color: i === activeIdx ? ACCENT : MUTED, transition: 'opacity .2s' }}>{sec.label}</span>
+                <span style={{ width: i === activeIdx ? 10 : 6, height: i === activeIdx ? 10 : 6, borderRadius: '50%', background: i === activeIdx ? ACCENT : 'rgba(243,238,233,.3)', transition: 'all .2s' }} />
+              </button>
+            ))}
+          </nav>
         </aside>
 
         <article style={{ position: 'absolute', zIndex: 20, inset: 0, display: 'flex', alignItems: 'flex-start', paddingTop: 'clamp(7rem,14vh,10rem)', paddingInline: 'clamp(1.15rem,7vw,8rem)', opacity: sceneOne, transform: `translateY(${-progress * 58}px)`, pointerEvents: sceneOne > .15 ? 'auto' : 'none' }}>
-          <div style={{ position: 'absolute', bottom: 'clamp(5rem,8vh,7rem)', right: 'clamp(1.15rem,4vw,4.5rem)', zIndex: 20, display: 'flex', flexWrap: 'wrap', gap: '1.4rem 2.6rem' }}>
+          <div className="left-4 right-4 md:left-auto md:right-[clamp(1.15rem,4vw,4.5rem)]" style={{ position: 'absolute', bottom: 'clamp(5rem,8vh,7rem)', zIndex: 20, display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '1.4rem 2.6rem', paddingRight: '0' }}>
             {[{v:4,s:'papers'},{v:100,suf:'+',s:'tools'},{v:90,suf:'%',s:'less manual'},{v:1,pre:'<',suf:'s',s:'handoff'}].map((st) => (
               <div key={st.s}>
                 <p style={{ ...meta, margin: 0, color: ACCENT }}>{st.s}</p>
