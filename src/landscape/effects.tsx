@@ -251,6 +251,55 @@ export function Signature({ text = 'Damon', color = '#d97757', style }: { text?:
   )
 }
 
+/** Streaming "agent trace" terminal — a live example of the multi-agent system
+ *  (plan/tool/memory + evaluator check/reject/pass). Adds motion + an 实例 to
+ *  the hero. Lines stream in every ~850ms; last 7 shown, older fade. Loops. */
+const TRACE = [
+  { k: 'agent', n: '07', t: 'plan → decompose(query) · 3 sub' },
+  { k: 'agent', n: '02', t: 'tool → resolve("supplier_db") ✓' },
+  { k: 'eval', n: '', t: 'check → multi-turn consistency' },
+  { k: 'agent', n: '12', t: 'tool → call("HS_code_api")' },
+  { k: 'eval', n: '', t: 'reject → missing bridge lemma' },
+  { k: 'agent', n: '05', t: 'mutate strategy → retry' },
+  { k: 'eval', n: '', t: 'pass → trajectory coherent ✓' },
+  { k: 'agent', n: '09', t: 'plan → cross-turn re-plan' },
+  { k: 'agent', n: '03', t: 'memory → retrieve(session, k=5)' },
+  { k: 'eval', n: '', t: 'judge → intermediate steps ✓' },
+]
+export function AgentConsole({ style }: { style?: CSSProperties }) {
+  const [n, setN] = useState(4)
+  useEffect(() => {
+    const id = setInterval(() => setN((x) => x + 1), 850)
+    return () => clearInterval(id)
+  }, [])
+  const start = Math.max(0, n - 7)
+  const view = []
+  for (let i = start; i < n; i++) view.push({ ...TRACE[i % TRACE.length], idx: i })
+  return (
+    <div style={{
+      background: 'rgba(7,7,9,.62)', border: '1px solid rgba(243,238,233,.12)', borderRadius: 12,
+      padding: '1rem 1.1rem', fontFamily: "ui-monospace, Menlo, monospace", fontSize: '.72rem',
+      lineHeight: 1.7, WebkitBackdropFilter: 'blur(4px)', backdropFilter: 'blur(4px)',
+      width: 'clamp(20rem,24vw,23rem)', ...style,
+    }}>
+      <div style={{ display: 'flex', gap: '.45rem', marginBottom: '.65rem', alignItems: 'center' }}>
+        <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#d97757', boxShadow: '0 0 6px rgba(217,119,87,.8)' }} />
+        <span style={{ color: 'rgba(243,238,233,.5)', fontSize: '.58rem', letterSpacing: '.18em', textTransform: 'uppercase' }}>agent_trace · live</span>
+      </div>
+      {view.map((l, i) => {
+        const op = i === view.length - 1 ? 1 : 0.35 + (i / Math.max(1, view.length - 1)) * 0.6
+        const isEval = l.k === 'eval'
+        return (
+          <div key={l.idx} style={{ opacity: op, display: 'flex', gap: '.5rem', marginBottom: 1 }}>
+            <span style={{ color: isEval ? '#d97757' : 'rgba(255,213,191,.85)', flexShrink: 0 }}>{isEval ? 'eval' : 'a-' + l.n}</span>
+            <span style={{ color: isEval ? 'rgba(217,119,87,.9)' : 'rgba(243,238,233,.82)' }}>{l.t}</span>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
 export function Accordion({
   items,
   accent,
