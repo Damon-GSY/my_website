@@ -1,60 +1,68 @@
 import { type CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
 
-const ASSET = '/assets/optimization-'
-const BG = '#0a0a0c'
-const INK = '#f4eee9'
-const ACCENT = '#d97757'
-const MUTED = 'rgba(244,238,233,.64)'
-const LINE = 'rgba(244,238,233,.16)'
+const C = {
+  black: '#08090a',
+  paper: '#eee9e2',
+  clay: '#d97757',
+  dim: 'rgba(238,233,226,.54)',
+  line: 'rgba(238,233,226,.17)',
+  faint: 'rgba(238,233,226,.07)',
+}
 
-const profile = {
+const person = {
   name: 'Damon Guo-Siyi',
   role: 'LLM Algorithm Engineer',
   company: 'Alibaba',
-  location: 'Hangzhou, China',
+  city: 'Hangzhou',
   email: 'hello@damon.ai',
-  links: [
-    ['GitHub', 'https://github.com/Damon-GSY'],
-    ['LinkedIn', 'https://www.linkedin.com/in/shengyue-guan-1a7b3226b/'],
-    ['YouTube', 'https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA'],
-    ['Bilibili', 'https://space.bilibili.com/358541297'],
+  channels: [
+    ['GH', 'GitHub', 'https://github.com/Damon-GSY'],
+    ['IN', 'LinkedIn', 'https://www.linkedin.com/in/shengyue-guan-1a7b3226b/'],
+    ['YT', 'YouTube', 'https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA'],
+    ['BI', 'Bilibili', 'https://space.bilibili.com/358541297'],
   ],
 } as const
 
-export const clamp = (value: number) => Math.max(0, Math.min(1, value))
-export const smoothstep = (from: number, to: number, value: number) => {
-  const x = clamp((value - from) / (to - from))
+const asset = (name: string) => `/assets/optimization-${name}.webp`
+const clamp = (value: number) => Math.max(0, Math.min(1, value))
+const ease = (a: number, b: number, value: number) => {
+  const x = clamp((value - a) / (b - a))
   return x * x * (3 - 2 * x)
 }
+const windowed = (enter: number, inAt: number, outAt: number, exit: number, value: number) =>
+  ease(enter, inAt, value) * (1 - ease(outAt, exit, value))
 
-function useScrollProgress() {
+function useScrollInstrument() {
   const target = useRef(0)
-  const current = useRef(0)
+  const rendered = useRef(0)
   const frame = useRef(0)
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const read = () => {
+    const media = matchMedia('(prefers-reduced-motion: reduce)')
+    const measure = () => {
       const range = document.documentElement.scrollHeight - innerHeight
       target.current = range > 0 ? clamp(scrollY / range) : 0
-      if (reduced.matches) setProgress(target.current)
-    }
-    const render = () => {
-      if (!reduced.matches) {
-        const delta = target.current - current.current
-        current.current += delta * 0.1
-        if (Math.abs(delta) > 0.0001) setProgress(current.current)
+      if (media.matches) {
+        rendered.current = target.current
+        setProgress(target.current)
       }
-      frame.current = requestAnimationFrame(render)
     }
-    read()
-    frame.current = requestAnimationFrame(render)
-    addEventListener('scroll', read, { passive: true })
-    addEventListener('resize', read)
+    const draw = () => {
+      if (!media.matches) {
+        const delta = target.current - rendered.current
+        rendered.current += delta * .085
+        if (Math.abs(delta) > .00008) setProgress(rendered.current)
+      }
+      frame.current = requestAnimationFrame(draw)
+    }
+    measure()
+    frame.current = requestAnimationFrame(draw)
+    addEventListener('scroll', measure, { passive: true })
+    addEventListener('resize', measure)
     return () => {
-      removeEventListener('scroll', read)
-      removeEventListener('resize', read)
+      removeEventListener('scroll', measure)
+      removeEventListener('resize', measure)
       cancelAnimationFrame(frame.current)
     }
   }, [])
@@ -62,35 +70,25 @@ function useScrollProgress() {
   return progress
 }
 
-const meta: CSSProperties = {
-  color: MUTED,
+const mono: CSSProperties = {
   fontFamily: "'Imprima', sans-serif",
-  fontSize: '.62rem',
+  fontSize: '.61rem',
+  lineHeight: 1.45,
   letterSpacing: '.18em',
-  lineHeight: 1.4,
   textTransform: 'uppercase',
 }
 
-const link: CSSProperties = {
-  color: INK,
-  fontFamily: "'Imprima', sans-serif",
-  fontSize: '.7rem',
-  letterSpacing: '.13em',
-  textDecoration: 'none',
-  textTransform: 'uppercase',
-}
-
-function Layer({ name, style }: { name: string; style: CSSProperties }) {
+function Raster({ name, style }: { name: string; style: CSSProperties }) {
   return (
     <img
-      src={`${ASSET}${name}.webp`}
+      src={asset(name)}
       alt=""
       draggable={false}
       style={{
         position: 'absolute',
-        inset: '-7%',
-        width: '114%',
-        height: '114%',
+        inset: '-6%',
+        width: '112%',
+        height: '112%',
         objectFit: 'cover',
         userSelect: 'none',
         willChange: 'transform, opacity',
@@ -100,97 +98,154 @@ function Layer({ name, style }: { name: string; style: CSSProperties }) {
   )
 }
 
-function Metric({ label, value, reveal }: { label: string; value: string; reveal: number }) {
+function Corner({ x, y }: { x: 'left' | 'right'; y: 'top' | 'bottom' }) {
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '6rem 1fr', gap: '1rem', padding: '.8rem 0', borderTop: `1px solid ${LINE}`, opacity: reveal, transform: `translateY(${(1 - reveal) * 16}px)` }}>
-      <span style={meta}>{label}</span>
-      <span style={{ color: INK, fontFamily: "'Imprima',sans-serif", fontSize: '.82rem', lineHeight: 1.45 }}>{value}</span>
+    <i
+      style={{
+        position: 'absolute',
+        [x]: 0,
+        [y]: 0,
+        width: 18,
+        height: 18,
+        borderTop: y === 'top' ? `1px solid ${C.paper}` : undefined,
+        borderBottom: y === 'bottom' ? `1px solid ${C.paper}` : undefined,
+        borderLeft: x === 'left' ? `1px solid ${C.paper}` : undefined,
+        borderRight: x === 'right' ? `1px solid ${C.paper}` : undefined,
+        opacity: .45,
+      }}
+    />
+  )
+}
+
+function Signal({ index, label, value, progress }: { index: string; label: string; value: string; progress: number }) {
+  return (
+    <div className="grid grid-cols-[2rem_minmax(0,1fr)] md:grid-cols-[2.2rem_7rem_minmax(0,1fr)]" style={{ gap: '.35rem .7rem', padding: '.72rem 0', borderTop: `1px solid ${C.line}`, color: C.paper, opacity: progress, transform: `translateX(${(1 - progress) * -18}px)` }}>
+      <span style={{ ...mono, color: C.clay }}>{index}</span>
+      <span style={{ ...mono, color: C.dim }}>{label}</span>
+      <span className="col-start-2 md:col-start-auto" style={{ fontFamily: "'Imprima',sans-serif", fontSize: '.8rem', lineHeight: 1.45 }}>{value}</span>
     </div>
   )
 }
 
-export default function App() {
-  const progress = useScrollProgress()
-  const sceneOne = 1 - smoothstep(.24, .43, progress)
-  const sceneTwo = smoothstep(.39, .56, progress) * (1 - smoothstep(.8, .91, progress))
-  const finale = smoothstep(.83, .96, progress)
-  const intensity = smoothstep(.32, .88, progress)
+function Curve({ progress }: { progress: number }) {
+  const offset = 420 - progress * 420
+  return (
+    <svg viewBox="0 0 520 120" preserveAspectRatio="none" style={{ width: '100%', height: '100%', overflow: 'visible' }} aria-hidden="true">
+      <path d="M0 18 C82 18 96 87 173 72 C252 58 283 105 357 93 C414 83 444 102 520 108" fill="none" stroke="rgba(238,233,226,.13)" strokeWidth="1" />
+      <path d="M0 18 C82 18 96 87 173 72 C252 58 283 105 357 93 C414 83 444 102 520 108" fill="none" stroke={C.clay} strokeWidth="1.25" strokeDasharray="420" strokeDashoffset={offset} vectorEffect="non-scaling-stroke" />
+      <circle cx={520 * progress} cy={18 + 90 * progress} r="2.5" fill={C.clay} style={{ filter: 'drop-shadow(0 0 6px rgba(217,119,87,.8))' }} />
+    </svg>
+  )
+}
 
-  const particles = useMemo(() => Array.from({ length: 28 }, (_, index) => ({
-    id: index,
-    x: 3 + ((index * 31) % 94),
-    y: 17 + ((index * 43) % 78),
-    depth: .35 + (index % 6) * .12,
-    size: 1 + (index % 3) * .55,
+export default function App() {
+  const p = useScrollInstrument()
+  const entry = 1 - ease(.17, .3, p)
+  const fieldNotes = windowed(.17, .27, .39, .47, p)
+  const lock = windowed(.43, .55, .76, .84, p)
+  const contact = ease(.81, .95, p)
+  const sceneTwo = ease(.43, .7, p)
+  const lightGain = ease(.35, .82, p)
+
+  const dust = useMemo(() => Array.from({ length: 22 }, (_, i) => ({
+    id: i,
+    x: 4 + ((i * 37) % 91),
+    y: 23 + ((i * 53) % 70),
+    z: .28 + (i % 7) * .1,
+    s: .8 + (i % 3) * .55,
   })), [])
 
   return (
-    <main style={{ minHeight: '520svh', background: BG, color: INK }}>
-      <section aria-label="Optimization landscape portfolio" style={{ position: 'sticky', top: 0, height: '100svh', minHeight: '38rem', overflow: 'hidden', isolation: 'isolate', background: BG }}>
+    <main style={{ minHeight: '640svh', background: C.black, color: C.paper }}>
+      <section aria-label="Computational landscape instrument" style={{ position: 'sticky', top: 0, height: '100svh', minHeight: '38rem', overflow: 'hidden', isolation: 'isolate', background: C.black }}>
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
-          <Layer name="landscape" style={{ zIndex: 1, opacity: .86, objectPosition: '53% 55%', transform: `translate3d(${-progress * 3}vw,${5 - progress * 9}vh,0) scale(${1.04 + progress * .38})`, filter: `brightness(${.57 + intensity * .11}) saturate(${.82 + intensity * .2}) contrast(1.16)` }} />
-          <Layer name="depth" style={{ zIndex: 2, opacity: .14 + intensity * .2, mixBlendMode: 'screen', transform: `translate3d(${progress * 5}vw,${9 - progress * 15}vh,0) scale(${1.12 + progress * .53})`, filter: 'brightness(.62) contrast(1.2)', maskImage: 'linear-gradient(to bottom,transparent 5%,black 34%,black 84%,transparent)', WebkitMaskImage: 'linear-gradient(to bottom,transparent 5%,black 34%,black 84%,transparent)' }} />
-          <Layer name="light" style={{ zIndex: 3, opacity: .08 + intensity * .42, mixBlendMode: 'screen', transform: `translate3d(${5 - progress * 9}vw,${11 - progress * 14}vh,0) scale(${1.06 + progress * .7})`, filter: `brightness(${.76 + intensity * .68}) saturate(1.1)`, maskImage: 'radial-gradient(ellipse at 56% 70%,black 0 44%,transparent 82%)', WebkitMaskImage: 'radial-gradient(ellipse at 56% 70%,black 0 44%,transparent 82%)' }} />
-          <Layer name="foreground" style={{ zIndex: 4, opacity: .17 + (1 - progress) * .17, mixBlendMode: 'screen', objectPosition: '43% 68%', transform: `translate3d(${-5 - progress * 8}vw,${18 - progress * 30}vh,0) scale(${1.22 + progress * .82})`, filter: 'brightness(.48) contrast(1.18)', maskImage: 'linear-gradient(to bottom,transparent 6%,transparent 31%,black 70%,black)', WebkitMaskImage: 'linear-gradient(to bottom,transparent 6%,transparent 31%,black 70%,black)' }} />
+          <Raster name="landscape" style={{ zIndex: 1, opacity: .87, objectPosition: `${52 + p * 4}% ${58 - p * 4}%`, filter: 'brightness(.54) saturate(.75) contrast(1.22)', transform: `translate3d(${-2 - p * 3}vw,${9 - p * 13}vh,0) scale(${1.08 + p * .39})` }} />
+          <Raster name="depth" style={{ zIndex: 2, opacity: .12 + sceneTwo * .25, mixBlendMode: 'screen', objectPosition: '51% 62%', filter: 'brightness(.52) contrast(1.32)', transform: `translate3d(${p * 6}vw,${14 - p * 22}vh,0) scale(${1.17 + p * .58})`, maskImage: 'linear-gradient(180deg,transparent 8%,black 40%,black 88%,transparent)', WebkitMaskImage: 'linear-gradient(180deg,transparent 8%,black 40%,black 88%,transparent)' }} />
+          <Raster name="light" style={{ zIndex: 3, opacity: .04 + lightGain * .55, mixBlendMode: 'screen', objectPosition: '56% 66%', filter: `brightness(${.72 + lightGain * .92}) saturate(1.08)`, transform: `translate3d(${6 - p * 11}vw,${17 - p * 21}vh,0) scale(${1.08 + p * .75})`, maskImage: 'radial-gradient(ellipse at 55% 70%,black 0 41%,transparent 79%)', WebkitMaskImage: 'radial-gradient(ellipse at 55% 70%,black 0 41%,transparent 79%)' }} />
+          <Raster name="foreground" style={{ zIndex: 4, opacity: .32 - p * .13, mixBlendMode: 'screen', objectPosition: '43% 70%', filter: 'brightness(.42) contrast(1.28)', transform: `translate3d(${-8 - p * 11}vw,${25 - p * 38}vh,0) scale(${1.34 + p * .96})`, maskImage: 'radial-gradient(ellipse at 51% 57%,transparent 0 20%,rgba(0,0,0,.38) 36%,black 71%)', WebkitMaskImage: 'radial-gradient(ellipse at 51% 57%,transparent 0 20%,rgba(0,0,0,.38) 36%,black 71%)' }} />
 
-          {particles.map((particle) => (
-            <i key={particle.id} style={{ position: 'absolute', zIndex: 5, left: `${particle.x}%`, top: `${particle.y}%`, width: particle.size, height: particle.size, borderRadius: '50%', background: particle.id % 5 === 0 ? '#ffd3bd' : ACCENT, boxShadow: '0 0 8px rgba(217,119,87,.7)', opacity: .16 + intensity * .22, transform: `translate3d(${progress * 100 * particle.depth}px,${-progress * 145 * particle.depth}px,0) scale(${.8 + progress * particle.depth})` }} />
+          {dust.map((d) => (
+            <i key={d.id} style={{ position: 'absolute', zIndex: 5, left: `${d.x}%`, top: `${d.y}%`, width: d.s, height: d.s, borderRadius: '50%', background: d.id % 4 === 0 ? '#ffd8c4' : C.clay, opacity: .12 + lightGain * .28, boxShadow: '0 0 7px rgba(217,119,87,.72)', transform: `translate3d(${p * 125 * d.z}px,${-p * 175 * d.z}px,0) scale(${.75 + p * d.z})` }} />
           ))}
 
-          <div style={{ position: 'absolute', zIndex: 6, inset: 0, background: `radial-gradient(ellipse at ${50 + progress * 7}% ${60 - progress * 7}%,transparent 16%,rgba(5,5,7,.12) 48%,rgba(3,3,5,.76) 100%)`, boxShadow: 'inset 0 0 14vw rgba(0,0,0,.78)' }} />
-          <div style={{ position: 'absolute', zIndex: 7, inset: 0, opacity: .04, backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%270 0 160 160%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cfilter id=%27n%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%27.8%27 numOctaves=%273%27/%3E%3C/filter%3E%3Crect width=%27100%25%27 height=%27100%25%27 filter=%27url(%23n)%27/%3E%3C/svg%3E")', mixBlendMode: 'soft-light' }} />
+          <div style={{ position: 'absolute', zIndex: 6, inset: 0, background: `linear-gradient(90deg,rgba(8,9,10,${.8 - p * .17}) 0%,rgba(8,9,10,.16) 46%,rgba(8,9,10,.43) 100%),linear-gradient(180deg,rgba(8,9,10,.9),transparent 36%,rgba(8,9,10,.58))` }} />
+          <div style={{ position: 'absolute', zIndex: 7, inset: 0, boxShadow: 'inset 0 0 15vw rgba(0,0,0,.8)', background: 'radial-gradient(ellipse at 55% 58%,transparent 16%,rgba(8,9,10,.08) 54%,rgba(8,9,10,.6))' }} />
         </div>
 
-        <header style={{ position: 'absolute', zIndex: 30, inset: '0 0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'clamp(1.15rem,2.8vw,2.4rem) clamp(1.15rem,4vw,4.5rem)' }}>
-          <a href={`mailto:${profile.email}`} style={{ display: 'flex', alignItems: 'center', gap: '.75rem', textDecoration: 'none' }}>
-            <span style={{ display: 'grid', width: 30, height: 30, placeItems: 'center', borderRadius: '50%', border: `1px solid ${LINE}`, color: INK, fontFamily: "'Viaoda Libre',serif" }}>D</span>
-            <span className="hidden sm:inline" style={{ ...meta, color: INK }}>{profile.name}</span>
+        <header style={{ position: 'absolute', zIndex: 30, top: 0, right: 0, left: 0, display: 'grid', gridTemplateColumns: 'auto 1fr auto', alignItems: 'center', gap: '1.3rem', padding: 'clamp(1.1rem,2.6vw,2.1rem) clamp(1.1rem,3vw,3rem)' }}>
+          <a href={`mailto:${person.email}`} style={{ display: 'flex', alignItems: 'center', gap: '.75rem', color: C.paper, textDecoration: 'none' }}>
+            <span style={{ display: 'grid', width: 27, height: 27, placeItems: 'center', border: `1px solid ${C.line}`, fontFamily: "'Viaoda Libre',serif", fontSize: '.9rem' }}>D</span>
+            <span className="hidden sm:inline" style={{ ...mono, color: C.paper }}>{person.name}</span>
           </a>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(1rem,3vw,3rem)' }}>
-            <span className="hidden sm:inline" style={meta}>{profile.location}</span>
-            <a href={`mailto:${profile.email}`} style={{ ...link, color: ACCENT }}>Contact ↗</a>
+          <span style={{ height: 1, background: C.line }} />
+          <div style={{ display: 'flex', gap: '1.5rem' }}>
+            <span className="hidden md:inline" style={{ ...mono, color: C.dim }}>{person.city} / 30.27°N</span>
+            <span style={{ ...mono, color: C.clay }}>OBS–{String(Math.round(p * 999)).padStart(3, '0')}</span>
           </div>
         </header>
 
-        <aside aria-label={`Scroll progress ${Math.round(progress * 100)} percent`} style={{ position: 'absolute', zIndex: 28, top: '50%', right: 'clamp(1rem,2.7vw,2.8rem)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '.75rem', transform: 'translateY(-50%)' }}>
-          <span style={{ ...meta, writingMode: 'vertical-rl', fontSize: '.54rem' }}>{progress < .55 ? '01 / LANDSCAPE' : '02 / CORE'}</span>
-          <span style={{ position: 'relative', width: 1, height: '22vh', minHeight: 110, background: LINE }}><span style={{ position: 'absolute', inset: '0 0 auto', width: 1, height: `${progress * 100}%`, background: ACCENT, boxShadow: '0 0 12px rgba(217,119,87,.7)' }} /></span>
-          <span style={{ ...meta, color: INK }}>{String(Math.round(progress * 100)).padStart(2, '0')}</span>
-        </aside>
+        <div aria-hidden="true" style={{ position: 'absolute', zIndex: 18, inset: 'clamp(4.8rem,8vw,7rem) clamp(1.1rem,3vw,3rem) clamp(4.4rem,7vw,6.5rem)' }}>
+          <Corner x="left" y="top" /><Corner x="right" y="top" /><Corner x="left" y="bottom" /><Corner x="right" y="bottom" />
+          <span style={{ position: 'absolute', top: '50%', left: '50%', width: 52, height: 52, border: `1px solid rgba(217,119,87,${.14 + sceneTwo * .42})`, borderRadius: '50%', transform: `translate(-50%,-50%) scale(${1.4 - sceneTwo * .4})` }} />
+          <span style={{ position: 'absolute', top: '50%', left: '50%', width: 7, height: 7, border: `1px solid ${C.clay}`, transform: 'translate(-50%,-50%) rotate(45deg)', opacity: sceneTwo }} />
+          <span style={{ position: 'absolute', top: '50%', left: 'calc(50% - 42px)', width: 26, height: 1, background: C.clay, opacity: sceneTwo }} />
+          <span style={{ position: 'absolute', top: '50%', left: 'calc(50% + 16px)', width: 26, height: 1, background: C.clay, opacity: sceneTwo }} />
+        </div>
 
-        <article style={{ position: 'absolute', zIndex: 20, inset: 0, display: 'flex', alignItems: 'center', padding: '7rem clamp(3.2rem,7vw,8rem) 6rem clamp(1.15rem,7vw,8rem)', opacity: sceneOne, transform: `translateY(${-progress * 54}px)`, pointerEvents: sceneOne > .15 ? 'auto' : 'none' }}>
-          <div className="max-w-[54rem]">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '.75rem', marginBottom: '1.35rem' }}><span style={{ width: 34, height: 1, background: ACCENT }} /><p style={{ ...meta, margin: 0, color: ACCENT }}>Optimization Landscape · Scene 01</p></div>
-            <h1 style={{ margin: 0, maxWidth: '11ch', color: INK, fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(3.3rem,8.7vw,9rem)', fontWeight: 400, letterSpacing: '-.045em', lineHeight: .86, textShadow: '0 10px 42px rgba(0,0,0,.62)' }}>Map the terrain before the model moves.</h1>
-            <p style={{ maxWidth: '34rem', margin: 'clamp(1.4rem,3vw,2.5rem) 0 0', color: 'rgba(244,238,233,.76)', fontFamily: "'Imprima',sans-serif", fontSize: 'clamp(.88rem,1.2vw,1.04rem)', lineHeight: 1.7 }}>I design evaluation systems, post-training methods, and production agents—turning uncertain search spaces into decisions that can be inspected.</p>
-          </div>
-        </article>
-
-        <article style={{ position: 'absolute', zIndex: 21, inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: '7rem clamp(3.3rem,9vw,10rem) 6.5rem clamp(1.15rem,6vw,6rem)', opacity: sceneTwo, transform: `translateY(${(.58 - progress) * 62}px)`, pointerEvents: sceneTwo > .15 ? 'auto' : 'none' }}>
-          <div className="w-full max-w-[31rem] md:w-[40vw]">
-            <p style={{ ...meta, margin: '0 0 1.15rem', color: ACCENT }}>Optimization Core · Scene 02</p>
-            <h2 style={{ margin: 0, color: INK, fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(3rem,5.9vw,6.4rem)', fontWeight: 400, letterSpacing: '-.04em', lineHeight: .91, textShadow: '0 9px 40px rgba(0,0,0,.7)' }}>Systems that survive contact with reality.</h2>
-            <div style={{ marginTop: 'clamp(1.6rem,3.5vw,2.8rem)', borderBottom: `1px solid ${LINE}` }}>
-              <Metric label="Current" value={`${profile.company} · ${profile.role}`} reveal={smoothstep(.43, .52, progress)} />
-              <Metric label="Research" value="Agentic RL · Post-training · Multi-turn evaluation" reveal={smoothstep(.47, .56, progress)} />
-              <Metric label="Training" value="100+ tool environments · risk-aware decision traces" reveal={smoothstep(.51, .6, progress)} />
-              <Metric label="Education" value="NUS Statistics · UNSW Computer Science" reveal={smoothstep(.55, .64, progress)} />
+        <article style={{ position: 'absolute', zIndex: 20, inset: 0, display: 'flex', alignItems: 'flex-end', padding: '6rem clamp(3.2rem,8vw,9rem) clamp(7rem,15vh,10rem) clamp(1.15rem,7vw,8rem)', opacity: entry, transform: `translateY(${p * -45}px)`, pointerEvents: entry > .2 ? 'auto' : 'none' }}>
+          <div style={{ maxWidth: '68rem' }}>
+            <p style={{ ...mono, margin: '0 0 1rem', color: C.clay }}>Field 01 / Unconstrained Search</p>
+            <h1 style={{ margin: 0, maxWidth: '11ch', color: C.paper, fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(4.1rem,10.6vw,11.5rem)', fontWeight: 400, letterSpacing: '-.055em', lineHeight: .76, textShadow: '0 12px 50px rgba(0,0,0,.68)' }}>Intelligence is a surface.</h1>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.4rem', marginTop: '1.6rem' }}>
+              <span style={{ width: 54, height: 1, marginTop: '.7rem', background: C.clay }} />
+              <p style={{ maxWidth: '31rem', margin: 0, color: 'rgba(238,233,226,.72)', fontFamily: "'Imprima',sans-serif", fontSize: 'clamp(.86rem,1.15vw,1rem)', lineHeight: 1.7 }}>I study how agents plan, use tools, remember, and recover—then turn those traces into systems that can operate in the real world.</p>
             </div>
           </div>
         </article>
 
-        <article style={{ position: 'absolute', zIndex: 22, inset: 0, display: 'grid', placeItems: 'center', padding: '7rem 3.3rem 5rem 1.2rem', opacity: finale, transform: `scale(${.96 + finale * .04})`, pointerEvents: finale > .4 ? 'auto' : 'none', textAlign: 'center' }}>
-          <div>
-            <p style={{ ...meta, margin: '0 0 1.2rem', color: ACCENT }}>Loss minimum reached · Δ 0.0001</p>
-            <h2 style={{ margin: 0, color: INK, fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(3.8rem,9vw,9.4rem)', fontWeight: 400, letterSpacing: '-.045em', lineHeight: .86, textShadow: '0 10px 44px rgba(0,0,0,.72)' }}>Continue the search.</h2>
-            <p style={{ maxWidth: '32rem', margin: '1.6rem auto 0', color: 'rgba(244,238,233,.76)', fontFamily: "'Imprima',sans-serif", fontSize: 'clamp(.86rem,1.15vw,1rem)', lineHeight: 1.65 }}>Open to collaborations on agent systems, evaluation research, and practical AI communication.</p>
-            <a href={`mailto:${profile.email}`} style={{ display: 'inline-flex', gap: '1rem', marginTop: '1.8rem', padding: '.9rem 0', borderBottom: `1px solid ${ACCENT}`, color: INK, fontFamily: "'Imprima',sans-serif", textDecoration: 'none' }}>{profile.email} <span style={{ color: ACCENT }}>↗</span></a>
+        <article style={{ position: 'absolute', zIndex: 21, inset: 0, display: 'flex', alignItems: 'center', padding: '6.5rem clamp(3.2rem,8vw,9rem) 6rem clamp(1.15rem,7vw,8rem)', opacity: fieldNotes, transform: `translateX(${(1 - fieldNotes) * -32}px)`, pointerEvents: fieldNotes > .2 ? 'auto' : 'none' }}>
+          <div className="w-full max-w-[35rem] md:w-[44vw]">
+            <p style={{ ...mono, margin: '0 0 1.1rem', color: C.clay }}>Observed Variables / 04</p>
+            <h2 style={{ margin: '0 0 2rem', color: C.paper, fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(3.1rem,6.3vw,6.8rem)', fontWeight: 400, letterSpacing: '-.04em', lineHeight: .86 }}>Measure the path, not only the answer.</h2>
+            <Signal index="01" label="Planning" value="Task decomposition and cross-turn replanning" progress={ease(.2,.29,p)} />
+            <Signal index="02" label="Tool use" value="Execution across dynamic pools of 100+ tools" progress={ease(.23,.32,p)} />
+            <Signal index="03" label="Memory" value="Session, persistent, and retrieval horizons" progress={ease(.26,.35,p)} />
+            <Signal index="04" label="Evaluation" value="Intermediate-step and dependency-aware judgment" progress={ease(.29,.38,p)} />
           </div>
         </article>
 
-        <footer style={{ position: 'absolute', zIndex: 30, right: 'clamp(3.2rem,7vw,7rem)', bottom: 'clamp(1.1rem,2.8vw,2.4rem)', left: 'clamp(1.15rem,4vw,4.5rem)', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '1rem' }}>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '.85rem clamp(1rem,2.5vw,2.2rem)' }}>{profile.links.map(([label, href]) => <a key={label} href={href} target="_blank" rel="noreferrer" style={link}>{label} ↗</a>)}</div>
-          <div className="hidden md:block" style={{ textAlign: 'right' }}><p style={{ ...meta, margin: 0, color: 'rgba(244,238,233,.84)' }}>{profile.role}</p><p style={{ ...meta, margin: '.28rem 0 0' }}>{profile.company} · 2026</p></div>
+        <article className="grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(18rem,31rem)]" style={{ position: 'absolute', zIndex: 22, inset: 0, display: 'grid', alignItems: 'center', gap: 'clamp(2rem,8vw,9rem)', padding: '6.5rem clamp(3.5rem,8vw,8.5rem) 6.5rem clamp(1.15rem,7vw,8rem)', opacity: lock, pointerEvents: lock > .2 ? 'auto' : 'none' }}>
+          <div className="hidden md:block" style={{ alignSelf: 'end', paddingBottom: '3rem' }}>
+            <p style={{ ...mono, margin: 0, color: C.dim }}>Current position</p>
+            <p style={{ margin: '.55rem 0 0', fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(2rem,3.8vw,4rem)', lineHeight: 1 }}>{person.company}</p>
+            <p style={{ ...mono, margin: '.8rem 0 0', color: C.clay }}>{person.role}</p>
+          </div>
+          <div>
+            <p style={{ ...mono, margin: '0 0 1rem', color: C.clay }}>Field 02 / Loss Minimum</p>
+            <h2 style={{ margin: 0, color: C.paper, fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(4rem,8.3vw,9rem)', fontWeight: 400, letterSpacing: '-.055em', lineHeight: .77, textShadow: '0 12px 48px rgba(0,0,0,.7)' }}>The minimum is operational.</h2>
+            <div style={{ marginTop: '2rem', borderBottom: `1px solid ${C.line}` }}>
+              <Signal index="A" label="Impact" value="90% less manual ticket handling" progress={ease(.5,.6,p)} />
+              <Signal index="B" label="Control" value="95% fewer manual interventions" progress={ease(.54,.64,p)} />
+              <Signal index="C" label="Latency" value="Sub-second exception handoff across 12 scenarios" progress={ease(.58,.68,p)} />
+              <Signal index="D" label="Training" value="Continual pretraining · SFT · agentic RL" progress={ease(.62,.72,p)} />
+            </div>
+          </div>
+        </article>
+
+        <article style={{ position: 'absolute', zIndex: 24, inset: 0, display: 'grid', placeItems: 'center', padding: '6rem 2.5rem', opacity: contact, transform: `scale(${.95 + contact * .05})`, pointerEvents: contact > .4 ? 'auto' : 'none', textAlign: 'center' }}>
+          <div>
+            <p style={{ ...mono, margin: '0 0 1rem', color: C.clay }}>Convergence confirmed / Δ 0.0001</p>
+            <h2 style={{ margin: 0, color: C.paper, fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(4.2rem,10vw,10.5rem)', fontWeight: 400, letterSpacing: '-.055em', lineHeight: .78 }}>Run the next experiment.</h2>
+            <a href={`mailto:${person.email}`} style={{ display: 'inline-flex', gap: '1rem', marginTop: '2rem', padding: '.9rem 0', borderBottom: `1px solid ${C.clay}`, color: C.paper, fontFamily: "'Imprima',sans-serif", fontSize: 'clamp(.9rem,1.3vw,1.05rem)', letterSpacing: '.06em', textDecoration: 'none' }}>{person.email} <span style={{ color: C.clay }}>↗</span></a>
+          </div>
+        </article>
+
+        <footer style={{ position: 'absolute', zIndex: 31, right: 'clamp(1.1rem,3vw,3rem)', bottom: 'clamp(1rem,2.2vw,1.9rem)', left: 'clamp(1.1rem,3vw,3rem)', display: 'grid', gridTemplateColumns: 'auto minmax(8rem,1fr) auto', alignItems: 'end', gap: 'clamp(1rem,3vw,3rem)' }}>
+          <nav aria-label="Social links" style={{ display: 'flex', gap: '1rem' }}>
+            {person.channels.map(([short, label, href]) => <a key={short} href={href} target="_blank" rel="noreferrer" aria-label={label} style={{ ...mono, color: C.paper, textDecoration: 'none' }}>{short}</a>)}
+          </nav>
+          <div style={{ height: 38 }}><Curve progress={p} /></div>
+          <span style={{ ...mono, color: C.clay }}>{String(Math.round(p * 100)).padStart(2,'0')}%</span>
         </footer>
       </section>
     </main>
