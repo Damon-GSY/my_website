@@ -1,9 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Imprima&family=Viaoda+Libre&display=swap" rel="stylesheet" />
     <title>Damon — Agent Systems & AI Research</title>
     <meta
       name="description"
@@ -46,24 +49,14 @@
       }
     </script>
 
-    <!-- FOUC prevention — dark-first default, honor an explicit light choice -->
-    <script>
-      (function(){try{var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.classList.remove('dark')}else{document.documentElement.classList.add('dark')}}catch(e){document.documentElement.classList.add('dark')}})()
-    </script>
-
-    <!-- Pre-paint the dark surface on html/body/#root so the empty #root never
-         flashes white before React + CSS mount. Vite injects styles via JS, so
-         without this the browser paints its default white for a frame. The
-         :not(.dark) override mirrors an explicit light choice (see script above). -->
     <meta name="theme-color" content="#0a0a0c" />
     <style>
       html { color-scheme: dark; background-color: #0a0a0c; }
-      html:not(.dark) { color-scheme: light; background-color: #f8f7f4; }
       body, #root { background-color: inherit; }
     </style>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
