@@ -9,6 +9,20 @@ import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 
 const prefersReduced = () =>
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
+export function useReducedMotionPreference() {
+  const [reduced, setReduced] = useState(prefersReduced)
+
+  useEffect(() => {
+    const query = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const update = () => setReduced(query.matches)
+    update()
+    query.addEventListener('change', update)
+    return () => query.removeEventListener('change', update)
+  }, [])
+
+  return reduced
+}
+
 /** Text with continuous sparkle particles (always-visible, not one-time). */
 export function SparklesText({
   text,
@@ -21,21 +35,20 @@ export function SparklesText({
   colors?: [string, string]
   style?: CSSProperties
 }) {
+  const reducedMotion = useReducedMotionPreference()
   const [sparkles] = useState(() =>
-    prefersReduced()
-      ? []
-      : Array.from({ length: count }, (_, i) => ({
-          id: i,
-          x: Math.random() * 100,
-          y: Math.random() * 100,
-          color: colors[Math.random() > 0.5 ? 0 : 1],
-          delay: Math.random() * 3,
-          dur: 0.9 + Math.random() * 1.4,
-        })),
+    Array.from({ length: count }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      color: colors[Math.random() > 0.5 ? 0 : 1],
+      delay: Math.random() * 3,
+      dur: 0.9 + Math.random() * 1.4,
+    })),
   )
   return (
     <span style={{ position: 'relative', display: 'inline-block', ...style }} aria-label={text}>
-      {sparkles.map((s) => (
+      {!reducedMotion && sparkles.map((s) => (
         <span
           key={s.id}
           aria-hidden
@@ -63,9 +76,10 @@ export function SparklesText({
 function useInViewOnce<T extends HTMLElement>(margin = '-50px') {
   const ref = useRef<T>(null)
   const [inView, setInView] = useState(false)
+  const reducedMotion = useReducedMotionPreference()
   useEffect(() => {
     const el = ref.current
-    if (!el || prefersReduced()) {
+    if (!el || reducedMotion) {
       setInView(true)
       return
     }
@@ -80,8 +94,8 @@ function useInViewOnce<T extends HTMLElement>(margin = '-50px') {
     )
     io.observe(el)
     return () => io.disconnect()
-  }, [margin])
-  return { ref, inView }
+  }, [margin, reducedMotion])
+  return { ref, inView, reducedMotion }
 }
 
 const SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!<>-_\\/[]{}—=+*^?#________'
@@ -98,12 +112,12 @@ export function EncryptedText({
   maxIter?: number
   style?: CSSProperties
 }) {
-  const { ref, inView } = useInViewOnce<HTMLSpanElement>()
+  const { ref, inView, reducedMotion } = useInViewOnce<HTMLSpanElement>()
   const [display, setDisplay] = useState(text)
 
   useEffect(() => {
     if (!inView) return
-    if (prefersReduced()) {
+    if (reducedMotion) {
       setDisplay(text)
       return
     }
@@ -122,11 +136,12 @@ export function EncryptedText({
       }
     }, speed)
     return () => clearInterval(id)
-  }, [inView, text, speed, maxIter])
+  }, [inView, text, speed, maxIter, reducedMotion])
 
   return (
-    <span ref={ref} style={style} aria-label={text}>
-      {display}
+    <span ref={ref} style={style}>
+      <span aria-hidden="true">{display}</span>
+      <span className="sr-only">{text}</span>
     </span>
   )
 }
@@ -145,12 +160,12 @@ export function NumberTicker({
   duration?: number
   style?: CSSProperties
 }) {
-  const { ref, inView } = useInViewOnce<HTMLSpanElement>()
+  const { ref, inView, reducedMotion } = useInViewOnce<HTMLSpanElement>()
   const [display, setDisplay] = useState(0)
 
   useEffect(() => {
     if (!inView) return
-    if (prefersReduced()) {
+    if (reducedMotion) {
       setDisplay(value)
       return
     }
@@ -164,7 +179,7 @@ export function NumberTicker({
     }
     raf = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(raf)
-  }, [inView, value, duration])
+  }, [inView, value, duration, reducedMotion])
 
   return (
     <span ref={ref} style={style}>
@@ -186,6 +201,7 @@ export function MagneticButton({
   strength?: number
   style?: CSSProperties
 } & React.HTMLAttributes<HTMLSpanElement>) {
+  const reducedMotion = useReducedMotionPreference()
   const ref = useRef<HTMLSpanElement>(null)
   const target = useRef({ x: 0, y: 0 })
   const current = useRef({ x: 0, y: 0 })
@@ -210,7 +226,7 @@ export function MagneticButton({
   }
 
   const onMove = (e: React.MouseEvent<HTMLSpanElement>) => {
-    if (prefersReduced()) return
+    if (reducedMotion) return
     const el = ref.current
     if (!el) return
     const r = el.getBoundingClientRect()
@@ -223,6 +239,11 @@ export function MagneticButton({
 
   const onLeave = () => {
     target.current = { x: 0, y: 0 }
+    if (reducedMotion) {
+      current.current = { x: 0, y: 0 }
+      if (ref.current) ref.current.style.transform = 'translate(0, 0)'
+      return
+    }
     if (!raf.current) raf.current = requestAnimationFrame(loop)
   }
 
@@ -236,7 +257,7 @@ export function MagneticButton({
 /** Accordion row: click to expand a detail panel (grid-rows 0fr->1fr height anim, no measuring). */
 /** Handwritten-style signature that "writes itself" (clip reveal L→R) when in view. */
 export function Signature({ text = 'Damon', color = '#d97757', style }: { text?: string; color?: string; style?: CSSProperties }) {
-  const { ref, inView } = useInViewOnce<HTMLSpanElement>()
+  const { ref, inView, reducedMotion } = useInViewOnce<HTMLSpanElement>()
   return (
     <span ref={ref} aria-label={text} style={{
       fontFamily: "'Caveat', cursive",
@@ -245,7 +266,7 @@ export function Signature({ text = 'Damon', color = '#d97757', style }: { text?:
       display: 'inline-block',
       clipPath: inView ? 'inset(0 0 0 0)' : 'inset(0 100% 0 0)',
       WebkitClipPath: inView ? 'inset(0 0 0 0)' : 'inset(0 100% 0 0)',
-      transition: 'clip-path 1.6s cubic-bezier(0.65,0,0.35,1) .2s',
+      transition: reducedMotion ? 'none' : 'clip-path 1.6s cubic-bezier(0.65,0,0.35,1) .2s',
       ...style,
     }}>{text}</span>
   )
@@ -267,26 +288,31 @@ const TRACE = [
   { k: 'eval', n: '', t: 'judge → intermediate steps ✓' },
 ]
 export function AgentConsole({ style }: { style?: CSSProperties }) {
+  const reducedMotion = useReducedMotionPreference()
   const [n, setN] = useState(4)
   useEffect(() => {
+    if (reducedMotion) {
+      setN(7)
+      return
+    }
     const id = setInterval(() => setN((x) => x + 1), 850)
     return () => clearInterval(id)
-  }, [])
+  }, [reducedMotion])
   const start = Math.max(0, n - 7)
   const view = []
   for (let i = start; i < n; i++) view.push({ ...TRACE[i % TRACE.length], idx: i })
   return (
-    <div style={{
+    <div role="img" aria-label="Example agent trace showing planning, tool calls, evaluation, and recovery" style={{
       background: 'rgba(7,7,9,.62)', border: '1px solid rgba(243,238,233,.12)', borderRadius: 12,
       padding: '1rem 1.1rem', fontFamily: "ui-monospace, Menlo, monospace", fontSize: '.72rem',
       lineHeight: 1.7, WebkitBackdropFilter: 'blur(4px)', backdropFilter: 'blur(4px)',
       width: 'clamp(20rem,24vw,23rem)', ...style,
     }}>
-      <div style={{ display: 'flex', gap: '.45rem', marginBottom: '.65rem', alignItems: 'center' }}>
+      <div aria-hidden="true" style={{ display: 'flex', gap: '.45rem', marginBottom: '.65rem', alignItems: 'center' }}>
         <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#d97757', boxShadow: '0 0 6px rgba(217,119,87,.8)' }} />
-        <span style={{ color: 'rgba(243,238,233,.5)', fontSize: '.58rem', letterSpacing: '.18em', textTransform: 'uppercase' }}>agent_trace · live</span>
+        <span style={{ color: 'rgba(243,238,233,.72)', fontSize: '.65rem', letterSpacing: '.16em', textTransform: 'uppercase' }}>agent_trace · example</span>
       </div>
-      {view.map((l, i) => {
+      <div aria-hidden="true">{view.map((l, i) => {
         const op = i === view.length - 1 ? 1 : 0.35 + (i / Math.max(1, view.length - 1)) * 0.6
         const isEval = l.k === 'eval'
         return (
@@ -295,7 +321,7 @@ export function AgentConsole({ style }: { style?: CSSProperties }) {
             <span style={{ color: isEval ? 'rgba(217,119,87,.9)' : 'rgba(243,238,233,.82)' }}>{l.t}</span>
           </div>
         )
-      })}
+      })}</div>
     </div>
   )
 }
@@ -315,28 +341,29 @@ const EDGES: [number, number][] = [
   [1, 5], [2, 6], [3, 7], [4, 8], [5, 9], [6, 9],
 ]
 export function AgentNetwork({ style }: { style?: CSSProperties }) {
+  const reducedMotion = useReducedMotionPreference()
   return (
-    <div style={{
+    <div role="img" aria-label="Example network of agents communicating through a central coordinator" style={{
       background: 'rgba(7,7,9,.55)', border: '1px solid rgba(243,238,233,.14)', borderRadius: 14,
       padding: '1rem 1.1rem .7rem', WebkitBackdropFilter: 'blur(5px)', backdropFilter: 'blur(5px)',
       ...style,
     }}>
       <div style={{ display: 'flex', gap: '.45rem', marginBottom: '.2rem', alignItems: 'center' }}>
         <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#d97757', boxShadow: '0 0 6px rgba(217,119,87,.8)' }} />
-        <span style={{ color: 'rgba(243,238,233,.55)', fontSize: '.58rem', letterSpacing: '.18em', textTransform: 'uppercase' }}>agent_network · live</span>
+        <span style={{ color: 'rgba(243,238,233,.72)', fontSize: '.65rem', letterSpacing: '.16em', textTransform: 'uppercase' }}>agent_network · example</span>
       </div>
       <svg viewBox="0 0 440 320" style={{ width: 'clamp(17rem,22vw,21rem)', height: 'auto', overflow: 'visible', display: 'block' }} aria-hidden>
         {EDGES.map(([a, b], i) => (
           <line key={`e${i}`} x1={NODES[a].x} y1={NODES[a].y} x2={NODES[b].x} y2={NODES[b].y} stroke="rgba(217,119,87,.4)" strokeWidth="1.3" />
         ))}
-        {EDGES.map(([a, b], i) => (
+        {!reducedMotion && EDGES.map(([a, b], i) => (
           <circle key={`p${i}`} r="3" fill="#ffd5bf" style={{ filter: 'drop-shadow(0 0 5px rgba(255,213,191,.95))' }}>
             <animateMotion dur={`${1.8 + (i % 5) * 0.4}s`} begin={`${(i % 7) * 0.32}s`} repeatCount="indefinite" path={`M${NODES[a].x},${NODES[a].y} L${NODES[b].x},${NODES[b].y}`} />
           </circle>
         ))}
         {NODES.map((n, i) => (
           <g key={`n${i}`}>
-            {n.hub && (
+            {n.hub && !reducedMotion && (
               <circle cx={n.x} cy={n.y} r={n.r + 6} fill="rgba(217,119,87,.22)">
                 <animate attributeName="r" values={`${n.r + 4};${n.r + 13};${n.r + 4}`} dur="2.6s" repeatCount="indefinite" />
                 <animate attributeName="opacity" values="0.4;0.9;0.4" dur="2.6s" repeatCount="indefinite" />

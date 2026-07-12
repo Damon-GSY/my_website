@@ -37,6 +37,50 @@ body { overflow-x: hidden; }
   outline-offset: 5px;
 }
 
+.landscape-split {
+  grid-template-columns: minmax(13rem, 0.35fr) minmax(0, 0.65fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  padding: 7rem clamp(3rem, 7vw, 6rem);
+}
+
+.landscape-split--research {
+  padding-block: 6.5rem;
+}
+
+@media (max-width: 767px) {
+  .landscape-split {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    align-content: center;
+    gap: 1rem;
+    padding: 6.25rem 4.15rem 5rem 1.25rem;
+  }
+
+  .landscape-split--research {
+    padding-block: 5.5rem 4.5rem;
+  }
+
+  .landscape-split--research h2 {
+    font-size: clamp(2.15rem, 11vw, 2.75rem) !important;
+  }
+
+  .landscape-research-card {
+    min-height: 0 !important;
+    padding: .62rem !important;
+  }
+
+  .landscape-research-card p:first-child {
+    font-size: .58rem !important;
+    letter-spacing: .1em !important;
+  }
+
+  .landscape-research-card p:last-child {
+    margin-top: .35rem !important;
+    font-size: .66rem !important;
+    line-height: 1.35 !important;
+  }
+}
+
 @keyframes sparkle {
   0%, 100% { transform: scale(0.3); opacity: 0.45; }
   50% { transform: scale(1); opacity: 1; }
@@ -44,4 +88,35 @@ body { overflow-x: hidden; }
 @keyframes shimmer {
   0% { background-position: 0% center; }
   100% { background-position: 200% center; }
+}
+
+.landscape-gradient-title {
+  color: #f3eee9;
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .landscape-gradient-title {
+    color: transparent;
+    background: linear-gradient(90deg, #f3eee9, #d97757, #ffd5bf, #f3eee9);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: shimmer 4s linear infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landscape-gradient-title {
+    animation: none;
+    background-position: 50% center;
+  }
+}
+
+@media (forced-colors: active) {
+  .landscape-gradient-title {
+    color: CanvasText;
+    background: none;
+    -webkit-text-fill-color: CanvasText;
+    animation: none;
+  }
 }

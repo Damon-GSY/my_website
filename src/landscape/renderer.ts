@@ -102,7 +102,12 @@ function applyMask(o: CanvasRenderingContext2D, cw: number, ch: number, kind: Ma
   o.fillRect(0, 0, cw, ch)
 }
 
-export function createLandscapeRenderer(canvas: HTMLCanvasElement, images: LandscapeImages) {
+export function createLandscapeRenderer(
+  canvas: HTMLCanvasElement,
+  images: LandscapeImages,
+  options: { motionEnabled?: boolean } = {},
+) {
+  const motionEnabled = options.motionEnabled ?? true
   const ctx = canvas.getContext('2d')!
   let target = 0
   let dirty = true
@@ -176,18 +181,18 @@ export function createLandscapeRenderer(canvas: HTMLCanvasElement, images: Lands
   }
   function onScroll() {
     const range = document.documentElement.scrollHeight - window.innerHeight
-    target = range > 0 ? clamp(window.scrollY / range) : 0
+    target = motionEnabled && range > 0 ? clamp(window.scrollY / range) : 0
     dirty = true
   }
   resize(); onScroll()
-  window.addEventListener('scroll', onScroll, { passive: true })
+  if (motionEnabled) window.addEventListener('scroll', onScroll, { passive: true })
   window.addEventListener('resize', resize)
   raf = requestAnimationFrame(tick)
   return {
     setProgress(p: number) { target = clamp(p); dirty = true },
     dispose() {
       cancelAnimationFrame(raf)
-      window.removeEventListener('scroll', onScroll)
+      if (motionEnabled) window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', resize)
     },
   }
