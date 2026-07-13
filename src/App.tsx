@@ -197,10 +197,10 @@ export default function App() {
             <h2 style={{ margin: 0, color: INK, fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(3rem,6.2vw,6.8rem)', fontWeight: 400, letterSpacing: '-.035em', lineHeight: .9, textShadow: '0 8px 38px rgba(0,0,0,.66)' }}>{enc('Four axes. One agent.')}</h2>
             </div>
             <div style={{ borderBottom: `1px solid ${LINE}` }}>
-              <DataRow label="01" value="Planning · dynamic decomposition and cross-turn replanning" at={.13} progress={progress} />
-              <DataRow label="02" value="Tool use · execution accuracy across 100+ tools" at={.15} progress={progress} />
-              <DataRow label="03" value="Memory · session, persistent, and retrieval horizons" at={.17} progress={progress} />
-              <DataRow label="04" value="Evaluation · judge intermediate steps, not just final answers" at={.19} progress={progress} />
+              <DataRow label="01" value="Planning · break complex requests into steps and revise the plan as context changes" at={.13} progress={progress} />
+              <DataRow label="02" value="Tool use · choose and execute the right action across 100+ tools" at={.15} progress={progress} />
+              <DataRow label="03" value="Memory · carry the right context across a session and over time" at={.17} progress={progress} />
+              <DataRow label="04" value="Evaluation · check each important step, not only the final answer" at={.19} progress={progress} />
             </div>
         </article>
 
@@ -210,10 +210,10 @@ export default function App() {
             <h2 style={{ margin: 0, color: INK, fontFamily: "'Viaoda Libre',serif", fontSize: 'clamp(2.9rem,5.8vw,6.4rem)', fontWeight: 400, letterSpacing: '-.035em', lineHeight: .91, textShadow: '0 8px 38px rgba(0,0,0,.66)' }}>{enc('Systems that survive contact with reality.')}</h2>
             </div>
             <div style={{ borderBottom: `1px solid ${LINE}` }}>
-              <DataRow label="Agent System" value="Risk-tiered multi-turn decisions across 12 supply-chain scenarios; 90% fewer misoperations, sub-second handoff." at={.28} progress={progress} />
-              <DataRow label="Agentic RL" value="Ticket-resolution agents over 100+ dynamically registered tools; 90% less manual handling." at={.3} progress={progress} />
-              <DataRow label="Domain LLM" value="Continual pretraining + integrated SFT/RL; internal SOTA on a dual-axis knowledge + tool-use benchmark." at={.32} progress={progress} />
-              <DataRow label="Reward Design" value="Multi-objective GRPO stabilized via conditional rewards, variance control, and hierarchical rewards." at={.34} progress={progress} />
+              <DataRow label="Safe Automation" value="Set clear checkpoints for risky decisions across 12 supply-chain workflows — cutting mistakes by 90% and handing exceptions to people in under a second." at={.28} progress={progress} />
+              <DataRow label="Tool-using Agents" value="Trained ticket agents to choose from 100+ changing tools, reducing manual handling by 90%." at={.3} progress={progress} />
+              <DataRow label="Supply-chain LLM" value="Built the benchmark first, then trained for domain knowledge and tool use — reaching the strongest internal result on both." at={.32} progress={progress} />
+              <DataRow label="Stable Training" value="Balanced competing product goals so training stayed stable and the model made more reliable downstream decisions." at={.34} progress={progress} />
             </div>
         </article>
 
@@ -224,12 +224,12 @@ export default function App() {
             </div>
             <div className="landscape-research-grid grid grid-cols-2" style={{ borderTop: `1px solid ${LINE}`, borderLeft: `1px solid ${LINE}` }}>
               {[
-                ['01 · Agent Evaluation', 'A taxonomy built from ~250 Papers across planning, tools, memory, and Agent-as-Judge.'],
-                ['02 · SupChain-Bench', '530 real-world samples spanning logistics, fulfillment, finance, and customs.'],
-                ['03 · VisualDeltas', 'Preference learning from visual-quality-induced reasoning; gains up to +8.2%.'],
-                ['04 · Multi-turn Evaluation', 'Cross-turn recovery, intent shifts, and dependency-aware intermediate scoring.'],
-                ['05 · M365 Copilot Memory', '3-layer memory + tree-structured retrieval for GPT-4o email workflows (MSRA).'],
-                ['06 · Product Attribute RL', 'Multi-objective GRPO stabilized via conditional rewards + variance control.'],
+                ['01 · Agent Evaluation', 'Reviewed ~250 papers to show where agents fail: planning, tool use, memory, and self-evaluation.'],
+                ['02 · SupChain-Bench', 'Tested AI on 530 real supply-chain tasks across logistics, fulfillment, finance, and customs.'],
+                ['03 · VisualDeltas', 'Turned high- vs low-quality images into training signals, improving results by up to 8.2% without manual labels.'],
+                ['04 · Conversation Evaluation', 'Measured whether agents recover from mistakes, follow changing intent, and keep dependent steps consistent.'],
+                ['05 · M365 Copilot Memory', 'Built layered memory and structured retrieval so GPT-4o email workflows stayed consistent in long conversations.'],
+                ['06 · Product Decisions', 'Balanced competing product goals so training stayed stable and supported better supply-chain decisions.'],
               ].map(([title, copy]) => (
                 <div className="landscape-research-card" key={title} style={{ minHeight: '6.4rem', padding: '1rem', borderRight: `1px solid ${LINE}`, borderBottom: `1px solid ${LINE}`, background: 'rgba(7,7,9,.5)' }}>
                   <p style={{ ...meta, margin: 0, color: 'rgba(243,238,233,.82)' }}>{title}</p>
@@ -249,8 +249,8 @@ export default function App() {
               {[
                 { label: '2019—22', value: 'UNSW · Computer Science · Dean\'s List', detail: 'GPA 85/100 · Academic Scholarship · Dean\'s List 2019–2022 · QS #19.' },
                 { label: '2023—25', value: 'NUS · Statistics · top 5%', detail: 'GPA 4.0/5.0 · top 5% in major · QS #8.' },
-                { label: '2024—25', value: 'MSRA · M365 Copilot', detail: 'GPT-4o production rollout · 3-layer memory + tree-structured retrieval · multi-turn eval framework.' },
-                { label: '2025—now', value: 'Alibaba · LLM systems', detail: 'Agentic RL + post-training · 12 supply-chain scenarios · 100+ dynamic tools · Hangzhou.' },
+                { label: '2024—25', value: 'MSRA · M365 Copilot', detail: 'GPT-4o email workflows · layered memory · structured retrieval · conversation-wide evaluation.' },
+                { label: '2025—now', value: 'Alibaba · LLM systems', detail: 'Production agent systems · 12 supply-chain workflows · 100+ dynamic tools · Hangzhou.' },
               ].map((it) => (
                 <div key={it.label} style={{ padding: '.78rem 0', borderTop: `1px solid ${LINE}` }}>
                   <div style={{ display: 'grid', gridTemplateColumns: '5.5rem minmax(0,1fr)', gap: '1rem' }}>
@@ -264,7 +264,7 @@ export default function App() {
             <div style={{ marginTop: '1.4rem', padding: '.9rem 1rem', border: `1px solid ${LINE}`, background: 'rgba(7,7,9,.42)' }}>
               <p style={{ ...meta, margin: 0, color: ACCENT }}>Field notes · recent writing</p>
               <div style={{ marginTop: '.6rem', display: 'grid', gap: '.5rem' }}>
-                <p style={{ margin: 0, color: 'rgba(243,238,233,.88)', fontFamily: "'Imprima',sans-serif", fontSize: '.78rem', lineHeight: 1.4 }}><span style={{ color: 'rgba(243,238,233,.7)' }}>2026 · </span>Why Agent Evaluation Is Hard — lessons from multi-turn eval benchmarks.</p>
+                <p style={{ margin: 0, color: 'rgba(243,238,233,.88)', fontFamily: "'Imprima',sans-serif", fontSize: '.78rem', lineHeight: 1.4 }}><span style={{ color: 'rgba(243,238,233,.7)' }}>2026 · </span>Why Agent Evaluation Is Hard — lessons from evaluating entire conversations.</p>
                 <p style={{ margin: 0, color: 'rgba(243,238,233,.88)', fontFamily: "'Imprima',sans-serif", fontSize: '.78rem', lineHeight: 1.4 }}><span style={{ color: 'rgba(243,238,233,.7)' }}>2026 · </span>Building Agents That Actually Work — patterns for production agent systems.</p>
                 <p style={{ margin: 0, color: 'rgba(243,238,233,.88)', fontFamily: "'Imprima',sans-serif", fontSize: '.78rem', lineHeight: 1.4 }}><span style={{ color: 'rgba(243,238,233,.7)' }}>2026 · </span>Post-Training Lessons From Production — what shipped, what broke.</p>
               </div>
