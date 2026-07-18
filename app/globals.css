@@ -220,7 +220,7 @@ a {
 
 .hero {
   position: relative;
-  height: 260svh;
+  height: 245svh;
   background: var(--bg);
 }
 
@@ -308,6 +308,10 @@ a {
   grid-template-rows: auto auto 1fr auto;
   min-height: max(48rem, 100svh);
   padding: clamp(8rem, 14vh, 10rem) 0 2rem;
+}
+
+.hero__content.is-inactive {
+  pointer-events: none;
 }
 
 .hero__eyebrow,
@@ -427,14 +431,44 @@ a {
 }
 
 .hero__foot {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   padding-top: 1rem;
   border-top: 1px solid var(--line);
-  color: var(--muted);
-  font-size: 0.6rem;
-  letter-spacing: 0.07em;
+}
+
+.hero__foot > span {
+  display: grid;
+  gap: 0.45rem;
+  min-width: 0;
+  padding: 0 1.25rem;
+  border-left: 1px solid var(--line);
+}
+
+.hero__foot > span:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.hero__foot small,
+.hero__foot strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hero__foot small {
+  color: var(--accent);
+  font-size: 0.54rem;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
+}
+
+.hero__foot strong {
+  color: var(--text-soft);
+  font-size: 0.62rem;
+  font-weight: 300;
+  letter-spacing: 0.035em;
 }
 
 .hero__journey {
@@ -443,8 +477,8 @@ a {
   right: var(--gutter);
   bottom: clamp(6rem, 13vh, 9rem);
   display: grid;
-  width: min(21rem, 25vw);
-  gap: 0.5rem;
+  width: min(31rem, 38vw);
+  gap: 0.65rem;
   pointer-events: none;
 }
 
@@ -462,10 +496,21 @@ a {
 }
 
 .hero__journey strong {
-  font-size: clamp(1.3rem, 2vw, 2.25rem);
-  font-weight: 300;
-  line-height: 1.05;
-  letter-spacing: -0.045em;
+  max-width: 14ch;
+  font-size: clamp(1.5rem, 2.35vw, 2.7rem);
+  font-weight: 200;
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+.hero__journey p {
+  max-width: 43rem;
+  margin: 0.35rem 0 0;
+  color: rgba(240, 238, 233, 0.66);
+  font-size: 0.66rem;
+  line-height: 1.72;
+  text-wrap: pretty;
 }
 
 .hero__journey-rail {
@@ -1380,7 +1425,7 @@ a {
   }
 
   .hero {
-    height: 240svh;
+    height: 210svh;
   }
 
   .hero__viewport {
@@ -1434,14 +1479,34 @@ a {
   }
 
   .hero__foot {
-    display: grid;
-    gap: 0.45rem;
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-top: 0;
+  }
+
+  .hero__foot > span {
+    grid-template-columns: 5.5rem 1fr;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .hero__foot > span:first-child {
+    padding-left: 0;
+  }
+
+  .hero__foot small,
+  .hero__foot strong {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
   }
 
   .hero__journey {
     right: var(--gutter);
-    bottom: 6.75rem;
-    width: min(16rem, 72vw);
+    bottom: 4rem;
+    width: min(22rem, 86vw);
   }
 
   .hero__journey--core {

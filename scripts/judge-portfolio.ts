@@ -37,6 +37,7 @@ function banPattern(source: string, pattern: RegExp, message: string) {
 }
 
 requirePattern(files.hero, /profile\.name[\s\S]*profile\.role[\s\S]*profile\.thesis/, 'Above-the-fold identity or point of view is incomplete.')
+requirePattern(files.hero, /heroChapters\[0\][\s\S]*heroChapters\[1\]/, 'The scroll story stops presenting Damon after the opening frame.')
 requirePattern(files.work, /work\.map[\s\S]*\/work\/\$\{project\.id\}/, 'Selected work does not lead to project evidence.')
 requirePattern(files.casePage, /project\.context[\s\S]*project\.principle[\s\S]*project\.details/, 'Case studies lack context and design rationale.')
 requirePattern(files.research, /paper\.description[\s\S]*paper\.topics[\s\S]*paper\.metric/, 'Research lacks method, dimensions, or evidence.')
@@ -49,6 +50,7 @@ requirePattern(files.footer, /mailto:[\s\S]*socials\.map/, 'The site has no comp
 requirePattern(files.content, /bio:/, 'Identity data lacks a personal biography.')
 requirePattern(files.content, /principles:/, 'Identity data lacks working principles.')
 requirePattern(files.content, /creatorLine:/, 'Identity data hides the creator practice.')
+requirePattern(files.content, /530 real-world samples/, 'SupChain-Bench evidence from main is missing from the personal narrative.')
 const experienceEvidenceCount = files.content.match(/\n\s+highlights:/g)?.length ?? 0
 if (experienceEvidenceCount < 8) failures.push(`Expected at least 8 evidenced trajectory records, found ${experienceEvidenceCount}.`)
 requirePattern(files.content, /4\.0 \/ 5\.0[\s\S]*QS global #8/, 'NUS evidence from main is compressed out of the public trajectory.')

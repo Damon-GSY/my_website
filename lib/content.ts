@@ -37,7 +37,29 @@ export const profile = {
     ['Education', 'NUS Top 5% · UNSW Top 3%'],
     ['Publishing', 'YouTube · Bilibili'],
   ],
+  heroProofs: [
+    ['Current', 'Alibaba · LLM Algorithm Engineer'],
+    ['Research', '2× first author · ACL Findings'],
+    ['Public work', 'YouTube · Bilibili'],
+  ],
 }
+
+export const heroChapters = [
+  {
+    index: '01 / Production engineer',
+    title: 'I build the control layer between models and irreversible work.',
+    description:
+      'At Alibaba, I turn agent capability into bounded decisions, inspectable tool traces, and fast human recovery.',
+    evidence: '12 scenarios · 100+ tools · <1s handoff',
+  },
+  {
+    index: '02 / Researcher + creator',
+    title: 'I turn production traces into evidence people can use.',
+    description:
+      'My first-author research maps multi-turn agent evaluation and real supply-chain work; my public notes make the methods legible beyond the paper.',
+    evidence: '~250 papers mapped · 530 real-world samples · YouTube / Bilibili',
+  },
+] as const
 
 export const signals = [
   { value: '12', label: 'production scenarios' },
@@ -188,8 +210,8 @@ export const research = [
     authorship: 'First author · 3 authors',
     href: 'https://aclanthology.org/2026.findings-acl.371/',
     description:
-      'A real-world benchmark for supply-chain knowledge and long-horizon tool orchestration, with SupChain-ReAct for SOP-free procedure synthesis.',
-    metric: 'ACL 2026 · open code',
+      'A 530-sample benchmark for supply-chain knowledge and long-horizon tool orchestration. SupChain-ReAct synthesizes procedures without manual SOPs and led tool-calling accuracy across 15+ models.',
+    metric: '530 samples · 15+ models',
     topics: ['logistics', 'fulfillment', 'finance', 'tool calling'],
   },
   {

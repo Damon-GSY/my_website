@@ -55,7 +55,7 @@ export default function WorkSection() {
                 </div>
 
                 <div className="case-study__details">
-                  <span>Design moves</span>
+                  <span>System decisions</span>
                   <ol>
                     {project.details.map((detail) => <li key={detail}>{detail}</li>)}
                   </ol>
