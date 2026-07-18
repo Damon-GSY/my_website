@@ -210,6 +210,44 @@
   line-height: 1.65;
 }
 
+.articleGrid aside .related {
+  display: grid;
+  gap: 0;
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.related > span {
+  margin-bottom: 0.65rem;
+  color: var(--muted);
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.related a {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  padding: 0.8rem 0;
+  border-top: 1px solid rgba(240, 238, 233, 0.07);
+  color: var(--text-soft);
+  font-size: 0.62rem;
+  line-height: 1.5;
+  transition: color 220ms var(--ease), transform 220ms var(--ease);
+}
+
+.related a:hover {
+  color: var(--accent);
+  transform: translateX(0.2rem);
+}
+
+.related i {
+  color: var(--accent);
+  font-style: normal;
+}
+
 .prose {
   grid-column: 5 / 12;
 }
@@ -366,6 +404,8 @@
   .articleGrid aside > span,
   .articleGrid aside small,
   .articleGrid aside p,
+  .related > span,
+  .related a,
   .prose section > span,
   .nextNote span {
     font-size: 0.68rem;

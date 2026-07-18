@@ -232,176 +232,219 @@ export const research = [
 export const notes = [
   {
     slug: 'why-agent-evaluation-is-hard',
-    title: 'Why Agent Evaluation Is Hard',
+    title: 'Why agent evaluation is hard',
     date: '2026-04-10',
     category: 'Research',
-    excerpt: 'Lessons from building multi-turn evaluation benchmarks for real workflows.',
-    readingTime: '6 min read',
+    excerpt: 'What a survey of roughly 250 papers—and production traces—changed about how I score an agent.',
+    readingTime: '7 min read',
     tags: ['Agents', 'Evaluation', 'Benchmarks'],
+    related: [
+      { label: 'Multi-turn agent evaluation survey', href: 'https://arxiv.org/abs/2503.22458' },
+    ],
     intro:
-      'Agent evaluation is fundamentally different from single-turn model evaluation. In a multi-turn setting, the agent makes a sequence of decisions, each affecting the state in which the next decision is made.',
+      'While mapping roughly 250 papers for our multi-turn agent evaluation survey, I kept finding the same mismatch: benchmarks reward the final answer, while production failures live inside the trajectory. The useful question is not only whether an agent finished, but whether it noticed drift, preserved state, and knew when to recover.',
     sections: [
       {
-        title: 'State space explosion',
-        body: 'In single-turn evaluation, you compare a model output against a reference. In multi-turn work, the state after each action changes the distribution of possible next states. A small error early can produce a completely different trajectory.',
+        title: 'Every action changes the test',
+        body: 'A tool call, clarification, or premature commitment changes the state presented to the next turn. Two agents can produce the same final sentence after taking very different paths; one preserved the user’s constraints, while the other arrived there by luck. That branching state is why replayable traces matter more than a larger answer-key spreadsheet.',
       },
       {
-        title: 'Compounding errors',
-        body: 'If an agent makes a small mistake per turn, the probability of a fully correct trajectory drops quickly as the task gets longer. That is why I care about intermediate milestones, recovery behavior, and tool-use traces instead of final-answer scoring only.',
+        title: 'Score the dependency chain',
+        body: 'I prefer to score intermediate milestones and the dependencies between them: was the task modeled correctly, did the plan respect available tools, and did later actions use earlier evidence? Agent-as-Judge becomes useful when it evaluates this chain instead of simply grading the last message with another model.',
       },
       {
-        title: 'What we measured',
-        body: 'We designed evaluation around full task completion with partial credit for intermediate progress. This gives a more realistic picture of agent capability than pass/fail metrics on individual turns.',
+        title: 'Recovery is a capability',
+        body: 'A strong agent should re-plan after a tool fails, a result contradicts its assumption, or the user changes intent. Current test sets still under-measure these cross-turn corrections. I treat recovery latency, repeated failure, and the decision to ask for help as first-class outcomes—not cleanup around the “real” benchmark.',
+      },
+      {
+        title: 'The minimum useful report',
+        body: 'A useful evaluation report should separate planning, tool execution, memory horizon, and recovery, then connect each failure to a trace that can be replayed. One aggregate score is easy to compare and almost impossible to improve. A capability surface tells the team what to train, what to redesign, and what should remain under human authority.',
       },
     ],
   },
   {
     slug: 'building-agents-that-actually-work',
-    title: 'Building Agents That Actually Work',
+    title: 'Building agents that actually work',
     date: '2026-03-28',
     category: 'Engineering',
-    excerpt: 'Practical patterns for designing agent systems that ship to production.',
-    readingTime: '5 min read',
+    excerpt: 'Lessons from routing authority across 12 supply-chain scenarios and more than 100 tools.',
+    readingTime: '6 min read',
     tags: ['Agents', 'Engineering', 'Production'],
+    related: [
+      { label: 'Supply Chain Agent System', href: '/work/risk-router' },
+      { label: 'Dynamic Tool Resolution', href: '/work/tool-resolver' },
+    ],
     intro:
-      'Most agent demos look impressive but fall apart in production. The gap between “works in a notebook” and “works for real users” is where the actual engineering begins.',
+      'The agent system I trust most is rarely the one with the longest plan. Across 12 supply-chain scenarios, the decisive work was defining authority, tool contracts, traces, and a path back to a person before the model made an irreversible decision.',
     sections: [
       {
-        title: 'Start with constraints',
-        body: 'The best agent systems I have worked on started not with “what can the agent do?” but with “what must the agent not do?” Defining safety boundaries, operating constraints, and failure modes first leads to more robust systems.',
+        title: 'Route authority before intent',
+        body: 'A routine lookup and an operational change should not share one autonomy threshold. We made risk a routed system state: observe the requested action, narrow the available tools, request progressive confirmation when consequences rise, and keep high-risk execution outside the model’s blanket permission.',
       },
       {
-        title: 'Tool orchestration over fancy planning',
-        body: 'Planning architectures get attention, but in production, clean tool interfaces, strong routing contracts, and observable traces usually matter more. Tool-use failures need to be visible, replayable, and easy to classify.',
+        title: 'A tool pool is an interface',
+        body: 'Once the internal pool passed 100 tools, a static prompt stopped being a reasonable capability layer. Dynamic resolution separated discovery from execution and exposed whether the system chose the wrong tool, found no valid tool, or called one it did not need. Those are different product failures and different training signals.',
       },
       {
-        title: 'Observability is non-negotiable',
-        body: 'If you cannot see what your agent is doing at every step, you cannot debug it. Structured logging, step-by-step traces, and rollback mechanisms are requirements, not polish.',
+        title: 'Design the handoff as a fast path',
+        body: 'Human review is not a failure state if the transition preserves context. The useful target was a sub-second exception handoff with the intent, risk tier, attempted actions, and current state already attached. A person should inherit the decision—not reconstruct the conversation.',
+      },
+      {
+        title: 'Let traces close the loop',
+        body: 'Structured traces turned production incidents into a failure taxonomy the team could evaluate and train against. That loop matters more than a polished demo: observe a failure, classify the decision that caused it, change the policy or reward, and replay the same trajectory before shipping again.',
       },
     ],
   },
   {
     slug: 'post-training-lessons-from-production',
-    title: 'Post-Training Lessons From Production',
+    title: 'Post-training lessons from production',
     date: '2026-03-15',
     category: 'Post-training',
-    excerpt: 'What I learned running SFT and RL loops on real business data.',
-    readingTime: '5 min read',
+    excerpt: 'Why I define the capability surface before choosing a continual pretraining, SFT, or RL recipe.',
+    readingTime: '6 min read',
     tags: ['Post-training', 'SFT', 'RL'],
+    related: [
+      { label: 'Supply-Chain Domain LLM', href: '/work/domain-model' },
+      { label: 'Multi-objective GRPO', href: '/work/reward-system' },
+    ],
     intro:
-      'Post-training gets discussed as a recipe, but production data rarely behaves like a recipe. The hard part is not only choosing SFT or RL; it is building the loop around a measurable outcome.',
+      'On a supply-chain domain model, knowledge accuracy and reliable tool execution improved at different rates. That made the main lesson uncomfortable but useful: the training recipe is downstream of the measurement contract, not the other way around.',
     sections: [
       {
-        title: 'SFT first, RL second',
-        body: 'Start with supervised fine-tuning to establish a behavioral baseline. Jumping straight to RL without a reliable checkpoint wastes compute and makes reward problems harder to diagnose.',
+        title: 'Write the benchmark first',
+        body: 'We built a dual-axis benchmark for knowledge QA and tool use before the expensive loop began. This prevented an aggregate score from hiding a model that knew the domain answer but could not execute the workflow—or one that called tools fluently without enough domain knowledge to judge the result.',
+      },
+      {
+        title: 'Keep each gain attributable',
+        body: 'Continual pretraining, SFT, and RL can all move the same headline metric. I track business-facing capability slices after every stage so a gain has an owner and a regression has a location. Otherwise the final checkpoint becomes an opaque average of several unrelated changes.',
+      },
+      {
+        title: 'Use SFT to establish behavior',
+        body: 'SFT gave us a stable behavioral baseline before RL introduced another source of variance. Starting from a checkpoint that already followed the task format made it easier to distinguish a reward problem from a basic instruction-following problem.',
       },
       {
         title: 'Reward design is product design',
-        body: 'In multi-objective settings, reward shaping is not a pure modeling detail. It encodes what the system values, what tradeoffs are acceptable, and which failures are too costly to tolerate.',
-      },
-      {
-        title: 'Evaluate before training',
-        body: 'Design the evaluation pipeline before running expensive loops. If you cannot measure the behavior you want, the training run will mostly teach you how weak your measurement is.',
+        body: 'In multi-objective GRPO, frequent product-attribute tasks can dominate gradients and erase progress on rarer decisions. Conditional rewards, sample-level variance control, zero-gradient filtering, and an explicit hierarchy were not mathematical decoration; they encoded which downstream mistakes the product could tolerate.',
       },
     ],
   },
   {
     slug: 'tool-use-is-a-product-interface',
-    title: 'Tool Use Is a Product Interface',
+    title: 'Tool use is a product interface',
     date: '2026-02-24',
     category: 'Engineering',
-    excerpt: 'Agents negotiate with a product surface made of permissions, latency, and failure states.',
-    readingTime: '4 min read',
+    excerpt: 'What a dynamic registry of 100+ capabilities taught me about names, permissions, latency, and failure states.',
+    readingTime: '5 min read',
     tags: ['Tool use', 'Agents', 'UX'],
+    related: [
+      { label: 'Dynamic Tool Resolution', href: '/work/tool-resolver' },
+    ],
     intro:
-      'A tool schema is not only a technical contract. It is a product interface for the model. The names, arguments, permissions, and failure messages all shape how the agent behaves.',
+      'A model never sees the product directly. It sees tool names, argument schemas, permissions, response latency, and error messages. When that surface is ambiguous, the resulting behavior is usually called a reasoning failure even though the interface failed first.',
     sections: [
       {
-        title: 'Bad tools create bad reasoning',
-        body: 'When tools are ambiguous, overlapping, or under-documented, the agent has to infer product semantics from weak signals. This often looks like reasoning failure, but the root cause is interface design.',
+        title: 'Separate discovery from execution',
+        body: 'A prompt containing 100+ changing tools is both expensive and stale. We let a meta tool search a dynamic capability registry, then passed only the selected contract into execution. This made capability discovery observable and allowed registration to change without retraining the agent’s static memory of the pool.',
       },
       {
         title: 'Latency changes strategy',
-        body: 'Slow tools push agents toward fewer calls and more guessing. Fast tools encourage verification. Evaluation should account for the actual tool environment, not an idealized offline setup.',
+        body: 'Slow tools encourage the model to guess instead of verify; cheap tools can trigger unnecessary exploration. I evaluate agents in the actual tool environment because latency, retries, and permission checks change the policy. An offline answer score cannot reveal that shift.',
       },
       {
-        title: 'Design for recoverability',
-        body: 'Tool errors should be useful. A recoverable error message can turn a failed step into a replanning opportunity; a vague error message usually turns it into drift.',
+        title: 'Name the failure precisely',
+        body: 'Wrong-tool, missing-tool, invalid-argument, and over-tooling traces should not collapse into one “tool error.” Each points to a different repair: improve discovery, add a capability, clarify a contract, or teach the policy to stop. Precise failure semantics turn an error message into a replanning interface.',
       },
     ],
   },
   {
     slug: 'memory-is-not-one-feature',
-    title: 'Memory Is Not One Feature',
+    title: 'Memory is not one feature',
     date: '2026-02-08',
     category: 'Research',
-    excerpt: 'A practical taxonomy for session memory, long-term retrieval, and preferences.',
-    readingTime: '5 min read',
+    excerpt: 'The three-horizon model I used to separate local coherence, session state, and persistent preferences.',
+    readingTime: '6 min read',
     tags: ['Memory', 'RAG', 'Agents'],
+    related: [
+      { label: 'Multi-turn agent evaluation survey', href: 'https://arxiv.org/abs/2503.22458' },
+    ],
     intro:
-      'Memory in agent systems is often described as one feature, but it is really a set of different mechanisms with different failure modes.',
+      'During my work on M365 Copilot email workflows at Microsoft Research Asia, “memory” quickly stopped being a useful single noun. Local conversational coherence, progressive task state, external documents, and user preferences need different storage, retrieval, and evaluation contracts.',
     sections: [
       {
         title: 'Three horizons',
-        body: 'Turn-level memory helps the model stay coherent inside a local exchange. Session memory preserves task state across multiple turns. Persistent memory stores user or domain information beyond the immediate conversation.',
+        body: 'Turn-level memory keeps a local exchange coherent. Progressive in-conversation memory compresses the state of a longer task. Persistent memory retrieves documents and preferences beyond the session. Mixing these horizons makes it difficult to tell whether the model forgot, retrieved the wrong evidence, or preserved something it should have discarded.',
       },
       {
-        title: 'Retrieval is a form factor',
-        body: 'External memory is not automatically better than parametric memory. Retrieval gives adaptability and inspectability, but it also introduces ranking errors, context pressure, and stale information risks.',
+        title: 'Structure before similarity',
+        body: 'For long documents, I explored tree-structured retrieval that maps content to section and paragraph coordinates: locate the relevant region first, then read continuously around it. This preserves cross-paragraph context better than collecting isolated chunks that happen to share vocabulary.',
       },
       {
-        title: 'Evaluate memory by use',
-        body: 'The right question is not “does the system remember?” The right question is whether memory improves task completion without leaking irrelevant context into decisions.',
+        title: 'Remembering can make the agent worse',
+        body: 'External memory adds ranking errors, stale evidence, privacy boundaries, and context pressure. Persistent preferences can also overfit a past behavior to a new task. More recalled tokens are not a success metric; the system should retrieve only what changes the current decision.',
+      },
+      {
+        title: 'Evaluate memory by consequence',
+        body: 'I evaluate whether memory improves intent understanding, task completion, and cross-turn consistency without leaking irrelevant context. The question is not “did the agent remember?” It is “did the right memory alter the right decision, and can we inspect why?”',
       },
     ],
   },
   {
     slug: 'supchain-bench-notes',
-    title: 'Notes On Supply-Chain Benchmarks',
+    title: 'Notes on supply-chain benchmarks',
     date: '2026-01-20',
     category: 'Research',
-    excerpt: 'Why real-world supply-chain tasks expose gaps in generic LLM evaluation.',
-    readingTime: '4 min read',
+    excerpt: 'What 530 annotated samples across logistics, fulfillment, and finance reveal about generic evaluation.',
+    readingTime: '5 min read',
     tags: ['Supply chain', 'Benchmarks', 'Tool calling'],
+    related: [
+      { label: 'SupChain-Bench · ACL Findings', href: 'https://aclanthology.org/2026.findings-acl.371/' },
+    ],
     intro:
-      'Supply-chain work is a good stress test for LLM systems because the tasks are operational, multi-step, and full of constraints. A plausible answer is not enough.',
+      'We built SupChain-Bench because a plausible answer is cheap in a domain where the next step may update inventory, release a shipment, or affect a financial workflow. Its 530 annotated samples force models to combine domain knowledge with constrained, multi-step tool use.',
     sections: [
       {
-        title: 'Domain context matters',
-        body: 'Logistics collaboration, warehouse fulfillment, finance, and customs workflows each require different assumptions. A benchmark that collapses them into generic QA misses the hard parts.',
+        title: 'One domain contains several operating worlds',
+        body: 'Logistics collaboration, warehouse fulfillment, and finance or customs workflows use different assumptions, tools, and failure costs. Treating them as generic “supply-chain QA” erases the constraints that make the tasks operationally meaningful.',
       },
       {
-        title: 'Tool calling is not a sideshow',
-        body: 'Many supply-chain tasks require checking state, calling APIs, comparing constraints, and updating decisions. Evaluating only natural-language answers underestimates the system problem.',
+        title: 'Data construction needs disagreement',
+        body: 'We used a heterogeneous multi-model generation process and expert review rather than trusting one model to generate both the question and its authority. Model disagreement was useful: it surfaced ambiguous assumptions and weak tool sequences before they entered the benchmark.',
       },
       {
         title: 'Procedures are often implicit',
-        body: 'In real teams, procedures live across SOPs, tools, experts, and local habits. Benchmarks need to represent that messiness instead of assuming a clean textbook workflow.',
+        body: 'Real procedures live across SOPs, tools, experts, and local habits. SupChain-ReAct synthesizes an execution procedure through multiple reasoning paths and voting instead of assuming a hand-written SOP already exists for every case.',
+      },
+      {
+        title: 'Tool calling exposes the real gap',
+        body: 'Across more than 15 mainstream models, the difficult part was not producing fluent supply-chain language. It was choosing and sequencing capabilities while preserving constraints over a long horizon. That is the gap a real-world benchmark should make impossible to hide.',
       },
     ],
   },
   {
     slug: 'visual-quality-as-preference-signal',
-    title: 'Visual Quality As A Preference Signal',
+    title: 'Visual quality as a preference signal',
     date: '2025-12-12',
     category: 'Research',
-    excerpt: 'Controlled visual degradation can create preference pairs without manual labels.',
-    readingTime: '4 min read',
+    excerpt: 'How controlled resolution changes produce preference pairs without labels, reward models, or larger teachers.',
+    readingTime: '5 min read',
     tags: ['VLM', 'DPO', 'Preference learning'],
+    related: [
+      { label: 'VisualDeltas paper', href: 'https://arxiv.org/abs/2603.07272' },
+    ],
     intro:
-      'Visual reasoning can change when image quality changes. That sounds like a robustness problem, but it can also become a useful training signal.',
+      'VisualDeltas started from a simple observation: the same vision-language model can take a better reasoning path when the input retains more visual information. Instead of treating that difference only as a robustness failure, we use it as supervision.',
     sections: [
       {
-        title: 'The core observation',
-        body: 'If the same question induces better reasoning on a high-quality image than on a degraded version, the pair can act as a preference signal. The model is compared against its own quality-conditioned reasoning paths.',
+        title: 'Create a controlled delta',
+        body: 'We ask the same question over a high-quality image and a deliberately degraded version. When quality changes the reasoning path, the pair provides a structured positive and negative example tied to one controlled input difference rather than two unrelated model outputs.',
       },
       {
-        title: 'Why it is useful',
-        body: 'This avoids manual preference labels, external reward models, and larger teacher models. The supervision comes from a controlled transformation of the input.',
+        title: 'Let the model supervise itself',
+        body: 'The method does not require manual preference labels, an external reward model, or a larger teacher. DPO learns from the model’s own quality-conditioned reasoning paths, which keeps the supervision source cheap and inspectable.',
       },
       {
-        title: 'Where it helps',
-        body: 'The approach is especially interesting for chart, table, and visual question-answering tasks where resolution affects OCR, object grounding, and multi-step reasoning.',
+        title: 'Generalization is the useful result',
+        body: 'Across HiTab, WikiTQ, VQA, GQA, and MathVision settings, the strongest improvements reached +8.2%. More important to me, the preference signal generalized across datasets better than reinforcement fine-tuning, suggesting the model learned a broader visual reasoning preference instead of memorizing one benchmark.',
       },
     ],
   },

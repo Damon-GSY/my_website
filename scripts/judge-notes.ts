@@ -23,8 +23,14 @@ function banPattern(source: string, pattern: RegExp, message: string) {
 const notesBlock = content.slice(content.indexOf('export const notes'), content.indexOf('export const experience'))
 const noteCount = notesBlock.match(/\n\s+slug:/g)?.length ?? 0
 if (noteCount !== 7) failures.push(`Expected 7 field notes from main, found ${noteCount}.`)
+const sectionCount = notesBlock.match(/\n\s+body:/g)?.length ?? 0
+if (sectionCount < 25) failures.push(`Field notes are still compressed into a repeated three-section template (${sectionCount} sections).`)
+const relatedCount = notesBlock.match(/\n\s+related:/g)?.length ?? 0
+if (relatedCount !== noteCount) failures.push(`Only ${relatedCount}/${noteCount} field notes connect claims to related evidence.`)
 
 requirePattern(notesBlock, /intro:[\s\S]*sections:[\s\S]*title:[\s\S]*body:/, 'Notes are not stored as structured, readable content.')
+requirePattern(notesBlock, /roughly 250 papers[\s\S]*12 supply-chain scenarios[\s\S]*(?:more than|passed) 100 tools/, 'Agent notes omit Damon’s verified research and production evidence.')
+requirePattern(notesBlock, /M365 Copilot[\s\S]*530 annotated samples[\s\S]*15 mainstream models[\s\S]*\+8\.2%/, 'Research notes omit the concrete evidence that makes them personal and credible.')
 banPattern(
   article,
   /<article[^>]*dangerouslySetInnerHTML|<section[^>]*dangerouslySetInnerHTML|<p[^>]*dangerouslySetInnerHTML/,
@@ -39,6 +45,7 @@ requirePattern(homepage, /notes\.slice\(0, 4\)[\s\S]*Browse all/, 'Homepage note
 requirePattern(index, /notes\.map[\s\S]*\/notes\/\$\{note\.slug\}/, 'The full notes index is incomplete.')
 requirePattern(article, /generateStaticParams[\s\S]*generateMetadata[\s\S]*notFound\(\)/, 'Article routes lack static generation, metadata, or 404 handling.')
 requirePattern(article, /note\.intro[\s\S]*note\.sections\.map[\s\S]*nextNote/, 'Article pages lack body structure or reading continuity.')
+requirePattern(article, /note\.related\.map[\s\S]*reference\.href\.startsWith\('http'\)/, 'Article pages do not connect writing back to cases or primary research.')
 requirePattern(header, /id: 'notes'[^\n]*href: '#notes'[^\n]*routePrefix: '\/notes'[\s\S]*routeItem[\s\S]*setActiveSection\(routeItem\.id\)/, 'Global navigation does not adapt to Notes routes.')
 requirePattern(sitemap, /notes\.map[\s\S]*note\.slug/, 'Article routes are absent from the sitemap.')
 requirePattern(styles, /@media \(max-width: 640px\)/, 'Notes have no small-screen reading contract.')

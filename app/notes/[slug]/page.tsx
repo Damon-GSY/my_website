@@ -87,6 +87,22 @@ export default async function NotePage({ params }: NotePageProps) {
               <span>Filed under</span>
               <div>{note.tags.map((tag) => <small key={tag}>{tag}</small>)}</div>
               <p>{profile.name}<br />{profile.role}</p>
+              <div className={styles.related}>
+                <span>Related evidence</span>
+                {note.related.map((reference) => {
+                  const external = reference.href.startsWith('http')
+                  return (
+                    <a
+                      key={reference.href}
+                      href={reference.href}
+                      target={external ? '_blank' : undefined}
+                      rel={external ? 'noreferrer' : undefined}
+                    >
+                      {reference.label}<i aria-hidden="true">{external ? '↗' : '→'}</i>
+                    </a>
+                  )
+                })}
+              </div>
             </aside>
 
             <div className={styles.prose}>
