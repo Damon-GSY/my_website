@@ -220,7 +220,7 @@ a {
 
 .hero {
   position: relative;
-  height: 245svh;
+  height: 300svh;
   background: var(--bg);
 }
 
@@ -1431,7 +1431,7 @@ a {
   }
 
   .hero {
-    height: 210svh;
+    height: 275svh;
   }
 
   .hero__viewport {

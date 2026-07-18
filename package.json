@@ -17,6 +17,7 @@
     "judge:notes": "node --experimental-strip-types scripts/judge-notes.ts",
     "judge:navigation": "node --experimental-strip-types scripts/judge-navigation.ts",
     "judge:mobile": "node --experimental-strip-types scripts/judge-mobile.ts",
+    "judge:motion": "node --experimental-strip-types scripts/judge-motion.ts",
     "judge:metadata": "node --experimental-strip-types scripts/judge-metadata.ts",
     "judge:portfolio": "node --experimental-strip-types scripts/judge-portfolio.ts",
     "judge:depth": "node --experimental-strip-types scripts/judge-depth.ts",
