@@ -38,6 +38,7 @@
   }
 
   .hero__lower > p,
+  .hero__journey p,
   .case-study__description p,
   .case-study__details li,
   .research-intro > p:not(.section-eyebrow),
@@ -45,6 +46,12 @@
   .experience-list div p,
   .experience-list li {
     font-size: 0.74rem;
+  }
+
+  .hero__foot small,
+  .hero__foot strong {
+    font-size: 0.68rem;
+    line-height: 1.45;
   }
 
   .site-mobile-menu__foot a,

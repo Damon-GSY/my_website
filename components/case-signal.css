@@ -120,7 +120,7 @@
 
 .case-signal__label {
   fill: rgba(240, 238, 233, 0.38);
-  font-family: var(--font-body), monospace;
+  font-family: var(--font-sans);
   font-size: 10px;
   letter-spacing: 0.06em;
   text-transform: uppercase;

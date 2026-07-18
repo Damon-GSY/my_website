@@ -357,6 +357,20 @@
 }
 
 @media (max-width: 640px) {
+  .indexHeroGrid > p:first-child,
+  .noteIndex article > a > span,
+  .noteIndex time,
+  .noteIndex small,
+  .back,
+  .articleMeta,
+  .articleGrid aside > span,
+  .articleGrid aside small,
+  .articleGrid aside p,
+  .prose section > span,
+  .nextNote span {
+    font-size: 0.68rem;
+  }
+
   .indexHero,
   .articleHero {
     padding-top: 7rem;

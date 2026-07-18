@@ -7,6 +7,8 @@ const css = readFileSync(resolve(root, 'app/globals.css'), 'utf8')
 const mobilePath = resolve(root, 'app/mobile-excellence.css')
 let mobile = ''
 try { mobile = readFileSync(mobilePath, 'utf8') } catch {}
+const caseCss = readFileSync(resolve(root, 'app/work/[slug]/case-study.module.css'), 'utf8')
+const notesCss = readFileSync(resolve(root, 'app/notes/notes.module.css'), 'utf8')
 const scene = readFileSync(resolve(root, 'components/optimization-landscape-scene.tsx'), 'utf8')
 const findings: string[] = []
 
@@ -20,6 +22,9 @@ requirePattern(css, /\.site-mobile-menu nav a\s*\{[^}]*padding:\s*1rem 0/s, 'Pri
 requirePattern(mobile, /\.site-menu-toggle\s*\{[^}]*width:\s*2\.75rem[^}]*height:\s*2\.75rem/s, 'The menu button is smaller than 44px.')
 requirePattern(mobile, /touch-action:\s*manipulation/, 'Touch interactions do not opt into low-latency manipulation behavior.')
 requirePattern(mobile, /\.section-eyebrow[\s\S]*font-size:\s*0\.68rem/, 'Critical mobile metadata still inherits sub-11px text.')
+requirePattern(mobile, /\.hero__foot small,[\s\S]*\.hero__foot strong[\s\S]*font-size:\s*0\.68rem/, 'The hero identity proof overrides the mobile readability floor.')
+requirePattern(caseCss, /@media \(max-width: 720px\)[\s\S]*\.heroLower dt,[\s\S]*\.next span[\s\S]*font-size:\s*0\.68rem/, 'Case-study metadata drops below the mobile readability floor.')
+requirePattern(notesCss, /@media \(max-width: 640px\)[\s\S]*\.articleMeta,[\s\S]*\.nextNote span[\s\S]*font-size:\s*0\.68rem/, 'Field-note metadata drops below the mobile readability floor.')
 requirePattern(mobile, /\.footer-bottom a[\s\S]*min-height:\s*2\.75rem/, 'Footer links do not provide 44px touch targets.')
 requirePattern(scene, /compactViewport \? 1\.1 : 1\.35/, 'Mobile WebGL renders above the capped pixel ratio.')
 requirePattern(scene, /!compactViewport[\s\S]*<OptimizationPostEffects/, 'Mobile clients still load desktop-only postprocessing.')

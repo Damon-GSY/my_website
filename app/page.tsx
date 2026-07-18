@@ -9,6 +9,22 @@ import WorkSection from '@/components/work-section'
 export default function Home() {
   return (
     <>
+      <link
+        rel="preload"
+        as="image"
+        href="/assets/optimization-landscape-1280.webp"
+        media="(max-width: 720px)"
+        fetchPriority="high"
+      />
+      <link
+        rel="preload"
+        as="image"
+        href="/assets/optimization-landscape-1280.webp"
+        imageSrcSet="/assets/optimization-landscape-1280.webp 1280w, /assets/optimization-landscape-1920.webp 1920w"
+        imageSizes="100vw"
+        media="(min-width: 721px)"
+        fetchPriority="high"
+      />
       <a className="skip-link" href="#work">
         Skip to selected work
       </a>

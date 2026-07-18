@@ -1437,6 +1437,12 @@ a {
     filter: saturate(0.88) brightness(0.86);
   }
 
+  .hero__scene-fallback {
+    background:
+      linear-gradient(90deg, rgba(7, 9, 11, 0.76), transparent 62%),
+      url('/assets/optimization-landscape-1280.webp') center / cover;
+  }
+
   .hero__wash {
     background:
       linear-gradient(180deg, rgba(7, 9, 14, 0.5), rgba(7, 9, 14, 0.28) 42%, rgba(7, 9, 14, 0.88) 72%, var(--bg)),

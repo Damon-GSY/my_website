@@ -3,6 +3,7 @@ import { resolve } from 'node:path'
 
 const root = process.cwd()
 const scene = readFileSync(resolve(root, 'components/optimization-landscape-scene.tsx'), 'utf8')
+const page = readFileSync(resolve(root, 'app/page.tsx'), 'utf8')
 const effectsPath = resolve(root, 'components/optimization-post-effects.tsx')
 const findings: string[] = []
 
@@ -18,6 +19,9 @@ if (!/!compactViewport[\s\S]*!reducedMotion[\s\S]*<OptimizationPostEffects/.test
 if (!existsSync(effectsPath)) findings.push('The isolated postprocessing component is missing.')
 if (!/frameloop=\{active \? 'always' : 'never'\}/.test(scene)) findings.push('Offscreen WebGL rendering is not paused.')
 if (!/dpr=\{\[1, compactViewport \? 1\.1 : 1\.35\]\}/.test(scene)) findings.push('Canvas device-pixel ratio is not capped.')
+if (!/media="\(max-width: 720px\)"[\s\S]*imageSrcSet[\s\S]*media="\(min-width: 721px\)"[\s\S]*fetchPriority="high"/.test(page)) {
+  findings.push('The above-the-fold landscape has no responsive preload contract.')
+}
 
 const manifestPath = resolve(root, '.next/react-loadable-manifest.json')
 if (existsSync(manifestPath)) {
@@ -40,6 +44,21 @@ if (existsSync(manifestPath)) {
         findings.push(`The homepage eagerly loads immersive chunks: ${eagerlyLoaded.join(', ')}.`)
       }
     }
+  }
+}
+
+const builtHomePath = resolve(root, '.next/server/app/index.html')
+const builtCasePath = resolve(root, '.next/server/app/work/risk-router.html')
+if (existsSync(builtHomePath)) {
+  const builtHome = readFileSync(builtHomePath, 'utf8')
+  if (!/rel="preload"[^>]+optimization-landscape-(?:1280|1920)\.webp/.test(builtHome)) {
+    findings.push('Built homepage HTML does not emit the landscape image preload.')
+  }
+}
+if (existsSync(builtCasePath)) {
+  const builtCase = readFileSync(builtCasePath, 'utf8')
+  if (/rel="preload"[^>]+optimization-landscape-(?:1280|1920)\.webp/.test(builtCase)) {
+    findings.push('Non-home routes preload the homepage landscape unnecessarily.')
   }
 }
 
