@@ -2,7 +2,7 @@
   padding-top: 1rem;
   border-top: 1px solid var(--line);
   color: var(--muted) !important;
-  font-size: 0.58rem !important;
+  font-size: 0.62rem !important;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
@@ -39,7 +39,7 @@
 .authorship {
   margin: 1rem 0 0;
   color: var(--muted);
-  font-size: 0.58rem;
+  font-size: 0.62rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -71,7 +71,7 @@
 
 .citation span {
   color: var(--muted);
-  font-size: 0.56rem;
+  font-size: 0.62rem;
   line-height: 1.45;
   letter-spacing: 0.04em;
   text-align: right;

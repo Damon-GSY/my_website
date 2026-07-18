@@ -165,7 +165,7 @@
 }
 
 .chapterIndex small {
-  font-size: 0.58rem;
+  font-size: 0.62rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -265,13 +265,13 @@
   color: var(--accent);
   background: var(--bg);
   content: "→";
-  font-size: 0.58rem;
+  font-size: 0.62rem;
   transform: translateY(-50%);
 }
 
 .trace span {
   color: var(--accent);
-  font-size: 0.56rem;
+  font-size: 0.62rem;
 }
 
 .trace strong {

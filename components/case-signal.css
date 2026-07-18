@@ -33,7 +33,7 @@
 .case-signal__meta small,
 .case-signal__legend b {
   color: var(--accent);
-  font-size: 0.56rem;
+  font-size: 0.62rem;
   font-style: normal;
   font-weight: 400;
   letter-spacing: 0.09em;
@@ -170,7 +170,7 @@
   padding-top: 0.55rem;
   border-top: 1px solid var(--line);
   color: var(--muted);
-  font-size: 0.56rem;
+  font-size: 0.62rem;
   font-style: normal;
   line-height: 1.35;
   text-transform: lowercase;
