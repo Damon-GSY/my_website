@@ -1,0 +1,391 @@
+.indexPage,
+.articlePage {
+  min-height: 100dvh;
+  background: var(--bg);
+}
+
+.indexHero,
+.articleHero {
+  padding: 9rem 0 clamp(6rem, 11vw, 11rem);
+  border-bottom: 1px solid var(--line-strong);
+  background:
+    radial-gradient(circle at 76% 18%, rgba(217, 120, 88, 0.08), transparent 24%),
+    #0b0c0f;
+}
+
+.indexHeroGrid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.25rem;
+  align-items: end;
+}
+
+.indexHeroGrid > p:first-child {
+  grid-column: 1 / 4;
+  align-self: start;
+  margin: 0;
+  color: var(--accent);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.indexHeroGrid h1 {
+  grid-column: 3 / 10;
+  max-width: 10ch;
+  margin: clamp(5rem, 10vw, 9rem) 0 0;
+  font-size: clamp(4.5rem, 9vw, 10rem);
+  font-weight: 200;
+  line-height: 0.82;
+  letter-spacing: -0.08em;
+  text-wrap: balance;
+  animation: titleEnter 1000ms var(--ease) both;
+}
+
+.indexHeroGrid > p:last-child {
+  grid-column: 10 / 13;
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 0.76rem;
+  line-height: 1.8;
+}
+
+.noteIndex {
+  padding: clamp(5rem, 9vw, 9rem) 0 clamp(9rem, 14vw, 15rem);
+}
+
+.noteIndex article {
+  border-top: 1px solid var(--line-strong);
+}
+
+.noteIndex article:last-child {
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.noteIndex article a {
+  display: grid;
+  grid-template-columns: 3rem 7rem minmax(0, 1fr) auto;
+  gap: 2rem;
+  align-items: start;
+  padding: clamp(2rem, 4vw, 4rem) 0;
+  transition: color 260ms var(--ease), padding 260ms var(--ease);
+}
+
+.noteIndex article a:hover {
+  padding-inline: 1rem;
+  color: var(--accent);
+}
+
+.noteIndex article > a > span,
+.noteIndex time,
+.noteIndex small {
+  color: var(--muted);
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.noteIndex article > a > span {
+  color: var(--accent);
+}
+
+.noteIndex h2 {
+  max-width: 18ch;
+  margin: 1rem 0 0;
+  font-size: clamp(2.1rem, 4.3vw, 4.8rem);
+  font-weight: 200;
+  line-height: 0.92;
+  letter-spacing: -0.06em;
+}
+
+.noteIndex p {
+  max-width: 38rem;
+  margin: 1.5rem 0 0;
+  color: var(--text-soft);
+  font-size: 0.7rem;
+  line-height: 1.65;
+}
+
+.noteIndex i {
+  color: var(--accent);
+  font-style: normal;
+  transition: transform 260ms var(--ease);
+}
+
+.noteIndex a:hover i {
+  transform: translate(0.25rem, -0.25rem);
+}
+
+.articleHeroGrid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.back {
+  grid-column: 1 / 4;
+  color: var(--muted);
+  font-size: 0.6rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.articleMeta {
+  grid-column: 7 / 13;
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 0.58rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.articleMeta span:first-child {
+  color: var(--accent);
+}
+
+.articleHero h1 {
+  grid-column: 1 / 12;
+  max-width: 12ch;
+  margin: clamp(7rem, 13vw, 12rem) 0 0;
+  font-size: clamp(4.3rem, 10vw, 11rem);
+  font-weight: 200;
+  line-height: 0.82;
+  letter-spacing: -0.085em;
+  text-wrap: balance;
+  animation: titleEnter 1050ms var(--ease) both;
+}
+
+.articleHeroGrid > p {
+  grid-column: 8 / 13;
+  margin: clamp(4rem, 7vw, 7rem) 0 0;
+  color: var(--text-soft);
+  font-size: clamp(0.9rem, 1.3vw, 1.25rem);
+  line-height: 1.7;
+}
+
+.articleBody {
+  padding: clamp(7rem, 12vw, 12rem) 0;
+}
+
+.articleGrid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.articleGrid aside {
+  grid-column: 1 / 4;
+  position: sticky;
+  top: 7rem;
+  align-self: start;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line-strong);
+}
+
+.articleGrid aside > span,
+.articleGrid aside small {
+  color: var(--muted);
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.articleGrid aside div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 1rem;
+  margin-top: 1.5rem;
+}
+
+.articleGrid aside small::before {
+  color: var(--accent);
+  content: "/ ";
+}
+
+.articleGrid aside p {
+  margin: 5rem 0 0;
+  color: var(--text-soft);
+  font-size: 0.65rem;
+  line-height: 1.65;
+}
+
+.prose {
+  grid-column: 5 / 12;
+}
+
+.intro {
+  margin: 0 0 clamp(7rem, 11vw, 11rem);
+  font-size: clamp(1.7rem, 3.2vw, 3.2rem);
+  font-weight: 300;
+  line-height: 1.25;
+  letter-spacing: -0.04em;
+}
+
+.prose section {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  gap: 1.5rem;
+  padding: clamp(3rem, 6vw, 6rem) 0;
+  border-top: 1px solid var(--line-strong);
+}
+
+.prose section > span {
+  color: var(--accent);
+  font-size: 0.6rem;
+}
+
+.prose h2,
+.prose section > p {
+  grid-column: 2;
+}
+
+.prose h2 {
+  max-width: 14ch;
+  margin: 0;
+  font-size: clamp(2.5rem, 4.7vw, 5.2rem);
+  font-weight: 200;
+  line-height: 0.92;
+  letter-spacing: -0.06em;
+}
+
+.prose section > p {
+  max-width: 46rem;
+  margin: 2.5rem 0 0;
+  color: var(--text-soft);
+  font-size: clamp(1rem, 1.35vw, 1.3rem);
+  line-height: 1.75;
+}
+
+.nextNote {
+  padding: clamp(7rem, 12vw, 12rem) 0;
+  border-top: 1px solid var(--line-strong);
+  background: var(--surface);
+}
+
+.nextNote span {
+  color: var(--muted);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.nextNote a {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  align-items: baseline;
+  max-width: 13ch;
+  margin-top: 2.5rem;
+  font-size: clamp(3.2rem, 7.5vw, 8.5rem);
+  font-weight: 200;
+  line-height: 0.88;
+  letter-spacing: -0.07em;
+  transition: color 260ms var(--ease);
+}
+
+.nextNote a:hover {
+  color: var(--accent);
+}
+
+.nextNote i {
+  color: var(--accent);
+  font-size: 0.35em;
+  font-style: normal;
+}
+
+@keyframes titleEnter {
+  from {
+    opacity: 0;
+    transform: translateY(3.5rem);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .noteIndex article,
+  .prose section {
+    animation: contentEnter both var(--ease);
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+}
+
+@keyframes contentEnter {
+  from {
+    opacity: 0.3;
+    transform: translateY(2.5rem);
+  }
+}
+
+@media (max-width: 800px) {
+  .indexHeroGrid,
+  .articleHeroGrid,
+  .articleGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .indexHeroGrid > p:first-child,
+  .indexHeroGrid h1,
+  .indexHeroGrid > p:last-child,
+  .back,
+  .articleMeta,
+  .articleHero h1,
+  .articleHeroGrid > p,
+  .articleGrid aside,
+  .prose {
+    grid-column: 1;
+  }
+
+  .indexHeroGrid h1,
+  .articleHero h1 {
+    margin-top: 4rem;
+  }
+
+  .articleMeta {
+    margin-top: 2rem;
+  }
+
+  .articleHeroGrid > p {
+    max-width: 34rem;
+  }
+
+  .articleGrid aside {
+    position: relative;
+    top: auto;
+    margin-bottom: 4rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .indexHero,
+  .articleHero {
+    padding-top: 7rem;
+  }
+
+  .indexHeroGrid h1,
+  .articleHero h1 {
+    font-size: clamp(3.8rem, 18vw, 6rem);
+  }
+
+  .noteIndex article a {
+    grid-template-columns: 2rem minmax(0, 1fr) auto;
+    gap: 1rem;
+  }
+
+  .noteIndex time {
+    display: none;
+  }
+
+  .articleMeta {
+    gap: 1rem;
+  }
+
+  .prose section {
+    grid-template-columns: 1fr;
+  }
+
+  .prose h2,
+  .prose section > p {
+    grid-column: 1;
+  }
+}

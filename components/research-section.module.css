@@ -1,0 +1,130 @@
+.identity {
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted) !important;
+  font-size: 0.58rem !important;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.identity strong {
+  color: var(--text-soft);
+  font-weight: 400;
+}
+
+.list article::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -1.25rem;
+  width: 2px;
+  background: var(--accent);
+  content: "";
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 420ms var(--ease);
+}
+
+.list article:hover::before,
+.list article:focus-within::before {
+  transform: scaleY(1);
+}
+
+.link {
+  display: block;
+  min-height: 25rem;
+  padding: clamp(2.5rem, 5vw, 5rem) 0;
+}
+
+.authorship {
+  margin: 1rem 0 0;
+  color: var(--muted);
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.description {
+  max-width: 42rem;
+  margin: 3rem 0 0;
+  color: var(--text-soft);
+  font-size: 0.76rem;
+  line-height: 1.8;
+}
+
+.citation {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 1.5rem;
+  align-items: end;
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.citation strong {
+  color: var(--accent);
+  font-size: clamp(1.35rem, 2.2vw, 2.4rem);
+  font-weight: 300;
+  font-variant-numeric: tabular-nums;
+}
+
+.citation span {
+  color: var(--muted);
+  font-size: 0.56rem;
+  line-height: 1.45;
+  letter-spacing: 0.04em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.citation i {
+  color: var(--accent);
+  font-size: 1.2rem;
+  font-style: normal;
+  transition: transform 260ms var(--ease);
+}
+
+.list article:hover .citation i,
+.list article:focus-within .citation i {
+  transform: translate(0.22rem, -0.22rem);
+}
+
+@media (max-width: 720px) {
+  .identity {
+    font-size: 0.68rem !important;
+  }
+
+  .authorship,
+  .citation span {
+    font-size: 0.68rem;
+  }
+
+  .description {
+    font-size: 0.74rem;
+  }
+
+  .link {
+    min-height: 0;
+    padding: 3.5rem 0 4.5rem;
+  }
+
+  .list article::before {
+    left: -0.5rem;
+  }
+
+  .citation {
+    grid-template-columns: 1fr auto;
+  }
+
+  .citation span {
+    grid-column: 1;
+    grid-row: 2;
+    text-align: left;
+  }
+
+  .citation i {
+    grid-column: 2;
+    grid-row: 1 / 3;
+  }
+}

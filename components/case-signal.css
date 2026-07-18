@@ -1,0 +1,183 @@
+.case-signal {
+  position: relative;
+  min-height: 27rem;
+  height: 100%;
+  overflow: hidden;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    radial-gradient(circle at var(--spot-x, 52%) var(--spot-y, 46%), rgba(217, 120, 88, 0.2), transparent 36%),
+    var(--surface);
+  background-size: 4rem 4rem, 4rem 4rem, auto, auto;
+}
+
+.case-signal::before {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(112deg, transparent 18%, rgba(255, 255, 255, 0.018) 50%, transparent 78%);
+  content: "";
+  pointer-events: none;
+}
+
+.case-signal__meta {
+  position: absolute;
+  z-index: 2;
+  top: 1.25rem;
+  left: 1.25rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.case-signal__meta small,
+.case-signal__legend b {
+  color: var(--accent);
+  font-size: 0.56rem;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.case-signal__meta strong {
+  font-size: 0.72rem;
+  font-weight: 300;
+}
+
+.case-signal__plot {
+  position: absolute;
+  top: 4rem;
+  right: 1rem;
+  bottom: 5.4rem;
+  left: 1rem;
+  width: calc(100% - 2rem);
+  height: calc(100% - 9.4rem);
+  overflow: visible;
+}
+
+.case-signal__axis,
+.case-signal__network path {
+  fill: none;
+  stroke: rgba(240, 238, 233, 0.1);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.case-signal__trace {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.case-signal__trace--muted {
+  stroke: rgba(240, 238, 233, 0.22);
+}
+
+.case-signal__trace--faint {
+  stroke: rgba(240, 238, 233, 0.1);
+}
+
+.case-signal__flow {
+  stroke: var(--accent);
+  stroke-dasharray: 0.08 0.07;
+  animation: signalFlow 7s linear infinite;
+}
+
+.case-signal__node {
+  fill: #101215;
+  stroke: rgba(240, 238, 233, 0.34);
+  stroke-width: 1;
+  transition: fill 320ms var(--ease), stroke 320ms var(--ease);
+  vector-effect: non-scaling-stroke;
+}
+
+.case-signal__node--accent {
+  fill: var(--accent);
+  stroke: rgba(255, 227, 210, 0.76);
+}
+
+.case-signal__zone,
+.case-signal__hub {
+  fill: rgba(255, 255, 255, 0.012);
+  stroke: rgba(240, 238, 233, 0.14);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.case-signal__zone--accent,
+.case-signal__hub {
+  fill: rgba(217, 120, 88, 0.055);
+  stroke: rgba(217, 120, 88, 0.4);
+}
+
+.case-signal__hub {
+  transform: rotate(45deg);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.case-signal__label {
+  fill: rgba(240, 238, 233, 0.38);
+  font-family: var(--font-body), monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.case-signal__label--accent {
+  fill: var(--accent);
+}
+
+.case-signal__area,
+.case-signal__reward-area {
+  fill: rgba(217, 120, 88, 0.06);
+  stroke: none;
+}
+
+.case-signal__reward-area {
+  fill: rgba(217, 120, 88, 0.04);
+}
+
+.case-signal__marker {
+  fill: none;
+  stroke: rgba(217, 120, 88, 0.28);
+  stroke-dasharray: 3 5;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.case-signal:hover .case-signal__node--accent {
+  fill: #f09a79;
+  stroke: rgba(255, 239, 230, 0.9);
+}
+
+.case-signal__legend {
+  position: absolute;
+  z-index: 2;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.case-signal__legend em {
+  display: grid;
+  gap: 0.3rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.56rem;
+  font-style: normal;
+  line-height: 1.35;
+  text-transform: lowercase;
+}
+
+@keyframes signalFlow {
+  to {
+    stroke-dashoffset: -1;
+  }
+}

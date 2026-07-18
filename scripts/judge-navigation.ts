@@ -1,0 +1,35 @@
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
+
+const root = process.cwd()
+const header = readFileSync(resolve(root, 'components/site-header.tsx'), 'utf8')
+const css = readFileSync(resolve(root, 'app/globals.css'), 'utf8')
+
+const failures: string[] = []
+
+function requirePattern(source: string, pattern: RegExp, message: string) {
+  if (!pattern.test(source)) failures.push(message)
+}
+
+requirePattern(header, /aria-expanded=\{menuOpen\}[\s\S]*aria-controls="mobile-navigation"/, 'Mobile menu trigger does not expose state or ownership.')
+requirePattern(header, /role="dialog"[\s\S]*aria-modal="true"[\s\S]*aria-hidden=\{!menuOpen\}/, 'Mobile menu overlay has no accessible dialog contract.')
+requirePattern(header, /event\.key === 'Escape'[\s\S]*setMenuOpen\(false\)/, 'Mobile menu cannot be closed with Escape.')
+requirePattern(header, /document\.body\.style\.overflow = 'hidden'/, 'Open mobile navigation does not lock background scrolling.')
+requirePattern(header, /tabIndex=\{menuOpen \? 0 : -1\}/, 'Closed mobile navigation leaves hidden links in the tab order.')
+requirePattern(header, /event\.key === 'Tab'[\s\S]*focusables[\s\S]*\.focus\(\)/, 'Modal navigation does not trap keyboard focus.')
+requirePattern(header, /const toggle = toggleRef\.current[\s\S]*toggle\?\.focus\(\)/, 'Closing the modal navigation does not restore trigger focus.')
+requirePattern(header, /const navItems = \[[\s\S]*id: 'work'[\s\S]*id: 'about'/, 'Navigation sections have no single typed source of truth.')
+const navMapCount = header.match(/navItems\s*\.map/g)?.length ?? 0
+if (navMapCount < 3) failures.push('Scroll observation, desktop links, and mobile links do not derive from the same navigation model.')
+
+for (const section of ['work', 'research', 'notes', 'about']) {
+  requirePattern(header, new RegExp(`#${section}`), `Mobile or desktop navigation is missing ${section}.`)
+}
+
+requirePattern(css, /@media \(max-width: 720px\)[\s\S]*\.site-menu-toggle[\s\S]*\.site-mobile-menu\.is-open/s, 'Mobile navigation has no small-screen visual state.')
+requirePattern(css, /\.site-menu-toggle\.is-open span:first-child[\s\S]*rotate\(45deg\)/, 'Menu trigger does not morph into a close control.')
+requirePattern(css, /env\(safe-area-inset-top\)[\s\S]*env\(safe-area-inset-bottom\)/, 'Mobile navigation ignores device safe areas.')
+
+console.log(`Navigation judge: ${failures.length === 0 ? 'PASS' : 'FAIL'}`)
+for (const failure of failures) console.log(`- ${failure}`)
+if (failures.length > 0) process.exitCode = 1
