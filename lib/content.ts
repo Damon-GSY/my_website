@@ -53,11 +53,18 @@ export const heroChapters = [
     evidence: '12 scenarios · 100+ tools · <1s handoff',
   },
   {
-    index: '02 / Researcher + creator',
-    title: 'I turn production traces into evidence people can use.',
+    index: '02 / Researcher',
+    title: 'I study the failures that final-answer scores erase.',
     description:
-      'My first-author research maps multi-turn agent evaluation and real supply-chain work; my public notes make the methods legible beyond the paper.',
-    evidence: '~250 papers mapped · 530 real-world samples · YouTube / Bilibili',
+      'Two first-author projects connect multi-turn agent evaluation with 530 real-world samples, annotated for supply-chain decisions and long-horizon tool traces.',
+    evidence: '2× first author · ~250 papers mapped · ACL 2026 Findings',
+  },
+  {
+    index: '03 / Creator',
+    title: 'I publish the operating lessons, not just the outcomes.',
+    description:
+      'Field notes and videos turn agent evaluation, tool interfaces, memory, and post-training into methods other builders can inspect and reuse.',
+    evidence: '7 field notes · YouTube / Bilibili · practical AI systems',
   },
 ] as const
 

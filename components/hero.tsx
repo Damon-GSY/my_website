@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic'
 import {
   motion,
+  type MotionValue,
   useInView,
   useMotionValueEvent,
   useReducedMotion,
@@ -16,6 +17,46 @@ const OptimizationLandscapeScene = dynamic(() => import('@/components/optimizati
   ssr: false,
   loading: () => <div className="hero__scene-fallback" aria-hidden="true" />,
 })
+
+type ChapterMotion = {
+  range: [number, number, number, number]
+  className: string
+}
+
+const chapterMotion: readonly ChapterMotion[] = [
+  { range: [0.18, 0.27, 0.43, 0.52], className: 'hero__journey--production' },
+  { range: [0.42, 0.51, 0.68, 0.77], className: 'hero__journey--research' },
+  { range: [0.67, 0.76, 0.94, 1], className: 'hero__journey--creator' },
+]
+
+type HeroChapterProps = {
+  chapter: (typeof heroChapters)[number]
+  className: string
+  range: [number, number, number, number]
+  scrollProgress: MotionValue<number>
+}
+
+function HeroChapter({ chapter, className, range, scrollProgress }: HeroChapterProps) {
+  const opacity = useTransform(scrollProgress, range, [0, 1, 1, 0])
+  const y = useTransform(scrollProgress, [range[0], range[3]], [26, -12])
+  const railScale = useTransform(scrollProgress, [range[0], range[2]], [0, 1])
+
+  return (
+    <motion.aside
+      aria-hidden="true"
+      className={`hero__journey ${className}`}
+      style={{ opacity, y }}
+    >
+      <span>{chapter.index}</span>
+      <strong>{chapter.title}</strong>
+      <p>{chapter.description}</p>
+      <div className="hero__journey-rail" aria-hidden="true">
+        <motion.i style={{ scaleX: railScale }} />
+      </div>
+      <small>{chapter.evidence}</small>
+    </motion.aside>
+  )
+}
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -31,12 +72,6 @@ export default function Hero() {
   const copyY = useTransform(scrollYProgress, [0, 0.36], [0, -72])
   const copyOpacity = useTransform(scrollYProgress, [0, 0.18, 0.36], [1, 1, 0])
   const sceneOpacity = useTransform(scrollYProgress, [0, 0.92, 1], [1, 1, 0.08])
-  const journeyOpacity = useTransform(scrollYProgress, [0.2, 0.32, 0.61, 0.7], [0, 1, 1, 0])
-  const coreOpacity = useTransform(scrollYProgress, [0.59, 0.72, 0.93, 1], [0, 1, 1, 0])
-  const journeyY = useTransform(scrollYProgress, [0.22, 0.7], [28, -12])
-  const coreY = useTransform(scrollYProgress, [0.62, 1], [26, -10])
-  const journeyRailScale = useTransform(scrollYProgress, [0.2, 0.61], [0, 1])
-  const coreRailScale = useTransform(scrollYProgress, [0.62, 0.94], [0, 1])
   const contentInteractive = Boolean(reduceMotion) || introInteractive
 
   useEffect(() => {
@@ -106,26 +141,15 @@ export default function Hero() {
         </motion.div>
 
         {!reduceMotion && (
-          <>
-            <motion.aside aria-hidden="true" className="hero__journey" style={{ opacity: journeyOpacity, y: journeyY }}>
-              <span>{heroChapters[0].index}</span>
-              <strong>{heroChapters[0].title}</strong>
-              <p>{heroChapters[0].description}</p>
-              <div className="hero__journey-rail" aria-hidden="true">
-                <motion.i style={{ scaleX: journeyRailScale }} />
-              </div>
-              <small>{heroChapters[0].evidence}</small>
-            </motion.aside>
-            <motion.aside aria-hidden="true" className="hero__journey hero__journey--core" style={{ opacity: coreOpacity, y: coreY }}>
-              <span>{heroChapters[1].index}</span>
-              <strong>{heroChapters[1].title}</strong>
-              <p>{heroChapters[1].description}</p>
-              <div className="hero__journey-rail" aria-hidden="true">
-                <motion.i style={{ scaleX: coreRailScale }} />
-              </div>
-              <small>{heroChapters[1].evidence}</small>
-            </motion.aside>
-          </>
+          heroChapters.map((chapter, index) => (
+            <HeroChapter
+              key={chapter.index}
+              chapter={chapter}
+              className={chapterMotion[index].className}
+              range={chapterMotion[index].range}
+              scrollProgress={scrollYProgress}
+            />
+          ))
         )}
       </div>
     </section>

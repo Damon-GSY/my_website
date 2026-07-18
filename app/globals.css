@@ -482,9 +482,13 @@ a {
   pointer-events: none;
 }
 
-.hero__journey--core {
+.hero__journey--research {
   left: var(--gutter);
   right: auto;
+}
+
+.hero__journey--creator {
+  bottom: clamp(5rem, 10vh, 7rem);
 }
 
 .hero__journey > span,
@@ -1521,9 +1525,13 @@ a {
     width: min(22rem, 86vw);
   }
 
-  .hero__journey--core {
+  .hero__journey--research {
     right: auto;
     left: var(--gutter);
+  }
+
+  .hero__journey--creator {
+    bottom: 3.25rem;
   }
 
   .work-section,

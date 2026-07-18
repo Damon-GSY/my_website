@@ -42,8 +42,8 @@ requirePattern(css, /@media \(max-width: 720px\)/, 'The mobile layout contract i
 // Creativity — a real spatial idea, not a decorative background.
 requirePattern(scene, /cameraRail\.getPointAt/, 'The hero does not move through a curved 3D camera rail.')
 requirePattern(scene, /function SpatialContours/, 'The optimization landscape has no real spatial contour field.')
-requirePattern(hero, /heroChapters\[0\][\s\S]*heroChapters\[1\]/, 'The 3D experience has no authored personal narrative stages.')
-requirePattern(content, /Production engineer[\s\S]*Researcher \+ creator/, 'The hero chapters showcase the visualization instead of Damon’s work and identity.')
+requirePattern(hero, /heroChapters\.map[\s\S]*<HeroChapter/, 'The 3D experience has no data-driven personal narrative stages.')
+requirePattern(content, /Production engineer[\s\S]*Researcher[\s\S]*Creator/, 'The hero chapters do not present Damon as an engineer, researcher, and creator.')
 
 // Content — every public research claim needs provenance and Damon’s role.
 for (const field of ['href', 'venue', 'year', 'authorship']) {

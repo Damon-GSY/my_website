@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs'
 import * as THREE from 'three'
 
 const scene = readFileSync('components/optimization-landscape-scene.tsx', 'utf8')
+const hero = readFileSync('components/hero.tsx', 'utf8')
 const styles = readFileSync('app/globals.css', 'utf8')
 const findings: string[] = []
 
@@ -45,6 +46,30 @@ for (let index = 1; index <= 200; index += 1) {
 
 if (maximumStep / minimumStep > 1.08) {
   findings.push('The camera rail changes speed abruptly between adjacent samples.')
+}
+
+const chapterRanges = [...hero.matchAll(/range: \[([\d.]+), ([\d.]+), ([\d.]+), ([\d.]+)\]/g)]
+  .map((match) => match.slice(1).map(Number) as [number, number, number, number])
+
+if (chapterRanges.length < 3) {
+  findings.push('The extended 3D journey has fewer than three personal story chapters.')
+} else {
+  const opacityAt = (range: [number, number, number, number], progress: number) => {
+    const [start, visible, hold, end] = range
+    if (progress <= start || progress >= end) return 0
+    if (progress < visible) return (progress - start) / (visible - start)
+    if (progress <= hold) return 1
+    return 1 - (progress - hold) / (end - hold)
+  }
+
+  for (let step = 27; step <= 97; step += 1) {
+    const progress = step / 100
+    const strongestChapter = Math.max(...chapterRanges.map((range) => opacityAt(range, progress)))
+    if (strongestChapter < 0.45) {
+      findings.push(`The personal scroll story has a low-information gap near ${(progress * 100).toFixed(0)}%.`)
+      break
+    }
+  }
 }
 
 if (findings.length) {

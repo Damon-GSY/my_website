@@ -37,7 +37,9 @@ function banPattern(source: string, pattern: RegExp, message: string) {
 }
 
 requirePattern(files.hero, /profile\.name[\s\S]*profile\.role[\s\S]*profile\.thesis/, 'Above-the-fold identity or point of view is incomplete.')
-requirePattern(files.hero, /heroChapters\[0\][\s\S]*heroChapters\[1\]/, 'The scroll story stops presenting Damon after the opening frame.')
+requirePattern(files.hero, /heroChapters\.map/, 'The scroll story does not derive its identity chapters from content.')
+const heroChapterCount = files.content.match(/index: '0\d \/[^']+'/g)?.length ?? 0
+if (heroChapterCount < 3) failures.push(`Expected three distinct personal identities in the scroll story, found ${heroChapterCount}.`)
 requirePattern(files.work, /work\.map[\s\S]*\/work\/\$\{project\.id\}/, 'Selected work does not lead to project evidence.')
 requirePattern(files.casePage, /project\.context[\s\S]*project\.principle[\s\S]*project\.details/, 'Case studies lack context and design rationale.')
 requirePattern(files.research, /paper\.description[\s\S]*paper\.topics[\s\S]*paper\.metric/, 'Research lacks method, dimensions, or evidence.')
