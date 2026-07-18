@@ -29,6 +29,8 @@ const relatedCount = notesBlock.match(/\n\s+related:/g)?.length ?? 0
 if (relatedCount !== noteCount) failures.push(`Only ${relatedCount}/${noteCount} field notes connect claims to related evidence.`)
 
 requirePattern(notesBlock, /intro:[\s\S]*sections:[\s\S]*title:[\s\S]*body:/, 'Notes are not stored as structured, readable content.')
+banPattern(notesBlock, /readingTime:/, 'Reading times are hard-coded and can drift from the article body.')
+requirePattern(content, /READING_WORDS_PER_MINUTE[\s\S]*export function getReadingTime[\s\S]*Math\.ceil\(words \/ READING_WORDS_PER_MINUTE\)/, 'Reading time is not derived from the current article body.')
 requirePattern(notesBlock, /roughly 250 papers[\s\S]*12 supply-chain scenarios[\s\S]*(?:more than|passed) 100 tools/, 'Agent notes omit Damon’s verified research and production evidence.')
 requirePattern(notesBlock, /M365 Copilot[\s\S]*530 annotated samples[\s\S]*15 mainstream models[\s\S]*\+8\.2%/, 'Research notes omit the concrete evidence that makes them personal and credible.')
 banPattern(
@@ -42,6 +44,7 @@ requirePattern(
   'Article schema is missing or is injected without escaping opening angle brackets.',
 )
 requirePattern(homepage, /notes\.slice\(0, 4\)[\s\S]*Browse all/, 'Homepage notes do not provide a focused preview and full index path.')
+requirePattern(homepage, /getReadingTime\(featured\)[\s\S]*getReadingTime\(note\)/, 'Homepage reading times bypass the shared content calculation.')
 requirePattern(index, /notes\.map[\s\S]*\/notes\/\$\{note\.slug\}/, 'The full notes index is incomplete.')
 requirePattern(article, /generateStaticParams[\s\S]*generateMetadata[\s\S]*notFound\(\)/, 'Article routes lack static generation, metadata, or 404 handling.')
 requirePattern(article, /note\.intro[\s\S]*note\.sections\.map[\s\S]*nextNote/, 'Article pages lack body structure or reading continuity.')

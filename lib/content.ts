@@ -236,7 +236,6 @@ export const notes = [
     date: '2026-04-10',
     category: 'Research',
     excerpt: 'What a survey of roughly 250 papers—and production traces—changed about how I score an agent.',
-    readingTime: '7 min read',
     tags: ['Agents', 'Evaluation', 'Benchmarks'],
     related: [
       { label: 'Multi-turn agent evaluation survey', href: 'https://arxiv.org/abs/2503.22458' },
@@ -268,7 +267,6 @@ export const notes = [
     date: '2026-03-28',
     category: 'Engineering',
     excerpt: 'Lessons from routing authority across 12 supply-chain scenarios and more than 100 tools.',
-    readingTime: '6 min read',
     tags: ['Agents', 'Engineering', 'Production'],
     related: [
       { label: 'Supply Chain Agent System', href: '/work/risk-router' },
@@ -301,7 +299,6 @@ export const notes = [
     date: '2026-03-15',
     category: 'Post-training',
     excerpt: 'Why I define the capability surface before choosing a continual pretraining, SFT, or RL recipe.',
-    readingTime: '6 min read',
     tags: ['Post-training', 'SFT', 'RL'],
     related: [
       { label: 'Supply-Chain Domain LLM', href: '/work/domain-model' },
@@ -334,7 +331,6 @@ export const notes = [
     date: '2026-02-24',
     category: 'Engineering',
     excerpt: 'What a dynamic registry of 100+ capabilities taught me about names, permissions, latency, and failure states.',
-    readingTime: '5 min read',
     tags: ['Tool use', 'Agents', 'UX'],
     related: [
       { label: 'Dynamic Tool Resolution', href: '/work/tool-resolver' },
@@ -362,7 +358,6 @@ export const notes = [
     date: '2026-02-08',
     category: 'Research',
     excerpt: 'The three-horizon model I used to separate local coherence, session state, and persistent preferences.',
-    readingTime: '6 min read',
     tags: ['Memory', 'RAG', 'Agents'],
     related: [
       { label: 'Multi-turn agent evaluation survey', href: 'https://arxiv.org/abs/2503.22458' },
@@ -394,7 +389,6 @@ export const notes = [
     date: '2026-01-20',
     category: 'Research',
     excerpt: 'What 530 annotated samples across logistics, fulfillment, and finance reveal about generic evaluation.',
-    readingTime: '5 min read',
     tags: ['Supply chain', 'Benchmarks', 'Tool calling'],
     related: [
       { label: 'SupChain-Bench · ACL Findings', href: 'https://aclanthology.org/2026.findings-acl.371/' },
@@ -426,7 +420,6 @@ export const notes = [
     date: '2025-12-12',
     category: 'Research',
     excerpt: 'How controlled resolution changes produce preference pairs without labels, reward models, or larger teachers.',
-    readingTime: '5 min read',
     tags: ['VLM', 'DPO', 'Preference learning'],
     related: [
       { label: 'VisualDeltas paper', href: 'https://arxiv.org/abs/2603.07272' },
@@ -449,6 +442,17 @@ export const notes = [
     ],
   },
 ] as const
+
+const READING_WORDS_PER_MINUTE = 200
+
+export function getReadingTime(note: (typeof notes)[number]) {
+  const text = [
+    note.intro,
+    ...note.sections.flatMap((section) => [section.title, section.body]),
+  ].join(' ')
+  const words = text.trim().split(/\s+/).filter(Boolean).length
+  return `${Math.max(1, Math.ceil(words / READING_WORDS_PER_MINUTE))} min read`
+}
 
 export const experience = [
   {

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import SiteFooter from '@/components/site-footer'
 import SiteHeader from '@/components/site-header'
-import { notes, profile } from '@/lib/content'
+import { getReadingTime, notes, profile } from '@/lib/content'
 import { socialImage } from '@/lib/metadata'
 import styles from './notes.module.css'
 
@@ -49,7 +49,7 @@ export default function NotesIndexPage() {
                   <span>0{index + 1}</span>
                   <time dateTime={note.date}>{note.date}</time>
                   <div>
-                    <small>{note.category} · {note.readingTime}</small>
+                    <small>{note.category} · {getReadingTime(note)}</small>
                     <h2>{note.title}</h2>
                     <p>{note.excerpt}</p>
                   </div>

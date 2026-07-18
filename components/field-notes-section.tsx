@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { notes } from '@/lib/content'
+import { getReadingTime, notes } from '@/lib/content'
 import styles from './field-notes-section.module.css'
 
 export default function FieldNotesSection() {
@@ -26,7 +26,7 @@ export default function FieldNotesSection() {
             <h3>{featured.title}</h3>
             <p>{featured.excerpt}</p>
             <div className={styles.featuredFoot}>
-              <span>{featured.category} · {featured.readingTime}</span>
+              <span>{featured.category} · {getReadingTime(featured)}</span>
               <i aria-hidden="true">↗</i>
             </div>
           </Link>
@@ -37,7 +37,7 @@ export default function FieldNotesSection() {
                 <Link href={`/notes/${note.slug}`}>
                   <span>0{index + 2}</span>
                   <div>
-                    <p>{note.category} · {note.readingTime}</p>
+                    <p>{note.category} · {getReadingTime(note)}</p>
                     <h3>{note.title}</h3>
                     <small>{note.excerpt}</small>
                   </div>

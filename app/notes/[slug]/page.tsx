@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import SiteFooter from '@/components/site-footer'
 import SiteHeader from '@/components/site-header'
-import { notes, profile } from '@/lib/content'
+import { getReadingTime, notes, profile } from '@/lib/content'
 import { socialImage } from '@/lib/metadata'
 import styles from '../notes.module.css'
 
@@ -74,7 +74,7 @@ export default async function NotePage({ params }: NotePageProps) {
             <div className={styles.articleMeta}>
               <span>{note.category}</span>
               <time dateTime={note.date}>{note.date}</time>
-              <span>{note.readingTime}</span>
+              <span>{getReadingTime(note)}</span>
             </div>
             <h1>{note.title}</h1>
             <p>{note.excerpt}</p>
