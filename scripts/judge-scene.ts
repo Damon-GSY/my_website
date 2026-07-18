@@ -26,6 +26,7 @@ requirePattern(scene, /planeGeometry ref=\{geometryRef\} args=\{\[TERRAIN_WIDTH,
 requirePattern(scene, /TubeGeometry/, 'The optimization path is not a spatial curve through the landscape.')
 requirePattern(scene, /cameraRail\.getPointAt[\s\S]*camera\.position\.copy/, 'The camera is not moving through a real 3D path.')
 requirePattern(scene, /<fog attach="fog"/, 'The scene has no atmospheric depth cue.')
+requirePattern(scene, /frameloop=\{reducedMotion \? 'demand' : active \? 'always' : 'never'\}/, 'Reduced-motion users still render a static WebGL scene continuously.')
 
 requirePattern(scene, /optimization-landscape-/, 'The distant photographic backdrop is missing from the WebGL scene.')
 banPattern(scene, /optimization-(?:depth|foreground|light)-/, 'Opaque images from incompatible viewpoints are stacked as fake depth.')

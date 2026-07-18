@@ -477,7 +477,7 @@ export default function OptimizationLandscapeScene({
       <SceneErrorBoundary>
         <Canvas
           dpr={[1, compactViewport ? 1.1 : 1.35]}
-          frameloop={active ? 'always' : 'never'}
+          frameloop={reducedMotion ? 'demand' : active ? 'always' : 'never'}
           camera={{ position: CAMERA_RAIL_POINTS[0].toArray(), fov: 50, near: 0.06, far: 36 }}
           gl={{ antialias: !compactViewport, alpha: false, powerPreference: 'high-performance' }}
           fallback={<div className="hero__scene-fallback" aria-hidden="true" />}
