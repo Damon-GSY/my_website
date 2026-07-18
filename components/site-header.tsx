@@ -29,6 +29,7 @@ export default function SiteHeader() {
       return
     }
 
+    setActiveSection('')
     const sections = navItems
       .map((item) => document.getElementById(item.id))
       .filter((section): section is HTMLElement => Boolean(section))

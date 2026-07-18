@@ -48,7 +48,7 @@ requirePattern(homepage, /getReadingTime\(featured\)[\s\S]*getReadingTime\(note\
 requirePattern(index, /notes\.map[\s\S]*\/notes\/\$\{note\.slug\}/, 'The full notes index is incomplete.')
 requirePattern(article, /generateStaticParams[\s\S]*generateMetadata[\s\S]*notFound\(\)/, 'Article routes lack static generation, metadata, or 404 handling.')
 requirePattern(article, /note\.intro[\s\S]*note\.sections\.map[\s\S]*nextNote/, 'Article pages lack body structure or reading continuity.')
-requirePattern(article, /note\.related\.map[\s\S]*reference\.href\.startsWith\('http'\)/, 'Article pages do not connect writing back to cases or primary research.')
+requirePattern(article, /note\.related\.map[\s\S]*reference\.href\.startsWith\('http'\)[\s\S]*target="_blank"[\s\S]*<Link key=\{reference\.href\}/, 'Article evidence links do not distinguish external research from client-routed case studies.')
 requirePattern(header, /id: 'notes'[^\n]*href: '#notes'[^\n]*routePrefix: '\/notes'[\s\S]*routeItem[\s\S]*setActiveSection\(routeItem\.id\)/, 'Global navigation does not adapt to Notes routes.')
 requirePattern(sitemap, /notes\.map[\s\S]*note\.slug/, 'Article routes are absent from the sitemap.')
 requirePattern(styles, /@media \(max-width: 640px\)/, 'Notes have no small-screen reading contract.')

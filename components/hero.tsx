@@ -9,7 +9,7 @@ import {
   useScroll,
   useTransform,
 } from 'framer-motion'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { heroChapters, profile } from '@/lib/content'
 
 const OptimizationLandscapeScene = dynamic(() => import('@/components/optimization-landscape-scene'), {
@@ -38,6 +38,13 @@ export default function Hero() {
   const journeyRailScale = useTransform(scrollYProgress, [0.2, 0.61], [0, 1])
   const coreRailScale = useTransform(scrollYProgress, [0.62, 0.94], [0, 1])
   const contentInteractive = Boolean(reduceMotion) || introInteractive
+
+  useEffect(() => {
+    const nextInteractive = Boolean(reduceMotion) || scrollYProgress.get() < 0.38
+    if (introInteractiveRef.current === nextInteractive) return
+    introInteractiveRef.current = nextInteractive
+    setIntroInteractive(nextInteractive)
+  }, [reduceMotion, scrollYProgress])
 
   useMotionValueEvent(scrollYProgress, 'change', (progress) => {
     const nextInteractive = Boolean(reduceMotion) || progress < 0.38

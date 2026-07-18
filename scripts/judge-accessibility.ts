@@ -3,6 +3,7 @@ import { resolve } from 'node:path'
 
 const root = process.cwd()
 const appOutput = resolve(root, '.next/server/app')
+const hero = readFileSync(resolve(root, 'components/hero.tsx'), 'utf8')
 const findings: string[] = []
 
 function collectHtml(directory: string): string[] {
@@ -37,6 +38,13 @@ if (!existsSync(appOutput)) {
       if (!/rel="[^"]*noreferrer[^"]*"/.test(match[0])) findings.push(`${relative}: external link lacks noreferrer.`)
     }
   }
+}
+
+if (!/useEffect\(\(\) => \{[\s\S]*scrollYProgress\.get\(\) < 0\.38[\s\S]*setIntroInteractive/.test(hero)) {
+  findings.push('Restored mid-hero scroll positions can leave invisible intro links interactive.')
+}
+if (!/tabIndex=\{contentInteractive \? 0 : -1\}/.test(hero)) {
+  findings.push('Faded hero actions remain in the keyboard tab order.')
 }
 
 console.log(`Built accessibility judge: ${findings.length === 0 ? 'PASS' : 'FAIL'}`)

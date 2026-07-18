@@ -91,15 +91,21 @@ export default async function NotePage({ params }: NotePageProps) {
                 <span>Related evidence</span>
                 {note.related.map((reference) => {
                   const external = reference.href.startsWith('http')
-                  return (
+                  if (external) return (
                     <a
                       key={reference.href}
                       href={reference.href}
-                      target={external ? '_blank' : undefined}
-                      rel={external ? 'noreferrer' : undefined}
+                      target="_blank"
+                      rel="noreferrer"
                     >
-                      {reference.label}<i aria-hidden="true">{external ? '↗' : '→'}</i>
+                      {reference.label}<i aria-hidden="true">↗</i>
                     </a>
+                  )
+
+                  return (
+                    <Link key={reference.href} href={reference.href}>
+                      {reference.label}<i aria-hidden="true">→</i>
+                    </Link>
                   )
                 })}
               </div>

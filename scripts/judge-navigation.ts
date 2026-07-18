@@ -19,6 +19,7 @@ requirePattern(header, /tabIndex=\{menuOpen \? 0 : -1\}/, 'Closed mobile navigat
 requirePattern(header, /event\.key === 'Tab'[\s\S]*focusables[\s\S]*\.focus\(\)/, 'Modal navigation does not trap keyboard focus.')
 requirePattern(header, /const toggle = toggleRef\.current[\s\S]*toggle\?\.focus\(\)/, 'Closing the modal navigation does not restore trigger focus.')
 requirePattern(header, /const navItems = \[[\s\S]*id: 'work'[\s\S]*id: 'about'/, 'Navigation sections have no single typed source of truth.')
+requirePattern(header, /if \(routeItem\)[\s\S]*return[\s\S]*setActiveSection\(''\)[\s\S]*new IntersectionObserver/, 'Returning to the homepage can leave a detail-route navigation item active.')
 const navMapCount = header.match(/navItems\s*\.map/g)?.length ?? 0
 if (navMapCount < 3) failures.push('Scroll observation, desktop links, and mobile links do not derive from the same navigation model.')
 
