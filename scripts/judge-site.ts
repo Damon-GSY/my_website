@@ -45,7 +45,7 @@ requirePattern(scene, /scrollProgress\.get/, 'The WebGL scene does not read scro
 requirePattern(scene, /cameraRail\.getPointAt[\s\S]*camera\.position\.copy/, 'The WebGL camera has no spatial dolly movement.')
 requirePattern(scene, /lookRail\.getPointAt[\s\S]*camera\.lookAt/, 'The WebGL camera gaze does not follow the optimization path.')
 banPattern(scene, /optimization-(?:depth|foreground|light)-/, 'Opaque images from incompatible viewpoints are stacked as fake depth.')
-requirePattern(work, /work\.map[\s\S]*project\.statement[\s\S]*project\.details\.map[\s\S]*project\.result/, 'Work cases no longer show problem, design decisions, and outcome evidence.')
+requirePattern(work, /work\.map[\s\S]*project\.statement[\s\S]*project\.details\.map[\s\S]*project\.outcome\.value[\s\S]*project\.outcome\.evidence/, 'Work cases no longer show problem, design decisions, and structured outcome evidence.')
 requirePattern(research, /research\.map[\s\S]*paper\.description[\s\S]*paper\.metric/, 'Research records are incomplete.')
 requirePattern(research, /paper\.topics\.map/, 'Research records no longer expose their evaluation dimensions.')
 requirePattern(notesSection, /notes\.slice[\s\S]*\/notes\/\$\{note\.slug\}/, 'Field notes are missing from the personal narrative.')

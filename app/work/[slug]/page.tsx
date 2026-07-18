@@ -89,7 +89,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                 </div>
                 <div>
                   <dt>Outcome</dt>
-                  <dd>{project.result} {project.resultLabel}</dd>
+                  <dd>{project.outcome.value} {project.outcome.label}</dd>
                 </div>
                 <div>
                   <dt>Scope</dt>
@@ -171,10 +171,12 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
           <div className={`section-shell ${styles.evidenceGrid}`}>
             <div>
               <p className={styles.eyebrow}>04 / Observed evidence</p>
-              <strong>{project.result}</strong>
-              <span>{project.resultLabel}</span>
+              <strong className={project.outcome.value.length > 4 ? styles.outcomeWord : undefined}>
+                {project.outcome.value}
+              </strong>
+              <span>{project.outcome.label}</span>
             </div>
-            <p>{project.secondary}</p>
+            <p>{project.outcome.evidence}</p>
           </div>
         </section>
 

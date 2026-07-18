@@ -839,6 +839,12 @@ a {
   font-variant-numeric: tabular-nums;
 }
 
+.case-study__result strong.is-word {
+  font-size: clamp(2.8rem, 5vw, 5.8rem);
+  line-height: 0.82;
+  letter-spacing: -0.065em;
+}
+
 .case-study__result p {
   margin: 1rem 0 0;
   font-size: 0.62rem;
@@ -1640,6 +1646,10 @@ a {
 
   .case-study__result strong {
     font-size: clamp(4rem, 22vw, 6.4rem);
+  }
+
+  .case-study__result strong.is-word {
+    font-size: clamp(3.2rem, 16vw, 5rem);
   }
 
   .research-layout,

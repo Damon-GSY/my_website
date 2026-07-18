@@ -63,9 +63,11 @@ export default function WorkSection() {
 
                 <aside className="case-study__result">
                   <span>Observed outcome</span>
-                  <strong>{project.result}</strong>
-                  <p>{project.resultLabel}</p>
-                  <small>{project.secondary}</small>
+                  <strong className={project.outcome.value.length > 4 ? 'is-word' : undefined}>
+                    {project.outcome.value}
+                  </strong>
+                  <p>{project.outcome.label}</p>
+                  <small>{project.outcome.evidence}</small>
                 </aside>
               </div>
             </article>

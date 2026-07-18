@@ -308,6 +308,11 @@
   font-variant-numeric: tabular-nums;
 }
 
+.evidenceGrid strong.outcomeWord {
+  font-size: clamp(6rem, 16vw, 17rem);
+  letter-spacing: -0.08em;
+}
+
 .evidenceGrid span {
   margin-top: 2rem;
   font-size: clamp(1.1rem, 2vw, 2rem);
@@ -538,6 +543,10 @@
 
   .evidenceGrid strong {
     font-size: clamp(7rem, 38vw, 12rem);
+  }
+
+  .evidenceGrid strong.outcomeWord {
+    font-size: clamp(4.8rem, 24vw, 8rem);
   }
 
   .next a {
