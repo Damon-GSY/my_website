@@ -60,7 +60,15 @@ function useViewportProfile() {
 
   useEffect(() => {
     const compactQuery = window.matchMedia('(max-width: 720px)')
-    const update = () => setProfile(readViewportProfile())
+    const update = () => {
+      const next = readViewportProfile()
+      setProfile((current) =>
+        current.assetResolution === next.assetResolution &&
+        current.compactViewport === next.compactViewport
+          ? current
+          : next,
+      )
+    }
 
     compactQuery.addEventListener('change', update)
     window.addEventListener('resize', update, { passive: true })
