@@ -14,7 +14,7 @@ export default function Home() {
         rel="preload"
         as="image"
         href="/assets/optimization-signature-mobile.webp"
-        media="(max-width: 720px)"
+        media="(max-width: 720px) and (orientation: portrait)"
         fetchPriority="high"
       />
       <link
@@ -23,7 +23,7 @@ export default function Home() {
         href="/assets/optimization-signature-1280.webp"
         imageSrcSet="/assets/optimization-signature-1280.webp 1280w, /assets/optimization-signature-1920.webp 1920w"
         imageSizes="100vw"
-        media="(min-width: 721px)"
+        media="(min-width: 721px), (orientation: landscape)"
         fetchPriority="high"
       />
       <a className="skip-link" href="#work">

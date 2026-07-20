@@ -38,21 +38,28 @@ const cameraLook = new THREE.Vector3()
 const PATH_BASE_COLOR = new THREE.Color('#e27a57')
 const PATH_PEAK_COLOR = new THREE.Color('#ffd0b4')
 const SCROLL_SETTLE_SECONDS = 0.9
+const COMPACT_VIEWPORT_QUERY = '(max-width: 720px), (pointer: coarse) and (max-height: 540px)'
+const PORTRAIT_COMPOSITION_QUERY = '(max-width: 720px) and (orientation: portrait)'
 
 type AssetResolution = '1280' | '1920'
 type ViewportProfile = {
   assetResolution: AssetResolution
   compactViewport: boolean
+  portraitComposition: boolean
 }
 
 function readViewportProfile(): ViewportProfile {
-  if (typeof window === 'undefined') return { assetResolution: '1280', compactViewport: false }
+  if (typeof window === 'undefined') {
+    return { assetResolution: '1280', compactViewport: false, portraitComposition: false }
+  }
 
-  const compactViewport = window.matchMedia('(max-width: 720px)').matches
+  const compactViewport = window.matchMedia(COMPACT_VIEWPORT_QUERY).matches
+  const portraitComposition = window.matchMedia(PORTRAIT_COMPOSITION_QUERY).matches
   const renderedWidth = window.innerWidth * Math.min(window.devicePixelRatio, 1.5)
   return {
     assetResolution: renderedWidth > 1680 ? '1920' : '1280',
     compactViewport,
+    portraitComposition,
   }
 }
 
@@ -60,22 +67,26 @@ function useViewportProfile() {
   const [profile, setProfile] = useState<ViewportProfile>(readViewportProfile)
 
   useEffect(() => {
-    const compactQuery = window.matchMedia('(max-width: 720px)')
+    const compactQuery = window.matchMedia(COMPACT_VIEWPORT_QUERY)
+    const portraitQuery = window.matchMedia(PORTRAIT_COMPOSITION_QUERY)
     const update = () => {
       const next = readViewportProfile()
       setProfile((current) =>
         current.assetResolution === next.assetResolution &&
-        current.compactViewport === next.compactViewport
+        current.compactViewport === next.compactViewport &&
+        current.portraitComposition === next.portraitComposition
           ? current
           : next,
       )
     }
 
     compactQuery.addEventListener('change', update)
+    portraitQuery.addEventListener('change', update)
     window.addEventListener('resize', update, { passive: true })
     window.visualViewport?.addEventListener('resize', update, { passive: true })
     return () => {
       compactQuery.removeEventListener('change', update)
+      portraitQuery.removeEventListener('change', update)
       window.removeEventListener('resize', update)
       window.visualViewport?.removeEventListener('resize', update)
     }
@@ -542,24 +553,24 @@ function ScrollFrameDriver({
 
 function AtmosphericBackdrop({
   assetResolution,
-  compactViewport,
+  portraitComposition,
   reducedMotion,
   scrollProgress,
   onReady,
 }: SceneMotionProps & {
   assetResolution: AssetResolution
-  compactViewport: boolean
+  portraitComposition: boolean
   onReady: () => void
 }) {
   const backdropRef = useRef<THREE.MeshBasicMaterial>(null)
-  const textureUrl = compactViewport
+  const textureUrl = portraitComposition
     ? '/assets/optimization-signature-mobile.webp'
     : `/assets/optimization-signature-${assetResolution}.webp`
   const landscape = useLoader(THREE.TextureLoader, textureUrl)
-  const backdropSize: [number, number] = compactViewport
+  const backdropSize: [number, number] = portraitComposition
     ? [BACKPLATE_HEIGHT, BACKPLATE_WIDTH]
     : [BACKPLATE_WIDTH, BACKPLATE_HEIGHT]
-  const backdropPosition: [number, number, number] = compactViewport
+  const backdropPosition: [number, number, number] = portraitComposition
     ? [0.35, 2.15, -11.8]
     : [0.82, 1.02, -11.8]
 
@@ -596,13 +607,13 @@ function AtmosphericBackdrop({
 
 function OptimizationWorld({
   assetResolution,
-  compactViewport,
+  portraitComposition,
   reducedMotion,
   scrollProgress,
   onReady,
 }: SceneMotionProps & {
   assetResolution: AssetResolution
-  compactViewport: boolean
+  portraitComposition: boolean
   onReady: () => void
 }) {
   const progressRef = useRef(reducedMotion ? 0.14 : 0)
@@ -629,7 +640,7 @@ function OptimizationWorld({
     <>
       <AtmosphericBackdrop
         assetResolution={assetResolution}
-        compactViewport={compactViewport}
+        portraitComposition={portraitComposition}
         reducedMotion={reducedMotion}
         scrollProgress={scrollProgress}
         onReady={onReady}
@@ -655,9 +666,9 @@ export default function OptimizationLandscapeScene({
 }: SceneMotionProps & { active?: boolean }) {
   const [ready, setReady] = useState(false)
   const handleReady = useCallback(() => setReady(true), [])
-  const { assetResolution, compactViewport } = useViewportProfile()
+  const { assetResolution, compactViewport, portraitComposition } = useViewportProfile()
 
-  useEffect(() => setReady(false), [assetResolution, compactViewport])
+  useEffect(() => setReady(false), [assetResolution, portraitComposition])
 
   return (
     <div className="hero__scene-stage">
@@ -683,7 +694,7 @@ export default function OptimizationLandscapeScene({
           <Suspense fallback={<LoadingLandscape />}>
             <OptimizationWorld
               assetResolution={assetResolution}
-              compactViewport={compactViewport}
+              portraitComposition={portraitComposition}
               reducedMotion={reducedMotion}
               scrollProgress={scrollProgress}
               onReady={handleReady}

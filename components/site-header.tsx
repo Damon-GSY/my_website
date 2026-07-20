@@ -49,6 +49,16 @@ export default function SiteHeader() {
   }, [pathname])
 
   useEffect(() => {
+    const desktopQuery = window.matchMedia('(min-width: 721px)')
+    const closeOnDesktop = (event: MediaQueryListEvent) => {
+      if (event.matches) setMenuOpen(false)
+    }
+
+    desktopQuery.addEventListener('change', closeOnDesktop)
+    return () => desktopQuery.removeEventListener('change', closeOnDesktop)
+  }, [])
+
+  useEffect(() => {
     if (!menuOpen) return
 
     const previousOverflow = document.body.style.overflow

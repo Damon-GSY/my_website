@@ -30,7 +30,7 @@ if (/remainingFrames/.test(scene)) {
   findings.push('Demand rendering still uses a refresh-rate-dependent frame budget.')
 }
 if (!/dpr=\{\[1, compactViewport \? 1\.1 : 1\.35\]\}/.test(scene)) findings.push('Canvas device-pixel ratio is not capped.')
-if (!/media="\(max-width: 720px\)"[\s\S]*imageSrcSet[\s\S]*media="\(min-width: 721px\)"[\s\S]*fetchPriority="high"/.test(page)) {
+if (!/media="\(max-width: 720px\) and \(orientation: portrait\)"[\s\S]*imageSrcSet[\s\S]*media="\(min-width: 721px\), \(orientation: landscape\)"[\s\S]*fetchPriority="high"/.test(page)) {
   findings.push('The above-the-fold landscape has no responsive preload contract.')
 }
 

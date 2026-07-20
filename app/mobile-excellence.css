@@ -62,3 +62,109 @@
     align-items: center;
   }
 }
+
+@media (pointer: coarse) and (max-height: 540px) {
+  .site-mobile-menu {
+    grid-template-rows: 1fr;
+    padding: 4.75rem var(--gutter) max(1rem, env(safe-area-inset-bottom));
+  }
+
+  .site-mobile-menu nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 1.5rem;
+  }
+
+  .site-mobile-menu nav a {
+    font-size: clamp(2.2rem, 7vw, 3.4rem);
+  }
+
+  .site-mobile-menu__foot {
+    display: none;
+  }
+
+  .hero {
+    height: 250svh;
+  }
+
+  .hero__viewport {
+    height: 100dvh;
+    min-height: 0;
+  }
+
+  .hero__scene {
+    filter: saturate(0.88) brightness(0.86);
+  }
+
+  .hero__scene-fallback {
+    background:
+      linear-gradient(90deg, rgba(7, 9, 11, 0.76), transparent 62%),
+      image-set(
+        url('/assets/optimization-signature-1280.webp') 1x,
+        url('/assets/optimization-signature-1920.webp') 2x
+      ) center / cover;
+  }
+
+  .hero__wash {
+    background:
+      linear-gradient(90deg, rgba(7, 9, 11, 0.9), rgba(7, 9, 11, 0.48) 52%, rgba(7, 9, 11, 0.2)),
+      linear-gradient(180deg, rgba(7, 9, 11, 0.22), transparent 58%, var(--bg));
+  }
+
+  .hero__content {
+    grid-template-rows: auto auto 1fr;
+    min-height: 100dvh;
+    padding: 5.2rem 0 0.75rem;
+  }
+
+  .hero__eyebrow {
+    display: flex;
+    gap: 1.25rem;
+  }
+
+  .hero h1 {
+    margin-top: 1rem;
+    font-size: clamp(3.4rem, 10vw, 5.4rem);
+  }
+
+  .hero h1 .hero__claim {
+    max-width: 12ch;
+    margin: -0.06em 0 0 clamp(3rem, 28vw, 16rem);
+    font-size: 0.44em;
+  }
+
+  .hero__lower {
+    grid-template-columns: minmax(17rem, 27rem) auto;
+    gap: 2rem;
+    margin: 1rem 0 0;
+  }
+
+  .hero__lower > p {
+    font-size: 0.7rem;
+    line-height: 1.5;
+  }
+
+  .hero__actions {
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .primary-link,
+  .text-link {
+    min-height: 2.6rem;
+  }
+
+  .hero__foot {
+    display: none;
+  }
+
+  .hero__journey,
+  .hero__journey--creator {
+    bottom: 1.4rem;
+    width: min(27rem, 48vw);
+    gap: 0.4rem;
+  }
+
+  .hero__journey p {
+    display: none;
+  }
+}
