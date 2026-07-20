@@ -31,7 +31,7 @@ requirePattern(workLayoutCss, /@media \(max-width: 720px\)[\s\S]*\.case-study:nt
 requirePattern(scene, /compactViewport \? 1\.1 : 1\.35/, 'Mobile WebGL renders above the capped pixel ratio.')
 requirePattern(scene, /!compactViewport[\s\S]*<OptimizationPostEffects/, 'Mobile clients still load desktop-only postprocessing.')
 requirePattern(scene, /function useViewportProfile[\s\S]*matchMedia[\s\S]*addEventListener\('resize'/, 'WebGL performance mode is frozen at mount and ignores resize or orientation changes.')
-requirePattern(scene, /assetResolution[\s\S]*optimization-landscape-\$\{assetResolution\}/, 'Backdrop asset resolution does not follow the shared responsive viewport profile.')
+requirePattern(scene, /assetResolution[\s\S]*optimization-signature-\$\{assetResolution\}/, 'Backdrop asset resolution does not follow the shared responsive viewport profile.')
 requirePattern(scene, /setProfile\(\(current\)[\s\S]*current\.assetResolution === next\.assetResolution[\s\S]*current\.compactViewport === next\.compactViewport[\s\S]*\? current/, 'Resize events rerender the WebGL tree even when its responsive profile did not change.')
 
 console.log(`Mobile excellence judge: ${findings.length === 0 ? 'PASS' : 'FAIL'}`)

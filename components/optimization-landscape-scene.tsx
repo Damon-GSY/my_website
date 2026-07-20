@@ -546,7 +546,7 @@ function AtmosphericBackdrop({
   onReady,
 }: SceneMotionProps & { assetResolution: AssetResolution; onReady: () => void }) {
   const backdropRef = useRef<THREE.MeshBasicMaterial>(null)
-  const textureUrl = `/assets/optimization-landscape-${assetResolution}.webp`
+  const textureUrl = `/assets/optimization-signature-${assetResolution}.webp`
   const landscape = useLoader(THREE.TextureLoader, textureUrl)
 
   useEffect(() => {
@@ -560,7 +560,7 @@ function AtmosphericBackdrop({
   useFrame((_, delta) => {
     const progress = reducedMotion ? 0.12 : scrollProgress.get()
     if (backdropRef.current) {
-      const targetOpacity = THREE.MathUtils.lerp(0.46, 0.08, THREE.MathUtils.smoothstep(progress, 0.05, 0.88))
+      const targetOpacity = THREE.MathUtils.lerp(0.72, 0.1, THREE.MathUtils.smoothstep(progress, 0.05, 0.88))
       backdropRef.current.opacity = damp(backdropRef.current.opacity, targetOpacity, delta, 3.4)
     }
   })
@@ -572,7 +572,7 @@ function AtmosphericBackdrop({
         ref={backdropRef}
         map={landscape}
         transparent
-        opacity={0.46}
+        opacity={0.72}
         depthWrite={false}
         toneMapped={false}
       />

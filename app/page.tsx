@@ -13,15 +13,15 @@ export default function Home() {
       <link
         rel="preload"
         as="image"
-        href="/assets/optimization-landscape-1280.webp"
+        href="/assets/optimization-signature-1280.webp"
         media="(max-width: 720px)"
         fetchPriority="high"
       />
       <link
         rel="preload"
         as="image"
-        href="/assets/optimization-landscape-1280.webp"
-        imageSrcSet="/assets/optimization-landscape-1280.webp 1280w, /assets/optimization-landscape-1920.webp 1920w"
+        href="/assets/optimization-signature-1280.webp"
+        imageSrcSet="/assets/optimization-signature-1280.webp 1280w, /assets/optimization-signature-1920.webp 1920w"
         imageSizes="100vw"
         media="(min-width: 721px)"
         fetchPriority="high"

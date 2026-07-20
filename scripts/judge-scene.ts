@@ -41,7 +41,7 @@ requirePattern(scene, /frameloop="demand"/, 'The WebGL scene still renders conti
 requirePattern(scene, /function ScrollFrameDriver[\s\S]*scrollProgress\.on\('change'[\s\S]*remainingFrames[\s\S]*invalidate/, 'Scroll-driven demand rendering has no bounded settle frames.')
 banPattern(scene, /clock\.elapsedTime/, 'The supposedly scroll-driven scene still contains autonomous time animation.')
 
-requirePattern(scene, /optimization-landscape-/, 'The distant photographic backdrop is missing from the WebGL scene.')
+requirePattern(scene, /optimization-signature-/, 'The signature photographic backdrop is missing from the WebGL scene.')
 banPattern(scene, /optimization-(?:depth|foreground|light)-/, 'Opaque images from incompatible viewpoints are stacked as fake depth.')
 
 requirePattern(hero, /offset:\s*\['start start', 'end end'\]/, 'Hero scroll progress does not span the sticky sequence.')

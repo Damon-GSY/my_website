@@ -266,8 +266,8 @@ a {
   background:
     linear-gradient(90deg, rgba(7, 9, 11, 0.76), transparent 62%),
     image-set(
-      url('/assets/optimization-landscape-1280.webp') 1x,
-      url('/assets/optimization-landscape-1920.webp') 2x
+      url('/assets/optimization-signature-1280.webp') 1x,
+      url('/assets/optimization-signature-1920.webp') 2x
     ) center / cover;
 }
 
@@ -1450,7 +1450,7 @@ a {
   .hero__scene-fallback {
     background:
       linear-gradient(90deg, rgba(7, 9, 11, 0.76), transparent 62%),
-      url('/assets/optimization-landscape-1280.webp') center / cover;
+      url('/assets/optimization-signature-1280.webp') center / cover;
   }
 
   .hero__wash {
