@@ -1,4 +1,4 @@
-import { experience, profile, socials } from '@/lib/content'
+import { education, profile, socials } from '@/lib/content'
 import BlurText from '@/components/ui/blur-text'
 import styles from './about-section.module.css'
 
@@ -52,8 +52,13 @@ export default function AboutSection() {
             </blockquote>
           </aside>
 
-          <div className="experience-list">
-            {experience.map((entry) => (
+          <div className="experience-list" aria-labelledby="education-heading">
+            <header className={styles.educationHead}>
+              <span>Education / foundation</span>
+              <h3 id="education-heading">Statistical thinking, built across two disciplines.</h3>
+              <small>Singapore → Sydney</small>
+            </header>
+            {education.map((entry) => (
               <article key={`${entry.time}-${entry.place}`}>
                 <time>{entry.time}</time>
                 <div>

@@ -586,6 +586,13 @@ export const experience = [
   },
 ] as const
 
+const educationPlaces = new Set([
+  'National University of Singapore',
+  'University of New South Wales',
+])
+
+export const education = experience.filter((entry) => educationPlaces.has(entry.place))
+
 const earlierSystemPlaces = new Set([
   'Microsoft Research Asia',
   'Meituan',
