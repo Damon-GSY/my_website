@@ -4,11 +4,12 @@ import { resolve } from 'node:path'
 const root = process.cwd()
 const layout = readFileSync(resolve(root, 'app/layout.tsx'), 'utf8')
 const globalCss = readFileSync(resolve(root, 'app/globals.css'), 'utf8')
+const workLayoutCss = readFileSync(resolve(root, 'components/work-section-layout.css'), 'utf8')
 const aboutCss = readFileSync(resolve(root, 'components/about-section.module.css'), 'utf8')
 const caseSignal = readFileSync(resolve(root, 'components/case-signal.tsx'), 'utf8')
 const hero = readFileSync(resolve(root, 'components/hero.tsx'), 'utf8')
 const content = readFileSync(resolve(root, 'lib/content.ts'), 'utf8')
-const source = `${layout}\n${globalCss}\n${aboutCss}\n${caseSignal}\n${hero}\n${content}`
+const source = `${layout}\n${globalCss}\n${workLayoutCss}\n${aboutCss}\n${caseSignal}\n${hero}\n${content}`
 const findings: string[] = []
 
 function requirePattern(input: string, pattern: RegExp, message: string) {
@@ -49,6 +50,16 @@ requirePattern(
   aboutCss,
   /\.principles\s+article:nth-child\(2\)[\s\S]*?\.principles\s+article:nth-child\(3\)/,
   'The principles do not use an authored editorial rhythm.',
+)
+requirePattern(
+  workLayoutCss,
+  /\.case-study:nth-child\(3\) \.case-study__title[\s\S]*?\.case-study:nth-child\(3\) \.case-study__visual/,
+  'The third project repeats the first project composition instead of introducing a new editorial rhythm.',
+)
+requirePattern(
+  workLayoutCss,
+  /\.case-study:nth-child\(4\) \.case-study__title[\s\S]*?\.case-study:nth-child\(4\) \.case-study__visual/,
+  'The fourth project repeats the mirrored composition instead of closing with a distinct layout.',
 )
 requirePattern(source, /cubic-bezier\(/, 'The motion language does not define a custom easing curve.')
 requirePattern(

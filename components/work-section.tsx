@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { signals, work } from '@/lib/content'
 import CaseSignal from '@/components/case-signal'
+import './work-section-layout.css'
 
 export default function WorkSection() {
   return (

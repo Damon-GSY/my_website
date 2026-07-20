@@ -4,6 +4,7 @@ import { resolve } from 'node:path'
 const root = process.cwd()
 const layout = readFileSync(resolve(root, 'app/layout.tsx'), 'utf8')
 const css = readFileSync(resolve(root, 'app/globals.css'), 'utf8')
+const workLayoutCss = readFileSync(resolve(root, 'components/work-section-layout.css'), 'utf8')
 const mobilePath = resolve(root, 'app/mobile-excellence.css')
 let mobile = ''
 try { mobile = readFileSync(mobilePath, 'utf8') } catch {}
@@ -26,6 +27,7 @@ requirePattern(mobile, /\.hero__foot small,[\s\S]*\.hero__foot strong[\s\S]*font
 requirePattern(caseCss, /@media \(max-width: 720px\)[\s\S]*\.heroLower dt,[\s\S]*\.next span[\s\S]*font-size:\s*0\.68rem/, 'Case-study metadata drops below the mobile readability floor.')
 requirePattern(notesCss, /@media \(max-width: 640px\)[\s\S]*\.articleMeta,[\s\S]*\.nextNote span[\s\S]*font-size:\s*0\.68rem/, 'Field-note metadata drops below the mobile readability floor.')
 requirePattern(mobile, /\.footer-bottom a[\s\S]*min-height:\s*2\.75rem/, 'Footer links do not provide 44px touch targets.')
+requirePattern(workLayoutCss, /@media \(max-width: 720px\)[\s\S]*\.case-study:nth-child\(3\) \.case-study__title,[\s\S]*grid-column:\s*1;[\s\S]*grid-row:\s*auto;/, 'The third project keeps its authored desktop grid on narrow screens.')
 requirePattern(scene, /compactViewport \? 1\.1 : 1\.35/, 'Mobile WebGL renders above the capped pixel ratio.')
 requirePattern(scene, /!compactViewport[\s\S]*<OptimizationPostEffects/, 'Mobile clients still load desktop-only postprocessing.')
 requirePattern(scene, /function useViewportProfile[\s\S]*matchMedia[\s\S]*addEventListener\('resize'/, 'WebGL performance mode is frozen at mount and ignores resize or orientation changes.')
