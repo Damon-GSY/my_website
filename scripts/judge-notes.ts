@@ -4,11 +4,17 @@ import { resolve } from 'node:path'
 const root = process.cwd()
 const content = readFileSync(resolve(root, 'lib/content.ts'), 'utf8')
 const homepage = readFileSync(resolve(root, 'components/field-notes-section.tsx'), 'utf8')
+const homepageStyles = readFileSync(resolve(root, 'components/field-notes-section.module.css'), 'utf8')
 const index = readFileSync(resolve(root, 'app/notes/page.tsx'), 'utf8')
 const article = readFileSync(resolve(root, 'app/notes/[slug]/page.tsx'), 'utf8')
 const styles = readFileSync(resolve(root, 'app/notes/notes.module.css'), 'utf8')
 const header = readFileSync(resolve(root, 'components/site-header.tsx'), 'utf8')
 const sitemap = readFileSync(resolve(root, 'app/sitemap.ts'), 'utf8')
+
+const tabletStyles = homepageStyles.slice(
+  homepageStyles.indexOf('@media (max-width: 960px)'),
+  homepageStyles.indexOf('@media (max-width: 720px)'),
+)
 
 const failures: string[] = []
 
@@ -44,6 +50,9 @@ requirePattern(
   'Article schema is missing or is injected without escaping opening angle brackets.',
 )
 requirePattern(homepage, /notes\.slice\(0, 4\)[\s\S]*Browse all/, 'Homepage notes do not provide a focused preview and full index path.')
+requirePattern(homepage, /socials\.filter[\s\S]*YouTube[\s\S]*Bilibili[\s\S]*creatorChannels\.map/, 'The creator identity has no verified public channel path.')
+requirePattern(homepage, /aria-label=\{`\$\{label\} video channel \(opens in a new tab\)`\}/, 'Creator channel links do not announce their new-tab behavior.')
+requirePattern(tabletStyles, /\.publicPractice nav\s*\{[\s\S]*border-top:[\s\S]*border-left:\s*0/, 'Creator channels retain the desktop divider after the tablet layout becomes a single column.')
 requirePattern(homepage, /getReadingTime\(featured\)[\s\S]*getReadingTime\(note\)/, 'Homepage reading times bypass the shared content calculation.')
 requirePattern(index, /notes\.map[\s\S]*\/notes\/\$\{note\.slug\}/, 'The full notes index is incomplete.')
 requirePattern(article, /generateStaticParams[\s\S]*generateMetadata[\s\S]*notFound\(\)/, 'Article routes lack static generation, metadata, or 404 handling.')

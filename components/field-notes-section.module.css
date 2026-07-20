@@ -37,6 +37,82 @@
   line-height: 1.8;
 }
 
+.publicPractice {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(3rem, 7vw, 8rem);
+  margin-top: clamp(5rem, 8vw, 8rem);
+  padding: 1.25rem 0 1.5rem;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.publicPractice > p {
+  display: grid;
+  max-width: 38rem;
+  min-height: 11rem;
+  align-content: space-between;
+  margin: 0;
+}
+
+.publicPractice > p span,
+.publicPractice nav a > span,
+.publicPractice nav small {
+  color: var(--accent);
+  font-size: 0.61rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.publicPractice > p strong {
+  max-width: 14ch;
+  font-size: clamp(1.8rem, 3.1vw, 3.5rem);
+  font-weight: 200;
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+.publicPractice nav {
+  border-left: 1px solid var(--line);
+}
+
+.publicPractice nav a {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr) auto auto;
+  gap: 1rem;
+  min-height: 5.5rem;
+  align-items: center;
+  padding: 1rem 0 1rem 1.25rem;
+  border-top: 1px solid var(--line);
+  transition: color 240ms var(--ease), padding 240ms var(--ease);
+}
+
+.publicPractice nav a:first-child {
+  border-top: 0;
+}
+
+.publicPractice nav a:hover {
+  padding-inline: 1.75rem 0.5rem;
+  color: var(--accent);
+}
+
+.publicPractice nav a > strong {
+  font-size: clamp(1.15rem, 1.8vw, 1.8rem);
+  font-weight: 300;
+  letter-spacing: -0.035em;
+}
+
+.publicPractice nav small {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.publicPractice nav i {
+  color: var(--accent);
+  font-style: normal;
+}
+
 .layout {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(24rem, 0.95fr);
@@ -181,6 +257,7 @@
 }
 
 @supports (animation-timeline: view()) {
+  .publicPractice,
   .layout {
     animation: notesEnter both var(--ease);
     animation-timeline: view();
@@ -196,8 +273,14 @@
 }
 
 @media (max-width: 960px) {
+  .publicPractice,
   .layout {
     grid-template-columns: 1fr;
+  }
+
+  .publicPractice nav {
+    border-top: 1px solid var(--line);
+    border-left: 0;
   }
 
   .featured {
@@ -236,6 +319,30 @@
 
   .header h2 {
     font-size: clamp(3.3rem, 16vw, 5.4rem);
+  }
+
+  .publicPractice {
+    grid-template-columns: 1fr;
+    margin-top: 4rem;
+  }
+
+  .publicPractice > p {
+    min-height: 9rem;
+  }
+
+  .publicPractice > p span,
+  .publicPractice nav a > span,
+  .publicPractice nav small {
+    font-size: 0.68rem;
+  }
+
+  .publicPractice nav a {
+    grid-template-columns: 2.4rem minmax(0, 1fr) auto;
+    padding-left: 0;
+  }
+
+  .publicPractice nav small {
+    display: none;
   }
 
   .layout {

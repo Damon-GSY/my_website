@@ -1,21 +1,45 @@
 import Link from 'next/link'
-import { getReadingTime, notes } from '@/lib/content'
+import { getReadingTime, notes, socials } from '@/lib/content'
 import styles from './field-notes-section.module.css'
 
 export default function FieldNotesSection() {
   const [featured, ...latest] = notes.slice(0, 4)
+  const creatorChannels = socials.filter(([label]) => label === 'YouTube' || label === 'Bilibili')
 
   return (
     <section className={styles.section} id="notes" aria-labelledby="notes-heading">
       <div className="section-shell">
         <header className={styles.header}>
-          <p className="section-eyebrow">Field notes</p>
-          <h2 id="notes-heading">Working theories, written down.</h2>
+          <p className="section-eyebrow">Writing &amp; teaching</p>
+          <h2 id="notes-heading">Working theories, made public.</h2>
           <p>
             Short essays on agent evaluation, production constraints, tool interfaces, memory, and
             post-training—written from the systems I build.
           </p>
         </header>
+
+        <aside className={styles.publicPractice} aria-label="Public teaching channels">
+          <p>
+            <span>Public practice</span>
+            <strong>I publish the operating lessons behind the systems I build.</strong>
+          </p>
+          <nav aria-label="Video channels">
+            {creatorChannels.map(([label, url], index) => (
+              <a
+                key={label}
+                href={url}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`${label} video channel (opens in a new tab)`}
+              >
+                <span>C/0{index + 1}</span>
+                <strong>{label}</strong>
+                <small>Video channel</small>
+                <i aria-hidden="true">↗</i>
+              </a>
+            ))}
+          </nav>
+        </aside>
 
         <div className={styles.layout}>
           <Link className={styles.featured} href={`/notes/${featured.slug}`}>
