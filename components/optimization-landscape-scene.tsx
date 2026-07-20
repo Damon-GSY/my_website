@@ -37,6 +37,7 @@ const cameraPosition = new THREE.Vector3()
 const cameraLook = new THREE.Vector3()
 const PATH_BASE_COLOR = new THREE.Color('#e27a57')
 const PATH_PEAK_COLOR = new THREE.Color('#ffd0b4')
+const SCROLL_SETTLE_SECONDS = 0.9
 
 type AssetResolution = '1280' | '1920'
 type ViewportProfile = {
@@ -517,23 +518,23 @@ function ScrollFrameDriver({
   scrollProgress,
 }: SceneMotionProps & { active: boolean }) {
   const invalidate = useThree((state) => state.invalidate)
-  const remainingFrames = useRef(0)
+  const settleSeconds = useRef(0)
 
   useEffect(() => {
-    remainingFrames.current = active && !reducedMotion ? 2 : 0
+    settleSeconds.current = active && !reducedMotion ? 0.3 : 0
     invalidate()
     if (!active || reducedMotion) return
 
     return scrollProgress.on('change', () => {
-      remainingFrames.current = 10
+      settleSeconds.current = SCROLL_SETTLE_SECONDS
       invalidate()
     })
   }, [active, invalidate, reducedMotion, scrollProgress])
 
-  useFrame(() => {
-    if (!active || reducedMotion || remainingFrames.current <= 0) return
-    remainingFrames.current -= 1
-    invalidate()
+  useFrame((_, delta) => {
+    if (!active || reducedMotion || settleSeconds.current <= 0) return
+    settleSeconds.current = Math.max(0, settleSeconds.current - delta)
+    if (settleSeconds.current > 0) invalidate()
   })
 
   return null

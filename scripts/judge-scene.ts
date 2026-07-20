@@ -38,7 +38,7 @@ requirePattern(
 requirePattern(scene, /cameraRail\.getPointAt[\s\S]*camera\.position\.copy/, 'The camera is not moving through a real 3D path.')
 requirePattern(scene, /<fog attach="fog"/, 'The scene has no atmospheric depth cue.')
 requirePattern(scene, /frameloop="demand"/, 'The WebGL scene still renders continuously while idle.')
-requirePattern(scene, /function ScrollFrameDriver[\s\S]*scrollProgress\.on\('change'[\s\S]*remainingFrames[\s\S]*invalidate/, 'Scroll-driven demand rendering has no bounded settle frames.')
+requirePattern(scene, /function ScrollFrameDriver[\s\S]*scrollProgress\.on\('change'[\s\S]*SCROLL_SETTLE_SECONDS[\s\S]*useFrame\(\(_, delta\)[\s\S]*settleSeconds\.current[\s\S]*invalidate/, 'Scroll-driven demand rendering has no refresh-rate-independent settle window.')
 banPattern(scene, /clock\.elapsedTime/, 'The supposedly scroll-driven scene still contains autonomous time animation.')
 
 requirePattern(scene, /optimization-signature-/, 'The signature photographic backdrop is missing from the WebGL scene.')

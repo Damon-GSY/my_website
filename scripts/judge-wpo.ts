@@ -23,6 +23,12 @@ if (!/frameloop="demand"/.test(scene)) {
 if (!/function ScrollFrameDriver[\s\S]*scrollProgress\.on\('change'[\s\S]*invalidate\(\)/.test(scene)) {
   findings.push('Demand rendering is not driven by scroll changes.')
 }
+if (!/SCROLL_SETTLE_SECONDS[\s\S]*settleSeconds\.current[\s\S]*settleSeconds\.current - delta/.test(scene)) {
+  findings.push('Demand rendering does not use a bounded time-based settling window.')
+}
+if (/remainingFrames/.test(scene)) {
+  findings.push('Demand rendering still uses a refresh-rate-dependent frame budget.')
+}
 if (!/dpr=\{\[1, compactViewport \? 1\.1 : 1\.35\]\}/.test(scene)) findings.push('Canvas device-pixel ratio is not capped.')
 if (!/media="\(max-width: 720px\)"[\s\S]*imageSrcSet[\s\S]*media="\(min-width: 721px\)"[\s\S]*fetchPriority="high"/.test(page)) {
   findings.push('The above-the-fold landscape has no responsive preload contract.')

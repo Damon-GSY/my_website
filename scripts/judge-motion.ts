@@ -6,6 +6,15 @@ const hero = readFileSync('components/hero.tsx', 'utf8')
 const styles = readFileSync('app/globals.css', 'utf8')
 const findings: string[] = []
 
+const settleMatch = scene.match(/const SCROLL_SETTLE_SECONDS = ([\d.]+)/)
+const settleSeconds = settleMatch ? Number(settleMatch[1]) : 0
+if (settleSeconds < 0.75 || settleSeconds > 1.5) {
+  findings.push(`Demand rendering settles for ${settleSeconds || 0}s instead of a bounded 0.75–1.5s window.`)
+}
+if (/remainingFrames/.test(scene)) {
+  findings.push('Demand rendering still stops after a fixed frame count, so damping changes with refresh rate.')
+}
+
 const cameraRailBlock = scene.match(/const CAMERA_RAIL_POINTS = \[([\s\S]*?)\]\nconst LOOK_RAIL_POINTS/)
 if (!cameraRailBlock) throw new Error('Motion judge could not find the camera rail.')
 
