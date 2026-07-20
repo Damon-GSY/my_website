@@ -2,7 +2,6 @@ import AboutSection from '@/components/about-section'
 import FieldNotesSection from '@/components/field-notes-section'
 import EarlierSystemsSection from '@/components/earlier-systems-section'
 import Hero from '@/components/hero'
-import IdentityBridge from '@/components/identity-bridge'
 import ResearchSection from '@/components/research-section'
 import SiteFooter from '@/components/site-footer'
 import SiteHeader from '@/components/site-header'
@@ -34,7 +33,6 @@ export default function Home() {
       <SiteHeader />
       <main>
         <Hero />
-        <IdentityBridge />
         <WorkSection />
         <EarlierSystemsSection />
         <ResearchSection />
