@@ -20,14 +20,17 @@ const ownershipCount = content.match(/\n\s+ownership:/g)?.length ?? 0
 const flowCount = content.match(/\n\s+flow:/g)?.length ?? 0
 const workBlock = content.slice(content.indexOf('export const work'), content.indexOf('export const research'))
 const outcomeCount = workBlock.match(/\n\s+outcome:/g)?.length ?? 0
+const proofCount = workBlock.match(/\n\s+proof:/g)?.length ?? 0
 if (contextCount !== 4) failures.push(`Expected 4 project contexts, found ${contextCount}.`)
 if (principleCount !== 4) failures.push(`Expected 4 project principles, found ${principleCount}.`)
 if (ownershipCount !== 4) failures.push(`Expected 4 personal ownership records, found ${ownershipCount}.`)
 if (flowCount !== 4) failures.push(`Expected 4 system traces, found ${flowCount}.`)
 if (outcomeCount !== 4) failures.push(`Expected 4 structured project outcomes, found ${outcomeCount}.`)
+if (proofCount !== 4) failures.push(`Expected 4 evidence protocols, found ${proofCount}.`)
 
-requirePattern(workBlock, /id: 'tool-resolver'[\s\S]*value: '−90%'[\s\S]*label: 'manual ticket handling'[\s\S]*100\+ dynamic tools/, 'Tool scale is still presented as the outcome instead of supporting evidence.')
-requirePattern(workBlock, /id: 'reward-system'[\s\S]*value: 'Stable'[\s\S]*label: 'multi-objective training'[\s\S]*zero-gradient filtering/, 'Reward mechanisms are still presented as a fabricated numeric outcome.')
+requirePattern(workBlock, /id: 'tool-resolver'[\s\S]*value: '≈90%'[\s\S]*label: 'manual ticket handling'[\s\S]*Internal operational measurement[\s\S]*100 internal tools/, 'Tool outcome lacks an approximate value, internal measurement type, or supported scope.')
+requirePattern(workBlock, /id: 'domain-model'[\s\S]*value: 'Internal best'[\s\S]*Frozen internal benchmark/, 'The domain model still implies public SOTA instead of a frozen internal comparison.')
+requirePattern(workBlock, /id: 'reward-system'[\s\S]*value: 'Convergent'[\s\S]*Qualitative internal observation[\s\S]*zero-gradient filtering/, 'Reward mechanisms are still presented as a quantitative outcome.')
 
 requirePattern(page, /generateStaticParams/, 'Case-study routes are not statically generated.')
 requirePattern(page, /generateMetadata/, 'Case-study routes have no project metadata.')
@@ -35,6 +38,7 @@ requirePattern(page, /notFound\(\)/, 'Unknown project slugs do not reach the bra
 requirePattern(page, /project\.context[\s\S]*project\.principle[\s\S]*project\.details\.map/, 'Case studies do not expose context, principle, and design decisions.')
 requirePattern(page, /project\.ownership[\s\S]*project\.flow\.map/, 'Case studies do not show what Damon personally owned or how the system moves.')
 requirePattern(page, /project\.outcome\.value[\s\S]*project\.outcome\.label[\s\S]*project\.outcome\.evidence/, 'Case studies do not expose structured outcome evidence.')
+requirePattern(page, /project\.proof\.baseline[\s\S]*project\.proof\.intervention[\s\S]*project\.proof\.result[\s\S]*project\.proof\.scope[\s\S]*project\.proof\.disclosure/, 'Case studies do not explain baseline, intervention, result, scope, and disclosure.')
 requirePattern(page, /project\.outcome\.value\.length > 4[\s\S]*styles\.outcomeWord/, 'Long qualitative outcomes have no overflow-safe typographic treatment.')
 requirePattern(page, /nextProject[\s\S]*Next case/, 'Case studies end without a next-project route.')
 requirePattern(workSection, /href=\{`\/work\/\$\{project\.id\}`\}/, 'Homepage projects do not link to their case studies.')

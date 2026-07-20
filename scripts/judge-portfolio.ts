@@ -9,6 +9,7 @@ const files = {
   hero: readFileSync(resolve(root, 'components/hero.tsx'), 'utf8'),
   identity: readFileSync(resolve(root, 'components/identity-bridge.tsx'), 'utf8'),
   work: readFileSync(resolve(root, 'components/work-section.tsx'), 'utf8'),
+  earlier: readFileSync(resolve(root, 'components/earlier-systems-section.tsx'), 'utf8'),
   research: readFileSync(resolve(root, 'components/research-section.tsx'), 'utf8'),
   notes: readFileSync(resolve(root, 'components/field-notes-section.tsx'), 'utf8'),
   about: readFileSync(resolve(root, 'components/about-section.tsx'), 'utf8'),
@@ -44,6 +45,8 @@ requirePattern(files.identity, /identityBrief\.map[\s\S]*entry\.label[\s\S]*entr
 const heroChapterCount = files.content.match(/index: '0\d \/[^']+'/g)?.length ?? 0
 if (heroChapterCount < 3) failures.push(`Expected three distinct personal identities in the scroll story, found ${heroChapterCount}.`)
 requirePattern(files.work, /work\.map[\s\S]*\/work\/\$\{project\.id\}/, 'Selected work does not lead to project evidence.')
+requirePattern(files.page, /<WorkSection \/>[\s\S]*<EarlierSystemsSection \/>[\s\S]*<ResearchSection \/>/, 'Earlier systems do not broaden the all-Alibaba flagship sequence before research.')
+requirePattern(files.earlier, /earlierSystems\.map[\s\S]*entry\.place[\s\S]*entry\.highlights\.map/, 'Earlier systems are not derived from the evidenced career record.')
 requirePattern(files.casePage, /project\.context[\s\S]*project\.principle[\s\S]*project\.details/, 'Case studies lack context and design rationale.')
 requirePattern(files.research, /paper\.description[\s\S]*paper\.topics[\s\S]*paper\.metric/, 'Research lacks method, dimensions, or evidence.')
 requirePattern(files.notes, /featured\.title[\s\S]*latest\.map[\s\S]*\/notes/, 'Personal writing is absent from the homepage narrative.')
@@ -58,8 +61,8 @@ requirePattern(files.content, /creatorLine:/, 'Identity data hides the creator p
 requirePattern(files.content, /530 real-world samples/, 'SupChain-Bench evidence from main is missing from the personal narrative.')
 const experienceEvidenceCount = files.content.match(/\n\s+highlights:/g)?.length ?? 0
 if (experienceEvidenceCount < 8) failures.push(`Expected at least 8 evidenced trajectory records, found ${experienceEvidenceCount}.`)
-requirePattern(files.content, /4\.0 \/ 5\.0[\s\S]*QS global #8/, 'NUS evidence from main is compressed out of the public trajectory.')
-requirePattern(files.content, /85\/100 GPA[\s\S]*QS global #19/, 'UNSW evidence from main is compressed out of the public trajectory.')
+requirePattern(files.content, /4\.0 \/ 5\.0 GPA[\s\S]*85\/100 GPA/, 'NUS or UNSW academic evidence from main is compressed out of the public trajectory.')
+banPattern(files.content, /QS global #/, 'Undated university rankings are presented as current personal evidence.')
 
 requirePattern(files.global, /\.site-header\s*\{[^}]*top:\s*0\.75rem[^}]*right:\s*var\(--gutter\)[^}]*left:\s*var\(--gutter\)/s, 'Navigation is not detached from the viewport edges.')
 requirePattern(files.caseCss, /animation-timeline:\s*view\(\)/, 'Case-study chapters have no scroll-entry choreography.')

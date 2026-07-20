@@ -92,10 +92,10 @@ export const identityBrief = [
 ] as const
 
 export const signals = [
-  { value: '12', label: 'production scenarios' },
-  { value: '100+', label: 'tools resolved at runtime' },
-  { value: '−95%', label: 'manual interventions' },
-  { value: '<1s', label: 'exception handoff' },
+  { value: '12', label: 'supported internal scenarios' },
+  { value: '100+', label: 'tools in a changing registry' },
+  { value: '≈90%', label: 'relative reduction · supported tickets' },
+  { value: '<1s', label: 'internal exception handoff' },
 ] as const
 
 export const work = [
@@ -123,9 +123,17 @@ export const work = [
       'Connected execution traces to sub-second human handoff paths.',
     ],
     outcome: {
-      value: '−90%',
+      value: '≈90%',
       label: 'misoperations',
-      evidence: '−95% manual intervention · <1s handoff',
+      evidence: '≈95% manual intervention · <1s handoff · supported internal scope',
+    },
+    proof: {
+      evidenceType: 'Internal operational measurement',
+      baseline: 'One autonomy threshold covered actions with very different failure costs.',
+      intervention: 'Risk tiers, progressive confirmations, explicit boundaries, and trace-linked human recovery.',
+      result: 'Approximately 90% fewer misoperations and 95% less manual intervention; exception handoff below one second.',
+      scope: 'Twelve supported supply-chain scenarios in internal production workflows.',
+      disclosure: 'Internal operational measurement; absolute event counts and customer data remain confidential.',
     },
     tags: ['12 scenarios', 'progressive confirmation', 'human handoff'],
     visual: 'risk',
@@ -154,9 +162,17 @@ export const work = [
       'Separated wrong-tool, missing-tool, and over-tooling failure traces.',
     ],
     outcome: {
-      value: '−90%',
+      value: '≈90%',
       label: 'manual ticket handling',
       evidence: '100+ dynamic tools · runtime capability registry',
+    },
+    proof: {
+      evidenceType: 'Internal operational measurement',
+      baseline: 'A static tool list degraded as descriptions overlapped and capabilities changed.',
+      intervention: 'A dynamic registry, Meta Tool discovery, and trace-level agentic-RL evaluation.',
+      result: 'Approximately 90% less manual ticket handling in supported workflows.',
+      scope: 'Ticket-resolution assistants operating over a changing pool of more than 100 internal tools.',
+      disclosure: 'Internal workflow measurement; ticket volumes and task-level scores remain confidential.',
     },
     tags: ['meta tool', 'dynamic registry', 'trace evaluation'],
     visual: 'tools',
@@ -185,9 +201,17 @@ export const work = [
       'Tracked gains against business-facing capability slices.',
     ],
     outcome: {
-      value: 'SOTA',
-      label: 'internal benchmark',
+      value: 'Internal best',
+      label: 'frozen 2025 benchmark',
       evidence: 'continual pretraining → SFT → RL',
+    },
+    proof: {
+      evidenceType: 'Frozen internal benchmark',
+      baseline: 'One aggregate score hid the gap between domain knowledge and reliable execution.',
+      intervention: 'A dual-axis benchmark followed by continual pretraining, SFT, and RL against capability slices.',
+      result: 'Best-performing internal checkpoint on the frozen 2025 knowledge-QA and tool-use benchmark.',
+      scope: 'Supply-chain domain tasks evaluated against internal business-facing capability slices.',
+      disclosure: 'Benchmark composition, absolute scores, and production data remain confidential.',
     },
     tags: ['knowledge QA', 'tool use', 'capability slices'],
     visual: 'benchmark',
@@ -209,16 +233,24 @@ export const work = [
       'I designed the conditional, hierarchical reward architecture for conflicting product-attribute objectives and added variance control plus zero-gradient filtering so frequent tasks could not silently erase progress on rarer ones.',
     flow: ['Task condition', 'Sample reward', 'Hierarchy', 'Gradient filter', 'Policy update'],
     statement:
-      'A hierarchical reward design that stops one objective from silently dominating every other task.',
+      'A hierarchical reward design built to prevent one objective from silently dominating every other task.',
     details: [
       'Conditioned rewards across conflicting product-attribute objectives.',
       'Controlled gradient variance and filtered zero-gradient samples.',
       'Aligned the hierarchy with downstream supply-chain decisions.',
     ],
     outcome: {
-      value: 'Stable',
-      label: 'multi-objective training',
+      value: 'Convergent',
+      label: 'selected multi-objective runs',
       evidence: 'conditional reward · variance control · zero-gradient filtering · hierarchy',
+    },
+    proof: {
+      evidenceType: 'Qualitative internal observation',
+      baseline: 'Frequent objectives could dominate gradients and erase progress on rarer attribute tasks.',
+      intervention: 'Conditional rewards, sample-level variance control, zero-gradient filtering, and an explicit hierarchy.',
+      result: 'Selected runs remained convergent without the monitored high-frequency objective erasing rarer-task gains.',
+      scope: 'Internal fulfillment, bundle-consolidation, HS Code, and related supply-chain decisions.',
+      disclosure: 'Qualitative internal training outcome; task-level scores and model details remain confidential.',
     },
     tags: ['GRPO', 'hierarchical rewards', 'multi-task'],
     visual: 'reward',
@@ -509,7 +541,7 @@ export const experience = [
     role: 'LLM Research Intern · M365 Copilot',
     location: 'Beijing',
     highlights: [
-      'Contributed to an early GPT-4o production rollout for M365 Copilot email workflows.',
+      'Developed and evaluated long-context behavior for M365 Copilot email workflows.',
       'Designed a three-horizon memory architecture for long-context behavior.',
       'Built tree-structured retrieval and multi-turn evaluation for intent, completion, and consistency.',
     ],
@@ -532,7 +564,7 @@ export const experience = [
     location: 'Singapore',
     highlights: [
       'Studied statistics in the Faculty of Science and graduated in the top five percent of the major.',
-      'Earned a 4.0 / 5.0 GPA at a university ranked QS global #8.',
+      'Earned a 4.0 / 5.0 GPA.',
     ],
   },
   {
@@ -541,18 +573,18 @@ export const experience = [
     role: 'Algorithm Intern · Edge vision',
     location: 'Singapore',
     highlights: [
-      'Built a lightweight CNN for multi-feature scalp microscopy detection with 85%+ accuracy.',
-      'Optimized quantized inference to under 150 ms per image on a 2.4 GHz CPU.',
+      'Built a lightweight CNN whose key feature-detection accuracy exceeded 85% in an internal prototype.',
+      'Optimized quantized prototype inference to under 150 ms per image on a 2.4 GHz CPU.',
     ],
   },
   {
     time: '2022',
     place: 'AT&T TrackHack',
-    role: 'Weak-supervision classification · Top 10 / 500+',
+    role: 'Weak-supervision classification',
     location: 'United States',
     highlights: [
       'Combined PU learning, Random Forest, K-means, and recursive feature elimination.',
-      'Reached 0.94 F1 while identifying households eligible for a broadband subsidy program.',
+      'Applied the pipeline to broadband-subsidy eligibility under positive-only supervision.',
     ],
   },
   {
@@ -561,7 +593,7 @@ export const experience = [
     role: 'Underwater object detection',
     location: 'Remote',
     highlights: [
-      'Used targeted image cropping, HOG, and color features to improve accuracy by roughly 30%.',
+      'Used targeted image cropping with HOG and color features for coral-reef video.',
       'Combined sliding-window detection with non-maximum suppression for more reliable localization.',
     ],
   },
@@ -572,11 +604,20 @@ export const experience = [
     location: 'Sydney',
     highlights: [
       'Graduated with an 85/100 GPA in the top three percent of the major.',
-      'Studied at a university ranked QS global #19.',
-      'Academic Scholarship recipient and Dean’s List student from 2019 through 2022.',
+      'Academic Scholarship recipient and Dean’s List student.',
     ],
   },
 ] as const
+
+const earlierSystemPlaces = new Set([
+  'Microsoft Research Asia',
+  'Meituan',
+  'Singapore AI Visual',
+  'AT&T TrackHack',
+  'Kaggle Starfish Detection',
+])
+
+export const earlierSystems = experience.filter((entry) => earlierSystemPlaces.has(entry.place))
 
 export const socials = [
   ['GitHub', 'https://github.com/Damon-GSY'],

@@ -1,5 +1,6 @@
 import AboutSection from '@/components/about-section'
 import FieldNotesSection from '@/components/field-notes-section'
+import EarlierSystemsSection from '@/components/earlier-systems-section'
 import Hero from '@/components/hero'
 import IdentityBridge from '@/components/identity-bridge'
 import ResearchSection from '@/components/research-section'
@@ -35,6 +36,7 @@ export default function Home() {
         <Hero />
         <IdentityBridge />
         <WorkSection />
+        <EarlierSystemsSection />
         <ResearchSection />
         <FieldNotesSection />
         <AboutSection />

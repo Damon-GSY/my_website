@@ -49,6 +49,12 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
 
   const project = work[projectIndex]
   const nextProject = work[(projectIndex + 1) % work.length]
+  const proofSteps = [
+    { index: '01', label: 'Baseline', value: project.proof.baseline },
+    { index: '02', label: 'Intervention', value: project.proof.intervention },
+    { index: '03', label: 'Result', value: project.proof.result },
+    { index: '04', label: 'Scope', value: project.proof.scope },
+  ]
   const caseStudySchema = {
     '@context': 'https://schema.org',
     '@type': 'CreativeWork',
@@ -168,15 +174,37 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         </section>
 
         <section className={styles.evidence}>
-          <div className={`section-shell ${styles.evidenceGrid}`}>
-            <div>
+          <div className="section-shell">
+            <header className={styles.evidenceHeader}>
               <p className={styles.eyebrow}>04 / Observed evidence</p>
-              <strong className={project.outcome.value.length > 4 ? styles.outcomeWord : undefined}>
-                {project.outcome.value}
-              </strong>
-              <span>{project.outcome.label}</span>
+              <h2>What changed,<br />and where it was measured.</h2>
+            </header>
+
+            <div className={styles.evidenceGrid}>
+              <div className={styles.evidenceOutcome} aria-hidden="true">
+                <small className={styles.evidenceType}>{project.proof.evidenceType}</small>
+                <strong className={project.outcome.value.length > 4 ? styles.outcomeWord : undefined}>
+                  {project.outcome.value}
+                </strong>
+                <span>{project.outcome.label}</span>
+                <small>{project.outcome.evidence}</small>
+              </div>
+
+              <ol className={styles.evidenceProtocol} aria-label="Evidence protocol">
+                {proofSteps.map((step) => (
+                  <li key={step.label}>
+                    <span>{step.index}</span>
+                    <small>{step.label}</small>
+                    <p>{step.value}</p>
+                  </li>
+                ))}
+              </ol>
             </div>
-            <p>{project.outcome.evidence}</p>
+
+            <p className={styles.disclosure}>
+              <span>Disclosure</span>
+              {project.proof.disclosure}
+            </p>
           </div>
         </section>
 

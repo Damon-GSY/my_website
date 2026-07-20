@@ -287,44 +287,134 @@
   background: var(--surface-soft);
 }
 
+.evidenceHeader {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.evidenceHeader .eyebrow {
+  grid-column: 1 / 4;
+}
+
+.evidenceHeader h2 {
+  grid-column: 4 / 13;
+  max-width: 13ch;
+  margin: 0;
+  font-size: clamp(3.4rem, 6.8vw, 7.6rem);
+  font-weight: 200;
+  line-height: 0.86;
+  letter-spacing: -0.075em;
+  text-wrap: balance;
+}
+
 .evidenceGrid {
   display: grid;
-  grid-template-columns: 1.5fr 0.5fr;
-  gap: 4rem;
-  align-items: end;
+  grid-template-columns: 0.82fr 1.18fr;
+  gap: clamp(3rem, 8vw, 9rem);
+  align-items: start;
+  margin-top: clamp(6rem, 10vw, 10rem);
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line-strong);
 }
 
-.evidenceGrid > div {
+.evidenceOutcome {
   display: grid;
+  position: sticky;
+  top: 7rem;
 }
 
-.evidenceGrid strong {
-  margin-top: 3rem;
+.evidenceType {
+  margin: 0 0 2.5rem;
   color: var(--accent);
-  font-size: clamp(8rem, 20vw, 22rem);
+  font-size: 0.61rem;
+  font-weight: 400;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.evidenceOutcome strong {
+  color: var(--accent);
+  font-size: clamp(7rem, 14vw, 16rem);
   font-weight: 200;
-  line-height: 0.66;
+  line-height: 0.72;
   letter-spacing: -0.1em;
   font-variant-numeric: tabular-nums;
 }
 
-.evidenceGrid strong.outcomeWord {
-  font-size: clamp(6rem, 16vw, 17rem);
+.evidenceOutcome strong.outcomeWord {
+  font-size: clamp(5.2rem, 11vw, 12rem);
   letter-spacing: -0.08em;
 }
 
-.evidenceGrid span {
+.evidenceOutcome > span {
   margin-top: 2rem;
   font-size: clamp(1.1rem, 2vw, 2rem);
   letter-spacing: -0.03em;
 }
 
-.evidenceGrid > p {
+.evidenceOutcome > small:not(.evidenceType) {
+  max-width: 24rem;
+  margin-top: 1.15rem;
+  color: var(--muted);
+  font-size: 0.65rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.evidenceProtocol {
   margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.evidenceProtocol li {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(7rem, 0.45fr) 1fr;
+  gap: 1rem;
+  min-height: 9rem;
+  align-items: start;
+  padding: 1.35rem 0 2rem;
+  border-top: 1px solid var(--line);
+}
+
+.evidenceProtocol li:first-child {
+  border-top: 0;
+}
+
+.evidenceProtocol span,
+.evidenceProtocol small,
+.disclosure span {
+  color: var(--accent);
+  font-size: 0.61rem;
+  font-weight: 400;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.evidenceProtocol small {
+  color: var(--muted);
+}
+
+.evidenceProtocol p {
+  max-width: 35rem;
+  margin: 0;
+  color: var(--text-soft);
+  font-size: clamp(0.82rem, 1.1vw, 1.02rem);
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+.disclosure {
+  display: grid;
+  grid-template-columns: 3fr 9fr;
+  gap: 1.25rem;
+  margin: clamp(5rem, 8vw, 8rem) 0 0;
   padding-top: 1rem;
   border-top: 1px solid var(--line-strong);
-  color: var(--text-soft);
-  font-size: 0.7rem;
+  color: var(--muted);
+  font-size: 0.68rem;
   line-height: 1.7;
 }
 
@@ -541,15 +631,60 @@
     grid-template-columns: 1fr;
   }
 
-  .evidenceGrid strong {
+  .evidenceHeader {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .evidenceHeader .eyebrow,
+  .evidenceHeader h2 {
+    grid-column: 1;
+  }
+
+  .evidenceHeader h2 {
+    font-size: clamp(3.2rem, 15vw, 5.6rem);
+  }
+
+  .evidenceOutcome {
+    position: static;
+  }
+
+  .evidenceOutcome strong {
     font-size: clamp(7rem, 38vw, 12rem);
   }
 
-  .evidenceGrid strong.outcomeWord {
+  .evidenceOutcome strong.outcomeWord {
     font-size: clamp(4.8rem, 24vw, 8rem);
+  }
+
+  .evidenceProtocol li {
+    grid-template-columns: 2rem 6.5rem 1fr;
+  }
+
+  .evidenceProtocol span,
+  .evidenceProtocol small,
+  .disclosure span {
+    font-size: 0.68rem;
+  }
+
+  .disclosure {
+    grid-template-columns: 1fr;
+    font-size: 0.76rem;
   }
 
   .next a {
     font-size: clamp(3rem, 14vw, 5.5rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .evidenceProtocol li {
+    grid-template-columns: 2rem 1fr;
+    gap: 0.5rem 1rem;
+  }
+
+  .evidenceProtocol small,
+  .evidenceProtocol p {
+    grid-column: 2;
   }
 }
