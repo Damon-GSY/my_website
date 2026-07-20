@@ -1,6 +1,6 @@
 'use client'
 
-import { Canvas, useFrame, useLoader } from '@react-three/fiber'
+import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber'
 import type { MotionValue } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import { Component, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
@@ -478,11 +478,11 @@ function DustField({ reducedMotion, scrollProgress }: SceneMotionProps) {
     return positions
   }, [])
 
-  useFrame(({ clock }, delta) => {
+  useFrame((_, delta) => {
     if (!pointsRef.current || !materialRef.current) return
     const progress = reducedMotion ? 0.12 : scrollProgress.get()
     pointsRef.current.position.z = damp(pointsRef.current.position.z, progress * 0.85, delta, 2.2)
-    pointsRef.current.rotation.y = reducedMotion ? 0 : Math.sin(clock.elapsedTime * 0.08) * 0.018
+    pointsRef.current.rotation.y = reducedMotion ? 0 : progress * 0.045
     materialRef.current.opacity = damp(materialRef.current.opacity, 0.16 + progress * 0.28, delta)
   })
 
@@ -509,6 +509,34 @@ function DustField({ reducedMotion, scrollProgress }: SceneMotionProps) {
 type SceneMotionProps = {
   reducedMotion: boolean
   scrollProgress: MotionValue<number>
+}
+
+function ScrollFrameDriver({
+  active,
+  reducedMotion,
+  scrollProgress,
+}: SceneMotionProps & { active: boolean }) {
+  const invalidate = useThree((state) => state.invalidate)
+  const remainingFrames = useRef(0)
+
+  useEffect(() => {
+    remainingFrames.current = active && !reducedMotion ? 2 : 0
+    invalidate()
+    if (!active || reducedMotion) return
+
+    return scrollProgress.on('change', () => {
+      remainingFrames.current = 10
+      invalidate()
+    })
+  }, [active, invalidate, reducedMotion, scrollProgress])
+
+  useFrame(() => {
+    if (!active || reducedMotion || remainingFrames.current <= 0) return
+    remainingFrames.current -= 1
+    invalidate()
+  })
+
+  return null
 }
 
 function AtmosphericBackdrop({
@@ -620,13 +648,18 @@ export default function OptimizationLandscapeScene({
       <SceneErrorBoundary>
         <Canvas
           dpr={[1, compactViewport ? 1.1 : 1.35]}
-          frameloop={reducedMotion ? 'demand' : active ? 'always' : 'never'}
+          frameloop="demand"
           camera={{ position: CAMERA_RAIL_POINTS[0].toArray(), fov: 50, near: 0.06, far: 36 }}
           gl={{ antialias: !compactViewport, alpha: false, powerPreference: 'high-performance' }}
           fallback={<div className="hero__scene-fallback" aria-hidden="true" />}
         >
           <color attach="background" args={['#07090b']} />
           <fog attach="fog" args={['#07090b', 7.5, 24]} />
+          <ScrollFrameDriver
+            active={active}
+            reducedMotion={reducedMotion}
+            scrollProgress={scrollProgress}
+          />
           <Suspense fallback={<LoadingLandscape />}>
             <OptimizationWorld
               assetResolution={assetResolution}

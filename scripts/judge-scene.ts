@@ -37,7 +37,9 @@ requirePattern(
 )
 requirePattern(scene, /cameraRail\.getPointAt[\s\S]*camera\.position\.copy/, 'The camera is not moving through a real 3D path.')
 requirePattern(scene, /<fog attach="fog"/, 'The scene has no atmospheric depth cue.')
-requirePattern(scene, /frameloop=\{reducedMotion \? 'demand' : active \? 'always' : 'never'\}/, 'Reduced-motion users still render a static WebGL scene continuously.')
+requirePattern(scene, /frameloop="demand"/, 'The WebGL scene still renders continuously while idle.')
+requirePattern(scene, /function ScrollFrameDriver[\s\S]*scrollProgress\.on\('change'[\s\S]*remainingFrames[\s\S]*invalidate/, 'Scroll-driven demand rendering has no bounded settle frames.')
+banPattern(scene, /clock\.elapsedTime/, 'The supposedly scroll-driven scene still contains autonomous time animation.')
 
 requirePattern(scene, /optimization-landscape-/, 'The distant photographic backdrop is missing from the WebGL scene.')
 banPattern(scene, /optimization-(?:depth|foreground|light)-/, 'Opaque images from incompatible viewpoints are stacked as fake depth.')

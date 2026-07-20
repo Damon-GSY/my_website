@@ -17,8 +17,11 @@ if (!/!compactViewport[\s\S]*!reducedMotion[\s\S]*<OptimizationPostEffects/.test
   findings.push('Mobile or reduced-motion clients can still request the Bloom chunk.')
 }
 if (!existsSync(effectsPath)) findings.push('The isolated postprocessing component is missing.')
-if (!/frameloop=\{reducedMotion \? 'demand' : active \? 'always' : 'never'\}/.test(scene)) {
-  findings.push('WebGL does not combine reduced-motion demand rendering with offscreen pausing.')
+if (!/frameloop="demand"/.test(scene)) {
+  findings.push('WebGL still renders continuously instead of waking on interaction.')
+}
+if (!/function ScrollFrameDriver[\s\S]*scrollProgress\.on\('change'[\s\S]*invalidate\(\)/.test(scene)) {
+  findings.push('Demand rendering is not driven by scroll changes.')
 }
 if (!/dpr=\{\[1, compactViewport \? 1\.1 : 1\.35\]\}/.test(scene)) findings.push('Canvas device-pixel ratio is not capped.')
 if (!/media="\(max-width: 720px\)"[\s\S]*imageSrcSet[\s\S]*media="\(min-width: 721px\)"[\s\S]*fetchPriority="high"/.test(page)) {
