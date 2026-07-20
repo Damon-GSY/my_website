@@ -664,11 +664,11 @@ export default function OptimizationLandscapeScene({
   reducedMotion = false,
   scrollProgress,
 }: SceneMotionProps & { active?: boolean }) {
-  const [ready, setReady] = useState(false)
-  const handleReady = useCallback(() => setReady(true), [])
   const { assetResolution, compactViewport, portraitComposition } = useViewportProfile()
-
-  useEffect(() => setReady(false), [assetResolution, portraitComposition])
+  const renderProfile = `${assetResolution}:${compactViewport ? 'compact' : 'full'}:${portraitComposition ? 'portrait' : 'landscape'}`
+  const [readyProfile, setReadyProfile] = useState('')
+  const handleReady = useCallback(() => setReadyProfile(renderProfile), [renderProfile])
+  const ready = readyProfile === renderProfile
 
   return (
     <div className="hero__scene-stage">
@@ -678,6 +678,7 @@ export default function OptimizationLandscapeScene({
       />
       <SceneErrorBoundary>
         <Canvas
+          key={renderProfile}
           dpr={[1, compactViewport ? 1.1 : 1.35]}
           frameloop="demand"
           camera={{ position: CAMERA_RAIL_POINTS[0].toArray(), fov: 50, near: 0.06, far: 36 }}

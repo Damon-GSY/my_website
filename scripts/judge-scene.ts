@@ -19,7 +19,7 @@ function banPattern(source: string, pattern: RegExp, message: string) {
 requirePattern(scene, /Suspense/, 'Texture loading has no in-canvas Suspense boundary.')
 requirePattern(scene, /SceneErrorBoundary/, 'WebGL and texture failures have no DOM fallback boundary.')
 requirePattern(scene, /fallback=\{<div className="hero__scene-fallback"/, 'Canvas cannot fall back when WebGL is unavailable.')
-requirePattern(scene, /const \[ready, setReady\][\s\S]*setReady\(true\)[\s\S]*hero__scene-fallback--loading[\s\S]*onReady=\{handleReady\}/, 'The DOM fallback flashes to black before WebGL textures are ready.')
+requirePattern(scene, /const \[readyProfile, setReadyProfile\][\s\S]*setReadyProfile\(renderProfile\)[\s\S]*readyProfile === renderProfile[\s\S]*hero__scene-fallback--loading[\s\S]*onReady=\{handleReady\}/, 'The DOM fallback is not tied to the texture-ready state of the current WebGL profile.')
 requirePattern(scene, /scrollProgress\.get[\s\S]*cameraRail\.getPointAt/, 'Scroll progress does not drive the camera dolly.')
 requirePattern(scene, /function TerrainField/, 'The scene has no real 3D optimization topology.')
 requirePattern(scene, /planeGeometry ref=\{geometryRef\} args=\{\[TERRAIN_WIDTH, TERRAIN_DEPTH, (?:[4-9]\d|\d{3,}), (?:[3-9]\d|\d{3,})\]\}/, 'The terrain is not sufficiently subdivided to read as a 3D field.')

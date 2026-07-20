@@ -35,7 +35,7 @@ requirePattern(scene, /COMPACT_VIEWPORT_QUERY = '\(max-width: 720px\), \(pointer
 requirePattern(scene, /function useViewportProfile[\s\S]*compactQuery[\s\S]*portraitQuery[\s\S]*addEventListener\('resize'/, 'WebGL performance or composition mode is frozen at mount and ignores orientation changes.')
 requirePattern(scene, /portraitComposition[\s\S]*optimization-signature-mobile[\s\S]*optimization-signature-\$\{assetResolution\}/, 'Backdrop assets do not switch between portrait mobile and responsive landscape compositions.')
 requirePattern(page, /href="\/assets\/optimization-signature-mobile\.webp"[\s\S]*media="\(max-width: 720px\) and \(orientation: portrait\)"/, 'The mobile hero does not preload its portrait-safe composition.')
-requirePattern(scene, /setReady\(false\), \[assetResolution, portraitComposition\]/, 'Changing orientation can leave the old backdrop visible while the new composition loads.')
+requirePattern(scene, /renderProfile = `\$\{assetResolution\}:\$\{compactViewport[\s\S]*readyProfile === renderProfile[\s\S]*key=\{renderProfile\}/, 'Changing WebGL performance profiles does not rebuild context creation settings behind a loading-safe profile key.')
 requirePattern(scene, /setProfile\(\(current\)[\s\S]*current\.assetResolution === next\.assetResolution[\s\S]*current\.compactViewport === next\.compactViewport[\s\S]*current\.portraitComposition === next\.portraitComposition[\s\S]*\? current/, 'Resize events rerender the WebGL tree even when its responsive profile did not change.')
 requirePattern(mobile, /@media \(pointer: coarse\) and \(max-height: 540px\)[\s\S]*\.hero__viewport[\s\S]*min-height:\s*0/, 'Short landscape phones retain the desktop 48rem sticky viewport floor.')
 
