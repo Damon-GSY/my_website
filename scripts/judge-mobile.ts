@@ -3,6 +3,7 @@ import { resolve } from 'node:path'
 
 const root = process.cwd()
 const layout = readFileSync(resolve(root, 'app/layout.tsx'), 'utf8')
+const page = readFileSync(resolve(root, 'app/page.tsx'), 'utf8')
 const css = readFileSync(resolve(root, 'app/globals.css'), 'utf8')
 const workLayoutCss = readFileSync(resolve(root, 'components/work-section-layout.css'), 'utf8')
 const mobilePath = resolve(root, 'app/mobile-excellence.css')
@@ -31,7 +32,9 @@ requirePattern(workLayoutCss, /@media \(max-width: 720px\)[\s\S]*\.case-study:nt
 requirePattern(scene, /compactViewport \? 1\.1 : 1\.35/, 'Mobile WebGL renders above the capped pixel ratio.')
 requirePattern(scene, /!compactViewport[\s\S]*<OptimizationPostEffects/, 'Mobile clients still load desktop-only postprocessing.')
 requirePattern(scene, /function useViewportProfile[\s\S]*matchMedia[\s\S]*addEventListener\('resize'/, 'WebGL performance mode is frozen at mount and ignores resize or orientation changes.')
-requirePattern(scene, /assetResolution[\s\S]*optimization-signature-\$\{assetResolution\}/, 'Backdrop asset resolution does not follow the shared responsive viewport profile.')
+requirePattern(scene, /compactViewport[\s\S]*optimization-signature-mobile[\s\S]*optimization-signature-\$\{assetResolution\}/, 'Backdrop assets do not switch between portrait mobile and responsive desktop compositions.')
+requirePattern(page, /href="\/assets\/optimization-signature-mobile\.webp"[\s\S]*media="\(max-width: 720px\)"/, 'The mobile hero does not preload its portrait-safe composition.')
+requirePattern(scene, /setReady\(false\), \[assetResolution, compactViewport\]/, 'Crossing the mobile breakpoint can leave the old backdrop visible while the new composition loads.')
 requirePattern(scene, /setProfile\(\(current\)[\s\S]*current\.assetResolution === next\.assetResolution[\s\S]*current\.compactViewport === next\.compactViewport[\s\S]*\? current/, 'Resize events rerender the WebGL tree even when its responsive profile did not change.')
 
 console.log(`Mobile excellence judge: ${findings.length === 0 ? 'PASS' : 'FAIL'}`)

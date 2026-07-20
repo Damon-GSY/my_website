@@ -1450,7 +1450,7 @@ a {
   .hero__scene-fallback {
     background:
       linear-gradient(90deg, rgba(7, 9, 11, 0.76), transparent 62%),
-      url('/assets/optimization-signature-1280.webp') center / cover;
+      url('/assets/optimization-signature-mobile.webp') center / cover;
   }
 
   .hero__wash {

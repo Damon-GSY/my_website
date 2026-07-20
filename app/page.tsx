@@ -13,7 +13,7 @@ export default function Home() {
       <link
         rel="preload"
         as="image"
-        href="/assets/optimization-signature-1280.webp"
+        href="/assets/optimization-signature-mobile.webp"
         media="(max-width: 720px)"
         fetchPriority="high"
       />

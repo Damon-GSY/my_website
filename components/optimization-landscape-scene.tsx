@@ -542,13 +542,26 @@ function ScrollFrameDriver({
 
 function AtmosphericBackdrop({
   assetResolution,
+  compactViewport,
   reducedMotion,
   scrollProgress,
   onReady,
-}: SceneMotionProps & { assetResolution: AssetResolution; onReady: () => void }) {
+}: SceneMotionProps & {
+  assetResolution: AssetResolution
+  compactViewport: boolean
+  onReady: () => void
+}) {
   const backdropRef = useRef<THREE.MeshBasicMaterial>(null)
-  const textureUrl = `/assets/optimization-signature-${assetResolution}.webp`
+  const textureUrl = compactViewport
+    ? '/assets/optimization-signature-mobile.webp'
+    : `/assets/optimization-signature-${assetResolution}.webp`
   const landscape = useLoader(THREE.TextureLoader, textureUrl)
+  const backdropSize: [number, number] = compactViewport
+    ? [BACKPLATE_HEIGHT, BACKPLATE_WIDTH]
+    : [BACKPLATE_WIDTH, BACKPLATE_HEIGHT]
+  const backdropPosition: [number, number, number] = compactViewport
+    ? [0.35, 2.15, -11.8]
+    : [0.82, 1.02, -11.8]
 
   useEffect(() => {
     landscape.colorSpace = THREE.SRGBColorSpace
@@ -567,8 +580,8 @@ function AtmosphericBackdrop({
   })
 
   return (
-    <mesh position={[0.82, 1.02, -11.8]} renderOrder={-3}>
-      <planeGeometry args={[BACKPLATE_WIDTH, BACKPLATE_HEIGHT]} />
+    <mesh position={backdropPosition} renderOrder={-3}>
+      <planeGeometry args={backdropSize} />
       <meshBasicMaterial
         ref={backdropRef}
         map={landscape}
@@ -583,10 +596,15 @@ function AtmosphericBackdrop({
 
 function OptimizationWorld({
   assetResolution,
+  compactViewport,
   reducedMotion,
   scrollProgress,
   onReady,
-}: SceneMotionProps & { assetResolution: AssetResolution; onReady: () => void }) {
+}: SceneMotionProps & {
+  assetResolution: AssetResolution
+  compactViewport: boolean
+  onReady: () => void
+}) {
   const progressRef = useRef(reducedMotion ? 0.14 : 0)
 
   useFrame(({ camera, pointer }, delta) => {
@@ -611,6 +629,7 @@ function OptimizationWorld({
     <>
       <AtmosphericBackdrop
         assetResolution={assetResolution}
+        compactViewport={compactViewport}
         reducedMotion={reducedMotion}
         scrollProgress={scrollProgress}
         onReady={onReady}
@@ -638,7 +657,7 @@ export default function OptimizationLandscapeScene({
   const handleReady = useCallback(() => setReady(true), [])
   const { assetResolution, compactViewport } = useViewportProfile()
 
-  useEffect(() => setReady(false), [assetResolution])
+  useEffect(() => setReady(false), [assetResolution, compactViewport])
 
   return (
     <div className="hero__scene-stage">
@@ -664,6 +683,7 @@ export default function OptimizationLandscapeScene({
           <Suspense fallback={<LoadingLandscape />}>
             <OptimizationWorld
               assetResolution={assetResolution}
+              compactViewport={compactViewport}
               reducedMotion={reducedMotion}
               scrollProgress={scrollProgress}
               onReady={handleReady}
