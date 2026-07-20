@@ -24,6 +24,17 @@ requirePattern(scene, /scrollProgress\.get[\s\S]*cameraRail\.getPointAt/, 'Scrol
 requirePattern(scene, /function TerrainField/, 'The scene has no real 3D optimization topology.')
 requirePattern(scene, /planeGeometry ref=\{geometryRef\} args=\{\[TERRAIN_WIDTH, TERRAIN_DEPTH, (?:[4-9]\d|\d{3,}), (?:[3-9]\d|\d{3,})\]\}/, 'The terrain is not sufficiently subdivided to read as a 3D field.')
 requirePattern(scene, /TubeGeometry/, 'The optimization path is not a spatial curve through the landscape.')
+requirePattern(scene, /function ConvergenceField/, 'The loss minimum has no authored volumetric convergence field.')
+requirePattern(
+  scene,
+  /function ConvergenceField[\s\S]*scrollProgress\.get\(\)[\s\S]*smoothstep\(progress,\s*0\.5[\s\S]*AdditiveBlending/,
+  'The convergence field is not revealed by scroll progress with additive light scattering.',
+)
+requirePattern(
+  scene,
+  /function ConvergenceField[\s\S]*rotation\.z\s*=\s*progress[\s\S]*ringGeometry/,
+  'The optimization core has no scroll-scrubbed iso-loss rings.',
+)
 requirePattern(scene, /cameraRail\.getPointAt[\s\S]*camera\.position\.copy/, 'The camera is not moving through a real 3D path.')
 requirePattern(scene, /<fog attach="fog"/, 'The scene has no atmospheric depth cue.')
 requirePattern(scene, /frameloop=\{reducedMotion \? 'demand' : active \? 'always' : 'never'\}/, 'Reduced-motion users still render a static WebGL scene continuously.')

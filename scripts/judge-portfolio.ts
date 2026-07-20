@@ -7,6 +7,7 @@ const files = {
   layout: readFileSync(resolve(root, 'app/layout.tsx'), 'utf8'),
   global: readFileSync(resolve(root, 'app/globals.css'), 'utf8'),
   hero: readFileSync(resolve(root, 'components/hero.tsx'), 'utf8'),
+  identity: readFileSync(resolve(root, 'components/identity-bridge.tsx'), 'utf8'),
   work: readFileSync(resolve(root, 'components/work-section.tsx'), 'utf8'),
   research: readFileSync(resolve(root, 'components/research-section.tsx'), 'utf8'),
   notes: readFileSync(resolve(root, 'components/field-notes-section.tsx'), 'utf8'),
@@ -38,6 +39,8 @@ function banPattern(source: string, pattern: RegExp, message: string) {
 
 requirePattern(files.hero, /profile\.name[\s\S]*profile\.role[\s\S]*profile\.thesis/, 'Above-the-fold identity or point of view is incomplete.')
 requirePattern(files.hero, /heroChapters\.map/, 'The scroll story does not derive its identity chapters from content.')
+requirePattern(files.page, /<Hero \/>[\s\S]*<IdentityBridge \/>[\s\S]*<WorkSection \/>/, 'The 3D hook does not resolve into an immediate personal evidence bridge.')
+requirePattern(files.identity, /identityBrief\.map[\s\S]*entry\.label[\s\S]*entry\.value[\s\S]*entry\.detail/, 'The post-hero identity bridge lacks structured personal evidence.')
 const heroChapterCount = files.content.match(/index: '0\d \/[^']+'/g)?.length ?? 0
 if (heroChapterCount < 3) failures.push(`Expected three distinct personal identities in the scroll story, found ${heroChapterCount}.`)
 requirePattern(files.work, /work\.map[\s\S]*\/work\/\$\{project\.id\}/, 'Selected work does not lead to project evidence.')

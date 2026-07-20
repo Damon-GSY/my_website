@@ -68,6 +68,29 @@ export const heroChapters = [
   },
 ] as const
 
+export const identityBrief = [
+  {
+    label: 'Now / production',
+    value: 'Alibaba',
+    detail: 'LLM algorithm engineering across post-training, agentic RL, and bounded production systems.',
+  },
+  {
+    label: 'Previously',
+    value: 'MSRA · Meituan',
+    detail: 'M365 Copilot memory and evaluation, followed by forecasting under operational constraints.',
+  },
+  {
+    label: 'Research',
+    value: '2× first author',
+    detail: 'ACL 2026 Findings, agent evaluation, and a 530-sample supply-chain benchmark.',
+  },
+  {
+    label: 'Foundation',
+    value: 'NUS · UNSW',
+    detail: 'Statistics top 5% and Computer Science top 3%, across Singapore and Sydney.',
+  },
+] as const
+
 export const signals = [
   { value: '12', label: 'production scenarios' },
   { value: '100+', label: 'tools resolved at runtime' },

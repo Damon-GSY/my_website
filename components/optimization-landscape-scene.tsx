@@ -100,6 +100,9 @@ function terrainHeight(x: number, z: number) {
   return broadWave + leftRidge + rightRidge + valley + minimum - 0.34
 }
 
+const CORE_CURVE_PROGRESS = 0.862
+const CORE_ANCHOR = new THREE.Vector3(-0.25, terrainHeight(-0.25, -5.9) + 0.14, -5.9)
+
 class SceneErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
   state = { failed: false }
 
@@ -251,7 +254,15 @@ function OptimizationPath({ scrollProgress, reducedMotion }: SceneMotionProps) {
   }, [])
   const pathGeometry = useMemo(() => new THREE.TubeGeometry(curve, 180, 0.036, 8, false), [curve])
   const haloGeometry = useMemo(() => new THREE.TubeGeometry(curve, 180, 0.105, 8, false), [curve])
-  const markers = useMemo(() => Array.from({ length: 9 }, (_, index) => curve.getPoint(index / 8)), [curve])
+  const markers = useMemo(
+    () =>
+      [0, 0.14, 0.28, 0.42, 0.56, 0.7, CORE_CURVE_PROGRESS, 1].map((progress) => ({
+        isCore: progress === CORE_CURVE_PROGRESS,
+        position: progress === CORE_CURVE_PROGRESS ? CORE_ANCHOR.clone() : curve.getPoint(progress),
+        progress,
+      })),
+    [curve],
+  )
 
   useFrame((_, delta) => {
     const progress = reducedMotion ? 0.14 : scrollProgress.get()
@@ -281,20 +292,151 @@ function OptimizationPath({ scrollProgress, reducedMotion }: SceneMotionProps) {
       <mesh geometry={pathGeometry} renderOrder={5}>
         <meshBasicMaterial ref={pathMaterialRef} color="#e27a57" toneMapped={false} />
       </mesh>
-      {markers.map((position, index) => (
-        <mesh key={index} position={position} scale={index === markers.length - 1 ? 1.7 : 1}>
+      {markers.map(({ isCore, position, progress }) => (
+        <mesh key={progress} position={position} scale={isCore ? 1.9 : progress === 1 ? 0.72 : 1}>
           <sphereGeometry args={[0.055, 12, 12]} />
           <meshBasicMaterial color="#ffd0b4" toneMapped={false} />
         </mesh>
       ))}
       <pointLight
         ref={coreLightRef}
-        position={[-0.25, terrainHeight(-0.25, -5.9) + 0.36, -5.9]}
+        position={CORE_ANCHOR}
         color="#ff8053"
         intensity={8}
         distance={6}
         decay={2}
       />
+    </group>
+  )
+}
+
+function ConvergenceField({ scrollProgress, reducedMotion }: SceneMotionProps) {
+  const fieldRef = useRef<THREE.Group>(null)
+  const beamsRef = useRef<THREE.InstancedMesh>(null)
+  const beamMaterialRef = useRef<THREE.MeshBasicMaterial>(null)
+  const coreRef = useRef<THREE.Mesh>(null)
+  const coreMaterialRef = useRef<THREE.MeshBasicMaterial>(null)
+  const primaryRingRef = useRef<THREE.Mesh>(null)
+  const secondaryRingRef = useRef<THREE.Mesh>(null)
+  const beamMatrices = useMemo(() => {
+    const starts = [
+      new THREE.Vector3(-3.25, 2.7, 1.7),
+      new THREE.Vector3(-2.2, 3.55, -0.55),
+      new THREE.Vector3(-0.95, 4.25, -1.45),
+      new THREE.Vector3(0.85, 4.55, -1.2),
+      new THREE.Vector3(2.15, 3.7, -0.2),
+      new THREE.Vector3(3.05, 2.75, 1.25),
+      new THREE.Vector3(-1.8, 2.45, 2.45),
+      new THREE.Vector3(1.9, 2.6, 2.2),
+    ]
+    const up = new THREE.Vector3(0, 1, 0)
+
+    return starts.map((start) => {
+      const direction = start.clone()
+      const length = direction.length()
+      const midpoint = start.clone().multiplyScalar(0.5)
+      const rotation = new THREE.Quaternion().setFromUnitVectors(up, direction.normalize())
+      return new THREE.Matrix4().compose(midpoint, rotation, new THREE.Vector3(1, length, 1))
+    })
+  }, [])
+
+  useLayoutEffect(() => {
+    if (!beamsRef.current) return
+    beamMatrices.forEach((matrix, index) => beamsRef.current?.setMatrixAt(index, matrix))
+    beamsRef.current.instanceMatrix.setUsage(THREE.StaticDrawUsage)
+    beamsRef.current.instanceMatrix.needsUpdate = true
+  }, [beamMatrices])
+
+  useFrame((_, delta) => {
+    const progress = reducedMotion ? 0.72 : THREE.MathUtils.clamp(scrollProgress.get(), 0, 1)
+    const convergence = THREE.MathUtils.smoothstep(progress, 0.5, 0.92)
+    const settle = THREE.MathUtils.smoothstep(progress, 0.72, 1)
+    const resolve = (current: number, target: number, speed = 3.2) =>
+      reducedMotion ? target : damp(current, target, delta, speed)
+
+    if (fieldRef.current) {
+      fieldRef.current.visible = reducedMotion || convergence > 0.002
+      fieldRef.current.scale.setScalar(0.34 + convergence * 0.66)
+    }
+    if (beamMaterialRef.current) {
+      beamMaterialRef.current.opacity = resolve(beamMaterialRef.current.opacity, convergence * 0.115, 2.8)
+    }
+    if (coreMaterialRef.current) {
+      coreMaterialRef.current.opacity = resolve(coreMaterialRef.current.opacity, 0.18 + convergence * 0.62)
+    }
+    if (coreRef.current) {
+      coreRef.current.scale.setScalar(0.72 + convergence * 0.52 - settle * 0.08)
+    }
+    if (primaryRingRef.current) {
+      primaryRingRef.current.rotation.z = progress * Math.PI * 1.35
+      primaryRingRef.current.scale.setScalar(0.72 + convergence * 1.15)
+      const material = primaryRingRef.current.material as THREE.MeshBasicMaterial
+      material.opacity = resolve(material.opacity, convergence * 0.58)
+    }
+    if (secondaryRingRef.current) {
+      secondaryRingRef.current.rotation.z = -progress * Math.PI * 0.9
+      secondaryRingRef.current.scale.setScalar(0.9 + convergence * 1.8)
+      const material = secondaryRingRef.current.material as THREE.MeshBasicMaterial
+      material.opacity = resolve(material.opacity, convergence * 0.24, 2.7)
+    }
+  })
+
+  return (
+    <group ref={fieldRef} position={CORE_ANCHOR} visible={false}>
+      <instancedMesh
+        ref={beamsRef}
+        args={[undefined, undefined, beamMatrices.length]}
+        frustumCulled={false}
+        renderOrder={6}
+      >
+        <cylinderGeometry args={[0.075, 0.006, 1, 6, 1, true]} />
+        <meshBasicMaterial
+          ref={beamMaterialRef}
+          color="#ffd0b4"
+          transparent
+          opacity={0}
+          side={THREE.DoubleSide}
+          depthWrite={false}
+          blending={THREE.AdditiveBlending}
+          toneMapped={false}
+        />
+      </instancedMesh>
+      <mesh ref={coreRef} position={[0, 0.055, 0]} renderOrder={9}>
+        <sphereGeometry args={[0.105, 24, 24]} />
+        <meshBasicMaterial
+          ref={coreMaterialRef}
+          color="#fff0e5"
+          transparent
+          opacity={0.18}
+          depthWrite={false}
+          blending={THREE.AdditiveBlending}
+          toneMapped={false}
+        />
+      </mesh>
+      <mesh ref={primaryRingRef} position={[0, 0.035, 0]} rotation={[-Math.PI / 2, 0, 0]} renderOrder={8}>
+        <ringGeometry args={[0.22, 0.244, 64]} />
+        <meshBasicMaterial
+          color="#ffc3a9"
+          transparent
+          opacity={0}
+          side={THREE.DoubleSide}
+          depthWrite={false}
+          blending={THREE.AdditiveBlending}
+          toneMapped={false}
+        />
+      </mesh>
+      <mesh ref={secondaryRingRef} position={[0, 0.028, 0]} rotation={[-Math.PI / 2, 0, 0]} renderOrder={7}>
+        <ringGeometry args={[0.39, 0.402, 72]} />
+        <meshBasicMaterial
+          color="#e98968"
+          transparent
+          opacity={0}
+          side={THREE.DoubleSide}
+          depthWrite={false}
+          blending={THREE.AdditiveBlending}
+          toneMapped={false}
+        />
+      </mesh>
     </group>
   )
 }
@@ -448,6 +590,7 @@ function OptimizationWorld({
         <TerrainField />
         <SpatialContours />
         <OptimizationPath reducedMotion={reducedMotion} scrollProgress={scrollProgress} />
+        <ConvergenceField reducedMotion={reducedMotion} scrollProgress={scrollProgress} />
         <GradientVectors />
         <DustField reducedMotion={reducedMotion} scrollProgress={scrollProgress} />
       </group>
