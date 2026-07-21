@@ -14,7 +14,7 @@ export default function AboutSection() {
           <div className={styles.copy}>
             <p>{profile.bio}</p>
             <p>{profile.creatorLine}</p>
-            <nav className={styles.channels} aria-label="Damon around the web">
+            <nav className={styles.channels} aria-label={`${profile.name} around the web`}>
               {socials.map(([label, url]) => (
                 <a key={label} href={url} target="_blank" rel="noreferrer">
                   {label}<i aria-hidden="true">↗</i>

@@ -22,11 +22,11 @@ export async function generateMetadata({ params }: NotePageProps): Promise<Metad
   if (!note) return {}
 
   return {
-    title: `${note.title} — ${profile.shortName}`,
+    title: `${note.title} — ${profile.name}`,
     description: note.excerpt,
     alternates: { canonical: `/notes/${note.slug}` },
     openGraph: {
-      title: `${note.title} — ${profile.shortName}`,
+      title: `${note.title} — ${profile.name}`,
       description: note.excerpt,
       type: 'article',
       publishedTime: note.date,
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: NotePageProps): Promise<Metad
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${note.title} — ${profile.shortName}`,
+      title: `${note.title} — ${profile.name}`,
       description: note.excerpt,
       images: [socialImage],
     },

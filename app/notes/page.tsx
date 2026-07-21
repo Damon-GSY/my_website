@@ -7,18 +7,18 @@ import { socialImage } from '@/lib/metadata'
 import styles from './notes.module.css'
 
 export const metadata: Metadata = {
-  title: `Field Notes — ${profile.shortName}`,
+  title: `Field Notes — ${profile.name}`,
   description: 'Notes on agent systems, post-training, tool use, memory, and evaluation.',
   alternates: { canonical: '/notes' },
   openGraph: {
-    title: `Field Notes — ${profile.shortName}`,
+    title: `Field Notes — ${profile.name}`,
     description: 'Notes on agent systems, post-training, tool use, memory, and evaluation.',
     url: '/notes',
     images: [socialImage],
   },
   twitter: {
     card: 'summary_large_image',
-    title: `Field Notes — ${profile.shortName}`,
+    title: `Field Notes — ${profile.name}`,
     description: 'Notes on agent systems, post-training, tool use, memory, and evaluation.',
     images: [socialImage],
   },

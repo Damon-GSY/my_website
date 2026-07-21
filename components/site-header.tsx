@@ -104,7 +104,7 @@ export default function SiteHeader() {
 
   return (
     <header className="site-header">
-      <a className="site-brand" href={pathname === '/' ? '#top' : '/'} aria-label="Damon, home">
+      <a className="site-brand" href={pathname === '/' ? '#top' : '/'} aria-label={`${profile.name}, home`}>
         <svg className="site-brand__mark" viewBox="0 0 32 32" aria-hidden="true">
           <path d="M7 5v22h6.5C21.2 27 26 22.8 26 16S21.2 5 13.5 5H7Z" />
           <path d="M10.5 22c2.8-1 3.2-4.8 5.3-7 1.8-1.9 3.6-.7 5.9-4.5" />

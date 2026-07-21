@@ -16,7 +16,7 @@ export default function SiteFooter() {
               <a key={label} href={url} target="_blank" rel="noreferrer">{label}</a>
             ))}
           </nav>
-          <span>Hangzhou · UTC+8 · © 2026 {profile.legalName}</span>
+          <span>Hangzhou · UTC+8 · © 2026 {profile.name}</span>
         </div>
       </div>
     </footer>

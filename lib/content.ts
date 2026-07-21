@@ -1,8 +1,8 @@
 export const profile = {
-  name: 'Damon Guo-Siyi',
+  name: 'Damon Guan',
   shortName: 'Damon',
   legalName: 'Shengyue Guan',
-  alternateNames: ['Damon', 'Damon Guo-Siyi'],
+  alternateNames: ['Damon', 'Damon Guan', 'Shengyue Guan'],
   role: 'LLM Algorithm Engineer',
   company: 'Alibaba',
   location: 'Hangzhou, China',

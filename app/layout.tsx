@@ -28,11 +28,11 @@ const cartograph = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL(profile.siteUrl),
-  title: `${profile.shortName} — Agent Systems, Under Control`,
+  title: `${profile.name} — Agent Systems, Under Control`,
   description:
-    `${profile.shortName} is an LLM algorithm engineer at ${profile.company} building reliable agent systems, agentic RL, post-training pipelines, and multi-turn evaluation.`,
-  authors: [{ name: profile.legalName, url: profile.siteUrl }],
-  creator: profile.legalName,
+    `${profile.name} is an LLM algorithm engineer at ${profile.company} building reliable agent systems, agentic RL, post-training pipelines, and multi-turn evaluation.`,
+  authors: [{ name: profile.name, url: profile.siteUrl }],
+  creator: profile.name,
   icons: {
     icon: '/favicon.svg',
   },
@@ -41,14 +41,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: '/',
-    title: `${profile.shortName} — Agent Systems, Under Control`,
+    title: `${profile.name} — Agent Systems, Under Control`,
     description:
-      'Production agent systems, post-training, and evaluation research by Damon Guo-Siyi.',
-    siteName: profile.shortName,
+      `Production agent systems, post-training, and evaluation research by ${profile.name}.`,
+    siteName: profile.name,
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${profile.shortName} — Agent Systems, Under Control`,
+    title: `${profile.name} — Agent Systems, Under Control`,
     description: 'Production agent systems, post-training, and evaluation research.',
   },
 }
@@ -64,7 +64,8 @@ const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   '@id': `${profile.siteUrl}/#person`,
-  name: profile.legalName,
+  name: profile.name,
+  additionalName: profile.legalName,
   alternateName: profile.alternateNames,
   url: profile.siteUrl,
   email: profile.email,

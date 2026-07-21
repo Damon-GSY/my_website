@@ -3,6 +3,7 @@ import { resolve } from 'node:path'
 
 const root = process.cwd()
 const layout = readFileSync(resolve(root, 'app/layout.tsx'), 'utf8')
+const content = readFileSync(resolve(root, 'lib/content.ts'), 'utf8')
 const workPage = readFileSync(resolve(root, 'app/work/[slug]/page.tsx'), 'utf8')
 const notePage = readFileSync(resolve(root, 'app/notes/[slug]/page.tsx'), 'utf8')
 const metadataSource = readFileSync(resolve(root, 'lib/metadata.ts'), 'utf8')
@@ -13,6 +14,10 @@ function requirePattern(source: string, pattern: RegExp, message: string) {
 }
 
 requirePattern(layout, /'@id':\s*`\$\{profile\.siteUrl\}\/#person`/, 'The Person entity has no stable @id.')
+requirePattern(content, /name:\s*'Damon Guan'/, 'The public identity is not Damon Guan.')
+requirePattern(content, /legalName:\s*'Shengyue Guan'/, 'The publication identity is not Shengyue Guan.')
+requirePattern(layout, /name:\s*profile\.name/, 'Structured data does not use Damon Guan as the primary identity.')
+requirePattern(layout, /authors:\s*\[\{\s*name:\s*profile\.name/, 'Page metadata does not use Damon Guan as its author.')
 requirePattern(layout, /subjectOf:[\s\S]*'@type':\s*'ScholarlyArticle'/, 'Published research is not connected to the Person entity.')
 requirePattern(workPage, /'@type':\s*'CreativeWork'/, 'Case-study routes do not expose CreativeWork structured data.')
 requirePattern(notePage, /'@type':\s*'BlogPosting'/, 'Note routes do not expose BlogPosting structured data.')

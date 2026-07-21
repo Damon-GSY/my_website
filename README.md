@@ -1,6 +1,6 @@
 # Damon — Agent systems, under control
 
-Personal portfolio for Damon Guo-Siyi (Shengyue Guan), an LLM Algorithm Engineer working across agentic RL, post-training, evaluation, and production agent systems.
+Personal portfolio for Damon Guan (publication name: Shengyue Guan), an LLM Algorithm Engineer working across agentic RL, post-training, evaluation, and production agent systems.
 
 The homepage moves through a real Three.js optimization landscape before opening into selected work, research, field notes, and Damon's professional trajectory. Content is centralized in `lib/content.ts`; the legacy Vite application is not part of the current runtime.
 

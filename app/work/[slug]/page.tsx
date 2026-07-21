@@ -23,18 +23,18 @@ export async function generateMetadata({ params }: CaseStudyPageProps): Promise<
   if (!project) return {}
 
   return {
-    title: `${project.title} — ${profile.shortName}`,
+    title: `${project.title} — ${profile.name}`,
     description: project.statement,
     alternates: { canonical: `/work/${project.id}` },
     openGraph: {
-      title: `${project.title} — ${profile.shortName}`,
+      title: `${project.title} — ${profile.name}`,
       description: project.statement,
       url: `/work/${project.id}`,
       images: [socialImage],
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${project.title} — ${profile.shortName}`,
+      title: `${project.title} — ${profile.name}`,
       description: project.statement,
       images: [socialImage],
     },
