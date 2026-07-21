@@ -4,9 +4,9 @@ export default function SiteFooter() {
   return (
     <footer className="site-footer">
       <div className="section-shell">
-        <p className="section-eyebrow">Contact</p>
+        <p className="section-eyebrow">Contact / agent systems · evaluation · post-training</p>
         <a className="footer-cta" href={`mailto:${profile.email}`}>
-          Let&apos;s compare traces.<span aria-hidden="true">↗</span>
+          Bring me the hard failure.<span aria-hidden="true">↗</span>
         </a>
 
         <div className="footer-bottom">

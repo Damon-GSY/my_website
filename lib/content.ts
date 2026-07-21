@@ -13,7 +13,7 @@ export const profile = {
   bio:
     'I am an AI researcher and algorithm engineer working where model behavior meets operating reality. At Alibaba, I build post-training, evaluation, and agentic RL systems for workflows where a plausible answer is not enough.',
   creatorLine:
-    'Outside the training loop, I turn hard-won engineering lessons into practical AI writing and videos for YouTube and Bilibili.',
+    'Outside the training loop, I turn hard-won engineering lessons into public field notes and research-linked essays for other builders.',
   principles: [
     {
       index: 'P/01',
@@ -35,12 +35,12 @@ export const profile = {
     ['Base', 'Hangzhou · UTC+8'],
     ['Focus', 'Agentic RL · post-training'],
     ['Education', 'NUS Top 5% · UNSW Top 3%'],
-    ['Publishing', 'YouTube · Bilibili'],
+    ['Publishing', '7 public field notes'],
   ],
   heroProofs: [
     ['Current', 'Alibaba · LLM Algorithm Engineer'],
     ['Research', '2× first author · ACL Findings'],
-    ['Public work', 'YouTube · Bilibili'],
+    ['Public work', '7 field notes · research-linked essays'],
   ],
 }
 
@@ -63,8 +63,8 @@ export const heroChapters = [
     index: '03 / Creator',
     title: 'I publish the operating lessons, not just the outcomes.',
     description:
-      'Field notes and videos turn agent evaluation, tool interfaces, memory, and post-training into methods other builders can inspect and reuse.',
-    evidence: '7 field notes · YouTube / Bilibili · practical AI systems',
+      'Field notes turn agent evaluation, tool interfaces, memory, and post-training into methods other builders can inspect and reuse.',
+    evidence: '7 field notes · research-linked essays · practical AI systems',
   },
 ] as const
 
@@ -118,6 +118,10 @@ export const work = [
     },
     tags: ['12 scenarios', 'progressive confirmation', 'human handoff'],
     visual: 'risk',
+    relatedNote: {
+      label: 'Building agents that actually work',
+      href: '/notes/building-agents-that-actually-work',
+    },
   },
   {
     id: 'tool-resolver',
@@ -161,6 +165,10 @@ export const work = [
     },
     tags: ['meta tool', 'dynamic registry', 'trace evaluation'],
     visual: 'tools',
+    relatedNote: {
+      label: 'Tool use is a product interface',
+      href: '/notes/tool-use-is-a-product-interface',
+    },
   },
   {
     id: 'domain-model',
@@ -204,6 +212,10 @@ export const work = [
     },
     tags: ['knowledge QA', 'tool use', 'capability slices'],
     visual: 'benchmark',
+    relatedNote: {
+      label: 'Post-training lessons from production',
+      href: '/notes/post-training-lessons-from-production',
+    },
   },
   {
     id: 'reward-system',
@@ -247,6 +259,10 @@ export const work = [
     },
     tags: ['GRPO', 'hierarchical rewards', 'multi-task'],
     visual: 'reward',
+    relatedNote: {
+      label: 'Post-training lessons from production',
+      href: '/notes/post-training-lessons-from-production',
+    },
   },
 ] as const
 
@@ -600,6 +616,37 @@ export const experience = [
       'Graduated with an 85/100 GPA in the top three percent of the major.',
       'Academic Scholarship recipient and Dean’s List student.',
     ],
+  },
+] as const
+
+export const trajectory = [
+  {
+    index: '01',
+    period: '2019—2022',
+    city: 'Sydney',
+    title: 'Computer science foundation.',
+    evidence: 'UNSW · 85/100 · Top 3%',
+  },
+  {
+    index: '02',
+    period: '2023—2025',
+    city: 'Singapore',
+    title: 'Statistics met edge deployment.',
+    evidence: 'NUS Top 5% · AI Visual <150 ms',
+  },
+  {
+    index: '03',
+    period: '2024—2025',
+    city: 'Beijing',
+    title: 'Forecasting, memory, and Copilot evaluation.',
+    evidence: 'Meituan → Microsoft Research Asia',
+  },
+  {
+    index: '04',
+    period: '2025—Now',
+    city: 'Hangzhou',
+    title: 'Production agent systems.',
+    evidence: 'Alibaba · 12 scenarios · 100+ tools',
   },
 ] as const
 

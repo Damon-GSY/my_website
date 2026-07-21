@@ -12,6 +12,7 @@ try { mobile = readFileSync(mobilePath, 'utf8') } catch {}
 const caseCss = readFileSync(resolve(root, 'app/work/[slug]/case-study.module.css'), 'utf8')
 const notesCss = readFileSync(resolve(root, 'app/notes/notes.module.css'), 'utf8')
 const scene = readFileSync(resolve(root, 'components/optimization-landscape-scene.tsx'), 'utf8')
+const header = readFileSync(resolve(root, 'components/site-header.tsx'), 'utf8')
 const findings: string[] = []
 
 function requirePattern(source: string, pattern: RegExp, message: string) {
@@ -38,6 +39,9 @@ requirePattern(page, /href="\/assets\/optimization-signature-mobile\.webp"[\s\S]
 requirePattern(scene, /renderProfile = `\$\{assetResolution\}:\$\{compactViewport[\s\S]*readyProfile === renderProfile[\s\S]*key=\{renderProfile\}/, 'Changing WebGL performance profiles does not rebuild context creation settings behind a loading-safe profile key.')
 requirePattern(scene, /setProfile\(\(current\)[\s\S]*current\.assetResolution === next\.assetResolution[\s\S]*current\.compactViewport === next\.compactViewport[\s\S]*current\.portraitComposition === next\.portraitComposition[\s\S]*\? current/, 'Resize events rerender the WebGL tree even when its responsive profile did not change.')
 requirePattern(mobile, /@media \(pointer: coarse\) and \(max-height: 540px\)[\s\S]*\.hero__viewport[\s\S]*min-height:\s*0/, 'Short landscape phones retain the desktop 48rem sticky viewport floor.')
+requirePattern(mobile, /@media \(min-width: 721px\) and \(max-height: 760px\)[\s\S]*\.hero__content[\s\S]*min-height:\s*100svh/, 'Short fine-pointer desktop screens have no compact hero layout.')
+requirePattern(header, /<\/header>[\s\S]*className=\{`site-mobile-menu/, 'The fixed mobile dialog is nested inside a backdrop-filtered header containing block.')
+requirePattern(header, /site-mobile-menu__close[\s\S]*aria-label="Close navigation"/, 'The full-viewport mobile dialog has no close control inside its focus trap.')
 
 console.log(`Mobile excellence judge: ${findings.length === 0 ? 'PASS' : 'FAIL'}`)
 for (const finding of findings) console.log(`- ${finding}`)

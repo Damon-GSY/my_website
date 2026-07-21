@@ -11,13 +11,24 @@ import {
   useSpring,
   useTransform,
 } from 'framer-motion'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { heroChapters, profile } from '@/lib/content'
 
 const OptimizationLandscapeScene = dynamic(() => import('@/components/optimization-landscape-scene'), {
   ssr: false,
   loading: () => <div className="hero__scene-fallback" aria-hidden="true" />,
 })
+
+const subscribeToClient = () => () => undefined
+const getClientSnapshot = () => {
+  const hints = navigator as Navigator & {
+    connection?: { saveData?: boolean }
+    deviceMemory?: number
+  }
+  const hasEnoughMemory = hints.deviceMemory === undefined || hints.deviceMemory >= 4
+  return !hints.connection?.saveData && hasEnoughMemory
+}
+const getServerSnapshot = () => false
 
 type ChapterMotion = {
   range: [number, number, number, number]
@@ -64,6 +75,11 @@ export default function Hero() {
   const [introInteractive, setIntroInteractive] = useState(true)
   const introInteractiveRef = useRef(true)
   const reduceMotion = useReducedMotion()
+  const sceneCapable = useSyncExternalStore(
+    subscribeToClient,
+    getClientSnapshot,
+    getServerSnapshot,
+  )
   const sceneActive = useInView(sectionRef, { margin: '15% 0px' })
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -99,11 +115,15 @@ export default function Hero() {
     <section ref={sectionRef} className="hero" id="top">
       <div className="hero__viewport">
         <motion.div className="hero__scene" style={{ opacity: sceneOpacity }} aria-hidden="true">
-          <OptimizationLandscapeScene
-            active={sceneActive}
-            reducedMotion={Boolean(reduceMotion)}
-            scrollProgress={storyProgress}
-          />
+          {sceneCapable && !reduceMotion ? (
+            <OptimizationLandscapeScene
+              active={sceneActive}
+              reducedMotion={false}
+              scrollProgress={storyProgress}
+            />
+          ) : (
+            <div className="hero__scene-fallback" aria-hidden="true" />
+          )}
         </motion.div>
         <div className="hero__grid" aria-hidden="true" />
         <div className="hero__wash" aria-hidden="true" />

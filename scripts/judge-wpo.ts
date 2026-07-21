@@ -3,6 +3,7 @@ import { resolve } from 'node:path'
 
 const root = process.cwd()
 const scene = readFileSync(resolve(root, 'components/optimization-landscape-scene.tsx'), 'utf8')
+const hero = readFileSync(resolve(root, 'components/hero.tsx'), 'utf8')
 const page = readFileSync(resolve(root, 'app/page.tsx'), 'utf8')
 const effectsPath = resolve(root, 'components/optimization-post-effects.tsx')
 const findings: string[] = []
@@ -23,8 +24,14 @@ if (!/frameloop="demand"/.test(scene)) {
 if (!/function ScrollFrameDriver[\s\S]*scrollProgress\.on\('change', invalidate\)/.test(scene)) {
   findings.push('Demand rendering is not driven by scroll changes.')
 }
-if (!/useSpring\(scrollYProgress,[\s\S]*stiffness:[\s\S]*damping:[\s\S]*restDelta:/.test(readFileSync(resolve(root, 'components/hero.tsx'), 'utf8'))) {
+if (!/useSpring\(scrollYProgress,[\s\S]*stiffness:[\s\S]*damping:[\s\S]*restDelta:/.test(hero)) {
   findings.push('Demand rendering is not driven by a bounded spring clock.')
+}
+if (!/sceneCapable && !reduceMotion[\s\S]*<OptimizationLandscapeScene[\s\S]*hero__scene-fallback/.test(hero)) {
+  findings.push('Reduced-motion and server-rendered clients still instantiate the WebGL scene.')
+}
+if (!/connection\?: \{ saveData\?: boolean \}[\s\S]*deviceMemory\?: number[\s\S]*hasEnoughMemory/.test(hero)) {
+  findings.push('Data-saving and low-memory clients have no static hero capability gate.')
 }
 if (/remainingFrames/.test(scene)) {
   findings.push('Demand rendering still uses a refresh-rate-dependent frame budget.')

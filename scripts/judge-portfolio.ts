@@ -52,6 +52,7 @@ requirePattern(files.research, /paper\.description[\s\S]*paper\.topics[\s\S]*pap
 requirePattern(files.notes, /featured\.title[\s\S]*latest\.map[\s\S]*\/notes/, 'Personal writing is absent from the homepage narrative.')
 requirePattern(files.about, /profile\.name[\s\S]*profile\.bio[\s\S]*profile\.principles[\s\S]*profile\.facts[\s\S]*education\.map/, 'Biography lacks a dominant identity, working philosophy, or academic foundation.')
 requirePattern(files.about, /education\.map\(\(entry\)[\s\S]*entry\.highlights\.map/, 'Academic history is compressed into school names without personal evidence.')
+requirePattern(files.about, /trajectory\.map\(\(stop\)[\s\S]*stop\.city[\s\S]*stop\.evidence/, 'The biography lacks a continuous, evidence-led personal trajectory.')
 banPattern(files.about, /experience\.map/, 'The biography repeats the complete career archive already shown through Work and Earlier Systems.')
 requirePattern(files.about, /socials\.map/, 'Biography hides the creator channels that make the portfolio personal.')
 requirePattern(files.about, /<BlurText[\s\S]*profile\.name/, 'React Bits motion is not integrated into the personal identity moment.')
@@ -59,6 +60,7 @@ requirePattern(files.footer, /mailto:[\s\S]*socials\.map/, 'The site has no comp
 requirePattern(files.content, /bio:/, 'Identity data lacks a personal biography.')
 requirePattern(files.content, /principles:/, 'Identity data lacks working principles.')
 requirePattern(files.content, /creatorLine:/, 'Identity data hides the creator practice.')
+requirePattern(files.content, /7 field notes · research-linked essays/, 'Creator proof is not grounded in the public writing actually available on the site.')
 requirePattern(files.content, /530 real-world samples/, 'SupChain-Bench evidence from main is missing from the personal narrative.')
 const experienceEvidenceCount = files.content.match(/\n\s+highlights:/g)?.length ?? 0
 if (experienceEvidenceCount < 8) failures.push(`Expected at least 8 evidenced trajectory records, found ${experienceEvidenceCount}.`)

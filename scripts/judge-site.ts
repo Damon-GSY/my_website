@@ -50,7 +50,7 @@ requirePattern(scene, /lookRail\.getPointAt[\s\S]*camera\.lookAt/, 'The WebGL ca
 banPattern(scene, /optimization-(?:depth|foreground|light)-/, 'Opaque images from incompatible viewpoints are stacked as fake depth.')
 requirePattern(work, /signatureProject[\s\S]*projectIndex\.map[\s\S]*project\.statement[\s\S]*project\.details\[0\][\s\S]*project\.outcome\.value[\s\S]*project\.outcome\.evidence/, 'The compact work index no longer shows a problem, key decision, and structured outcome evidence.')
 requirePattern(earlier, /earlierSystems\.map/, 'The homepage no longer exposes Damon’s earlier systems work.')
-requirePattern(research, /research\.map[\s\S]*paper\.description[\s\S]*paper\.metric/, 'Research records are incomplete.')
+requirePattern(research, /function ResearchRecord[\s\S]*paper\.description[\s\S]*paper\.metric[\s\S]*research\.map/, 'Research records are incomplete.')
 requirePattern(research, /paper\.topics\.map/, 'Research records no longer expose their evaluation dimensions.')
 requirePattern(notesSection, /notes\.slice[\s\S]*\/notes\/\$\{note\.slug\}/, 'Field notes are missing from the personal narrative.')
 requirePattern(about, /education\.map/, 'The biography no longer shows Damon’s academic foundation.')

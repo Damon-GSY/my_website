@@ -63,6 +63,50 @@
   }
 }
 
+@media (min-width: 721px) and (max-height: 760px) {
+  .hero__content {
+    grid-template-rows: auto auto 1fr auto;
+    min-height: 100svh;
+    padding: 5.7rem 0 1rem;
+  }
+
+  .hero h1 {
+    margin-top: clamp(1rem, 3vh, 2rem);
+    font-size: clamp(4.4rem, 9.4vw, 7.6rem);
+  }
+
+  .hero__lower {
+    gap: 2rem;
+    margin: 1rem 0 1.4rem;
+  }
+
+  .hero__lower > p {
+    font-size: 0.72rem;
+    line-height: 1.55;
+  }
+
+  .hero__journey,
+  .hero__journey--creator {
+    bottom: 1.8rem;
+  }
+}
+
+@media (min-width: 721px) and (max-height: 620px) {
+  .hero__content {
+    grid-template-rows: auto auto 1fr;
+    padding-top: 5.2rem;
+  }
+
+  .hero__foot,
+  .hero__journey p {
+    display: none;
+  }
+
+  .hero__lower {
+    margin-bottom: 0;
+  }
+}
+
 @media (pointer: coarse) and (max-height: 540px) {
   .site-mobile-menu {
     grid-template-rows: 1fr;

@@ -137,6 +137,189 @@
   line-height: 1.65;
 }
 
+.trajectory {
+  margin-top: clamp(8rem, 14vw, 14rem);
+  border-top: 1px solid var(--line-strong);
+}
+
+.trajectoryHead {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.25rem;
+  min-height: clamp(12rem, 17vw, 17rem);
+  align-items: end;
+  padding: 1.25rem 0 2.5rem;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.trajectoryHead > span {
+  grid-column: 1 / 4;
+  align-self: start;
+  color: var(--accent);
+  font-size: 0.62rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.trajectoryHead h3 {
+  grid-column: 3 / 9;
+  max-width: 16ch;
+  margin: 0;
+  font-size: clamp(2.5rem, 4.8vw, 5.6rem);
+  font-weight: 200;
+  line-height: 0.9;
+  letter-spacing: -0.065em;
+  text-wrap: balance;
+}
+
+.trajectoryHead > p {
+  grid-column: 9 / 13;
+  max-width: 31rem;
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 0.76rem;
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+
+.route {
+  position: relative;
+  min-height: clamp(27rem, 35vw, 35rem);
+  overflow: hidden;
+  border-bottom: 1px solid var(--line-strong);
+  background:
+    linear-gradient(rgba(240, 238, 233, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240, 238, 233, 0.035) 1px, transparent 1px);
+  background-size: 100% 4rem, 8.333% 100%;
+}
+
+.route svg {
+  position: absolute;
+  inset: 2rem 0;
+  width: 100%;
+  height: calc(100% - 4rem);
+  overflow: visible;
+}
+
+.route path {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.routeBase {
+  stroke: rgba(240, 238, 233, 0.12);
+  stroke-width: 1;
+}
+
+.routeProgress {
+  stroke: var(--accent);
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  stroke-width: 1.5;
+  filter: drop-shadow(0 0 6px rgba(217, 119, 87, 0.55));
+}
+
+.route circle {
+  fill: var(--bg);
+  stroke: var(--accent);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.routeNodes {
+  position: absolute;
+  inset: 0;
+}
+
+.routeNodes article {
+  position: absolute;
+  width: min(18rem, 22vw);
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--line-strong);
+}
+
+.routeNodes article:nth-child(1) {
+  bottom: 1.4rem;
+  left: 0;
+}
+
+.routeNodes article:nth-child(2) {
+  top: 2.2rem;
+  left: 27%;
+}
+
+.routeNodes article:nth-child(3) {
+  top: 43%;
+  left: 59%;
+}
+
+.routeNodes article:nth-child(4) {
+  top: 1.2rem;
+  right: 0;
+}
+
+.routeNodes span,
+.routeNodes small {
+  color: var(--muted);
+  font-size: 0.62rem;
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.routeNodes span {
+  color: var(--accent);
+}
+
+.routeNodes h4 {
+  margin: 1.2rem 0 0;
+  font-size: clamp(1.9rem, 3.2vw, 3.8rem);
+  font-weight: 200;
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+}
+
+.routeNodes p {
+  max-width: 24ch;
+  margin: 0.75rem 0 0;
+  color: var(--text-soft);
+  font-size: 0.72rem;
+  line-height: 1.55;
+}
+
+.routeNodes small {
+  display: block;
+  margin-top: 0.75rem;
+  color: var(--muted);
+  text-transform: none;
+}
+
+@supports (animation-timeline: view()) {
+  .routeProgress {
+    stroke-dashoffset: 1;
+    animation: drawTrajectory linear both;
+    animation-range: entry 12% cover 62%;
+    animation-timeline: view();
+  }
+
+  .routeNodes article {
+    animation: trajectoryNode both var(--ease);
+    animation-range: entry 8% entry 42%;
+    animation-timeline: view();
+  }
+}
+
+@keyframes drawTrajectory {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes trajectoryNode {
+  from {
+    opacity: 0.28;
+    transform: translateY(1.5rem);
+  }
+}
+
 .educationHead {
   display: grid;
   grid-template-columns: 0.72fr 1.5fr 0.5fr;
@@ -192,6 +375,97 @@
 }
 
 @media (max-width: 720px) {
+  .trajectory {
+    margin-top: 7rem;
+  }
+
+  .trajectoryHead {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    min-height: 0;
+    padding-bottom: 3rem;
+  }
+
+  .trajectoryHead > span,
+  .trajectoryHead h3,
+  .trajectoryHead > p {
+    grid-column: 1;
+  }
+
+  .trajectoryHead h3 {
+    max-width: 12ch;
+    font-size: clamp(3rem, 14vw, 5rem);
+  }
+
+  .trajectoryHead > p {
+    font-size: 0.82rem;
+  }
+
+  .route {
+    min-height: 0;
+    padding: 2rem 0 1rem 2rem;
+    background-size: 100% 4rem, 100% 100%;
+  }
+
+  .route::before {
+    position: absolute;
+    top: 2rem;
+    bottom: 2rem;
+    left: 0.25rem;
+    width: 1px;
+    background: linear-gradient(var(--accent), rgba(217, 119, 87, 0.18));
+    content: '';
+  }
+
+  .route svg {
+    display: none;
+  }
+
+  .routeNodes {
+    position: relative;
+    display: grid;
+  }
+
+  .routeNodes article,
+  .routeNodes article:nth-child(1),
+  .routeNodes article:nth-child(2),
+  .routeNodes article:nth-child(3),
+  .routeNodes article:nth-child(4) {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    width: 100%;
+    min-height: 13rem;
+    padding: 1rem 0 2.5rem;
+  }
+
+  .routeNodes article::before {
+    position: absolute;
+    top: 0.82rem;
+    left: -2.05rem;
+    width: 0.55rem;
+    height: 0.55rem;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    background: var(--bg);
+    content: '';
+  }
+
+  .routeNodes span,
+  .routeNodes small {
+    font-size: 0.68rem;
+  }
+
+  .routeNodes h4 {
+    font-size: clamp(2.8rem, 13vw, 4.8rem);
+  }
+
+  .routeNodes p {
+    font-size: 0.8rem;
+  }
+
   .educationHead {
     grid-template-columns: 1fr;
     gap: 1.25rem;

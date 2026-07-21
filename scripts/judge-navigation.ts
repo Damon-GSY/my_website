@@ -18,7 +18,7 @@ requirePattern(header, /document\.body\.style\.overflow = 'hidden'/, 'Open mobil
 requirePattern(header, /matchMedia\('\(min-width: 721px\)'\)[\s\S]*event\.matches[\s\S]*setMenuOpen\(false\)/, 'Crossing to the desktop breakpoint can leave the page scroll-locked behind a hidden mobile menu.')
 requirePattern(header, /tabIndex=\{menuOpen \? 0 : -1\}/, 'Closed mobile navigation leaves hidden links in the tab order.')
 requirePattern(header, /event\.key === 'Tab'[\s\S]*focusables[\s\S]*\.focus\(\)/, 'Modal navigation does not trap keyboard focus.')
-requirePattern(header, /const toggle = toggleRef\.current[\s\S]*toggle\?\.focus\(\)/, 'Closing the modal navigation does not restore trigger focus.')
+requirePattern(header, /const toggle = toggleRef\.current[\s\S]*toggle\?\.isConnected[\s\S]*toggle\.focus\(\{ preventScroll: true \}\)/, 'Closing the modal navigation does not safely restore trigger focus.')
 requirePattern(header, /const navItems = \[[\s\S]*id: 'work'[\s\S]*id: 'about'/, 'Navigation sections have no single typed source of truth.')
 requirePattern(header, /if \(routeItem\)[\s\S]*return[\s\S]*setActiveSection\(''\)[\s\S]*new IntersectionObserver/, 'Returning to the homepage can leave a detail-route navigation item active.')
 const navMapCount = header.match(/navItems\s*\.map/g)?.length ?? 0

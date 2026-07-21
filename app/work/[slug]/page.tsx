@@ -202,6 +202,18 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
               <span>Disclosure</span>
               {project.proof.disclosure}
             </p>
+
+            <aside className={styles.notebook} aria-label="Related public field note">
+              <div>
+                <span>From Damon&apos;s notebook</span>
+                <p>The production details stay bounded; the reasoning method is public.</p>
+              </div>
+              <Link href={project.relatedNote.href}>
+                <small>Read the related field note</small>
+                <strong>{project.relatedNote.label}</strong>
+                <i aria-hidden="true">→</i>
+              </Link>
+            </aside>
           </div>
         </section>
 

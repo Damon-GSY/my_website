@@ -418,6 +418,80 @@
   line-height: 1.7;
 }
 
+.notebook {
+  display: grid;
+  grid-template-columns: 4fr 8fr;
+  gap: 1.25rem;
+  margin-top: clamp(5rem, 8vw, 8rem);
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.notebook > div,
+.notebook > a {
+  min-height: 12rem;
+  padding: 1.25rem 0 1.5rem;
+}
+
+.notebook > div {
+  display: grid;
+  align-content: space-between;
+  border-right: 1px solid var(--line);
+}
+
+.notebook span,
+.notebook small {
+  color: var(--accent);
+  font-size: 0.61rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.notebook > div p {
+  max-width: 28ch;
+  margin: 3rem 1.25rem 0 0;
+  color: var(--text-soft);
+  font-size: 0.74rem;
+  line-height: 1.65;
+}
+
+.notebook > a {
+  position: relative;
+  display: grid;
+  align-content: space-between;
+  padding-left: clamp(1.5rem, 4vw, 4rem);
+  transition: color 260ms var(--ease), padding 320ms var(--ease);
+}
+
+.notebook > a:hover,
+.notebook > a:focus-visible {
+  padding-left: clamp(2rem, 5vw, 5rem);
+  color: var(--accent);
+}
+
+.notebook small {
+  color: var(--muted);
+}
+
+.notebook strong {
+  max-width: 22ch;
+  margin-top: 2rem;
+  font-size: clamp(1.8rem, 3.4vw, 4rem);
+  font-weight: 200;
+  line-height: 0.92;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+.notebook i {
+  position: absolute;
+  right: 0;
+  bottom: 1.5rem;
+  color: var(--accent);
+  font-style: normal;
+}
+
 .next {
   padding: clamp(7rem, 12vw, 12rem) 0;
   border-top: 1px solid var(--line);
@@ -663,13 +737,35 @@
 
   .evidenceProtocol span,
   .evidenceProtocol small,
-  .disclosure span {
+  .disclosure span,
+  .notebook span,
+  .notebook small {
     font-size: 0.68rem;
   }
 
   .disclosure {
     grid-template-columns: 1fr;
     font-size: 0.76rem;
+  }
+
+  .notebook {
+    grid-template-columns: 1fr;
+  }
+
+  .notebook > div {
+    min-height: 9rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .notebook > a {
+    min-height: 14rem;
+    padding-left: 0;
+  }
+
+  .notebook > a:hover,
+  .notebook > a:focus-visible {
+    padding-left: 0.5rem;
   }
 
   .next a {

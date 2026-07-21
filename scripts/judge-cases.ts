@@ -24,6 +24,7 @@ const proofCount = workBlock.match(/\n\s+proof:/g)?.length ?? 0
 const constraintTitleCount = workBlock.match(/\n\s+constraintTitle:/g)?.length ?? 0
 const visualCaptionCount = workBlock.match(/\n\s+visualCaption:/g)?.length ?? 0
 const evidenceTitleCount = workBlock.match(/\n\s+evidenceTitle:/g)?.length ?? 0
+const relatedNoteCount = workBlock.match(/\n\s+relatedNote:/g)?.length ?? 0
 if (contextCount !== 4) failures.push(`Expected 4 project contexts, found ${contextCount}.`)
 if (principleCount !== 4) failures.push(`Expected 4 project principles, found ${principleCount}.`)
 if (ownershipCount !== 4) failures.push(`Expected 4 personal ownership records, found ${ownershipCount}.`)
@@ -33,6 +34,7 @@ if (proofCount !== 4) failures.push(`Expected 4 evidence protocols, found ${proo
 if (constraintTitleCount !== 4) failures.push(`Expected 4 project-specific constraint titles, found ${constraintTitleCount}.`)
 if (visualCaptionCount !== 4) failures.push(`Expected 4 project-specific visual captions, found ${visualCaptionCount}.`)
 if (evidenceTitleCount !== 4) failures.push(`Expected 4 project-specific evidence titles, found ${evidenceTitleCount}.`)
+if (relatedNoteCount !== 4) failures.push(`Expected 4 public reasoning links from confidential case studies, found ${relatedNoteCount}.`)
 
 requirePattern(workBlock, /id: 'tool-resolver'[\s\S]*value: '≈90%'[\s\S]*label: 'manual ticket handling'[\s\S]*Internal operational measurement[\s\S]*100 internal tools/, 'Tool outcome lacks an approximate value, internal measurement type, or supported scope.')
 requirePattern(workBlock, /id: 'domain-model'[\s\S]*value: 'Internal best'[\s\S]*Frozen internal benchmark/, 'The domain model still implies public SOTA instead of a frozen internal comparison.')
@@ -46,6 +48,7 @@ requirePattern(page, /project\.visualCaption[\s\S]*project\.constraintTitle[\s\S
 requirePattern(page, /project\.ownership[\s\S]*project\.flow\.map/, 'Case studies do not show what Damon personally owned or how the system moves.')
 requirePattern(page, /project\.outcome\.value[\s\S]*project\.outcome\.label[\s\S]*project\.outcome\.evidence/, 'Case studies do not expose structured outcome evidence.')
 requirePattern(page, /project\.proof\.baseline[\s\S]*project\.proof\.intervention[\s\S]*project\.proof\.result[\s\S]*project\.proof\.scope[\s\S]*project\.proof\.disclosure/, 'Case studies do not explain baseline, intervention, result, scope, and disclosure.')
+requirePattern(page, /From Damon[\s\S]*project\.relatedNote\.href[\s\S]*project\.relatedNote\.label/, 'Confidential case studies do not connect to Damon’s public reasoning record.')
 requirePattern(page, /project\.outcome\.value\.length > 4[\s\S]*styles\.outcomeWord/, 'Long qualitative outcomes have no overflow-safe typographic treatment.')
 requirePattern(page, /nextProject[\s\S]*Next case/, 'Case studies end without a next-project route.')
 requirePattern(workSection, /href=\{`\/work\/\$\{project\.id\}`\}/, 'Homepage projects do not link to their case studies.')

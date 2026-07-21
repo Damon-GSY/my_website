@@ -19,6 +19,7 @@ export default function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
   const toggleRef = useRef<HTMLButtonElement>(null)
+  const closeRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const routeItem = navItems.find(
@@ -70,12 +71,10 @@ export default function SiteHeader() {
       }
 
       if (event.key === 'Tab') {
-        const menuLinks = Array.from(
-          menuRef.current?.querySelectorAll<HTMLElement>('a[href]:not([tabindex="-1"])') ?? [],
+        const menuControls = Array.from(
+          menuRef.current?.querySelectorAll<HTMLElement>('button:not([tabindex="-1"]), a[href]:not([tabindex="-1"])') ?? [],
         )
-        const focusables = [toggle, ...menuLinks].filter(
-          (element): element is HTMLElement => Boolean(element),
-        )
+        const focusables = menuControls
         const first = focusables[0]
         const last = focusables[focusables.length - 1]
 
@@ -91,57 +90,59 @@ export default function SiteHeader() {
 
     document.body.style.overflow = 'hidden'
     document.addEventListener('keydown', handleKeyDown)
-    menuRef.current?.querySelector<HTMLElement>('a[href]:not([tabindex="-1"])')?.focus({ preventScroll: true })
+    closeRef.current?.focus({ preventScroll: true })
 
     return () => {
       document.body.style.overflow = previousOverflow
       document.removeEventListener('keydown', handleKeyDown)
-      toggle?.focus()
+      if (toggle?.isConnected) toggle.focus({ preventScroll: true })
     }
   }, [menuOpen])
 
   const homeAnchor = pathname === '/' ? '' : '/'
 
   return (
-    <header className="site-header">
-      <a className="site-brand" href={pathname === '/' ? '#top' : '/'} aria-label={`${profile.name}, home`}>
-        <svg className="site-brand__mark" viewBox="0 0 32 32" aria-hidden="true">
-          <path d="M7 5v22h6.5C21.2 27 26 22.8 26 16S21.2 5 13.5 5H7Z" />
-          <path d="M10.5 22c2.8-1 3.2-4.8 5.3-7 1.8-1.9 3.6-.7 5.9-4.5" />
-          <circle cx="21.7" cy="10.5" r="1.3" />
-        </svg>
-        <span>Damon</span>
-        <small>Agent systems</small>
-      </a>
+    <>
+      <header className="site-header">
+        <a className="site-brand" href={pathname === '/' ? '#top' : '/'} aria-label={`${profile.name}, home`}>
+          <svg className="site-brand__mark" viewBox="0 0 32 32" aria-hidden="true">
+            <path d="M7 5v22h6.5C21.2 27 26 22.8 26 16S21.2 5 13.5 5H7Z" />
+            <path d="M10.5 22c2.8-1 3.2-4.8 5.3-7 1.8-1.9 3.6-.7 5.9-4.5" />
+            <circle cx="21.7" cy="10.5" r="1.3" />
+          </svg>
+          <span>Damon</span>
+          <small>Agent systems</small>
+        </a>
 
-      <nav className="site-nav" aria-label="Primary navigation">
-        {navItems.map((item) => (
-          <a
-            key={item.id}
-            href={`${homeAnchor}${item.href}`}
-            aria-current={activeSection === item.id ? 'location' : undefined}
-          >
-            {item.label}
-          </a>
-        ))}
-      </nav>
+        <nav className="site-nav" aria-label="Primary navigation">
+          {navItems.map((item) => (
+            <a
+              key={item.id}
+              href={`${homeAnchor}${item.href}`}
+              aria-current={activeSection === item.id ? 'location' : undefined}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
 
-      <a className="site-contact" href={`mailto:${profile.email}`}>
-        <i aria-hidden="true" /> Contact
-      </a>
+        <a className="site-contact" href={`mailto:${profile.email}`}>
+          <i aria-hidden="true" /> Contact
+        </a>
 
-      <button
-        ref={toggleRef}
-        className={`site-menu-toggle${menuOpen ? ' is-open' : ''}`}
-        type="button"
-        aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}
-        aria-expanded={menuOpen}
-        aria-controls="mobile-navigation"
-        onClick={() => setMenuOpen((open) => !open)}
-      >
-        <span />
-        <span />
-      </button>
+        <button
+          ref={toggleRef}
+          className={`site-menu-toggle${menuOpen ? ' is-open' : ''}`}
+          type="button"
+          aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-navigation"
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <span />
+          <span />
+        </button>
+      </header>
 
       <div
         ref={menuRef}
@@ -152,6 +153,18 @@ export default function SiteHeader() {
         aria-label="Mobile navigation"
         aria-hidden={!menuOpen}
       >
+        <button
+          ref={closeRef}
+          className="site-mobile-menu__close"
+          type="button"
+          aria-label="Close navigation"
+          tabIndex={menuOpen ? 0 : -1}
+          onClick={() => setMenuOpen(false)}
+        >
+          <span />
+          <span />
+        </button>
+
         <nav aria-label="Mobile primary navigation">
           {navItems.map((item, index) => (
             <a
@@ -170,6 +183,6 @@ export default function SiteHeader() {
           <a href={`mailto:${profile.email}`} tabIndex={menuOpen ? 0 : -1}>{profile.email}</a>
         </div>
       </div>
-    </header>
+    </>
   )
 }
