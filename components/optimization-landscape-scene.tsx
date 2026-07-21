@@ -605,6 +605,44 @@ function AtmosphericBackdrop({
   )
 }
 
+function OptimizationCoreBackdrop({
+  reducedMotion,
+  scrollProgress,
+}: SceneMotionProps) {
+  const coreRef = useRef<THREE.MeshBasicMaterial>(null)
+  const core = useLoader(THREE.TextureLoader, '/assets/optimization-core-midjourney.webp')
+
+  useEffect(() => {
+    core.colorSpace = THREE.SRGBColorSpace
+    core.minFilter = THREE.LinearMipmapLinearFilter
+    core.magFilter = THREE.LinearFilter
+    core.needsUpdate = true
+  }, [core])
+
+  useFrame((_, delta) => {
+    if (!coreRef.current) return
+    const progress = reducedMotion ? 0 : scrollProgress.get()
+    const reveal = THREE.MathUtils.smoothstep(progress, 0.44, 0.56)
+    const release = 1 - THREE.MathUtils.smoothstep(progress, 0.69, 0.78)
+    const targetOpacity = reducedMotion ? 0 : reveal * release * 0.36
+    coreRef.current.opacity = damp(coreRef.current.opacity, targetOpacity, delta, 3.2)
+  })
+
+  return (
+    <mesh position={[0.82, 1.02, -11.74]} renderOrder={-2}>
+      <planeGeometry args={[BACKPLATE_WIDTH, BACKPLATE_HEIGHT]} />
+      <meshBasicMaterial
+        ref={coreRef}
+        map={core}
+        transparent
+        opacity={0}
+        depthWrite={false}
+        toneMapped={false}
+      />
+    </mesh>
+  )
+}
+
 function OptimizationWorld({
   assetResolution,
   portraitComposition,
@@ -645,6 +683,12 @@ function OptimizationWorld({
         scrollProgress={scrollProgress}
         onReady={onReady}
       />
+      {!portraitComposition && (
+        <OptimizationCoreBackdrop
+          reducedMotion={reducedMotion}
+          scrollProgress={scrollProgress}
+        />
+      )}
       <group position={[0.8, -0.2, 0]}>
         <TerrainField />
         <SpatialContours />
