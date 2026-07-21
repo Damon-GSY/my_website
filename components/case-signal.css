@@ -15,10 +15,47 @@
 
 .case-signal::before {
   position: absolute;
+  z-index: 1;
   inset: 0;
   background: linear-gradient(112deg, transparent 18%, rgba(255, 255, 255, 0.018) 50%, transparent 78%);
   content: "";
   pointer-events: none;
+}
+
+.case-signal__evidence-image {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  background: #090b0d;
+}
+
+.case-signal__evidence-image::before {
+  position: absolute;
+  inset: 0;
+  background: url('/assets/supply-chain-agent-trace-v1.webp') center 48% / cover no-repeat;
+  content: "";
+  filter: saturate(0.86) contrast(1.06);
+  opacity: 0.9;
+  transform: scale(1.01);
+  transition: filter 900ms var(--ease), opacity 900ms var(--ease), transform 1200ms var(--ease);
+}
+
+.case-signal__evidence-image::after {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(7, 9, 11, 0.34), transparent 22%, transparent 72%, rgba(7, 9, 11, 0.54)),
+    radial-gradient(circle at var(--spot-x, 54%) var(--spot-y, 48%), rgba(217, 120, 88, 0.13), transparent 34%);
+  content: "";
+  pointer-events: none;
+}
+
+.case-signal--risk:hover .case-signal__evidence-image::before {
+  filter: saturate(1) contrast(1.08);
+  opacity: 1;
+  transform: scale(1.035);
 }
 
 .case-signal__meta {
@@ -43,6 +80,18 @@
 .case-signal__meta strong {
   font-size: 0.72rem;
   font-weight: 300;
+}
+
+.case-signal__disclosure {
+  position: absolute;
+  z-index: 2;
+  top: 4.45rem;
+  left: 1.25rem;
+  max-width: 17rem;
+  margin: 0;
+  color: rgba(240, 238, 233, 0.54);
+  font-size: 0.62rem;
+  line-height: 1.55;
 }
 
 .case-signal__plot {

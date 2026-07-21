@@ -606,11 +606,23 @@ function AtmosphericBackdrop({
 }
 
 function OptimizationCoreBackdrop({
+  portraitComposition,
   reducedMotion,
   scrollProgress,
-}: SceneMotionProps) {
+}: SceneMotionProps & { portraitComposition: boolean }) {
   const coreRef = useRef<THREE.MeshBasicMaterial>(null)
-  const core = useLoader(THREE.TextureLoader, '/assets/optimization-core-midjourney.webp')
+  const core = useLoader(
+    THREE.TextureLoader,
+    portraitComposition
+      ? '/assets/optimization-core-mobile-720.webp'
+      : '/assets/optimization-core-midjourney.webp',
+  )
+  const coreSize: [number, number] = portraitComposition
+    ? [BACKPLATE_HEIGHT, BACKPLATE_WIDTH]
+    : [BACKPLATE_WIDTH, BACKPLATE_HEIGHT]
+  const corePosition: [number, number, number] = portraitComposition
+    ? [0.35, 2.15, -11.74]
+    : [0.82, 1.02, -11.74]
 
   useEffect(() => {
     core.colorSpace = THREE.SRGBColorSpace
@@ -622,15 +634,19 @@ function OptimizationCoreBackdrop({
   useFrame((_, delta) => {
     if (!coreRef.current) return
     const progress = reducedMotion ? 0 : scrollProgress.get()
-    const reveal = THREE.MathUtils.smoothstep(progress, 0.44, 0.56)
-    const release = 1 - THREE.MathUtils.smoothstep(progress, 0.69, 0.78)
-    const targetOpacity = reducedMotion ? 0 : reveal * release * 0.36
+    const revealEnd = portraitComposition ? 0.53 : 0.56
+    const releaseStart = portraitComposition ? 0.68 : 0.69
+    const releaseEnd = portraitComposition ? 0.76 : 0.78
+    const reveal = THREE.MathUtils.smoothstep(progress, 0.44, revealEnd)
+    const release = 1 - THREE.MathUtils.smoothstep(progress, releaseStart, releaseEnd)
+    const peakOpacity = portraitComposition ? 0.32 : 0.36
+    const targetOpacity = reducedMotion ? 0 : reveal * release * peakOpacity
     coreRef.current.opacity = damp(coreRef.current.opacity, targetOpacity, delta, 3.2)
   })
 
   return (
-    <mesh position={[0.82, 1.02, -11.74]} renderOrder={-2}>
-      <planeGeometry args={[BACKPLATE_WIDTH, BACKPLATE_HEIGHT]} />
+    <mesh position={corePosition} renderOrder={-2}>
+      <planeGeometry args={coreSize} />
       <meshBasicMaterial
         ref={coreRef}
         map={core}
@@ -683,11 +699,14 @@ function OptimizationWorld({
         scrollProgress={scrollProgress}
         onReady={onReady}
       />
-      {!portraitComposition && (
-        <OptimizationCoreBackdrop
-          reducedMotion={reducedMotion}
-          scrollProgress={scrollProgress}
-        />
+      {!reducedMotion && (
+        <Suspense fallback={null}>
+          <OptimizationCoreBackdrop
+            portraitComposition={portraitComposition}
+            reducedMotion={reducedMotion}
+            scrollProgress={scrollProgress}
+          />
+        </Suspense>
       )}
       <group position={[0.8, -0.2, 0]}>
         <TerrainField />
