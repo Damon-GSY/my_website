@@ -53,18 +53,13 @@ requirePattern(
 )
 requirePattern(
   workLayoutCss,
-  /\.case-study:nth-child\(3\) \.case-study__title[\s\S]*?\.case-study:nth-child\(3\) \.case-study__visual/,
-  'The third project repeats the first project composition instead of introducing a new editorial rhythm.',
-)
-requirePattern(
-  workLayoutCss,
-  /\.case-study:nth-child\(4\) \.case-study__title[\s\S]*?\.case-study:nth-child\(4\) \.case-study__visual/,
-  'The fourth project repeats the mirrored composition instead of closing with a distinct layout.',
+  /\.case-study--signature[\s\S]*?\.case-index__[\s\S]*?\.case-index__item/,
+  'Selected work lacks a clear signature-case versus compact-index hierarchy.',
 )
 requirePattern(source, /cubic-bezier\(/, 'The motion language does not define a custom easing curve.')
 requirePattern(
   hero,
-  /<h1[\s\S]*profile\.shortName[\s\S]*Agent systems,[\s\S]*under control\./,
+  /<h1[\s\S]*profile\.name[\s\S]*Agent systems,[\s\S]*under control\./,
   'The first display headline sells a generic capability before it establishes Damon as the subject.',
 )
 for (const graphic of ['risk', 'tools', 'benchmark', 'reward']) {

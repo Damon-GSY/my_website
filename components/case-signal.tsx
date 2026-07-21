@@ -5,7 +5,7 @@ import './case-signal.css'
 
 type SignalType = 'risk' | 'tools' | 'benchmark' | 'reward'
 
-const signalCopy: Record<SignalType, { title: string; eyebrow: string; disclosure?: string; steps: string[] }> = {
+const signalCopy: Record<SignalType, { title: string; eyebrow: string; disclosure: string; steps: string[] }> = {
   risk: {
     title: 'Decision policy',
     eyebrow: 'Sanitized system reconstruction',
@@ -14,17 +14,20 @@ const signalCopy: Record<SignalType, { title: string; eyebrow: string; disclosur
   },
   tools: {
     title: 'Resolution graph',
-    eyebrow: 'System trace',
+    eyebrow: 'Conceptual resolution trace',
+    disclosure: 'Illustrates system logic. No production trace, task record, or customer data shown.',
     steps: ['intent', 'meta tool', 'registry', 'trace'],
   },
   benchmark: {
     title: 'Capability surface',
-    eyebrow: 'System trace',
+    eyebrow: 'Illustrative benchmark surface',
+    disclosure: 'Shows evaluation structure, not disclosed benchmark scores or production data.',
     steps: ['knowledge', 'tool use', 'SFT', 'RL'],
   },
   reward: {
     title: 'Reward hierarchy',
-    eyebrow: 'System trace',
+    eyebrow: 'Illustrative reward topology',
+    disclosure: 'Explains the reward architecture. No internal task-level score curve shown.',
     steps: ['condition', 'variance', 'filter', 'balance'],
   },
 }
@@ -117,9 +120,7 @@ function SignalGraphic({ type }: { type: SignalType }) {
 
 export default function CaseSignal({ type }: { type: SignalType }) {
   const copy = signalCopy[type]
-  const accessibleLabel = type === 'risk'
-    ? 'Sanitized system reconstruction derived from 12 supported internal scenarios, with no customer data shown. Decision path: observe, risk tier, confirm, handoff.'
-    : undefined
+  const accessibleLabel = `${copy.eyebrow}. ${copy.disclosure} Flow: ${copy.steps.join(', ')}.`
 
   function handlePointerMove(event: PointerEvent<HTMLDivElement>) {
     if (event.pointerType !== 'mouse') return
@@ -138,16 +139,15 @@ export default function CaseSignal({ type }: { type: SignalType }) {
       className={`case-signal case-signal--${type}`}
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
-      role={accessibleLabel ? 'img' : undefined}
+      role="img"
       aria-label={accessibleLabel}
-      aria-hidden={accessibleLabel ? undefined : true}
     >
       {type === 'risk' && <div className="case-signal__evidence-image" />}
       <div className="case-signal__meta">
         <small>{copy.eyebrow}</small>
         <strong>{copy.title}</strong>
       </div>
-      {copy.disclosure && <p className="case-signal__disclosure">{copy.disclosure}</p>}
+      <p className="case-signal__disclosure">{copy.disclosure}</p>
       {type !== 'risk' && <SignalGraphic type={type} />}
       <div className="case-signal__legend">
         {copy.steps.map((step, index) => (

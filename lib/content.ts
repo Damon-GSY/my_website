@@ -71,7 +71,7 @@ export const heroChapters = [
 export const signals = [
   { value: '12', label: 'supported internal scenarios' },
   { value: '100+', label: 'tools in a changing registry' },
-  { value: '≈90%', label: 'relative reduction · supported tickets' },
+  { value: '≈90%', label: 'manual ticket handling reduction · supported workflows' },
   { value: '<1s', label: 'internal exception handoff' },
 ] as const
 
@@ -88,6 +88,10 @@ export const work = [
       'Twelve supply-chain scenarios shared one agent surface, but the cost of a mistaken action was not uniform. Routine retrieval and irreversible operational changes could not use the same autonomy threshold.',
     principle:
       'Treat authority as a routed system state: observe risk, narrow the action space, confirm when necessary, and preserve a fast path back to a human operator.',
+    constraintTitle: 'Different error costs cannot share one autonomy threshold.',
+    visualCaption:
+      'A sanitized reconstruction of the decision path: intent becomes a risk tier before any tool receives authority.',
+    evidenceTitle: 'A safer route through irreversible work.',
     ownershipTitle: 'I owned the policy between intent and execution.',
     ownership:
       'I designed the end-to-end control surface across twelve scenarios: the risk taxonomy, progressive-confirmation contract, explicit automation boundaries, exception traces, and the sub-second path back to a human operator.',
@@ -127,6 +131,10 @@ export const work = [
       'A static tool list became brittle as the internal capability pool grew past one hundred tools. Similar descriptions, changing registrations, and missing capabilities all surfaced as apparent reasoning failures.',
     principle:
       'Separate capability discovery from task execution, then evaluate the resolution trace instead of scoring the final answer alone.',
+    constraintTitle: 'Capability discovery cannot be frozen inside a static prompt.',
+    visualCaption:
+      'A conceptual resolution trace showing capability search before execution—not a production screenshot or customer trace.',
+    evidenceTitle: 'Less manual handling inside the supported workflows.',
     ownershipTitle: 'I owned the capability layer the agent reasons over.',
     ownership:
       'I designed the dynamic registry and agentic-RL target around a pool of more than one hundred changing tools, then separated wrong-tool, missing-tool, and unnecessary-tool behavior into traces the team could train and debug.',
@@ -166,6 +174,10 @@ export const work = [
       'Domain knowledge accuracy and reliable tool execution improved at different rates. A single aggregate score could hide a model that knew the right answer but could not complete the operational workflow.',
     principle:
       'Define the capability surface before training: measure knowledge and execution independently, then align each training stage with a business-facing slice.',
+    constraintTitle: 'Knowledge correctness and execution reliability are different capability axes.',
+    visualCaption:
+      'An illustrative capability surface separating knowledge QA from tool execution across the training sequence.',
+    evidenceTitle: 'A benchmark that kept each gain attributable.',
     ownershipTitle: 'I owned the measurement contract before the training recipe.',
     ownership:
       'I built the dual-axis benchmark, mapped it to business-facing capability slices, and drove the sequence from continual pretraining through integrated SFT and RL so each gain remained attributable instead of disappearing into one aggregate score.',
@@ -205,6 +217,10 @@ export const work = [
       'Product-attribute tasks shared one training loop while optimizing different downstream decisions. Unbalanced objectives could dominate gradients and silently erase gains on less frequent tasks.',
     principle:
       'Make reward hierarchy explicit, control variance at the sample level, and remove updates that cannot provide a useful learning signal.',
+    constraintTitle: 'Convergence can still hide one objective erasing another.',
+    visualCaption:
+      'An illustrative reward topology for the conditional hierarchy; it is not a chart of disclosed task-level scores.',
+    evidenceTitle: 'Stability without letting one task consume the policy.',
     ownershipTitle: 'I owned the reward hierarchy behind every gradient.',
     ownership:
       'I designed the conditional, hierarchical reward architecture for conflicting product-attribute objectives and added variance control plus zero-gradient filtering so frequent tasks could not silently erase progress on rarer ones.',
@@ -237,7 +253,7 @@ export const work = [
 export const research = [
   {
     index: 'R/01',
-    title: 'Evaluating LLM Agents for Multi-turn Conversation',
+    title: 'Evaluating LLM-based Agents for Multi-Turn Conversations: A Survey',
     type: 'Survey / arXiv',
     year: '2025 · revised 2026',
     venue: 'arXiv 2503.22458',
@@ -250,7 +266,7 @@ export const research = [
   },
   {
     index: 'R/02',
-    title: 'SupChain-Bench',
+    title: 'SupChain-Bench: Benchmarking Large Language Models for Real-World Supply Chain Management',
     type: 'Benchmark / ACL',
     year: '2026',
     venue: 'ACL 2026 Findings',
@@ -263,7 +279,7 @@ export const research = [
   },
   {
     index: 'R/03',
-    title: 'VisualDeltas',
+    title: 'VisualDeltas: Learning Preferences from Visual Quality Perturbations',
     type: 'Preference learning / arXiv',
     year: '2026',
     venue: 'arXiv 2603.07272',
@@ -513,31 +529,31 @@ export const experience = [
     ],
   },
   {
-    time: '2024—2025',
+    time: '2024.09—2025.02',
     place: 'Microsoft Research Asia',
     role: 'LLM Research Intern · M365 Copilot',
     location: 'Beijing',
     highlights: [
-      'Developed and evaluated long-context behavior for M365 Copilot email workflows.',
+      'Contributed to a GPT-4o production rollout for M365 Copilot email workflows.',
       'Designed a three-horizon memory architecture for long-context behavior.',
       'Built tree-structured retrieval and multi-turn evaluation for intent, completion, and consistency.',
     ],
   },
   {
-    time: '2024',
+    time: '2024.05—2024.08',
     place: 'Meituan',
     role: 'Algorithm Intern',
     location: 'Beijing',
     highlights: [
       'Reproduced research and built reusable forecasting implementations independently.',
-      'Combined dominant-frequency extraction with XGBoost and Random Forest for traffic-light countdown prediction.',
+      'Handled harmonic interference and divisor ambiguity with dominant-frequency extraction, XGBoost, and Random Forest.',
       'Improved prediction reliability at 3-, 5-, and 10-second horizons.',
     ],
   },
   {
-    time: '2023—2025',
+    time: '2023.08—2025.02',
     place: 'National University of Singapore',
-    role: 'MSc Statistics · Top 5%',
+    role: 'Statistics · Faculty of Science · Top 5%',
     location: 'Singapore',
     highlights: [
       'Studied statistics in the Faculty of Science and graduated in the top five percent of the major.',
@@ -545,27 +561,17 @@ export const experience = [
     ],
   },
   {
-    time: '2023',
+    time: '2023.07—2023.12',
     place: 'Singapore AI Visual',
     role: 'Algorithm Intern · Edge vision',
     location: 'Singapore',
     highlights: [
-      'Built a lightweight CNN whose key feature-detection accuracy exceeded 85% in an internal prototype.',
+      'Built a lightweight CNN with 85%+ key-feature accuracy and roughly 10% overall gain over the internal prototype baseline.',
       'Optimized quantized prototype inference to under 150 ms per image on a 2.4 GHz CPU.',
     ],
   },
   {
-    time: '2022',
-    place: 'AT&T TrackHack',
-    role: 'Weak-supervision classification',
-    location: 'United States',
-    highlights: [
-      'Combined PU learning, Random Forest, K-means, and recursive feature elimination.',
-      'Applied the pipeline to broadband-subsidy eligibility under positive-only supervision.',
-    ],
-  },
-  {
-    time: '2022',
+    time: '2022.09—2022.12',
     place: 'Kaggle Starfish Detection',
     role: 'Underwater object detection',
     location: 'Remote',
@@ -575,9 +581,20 @@ export const experience = [
     ],
   },
   {
-    time: '2019—2022',
+    time: '2022.02—2022.05',
+    place: 'AT&T TrackHack',
+    role: 'Weak-supervision classification',
+    location: 'United States',
+    highlights: [
+      'Combined PU learning, Random Forest, K-means, and recursive feature elimination.',
+      'Applied the pipeline to broadband-subsidy eligibility under positive-only supervision.',
+      'Reached 0.94 F1 and placed in the top 10 among more than 500 teams.',
+    ],
+  },
+  {
+    time: '2019.09—2022.12',
     place: 'University of New South Wales',
-    role: 'BSc Computer Science · Top 3%',
+    role: 'Computer Science and Technology · Top 3%',
     location: 'Sydney',
     highlights: [
       'Graduated with an 85/100 GPA in the top three percent of the major.',

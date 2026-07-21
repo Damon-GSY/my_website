@@ -21,12 +21,18 @@ const flowCount = content.match(/\n\s+flow:/g)?.length ?? 0
 const workBlock = content.slice(content.indexOf('export const work'), content.indexOf('export const research'))
 const outcomeCount = workBlock.match(/\n\s+outcome:/g)?.length ?? 0
 const proofCount = workBlock.match(/\n\s+proof:/g)?.length ?? 0
+const constraintTitleCount = workBlock.match(/\n\s+constraintTitle:/g)?.length ?? 0
+const visualCaptionCount = workBlock.match(/\n\s+visualCaption:/g)?.length ?? 0
+const evidenceTitleCount = workBlock.match(/\n\s+evidenceTitle:/g)?.length ?? 0
 if (contextCount !== 4) failures.push(`Expected 4 project contexts, found ${contextCount}.`)
 if (principleCount !== 4) failures.push(`Expected 4 project principles, found ${principleCount}.`)
 if (ownershipCount !== 4) failures.push(`Expected 4 personal ownership records, found ${ownershipCount}.`)
 if (flowCount !== 4) failures.push(`Expected 4 system traces, found ${flowCount}.`)
 if (outcomeCount !== 4) failures.push(`Expected 4 structured project outcomes, found ${outcomeCount}.`)
 if (proofCount !== 4) failures.push(`Expected 4 evidence protocols, found ${proofCount}.`)
+if (constraintTitleCount !== 4) failures.push(`Expected 4 project-specific constraint titles, found ${constraintTitleCount}.`)
+if (visualCaptionCount !== 4) failures.push(`Expected 4 project-specific visual captions, found ${visualCaptionCount}.`)
+if (evidenceTitleCount !== 4) failures.push(`Expected 4 project-specific evidence titles, found ${evidenceTitleCount}.`)
 
 requirePattern(workBlock, /id: 'tool-resolver'[\s\S]*value: '≈90%'[\s\S]*label: 'manual ticket handling'[\s\S]*Internal operational measurement[\s\S]*100 internal tools/, 'Tool outcome lacks an approximate value, internal measurement type, or supported scope.')
 requirePattern(workBlock, /id: 'domain-model'[\s\S]*value: 'Internal best'[\s\S]*Frozen internal benchmark/, 'The domain model still implies public SOTA instead of a frozen internal comparison.')
@@ -36,6 +42,7 @@ requirePattern(page, /generateStaticParams/, 'Case-study routes are not statical
 requirePattern(page, /generateMetadata/, 'Case-study routes have no project metadata.')
 requirePattern(page, /notFound\(\)/, 'Unknown project slugs do not reach the branded 404.')
 requirePattern(page, /project\.context[\s\S]*project\.principle[\s\S]*project\.details\.map/, 'Case studies do not expose context, principle, and design decisions.')
+requirePattern(page, /project\.visualCaption[\s\S]*project\.constraintTitle[\s\S]*project\.evidenceTitle/, 'Case-study chapters still reuse generic template language.')
 requirePattern(page, /project\.ownership[\s\S]*project\.flow\.map/, 'Case studies do not show what Damon personally owned or how the system moves.')
 requirePattern(page, /project\.outcome\.value[\s\S]*project\.outcome\.label[\s\S]*project\.outcome\.evidence/, 'Case studies do not expose structured outcome evidence.')
 requirePattern(page, /project\.proof\.baseline[\s\S]*project\.proof\.intervention[\s\S]*project\.proof\.result[\s\S]*project\.proof\.scope[\s\S]*project\.proof\.disclosure/, 'Case studies do not explain baseline, intervention, result, scope, and disclosure.')

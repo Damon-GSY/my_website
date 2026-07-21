@@ -37,7 +37,6 @@ const cameraPosition = new THREE.Vector3()
 const cameraLook = new THREE.Vector3()
 const PATH_BASE_COLOR = new THREE.Color('#e27a57')
 const PATH_PEAK_COLOR = new THREE.Color('#ffd0b4')
-const SCROLL_SETTLE_SECONDS = 0.9
 const COMPACT_VIEWPORT_QUERY = '(max-width: 720px), (pointer: coarse) and (max-height: 540px)'
 const PORTRAIT_COMPOSITION_QUERY = '(max-width: 720px) and (orientation: portrait)'
 
@@ -93,10 +92,6 @@ function useViewportProfile() {
   }, [])
 
   return profile
-}
-
-function damp(value: number, target: number, delta: number, speed = 3.2) {
-  return THREE.MathUtils.damp(value, target, speed, delta)
 }
 
 function pathX(z: number) {
@@ -276,7 +271,7 @@ function OptimizationPath({ scrollProgress, reducedMotion }: SceneMotionProps) {
     [curve],
   )
 
-  useFrame((_, delta) => {
+  useFrame(() => {
     const progress = reducedMotion ? 0.14 : scrollProgress.get()
     const ignition = THREE.MathUtils.smoothstep(progress, 0.12, 0.82)
     if (pathMaterialRef.current) {
@@ -284,9 +279,9 @@ function OptimizationPath({ scrollProgress, reducedMotion }: SceneMotionProps) {
     }
     if (haloRef.current) {
       const material = haloRef.current.material as THREE.MeshBasicMaterial
-      material.opacity = damp(material.opacity, 0.055 + ignition * 0.16, delta, 2.6)
+      material.opacity = 0.055 + ignition * 0.16
     }
-    if (coreLightRef.current) coreLightRef.current.intensity = damp(coreLightRef.current.intensity, 8 + ignition * 18, delta)
+    if (coreLightRef.current) coreLightRef.current.intensity = 8 + ignition * 18
   })
 
   return (
@@ -359,22 +354,19 @@ function ConvergenceField({ scrollProgress, reducedMotion }: SceneMotionProps) {
     beamsRef.current.instanceMatrix.needsUpdate = true
   }, [beamMatrices])
 
-  useFrame((_, delta) => {
+  useFrame(() => {
     const progress = reducedMotion ? 0.72 : THREE.MathUtils.clamp(scrollProgress.get(), 0, 1)
     const convergence = THREE.MathUtils.smoothstep(progress, 0.5, 0.92)
     const settle = THREE.MathUtils.smoothstep(progress, 0.72, 1)
-    const resolve = (current: number, target: number, speed = 3.2) =>
-      reducedMotion ? target : damp(current, target, delta, speed)
-
     if (fieldRef.current) {
       fieldRef.current.visible = reducedMotion || convergence > 0.002
       fieldRef.current.scale.setScalar(0.34 + convergence * 0.66)
     }
     if (beamMaterialRef.current) {
-      beamMaterialRef.current.opacity = resolve(beamMaterialRef.current.opacity, convergence * 0.115, 2.8)
+      beamMaterialRef.current.opacity = convergence * 0.115
     }
     if (coreMaterialRef.current) {
-      coreMaterialRef.current.opacity = resolve(coreMaterialRef.current.opacity, 0.18 + convergence * 0.62)
+      coreMaterialRef.current.opacity = 0.18 + convergence * 0.62
     }
     if (coreRef.current) {
       coreRef.current.scale.setScalar(0.72 + convergence * 0.52 - settle * 0.08)
@@ -383,13 +375,13 @@ function ConvergenceField({ scrollProgress, reducedMotion }: SceneMotionProps) {
       primaryRingRef.current.rotation.z = progress * Math.PI * 1.35
       primaryRingRef.current.scale.setScalar(0.72 + convergence * 1.15)
       const material = primaryRingRef.current.material as THREE.MeshBasicMaterial
-      material.opacity = resolve(material.opacity, convergence * 0.58)
+      material.opacity = convergence * 0.58
     }
     if (secondaryRingRef.current) {
       secondaryRingRef.current.rotation.z = -progress * Math.PI * 0.9
       secondaryRingRef.current.scale.setScalar(0.9 + convergence * 1.8)
       const material = secondaryRingRef.current.material as THREE.MeshBasicMaterial
-      material.opacity = resolve(material.opacity, convergence * 0.24, 2.7)
+      material.opacity = convergence * 0.24
     }
   })
 
@@ -490,12 +482,12 @@ function DustField({ reducedMotion, scrollProgress }: SceneMotionProps) {
     return positions
   }, [])
 
-  useFrame((_, delta) => {
+  useFrame(() => {
     if (!pointsRef.current || !materialRef.current) return
     const progress = reducedMotion ? 0.12 : scrollProgress.get()
-    pointsRef.current.position.z = damp(pointsRef.current.position.z, progress * 0.85, delta, 2.2)
+    pointsRef.current.position.z = progress * 0.85
     pointsRef.current.rotation.y = reducedMotion ? 0 : progress * 0.045
-    materialRef.current.opacity = damp(materialRef.current.opacity, 0.16 + progress * 0.28, delta)
+    materialRef.current.opacity = 0.16 + progress * 0.28
   })
 
   return (
@@ -529,24 +521,12 @@ function ScrollFrameDriver({
   scrollProgress,
 }: SceneMotionProps & { active: boolean }) {
   const invalidate = useThree((state) => state.invalidate)
-  const settleSeconds = useRef(0)
-
   useEffect(() => {
-    settleSeconds.current = active && !reducedMotion ? 0.3 : 0
     invalidate()
     if (!active || reducedMotion) return
 
-    return scrollProgress.on('change', () => {
-      settleSeconds.current = SCROLL_SETTLE_SECONDS
-      invalidate()
-    })
+    return scrollProgress.on('change', invalidate)
   }, [active, invalidate, reducedMotion, scrollProgress])
-
-  useFrame((_, delta) => {
-    if (!active || reducedMotion || settleSeconds.current <= 0) return
-    settleSeconds.current = Math.max(0, settleSeconds.current - delta)
-    if (settleSeconds.current > 0) invalidate()
-  })
 
   return null
 }
@@ -582,11 +562,11 @@ function AtmosphericBackdrop({
     onReady()
   }, [landscape, onReady])
 
-  useFrame((_, delta) => {
+  useFrame(() => {
     const progress = reducedMotion ? 0.12 : scrollProgress.get()
     if (backdropRef.current) {
       const targetOpacity = THREE.MathUtils.lerp(0.72, 0.1, THREE.MathUtils.smoothstep(progress, 0.05, 0.88))
-      backdropRef.current.opacity = damp(backdropRef.current.opacity, targetOpacity, delta, 3.4)
+      backdropRef.current.opacity = targetOpacity
     }
   })
 
@@ -631,7 +611,7 @@ function OptimizationCoreBackdrop({
     core.needsUpdate = true
   }, [core])
 
-  useFrame((_, delta) => {
+  useFrame(() => {
     if (!coreRef.current) return
     const progress = reducedMotion ? 0 : scrollProgress.get()
     const revealEnd = portraitComposition ? 0.53 : 0.56
@@ -641,7 +621,7 @@ function OptimizationCoreBackdrop({
     const release = 1 - THREE.MathUtils.smoothstep(progress, releaseStart, releaseEnd)
     const peakOpacity = portraitComposition ? 0.32 : 0.36
     const targetOpacity = reducedMotion ? 0 : reveal * release * peakOpacity
-    coreRef.current.opacity = damp(coreRef.current.opacity, targetOpacity, delta, 3.2)
+    coreRef.current.opacity = targetOpacity
   })
 
   return (
@@ -670,12 +650,8 @@ function OptimizationWorld({
   portraitComposition: boolean
   onReady: () => void
 }) {
-  const progressRef = useRef(reducedMotion ? 0.14 : 0)
-
-  useFrame(({ camera, pointer }, delta) => {
-    const rawProgress = reducedMotion ? 0.14 : scrollProgress.get()
-    progressRef.current = damp(progressRef.current, rawProgress, delta, 4.6)
-    const progress = THREE.MathUtils.clamp(progressRef.current, 0, 1)
+  useFrame(({ camera, pointer }) => {
+    const progress = THREE.MathUtils.clamp(reducedMotion ? 0.14 : scrollProgress.get(), 0, 1)
     cameraRail.getPointAt(progress, cameraPosition)
     lookRail.getPointAt(Math.min(1, progress * 0.96 + 0.04), cameraLook)
     camera.position.copy(cameraPosition)
@@ -685,7 +661,7 @@ function OptimizationWorld({
     camera.rotateZ(reducedMotion ? 0 : Math.sin(progress * Math.PI * 1.7) * 0.014)
 
     if (camera instanceof THREE.PerspectiveCamera) {
-      camera.fov = damp(camera.fov, 50 - progress * 10, delta, 3.4)
+      camera.fov = 50 - progress * 10
       camera.updateProjectionMatrix()
     }
   })

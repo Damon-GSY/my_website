@@ -96,12 +96,12 @@
 
 .case-signal__plot {
   position: absolute;
-  top: 4rem;
+  top: 6.8rem;
   right: 1rem;
   bottom: 5.4rem;
   left: 1rem;
   width: calc(100% - 2rem);
-  height: calc(100% - 9.4rem);
+  height: calc(100% - 12.2rem);
   overflow: visible;
 }
 

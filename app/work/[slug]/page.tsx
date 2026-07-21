@@ -109,10 +109,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         <section className={styles.visualSection} aria-label={`${project.title} system visualization`}>
           <div className={`section-shell ${styles.visualShell}`}>
             <CaseSignal type={project.visual} />
-            <p>
-              A reduced system trace. The visual describes the operating logic, while the case study
-              records the decisions that made it reliable.
-            </p>
+            <p>{project.visualCaption}</p>
           </div>
         </section>
 
@@ -124,7 +121,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
             </div>
             <div className={styles.chapterContent}>
               <p className={styles.eyebrow}>The constraint</p>
-              <h2>Capability was only half of the system.</h2>
+              <h2>{project.constraintTitle}</h2>
               <p className={styles.prose}>{project.context}</p>
             </div>
           </div>
@@ -177,7 +174,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
           <div className="section-shell">
             <header className={styles.evidenceHeader}>
               <p className={styles.eyebrow}>04 / Observed evidence</p>
-              <h2>What changed,<br />and where it was measured.</h2>
+              <h2>{project.evidenceTitle}</h2>
             </header>
 
             <div className={styles.evidenceGrid}>

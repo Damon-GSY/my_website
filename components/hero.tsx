@@ -8,6 +8,7 @@ import {
   useMotionValueEvent,
   useReducedMotion,
   useScroll,
+  useSpring,
   useTransform,
 } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
@@ -68,20 +69,26 @@ export default function Hero() {
     target: sectionRef,
     offset: ['start start', 'end end'],
   })
+  const storyProgress = useSpring(scrollYProgress, {
+    stiffness: 170,
+    damping: 34,
+    mass: 0.28,
+    restDelta: 0.0005,
+  })
 
-  const copyY = useTransform(scrollYProgress, [0, 0.36], [0, -72])
-  const copyOpacity = useTransform(scrollYProgress, [0, 0.18, 0.36], [1, 1, 0])
-  const sceneOpacity = useTransform(scrollYProgress, [0, 0.92, 1], [1, 1, 0.08])
+  const copyY = useTransform(storyProgress, [0, 0.36], [0, -72])
+  const copyOpacity = useTransform(storyProgress, [0, 0.18, 0.36], [1, 1, 0])
+  const sceneOpacity = useTransform(storyProgress, [0, 0.92, 1], [1, 1, 0.08])
   const contentInteractive = Boolean(reduceMotion) || introInteractive
 
   useEffect(() => {
-    const nextInteractive = Boolean(reduceMotion) || scrollYProgress.get() < 0.38
+    const nextInteractive = Boolean(reduceMotion) || storyProgress.get() < 0.38
     if (introInteractiveRef.current === nextInteractive) return
     introInteractiveRef.current = nextInteractive
     setIntroInteractive(nextInteractive)
-  }, [reduceMotion, scrollYProgress])
+  }, [reduceMotion, storyProgress])
 
-  useMotionValueEvent(scrollYProgress, 'change', (progress) => {
+  useMotionValueEvent(storyProgress, 'change', (progress) => {
     const nextInteractive = Boolean(reduceMotion) || progress < 0.38
     if (introInteractiveRef.current === nextInteractive) return
     introInteractiveRef.current = nextInteractive
@@ -95,7 +102,7 @@ export default function Hero() {
           <OptimizationLandscapeScene
             active={sceneActive}
             reducedMotion={Boolean(reduceMotion)}
-            scrollProgress={scrollYProgress}
+            scrollProgress={storyProgress}
           />
         </motion.div>
         <div className="hero__grid" aria-hidden="true" />
@@ -113,8 +120,8 @@ export default function Hero() {
             <span>{profile.role}</span>
           </p>
 
-          <h1 aria-label={`${profile.shortName}. Agent systems, under control.`}>
-            <span className="hero__name">{profile.shortName}.</span>
+          <h1 aria-label={`${profile.name}. Agent systems, under control.`}>
+            <span className="hero__name">{profile.name}.</span>
             <span className="hero__claim">Agent systems,<br />under control.</span>
           </h1>
 
@@ -147,7 +154,7 @@ export default function Hero() {
               chapter={chapter}
               className={chapterMotion[index].className}
               range={chapterMotion[index].range}
-              scrollProgress={scrollYProgress}
+              scrollProgress={storyProgress}
             />
           ))
         )}

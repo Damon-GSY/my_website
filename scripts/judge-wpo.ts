@@ -20,11 +20,11 @@ if (!existsSync(effectsPath)) findings.push('The isolated postprocessing compone
 if (!/frameloop="demand"/.test(scene)) {
   findings.push('WebGL still renders continuously instead of waking on interaction.')
 }
-if (!/function ScrollFrameDriver[\s\S]*scrollProgress\.on\('change'[\s\S]*invalidate\(\)/.test(scene)) {
+if (!/function ScrollFrameDriver[\s\S]*scrollProgress\.on\('change', invalidate\)/.test(scene)) {
   findings.push('Demand rendering is not driven by scroll changes.')
 }
-if (!/SCROLL_SETTLE_SECONDS[\s\S]*settleSeconds\.current[\s\S]*settleSeconds\.current - delta/.test(scene)) {
-  findings.push('Demand rendering does not use a bounded time-based settling window.')
+if (!/useSpring\(scrollYProgress,[\s\S]*stiffness:[\s\S]*damping:[\s\S]*restDelta:/.test(readFileSync(resolve(root, 'components/hero.tsx'), 'utf8'))) {
+  findings.push('Demand rendering is not driven by a bounded spring clock.')
 }
 if (/remainingFrames/.test(scene)) {
   findings.push('Demand rendering still uses a refresh-rate-dependent frame budget.')

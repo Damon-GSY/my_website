@@ -40,7 +40,7 @@ if (!existsSync(appOutput)) {
   }
 }
 
-if (!/useEffect\(\(\) => \{[\s\S]*scrollYProgress\.get\(\) < 0\.38[\s\S]*setIntroInteractive/.test(hero)) {
+if (!/useEffect\(\(\) => \{[\s\S]*storyProgress\.get\(\) < 0\.38[\s\S]*setIntroInteractive/.test(hero)) {
   findings.push('Restored mid-hero scroll positions can leave invisible intro links interactive.')
 }
 if (!/tabIndex=\{contentInteractive \? 0 : -1\}/.test(hero)) {

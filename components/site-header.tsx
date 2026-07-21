@@ -6,9 +6,9 @@ import { profile } from '@/lib/content'
 
 const navItems = [
   { id: 'work', href: '#work', label: 'Work', routePrefix: '/work/' },
+  { id: 'about', href: '#about', label: 'About', routePrefix: null },
   { id: 'research', href: '#research', label: 'Research', routePrefix: null },
   { id: 'notes', href: '#notes', label: 'Notes', routePrefix: '/notes' },
-  { id: 'about', href: '#about', label: 'About', routePrefix: null },
 ] as const
 
 type NavigationId = (typeof navItems)[number]['id']

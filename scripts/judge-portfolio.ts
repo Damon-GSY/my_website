@@ -44,8 +44,8 @@ requirePattern(files.hero, /profile\.heroProofs\.map/, 'The hero lacks concise p
 requirePattern(files.hero, /chapter\.evidence/, 'The scroll story lacks evidence for Damon’s three identities.')
 const heroChapterCount = files.content.match(/index: '0\d \/[^']+'/g)?.length ?? 0
 if (heroChapterCount < 3) failures.push(`Expected three distinct personal identities in the scroll story, found ${heroChapterCount}.`)
-requirePattern(files.work, /work\.map[\s\S]*\/work\/\$\{project\.id\}/, 'Selected work does not lead to project evidence.')
-requirePattern(files.page, /<WorkSection \/>[\s\S]*<EarlierSystemsSection \/>[\s\S]*<ResearchSection \/>/, 'Earlier systems do not broaden the all-Alibaba flagship sequence before research.')
+requirePattern(files.work, /signatureProject[\s\S]*projectIndex\.map[\s\S]*\/work\/\$\{project\.id\}/, 'Selected work does not distinguish the signature case or lead to project evidence.')
+requirePattern(files.page, /<WorkSection \/>[\s\S]*<AboutSection \/>[\s\S]*<ResearchSection \/>[\s\S]*<EarlierSystemsSection \/>/, 'The homepage does not establish Damon before broadening into research and earlier systems.')
 requirePattern(files.earlier, /earlierSystems\.map[\s\S]*entry\.place[\s\S]*entry\.highlights\.map/, 'Earlier systems are not derived from the evidenced career record.')
 requirePattern(files.casePage, /project\.context[\s\S]*project\.principle[\s\S]*project\.details/, 'Case studies lack context and design rationale.')
 requirePattern(files.research, /paper\.description[\s\S]*paper\.topics[\s\S]*paper\.metric/, 'Research lacks method, dimensions, or evidence.')
