@@ -91,7 +91,7 @@ const personSchema = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={cartograph.variable}>
+    <html lang="en" className={cartograph.variable} data-scroll-behavior="smooth">
       <body>
         {children}
         <script
