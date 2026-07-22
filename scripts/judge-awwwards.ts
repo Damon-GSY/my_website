@@ -31,7 +31,7 @@ if (!existsSync(ogPath)) {
   requirePattern(og, /profile\.role/, 'The social image omits Damon’s role.')
   requirePattern(og, /profile\.location/, 'The social image omits Damon’s location.')
 }
-requirePattern(page, /<WorkSection \/>[\s\S]*<AboutSection \/>/, 'The personal identity does not follow the selected-work hook.')
+requirePattern(page, /<WorkSection \/>[\s\S]*<ResearchSection \/>[\s\S]*<FieldNotesSection \/>[\s\S]*<AboutSection \/>/, 'Selected work does not resolve into research, public reasoning, and personal identity.')
 
 // Usability — orientation, access, motion preferences, and mobile behavior.
 requirePattern(page, /className="skip-link"/, 'The homepage has no keyboard skip link.')

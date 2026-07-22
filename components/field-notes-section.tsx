@@ -18,23 +18,23 @@ export default function FieldNotesSection() {
           </p>
         </header>
 
-        <aside className={styles.publicPractice} aria-label="Public teaching channels">
+        <aside className={styles.publicPractice} aria-label="Public channels">
           <p>
             <span>Public practice</span>
             <strong>I publish the operating lessons behind the systems I build.</strong>
           </p>
-          <nav aria-label="Video channels">
+          <nav aria-label="Public channels">
             {creatorChannels.map(([label, url], index) => (
               <a
                 key={label}
                 href={url}
                 target="_blank"
                 rel="noreferrer"
-                aria-label={`${label} video channel (opens in a new tab)`}
+                aria-label={`${label} public channel (opens in a new tab)`}
               >
                 <span>C/0{index + 1}</span>
                 <strong>{label}</strong>
-                <small>Video channel</small>
+                <small>Public channel</small>
                 <i aria-hidden="true">↗</i>
               </a>
             ))}

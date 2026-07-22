@@ -40,10 +40,10 @@ export default function Home() {
       <main>
         <Hero />
         <WorkSection />
-        <AboutSection />
         <ResearchSection />
-        <EarlierSystemsSection />
         <FieldNotesSection />
+        <AboutSection />
+        <EarlierSystemsSection />
       </main>
       <SiteFooter />
     </>

@@ -221,7 +221,7 @@ a {
 
 .hero {
   position: relative;
-  height: 300svh;
+  height: 255svh;
   background: var(--bg);
 }
 
@@ -1036,6 +1036,52 @@ a {
     #07080a;
 }
 
+.footer-fit {
+  display: grid;
+  grid-template-columns: minmax(13rem, 0.72fr) 1.8fr;
+  gap: clamp(2rem, 7vw, 7rem);
+  padding: clamp(3.5rem, 7vw, 6.5rem) 0 clamp(2rem, 4vw, 3.5rem);
+}
+
+.footer-fit > div > span,
+.footer-fit li > span {
+  color: var(--accent);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.footer-fit h2 {
+  max-width: 9ch;
+  margin-top: 0.85rem;
+  font-size: clamp(2.1rem, 4vw, 4.3rem);
+  font-weight: 250;
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+}
+
+.footer-fit ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line-strong);
+}
+
+.footer-fit li {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 1.15rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.footer-fit li strong {
+  font-size: clamp(1rem, 1.45vw, 1.35rem);
+  font-weight: 350;
+  letter-spacing: -0.015em;
+}
+
 .footer-cta {
   display: flex;
   align-items: baseline;
@@ -1372,7 +1418,7 @@ a {
   }
 
   .hero {
-    height: 275svh;
+    height: 240svh;
   }
 
   .hero__viewport {
@@ -1606,6 +1652,15 @@ a {
     display: block;
     padding: 5rem 0;
     font-size: clamp(3.3rem, 15.5vw, 5.7rem);
+  }
+
+  .footer-fit {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .footer-fit h2 {
+    max-width: 12ch;
   }
 
   .footer-cta span {

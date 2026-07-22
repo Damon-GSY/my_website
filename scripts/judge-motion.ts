@@ -4,6 +4,7 @@ import * as THREE from 'three'
 const scene = readFileSync('components/optimization-landscape-scene.tsx', 'utf8')
 const hero = readFileSync('components/hero.tsx', 'utf8')
 const styles = readFileSync('app/globals.css', 'utf8')
+const mobileStyles = readFileSync('app/mobile-excellence.css', 'utf8')
 const findings: string[] = []
 
 if (!/useSpring\(scrollYProgress,[\s\S]*stiffness:[\s\S]*damping:[\s\S]*restDelta:/.test(hero)) {
@@ -30,20 +31,25 @@ if (cameraPoints.length < 4) findings.push('The camera rail has too few control 
 const cameraRail = new THREE.CatmullRomCurve3(cameraPoints, false, 'catmullrom', 0.32)
 const dollyDistance = cameraRail.getLength()
 const heroHeights = [...styles.matchAll(/\.hero\s*\{[\s\S]*?height:\s*(\d+)svh;/g)].map((match) => Number(match[1]))
-const [desktopHeight, mobileHeight] = heroHeights
+const mobileHeroHeights = [...mobileStyles.matchAll(/\.hero\s*\{[\s\S]*?height:\s*(\d+)svh;/g)].map((match) => Number(match[1]))
+const [desktopHeight] = heroHeights
+const mobileHeight = mobileHeroHeights.at(-1)
 
 if (!desktopHeight || !mobileHeight) throw new Error('Motion judge could not read desktop and mobile hero heights.')
 
 const desktopTravel = desktopHeight / 100 - 1
 const mobileTravel = mobileHeight / 100 - 1
 const desktopPace = dollyDistance / desktopTravel
-const mobilePace = dollyDistance / mobileTravel
 
-if (desktopPace > 8.5) {
-  findings.push(`Desktop dolly is compressed to ${desktopPace.toFixed(2)} world units per viewport (maximum 8.50).`)
+if (desktopHeight < 250 || desktopHeight > 265) {
+  findings.push(`Desktop hero runway is ${desktopHeight}svh (expected a focused 250–265svh story).`)
 }
-if (mobilePace > 9.5) {
-  findings.push(`Mobile dolly is compressed to ${mobilePace.toFixed(2)} world units per viewport (maximum 9.50).`)
+if (mobileHeight < 220 || mobileHeight > 230) {
+  findings.push(`Mobile hero runway is ${mobileHeight}svh (expected a focused 220–230svh story).`)
+}
+
+if (desktopPace > 10.25) {
+  findings.push(`Desktop dolly is compressed to ${desktopPace.toFixed(2)} world units per viewport (maximum 10.25).`)
 }
 
 let minimumStep = Number.POSITIVE_INFINITY

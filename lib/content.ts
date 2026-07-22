@@ -39,8 +39,14 @@ export const profile = {
   ],
   heroProofs: [
     ['Current', 'Alibaba · LLM Algorithm Engineer'],
-    ['Research', '2× first author · ACL Findings'],
+    ['Research', '2 first-author works · ACL Findings + arXiv survey'],
     ['Public work', '7 field notes · research-linked essays'],
+  ],
+  reachOutFor: [
+    'Production agent evaluation',
+    'Post-training & reward systems',
+    'Tool-use reliability',
+    'Research collaboration & technical exchange',
   ],
 }
 
@@ -56,8 +62,8 @@ export const heroChapters = [
     index: '02 / Researcher',
     title: 'I study the failures that final-answer scores erase.',
     description:
-      'Two first-author projects connect multi-turn agent evaluation with 530 real-world samples, annotated for supply-chain decisions and long-horizon tool traces.',
-    evidence: '2× first author · ~250 papers mapped · ACL 2026 Findings',
+      'Two first-author projects connect multi-turn agent evaluation with hundreds of annotated benchmark instances for supply-chain decisions and long-horizon tool traces.',
+    evidence: '2 first-author works · ~250 papers mapped · ACL Findings + arXiv survey',
   },
   {
     index: '03 / Creator',
@@ -106,7 +112,7 @@ export const work = [
     outcome: {
       value: '≈90%',
       label: 'fewer misoperations',
-      evidence: '≈95% manual intervention · <1s handoff · supported internal scope',
+      evidence: '≈95% less manual intervention · <1s handoff · supported internal scope',
     },
     proof: {
       evidenceType: 'Internal operational measurement',
@@ -152,7 +158,7 @@ export const work = [
     ],
     outcome: {
       value: '≈90%',
-      label: 'manual ticket handling',
+      label: 'less manual ticket handling',
       evidence: '100+ dynamic tools · runtime capability registry',
     },
     proof: {
@@ -289,8 +295,8 @@ export const research = [
     authorship: 'First author · 3 authors',
     href: 'https://aclanthology.org/2026.findings-acl.371/',
     description:
-      'A 530-sample benchmark for supply-chain knowledge and long-horizon tool orchestration. SupChain-ReAct synthesizes procedures without manual SOPs and led tool-calling accuracy across 15+ models.',
-    metric: '530 samples · 15+ models',
+      'Hundreds of annotated benchmark instances for supply-chain knowledge and long-horizon tool orchestration. SupChain-ReAct synthesizes procedures without manual SOPs and led tool-calling accuracy across 15+ models.',
+    metric: 'hundreds of instances · 15+ models',
     topics: ['logistics', 'fulfillment', 'finance', 'tool calling'],
   },
   {
@@ -467,13 +473,13 @@ export const notes = [
     title: 'Notes on supply-chain benchmarks',
     date: '2026-01-20',
     category: 'Research',
-    excerpt: 'What 530 annotated samples across logistics, fulfillment, and finance reveal about generic evaluation.',
+    excerpt: 'What hundreds of annotated benchmark instances across logistics, fulfillment, and finance reveal about generic evaluation.',
     tags: ['Supply chain', 'Benchmarks', 'Tool calling'],
     related: [
       { label: 'SupChain-Bench · ACL Findings', href: 'https://aclanthology.org/2026.findings-acl.371/' },
     ],
     intro:
-      'We built SupChain-Bench because a plausible answer is cheap in a domain where the next step may update inventory, release a shipment, or affect a financial workflow. Its 530 annotated samples force models to combine domain knowledge with constrained, multi-step tool use.',
+      'We built SupChain-Bench because a plausible answer is cheap in a domain where the next step may update inventory, release a shipment, or affect a financial workflow. Its hundreds of annotated benchmark instances force models to combine domain knowledge with constrained, multi-step tool use.',
     sections: [
       {
         title: 'One domain contains several operating worlds',

@@ -59,7 +59,7 @@ requirePattern(about, /profile\.role/, 'Current role is missing.')
 requirePattern(about, /profile\.facts\.map/, 'Personal context is missing from the biography.')
 requirePattern(content, /legalName:[\s\S]*alternateNames:[\s\S]*siteUrl:/, 'Identity data is not centralized.')
 requirePattern(layout, /profile\.legalName[\s\S]*socials\.map/, 'Metadata duplicates identity or social data instead of using the content source.')
-requirePattern(page, /<Hero \/>[\s\S]*<WorkSection \/>[\s\S]*<AboutSection \/>[\s\S]*<ResearchSection \/>[\s\S]*<EarlierSystemsSection \/>[\s\S]*<FieldNotesSection \/>/, 'The portfolio information order changed unexpectedly.')
+requirePattern(page, /<Hero \/>[\s\S]*<WorkSection \/>[\s\S]*<ResearchSection \/>[\s\S]*<FieldNotesSection \/>[\s\S]*<AboutSection \/>[\s\S]*<EarlierSystemsSection \/>/, 'The portfolio information order changed unexpectedly.')
 
 const score = Math.max(0, 100 - findings.length * 10)
 console.log(`Site coherence judge: ${score}/100 · ${findings.length === 0 ? 'PASS' : 'FAIL'}`)

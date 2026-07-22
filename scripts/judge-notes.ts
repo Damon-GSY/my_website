@@ -38,7 +38,7 @@ requirePattern(notesBlock, /intro:[\s\S]*sections:[\s\S]*title:[\s\S]*body:/, 'N
 banPattern(notesBlock, /readingTime:/, 'Reading times are hard-coded and can drift from the article body.')
 requirePattern(content, /READING_WORDS_PER_MINUTE[\s\S]*export function getReadingTime[\s\S]*Math\.ceil\(words \/ READING_WORDS_PER_MINUTE\)/, 'Reading time is not derived from the current article body.')
 requirePattern(notesBlock, /roughly 250 papers[\s\S]*12 supply-chain scenarios[\s\S]*(?:more than|passed) 100 tools/, 'Agent notes omit Damon’s verified research and production evidence.')
-requirePattern(notesBlock, /M365 Copilot[\s\S]*530 annotated samples[\s\S]*15 mainstream models[\s\S]*\+8\.2%/, 'Research notes omit the concrete evidence that makes them personal and credible.')
+requirePattern(notesBlock, /M365 Copilot[\s\S]*hundreds of annotated benchmark instances[\s\S]*15 mainstream models[\s\S]*\+8\.2%/, 'Research notes omit the public evidence that makes them personal and credible.')
 banPattern(
   article,
   /<article[^>]*dangerouslySetInnerHTML|<section[^>]*dangerouslySetInnerHTML|<p[^>]*dangerouslySetInnerHTML/,
@@ -51,7 +51,8 @@ requirePattern(
 )
 requirePattern(homepage, /notes\.slice\(0, 4\)[\s\S]*Browse all/, 'Homepage notes do not provide a focused preview and full index path.')
 requirePattern(homepage, /socials\.filter[\s\S]*YouTube[\s\S]*Bilibili[\s\S]*creatorChannels\.map/, 'The creator identity has no verified public channel path.')
-requirePattern(homepage, /aria-label=\{`\$\{label\} video channel \(opens in a new tab\)`\}/, 'Creator channel links do not announce their new-tab behavior.')
+requirePattern(homepage, /aria-label=\{`\$\{label\} public channel \(opens in a new tab\)`\}/, 'Creator channel links do not announce their new-tab behavior without implying unverified video content.')
+banPattern(homepage, /Video channel|video channel/, 'The homepage claims unverified video content on public profile links.')
 requirePattern(tabletStyles, /\.publicPractice nav\s*\{[\s\S]*border-top:[\s\S]*border-left:\s*0/, 'Creator channels retain the desktop divider after the tablet layout becomes a single column.')
 requirePattern(homepage, /getReadingTime\(featured\)[\s\S]*getReadingTime\(note\)/, 'Homepage reading times bypass the shared content calculation.')
 requirePattern(index, /notes\.map[\s\S]*\/notes\/\$\{note\.slug\}/, 'The full notes index is incomplete.')
