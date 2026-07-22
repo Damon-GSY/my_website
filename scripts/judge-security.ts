@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict'
 
-import nextConfig from '../next.config.ts'
-
 type Header = { key: string; value: string }
+type HeaderRoute = { source: string; headers: Header[] }
+type Mode = 'development' | 'production'
 
 const findings: string[] = []
 
@@ -15,65 +15,112 @@ function check(name: string, run: () => void) {
   }
 }
 
-const routes = await nextConfig.headers?.()
-const catchAll = routes?.find((route) => route.source === '/:path*')
-const headers = new Map(
-  (catchAll?.headers ?? []).map((header: Header) => [header.key.toLowerCase(), header.value]),
-)
-const csp = headers.get('content-security-policy') ?? ''
-const directives = new Map(
-  csp.split('; ').map((directive) => {
+function parseDirectives(csp: string) {
+  const entries = csp.split('; ').map((directive) => {
     const [name, ...values] = directive.split(' ')
-    return [name, values]
-  }),
-)
-
-check('all routes receive the security policy', () => {
-  assert.ok(catchAll, 'missing /:path* header rule')
-})
-
-for (const [directive, requiredValues] of [
-  ['default-src', ["'self'"]],
-  ['script-src', ["'self'", "'unsafe-inline'"]],
-  ['style-src', ["'self'", "'unsafe-inline'"]],
-  ['img-src', ["'self'", 'data:', 'blob:']],
-  ['font-src', ["'self'"]],
-  ['connect-src', ["'self'"]],
-  ['worker-src', ["'self'", 'blob:']],
-  ['object-src', ["'none'"]],
-  ['base-uri', ["'self'"]],
-  ['form-action', ["'self'"]],
-  ['frame-ancestors', ["'none'"]],
-] as const) {
-  check(`CSP ${directive}`, () => {
-    const actualValues = directives.get(directive)
-    assert.ok(actualValues, `missing ${directive}`)
-    for (const value of requiredValues) {
-      assert.ok(actualValues.includes(value), `${directive} is missing ${value}`)
-    }
+    return [name, values] as const
   })
+  assert.equal(new Set(entries.map(([name]) => name)).size, entries.length, 'duplicate CSP directive')
+  return Object.fromEntries(entries)
 }
 
-check('CSP does not contain wildcard sources', () => {
-  assert.ok(!csp.split(/\s+/).includes('*'), 'wildcard source found')
-})
-
-check('production CSP upgrades insecure requests', () => {
-  if (process.env.NODE_ENV === 'production') assert.match(csp, /(?:^|; )upgrade-insecure-requests(?:;|$)/)
-})
-
-check('production CSP does not enable eval', () => {
-  if (process.env.NODE_ENV === 'production') assert.doesNotMatch(csp, /'unsafe-eval'/)
-})
-
-for (const [key, expected] of [
-  ['x-content-type-options', 'nosniff'],
-  ['referrer-policy', 'strict-origin-when-cross-origin'],
-  ['permissions-policy', 'camera=(), microphone=(), geolocation=(), browsing-topics=()'],
-  ['x-frame-options', 'DENY'],
-] as const) {
-  check(key, () => assert.equal(headers.get(key), expected))
+async function loadRoutes(mode: Mode) {
+  const previousMode = process.env.NODE_ENV
+  process.env.NODE_ENV = mode
+  try {
+    const configUrl = new URL(`../next.config.ts?security-judge=${mode}`, import.meta.url)
+    const nextConfig = (await import(configUrl.href)).default
+    return ((await nextConfig.headers?.()) ?? []) as HeaderRoute[]
+  } finally {
+    if (previousMode === undefined) delete process.env.NODE_ENV
+    else process.env.NODE_ENV = previousMode
+  }
 }
+
+const commonDirectives = {
+  'default-src': ["'self'"],
+  'style-src': ["'self'", "'unsafe-inline'"],
+  'img-src': ["'self'", 'data:', 'blob:'],
+  'font-src': ["'self'"],
+  'worker-src': ["'self'", 'blob:'],
+  'object-src': ["'none'"],
+  'base-uri': ["'self'"],
+  'form-action': ["'self'"],
+  'frame-ancestors': ["'none'"],
+}
+
+const expectedDirectives: Record<Mode, Record<string, string[]>> = {
+  development: {
+    ...commonDirectives,
+    'script-src': ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+    'connect-src': ["'self'", 'ws:', 'wss:'],
+  },
+  production: {
+    ...commonDirectives,
+    'script-src': ["'self'", "'unsafe-inline'"],
+    'connect-src': ["'self'"],
+    'upgrade-insecure-requests': [],
+  },
+}
+
+const expectedHeaders = {
+  'x-content-type-options': 'nosniff',
+  'referrer-policy': 'strict-origin-when-cross-origin',
+  'permissions-policy': 'camera=(), microphone=(), geolocation=(), browsing-topics=()',
+  'x-frame-options': 'DENY',
+}
+
+function assertSecurityRoutes(routes: HeaderRoute[], mode: Mode) {
+  const cspRoutes = routes.filter((route) =>
+    route.headers.some((header) => header.key.toLowerCase() === 'content-security-policy'),
+  )
+  assert.equal(cspRoutes.length, 1, 'CSP must be set by exactly one route')
+  assert.equal(cspRoutes[0]?.source, '/:path*', 'the sole CSP route must cover all paths')
+
+  const catchAll = routes.find((route) => route.source === '/:path*')
+  assert.ok(catchAll, 'missing /:path* header rule')
+  const normalizedKeys = catchAll.headers.map((header) => header.key.toLowerCase())
+  assert.equal(new Set(normalizedKeys).size, normalizedKeys.length, 'duplicate catch-all header')
+
+  const headers = Object.fromEntries(
+    catchAll.headers.map((header) => [header.key.toLowerCase(), header.value]),
+  )
+  const csp = headers['content-security-policy'] ?? ''
+  assert.deepEqual(headers, {
+    'content-security-policy': csp,
+    ...expectedHeaders,
+  })
+  assert.deepEqual(parseDirectives(csp), expectedDirectives[mode])
+}
+
+const routesByMode = {} as Record<Mode, HeaderRoute[]>
+for (const mode of ['production', 'development'] as const) {
+  const routes = await loadRoutes(mode)
+  routesByMode[mode] = routes
+  check(`${mode} routes, headers, and CSP values are exact`, () => assertSecurityRoutes(routes, mode))
+}
+
+check('validator rejects an injected script origin', () => {
+  const injectedRoutes = structuredClone(routesByMode.production)
+  const cspHeader = injectedRoutes
+    .flatMap((route) => route.headers)
+    .find((header) => header.key.toLowerCase() === 'content-security-policy')
+  assert.ok(cspHeader, 'test fixture is missing CSP')
+  cspHeader.value = cspHeader.value.replace(
+    "script-src 'self' 'unsafe-inline'",
+    "script-src 'self' 'unsafe-inline' https://example.com",
+  )
+  assert.throws(() => assertSecurityRoutes(injectedRoutes, 'production'))
+})
+
+check('validator rejects an overriding CSP route', () => {
+  const injectedRoutes = structuredClone(routesByMode.production)
+  injectedRoutes.push({
+    source: '/work/:path*',
+    headers: [{ key: 'Content-Security-Policy', value: "default-src 'none'" }],
+  })
+  assert.throws(() => assertSecurityRoutes(injectedRoutes, 'production'))
+})
 
 console.log(`Security headers judge: ${findings.length === 0 ? 'PASS' : 'FAIL'}`)
 for (const finding of findings) console.log(`- ${finding}`)

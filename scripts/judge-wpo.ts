@@ -16,8 +16,8 @@ const profilePolicy = readFileSync(resolve(root, 'lib/scene-performance-profile.
 const effectsPath = resolve(root, 'components/optimization-post-effects.tsx')
 const findings: string[] = []
 const publicAssetsPath = resolve(root, 'public/assets')
-const retiredLayerAssetPattern =
-  /^optimization-(depth|foreground|landscape|light)(?:-(?:1280|1920))?\.webp$/
+const retiredAssetPattern =
+  /^(?:optimization-(?:depth|foreground|landscape|light)(?:-(?:1280|1920))?|optimization-signature-(?:1280|1920|mobile)|supply-chain-agent-trace-v1)\.webp$/
 const buildMarkerPath = resolve(root, '.next/BUILD_ID')
 const buildInputs = [
   'app/globals.css',
@@ -44,8 +44,8 @@ if (!existsSync(buildMarkerPath)) {
   }
 }
 
-for (const asset of readdirSync(publicAssetsPath).filter((name) => retiredLayerAssetPattern.test(name))) {
-  findings.push(`Retired layered-scene asset is still publicly shipped: ${asset}.`)
+for (const asset of readdirSync(publicAssetsPath).filter((name) => retiredAssetPattern.test(name))) {
+  findings.push(`Retired asset is still publicly shipped: ${asset}.`)
 }
 
 const baselineSignals: ScenePerformanceSignals = {
