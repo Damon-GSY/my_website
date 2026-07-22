@@ -19,6 +19,11 @@ const buildInputs = [
   'components/optimization-landscape-scene.tsx',
   'components/optimization-post-effects.tsx',
   'lib/optimization-assets.ts',
+  'next.config.ts',
+  'package.json',
+  'package-lock.json',
+  'postcss.config.mjs',
+  'tsconfig.json',
 ].map((path) => resolve(root, path))
 
 if (!existsSync(buildMarkerPath)) {
@@ -90,6 +95,10 @@ if (!existsSync(manifestPath)) {
   if (!entry?.files?.length) {
     findings.push('The immersive scene is absent from the production loadable manifest.')
   } else {
+    const missingFiles = entry.files.filter((file) => !existsSync(resolve(root, '.next', file)))
+    if (missingFiles.length > 0) {
+      findings.push(`The immersive scene manifest references missing chunks: ${missingFiles.join(', ')}.`)
+    }
     const bytes = entry.files.reduce((total, file) => {
       const filePath = resolve(root, '.next', file)
       return total + (existsSync(filePath) ? statSync(filePath).size : 0)

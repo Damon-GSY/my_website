@@ -38,7 +38,7 @@ const cameraPosition = new THREE.Vector3()
 const cameraLook = new THREE.Vector3()
 const PATH_BASE_COLOR = new THREE.Color('#e27a57')
 const PATH_PEAK_COLOR = new THREE.Color('#ffd0b4')
-const COMPACT_VIEWPORT_QUERY = '(max-width: 720px), (pointer: coarse) and (max-width: 900px), (pointer: coarse) and (max-height: 600px)'
+const COMPACT_VIEWPORT_QUERY = '(max-width: 720px), (pointer: coarse) and (max-width: 900px), (pointer: coarse) and (max-width: 1200px) and (max-height: 600px)'
 const PORTRAIT_COMPOSITION_QUERY = WORLD_PLATE_MEDIA.mobilePortrait
 
 type ViewportProfile = {

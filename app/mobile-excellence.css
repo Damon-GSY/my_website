@@ -107,7 +107,7 @@
   }
 }
 
-@media (pointer: coarse) and (max-height: 600px) {
+@media (pointer: coarse) and (max-width: 1200px) and (max-height: 600px) {
   .site-mobile-menu {
     grid-template-rows: 1fr;
     padding: 4.75rem var(--gutter) max(1rem, env(safe-area-inset-bottom));

@@ -35,7 +35,7 @@ type NetworkHints = {
   removeEventListener?: (type: 'change', listener: () => void) => void
 }
 
-const COARSE_SMALL_VIEWPORT_QUERY = '(pointer: coarse) and (max-width: 900px), (pointer: coarse) and (max-height: 600px)'
+const COARSE_SMALL_VIEWPORT_QUERY = '(pointer: coarse) and (max-width: 900px), (pointer: coarse) and (max-width: 1200px) and (max-height: 600px)'
 const SLOW_EFFECTIVE_TYPES = new Set(['slow-2g', '2g', '3g'])
 
 const getNetworkHints = () => (navigator as Navigator & { connection?: NetworkHints }).connection
