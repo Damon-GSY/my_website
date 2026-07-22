@@ -44,6 +44,8 @@ requirePattern(files.hero, /profile\.heroProofs\.map/, 'The hero lacks concise p
 requirePattern(files.hero, /chapter\.evidence/, 'The scroll story lacks evidence for Damon’s three identities.')
 const heroChapterCount = files.content.match(/index: '0\d \/[^']+'/g)?.length ?? 0
 if (heroChapterCount < 3) failures.push(`Expected three distinct personal identities in the scroll story, found ${heroChapterCount}.`)
+requirePattern(files.content, /\['Research', '2 first-author works · ACL Findings \+ arXiv survey'\]/, 'The hero no longer states Damon’s two first-author works and their verified publication venues.')
+requirePattern(files.content, /value: '≈90%', label: 'manual ticket handling reduction · supported internal workflows'/, 'The hero tool-resolution signal no longer discloses its supported internal workflow scope.')
 requirePattern(files.work, /signatureProject[\s\S]*projectIndex\.map[\s\S]*\/work\/\$\{project\.id\}/, 'Selected work does not distinguish the signature case or lead to project evidence.')
 requirePattern(files.page, /<Hero \/>[\s\S]*<WorkSection \/>[\s\S]*<ResearchSection \/>[\s\S]*<FieldNotesSection \/>[\s\S]*<AboutSection \/>[\s\S]*<EarlierSystemsSection \/>/, 'The homepage does not move from selected work and research evidence into writing, biography, and earlier systems.')
 requirePattern(files.earlier, /earlierSystems\.map[\s\S]*entry\.place[\s\S]*entry\.highlights\.map/, 'Earlier systems are not derived from the evidenced career record.')
@@ -63,7 +65,11 @@ requirePattern(files.content, /creatorLine:/, 'Identity data hides the creator p
 requirePattern(files.content, /7 field notes · research-linked essays/, 'Creator proof is not grounded in the public writing actually available on the site.')
 requirePattern(files.content, /hundreds of annotated benchmark instances/, 'SupChain-Bench evidence is missing from the personal narrative.')
 requirePattern(files.content, /reachOutFor:[\s\S]*Production agent evaluation[\s\S]*Post-training & reward systems[\s\S]*Tool-use reliability[\s\S]*Research collaboration & technical exchange/, 'The contact path does not state credible reasons to collaborate with Damon.')
-banPattern(files.content, /530 (?:real-world|annotated|samples)/, 'An unsupported exact SupChain-Bench sample count remains in the public narrative.')
+const reachOutBlock = files.content.match(/reachOutFor:\s*\[([\s\S]*?)\],/)?.[1] ?? ''
+const reachOutCount = reachOutBlock.match(/^\s*'[^']+',?$/gm)?.length ?? 0
+if (reachOutCount !== 4) failures.push(`Expected exactly four evidence-led collaboration reasons, found ${reachOutCount}.`)
+banPattern(files.content, /\b530\b/, 'An unsupported exact SupChain-Bench sample count remains in the hero, research, or notes narrative.')
+banPattern(`${files.content}\n${files.footer}`, /\b(?:available|open to work|open for work|available for work)\b/i, 'The contact narrative makes an unverified availability claim.')
 const experienceEvidenceCount = files.content.match(/\n\s+highlights:/g)?.length ?? 0
 if (experienceEvidenceCount < 8) failures.push(`Expected at least 8 evidenced trajectory records, found ${experienceEvidenceCount}.`)
 requirePattern(files.content, /4\.0 \/ 5\.0 GPA[\s\S]*85\/100 GPA/, 'NUS or UNSW academic evidence from main is compressed out of the public trajectory.')

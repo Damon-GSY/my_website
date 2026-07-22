@@ -77,7 +77,7 @@ export const heroChapters = [
 export const signals = [
   { value: '12', label: 'supported internal scenarios' },
   { value: '100+', label: 'tools in a changing registry' },
-  { value: '≈90%', label: 'manual ticket handling reduction · supported workflows' },
+  { value: '≈90%', label: 'manual ticket handling reduction · supported internal workflows' },
   { value: '<1s', label: 'internal exception handoff' },
 ] as const
 
@@ -334,7 +334,7 @@ export const notes = [
       },
       {
         title: 'Score the dependency chain',
-        body: 'I prefer to score intermediate milestones and the dependencies between them: was the task modeled correctly, did the plan respect available tools, and did later actions use earlier evidence? Agent-as-Judge becomes useful when it evaluates this chain instead of simply grading the last message with another model.',
+        body: 'I prefer to score intermediate milestones and the dependencies between them: was the task modeled correctly, did the plan respect permitted tools, and did later actions use earlier evidence? Agent-as-Judge becomes useful when it evaluates this chain instead of simply grading the last message with another model.',
       },
       {
         title: 'Recovery is a capability',
@@ -362,7 +362,7 @@ export const notes = [
     sections: [
       {
         title: 'Route authority before intent',
-        body: 'A routine lookup and an operational change should not share one autonomy threshold. We made risk a routed system state: observe the requested action, narrow the available tools, request progressive confirmation when consequences rise, and keep high-risk execution outside the model’s blanket permission.',
+        body: 'A routine lookup and an operational change should not share one autonomy threshold. We made risk a routed system state: observe the requested action, narrow the permitted tools, request progressive confirmation when consequences rise, and keep high-risk execution outside the model’s blanket permission.',
       },
       {
         title: 'A tool pool is an interface',

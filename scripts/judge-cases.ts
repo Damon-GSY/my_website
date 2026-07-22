@@ -39,6 +39,7 @@ if (evidenceTitleCount !== 4) failures.push(`Expected 4 project-specific evidenc
 if (relatedNoteCount !== 4) failures.push(`Expected 4 public reasoning links from confidential case studies, found ${relatedNoteCount}.`)
 
 requirePattern(workBlock, /id: 'tool-resolver'[\s\S]*value: '≈90%'[\s\S]*label: 'less manual ticket handling'[\s\S]*Internal operational measurement[\s\S]*100 internal tools/, 'Tool outcome lacks an explicit reduction, approximate value, internal measurement type, or supported scope.')
+requirePattern(workBlock, /id: 'risk-router'[\s\S]*outcome:\s*\{[\s\S]*value: '≈90%'[\s\S]*label: 'fewer misoperations'[\s\S]*evidence: '≈95% less manual intervention · <1s handoff · supported internal scope'/, 'Risk-router outcome no longer locks the approximate misoperation reduction, intervention reduction, or supported internal scope.')
 requirePattern(workBlock, /id: 'domain-model'[\s\S]*value: 'Internal best'[\s\S]*Frozen internal benchmark/, 'The domain model still implies public SOTA instead of a frozen internal comparison.')
 requirePattern(workBlock, /id: 'reward-system'[\s\S]*value: 'Convergent'[\s\S]*Qualitative internal observation[\s\S]*zero-gradient filtering/, 'Reward mechanisms are still presented as a quantitative outcome.')
 
