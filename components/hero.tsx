@@ -13,20 +13,15 @@ import {
 } from 'framer-motion'
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { heroChapters, profile } from '@/lib/content'
+import {
+  resolveScenePerformanceProfile,
+  type ScenePerformanceProfile,
+} from '@/lib/scene-performance-profile'
 
 const OptimizationLandscapeScene = dynamic(() => import('@/components/optimization-landscape-scene'), {
   ssr: false,
   loading: () => <div className="hero__scene-fallback" aria-hidden="true" />,
 })
-
-type PerformanceProfile =
-  | 'full'
-  | 'static-server'
-  | 'static-save-data'
-  | 'static-slow-network'
-  | 'static-low-memory'
-  | 'static-low-cpu'
-  | 'static-compact-coarse'
 
 type NetworkHints = {
   effectiveType?: string
@@ -36,40 +31,41 @@ type NetworkHints = {
 }
 
 const COARSE_SMALL_VIEWPORT_QUERY = '(pointer: coarse) and (max-width: 900px), (pointer: coarse) and (max-width: 1200px) and (max-height: 600px)'
-const SLOW_EFFECTIVE_TYPES = new Set(['slow-2g', '2g', '3g'])
+const NETWORK_CONSTRAINED_CLIENT_QUERY = '(max-width: 1200px), (pointer: coarse)'
 
 const getNetworkHints = () => (navigator as Navigator & { connection?: NetworkHints }).connection
 
 const subscribeToPerformanceProfile = (onStoreChange: () => void) => {
   const connection = getNetworkHints()
   const compactCoarseQuery = window.matchMedia(COARSE_SMALL_VIEWPORT_QUERY)
+  const networkConstrainedQuery = window.matchMedia(NETWORK_CONSTRAINED_CLIENT_QUERY)
   connection?.addEventListener?.('change', onStoreChange)
   compactCoarseQuery.addEventListener('change', onStoreChange)
+  networkConstrainedQuery.addEventListener('change', onStoreChange)
 
   return () => {
     connection?.removeEventListener?.('change', onStoreChange)
     compactCoarseQuery.removeEventListener('change', onStoreChange)
+    networkConstrainedQuery.removeEventListener('change', onStoreChange)
   }
 }
 
-const getPerformanceProfile = (): PerformanceProfile => {
+const getPerformanceProfile = (): ScenePerformanceProfile => {
   const hints = navigator as Navigator & {
     deviceMemory?: number
   }
   const connection = getNetworkHints()
 
-  if (connection?.saveData) return 'static-save-data'
-  if (connection?.effectiveType && SLOW_EFFECTIVE_TYPES.has(connection.effectiveType)) {
-    return 'static-slow-network'
-  }
-  if (hints.deviceMemory !== undefined && hints.deviceMemory < 4) return 'static-low-memory'
-  if (navigator.hardwareConcurrency !== undefined && navigator.hardwareConcurrency <= 4) {
-    return 'static-low-cpu'
-  }
-  if (window.matchMedia(COARSE_SMALL_VIEWPORT_QUERY).matches) return 'static-compact-coarse'
-  return 'full'
+  return resolveScenePerformanceProfile({
+    compactCoarse: window.matchMedia(COARSE_SMALL_VIEWPORT_QUERY).matches,
+    deviceMemory: hints.deviceMemory,
+    effectiveType: connection?.effectiveType,
+    hardwareConcurrency: navigator.hardwareConcurrency,
+    networkConstrainedClient: window.matchMedia(NETWORK_CONSTRAINED_CLIENT_QUERY).matches,
+    saveData: Boolean(connection?.saveData),
+  })
 }
-const getServerPerformanceProfile = (): PerformanceProfile => 'static-server'
+const getServerPerformanceProfile = (): ScenePerformanceProfile => 'static-server'
 
 type ChapterMotion = {
   range: [number, number, number, number]

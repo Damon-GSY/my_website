@@ -15,6 +15,7 @@ const scene = readFileSync(resolve(root, 'components/optimization-landscape-scen
 const header = readFileSync(resolve(root, 'components/site-header.tsx'), 'utf8')
 const hero = readFileSync(resolve(root, 'components/hero.tsx'), 'utf8')
 const assets = readFileSync(resolve(root, 'lib/optimization-assets.ts'), 'utf8')
+const profilePolicy = readFileSync(resolve(root, 'lib/scene-performance-profile.ts'), 'utf8')
 const findings: string[] = []
 
 function requirePattern(source: string, pattern: RegExp, message: string) {
@@ -41,10 +42,12 @@ requirePattern(page, /href=\{WORLD_PLATE_URLS\.mobile\}[\s\S]*media=\{WORLD_PLAT
 requirePattern(assets, /mobilePortrait: '\(max-width: 720px\) and \(orientation: portrait\)'/, 'The shared mobile portrait media rule drifted from the CSS breakpoint.')
 requirePattern(css, /@media \(max-width: 720px\) and \(orientation: portrait\)[\s\S]*optimization-world-v2-mobile/, 'CSS does not restrict the mobile world plate to portrait phones.')
 requirePattern(hero, /COARSE_SMALL_VIEWPORT_QUERY = '[^']*pointer: coarse[^']*max-width: 900px[^']*max-width: 1200px[^']*max-height: 600px[^']*'/, 'Small coarse-pointer devices are not routed to the static performance profile.')
+requirePattern(hero, /NETWORK_CONSTRAINED_CLIENT_QUERY = '\(max-width: 1200px\), \(pointer: coarse\)'[\s\S]*networkConstrainedQuery\.addEventListener\('change', onStoreChange\)[\s\S]*networkConstrainedQuery\.removeEventListener\('change', onStoreChange\)/, 'Slow-network viewport gating is not reactive or does not clean up its listener.')
+requirePattern(profilePolicy, /networkConstrainedClient && effectiveType[\s\S]*static-slow-network/, 'Slow-network degradation is not limited to constrained clients.')
 requirePattern(scene, /renderProfile = `\$\{assetResolution\}:\$\{compactViewport[\s\S]*readyProfile === renderProfile[\s\S]*key=\{renderProfile\}/, 'Changing WebGL performance profiles does not rebuild context creation settings behind a loading-safe profile key.')
 requirePattern(scene, /setProfile\(\(current\)[\s\S]*current\.assetResolution === next\.assetResolution[\s\S]*current\.compactViewport === next\.compactViewport[\s\S]*current\.portraitComposition === next\.portraitComposition[\s\S]*\? current/, 'Resize events rerender the WebGL tree even when its responsive profile did not change.')
 requirePattern(mobile, /@media \(pointer: coarse\) and \(max-width: 1200px\) and \(max-height: 600px\)[\s\S]*\.hero__viewport[\s\S]*min-height:\s*0/, 'Short landscape phones retain the desktop 48rem sticky viewport floor.')
-requirePattern(hero, /COARSE_SMALL_VIEWPORT_QUERY = '\(pointer: coarse\) and \(max-width: 900px\), \(pointer: coarse\) and \(max-width: 1200px\) and \(max-height: 600px\)'[\s\S]*static-compact-coarse/, 'Landscape phones wider than the narrow CSS breakpoint can still mount WebGL.')
+requirePattern(hero, /COARSE_SMALL_VIEWPORT_QUERY = '\(pointer: coarse\) and \(max-width: 900px\), \(pointer: coarse\) and \(max-width: 1200px\) and \(max-height: 600px\)'[\s\S]*compactCoarse:/, 'Landscape phones wider than the narrow CSS breakpoint can still mount WebGL.')
 requirePattern(mobile, /@media \(min-width: 721px\) and \(max-height: 760px\)[\s\S]*\.hero__content[\s\S]*min-height:\s*100svh/, 'Short fine-pointer desktop screens have no compact hero layout.')
 requirePattern(header, /<\/header>[\s\S]*className=\{`site-mobile-menu/, 'The fixed mobile dialog is nested inside a backdrop-filtered header containing block.')
 requirePattern(header, /site-mobile-menu__close[\s\S]*aria-label="Close navigation"/, 'The full-viewport mobile dialog has no close control inside its focus trap.')

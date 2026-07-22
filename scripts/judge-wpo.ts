@@ -1,5 +1,9 @@
 import { existsSync, readFileSync, statSync } from 'node:fs'
 import { resolve } from 'node:path'
+import {
+  resolveScenePerformanceProfile,
+  type ScenePerformanceSignals,
+} from '../lib/scene-performance-profile.ts'
 
 const root = process.cwd()
 const scene = readFileSync(resolve(root, 'components/optimization-landscape-scene.tsx'), 'utf8')
@@ -8,6 +12,7 @@ const page = readFileSync(resolve(root, 'app/page.tsx'), 'utf8')
 const assets = readFileSync(resolve(root, 'lib/optimization-assets.ts'), 'utf8')
 const css = readFileSync(resolve(root, 'app/globals.css'), 'utf8')
 const mobileCss = readFileSync(resolve(root, 'app/mobile-excellence.css'), 'utf8')
+const profilePolicy = readFileSync(resolve(root, 'lib/scene-performance-profile.ts'), 'utf8')
 const effectsPath = resolve(root, 'components/optimization-post-effects.tsx')
 const findings: string[] = []
 const buildMarkerPath = resolve(root, '.next/BUILD_ID')
@@ -19,6 +24,7 @@ const buildInputs = [
   'components/optimization-landscape-scene.tsx',
   'components/optimization-post-effects.tsx',
   'lib/optimization-assets.ts',
+  'lib/scene-performance-profile.ts',
   'next.config.ts',
   'package.json',
   'package-lock.json',
@@ -32,6 +38,37 @@ if (!existsSync(buildMarkerPath)) {
   const latestInputTime = Math.max(...buildInputs.map((path) => statSync(path).mtimeMs))
   if (statSync(buildMarkerPath).mtimeMs < latestInputTime) {
     findings.push('The production build predates performance source changes; rebuild before WPO validation.')
+  }
+}
+
+const baselineSignals: ScenePerformanceSignals = {
+  compactCoarse: false,
+  deviceMemory: 8,
+  effectiveType: '4g',
+  hardwareConcurrency: 8,
+  networkConstrainedClient: false,
+  saveData: false,
+}
+const profileCases: Array<{
+  expected: ReturnType<typeof resolveScenePerformanceProfile>
+  label: string
+  signals: Partial<ScenePerformanceSignals>
+}> = [
+  { label: 'wide fine-pointer desktop on reported 3g', signals: { effectiveType: '3g' }, expected: 'full' },
+  {
+    label: 'compact coarse client on reported 3g',
+    signals: { compactCoarse: true, effectiveType: '3g', networkConstrainedClient: true },
+    expected: 'static-slow-network',
+  },
+  { label: 'desktop with data saver', signals: { saveData: true }, expected: 'static-save-data' },
+  { label: 'desktop with low memory', signals: { deviceMemory: 2 }, expected: 'static-low-memory' },
+  { label: 'desktop with low CPU concurrency', signals: { hardwareConcurrency: 4 }, expected: 'static-low-cpu' },
+]
+
+for (const testCase of profileCases) {
+  const actual = resolveScenePerformanceProfile({ ...baselineSignals, ...testCase.signals })
+  if (actual !== testCase.expected) {
+    findings.push(`Performance profile case "${testCase.label}" returned ${actual}, expected ${testCase.expected}.`)
   }
 }
 
@@ -57,11 +94,14 @@ if (!/useSpring\(scrollYProgress,[\s\S]*stiffness:[\s\S]*damping:[\s\S]*restDelt
 if (!/performanceProfile === 'full' && !reduceMotion[\s\S]*<OptimizationLandscapeScene[\s\S]*hero__scene-fallback/.test(hero)) {
   findings.push('Reduced-motion and server-rendered clients still instantiate the WebGL scene.')
 }
-if (!/saveData[\s\S]*effectiveType[\s\S]*deviceMemory[\s\S]*hardwareConcurrency[\s\S]*COARSE_SMALL_VIEWPORT_QUERY/.test(hero)) {
+if (!/saveData[\s\S]*deviceMemory[\s\S]*effectiveType[\s\S]*hardwareConcurrency[\s\S]*NETWORK_CONSTRAINED_CLIENT_QUERY/.test(hero)) {
   findings.push('The hero performance profile omits a required client capability signal.')
 }
-if (!/static-save-data[\s\S]*static-slow-network[\s\S]*static-low-memory[\s\S]*static-low-cpu[\s\S]*static-compact-coarse/.test(hero)) {
+if (!/static-save-data[\s\S]*static-slow-network[\s\S]*static-low-memory[\s\S]*static-low-cpu[\s\S]*static-compact-coarse/.test(profilePolicy)) {
   findings.push('Constrained clients do not resolve to explicit static performance profiles.')
+}
+if (!/networkConstrainedClient && effectiveType[\s\S]*SLOW_EFFECTIVE_TYPES\.has/.test(profilePolicy)) {
+  findings.push('Slow-network degradation is not scoped to constrained clients.')
 }
 if (/userAgent|navigator\.platform/.test(hero)) {
   findings.push('The performance gate regressed to user-agent sniffing.')
