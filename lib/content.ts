@@ -56,7 +56,7 @@ export const heroChapters = [
     title: 'I build the control layer between models and irreversible work.',
     description:
       'At Alibaba, I turn agent capability into bounded decisions, inspectable tool traces, and fast human recovery.',
-    evidence: '12 scenarios · 100+ tools · <1s handoff',
+    evidence: '12 scenarios · 100+ tools · <1s handoff · internal scope',
   },
   {
     index: '02 / Researcher',

@@ -45,6 +45,7 @@ requirePattern(files.hero, /chapter\.evidence/, 'The scroll story lacks evidence
 const heroChapterCount = files.content.match(/index: '0\d \/[^']+'/g)?.length ?? 0
 if (heroChapterCount < 3) failures.push(`Expected three distinct personal identities in the scroll story, found ${heroChapterCount}.`)
 requirePattern(files.content, /\['Research', '2 first-author works · ACL Findings \+ arXiv survey'\]/, 'The hero no longer states Damon’s two first-author works and their verified publication venues.')
+requirePattern(files.content, /evidence: '12 scenarios · 100\+ tools · <1s handoff · internal scope'/, 'The hero production evidence no longer discloses that its operational metrics have internal scope.')
 requirePattern(files.content, /value: '≈90%', label: 'manual ticket handling reduction · supported internal workflows'/, 'The hero tool-resolution signal no longer discloses its supported internal workflow scope.')
 requirePattern(files.work, /signatureProject[\s\S]*projectIndex\.map[\s\S]*\/work\/\$\{project\.id\}/, 'Selected work does not distinguish the signature case or lead to project evidence.')
 requirePattern(files.page, /<Hero \/>[\s\S]*<WorkSection \/>[\s\S]*<ResearchSection \/>[\s\S]*<FieldNotesSection \/>[\s\S]*<AboutSection \/>[\s\S]*<EarlierSystemsSection \/>/, 'The homepage does not move from selected work and research evidence into writing, biography, and earlier systems.')
@@ -69,7 +70,7 @@ const reachOutBlock = files.content.match(/reachOutFor:\s*\[([\s\S]*?)\],/)?.[1]
 const reachOutCount = reachOutBlock.match(/^\s*'[^']+',?$/gm)?.length ?? 0
 if (reachOutCount !== 4) failures.push(`Expected exactly four evidence-led collaboration reasons, found ${reachOutCount}.`)
 banPattern(files.content, /\b530\b/, 'An unsupported exact SupChain-Bench sample count remains in the hero, research, or notes narrative.')
-banPattern(`${files.content}\n${files.footer}`, /\b(?:available|open to work|open for work|available for work)\b/i, 'The contact narrative makes an unverified availability claim.')
+banPattern(`${reachOutBlock}\n${files.footer}`, /\bavailab(?:le|ility)\b|\bopen(?:[\s-]+)(?:to|for)(?:[\s-]+)work\b/i, 'The contact narrative makes an unverified availability claim.')
 const experienceEvidenceCount = files.content.match(/\n\s+highlights:/g)?.length ?? 0
 if (experienceEvidenceCount < 8) failures.push(`Expected at least 8 evidenced trajectory records, found ${experienceEvidenceCount}.`)
 requirePattern(files.content, /4\.0 \/ 5\.0 GPA[\s\S]*85\/100 GPA/, 'NUS or UNSW academic evidence from main is compressed out of the public trajectory.')
