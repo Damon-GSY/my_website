@@ -15,6 +15,12 @@ const mobileCss = readFileSync(resolve(root, 'app/mobile-excellence.css'), 'utf8
 const profilePolicy = readFileSync(resolve(root, 'lib/scene-performance-profile.ts'), 'utf8')
 const effectsPath = resolve(root, 'components/optimization-post-effects.tsx')
 const findings: string[] = []
+const retiredLayerAssets = [
+  'optimization-depth.webp',
+  'optimization-foreground.webp',
+  'optimization-landscape.webp',
+  'optimization-light.webp',
+]
 const buildMarkerPath = resolve(root, '.next/BUILD_ID')
 const buildInputs = [
   'app/globals.css',
@@ -41,6 +47,12 @@ if (!existsSync(buildMarkerPath)) {
   }
 }
 
+for (const asset of retiredLayerAssets) {
+  if (existsSync(resolve(root, 'public/assets', asset))) {
+    findings.push(`Retired layered-scene asset is still publicly shipped: ${asset}.`)
+  }
+}
+
 const baselineSignals: ScenePerformanceSignals = {
   compactCoarse: false,
   deviceMemory: 8,
@@ -59,6 +71,16 @@ const profileCases: Array<{
     label: 'compact coarse client on reported 3g',
     signals: { compactCoarse: true, effectiveType: '3g', networkConstrainedClient: true },
     expected: 'static-slow-network',
+  },
+  {
+    label: 'compact coarse client on fast network',
+    signals: { compactCoarse: true, effectiveType: '4g', networkConstrainedClient: true },
+    expected: 'static-compact-coarse',
+  },
+  {
+    label: 'constrained viewport on fast network',
+    signals: { effectiveType: '4g', networkConstrainedClient: true },
+    expected: 'full',
   },
   { label: 'desktop with data saver', signals: { saveData: true }, expected: 'static-save-data' },
   { label: 'desktop with low memory', signals: { deviceMemory: 2 }, expected: 'static-low-memory' },
