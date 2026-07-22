@@ -25,6 +25,7 @@
     "judge:taste": "node --experimental-strip-types scripts/judge-design-taste.ts",
     "judge:scene": "node --experimental-strip-types scripts/judge-scene.ts",
     "judge:semantics": "node --experimental-strip-types scripts/judge-semantics.ts",
+    "judge:security": "NODE_ENV=production node --experimental-strip-types scripts/judge-security.ts",
     "judge:site": "node --experimental-strip-types scripts/judge-site.ts",
     "judge:wpo": "node --experimental-strip-types scripts/judge-wpo.ts"
   },

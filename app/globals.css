@@ -1046,7 +1046,7 @@ a {
 .footer-fit > div > span,
 .footer-fit li > span {
   color: var(--accent);
-  font-size: 0.58rem;
+  font-size: 0.62rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
