@@ -164,7 +164,6 @@ export default function Hero() {
           {performanceProfile === 'full' && !reduceMotion ? (
             <OptimizationLandscapeScene
               active={sceneActive}
-              performanceProfile="full"
               reducedMotion={false}
               scrollProgress={storyProgress}
             />

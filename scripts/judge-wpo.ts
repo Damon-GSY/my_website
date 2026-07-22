@@ -10,6 +10,25 @@ const css = readFileSync(resolve(root, 'app/globals.css'), 'utf8')
 const mobileCss = readFileSync(resolve(root, 'app/mobile-excellence.css'), 'utf8')
 const effectsPath = resolve(root, 'components/optimization-post-effects.tsx')
 const findings: string[] = []
+const buildMarkerPath = resolve(root, '.next/BUILD_ID')
+const buildInputs = [
+  'app/globals.css',
+  'app/mobile-excellence.css',
+  'app/page.tsx',
+  'components/hero.tsx',
+  'components/optimization-landscape-scene.tsx',
+  'components/optimization-post-effects.tsx',
+  'lib/optimization-assets.ts',
+].map((path) => resolve(root, path))
+
+if (!existsSync(buildMarkerPath)) {
+  findings.push('The production build is missing; WPO cannot validate emitted assets.')
+} else {
+  const latestInputTime = Math.max(...buildInputs.map((path) => statSync(path).mtimeMs))
+  if (statSync(buildMarkerPath).mtimeMs < latestInputTime) {
+    findings.push('The production build predates performance source changes; rebuild before WPO validation.')
+  }
+}
 
 if (/@react-three\/postprocessing/.test(scene)) {
   findings.push('The core WebGL chunk statically imports desktop-only postprocessing.')
@@ -63,10 +82,14 @@ if (!/\(min-width: 1280px\) and \(resolution < 1\.5dppx\)/.test(assets)) {
 }
 
 const manifestPath = resolve(root, '.next/react-loadable-manifest.json')
-if (existsSync(manifestPath)) {
+if (!existsSync(manifestPath)) {
+  findings.push('The production loadable manifest is missing; immersive chunk loading is unverified.')
+} else {
   const manifest = JSON.parse(readFileSync(manifestPath, 'utf8')) as Record<string, { files?: string[] }>
   const entry = Object.entries(manifest).find(([key]) => key.includes('optimization-landscape-scene'))?.[1]
-  if (entry?.files) {
+  if (!entry?.files?.length) {
+    findings.push('The immersive scene is absent from the production loadable manifest.')
+  } else {
     const bytes = entry.files.reduce((total, file) => {
       const filePath = resolve(root, '.next', file)
       return total + (existsSync(filePath) ? statSync(filePath).size : 0)
@@ -88,13 +111,17 @@ if (existsSync(manifestPath)) {
 
 const builtHomePath = resolve(root, '.next/server/app/index.html')
 const builtCasePath = resolve(root, '.next/server/app/work/risk-router.html')
-if (existsSync(builtHomePath)) {
+if (!existsSync(builtHomePath)) {
+  findings.push('Built homepage HTML is missing; responsive world-plate preloads are unverified.')
+} else {
   const builtHome = readFileSync(builtHomePath, 'utf8')
   if (!/rel="preload"[^>]+optimization-world-v2-(?:mobile|1280|1920)\.webp/.test(builtHome)) {
     findings.push('Built homepage HTML does not emit the landscape image preload.')
   }
 }
-if (existsSync(builtCasePath)) {
+if (!existsSync(builtCasePath)) {
+  findings.push('Built case-study HTML is missing; route-scoped preload behavior is unverified.')
+} else {
   const builtCase = readFileSync(builtCasePath, 'utf8')
   if (/rel="preload"[^>]+optimization-world-v2-(?:mobile|1280|1920)\.webp/.test(builtCase)) {
     findings.push('Non-home routes preload the homepage landscape unnecessarily.')

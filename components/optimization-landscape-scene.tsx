@@ -38,7 +38,7 @@ const cameraPosition = new THREE.Vector3()
 const cameraLook = new THREE.Vector3()
 const PATH_BASE_COLOR = new THREE.Color('#e27a57')
 const PATH_PEAK_COLOR = new THREE.Color('#ffd0b4')
-const COMPACT_VIEWPORT_QUERY = '(max-width: 720px), (pointer: coarse) and (max-height: 540px)'
+const COMPACT_VIEWPORT_QUERY = '(max-width: 720px), (pointer: coarse) and (max-width: 900px), (pointer: coarse) and (max-height: 600px)'
 const PORTRAIT_COMPOSITION_QUERY = WORLD_PLATE_MEDIA.mobilePortrait
 
 type ViewportProfile = {
@@ -67,6 +67,7 @@ function useViewportProfile() {
   useEffect(() => {
     const compactQuery = window.matchMedia(COMPACT_VIEWPORT_QUERY)
     const portraitQuery = window.matchMedia(PORTRAIT_COMPOSITION_QUERY)
+    const highDensityQuery = window.matchMedia(WORLD_PLATE_MEDIA.highDensityWide)
     const update = () => {
       const next = readViewportProfile()
       setProfile((current) =>
@@ -80,11 +81,13 @@ function useViewportProfile() {
 
     compactQuery.addEventListener('change', update)
     portraitQuery.addEventListener('change', update)
+    highDensityQuery.addEventListener('change', update)
     window.addEventListener('resize', update, { passive: true })
     window.visualViewport?.addEventListener('resize', update, { passive: true })
     return () => {
       compactQuery.removeEventListener('change', update)
       portraitQuery.removeEventListener('change', update)
+      highDensityQuery.removeEventListener('change', update)
       window.removeEventListener('resize', update)
       window.visualViewport?.removeEventListener('resize', update)
     }
@@ -759,10 +762,9 @@ function OptimizationWorld({
 
 export default function OptimizationLandscapeScene({
   active = true,
-  performanceProfile,
   reducedMotion = false,
   scrollProgress,
-}: SceneMotionProps & { active?: boolean; performanceProfile: 'full' }) {
+}: SceneMotionProps & { active?: boolean }) {
   const { assetResolution, compactViewport, portraitComposition } = useViewportProfile()
   const renderProfile = `${assetResolution}:${compactViewport ? 'compact' : 'full'}:${portraitComposition ? 'portrait' : 'landscape'}`
   const [readyProfile, setReadyProfile] = useState('')
@@ -784,8 +786,8 @@ export default function OptimizationLandscapeScene({
           gl={{
             antialias: !compactViewport,
             alpha: false,
-            failIfMajorPerformanceCaveat: performanceProfile === 'full',
-            powerPreference: performanceProfile === 'full' ? 'high-performance' : 'default',
+            failIfMajorPerformanceCaveat: true,
+            powerPreference: 'high-performance',
           }}
           fallback={<div className="hero__scene-fallback" aria-hidden="true" />}
         >

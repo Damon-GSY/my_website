@@ -46,7 +46,8 @@ banPattern(scene, /clock\.elapsedTime/, 'The supposedly scroll-driven scene stil
 
 requirePattern(scene, /WORLD_PLATE_URLS\.mobile[\s\S]*WORLD_PLATE_URLS\.highDensity[\s\S]*WORLD_PLATE_URLS\.standard/, 'The generated mathematical world plate is missing from the WebGL scene.')
 requirePattern(scene, /WORLD_PLATE_MEDIA\.highDensityWide[\s\S]*\? '1920' : '1280'/, 'WebGL does not use the shared high-density-wide asset rule.')
-requirePattern(scene, /performanceProfile: 'full'[\s\S]*failIfMajorPerformanceCaveat: performanceProfile === 'full'[\s\S]*powerPreference:/, 'The full scene does not reject a major GPU performance caveat.')
+requirePattern(scene, /failIfMajorPerformanceCaveat: true[\s\S]*powerPreference: 'high-performance'/, 'The full scene does not reject a major GPU performance caveat.')
+banPattern(scene, /performanceProfile/, 'The scene retains a full-only performance prop or dead capability branch.')
 requirePattern(scene, /function TerrainField[\s\S]*smoothstep\(progress, 0\.06, 0\.38\)[\s\S]*opacity = 0\.04 \+ reveal/, 'The 3D terrain competes with the authored world plate before scroll begins.')
 requirePattern(scene, /function OptimizationPath[\s\S]*opacity = ignition \* 0\.9/, 'The spatial path is fully visible before the scroll story ignites it.')
 banPattern(scene, /optimization-(?:depth|foreground|light)-/, 'Opaque images from incompatible viewpoints are stacked as fake depth.')
