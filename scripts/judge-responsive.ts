@@ -1,16 +1,14 @@
 import { spawn } from 'node:child_process'
-import { existsSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { chromium, type Browser } from 'playwright'
 import { notes, work } from '../lib/content.ts'
+import { assertFreshBuild } from './build-provenance.ts'
 
 const root = process.cwd()
 const port = Number(process.argv[2] ?? 4195)
 const origin = `http://127.0.0.1:${port}`
 
-if (!existsSync(resolve(root, '.next/BUILD_ID'))) {
-  throw new Error('Responsive judge requires a current production build. Run `npm run build` first.')
-}
+assertFreshBuild(root, 'Responsive judge')
 
 const server = spawn(
   process.execPath,

@@ -740,7 +740,13 @@
   }
 
   .evidenceOutcome strong.outcomeWord {
-    font-size: clamp(4.8rem, 24vw, 8rem);
+    max-width: 100%;
+    font-size: clamp(2.9rem, 15.5vw, 5.5rem);
+    line-height: 0.82;
+    letter-spacing: -0.055em;
+    overflow-wrap: normal;
+    word-break: normal;
+    text-wrap: balance;
   }
 
   .evidenceProtocol li {
