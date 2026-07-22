@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, statSync } from 'node:fs'
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { resolve } from 'node:path'
 import {
   resolveScenePerformanceProfile,
@@ -15,12 +15,9 @@ const mobileCss = readFileSync(resolve(root, 'app/mobile-excellence.css'), 'utf8
 const profilePolicy = readFileSync(resolve(root, 'lib/scene-performance-profile.ts'), 'utf8')
 const effectsPath = resolve(root, 'components/optimization-post-effects.tsx')
 const findings: string[] = []
-const retiredLayerAssets = [
-  'optimization-depth.webp',
-  'optimization-foreground.webp',
-  'optimization-landscape.webp',
-  'optimization-light.webp',
-]
+const publicAssetsPath = resolve(root, 'public/assets')
+const retiredLayerAssetPattern =
+  /^optimization-(depth|foreground|landscape|light)(?:-(?:1280|1920))?\.webp$/
 const buildMarkerPath = resolve(root, '.next/BUILD_ID')
 const buildInputs = [
   'app/globals.css',
@@ -47,10 +44,8 @@ if (!existsSync(buildMarkerPath)) {
   }
 }
 
-for (const asset of retiredLayerAssets) {
-  if (existsSync(resolve(root, 'public/assets', asset))) {
-    findings.push(`Retired layered-scene asset is still publicly shipped: ${asset}.`)
-  }
+for (const asset of readdirSync(publicAssetsPath).filter((name) => retiredLayerAssetPattern.test(name))) {
+  findings.push(`Retired layered-scene asset is still publicly shipped: ${asset}.`)
 }
 
 const baselineSignals: ScenePerformanceSignals = {
