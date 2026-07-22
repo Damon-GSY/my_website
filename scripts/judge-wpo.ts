@@ -108,8 +108,11 @@ if (!/function ScrollFrameDriver[\s\S]*scrollProgress\.on\('change', invalidate\
 if (!/useSpring\(scrollYProgress,[\s\S]*stiffness:[\s\S]*damping:[\s\S]*restDelta:/.test(hero)) {
   findings.push('Demand rendering is not driven by a bounded spring clock.')
 }
-if (!/performanceProfile === 'full' && !reduceMotion[\s\S]*<OptimizationLandscapeScene[\s\S]*hero__scene-fallback/.test(hero)) {
+if (!/performanceProfile === 'full' && motionEnabled[\s\S]*<OptimizationLandscapeScene[\s\S]*hero__scene-fallback/.test(hero)) {
   findings.push('Reduced-motion and server-rendered clients still instantiate the WebGL scene.')
+}
+if (!/motionPreferenceReady && !reduceMotion[\s\S]*data-motion-mode=\{motionPreferenceReady[\s\S]*motionEnabled && \(/.test(hero)) {
+  findings.push('The hero does not hold motion-only DOM until the client motion preference is hydration-safe.')
 }
 if (!/saveData[\s\S]*deviceMemory[\s\S]*effectiveType[\s\S]*hardwareConcurrency[\s\S]*NETWORK_CONSTRAINED_CLIENT_QUERY/.test(hero)) {
   findings.push('The hero performance profile omits a required client capability signal.')

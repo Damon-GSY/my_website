@@ -111,7 +111,10 @@ export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
   const [introInteractive, setIntroInteractive] = useState(true)
   const introInteractiveRef = useRef(true)
-  const reduceMotion = useReducedMotion()
+  const preferredReducedMotion = useReducedMotion()
+  const [motionPreferenceReady, setMotionPreferenceReady] = useState(false)
+  const reduceMotion = motionPreferenceReady && Boolean(preferredReducedMotion)
+  const motionEnabled = motionPreferenceReady && !reduceMotion
   const performanceProfile = useSyncExternalStore(
     subscribeToPerformanceProfile,
     getPerformanceProfile,
@@ -132,32 +135,41 @@ export default function Hero() {
   const copyY = useTransform(storyProgress, [0, 0.36], [0, -72])
   const copyOpacity = useTransform(storyProgress, [0, 0.18, 0.36], [1, 1, 0])
   const sceneOpacity = useTransform(storyProgress, [0, 0.92, 1], [1, 1, 0.08])
-  const contentInteractive = Boolean(reduceMotion) || introInteractive
+  const contentInteractive = !motionEnabled || introInteractive
 
   useEffect(() => {
-    const nextInteractive = Boolean(reduceMotion) || storyProgress.get() < 0.38
+    setMotionPreferenceReady(true)
+  }, [])
+
+  useEffect(() => {
+    const nextInteractive = !motionEnabled || storyProgress.get() < 0.38
     if (introInteractiveRef.current === nextInteractive) return
     introInteractiveRef.current = nextInteractive
     setIntroInteractive(nextInteractive)
-  }, [reduceMotion, storyProgress])
+  }, [motionEnabled, storyProgress])
 
   useMotionValueEvent(storyProgress, 'change', (progress) => {
-    const nextInteractive = Boolean(reduceMotion) || progress < 0.38
+    const nextInteractive = !motionEnabled || progress < 0.38
     if (introInteractiveRef.current === nextInteractive) return
     introInteractiveRef.current = nextInteractive
     setIntroInteractive(nextInteractive)
   })
 
   return (
-    <section ref={sectionRef} className="hero" id="top">
+    <section
+      ref={sectionRef}
+      className="hero"
+      data-motion-mode={motionPreferenceReady ? (reduceMotion ? 'reduced' : 'full') : 'pending'}
+      id="top"
+    >
       <div className="hero__viewport">
         <motion.div
           className="hero__scene"
           data-performance-profile={performanceProfile}
-          style={{ opacity: sceneOpacity }}
+          style={{ opacity: motionEnabled ? sceneOpacity : 1 }}
           aria-hidden="true"
         >
-          {performanceProfile === 'full' && !reduceMotion ? (
+          {performanceProfile === 'full' && motionEnabled ? (
             <OptimizationLandscapeScene
               active={sceneActive}
               reducedMotion={false}
@@ -173,8 +185,8 @@ export default function Hero() {
         <motion.div
           className={`section-shell hero__content${contentInteractive ? '' : ' is-inactive'}`}
           style={{
-            y: reduceMotion ? 0 : copyY,
-            opacity: reduceMotion ? 1 : copyOpacity,
+            y: motionEnabled ? copyY : 0,
+            opacity: motionEnabled ? copyOpacity : 1,
           }}
         >
           <p className="hero__eyebrow">
@@ -209,7 +221,7 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {!reduceMotion && (
+        {motionEnabled && (
           heroChapters.map((chapter, index) => (
             <HeroChapter
               key={chapter.index}
