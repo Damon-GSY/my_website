@@ -105,7 +105,7 @@ export const work = [
     ],
     outcome: {
       value: '≈90%',
-      label: 'misoperations',
+      label: 'fewer misoperations',
       evidence: '≈95% manual intervention · <1s handoff · supported internal scope',
     },
     proof: {

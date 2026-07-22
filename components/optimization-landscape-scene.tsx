@@ -153,25 +153,39 @@ function TerrainGeometry() {
   return <planeGeometry ref={geometryRef} args={[TERRAIN_WIDTH, TERRAIN_DEPTH, 72, 48]} />
 }
 
-function TerrainField() {
+function TerrainField({ scrollProgress, reducedMotion }: SceneMotionProps) {
+  const surfaceMaterialRef = useRef<THREE.MeshStandardMaterial>(null)
+  const wireMaterialRef = useRef<THREE.MeshBasicMaterial>(null)
+
+  useFrame(() => {
+    const progress = reducedMotion ? 0.14 : scrollProgress.get()
+    const reveal = THREE.MathUtils.smoothstep(progress, 0.06, 0.38)
+    if (surfaceMaterialRef.current) surfaceMaterialRef.current.opacity = 0.04 + reveal * 0.94
+    if (wireMaterialRef.current) wireMaterialRef.current.opacity = 0.018 + reveal * 0.092
+  })
+
   return (
     <group>
       <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
         <TerrainGeometry />
         <meshStandardMaterial
+          ref={surfaceMaterialRef}
           color="#130d0c"
           emissive="#2c100a"
           emissiveIntensity={0.28}
           metalness={0.16}
+          transparent
+          opacity={0.04}
           roughness={0.84}
         />
       </mesh>
       <mesh position={[0, 0.018, 0]} rotation={[-Math.PI / 2, 0, 0]} renderOrder={3}>
         <TerrainGeometry />
         <meshBasicMaterial
+          ref={wireMaterialRef}
           color="#c3684b"
           transparent
-          opacity={0.11}
+          opacity={0.018}
           wireframe
           depthWrite={false}
           blending={THREE.AdditiveBlending}
@@ -182,7 +196,9 @@ function TerrainField() {
   )
 }
 
-function SpatialContours() {
+function SpatialContours({ scrollProgress, reducedMotion }: SceneMotionProps) {
+  const minorMaterialRef = useRef<THREE.LineBasicMaterial>(null)
+  const majorMaterialRef = useRef<THREE.LineBasicMaterial>(null)
   const { majorGeometry, minorGeometry } = useMemo(() => {
     const major: number[] = []
     const minor: number[] = []
@@ -220,13 +236,21 @@ function SpatialContours() {
     [majorGeometry, minorGeometry],
   )
 
+  useFrame(() => {
+    const progress = reducedMotion ? 0.14 : scrollProgress.get()
+    const reveal = THREE.MathUtils.smoothstep(progress, 0.08, 0.44)
+    if (minorMaterialRef.current) minorMaterialRef.current.opacity = 0.02 + reveal * 0.24
+    if (majorMaterialRef.current) majorMaterialRef.current.opacity = 0.035 + reveal * 0.545
+  })
+
   return (
     <group renderOrder={4}>
       <lineSegments geometry={minorGeometry}>
         <lineBasicMaterial
+          ref={minorMaterialRef}
           color="#a95038"
           transparent
-          opacity={0.26}
+          opacity={0.02}
           depthWrite={false}
           blending={THREE.AdditiveBlending}
           toneMapped={false}
@@ -234,9 +258,10 @@ function SpatialContours() {
       </lineSegments>
       <lineSegments geometry={majorGeometry}>
         <lineBasicMaterial
+          ref={majorMaterialRef}
           color="#ef8864"
           transparent
-          opacity={0.58}
+          opacity={0.035}
           depthWrite={false}
           blending={THREE.AdditiveBlending}
           toneMapped={false}
@@ -250,6 +275,15 @@ function OptimizationPath({ scrollProgress, reducedMotion }: SceneMotionProps) {
   const pathMaterialRef = useRef<THREE.MeshBasicMaterial>(null)
   const haloRef = useRef<THREE.Mesh>(null)
   const coreLightRef = useRef<THREE.PointLight>(null)
+  const markerMaterial = useMemo(
+    () => new THREE.MeshBasicMaterial({
+      color: '#ffd0b4',
+      transparent: true,
+      opacity: 0,
+      toneMapped: false,
+    }),
+    [],
+  )
   const curve = useMemo(() => {
     const points = Array.from({ length: 36 }, (_, index) => {
       const progress = index / 35
@@ -271,17 +305,21 @@ function OptimizationPath({ scrollProgress, reducedMotion }: SceneMotionProps) {
     [curve],
   )
 
+  useEffect(() => () => markerMaterial.dispose(), [markerMaterial])
+
   useFrame(() => {
     const progress = reducedMotion ? 0.14 : scrollProgress.get()
-    const ignition = THREE.MathUtils.smoothstep(progress, 0.12, 0.82)
+    const ignition = THREE.MathUtils.smoothstep(progress, 0.12, 0.72)
     if (pathMaterialRef.current) {
       pathMaterialRef.current.color.lerpColors(PATH_BASE_COLOR, PATH_PEAK_COLOR, ignition)
+      pathMaterialRef.current.opacity = ignition * 0.9
     }
     if (haloRef.current) {
       const material = haloRef.current.material as THREE.MeshBasicMaterial
-      material.opacity = 0.055 + ignition * 0.16
+      material.opacity = ignition * 0.18
     }
-    if (coreLightRef.current) coreLightRef.current.intensity = 8 + ignition * 18
+    markerMaterial.opacity = ignition * 0.92
+    if (coreLightRef.current) coreLightRef.current.intensity = ignition * 22
   })
 
   return (
@@ -290,26 +328,33 @@ function OptimizationPath({ scrollProgress, reducedMotion }: SceneMotionProps) {
         <meshBasicMaterial
           color="#ff6d3d"
           transparent
-          opacity={0.055}
+          opacity={0}
           depthWrite={false}
           blending={THREE.AdditiveBlending}
           toneMapped={false}
         />
       </mesh>
       <mesh geometry={pathGeometry} renderOrder={5}>
-        <meshBasicMaterial ref={pathMaterialRef} color="#e27a57" toneMapped={false} />
+        <meshBasicMaterial
+          ref={pathMaterialRef}
+          color="#e27a57"
+          transparent
+          opacity={0}
+          depthWrite={false}
+          toneMapped={false}
+        />
       </mesh>
       {markers.map(({ isCore, position, progress }) => (
         <mesh key={progress} position={position} scale={isCore ? 1.9 : progress === 1 ? 0.72 : 1}>
           <sphereGeometry args={[0.055, 12, 12]} />
-          <meshBasicMaterial color="#ffd0b4" toneMapped={false} />
+          <primitive object={markerMaterial} attach="material" />
         </mesh>
       ))}
       <pointLight
         ref={coreLightRef}
         position={CORE_ANCHOR}
         color="#ff8053"
-        intensity={8}
+        intensity={0}
         distance={6}
         decay={2}
       />
@@ -445,7 +490,8 @@ function ConvergenceField({ scrollProgress, reducedMotion }: SceneMotionProps) {
   )
 }
 
-function GradientVectors() {
+function GradientVectors({ scrollProgress, reducedMotion }: SceneMotionProps) {
+  const materialRef = useRef<THREE.LineBasicMaterial>(null)
   const geometry = useMemo(() => {
     const positions: number[] = []
     for (let row = 0; row < 5; row += 1) {
@@ -462,9 +508,21 @@ function GradientVectors() {
     return buffer
   }, [])
 
+  useFrame(() => {
+    const progress = reducedMotion ? 0.14 : scrollProgress.get()
+    const reveal = THREE.MathUtils.smoothstep(progress, 0.12, 0.5)
+    if (materialRef.current) materialRef.current.opacity = 0.018 + reveal * 0.322
+  })
+
   return (
     <lineSegments geometry={geometry} renderOrder={4}>
-      <lineBasicMaterial color="#e88a67" transparent opacity={0.34} blending={THREE.AdditiveBlending} />
+      <lineBasicMaterial
+        ref={materialRef}
+        color="#e88a67"
+        transparent
+        opacity={0.018}
+        blending={THREE.AdditiveBlending}
+      />
     </lineSegments>
   )
 }
@@ -487,7 +545,7 @@ function DustField({ reducedMotion, scrollProgress }: SceneMotionProps) {
     const progress = reducedMotion ? 0.12 : scrollProgress.get()
     pointsRef.current.position.z = progress * 0.85
     pointsRef.current.rotation.y = reducedMotion ? 0 : progress * 0.045
-    materialRef.current.opacity = 0.16 + progress * 0.28
+    materialRef.current.opacity = 0.035 + progress * 0.3
   })
 
   return (
@@ -500,7 +558,7 @@ function DustField({ reducedMotion, scrollProgress }: SceneMotionProps) {
         color="#f4a383"
         size={0.038}
         transparent
-        opacity={0.16}
+        opacity={0.035}
         sizeAttenuation
         depthWrite={false}
         blending={THREE.AdditiveBlending}
@@ -544,8 +602,8 @@ function AtmosphericBackdrop({
 }) {
   const backdropRef = useRef<THREE.MeshBasicMaterial>(null)
   const textureUrl = portraitComposition
-    ? '/assets/optimization-signature-mobile.webp'
-    : `/assets/optimization-signature-${assetResolution}.webp`
+    ? '/assets/optimization-world-v2-mobile.webp'
+    : `/assets/optimization-world-v2-${assetResolution}.webp`
   const landscape = useLoader(THREE.TextureLoader, textureUrl)
   const backdropSize: [number, number] = portraitComposition
     ? [BACKPLATE_HEIGHT, BACKPLATE_WIDTH]
@@ -565,7 +623,7 @@ function AtmosphericBackdrop({
   useFrame(() => {
     const progress = reducedMotion ? 0.12 : scrollProgress.get()
     if (backdropRef.current) {
-      const targetOpacity = THREE.MathUtils.lerp(0.72, 0.1, THREE.MathUtils.smoothstep(progress, 0.05, 0.88))
+      const targetOpacity = THREE.MathUtils.lerp(0.94, 0.08, THREE.MathUtils.smoothstep(progress, 0.08, 0.88))
       backdropRef.current.opacity = targetOpacity
     }
   })
@@ -577,7 +635,7 @@ function AtmosphericBackdrop({
         ref={backdropRef}
         map={landscape}
         transparent
-        opacity={0.72}
+        opacity={0.94}
         depthWrite={false}
         toneMapped={false}
       />
@@ -685,11 +743,11 @@ function OptimizationWorld({
         </Suspense>
       )}
       <group position={[0.8, -0.2, 0]}>
-        <TerrainField />
-        <SpatialContours />
+        <TerrainField reducedMotion={reducedMotion} scrollProgress={scrollProgress} />
+        <SpatialContours reducedMotion={reducedMotion} scrollProgress={scrollProgress} />
         <OptimizationPath reducedMotion={reducedMotion} scrollProgress={scrollProgress} />
         <ConvergenceField reducedMotion={reducedMotion} scrollProgress={scrollProgress} />
-        <GradientVectors />
+        <GradientVectors reducedMotion={reducedMotion} scrollProgress={scrollProgress} />
         <DustField reducedMotion={reducedMotion} scrollProgress={scrollProgress} />
       </group>
       <ambientLight intensity={0.18} color="#bdc6d1" />

@@ -117,20 +117,23 @@
 
 .visualShell {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 15rem;
-  gap: 1.25rem;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
   align-items: end;
 }
 
 .visualShell :global(.case-signal) {
-  min-height: min(68rem, 76dvh);
+  min-height: min(52rem, 68dvh);
 }
 
 .visualShell > p {
+  max-width: 24rem;
   margin: 0;
+  margin-left: auto;
   color: var(--muted);
   font-size: 0.6rem;
   line-height: 1.65;
+  text-align: right;
 }
 
 .chapter {
@@ -587,6 +590,8 @@
 
   .visualShell > p {
     max-width: 26rem;
+    margin-left: 0;
+    text-align: left;
   }
 
   .chapterContent {

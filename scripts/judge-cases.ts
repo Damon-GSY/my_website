@@ -7,6 +7,8 @@ const page = readFileSync(resolve(root, 'app/work/[slug]/page.tsx'), 'utf8')
 const styles = readFileSync(resolve(root, 'app/work/[slug]/case-study.module.css'), 'utf8')
 const workSection = readFileSync(resolve(root, 'components/work-section.tsx'), 'utf8')
 const header = readFileSync(resolve(root, 'components/site-header.tsx'), 'utf8')
+const caseSignal = readFileSync(resolve(root, 'components/case-signal.tsx'), 'utf8')
+const caseSignalStyles = readFileSync(resolve(root, 'components/case-signal.css'), 'utf8')
 
 const failures: string[] = []
 
@@ -56,6 +58,11 @@ requirePattern(header, /id: 'work'[^\n]*routePrefix: '\/work\/'[\s\S]*routeItem[
 requirePattern(header, /homeAnchor/, 'Global navigation does not return project routes to homepage sections.')
 requirePattern(styles, /@media \(max-width: 720px\)/, 'Case studies have no mobile layout contract.')
 requirePattern(styles, /min-height:\s*100dvh/, 'Case-study hero does not use the dynamic viewport contract.')
+requirePattern(caseSignal, /Authority routing[\s\S]*OBSERVED STATE[\s\S]*RISK[\s\S]*CONSEQUENCE[\s\S]*human handoff/, 'Risk case visual does not communicate an explicit authority-routing decision path.')
+requirePattern(caseSignal, /<SignalGraphic type=\{type\} \/>/, 'One or more case visuals bypass the shared semantic SVG renderer.')
+if (/supply-chain-agent-trace-v1\.webp|case-signal__evidence-image/.test(caseSignal + caseSignalStyles)) {
+  failures.push('Risk case still depends on the decorative raster pipe reconstruction.')
+}
 
 console.log(`Case-study judge: ${failures.length === 0 ? 'PASS' : 'FAIL'}`)
 for (const failure of failures) console.log(`- ${failure}`)

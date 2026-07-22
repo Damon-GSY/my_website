@@ -7,9 +7,9 @@ type SignalType = 'risk' | 'tools' | 'benchmark' | 'reward'
 
 const signalCopy: Record<SignalType, { title: string; eyebrow: string; disclosure: string; steps: string[] }> = {
   risk: {
-    title: 'Decision policy',
-    eyebrow: 'Sanitized system reconstruction',
-    disclosure: 'Derived from 12 supported internal scenarios. No customer data shown.',
+    title: 'Authority routing',
+    eyebrow: 'Decision architecture / 12 scenarios',
+    disclosure: 'A schematic of the policy boundary. No customer trace or production data shown.',
     steps: ['observe', 'risk tier', 'confirm', 'handoff'],
   },
   tools: {
@@ -34,22 +34,81 @@ const signalCopy: Record<SignalType, { title: string; eyebrow: string; disclosur
 
 function RiskGraphic() {
   return (
-    <svg className="case-signal__plot case-signal__plot--risk" viewBox="0 0 420 520">
-      <path className="case-signal__axis" d="M210 32V488" />
-      <path className="case-signal__trace case-signal__trace--muted" d="M210 64V132C210 184 96 171 96 238V344" />
-      <path className="case-signal__trace case-signal__trace--muted" d="M210 132C210 184 324 171 324 238V344" />
-      <path className="case-signal__trace case-signal__flow" pathLength="1" d="M210 64V132C210 184 324 171 324 238V404C324 448 264 452 210 452" />
-      <rect className="case-signal__zone" x="52" y="238" width="88" height="106" rx="2" />
-      <rect className="case-signal__zone case-signal__zone--accent" x="280" y="238" width="88" height="106" rx="2" />
-      <circle className="case-signal__node case-signal__node--accent" cx="210" cy="64" r="7" />
-      <circle className="case-signal__node" cx="210" cy="132" r="5" />
-      <circle className="case-signal__node" cx="96" cy="238" r="5" />
-      <circle className="case-signal__node case-signal__node--accent" cx="324" cy="238" r="7" />
-      <circle className="case-signal__node" cx="210" cy="452" r="5" />
-      <text className="case-signal__label" x="52" y="366">routine / execute</text>
-      <text className="case-signal__label case-signal__label--accent" x="280" y="366">high risk / confirm</text>
-      <text className="case-signal__label" x="226" y="136">policy gate</text>
+    <>
+    <svg className="case-signal__plot case-signal__plot--risk case-signal__plot--risk-desktop" viewBox="0 0 760 390">
+      <path className="case-signal__axis" d="M72 195H198M278 195H326" />
+      <path className="case-signal__trace case-signal__trace--muted" d="M326 195C374 195 370 108 422 108H672" />
+      <path className="case-signal__trace case-signal__flow" pathLength="1" d="M326 195C374 195 370 282 422 282H710" />
+
+      <g className="case-signal__module">
+        <rect x="50" y="157" width="142" height="76" rx="2" />
+        <text className="case-signal__micro" x="68" y="181">OBSERVED STATE</text>
+        <text className="case-signal__module-title" x="68" y="210">intent + context</text>
+      </g>
+
+      <g className="case-signal__gate">
+        <path d="M238 155L278 195L238 235L198 195Z" />
+        <text className="case-signal__micro" x="221" y="191">RISK</text>
+        <text className="case-signal__micro" x="221" y="206">TIER</text>
+      </g>
+
+      <g className="case-signal__module case-signal__module--muted">
+        <rect x="422" y="70" width="118" height="76" rx="2" />
+        <text className="case-signal__micro" x="440" y="94">ROUTINE</text>
+        <text className="case-signal__module-title" x="440" y="123">execute</text>
+      </g>
+
+      <g className="case-signal__module case-signal__module--accent">
+        <rect x="422" y="244" width="118" height="76" rx="2" />
+        <text className="case-signal__micro" x="440" y="268">CONSEQUENCE</text>
+        <text className="case-signal__module-title" x="440" y="297">confirm</text>
+      </g>
+
+      <path className="case-signal__handoff-link" d="M540 282H576" />
+      <g className="case-signal__module case-signal__module--handoff">
+        <rect x="576" y="244" width="134" height="76" rx="38" />
+        <text className="case-signal__micro" x="596" y="268">EXCEPTION</text>
+        <text className="case-signal__module-title" x="596" y="297">human handoff</text>
+      </g>
+
+      <text className="case-signal__lane-label" x="422" y="51">LOW CONSEQUENCE / BOUNDED ACTION</text>
+      <text className="case-signal__lane-label case-signal__label--accent" x="422" y="349">HIGH CONSEQUENCE / EXPLICIT AUTHORITY</text>
+      <circle className="case-signal__junction" cx="326" cy="195" r="3" />
     </svg>
+    <svg className="case-signal__plot case-signal__plot--risk case-signal__plot--risk-mobile" viewBox="0 0 340 280">
+      <path className="case-signal__axis" d="M100 125H102M150 125H164" />
+      <path className="case-signal__trace case-signal__trace--muted" d="M164 125C181 125 179 62 198 62H320" />
+      <path className="case-signal__trace case-signal__flow" pathLength="1" d="M164 125C181 125 179 184 198 184H308" />
+      <path className="case-signal__handoff-link" d="M253 210V234" />
+
+      <g className="case-signal__module">
+        <rect x="8" y="98" width="92" height="54" rx="2" />
+        <text className="case-signal__micro" x="18" y="116">OBSERVED STATE</text>
+        <text className="case-signal__module-title" x="18" y="139">intent + context</text>
+      </g>
+      <g className="case-signal__gate">
+        <path d="M126 101L150 125L126 149L102 125Z" />
+        <text className="case-signal__micro" x="115" y="122">RISK</text>
+        <text className="case-signal__micro" x="115" y="134">TIER</text>
+      </g>
+      <g className="case-signal__module case-signal__module--muted">
+        <rect x="198" y="38" width="110" height="48" rx="2" />
+        <text className="case-signal__micro" x="210" y="55">ROUTINE</text>
+        <text className="case-signal__module-title" x="210" y="75">execute</text>
+      </g>
+      <g className="case-signal__module case-signal__module--accent">
+        <rect x="198" y="158" width="110" height="52" rx="2" />
+        <text className="case-signal__micro" x="210" y="176">HIGH CONSEQUENCE</text>
+        <text className="case-signal__module-title" x="210" y="198">confirm</text>
+      </g>
+      <g className="case-signal__module case-signal__module--handoff">
+        <rect x="198" y="234" width="110" height="40" rx="20" />
+        <text className="case-signal__micro" x="210" y="250">EXCEPTION</text>
+        <text className="case-signal__module-title" x="210" y="267">human handoff</text>
+      </g>
+      <circle className="case-signal__junction" cx="164" cy="125" r="3" />
+    </svg>
+    </>
   )
 }
 
@@ -142,13 +201,12 @@ export default function CaseSignal({ type }: { type: SignalType }) {
       role="img"
       aria-label={accessibleLabel}
     >
-      {type === 'risk' && <div className="case-signal__evidence-image" />}
       <div className="case-signal__meta">
         <small>{copy.eyebrow}</small>
         <strong>{copy.title}</strong>
       </div>
       <p className="case-signal__disclosure">{copy.disclosure}</p>
-      {type !== 'risk' && <SignalGraphic type={type} />}
+      <SignalGraphic type={type} />
       <div className="case-signal__legend">
         {copy.steps.map((step, index) => (
           <em key={step}><b>0{index + 1}</b>{step}</em>

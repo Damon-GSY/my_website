@@ -143,8 +143,8 @@
     background:
       linear-gradient(90deg, rgba(7, 9, 11, 0.76), transparent 62%),
       image-set(
-        url('/assets/optimization-signature-1280.webp') 1x,
-        url('/assets/optimization-signature-1920.webp') 2x
+        url('/assets/optimization-world-v2-1280.webp') 1x,
+        url('/assets/optimization-world-v2-1920.webp') 2x
       ) center / cover;
   }
 

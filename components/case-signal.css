@@ -8,7 +8,7 @@
   background:
     linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    radial-gradient(circle at var(--spot-x, 52%) var(--spot-y, 46%), rgba(217, 120, 88, 0.2), transparent 36%),
+    radial-gradient(circle at var(--spot-x, 52%) var(--spot-y, 46%), rgba(217, 120, 88, 0.075), transparent 28%),
     var(--surface);
   background-size: 4rem 4rem, 4rem 4rem, auto, auto;
 }
@@ -20,42 +20,6 @@
   background: linear-gradient(112deg, transparent 18%, rgba(255, 255, 255, 0.018) 50%, transparent 78%);
   content: "";
   pointer-events: none;
-}
-
-.case-signal__evidence-image {
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  overflow: hidden;
-  background: #090b0d;
-}
-
-.case-signal__evidence-image::before {
-  position: absolute;
-  inset: 0;
-  background: url('/assets/supply-chain-agent-trace-v1.webp') center 48% / cover no-repeat;
-  content: "";
-  filter: saturate(0.86) contrast(1.06);
-  opacity: 0.9;
-  transform: scale(1.01);
-  transition: filter 900ms var(--ease), opacity 900ms var(--ease), transform 1200ms var(--ease);
-}
-
-.case-signal__evidence-image::after {
-  position: absolute;
-  z-index: 1;
-  inset: 0;
-  background:
-    linear-gradient(180deg, rgba(7, 9, 11, 0.34), transparent 22%, transparent 72%, rgba(7, 9, 11, 0.54)),
-    radial-gradient(circle at var(--spot-x, 54%) var(--spot-y, 48%), rgba(217, 120, 88, 0.13), transparent 34%);
-  content: "";
-  pointer-events: none;
-}
-
-.case-signal--risk:hover .case-signal__evidence-image::before {
-  filter: saturate(1) contrast(1.08);
-  opacity: 1;
-  transform: scale(1.035);
 }
 
 .case-signal__meta {
@@ -105,6 +69,19 @@
   overflow: visible;
 }
 
+.case-signal__plot--risk {
+  top: 7.25rem;
+  right: 2.5rem;
+  bottom: 5.8rem;
+  left: 2.5rem;
+  width: calc(100% - 5rem);
+  height: calc(100% - 13.05rem);
+}
+
+.case-signal__plot--risk-mobile {
+  display: none;
+}
+
 .case-signal__axis,
 .case-signal__network path {
   fill: none;
@@ -130,8 +107,55 @@
 
 .case-signal__flow {
   stroke: var(--accent);
-  stroke-dasharray: 0.08 0.07;
-  animation: signalFlow 7s linear infinite;
+}
+
+.case-signal__module rect,
+.case-signal__gate path {
+  fill: rgba(8, 10, 12, 0.76);
+  stroke: rgba(240, 238, 233, 0.18);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.case-signal__module--muted rect {
+  fill: rgba(240, 238, 233, 0.018);
+  stroke: rgba(240, 238, 233, 0.12);
+}
+
+.case-signal__module--accent rect,
+.case-signal__module--handoff rect {
+  fill: rgba(217, 120, 88, 0.055);
+  stroke: rgba(217, 120, 88, 0.48);
+}
+
+.case-signal__micro,
+.case-signal__lane-label {
+  fill: rgba(240, 238, 233, 0.36);
+  font-family: var(--font-sans);
+  font-size: 8px;
+  letter-spacing: 0.13em;
+}
+
+.case-signal__module-title {
+  fill: rgba(240, 238, 233, 0.78);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 300;
+}
+
+.case-signal__lane-label {
+  font-size: 7px;
+}
+
+.case-signal__handoff-link {
+  fill: none;
+  stroke: rgba(217, 120, 88, 0.48);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.case-signal__junction {
+  fill: var(--accent);
 }
 
 .case-signal__node {
@@ -225,8 +249,47 @@
   text-transform: lowercase;
 }
 
-@keyframes signalFlow {
-  to {
-    stroke-dashoffset: -1;
+@supports (animation-timeline: view()) {
+  .case-signal__flow {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: signalDraw linear both;
+    animation-range: entry 5% cover 42%;
+    animation-timeline: view();
+  }
+
+  @keyframes signalDraw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+}
+
+@media (max-width: 720px) {
+  .case-signal--risk {
+    min-height: 31rem;
+  }
+
+  .case-signal__plot--risk-desktop {
+    display: none;
+  }
+
+  .case-signal__plot--risk-mobile {
+    top: 7.3rem;
+    right: 0.8rem;
+    bottom: 5.7rem;
+    left: 0.8rem;
+    display: block;
+    width: calc(100% - 1.6rem);
+    height: calc(100% - 13rem);
+  }
+
+  .case-signal__micro {
+    font-size: 7px;
+    letter-spacing: 0.08em;
+  }
+
+  .case-signal__module-title {
+    font-size: 10px;
   }
 }

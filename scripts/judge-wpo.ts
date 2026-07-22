@@ -69,13 +69,13 @@ const builtHomePath = resolve(root, '.next/server/app/index.html')
 const builtCasePath = resolve(root, '.next/server/app/work/risk-router.html')
 if (existsSync(builtHomePath)) {
   const builtHome = readFileSync(builtHomePath, 'utf8')
-  if (!/rel="preload"[^>]+optimization-signature-(?:mobile|1280|1920)\.webp/.test(builtHome)) {
+  if (!/rel="preload"[^>]+optimization-world-v2-(?:mobile|1280|1920)\.webp/.test(builtHome)) {
     findings.push('Built homepage HTML does not emit the landscape image preload.')
   }
 }
 if (existsSync(builtCasePath)) {
   const builtCase = readFileSync(builtCasePath, 'utf8')
-  if (/rel="preload"[^>]+optimization-signature-(?:mobile|1280|1920)\.webp/.test(builtCase)) {
+  if (/rel="preload"[^>]+optimization-world-v2-(?:mobile|1280|1920)\.webp/.test(builtCase)) {
     findings.push('Non-home routes preload the homepage landscape unnecessarily.')
   }
 }

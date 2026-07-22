@@ -43,7 +43,9 @@ requirePattern(scene, /function ScrollFrameDriver[\s\S]*scrollProgress\.on\('cha
 banPattern(scene, /progressRef\.current\s*=|camera\.fov\s*=\s*damp/, 'The WebGL camera adds a second smoothing clock after the DOM story.')
 banPattern(scene, /clock\.elapsedTime/, 'The supposedly scroll-driven scene still contains autonomous time animation.')
 
-requirePattern(scene, /optimization-signature-/, 'The signature photographic backdrop is missing from the WebGL scene.')
+requirePattern(scene, /optimization-world-v2-/, 'The generated mathematical world plate is missing from the WebGL scene.')
+requirePattern(scene, /function TerrainField[\s\S]*smoothstep\(progress, 0\.06, 0\.38\)[\s\S]*opacity = 0\.04 \+ reveal/, 'The 3D terrain competes with the authored world plate before scroll begins.')
+requirePattern(scene, /function OptimizationPath[\s\S]*opacity = ignition \* 0\.9/, 'The spatial path is fully visible before the scroll story ignites it.')
 banPattern(scene, /optimization-(?:depth|foreground|light)-/, 'Opaque images from incompatible viewpoints are stacked as fake depth.')
 
 requirePattern(hero, /offset:\s*\['start start', 'end end'\]/, 'Hero scroll progress does not span the sticky sequence.')
