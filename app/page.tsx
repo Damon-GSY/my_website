@@ -6,6 +6,7 @@ import ResearchSection from '@/components/research-section'
 import SiteFooter from '@/components/site-footer'
 import SiteHeader from '@/components/site-header'
 import WorkSection from '@/components/work-section'
+import { WORLD_PLATE_MEDIA, WORLD_PLATE_URLS } from '@/lib/optimization-assets'
 
 export default function Home() {
   return (
@@ -13,17 +14,22 @@ export default function Home() {
       <link
         rel="preload"
         as="image"
-        href="/assets/optimization-world-v2-mobile.webp"
-        media="(max-width: 720px) and (orientation: portrait)"
+        href={WORLD_PLATE_URLS.mobile}
+        media={WORLD_PLATE_MEDIA.mobilePortrait}
         fetchPriority="high"
       />
       <link
         rel="preload"
         as="image"
-        href="/assets/optimization-world-v2-1280.webp"
-        imageSrcSet="/assets/optimization-world-v2-1280.webp 1280w, /assets/optimization-world-v2-1920.webp 1920w"
-        imageSizes="100vw"
-        media="(min-width: 721px), (orientation: landscape)"
+        href={WORLD_PLATE_URLS.standard}
+        media={WORLD_PLATE_MEDIA.standard}
+        fetchPriority="high"
+      />
+      <link
+        rel="preload"
+        as="image"
+        href={WORLD_PLATE_URLS.highDensity}
+        media={WORLD_PLATE_MEDIA.highDensityWide}
         fetchPriority="high"
       />
       <a className="skip-link" href="#work">

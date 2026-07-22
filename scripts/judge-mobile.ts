@@ -13,6 +13,8 @@ const caseCss = readFileSync(resolve(root, 'app/work/[slug]/case-study.module.cs
 const notesCss = readFileSync(resolve(root, 'app/notes/notes.module.css'), 'utf8')
 const scene = readFileSync(resolve(root, 'components/optimization-landscape-scene.tsx'), 'utf8')
 const header = readFileSync(resolve(root, 'components/site-header.tsx'), 'utf8')
+const hero = readFileSync(resolve(root, 'components/hero.tsx'), 'utf8')
+const assets = readFileSync(resolve(root, 'lib/optimization-assets.ts'), 'utf8')
 const findings: string[] = []
 
 function requirePattern(source: string, pattern: RegExp, message: string) {
@@ -34,8 +36,11 @@ requirePattern(scene, /compactViewport \? 1\.1 : 1\.35/, 'Mobile WebGL renders a
 requirePattern(scene, /!compactViewport[\s\S]*<OptimizationPostEffects/, 'Mobile clients still load desktop-only postprocessing.')
 requirePattern(scene, /COMPACT_VIEWPORT_QUERY = '\(max-width: 720px\), \(pointer: coarse\) and \(max-height: 540px\)'/, 'Short coarse-pointer landscape screens are misclassified as desktop WebGL clients.')
 requirePattern(scene, /function useViewportProfile[\s\S]*compactQuery[\s\S]*portraitQuery[\s\S]*addEventListener\('resize'/, 'WebGL performance or composition mode is frozen at mount and ignores orientation changes.')
-requirePattern(scene, /portraitComposition[\s\S]*optimization-world-v2-mobile[\s\S]*optimization-world-v2-\$\{assetResolution\}/, 'Backdrop assets do not switch between portrait mobile and responsive landscape compositions.')
-requirePattern(page, /href="\/assets\/optimization-world-v2-mobile\.webp"[\s\S]*media="\(max-width: 720px\) and \(orientation: portrait\)"/, 'The mobile hero does not preload its portrait-safe composition.')
+requirePattern(scene, /PORTRAIT_COMPOSITION_QUERY = WORLD_PLATE_MEDIA\.mobilePortrait[\s\S]*portraitComposition[\s\S]*WORLD_PLATE_URLS\.mobile/, 'Backdrop assets do not switch to the shared portrait mobile composition.')
+requirePattern(page, /href=\{WORLD_PLATE_URLS\.mobile\}[\s\S]*media=\{WORLD_PLATE_MEDIA\.mobilePortrait\}/, 'The mobile hero does not preload its portrait-safe composition.')
+requirePattern(assets, /mobilePortrait: '\(max-width: 720px\) and \(orientation: portrait\)'/, 'The shared mobile portrait media rule drifted from the CSS breakpoint.')
+requirePattern(css, /@media \(max-width: 720px\) and \(orientation: portrait\)[\s\S]*optimization-world-v2-mobile/, 'CSS does not restrict the mobile world plate to portrait phones.')
+requirePattern(hero, /COARSE_SMALL_VIEWPORT_QUERY = '[^']*pointer: coarse[^']*max-width: 900px[^']*max-height: 600px[^']*'/, 'Small coarse-pointer devices are not routed to the static performance profile.')
 requirePattern(scene, /renderProfile = `\$\{assetResolution\}:\$\{compactViewport[\s\S]*readyProfile === renderProfile[\s\S]*key=\{renderProfile\}/, 'Changing WebGL performance profiles does not rebuild context creation settings behind a loading-safe profile key.')
 requirePattern(scene, /setProfile\(\(current\)[\s\S]*current\.assetResolution === next\.assetResolution[\s\S]*current\.compactViewport === next\.compactViewport[\s\S]*current\.portraitComposition === next\.portraitComposition[\s\S]*\? current/, 'Resize events rerender the WebGL tree even when its responsive profile did not change.')
 requirePattern(mobile, /@media \(pointer: coarse\) and \(max-height: 540px\)[\s\S]*\.hero__viewport[\s\S]*min-height:\s*0/, 'Short landscape phones retain the desktop 48rem sticky viewport floor.')

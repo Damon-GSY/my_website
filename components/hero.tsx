@@ -19,16 +19,57 @@ const OptimizationLandscapeScene = dynamic(() => import('@/components/optimizati
   loading: () => <div className="hero__scene-fallback" aria-hidden="true" />,
 })
 
-const subscribeToClient = () => () => undefined
-const getClientSnapshot = () => {
+type PerformanceProfile =
+  | 'full'
+  | 'static-server'
+  | 'static-save-data'
+  | 'static-slow-network'
+  | 'static-low-memory'
+  | 'static-low-cpu'
+  | 'static-compact-coarse'
+
+type NetworkHints = {
+  effectiveType?: string
+  saveData?: boolean
+  addEventListener?: (type: 'change', listener: () => void) => void
+  removeEventListener?: (type: 'change', listener: () => void) => void
+}
+
+const COARSE_SMALL_VIEWPORT_QUERY = '(pointer: coarse) and (max-width: 900px), (pointer: coarse) and (max-height: 600px)'
+const SLOW_EFFECTIVE_TYPES = new Set(['slow-2g', '2g', '3g'])
+
+const getNetworkHints = () => (navigator as Navigator & { connection?: NetworkHints }).connection
+
+const subscribeToPerformanceProfile = (onStoreChange: () => void) => {
+  const connection = getNetworkHints()
+  const compactCoarseQuery = window.matchMedia(COARSE_SMALL_VIEWPORT_QUERY)
+  connection?.addEventListener?.('change', onStoreChange)
+  compactCoarseQuery.addEventListener('change', onStoreChange)
+
+  return () => {
+    connection?.removeEventListener?.('change', onStoreChange)
+    compactCoarseQuery.removeEventListener('change', onStoreChange)
+  }
+}
+
+const getPerformanceProfile = (): PerformanceProfile => {
   const hints = navigator as Navigator & {
-    connection?: { saveData?: boolean }
     deviceMemory?: number
   }
-  const hasEnoughMemory = hints.deviceMemory === undefined || hints.deviceMemory >= 4
-  return !hints.connection?.saveData && hasEnoughMemory
+  const connection = getNetworkHints()
+
+  if (connection?.saveData) return 'static-save-data'
+  if (connection?.effectiveType && SLOW_EFFECTIVE_TYPES.has(connection.effectiveType)) {
+    return 'static-slow-network'
+  }
+  if (hints.deviceMemory !== undefined && hints.deviceMemory < 4) return 'static-low-memory'
+  if (navigator.hardwareConcurrency !== undefined && navigator.hardwareConcurrency <= 4) {
+    return 'static-low-cpu'
+  }
+  if (window.matchMedia(COARSE_SMALL_VIEWPORT_QUERY).matches) return 'static-compact-coarse'
+  return 'full'
 }
-const getServerSnapshot = () => false
+const getServerPerformanceProfile = (): PerformanceProfile => 'static-server'
 
 type ChapterMotion = {
   range: [number, number, number, number]
@@ -75,10 +116,10 @@ export default function Hero() {
   const [introInteractive, setIntroInteractive] = useState(true)
   const introInteractiveRef = useRef(true)
   const reduceMotion = useReducedMotion()
-  const sceneCapable = useSyncExternalStore(
-    subscribeToClient,
-    getClientSnapshot,
-    getServerSnapshot,
+  const performanceProfile = useSyncExternalStore(
+    subscribeToPerformanceProfile,
+    getPerformanceProfile,
+    getServerPerformanceProfile,
   )
   const sceneActive = useInView(sectionRef, { margin: '15% 0px' })
   const { scrollYProgress } = useScroll({
@@ -114,10 +155,16 @@ export default function Hero() {
   return (
     <section ref={sectionRef} className="hero" id="top">
       <div className="hero__viewport">
-        <motion.div className="hero__scene" style={{ opacity: sceneOpacity }} aria-hidden="true">
-          {sceneCapable && !reduceMotion ? (
+        <motion.div
+          className="hero__scene"
+          data-performance-profile={performanceProfile}
+          style={{ opacity: sceneOpacity }}
+          aria-hidden="true"
+        >
+          {performanceProfile === 'full' && !reduceMotion ? (
             <OptimizationLandscapeScene
               active={sceneActive}
+              performanceProfile="full"
               reducedMotion={false}
               scrollProgress={storyProgress}
             />

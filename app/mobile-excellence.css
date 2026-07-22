@@ -139,15 +139,6 @@
     filter: saturate(0.88) brightness(0.86);
   }
 
-  .hero__scene-fallback {
-    background:
-      linear-gradient(90deg, rgba(7, 9, 11, 0.76), transparent 62%),
-      image-set(
-        url('/assets/optimization-world-v2-1280.webp') 1x,
-        url('/assets/optimization-world-v2-1920.webp') 2x
-      ) center / cover;
-  }
-
   .hero__wash {
     background:
       linear-gradient(90deg, rgba(7, 9, 11, 0.9), rgba(7, 9, 11, 0.48) 52%, rgba(7, 9, 11, 0.2)),

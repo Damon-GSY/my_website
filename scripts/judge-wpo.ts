@@ -5,6 +5,9 @@ const root = process.cwd()
 const scene = readFileSync(resolve(root, 'components/optimization-landscape-scene.tsx'), 'utf8')
 const hero = readFileSync(resolve(root, 'components/hero.tsx'), 'utf8')
 const page = readFileSync(resolve(root, 'app/page.tsx'), 'utf8')
+const assets = readFileSync(resolve(root, 'lib/optimization-assets.ts'), 'utf8')
+const css = readFileSync(resolve(root, 'app/globals.css'), 'utf8')
+const mobileCss = readFileSync(resolve(root, 'app/mobile-excellence.css'), 'utf8')
 const effectsPath = resolve(root, 'components/optimization-post-effects.tsx')
 const findings: string[] = []
 
@@ -27,18 +30,36 @@ if (!/function ScrollFrameDriver[\s\S]*scrollProgress\.on\('change', invalidate\
 if (!/useSpring\(scrollYProgress,[\s\S]*stiffness:[\s\S]*damping:[\s\S]*restDelta:/.test(hero)) {
   findings.push('Demand rendering is not driven by a bounded spring clock.')
 }
-if (!/sceneCapable && !reduceMotion[\s\S]*<OptimizationLandscapeScene[\s\S]*hero__scene-fallback/.test(hero)) {
+if (!/performanceProfile === 'full' && !reduceMotion[\s\S]*<OptimizationLandscapeScene[\s\S]*hero__scene-fallback/.test(hero)) {
   findings.push('Reduced-motion and server-rendered clients still instantiate the WebGL scene.')
 }
-if (!/connection\?: \{ saveData\?: boolean \}[\s\S]*deviceMemory\?: number[\s\S]*hasEnoughMemory/.test(hero)) {
-  findings.push('Data-saving and low-memory clients have no static hero capability gate.')
+if (!/saveData[\s\S]*effectiveType[\s\S]*deviceMemory[\s\S]*hardwareConcurrency[\s\S]*COARSE_SMALL_VIEWPORT_QUERY/.test(hero)) {
+  findings.push('The hero performance profile omits a required client capability signal.')
+}
+if (!/static-save-data[\s\S]*static-slow-network[\s\S]*static-low-memory[\s\S]*static-low-cpu[\s\S]*static-compact-coarse/.test(hero)) {
+  findings.push('Constrained clients do not resolve to explicit static performance profiles.')
+}
+if (/userAgent|navigator\.platform/.test(hero)) {
+  findings.push('The performance gate regressed to user-agent sniffing.')
 }
 if (/remainingFrames/.test(scene)) {
   findings.push('Demand rendering still uses a refresh-rate-dependent frame budget.')
 }
 if (!/dpr=\{\[1, compactViewport \? 1\.1 : 1\.35\]\}/.test(scene)) findings.push('Canvas device-pixel ratio is not capped.')
-if (!/media="\(max-width: 720px\) and \(orientation: portrait\)"[\s\S]*imageSrcSet[\s\S]*media="\(min-width: 721px\), \(orientation: landscape\)"[\s\S]*fetchPriority="high"/.test(page)) {
-  findings.push('The above-the-fold landscape has no responsive preload contract.')
+if (!/WORLD_PLATE_URLS\.mobile[\s\S]*WORLD_PLATE_MEDIA\.mobilePortrait[\s\S]*WORLD_PLATE_URLS\.standard[\s\S]*WORLD_PLATE_MEDIA\.standard[\s\S]*WORLD_PLATE_URLS\.highDensity[\s\S]*WORLD_PLATE_MEDIA\.highDensityWide/.test(page)) {
+  findings.push('The homepage does not preload each mutually exclusive world-plate profile.')
+}
+if (!/mobilePortrait: '\(max-width: 720px\) and \(orientation: portrait\)'[\s\S]*highDensityWide: '\(min-width: 1280px\) and \(min-resolution: 1\.5dppx\)'/.test(assets)) {
+  findings.push('The shared world-plate media rules do not preserve mobile and high-density-wide profiles.')
+}
+if (/imageSrcSet|imageSizes/.test(page)) {
+  findings.push('World-plate preload selection still delegates to a divergent source-set heuristic.')
+}
+if (/image-set\([\s\S]*optimization-world-v2/.test(`${css}\n${mobileCss}`)) {
+  findings.push('CSS fallback selection still uses a divergent density source set.')
+}
+if (!/\(min-width: 1280px\) and \(resolution < 1\.5dppx\)/.test(assets)) {
+  findings.push('The standard preload does not exhaustively cover wide screens below the high-density threshold.')
 }
 
 const manifestPath = resolve(root, '.next/react-loadable-manifest.json')

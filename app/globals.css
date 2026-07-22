@@ -266,10 +266,23 @@ a {
   height: 100%;
   background:
     linear-gradient(90deg, rgba(7, 9, 11, 0.76), transparent 62%),
-    image-set(
-      url('/assets/optimization-world-v2-1280.webp') 1x,
-      url('/assets/optimization-world-v2-1920.webp') 2x
-    ) center / cover;
+    url('/assets/optimization-world-v2-1280.webp') center / cover;
+}
+
+@media (min-width: 1280px) and (min-resolution: 1.5dppx) {
+  .hero__scene-fallback {
+    background:
+      linear-gradient(90deg, rgba(7, 9, 11, 0.76), transparent 62%),
+      url('/assets/optimization-world-v2-1920.webp') center / cover;
+  }
+}
+
+@media (max-width: 720px) and (orientation: portrait) {
+  .hero__scene-fallback {
+    background:
+      linear-gradient(90deg, rgba(7, 9, 11, 0.76), transparent 62%),
+      url('/assets/optimization-world-v2-mobile.webp') center / cover;
+  }
 }
 
 .hero__scene-fallback--loading {
@@ -1369,12 +1382,6 @@ a {
 
   .hero__scene {
     filter: saturate(0.88) brightness(0.86);
-  }
-
-  .hero__scene-fallback {
-    background:
-      linear-gradient(90deg, rgba(7, 9, 11, 0.76), transparent 62%),
-      url('/assets/optimization-world-v2-mobile.webp') center / cover;
   }
 
   .hero__wash {

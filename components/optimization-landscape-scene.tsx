@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic'
 import { Component, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import * as THREE from 'three'
+import { WORLD_PLATE_MEDIA, WORLD_PLATE_URLS, type WorldPlateResolution } from '@/lib/optimization-assets'
 
 const OptimizationPostEffects = dynamic(() => import('@/components/optimization-post-effects'), {
   ssr: false,
@@ -38,11 +39,10 @@ const cameraLook = new THREE.Vector3()
 const PATH_BASE_COLOR = new THREE.Color('#e27a57')
 const PATH_PEAK_COLOR = new THREE.Color('#ffd0b4')
 const COMPACT_VIEWPORT_QUERY = '(max-width: 720px), (pointer: coarse) and (max-height: 540px)'
-const PORTRAIT_COMPOSITION_QUERY = '(max-width: 720px) and (orientation: portrait)'
+const PORTRAIT_COMPOSITION_QUERY = WORLD_PLATE_MEDIA.mobilePortrait
 
-type AssetResolution = '1280' | '1920'
 type ViewportProfile = {
-  assetResolution: AssetResolution
+  assetResolution: WorldPlateResolution
   compactViewport: boolean
   portraitComposition: boolean
 }
@@ -54,9 +54,8 @@ function readViewportProfile(): ViewportProfile {
 
   const compactViewport = window.matchMedia(COMPACT_VIEWPORT_QUERY).matches
   const portraitComposition = window.matchMedia(PORTRAIT_COMPOSITION_QUERY).matches
-  const renderedWidth = window.innerWidth * Math.min(window.devicePixelRatio, 1.5)
   return {
-    assetResolution: renderedWidth > 1680 ? '1920' : '1280',
+    assetResolution: window.matchMedia(WORLD_PLATE_MEDIA.highDensityWide).matches ? '1920' : '1280',
     compactViewport,
     portraitComposition,
   }
@@ -596,14 +595,16 @@ function AtmosphericBackdrop({
   scrollProgress,
   onReady,
 }: SceneMotionProps & {
-  assetResolution: AssetResolution
+  assetResolution: WorldPlateResolution
   portraitComposition: boolean
   onReady: () => void
 }) {
   const backdropRef = useRef<THREE.MeshBasicMaterial>(null)
   const textureUrl = portraitComposition
-    ? '/assets/optimization-world-v2-mobile.webp'
-    : `/assets/optimization-world-v2-${assetResolution}.webp`
+    ? WORLD_PLATE_URLS.mobile
+    : assetResolution === '1920'
+      ? WORLD_PLATE_URLS.highDensity
+      : WORLD_PLATE_URLS.standard
   const landscape = useLoader(THREE.TextureLoader, textureUrl)
   const backdropSize: [number, number] = portraitComposition
     ? [BACKPLATE_HEIGHT, BACKPLATE_WIDTH]
@@ -704,7 +705,7 @@ function OptimizationWorld({
   scrollProgress,
   onReady,
 }: SceneMotionProps & {
-  assetResolution: AssetResolution
+  assetResolution: WorldPlateResolution
   portraitComposition: boolean
   onReady: () => void
 }) {
@@ -758,9 +759,10 @@ function OptimizationWorld({
 
 export default function OptimizationLandscapeScene({
   active = true,
+  performanceProfile,
   reducedMotion = false,
   scrollProgress,
-}: SceneMotionProps & { active?: boolean }) {
+}: SceneMotionProps & { active?: boolean; performanceProfile: 'full' }) {
   const { assetResolution, compactViewport, portraitComposition } = useViewportProfile()
   const renderProfile = `${assetResolution}:${compactViewport ? 'compact' : 'full'}:${portraitComposition ? 'portrait' : 'landscape'}`
   const [readyProfile, setReadyProfile] = useState('')
@@ -779,7 +781,12 @@ export default function OptimizationLandscapeScene({
           dpr={[1, compactViewport ? 1.1 : 1.35]}
           frameloop="demand"
           camera={{ position: CAMERA_RAIL_POINTS[0].toArray(), fov: 50, near: 0.06, far: 36 }}
-          gl={{ antialias: !compactViewport, alpha: false, powerPreference: 'high-performance' }}
+          gl={{
+            antialias: !compactViewport,
+            alpha: false,
+            failIfMajorPerformanceCaveat: performanceProfile === 'full',
+            powerPreference: performanceProfile === 'full' ? 'high-performance' : 'default',
+          }}
           fallback={<div className="hero__scene-fallback" aria-hidden="true" />}
         >
           <color attach="background" args={['#07090b']} />
