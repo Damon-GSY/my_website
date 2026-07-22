@@ -18,22 +18,22 @@ const findings: string[] = []
 const responsiveGridContracts = [
   {
     file: 'app/globals.css',
-    pattern: /@media \(max-width: 720px\)[\s\S]*\.section-intro\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)[^}]*\}[\s\S]*\.section-intro > \*\s*\{[^}]*min-width:\s*0/s,
+    pattern: /@media \(max-width: 720px\)[\s\S]*\.section-intro\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)[^}]*\}[\s\S]*\.section-intro > \*\s*\{[^}]*min-width:\s*0[\s\S]*\.section-intro h2\s*\{[^}]*max-width:\s*100%[^}]*overflow-wrap:\s*anywhere/s,
     message: 'Mobile work headings can force the page wider than the viewport.',
   },
   {
     file: 'components/earlier-systems-section.module.css',
-    pattern: /@media \(max-width: 720px\)[\s\S]*\.intro\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)[^}]*\}[\s\S]*\.intro > \*\s*\{[^}]*min-width:\s*0/s,
+    pattern: /@media \(max-width: 720px\)[\s\S]*\.intro\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)[^}]*\}[\s\S]*\.intro > \*\s*\{[^}]*min-width:\s*0[\s\S]*\.intro h2\s*\{[^}]*max-width:\s*100%[^}]*overflow-wrap:\s*anywhere/s,
     message: 'Mobile earlier-system headings can force the page wider than the viewport.',
   },
   {
     file: 'components/research-section.module.css',
-    pattern: /@media \(max-width: 820px\), \(max-height: 700px\)[\s\S]*\.mobileRecord \.record > a\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)[^}]*min-width:\s*0[^}]*\}[\s\S]*\.mobileRecord \.record > a > \*\s*\{[^}]*min-width:\s*0/s,
+    pattern: /@media \(max-width: 820px\), \(max-height: 700px\)[\s\S]*\.mobileHeader h2\s*\{[^}]*max-width:\s*100%[^}]*overflow-wrap:\s*anywhere[\s\S]*\.mobileRecord \.record > a\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)[^}]*min-width:\s*0[\s\S]*\.visualCompact \.visualReadout\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\) auto[^}]*min-width:\s*0[\s\S]*\.record h3\s*\{[^}]*max-width:\s*100%[^}]*overflow-wrap:\s*anywhere/s,
     message: 'Mobile research headings can force the page wider than the viewport.',
   },
   {
     file: 'components/about-section.module.css',
-    pattern: /@media \(max-width: 720px\)[\s\S]*\.trajectoryHead\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)[^}]*\}[\s\S]*\.trajectoryHead > \*\s*\{[^}]*min-width:\s*0/s,
+    pattern: /@media \(max-width: 720px\)[\s\S]*\.trajectoryHead\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)[^}]*\}[\s\S]*\.trajectoryHead > \*\s*\{[^}]*min-width:\s*0[\s\S]*\.trajectoryHead h3\s*\{[^}]*max-width:\s*100%[^}]*overflow-wrap:\s*anywhere[\s\S]*\.principles article\s*\{[^}]*min-width:\s*0[\s\S]*\.principles article > \*\s*\{[^}]*min-width:\s*0/s,
     message: 'Mobile trajectory headings can force the page wider than the viewport.',
   },
 ] as const

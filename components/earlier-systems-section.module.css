@@ -225,8 +225,9 @@
   }
 
   .intro h2 {
-    max-width: 9ch;
+    max-width: 100%;
     font-size: clamp(3.8rem, 17vw, 6.2rem);
+    overflow-wrap: anywhere;
   }
 
   .intro > p:last-child {

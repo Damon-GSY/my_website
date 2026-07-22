@@ -397,8 +397,9 @@
   }
 
   .trajectoryHead h3 {
-    max-width: 12ch;
+    max-width: 100%;
     font-size: clamp(3rem, 14vw, 5rem);
+    overflow-wrap: anywhere;
   }
 
   .trajectoryHead > p {
@@ -529,8 +530,13 @@
   .principles article {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1rem;
+    min-width: 0;
     min-height: 17rem;
     border-top: 1px solid var(--line);
+  }
+
+  .principles article > * {
+    min-width: 0;
   }
 
   .principles article:first-child {
@@ -546,8 +552,9 @@
   .principles article:nth-child(3) h3 {
     grid-column: 1 / 5;
     align-self: end;
-    max-width: 8ch;
+    max-width: 100%;
     font-size: clamp(3.6rem, 17vw, 6rem);
+    overflow-wrap: anywhere;
   }
 
   .principles p,
@@ -555,5 +562,7 @@
   .principles article:nth-child(3) p {
     grid-column: 2 / 5;
     align-self: end;
+    max-width: 100%;
+    overflow-wrap: anywhere;
   }
 }
