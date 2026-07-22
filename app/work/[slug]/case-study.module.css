@@ -6,7 +6,6 @@
 .hero {
   min-height: 100dvh;
   padding: 8rem 0 3rem;
-  overflow: hidden;
   background:
     radial-gradient(circle at 80% 68%, rgba(217, 120, 88, 0.09), transparent 28%),
     linear-gradient(180deg, #0c0e11, var(--bg));
@@ -580,12 +579,12 @@
   }
 
   .heroLower {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 3rem;
   }
 
   .visualShell {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .visualShell > p {
@@ -620,7 +619,7 @@
   }
 
   .heroShell {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto;
     min-height: 0;
   }
@@ -642,12 +641,14 @@
   }
 
   .hero h1 {
+    max-width: 100%;
     margin: 4rem 0 3rem;
     font-size: clamp(4.2rem, 20vw, 7rem);
+    overflow-wrap: anywhere;
   }
 
   .heroLower dl {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .heroLower dl div {
@@ -661,7 +662,7 @@
   }
 
   .chapterGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 4rem;
   }
 
@@ -671,7 +672,9 @@
   }
 
   .chapterContent h2 {
+    max-width: 100%;
     font-size: clamp(3rem, 14vw, 5rem);
+    overflow-wrap: anywhere;
   }
 
   .prose {
@@ -679,15 +682,15 @@
   }
 
   .decisions li {
-    grid-template-columns: 2.2rem 1fr;
+    grid-template-columns: 2.2rem minmax(0, 1fr);
   }
 
   .trace {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .trace > div {
-    grid-template-columns: 2.2rem 1fr;
+    grid-template-columns: 2.2rem minmax(0, 1fr);
     min-height: 0;
     padding: 1.15rem 0;
     border-top: 1px solid var(--line);
@@ -707,11 +710,11 @@
   }
 
   .evidenceGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .evidenceHeader {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 3rem;
   }
 
@@ -721,7 +724,9 @@
   }
 
   .evidenceHeader h2 {
+    max-width: 100%;
     font-size: clamp(3.2rem, 15vw, 5.6rem);
+    overflow-wrap: anywhere;
   }
 
   .evidenceOutcome {
@@ -729,7 +734,9 @@
   }
 
   .evidenceOutcome strong {
+    max-width: 100%;
     font-size: clamp(7rem, 38vw, 12rem);
+    overflow-wrap: anywhere;
   }
 
   .evidenceOutcome strong.outcomeWord {
@@ -749,12 +756,12 @@
   }
 
   .disclosure {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     font-size: 0.76rem;
   }
 
   .notebook {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .notebook > div {
@@ -774,13 +781,15 @@
   }
 
   .next a {
+    max-width: 100%;
     font-size: clamp(3rem, 14vw, 5.5rem);
+    overflow-wrap: anywhere;
   }
 }
 
 @media (max-width: 480px) {
   .evidenceProtocol li {
-    grid-template-columns: 2rem 1fr;
+    grid-template-columns: 2rem minmax(0, 1fr);
     gap: 0.5rem 1rem;
   }
 

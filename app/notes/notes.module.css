@@ -359,7 +359,7 @@
   .indexHeroGrid,
   .articleHeroGrid,
   .articleGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .indexHeroGrid > p:first-child,
@@ -418,7 +418,9 @@
 
   .indexHeroGrid h1,
   .articleHero h1 {
+    max-width: 100%;
     font-size: clamp(3.8rem, 18vw, 6rem);
+    overflow-wrap: anywhere;
   }
 
   .noteIndex article a {
@@ -434,12 +436,24 @@
     gap: 1rem;
   }
 
+  .nextNote a {
+    gap: 1rem;
+    max-width: 100%;
+    font-size: clamp(2.6rem, 14vw, 4rem);
+    overflow-wrap: anywhere;
+  }
+
   .prose section {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .prose h2,
   .prose section > p {
     grid-column: 1;
+  }
+
+  .prose h2 {
+    max-width: 100%;
+    overflow-wrap: anywhere;
   }
 }

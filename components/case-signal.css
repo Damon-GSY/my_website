@@ -266,6 +266,11 @@
 }
 
 @media (max-width: 720px) {
+  .case-signal__legend em {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
   .case-signal--risk {
     min-height: 31rem;
   }

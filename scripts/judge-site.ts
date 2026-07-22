@@ -39,7 +39,7 @@ banPattern(css, /(?:\.work-section|\.research-section|\.about-section)[^{]*\{[^}
 banPattern(packageJson, /"gsap"|"@gsap\/react"/, 'A second motion engine is still installed.')
 banPattern(packageJson, /"@react-three\/drei"/, 'The scene reintroduced the full Drei helper package for a trivial loader.')
 requirePattern(css, /@media \(max-width: 720px\)/, 'The mobile layout contract is missing.')
-requirePattern(css, /html\s*\{[^}]*position:\s*relative;/s, 'The document scroll container must be positioned for Framer Motion offsets.')
+requirePattern(css, /html\s*\{[^}]*position:\s*relative;[^}]*scroll-behavior:\s*smooth;/s, 'The positioned document scroll container must retain smooth scrolling for Framer Motion and Next.js restoration.')
 requirePattern(layout, /<html[^>]*data-scroll-behavior="smooth"/, 'Next.js is missing the smooth-scroll restoration contract.')
 requirePattern(hero, /profile\.name[\s\S]*profile\.role[\s\S]*profile\.thesis/, 'Hero no longer exposes identity, role, and thesis.')
 requirePattern(hero, /profile\.heroProofs\.map/, 'The hero no longer exposes Damon’s profile evidence above the fold.')

@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit",
     "judge:runtime": "node --experimental-strip-types scripts/judge-dev-runtime.ts",
     "judge:hydration": "node --experimental-strip-types scripts/judge-hydration.ts",
+    "judge:responsive": "node --experimental-strip-types scripts/judge-responsive.ts",
     "judge:awwwards": "node --experimental-strip-types scripts/judge-awwwards.ts",
     "judge:accessibility": "node --experimental-strip-types scripts/judge-accessibility.ts",
     "judge:architecture": "node --experimental-strip-types scripts/judge-architecture.ts",

@@ -25,6 +25,10 @@ function requirePattern(source: string, pattern: RegExp, message: string) {
   if (!pattern.test(source)) findings.push(message)
 }
 
+if (/body\s*\{[^}]*overflow-x:\s*(?:hidden|clip)/s.test(css)) {
+  findings.push('The document body hides horizontal overflow instead of making narrow layouts fit.')
+}
+
 requirePattern(layout, /export const viewport[\s\S]*width:\s*'device-width'[\s\S]*initialScale:\s*1/, 'The responsive viewport contract is incomplete.')
 requirePattern(layout, /import '\.\/mobile-excellence\.css'/, 'Mobile usability fixes are not isolated as a maintainable layer.')
 requirePattern(css, /\.site-mobile-menu nav a\s*\{[^}]*padding:\s*1rem 0/s, 'Primary mobile navigation lacks large touch rows.')
@@ -34,6 +38,8 @@ requirePattern(mobile, /\.section-eyebrow[\s\S]*font-size:\s*0\.68rem/, 'Critica
 requirePattern(mobile, /\.hero__foot small,[\s\S]*\.hero__foot strong[\s\S]*font-size:\s*0\.68rem/, 'The hero identity proof overrides the mobile readability floor.')
 requirePattern(caseCss, /@media \(max-width: 720px\)[\s\S]*\.heroLower dt,[\s\S]*\.next span[\s\S]*font-size:\s*0\.68rem/, 'Case-study metadata drops below the mobile readability floor.')
 requirePattern(notesCss, /@media \(max-width: 640px\)[\s\S]*\.articleMeta,[\s\S]*\.nextNote span[\s\S]*font-size:\s*0\.68rem/, 'Field-note metadata drops below the mobile readability floor.')
+requirePattern(notesCss, /@media \(max-width: 800px\)[\s\S]*\.articleHeroGrid,[\s\S]*grid-template-columns:\s*minmax\(0,\s*1fr\)/, 'Field-note article grids can expand beyond a narrow viewport.')
+requirePattern(notesCss, /@media \(max-width: 640px\)[\s\S]*\.articleHero h1\s*\{[^}]*max-width:\s*100%[^}]*overflow-wrap:\s*anywhere[\s\S]*\.nextNote a\s*\{[^}]*max-width:\s*100%[^}]*overflow-wrap:\s*anywhere[\s\S]*\.prose section\s*\{[^}]*grid-template-columns:\s*minmax\(0,\s*1fr\)[\s\S]*\.prose h2\s*\{[^}]*max-width:\s*100%[^}]*overflow-wrap:\s*anywhere/, 'Field-note display headings, continuation links, or prose grids can overflow the narrowest supported viewport.')
 requirePattern(mobile, /\.footer-bottom a[\s\S]*min-height:\s*2\.75rem/, 'Footer links do not provide 44px touch targets.')
 requirePattern(workLayoutCss, /@media \(max-width: 720px\)[\s\S]*\.case-index__intro,[\s\S]*\.case-index__body[\s\S]*grid-template-columns:\s*1fr;/, 'The compact project index keeps its desktop grid on narrow screens.')
 requirePattern(css, /@media \(max-width: 720px\)[\s\S]*\.section-intro\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)[^}]*\}[\s\S]*\.section-intro > \*\s*\{[^}]*min-width:\s*0/s, 'The mobile work intro can expand its single grid track beyond the viewport.')
