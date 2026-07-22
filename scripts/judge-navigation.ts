@@ -3,6 +3,7 @@ import { resolve } from 'node:path'
 
 const root = process.cwd()
 const header = readFileSync(resolve(root, 'components/site-header.tsx'), 'utf8')
+const page = readFileSync(resolve(root, 'app/page.tsx'), 'utf8')
 const css = readFileSync(resolve(root, 'app/globals.css'), 'utf8')
 
 const failures: string[] = []
@@ -19,10 +20,27 @@ requirePattern(header, /matchMedia\('\(min-width: 721px\)'\)[\s\S]*event\.matche
 requirePattern(header, /tabIndex=\{menuOpen \? 0 : -1\}/, 'Closed mobile navigation leaves hidden links in the tab order.')
 requirePattern(header, /event\.key === 'Tab'[\s\S]*focusables[\s\S]*\.focus\(\)/, 'Modal navigation does not trap keyboard focus.')
 requirePattern(header, /const toggle = toggleRef\.current[\s\S]*toggle\?\.isConnected[\s\S]*toggle\.focus\(\{ preventScroll: true \}\)/, 'Closing the modal navigation does not safely restore trigger focus.')
-requirePattern(header, /const navItems = \[[\s\S]*id: 'work'[\s\S]*id: 'about'/, 'Navigation sections have no single typed source of truth.')
+requirePattern(header, /const navItems = \[[\s\S]*\] as const/, 'Navigation sections have no single typed source of truth.')
 requirePattern(header, /if \(routeItem\)[\s\S]*return[\s\S]*setActiveSection\(''\)[\s\S]*new IntersectionObserver/, 'Returning to the homepage can leave a detail-route navigation item active.')
 const navMapCount = header.match(/navItems\s*\.map/g)?.length ?? 0
 if (navMapCount < 3) failures.push('Scroll observation, desktop links, and mobile links do not derive from the same navigation model.')
+
+const navModel = header.match(/const navItems = \[([\s\S]*?)\] as const/)?.[1] ?? ''
+const navIds = [...navModel.matchAll(/id: '([^']+)'/g)].map((match) => match[1])
+const sectionIdByComponent: Record<string, string> = {
+  WorkSection: 'work',
+  ResearchSection: 'research',
+  FieldNotesSection: 'notes',
+  AboutSection: 'about',
+}
+const mainSource = page.match(/<main>([\s\S]*?)<\/main>/)?.[1] ?? ''
+const documentSectionIds = [...mainSource.matchAll(/<([A-Z][A-Za-z]+) \/>/g)]
+  .map((match) => sectionIdByComponent[match[1]])
+  .filter((id): id is string => Boolean(id))
+
+if (JSON.stringify(navIds) !== JSON.stringify(documentSectionIds)) {
+  failures.push(`Navigation order (${navIds.join(' → ')}) does not match document order (${documentSectionIds.join(' → ')}).`)
+}
 
 for (const section of ['work', 'research', 'notes', 'about']) {
   requirePattern(header, new RegExp(`#${section}`), `Mobile or desktop navigation is missing ${section}.`)

@@ -30,22 +30,41 @@ if (cameraPoints.length < 4) findings.push('The camera rail has too few control 
 
 const cameraRail = new THREE.CatmullRomCurve3(cameraPoints, false, 'catmullrom', 0.32)
 const dollyDistance = cameraRail.getLength()
-const heroHeights = [...styles.matchAll(/\.hero\s*\{[\s\S]*?height:\s*(\d+)svh;/g)].map((match) => Number(match[1]))
-const mobileHeroHeights = [...mobileStyles.matchAll(/\.hero\s*\{[\s\S]*?height:\s*(\d+)svh;/g)].map((match) => Number(match[1]))
-const [desktopHeight] = heroHeights
-const mobileHeight = mobileHeroHeights.at(-1)
+const heroHeight = (source: string, profile: string) => {
+  const match = source.match(/\.hero\s*\{[^}]*height:\s*(\d+)svh;/)
+  if (!match) throw new Error(`Motion judge could not read the ${profile} hero height.`)
+  return Number(match[1])
+}
+const mediaBlock = (source: string, query: string) => {
+  const header = `@media ${query} {`
+  const start = source.indexOf(header)
+  if (start < 0) throw new Error(`Motion judge could not find ${query}.`)
+  const nextMedia = source.indexOf('\n@media ', start + header.length)
+  return source.slice(start + header.length, nextMedia < 0 ? source.length : nextMedia)
+}
 
-if (!desktopHeight || !mobileHeight) throw new Error('Motion judge could not read desktop and mobile hero heights.')
+const desktopHeight = heroHeight(styles.slice(0, styles.indexOf('@media ')), 'desktop')
+const ordinaryMobileHeight = heroHeight(mediaBlock(styles, '(max-width: 720px)'), 'ordinary mobile')
+const shortLandscapeHeight = heroHeight(
+  mediaBlock(mobileStyles, '(pointer: coarse) and (max-width: 1200px) and (max-height: 600px)'),
+  'coarse short-landscape',
+)
 
 const desktopTravel = desktopHeight / 100 - 1
-const mobileTravel = mobileHeight / 100 - 1
+const ordinaryMobileTravel = ordinaryMobileHeight / 100 - 1
+const shortLandscapeTravel = shortLandscapeHeight / 100 - 1
 const desktopPace = dollyDistance / desktopTravel
+const ordinaryMobilePace = dollyDistance / ordinaryMobileTravel
+const shortLandscapePace = dollyDistance / shortLandscapeTravel
 
-if (desktopHeight < 250 || desktopHeight > 265) {
-  findings.push(`Desktop hero runway is ${desktopHeight}svh (expected a focused 250–265svh story).`)
+if (desktopHeight !== 255) {
+  findings.push(`Desktop hero runway is ${desktopHeight}svh (expected exactly 255svh).`)
 }
-if (mobileHeight < 220 || mobileHeight > 230) {
-  findings.push(`Mobile hero runway is ${mobileHeight}svh (expected a focused 220–230svh story).`)
+if (ordinaryMobileHeight !== 240) {
+  findings.push(`Ordinary mobile hero runway is ${ordinaryMobileHeight}svh (expected exactly 240svh).`)
+}
+if (shortLandscapeHeight !== 225) {
+  findings.push(`Coarse short-landscape hero runway is ${shortLandscapeHeight}svh (expected exactly 225svh).`)
 }
 
 if (desktopPace > 10.25) {
@@ -98,5 +117,5 @@ if (findings.length) {
 }
 
 console.log(
-  `Scroll-motion judge: PASS · ${dollyDistance.toFixed(2)} world units across ${desktopTravel.toFixed(2)} desktop / ${mobileTravel.toFixed(2)} mobile viewports`,
+  `Scroll-motion judge: PASS · ${dollyDistance.toFixed(2)} world units · desktop ${desktopTravel.toFixed(2)}vp @ ${desktopPace.toFixed(2)}u/vp · ordinary mobile ${ordinaryMobileTravel.toFixed(2)}vp @ ${ordinaryMobilePace.toFixed(2)}u/vp · coarse short-landscape ${shortLandscapeTravel.toFixed(2)}vp @ ${shortLandscapePace.toFixed(2)}u/vp`,
 )

@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
+import { education, experience, heroChapters, notes, profile, research, signals, work } from '../lib/content.ts'
 
 const root = process.cwd()
 const files = {
@@ -16,7 +17,6 @@ const files = {
   header: readFileSync(resolve(root, 'components/site-header.tsx'), 'utf8'),
   casePage: readFileSync(resolve(root, 'app/work/[slug]/page.tsx'), 'utf8'),
   caseCss: readFileSync(resolve(root, 'app/work/[slug]/case-study.module.css'), 'utf8'),
-  content: readFileSync(resolve(root, 'lib/content.ts'), 'utf8'),
   packageJson: readFileSync(resolve(root, 'package.json'), 'utf8'),
   favicon: readFileSync(resolve(root, 'public/favicon.svg'), 'utf8'),
   og: existsSync(resolve(root, 'app/opengraph-image.tsx'))
@@ -42,11 +42,18 @@ requirePattern(files.hero, /heroChapters\.map/, 'The scroll story does not deriv
 requirePattern(files.page, /<Hero \/>[\s\S]*<WorkSection \/>/, 'The 3D hook does not resolve directly into selected work.')
 requirePattern(files.hero, /profile\.heroProofs\.map/, 'The hero lacks concise profile evidence above the fold.')
 requirePattern(files.hero, /chapter\.evidence/, 'The scroll story lacks evidence for Damon’s three identities.')
-const heroChapterCount = files.content.match(/index: '0\d \/[^']+'/g)?.length ?? 0
-if (heroChapterCount < 3) failures.push(`Expected three distinct personal identities in the scroll story, found ${heroChapterCount}.`)
-requirePattern(files.content, /\['Research', '2 first-author works · ACL Findings \+ arXiv survey'\]/, 'The hero no longer states Damon’s two first-author works and their verified publication venues.')
-requirePattern(files.content, /evidence: '12 scenarios · 100\+ tools · <1s handoff · internal scope'/, 'The hero production evidence no longer discloses that its operational metrics have internal scope.')
-requirePattern(files.content, /value: '≈90%', label: 'manual ticket handling reduction · supported internal workflows'/, 'The hero tool-resolution signal no longer discloses its supported internal workflow scope.')
+if (heroChapters.length < 3) failures.push(`Expected three distinct personal identities in the scroll story, found ${heroChapters.length}.`)
+const researchProof = profile.heroProofs.find(([label]) => label === 'Research')
+if (researchProof?.[1] !== '2 first-author works · ACL Findings + arXiv survey') {
+  failures.push('The hero no longer states Damon’s two first-author works and their verified publication venues.')
+}
+if (heroChapters[0]?.evidence !== '12 scenarios · 100+ tools · <1s handoff · internal scope') {
+  failures.push('The hero production evidence no longer discloses that its operational metrics have internal scope.')
+}
+const toolSignal = signals.find((signal) => signal.value === '≈90%')
+if (toolSignal?.label !== 'manual ticket handling reduction · supported internal workflows') {
+  failures.push('The hero tool-resolution signal no longer discloses its supported internal workflow scope.')
+}
 requirePattern(files.work, /signatureProject[\s\S]*projectIndex\.map[\s\S]*\/work\/\$\{project\.id\}/, 'Selected work does not distinguish the signature case or lead to project evidence.')
 requirePattern(files.page, /<Hero \/>[\s\S]*<WorkSection \/>[\s\S]*<ResearchSection \/>[\s\S]*<FieldNotesSection \/>[\s\S]*<AboutSection \/>[\s\S]*<EarlierSystemsSection \/>/, 'The homepage does not move from selected work and research evidence into writing, biography, and earlier systems.')
 requirePattern(files.earlier, /earlierSystems\.map[\s\S]*entry\.place[\s\S]*entry\.highlights\.map/, 'Earlier systems are not derived from the evidenced career record.')
@@ -60,21 +67,37 @@ banPattern(files.about, /experience\.map/, 'The biography repeats the complete c
 requirePattern(files.about, /socials\.map/, 'Biography hides the creator channels that make the portfolio personal.')
 requirePattern(files.about, /<BlurText[\s\S]*profile\.name/, 'React Bits motion is not integrated into the personal identity moment.')
 requirePattern(files.footer, /profile\.reachOutFor\.map[\s\S]*mailto:[\s\S]*socials\.map/, 'The site has no evidence-led collaboration fit or complete contact path.')
-requirePattern(files.content, /bio:/, 'Identity data lacks a personal biography.')
-requirePattern(files.content, /principles:/, 'Identity data lacks working principles.')
-requirePattern(files.content, /creatorLine:/, 'Identity data hides the creator practice.')
-requirePattern(files.content, /7 field notes · research-linked essays/, 'Creator proof is not grounded in the public writing actually available on the site.')
-requirePattern(files.content, /hundreds of annotated benchmark instances/, 'SupChain-Bench evidence is missing from the personal narrative.')
-requirePattern(files.content, /reachOutFor:[\s\S]*Production agent evaluation[\s\S]*Post-training & reward systems[\s\S]*Tool-use reliability[\s\S]*Research collaboration & technical exchange/, 'The contact path does not state credible reasons to collaborate with Damon.')
-const reachOutBlock = files.content.match(/reachOutFor:\s*\[([\s\S]*?)\],/)?.[1] ?? ''
-const reachOutCount = reachOutBlock.match(/^\s*'[^']+',?$/gm)?.length ?? 0
-if (reachOutCount !== 4) failures.push(`Expected exactly four evidence-led collaboration reasons, found ${reachOutCount}.`)
-banPattern(files.content, /\b530\b/, 'An unsupported exact SupChain-Bench sample count remains in the hero, research, or notes narrative.')
-banPattern(`${reachOutBlock}\n${files.footer}`, /\bavailab(?:le|ility)\b|\bopen(?:[\s-]+)(?:to|for)(?:[\s-]+)work\b/i, 'The contact narrative makes an unverified availability claim.')
-const experienceEvidenceCount = files.content.match(/\n\s+highlights:/g)?.length ?? 0
-if (experienceEvidenceCount < 8) failures.push(`Expected at least 8 evidenced trajectory records, found ${experienceEvidenceCount}.`)
-requirePattern(files.content, /4\.0 \/ 5\.0 GPA[\s\S]*85\/100 GPA/, 'NUS or UNSW academic evidence from main is compressed out of the public trajectory.')
-banPattern(files.content, /QS global #/, 'Undated university rankings are presented as current personal evidence.')
+if (!profile.bio.trim()) failures.push('Identity data lacks a personal biography.')
+if (profile.principles.length === 0) failures.push('Identity data lacks working principles.')
+if (!profile.creatorLine.trim()) failures.push('Identity data hides the creator practice.')
+const publicWorkProof = profile.heroProofs.find(([label]) => label === 'Public work')
+if (publicWorkProof?.[1] !== '7 field notes · research-linked essays' || notes.length !== 7) {
+  failures.push('Creator proof is not grounded in the public writing actually available on the site.')
+}
+const supChainResearch = research.find((paper) => paper.index === 'R/02')
+if (!supChainResearch?.description.includes('Hundreds of annotated benchmark instances')) {
+  failures.push('SupChain-Bench evidence is missing from the personal narrative.')
+}
+const expectedReachOutFor = [
+  'Production agent evaluation',
+  'Post-training & reward systems',
+  'Tool-use reliability',
+  'Research collaboration & technical exchange',
+]
+if (JSON.stringify(profile.reachOutFor) !== JSON.stringify(expectedReachOutFor)) {
+  failures.push(`Expected exactly four evidence-led collaboration reasons, found ${profile.reachOutFor.length}.`)
+}
+const evidenceData = JSON.stringify({ profile, heroChapters, signals, work, research, notes })
+banPattern(evidenceData, /\b530\b/, 'An unsupported exact SupChain-Bench sample count remains in the hero, research, or notes narrative.')
+banPattern(`${profile.reachOutFor.join('\n')}\n${files.footer}`, /\bavailab(?:le|ility)\b|\bopen(?:[\s-]+)(?:to|for)(?:[\s-]+)work\b/i, 'The contact narrative makes an unverified availability claim.')
+if (experience.length < 8 || experience.some((entry) => entry.highlights.length === 0)) {
+  failures.push(`Expected at least 8 evidenced trajectory records, found ${experience.length}.`)
+}
+const educationEvidence = education.flatMap((entry) => entry.highlights).join('\n')
+if (!educationEvidence.includes('4.0 / 5.0 GPA') || !educationEvidence.includes('85/100 GPA')) {
+  failures.push('NUS or UNSW academic evidence from main is compressed out of the public trajectory.')
+}
+banPattern(evidenceData, /QS global #/, 'Undated university rankings are presented as current personal evidence.')
 
 requirePattern(files.global, /\.site-header\s*\{[^}]*top:\s*0\.75rem[^}]*right:\s*var\(--gutter\)[^}]*left:\s*var\(--gutter\)/s, 'Navigation is not detached from the viewport edges.')
 requirePattern(files.caseCss, /animation-timeline:\s*view\(\)/, 'Case-study chapters have no scroll-entry choreography.')
