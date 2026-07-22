@@ -380,10 +380,14 @@
   }
 
   .trajectoryHead {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 2rem;
     min-height: 0;
     padding-bottom: 3rem;
+  }
+
+  .trajectoryHead > * {
+    min-width: 0;
   }
 
   .trajectoryHead > span,

@@ -1521,8 +1521,12 @@ a {
   }
 
   .section-intro {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 1.5rem;
+  }
+
+  .section-intro > * {
+    min-width: 0;
   }
 
   .section-intro .section-eyebrow,

@@ -588,8 +588,14 @@
   }
 
   .mobileRecord .record > a {
+    grid-template-columns: minmax(0, 1fr);
+    min-width: 0;
     min-height: 30rem;
     padding: 2rem 0 1rem;
+  }
+
+  .mobileRecord .record > a > * {
+    min-width: 0;
   }
 
   .recordMeta,
