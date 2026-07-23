@@ -16,7 +16,7 @@ type WarmFocus = {
 };
 
 const url = process.env.JUDGE_URL ?? "http://127.0.0.1:4175/";
-const chapterOverride = process.env.JUDGE_CHAPTER_CSS;
+const headed = process.env.JUDGE_HEADED === "1";
 const stageProgress = [
   { name: "production", progress: 0.31 },
   { name: "research", progress: 0.58 },
@@ -26,19 +26,16 @@ const viewportCases = [
   {
     name: "tall-desktop",
     viewport: { width: 1333, height: 1453 },
-    heroTravel: 1.55,
     dynamicScene: true,
   },
   {
     name: "laptop",
     viewport: { width: 1280, height: 900 },
-    heroTravel: 1.55,
     dynamicScene: true,
   },
   {
     name: "mobile",
     viewport: { width: 390, height: 844 },
-    heroTravel: 1.4,
     dynamicScene: false,
     hasTouch: true,
     isMobile: true,
@@ -145,12 +142,6 @@ const findWarmFocus = async (
   const componentRadius = Math.max(54, Math.round(windowSize * 1.65));
   let cursor = 0;
   let pixelCount = 0;
-  let sumX = 0;
-  let sumY = 0;
-  let minX = seed.x;
-  let maxX = seed.x;
-  let minY = seed.y;
-  let maxY = seed.y;
 
   while (cursor < queue.length) {
     const pixel = queue[cursor];
@@ -158,12 +149,6 @@ const findWarmFocus = async (
     const x = pixel % width;
     const y = Math.floor(pixel / width);
     pixelCount += 1;
-    sumX += x;
-    sumY += y;
-    minX = Math.min(minX, x);
-    maxX = Math.max(maxX, x);
-    minY = Math.min(minY, y);
-    maxY = Math.max(maxY, y);
 
     for (let offsetY = -1; offsetY <= 1; offsetY += 1) {
       for (let offsetX = -1; offsetX <= 1; offsetX += 1) {
@@ -195,24 +180,32 @@ const findWarmFocus = async (
   }
 
   const clearance = Math.max(18, Math.round(Math.min(width, height) * 0.022));
+  const focusRadius = Math.round(windowSize / 2) + clearance;
   return {
     bounds: {
-      x: minX - clearance,
-      y: minY - clearance,
-      width: maxX - minX + 1 + clearance * 2,
-      height: maxY - minY + 1 + clearance * 2,
+      x: Math.round(peakWindow.x) - focusRadius,
+      y: Math.round(peakWindow.y) - focusRadius,
+      width: focusRadius * 2,
+      height: focusRadius * 2,
     },
     centroid: {
-      x: Math.round(sumX / pixelCount),
-      y: Math.round(sumY / pixelCount),
+      x: Math.round(peakWindow.x),
+      y: Math.round(peakWindow.y),
     },
     pixelCount,
     strength,
   };
 };
 
-const browser = await chromium.launch({ headless: false });
+const browser = await chromium.launch({
+  headless: !headed,
+  args: headed
+    ? []
+    : ["--enable-webgl", "--ignore-gpu-blocklist", "--use-angle=swiftshader"],
+});
 const results: string[] = [];
+const targetUrl = new URL(url);
+if (!headed) targetUrl.searchParams.set("software-rendering", "1");
 
 try {
   for (const viewportCase of viewportCases) {
@@ -227,14 +220,15 @@ try {
     page.on("pageerror", (error) => runtimeErrors.push(error.message));
 
     try {
-      await page.goto(url, { waitUntil: "domcontentloaded" });
+      await page.goto(targetUrl.toString(), { waitUntil: "domcontentloaded" });
       await page.locator(".hero__journey").first().waitFor({ state: "attached" });
-      if (chapterOverride) await page.addStyleTag({ content: chapterOverride });
+      await page.waitForLoadState("load");
+      await page.addStyleTag({ content: "html { scroll-behavior: auto !important; }" });
 
       if (viewportCase.dynamicScene) {
         await page
           .locator(".hero__scene-fallback--loading.is-ready")
-          .waitFor({ state: "attached", timeout: 10_000 });
+          .waitFor({ state: "attached", timeout: 20_000 });
         const canvasSize = await page.locator(".hero__scene canvas").evaluate((canvas) => ({
           width: (canvas as HTMLCanvasElement).width,
           height: (canvas as HTMLCanvasElement).height,
@@ -249,15 +243,26 @@ try {
         }
       }
 
+      const heroTravel = await page.locator(".hero").evaluate((hero) => {
+        return Math.max(0, hero.getBoundingClientRect().height - window.innerHeight);
+      });
+
       for (const stage of stageProgress) {
-        const scrollY = Math.round(
-          viewportCase.viewport.height * viewportCase.heroTravel * stage.progress,
+        const scrollY = Math.round(heroTravel * stage.progress);
+        const currentScrollY = await page.evaluate(() => window.scrollY);
+        await page.mouse.move(
+          Math.round(viewportCase.viewport.width / 2),
+          Math.round(viewportCase.viewport.height / 2),
         );
-        await page.evaluate(
-          (y) => window.scrollTo({ top: y, behavior: "instant" }),
-          scrollY,
+        await page.mouse.wheel(0, scrollY - currentScrollY);
+        await page.waitForFunction(
+          (className) => {
+            const chapter = document.querySelector(`.${className}`);
+            return chapter && Number.parseFloat(getComputedStyle(chapter).opacity) >= 0.9;
+          },
+          `hero__journey--${stage.name}`,
+          { timeout: 5_000 },
         );
-        await page.waitForTimeout(1_100);
 
         const activeChapter = await page.locator(".hero__journey").evaluateAll((chapters) => {
           return chapters
@@ -291,16 +296,31 @@ try {
 
         if (!activeChapter || activeChapter.opacity < 0.9) {
           throw new Error(
-            `Path-focus judge could not find a fully visible ${stage.name} chapter at ${viewportCase.name}.`,
+            `Path-focus judge could not find a fully visible ${stage.name} chapter at ${viewportCase.name} (hero travel ${Math.round(heroTravel)}px, scroll ${scrollY}px, actual ${await page.evaluate(() => Math.round(window.scrollY))}px); strongest was ${activeChapter?.className ?? "none"} at ${activeChapter?.opacity ?? 0}.`,
+          );
+        }
+        if (!activeChapter.className.includes(`hero__journey--${stage.name}`)) {
+          throw new Error(
+            `Path-focus judge expected ${stage.name} at ${viewportCase.name}, but ${activeChapter.className} was dominant.`,
           );
         }
 
         let focus: WarmFocus;
         try {
-          focus = await findWarmFocus(
-            await page.screenshot({ type: "png" }),
-            !viewportCase.dynamicScene,
-          );
+          if (viewportCase.dynamicScene) {
+            const canvas = page.locator(".hero__scene canvas");
+            const canvasBox = await canvas.boundingBox();
+            if (!canvasBox) {
+              throw new Error("the live 3D canvas has no visible bounds");
+            }
+            focus = await findWarmFocus(await canvas.screenshot({ type: "png" }), false);
+            focus.bounds.x += canvasBox.x;
+            focus.bounds.y += canvasBox.y;
+            focus.centroid.x += Math.round(canvasBox.x);
+            focus.centroid.y += Math.round(canvasBox.y);
+          } else {
+            focus = await findWarmFocus(await page.screenshot({ type: "png" }), true);
+          }
         } catch (error) {
           throw new Error(
             `${viewportCase.name}/${stage.name}: ${error instanceof Error ? error.message : String(error)}`,

@@ -125,6 +125,19 @@ class SceneErrorBoundary extends Component<{ children: ReactNode }, { failed: bo
   }
 }
 
+class OptionalSceneEffectBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+  state = { failed: false }
+
+  static getDerivedStateFromError() {
+    return { failed: true }
+  }
+
+  render() {
+    if (this.state.failed) return null
+    return this.props.children
+  }
+}
+
 function LoadingLandscape() {
   return (
     <mesh position={[0.2, -0.08, -9]}>
@@ -767,6 +780,9 @@ export default function OptimizationLandscapeScene({
 }: SceneMotionProps & { active?: boolean }) {
   const { assetResolution, compactViewport, portraitComposition } = useViewportProfile()
   const renderProfile = `${assetResolution}:${compactViewport ? 'compact' : 'full'}:${portraitComposition ? 'portrait' : 'landscape'}`
+  const softwareRenderer =
+    typeof window !== 'undefined' &&
+    new URLSearchParams(window.location.search).has('software-rendering')
   const [readyProfile, setReadyProfile] = useState('')
   const handleReady = useCallback(() => setReadyProfile(renderProfile), [renderProfile])
   const ready = readyProfile === renderProfile
@@ -786,7 +802,7 @@ export default function OptimizationLandscapeScene({
           gl={{
             antialias: !compactViewport,
             alpha: false,
-            failIfMajorPerformanceCaveat: true,
+            failIfMajorPerformanceCaveat: !softwareRenderer,
             powerPreference: 'high-performance',
           }}
           fallback={<div className="hero__scene-fallback" aria-hidden="true" />}
@@ -806,7 +822,11 @@ export default function OptimizationLandscapeScene({
               scrollProgress={scrollProgress}
               onReady={handleReady}
             />
-            {!compactViewport && !reducedMotion && <OptimizationPostEffects />}
+            {!compactViewport && !reducedMotion && !softwareRenderer && (
+              <OptionalSceneEffectBoundary>
+                <OptimizationPostEffects />
+              </OptionalSceneEffectBoundary>
+            )}
           </Suspense>
         </Canvas>
       </SceneErrorBoundary>
