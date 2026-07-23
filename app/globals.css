@@ -502,10 +502,14 @@ a {
 
 .hero__journey--research {
   top: clamp(15rem, 38vh, 31rem);
+  left: var(--gutter);
+  width: min(35rem, 39vw);
 }
 
 .hero__journey--creator {
   top: clamp(15rem, 42vh, 34rem);
+  left: clamp(4.5rem, 7vw, 7rem);
+  width: min(38rem, 43vw);
 }
 
 .hero__journey > span,
