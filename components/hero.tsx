@@ -132,8 +132,8 @@ export default function Hero() {
     restDelta: 0.0005,
   })
 
-  const copyY = useTransform(storyProgress, [0, 0.36], [0, -72])
-  const copyOpacity = useTransform(storyProgress, [0, 0.18, 0.36], [1, 1, 0])
+  const copyY = useTransform(storyProgress, [0, 0.24], [0, -72])
+  const copyOpacity = useTransform(storyProgress, [0, 0.1, 0.22], [1, 1, 0])
   const sceneOpacity = useTransform(storyProgress, [0, 0.92, 1], [1, 1, 0.08])
   const contentInteractive = !motionEnabled || introInteractive
 
@@ -142,14 +142,14 @@ export default function Hero() {
   }, [])
 
   useEffect(() => {
-    const nextInteractive = !motionEnabled || storyProgress.get() < 0.38
+    const nextInteractive = !motionEnabled || storyProgress.get() < 0.24
     if (introInteractiveRef.current === nextInteractive) return
     introInteractiveRef.current = nextInteractive
     setIntroInteractive(nextInteractive)
   }, [motionEnabled, storyProgress])
 
   useMotionValueEvent(storyProgress, 'change', (progress) => {
-    const nextInteractive = !motionEnabled || progress < 0.38
+    const nextInteractive = !motionEnabled || progress < 0.24
     if (introInteractiveRef.current === nextInteractive) return
     introInteractiveRef.current = nextInteractive
     setIntroInteractive(nextInteractive)

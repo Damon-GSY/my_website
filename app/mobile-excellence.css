@@ -87,6 +87,7 @@
 
   .hero__journey,
   .hero__journey--creator {
+    top: auto;
     bottom: 1.8rem;
   }
 }

@@ -88,10 +88,18 @@ if (maximumStep / minimumStep > 1.08) {
 
 const chapterRanges = [...hero.matchAll(/range: \[([\d.]+), ([\d.]+), ([\d.]+), ([\d.]+)\]/g)]
   .map((match) => match.slice(1).map(Number) as [number, number, number, number])
+const introOpacityRange = hero.match(/copyOpacity = useTransform\(storyProgress, \[0, ([\d.]+), ([\d.]+)\]/)
 
 if (chapterRanges.length < 3) {
   findings.push('The extended 3D journey has fewer than three personal story chapters.')
 } else {
+  const introFadeEnd = Number(introOpacityRange?.[2])
+  if (!Number.isFinite(introFadeEnd)) {
+    findings.push('The opening identity frame has no readable handoff into the first story chapter.')
+  } else if (introFadeEnd < chapterRanges[0][0] || introFadeEnd > chapterRanges[0][1]) {
+    findings.push('The opening identity frame either leaves a blank gap or overlaps the first story chapter at full strength.')
+  }
+
   const opacityAt = (range: [number, number, number, number], progress: number) => {
     const [start, visible, hold, end] = range
     if (progress <= start || progress >= end) return 0
