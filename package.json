@@ -20,6 +20,7 @@
     "judge:navigation": "node --experimental-strip-types scripts/judge-navigation.ts",
     "judge:mobile": "node --experimental-strip-types scripts/judge-mobile.ts",
     "judge:motion": "node --experimental-strip-types scripts/judge-motion.ts",
+    "judge:path-focus": "node --experimental-strip-types scripts/judge-path-focus.ts",
     "judge:legibility": "node --experimental-strip-types scripts/judge-legibility.ts",
     "judge:metadata": "node --experimental-strip-types scripts/judge-metadata.ts",
     "judge:portfolio": "node --experimental-strip-types scripts/judge-portfolio.ts",

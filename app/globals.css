@@ -490,7 +490,8 @@ a {
   position: absolute;
   z-index: 6;
   top: clamp(15rem, 46vh, 38rem);
-  right: clamp(var(--gutter), 5vw, 6rem);
+  left: clamp(var(--gutter), 5vw, 6rem);
+  right: auto;
   display: grid;
   grid-template-columns: 7.75rem minmax(0, 1fr);
   width: min(42rem, 46vw);
@@ -501,8 +502,6 @@ a {
 
 .hero__journey--research {
   top: clamp(15rem, 38vh, 31rem);
-  left: var(--gutter);
-  right: auto;
 }
 
 .hero__journey--creator {
@@ -1518,6 +1517,7 @@ a {
 
   .hero__journey {
     top: auto;
+    left: auto;
     right: var(--gutter);
     bottom: 4rem;
     grid-template-columns: minmax(0, 1fr);
