@@ -109,6 +109,14 @@
   stroke: var(--accent);
 }
 
+.case-signal__traveler {
+  fill: #ffddcc;
+  filter:
+    drop-shadow(0 0 5px rgba(255, 225, 210, 0.95))
+    drop-shadow(0 0 12px rgba(217, 120, 88, 0.9));
+  pointer-events: none;
+}
+
 .case-signal__module rect,
 .case-signal__gate path {
   fill: rgba(8, 10, 12, 0.76);
@@ -249,19 +257,98 @@
   text-transform: lowercase;
 }
 
-@supports (animation-timeline: view()) {
-  .case-signal__flow {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-    animation: signalDraw linear both;
-    animation-range: entry 5% cover 42%;
-    animation-timeline: view();
-  }
+.case-signal--animated .case-signal__meta,
+.case-signal--animated .case-signal__disclosure,
+.case-signal--animated .case-signal__module,
+.case-signal--animated .case-signal__gate,
+.case-signal--animated .case-signal__legend em {
+  opacity: 0;
+}
 
-  @keyframes signalDraw {
-    to {
-      stroke-dashoffset: 0;
-    }
+.case-signal--animated .case-signal__meta,
+.case-signal--animated .case-signal__disclosure,
+.case-signal--animated .case-signal__legend em {
+  transform: translateY(0.7rem);
+}
+
+.case-signal--animated .case-signal__module,
+.case-signal--animated .case-signal__gate {
+  transform: translateY(9px) scale(0.97);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.case-signal--animated .case-signal__flow {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.case-signal--animated.is-active .case-signal__meta,
+.case-signal--animated.is-active .case-signal__disclosure,
+.case-signal--animated.is-active .case-signal__module,
+.case-signal--animated.is-active .case-signal__gate,
+.case-signal--animated.is-active .case-signal__legend em {
+  animation: signalElementIn 760ms var(--ease) both;
+}
+
+.case-signal--animated.is-active .case-signal__meta {
+  animation-delay: 80ms;
+}
+
+.case-signal--animated.is-active .case-signal__disclosure {
+  animation-delay: 180ms;
+}
+
+.case-signal--animated.is-active .case-signal__gate {
+  animation-delay: 540ms;
+}
+
+.case-signal--animated.is-active .case-signal__module {
+  animation-delay: 330ms;
+}
+
+.case-signal--animated.is-active .case-signal__module--muted {
+  animation-delay: 760ms;
+}
+
+.case-signal--animated.is-active .case-signal__module--accent {
+  animation-delay: 1.02s;
+}
+
+.case-signal--animated.is-active .case-signal__module--handoff {
+  animation-delay: 1.3s;
+}
+
+.case-signal--animated.is-active .case-signal__flow {
+  animation: signalDraw 1.35s 620ms var(--ease) both;
+}
+
+.case-signal--animated.is-active .case-signal__legend em:nth-child(1) {
+  animation-delay: 420ms;
+}
+
+.case-signal--animated.is-active .case-signal__legend em:nth-child(2) {
+  animation-delay: 660ms;
+}
+
+.case-signal--animated.is-active .case-signal__legend em:nth-child(3) {
+  animation-delay: 900ms;
+}
+
+.case-signal--animated.is-active .case-signal__legend em:nth-child(4) {
+  animation-delay: 1.14s;
+}
+
+@keyframes signalElementIn {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes signalDraw {
+  to {
+    stroke-dashoffset: 0;
   }
 }
 
@@ -296,5 +383,26 @@
 
   .case-signal__module-title {
     font-size: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case-signal--animated .case-signal__meta,
+  .case-signal--animated .case-signal__disclosure,
+  .case-signal--animated .case-signal__module,
+  .case-signal--animated .case-signal__gate,
+  .case-signal--animated .case-signal__legend em {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .case-signal--animated .case-signal__flow {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+
+  .case-signal__traveler {
+    display: none;
   }
 }

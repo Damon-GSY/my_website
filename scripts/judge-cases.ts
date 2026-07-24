@@ -92,7 +92,7 @@ requirePattern(styles, /@media \(max-width: 720px\)/, 'Case studies have no mobi
 requirePattern(styles, /min-height:\s*100dvh/, 'Case-study hero does not use the dynamic viewport contract.')
 requirePattern(styles, /@media \(max-width: 720px\)[\s\S]*\.evidenceOutcome strong\.outcomeWord\s*\{[^}]*max-width:\s*100%[^}]*font-size:\s*clamp\(2\.9rem, 15\.5vw, 5\.5rem\)[^}]*letter-spacing:\s*-0\.055em[^}]*overflow-wrap:\s*normal[^}]*word-break:\s*normal/s, 'Qualitative case outcomes can still break in the middle of a word on narrow screens.')
 requirePattern(caseSignal, /Authority routing[\s\S]*OBSERVED STATE[\s\S]*RISK[\s\S]*CONSEQUENCE[\s\S]*human handoff/, 'Risk case visual does not communicate an explicit authority-routing decision path.')
-requirePattern(caseSignal, /<SignalGraphic type=\{type\} \/>/, 'One or more case visuals bypass the shared semantic SVG renderer.')
+requirePattern(caseSignal, /<SignalGraphic animated=\{animated\} type=\{type\} \/>/, 'One or more case visuals bypass the shared semantic SVG renderer or its shared motion state.')
 if (/supply-chain-agent-trace-v1\.webp|case-signal__evidence-image/.test(caseSignal + caseSignalStyles)) {
   failures.push('Risk case still depends on the decorative raster pipe reconstruction.')
 }

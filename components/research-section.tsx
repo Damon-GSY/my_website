@@ -5,6 +5,8 @@ import {
   type MotionValue,
   useMotionValue,
   useMotionValueEvent,
+  useInView,
+  useReducedMotion,
   useScroll,
   useTransform,
 } from 'framer-motion'
@@ -28,6 +30,9 @@ function ResearchVisual({
   progress?: MotionValue<number>
 }) {
   const paper = research[activeIndex]
+  const visualRef = useRef<HTMLDivElement>(null)
+  const visible = useInView(visualRef, { amount: 0.32 })
+  const reducedMotion = useReducedMotion()
   const staticProgress = useMotionValue(activeIndex / 2)
   const source = progress ?? staticProgress
   const animated = Boolean(progress)
@@ -43,9 +48,11 @@ function ResearchVisual({
   const deltaY = useTransform(source, [0.57, 0.72, 1], [20, 0, -6])
   const deltaScale = useTransform(source, [0.57, 0.84, 1], [0.96, 1, 1.025])
   const deltaDraw = useTransform(source, [0.64, 0.9], [0.05, 1])
+  const taxonomyLive = visible && activeIndex === 0 && !reducedMotion
 
   return (
     <div
+      ref={visualRef}
       className={`${styles.visual}${compact ? ` ${styles.visualCompact}` : ''}`}
       data-active={activeIndex}
       data-animated={animated}
@@ -63,8 +70,42 @@ function ResearchVisual({
             d="M92 92L216 118L202 205L342 136L388 228L504 164L596 206M154 68L284 82L342 136L454 98L552 84L652 132M122 172L202 205L294 218L388 228L470 244L596 206"
           />
           {taxonomyNodes.map(([cx, cy, radius], index) => (
-            <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r={radius} className={index % 4 === 0 ? styles.nodeAccent : styles.node} />
+            <motion.circle
+              animate={taxonomyLive
+                ? { opacity: 1, scale: 1 }
+                : { opacity: reducedMotion ? 1 : 0.18, scale: reducedMotion ? 1 : 0.72 }}
+              className={index % 4 === 0 ? styles.nodeAccent : styles.node}
+              cx={cx}
+              cy={cy}
+              initial={false}
+              key={`${cx}-${cy}`}
+              r={radius}
+              style={{ transformOrigin: `${cx}px ${cy}px` }}
+              transition={{
+                delay: taxonomyLive ? index * 0.045 : 0,
+                duration: 0.46,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            />
           ))}
+          <motion.circle
+            animate={taxonomyLive ? {
+              cx: [92, 216, 202, 342, 388, 504, 596, 652],
+              cy: [92, 118, 205, 136, 228, 164, 206, 132],
+              opacity: [0, 1, 1, 1, 1, 1, 1, 0],
+            } : { cx: 92, cy: 92, opacity: 0 }}
+            className={styles.signalPulse}
+            data-research-pulse
+            initial={false}
+            r="5"
+            transition={taxonomyLive ? {
+              duration: 4.6,
+              ease: 'linear',
+              repeat: Infinity,
+              repeatDelay: 0.8,
+              times: [0, 0.14, 0.27, 0.42, 0.57, 0.72, 0.86, 1],
+            } : { duration: 0 }}
+          />
           <text x="70" y="322">planning</text>
           <text x="252" y="322">tools</text>
           <text x="404" y="322">memory</text>

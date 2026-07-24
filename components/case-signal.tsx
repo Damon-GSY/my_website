@@ -1,6 +1,8 @@
 'use client'
 
+import { motion, useInView, useReducedMotion } from 'framer-motion'
 import type { PointerEvent } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './case-signal.css'
 
 type SignalType = 'risk' | 'tools' | 'benchmark' | 'reward'
@@ -32,7 +34,15 @@ const signalCopy: Record<SignalType, { title: string; eyebrow: string; disclosur
   },
 }
 
-function RiskGraphic() {
+function RiskGraphic({ animated }: { animated: boolean }) {
+  const traveler = animated
+    ? {
+        cx: [72, 198, 238, 326, 374, 422, 540, 576, 710],
+        cy: [195, 195, 195, 195, 224, 282, 282, 282, 282],
+        opacity: [0, 0.9, 1, 1, 1, 1, 1, 0.9, 0],
+      }
+    : { cx: 72, cy: 195, opacity: 0 }
+
   return (
     <>
     <svg className="case-signal__plot case-signal__plot--risk case-signal__plot--risk-desktop" viewBox="0 0 760 390">
@@ -74,6 +84,20 @@ function RiskGraphic() {
       <text className="case-signal__lane-label" x="422" y="51">LOW CONSEQUENCE / BOUNDED ACTION</text>
       <text className="case-signal__lane-label case-signal__label--accent" x="422" y="349">HIGH CONSEQUENCE / EXPLICIT AUTHORITY</text>
       <circle className="case-signal__junction" cx="326" cy="195" r="3" />
+      <motion.circle
+        animate={traveler}
+        className="case-signal__traveler"
+        data-signal-traveler
+        initial={false}
+        r="5"
+        transition={animated ? {
+          duration: 4.2,
+          ease: 'linear',
+          repeat: Infinity,
+          repeatDelay: 0.7,
+          times: [0, 0.16, 0.27, 0.4, 0.52, 0.65, 0.78, 0.88, 1],
+        } : { duration: 0 }}
+      />
     </svg>
     <svg className="case-signal__plot case-signal__plot--risk case-signal__plot--risk-mobile" viewBox="0 0 340 280">
       <path className="case-signal__axis" d="M100 125H102M150 125H164" />
@@ -107,6 +131,22 @@ function RiskGraphic() {
         <text className="case-signal__module-title" x="210" y="267">human handoff</text>
       </g>
       <circle className="case-signal__junction" cx="164" cy="125" r="3" />
+      <motion.circle
+        animate={animated ? {
+          cx: [8, 102, 126, 164, 181, 198, 253, 308],
+          cy: [125, 125, 125, 125, 150, 184, 184, 184],
+          opacity: [0, 0.9, 1, 1, 1, 1, 0.9, 0],
+        } : { cx: 8, cy: 125, opacity: 0 }}
+        className="case-signal__traveler"
+        initial={false}
+        r="4"
+        transition={animated ? {
+          duration: 3.6,
+          ease: 'linear',
+          repeat: Infinity,
+          repeatDelay: 0.7,
+        } : { duration: 0 }}
+      />
     </svg>
     </>
   )
@@ -170,8 +210,8 @@ function RewardGraphic() {
   )
 }
 
-function SignalGraphic({ type }: { type: SignalType }) {
-  if (type === 'risk') return <RiskGraphic />
+function SignalGraphic({ animated, type }: { animated: boolean; type: SignalType }) {
+  if (type === 'risk') return <RiskGraphic animated={animated} />
   if (type === 'tools') return <ToolsGraphic />
   if (type === 'benchmark') return <BenchmarkGraphic />
   return <RewardGraphic />
@@ -179,7 +219,16 @@ function SignalGraphic({ type }: { type: SignalType }) {
 
 export default function CaseSignal({ type }: { type: SignalType }) {
   const copy = signalCopy[type]
+  const rootRef = useRef<HTMLDivElement>(null)
+  const visible = useInView(rootRef, { amount: 0.05 })
+  const [enteredView, setEnteredView] = useState(false)
+  const reducedMotion = useReducedMotion()
+  const animated = visible && !reducedMotion
   const accessibleLabel = `${copy.eyebrow}. ${copy.disclosure} Flow: ${copy.steps.join(', ')}.`
+
+  useEffect(() => {
+    if (visible) setEnteredView(true)
+  }, [visible])
 
   function handlePointerMove(event: PointerEvent<HTMLDivElement>) {
     if (event.pointerType !== 'mouse') return
@@ -195,7 +244,8 @@ export default function CaseSignal({ type }: { type: SignalType }) {
 
   return (
     <div
-      className={`case-signal case-signal--${type}`}
+      ref={rootRef}
+      className={`case-signal case-signal--${type} case-signal--animated${enteredView ? ' is-active' : ''}`}
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
       role="img"
@@ -206,7 +256,7 @@ export default function CaseSignal({ type }: { type: SignalType }) {
         <strong>{copy.title}</strong>
       </div>
       <p className="case-signal__disclosure">{copy.disclosure}</p>
-      <SignalGraphic type={type} />
+      <SignalGraphic animated={animated} type={type} />
       <div className="case-signal__legend">
         {copy.steps.map((step, index) => (
           <em key={step}><b>0{index + 1}</b>{step}</em>
