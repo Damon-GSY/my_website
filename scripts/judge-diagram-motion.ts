@@ -32,17 +32,31 @@ async function expectMovingSignal(
       `${label} signal never became visibly active: ${JSON.stringify(diagnostics)}`,
     )
   }
-  const before = await signal.boundingBox()
-  await page.waitForTimeout(520)
-  const after = await signal.boundingBox()
-
-  if (!before || !after) {
-    throw new Error(`${label} signal did not expose visible bounds.`)
+  const samples: Array<{ x: number; y: number }> = []
+  for (let attempt = 0; attempt < 10; attempt += 1) {
+    const point = await signal.evaluate((element) => ({
+      x: Number(element.getAttribute('cx')),
+      y: Number(element.getAttribute('cy')),
+      opacity: Number(element.getAttribute('opacity') ?? 1),
+    }))
+    if (point.opacity > 0.2 && Number.isFinite(point.x) && Number.isFinite(point.y)) {
+      samples.push(point)
+    }
+    await page.waitForTimeout(160)
   }
 
-  const distance = Math.hypot(after.x - before.x, after.y - before.y)
+  const distance = samples.reduce((maximum, point, index) => {
+    return Math.max(
+      maximum,
+      ...samples.slice(index + 1).map((other) => Math.hypot(
+        other.x - point.x,
+        other.y - point.y,
+      )),
+    )
+  }, 0)
+
   if (distance < 3) {
-    throw new Error(`${label} signal moved only ${distance.toFixed(1)}px.`)
+    throw new Error(`${label} signal moved only ${distance.toFixed(1)} SVG units.`)
   }
 }
 
@@ -61,6 +75,26 @@ try {
 
   await page.goto(targetUrl.toString(), { waitUntil: 'domcontentloaded' })
   await page.waitForLoadState('load')
+
+  const storyLayout = await page.evaluate(() => {
+    const panel = document.querySelector<HTMLElement>('.signature-story__panel')
+    const narrative = document.querySelector<HTMLElement>('.signature-story__problem-copy p')
+    return {
+      bodyWidth: document.body.scrollWidth,
+      narrativeSize: narrative ? Number.parseFloat(getComputedStyle(narrative).fontSize) : 0,
+      panelWidth: panel?.getBoundingClientRect().width ?? 0,
+      viewportWidth: window.innerWidth,
+    }
+  })
+  if (storyLayout.bodyWidth > storyLayout.viewportWidth + 1) {
+    throw new Error('Signature case introduces horizontal page overflow.')
+  }
+  if (storyLayout.panelWidth < storyLayout.viewportWidth * 0.5) {
+    throw new Error('Signature case evidence remains compressed into a narrow column.')
+  }
+  if (storyLayout.narrativeSize < 14) {
+    throw new Error('Signature case narrative remains below a readable desktop text size.')
+  }
 
   const caseSignal = page.locator('.case-signal--risk')
   await page.mouse.wheel(0, 4_000)

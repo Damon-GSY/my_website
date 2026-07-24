@@ -2,6 +2,313 @@
   border-bottom: 1px solid var(--line-strong);
 }
 
+.signature-story {
+  display: grid;
+  grid-template-columns: minmax(20rem, 0.72fr) minmax(34rem, 1.28fr);
+  gap: clamp(3.5rem, 7vw, 8rem);
+  align-items: start;
+  padding: clamp(3rem, 6vw, 6rem) 0 clamp(7rem, 11vw, 11rem);
+}
+
+.signature-story__anchor {
+  position: sticky;
+  top: 7rem;
+  display: flex;
+  min-height: calc(100dvh - 9rem);
+  flex-direction: column;
+  align-items: flex-start;
+  padding-bottom: 1rem;
+}
+
+.signature-story__eyebrow,
+.signature-story__panel-head,
+.signature-story__facts dt,
+.signature-story__outcome > span,
+.signature-story__decisions > span {
+  color: var(--muted);
+  font-size: 0.64rem;
+  line-height: 1.45;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.signature-story__eyebrow {
+  color: var(--accent);
+}
+
+.signature-story__anchor h3 {
+  max-width: 8.5ch;
+  margin: clamp(2rem, 4vw, 4.25rem) 0 0;
+  font-size: clamp(4rem, 6.8vw, 7.8rem);
+  font-weight: 200;
+  line-height: 0.82;
+  letter-spacing: -0.078em;
+  text-wrap: balance;
+}
+
+.signature-story__anchor .case-study__tags {
+  margin-top: 2.4rem;
+}
+
+.signature-story__lead {
+  max-width: 34rem;
+  margin: clamp(2.2rem, 4vw, 4rem) 0 0;
+  color: var(--text-soft);
+  font-size: clamp(0.94rem, 1.05vw, 1.08rem);
+  line-height: 1.72;
+  text-wrap: pretty;
+}
+
+.signature-story__progress {
+  display: grid;
+  width: 100%;
+  margin: auto 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line-strong);
+}
+
+.signature-story__progress li {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.72rem 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+}
+
+.signature-story__progress b {
+  color: var(--accent);
+  font-size: 0.62rem;
+  font-weight: 400;
+}
+
+.signature-story__stack {
+  display: grid;
+  gap: 16dvh;
+  padding-bottom: 18dvh;
+}
+
+.signature-story__panel {
+  position: sticky;
+  top: 6.6rem;
+  display: grid;
+  min-height: calc(100dvh - 8.2rem);
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  background:
+    linear-gradient(rgba(240, 238, 233, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240, 238, 233, 0.035) 1px, transparent 1px),
+    #0b0d10;
+  background-size: 100% 7.25rem, 7.25rem 100%, auto;
+  box-shadow: 0 -2rem 5rem rgba(4, 5, 7, 0.74);
+  transform-origin: 50% 0;
+}
+
+.signature-story__panel:nth-child(1) {
+  z-index: 1;
+}
+
+.signature-story__panel:nth-child(2) {
+  z-index: 2;
+}
+
+.signature-story__panel:nth-child(3) {
+  z-index: 3;
+}
+
+.signature-story__panel-head {
+  display: flex;
+  min-width: 0;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+  color: var(--accent);
+}
+
+.signature-story__panel-head > span:last-child,
+.signature-story__panel-head p {
+  max-width: 24rem;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+  text-align: right;
+}
+
+.signature-story__panel--problem,
+.signature-story__panel--evidence {
+  padding: clamp(2rem, 4vw, 4.5rem);
+}
+
+.signature-story__panel--problem {
+  grid-template-rows: auto 1fr auto;
+}
+
+.signature-story__problem-copy {
+  align-self: center;
+  padding: clamp(4rem, 9vh, 8rem) 0;
+}
+
+.signature-story__problem-copy h4 {
+  max-width: 13ch;
+  margin: 0;
+  font-size: clamp(3rem, 5vw, 6rem);
+  font-weight: 200;
+  line-height: 0.9;
+  letter-spacing: -0.068em;
+  text-wrap: balance;
+}
+
+.signature-story__problem-copy p {
+  max-width: 60ch;
+  margin: clamp(2.5rem, 4vw, 4rem) 0 0 auto;
+  color: var(--text-soft);
+  font-size: clamp(0.96rem, 1.12vw, 1.16rem);
+  line-height: 1.72;
+  text-wrap: pretty;
+}
+
+.signature-story__facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  margin: 0;
+  border-top: 1px solid var(--line-strong);
+}
+
+.signature-story__facts div {
+  min-width: 0;
+  padding: 1.2rem 1rem 0 0;
+}
+
+.signature-story__facts div + div {
+  padding-left: 1rem;
+  border-left: 1px solid var(--line);
+}
+
+.signature-story__facts dt,
+.signature-story__facts dd {
+  margin: 0;
+}
+
+.signature-story__facts dd {
+  margin-top: 0.6rem;
+  color: var(--text-soft);
+  font-size: 0.76rem;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.signature-story__panel--route {
+  grid-template-rows: auto minmax(0, 1fr);
+  padding: clamp(1.4rem, 2.2vw, 2.5rem);
+}
+
+.signature-story__panel--route .case-study__visual {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: stretch;
+  width: 100%;
+  min-height: 0;
+  margin-top: 1.5rem;
+}
+
+.signature-story__panel--route .case-signal {
+  min-height: min(46rem, calc(100dvh - 13rem));
+  border-color: rgba(240, 238, 233, 0.11);
+}
+
+.signature-story__panel--evidence {
+  grid-template-columns: minmax(0, 0.82fr) minmax(18rem, 1.18fr);
+  grid-template-rows: auto 1fr auto;
+  gap: clamp(3rem, 6vw, 7rem);
+  align-items: center;
+}
+
+.signature-story__panel--evidence .signature-story__panel-head,
+.signature-story__disclosure {
+  grid-column: 1 / -1;
+}
+
+.signature-story__outcome {
+  align-self: center;
+}
+
+.signature-story__outcome strong {
+  display: block;
+  margin-top: 1.5rem;
+  color: var(--accent);
+  font-size: clamp(6rem, 10vw, 11rem);
+  font-weight: 200;
+  line-height: 0.72;
+  letter-spacing: -0.09em;
+  font-variant-numeric: tabular-nums;
+}
+
+.signature-story__outcome strong.is-word {
+  font-size: clamp(3.8rem, 6vw, 7rem);
+  line-height: 0.82;
+}
+
+.signature-story__outcome h4 {
+  max-width: 12ch;
+  margin: 1.75rem 0 0;
+  font-size: clamp(1.4rem, 2vw, 2.2rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  text-transform: none;
+}
+
+.signature-story__outcome p {
+  max-width: 32rem;
+  margin: 1.4rem 0 0;
+  color: var(--text-soft);
+  font-size: 0.78rem;
+  line-height: 1.65;
+}
+
+.signature-story__decisions {
+  align-self: center;
+}
+
+.signature-story__decisions ol {
+  margin: 1.2rem 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line-strong);
+}
+
+.signature-story__decisions li {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--text-soft);
+  font-size: clamp(0.82rem, 0.95vw, 0.98rem);
+  line-height: 1.55;
+}
+
+.signature-story__decisions b {
+  color: var(--accent);
+  font-size: 0.65rem;
+  font-weight: 400;
+}
+
+.signature-story__disclosure {
+  align-self: end;
+  margin: 0;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line-strong);
+  color: var(--muted);
+  font-size: 0.66rem;
+  line-height: 1.65;
+}
+
 .case-index {
   margin-top: clamp(8rem, 13vw, 13rem);
   border-top: 1px solid var(--line-strong);
@@ -154,6 +461,31 @@
 }
 
 @media (max-width: 1024px) {
+  .signature-story {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 5rem;
+  }
+
+  .signature-story__anchor {
+    position: relative;
+    top: auto;
+    min-height: 0;
+  }
+
+  .signature-story__anchor h3 {
+    max-width: 10ch;
+    font-size: clamp(4.6rem, 12vw, 8rem);
+  }
+
+  .signature-story__progress {
+    margin-top: 4rem;
+  }
+
+  .signature-story__panel {
+    top: 5.5rem;
+    min-height: calc(100dvh - 7rem);
+  }
+
   .case-index__identity {
     grid-column: 1 / 8;
     grid-row: 1;
@@ -171,6 +503,101 @@
 }
 
 @media (max-width: 720px) {
+  .signature-story {
+    gap: 4rem;
+    padding: 3rem 0 7rem;
+  }
+
+  .signature-story__anchor h3 {
+    max-width: 100%;
+    font-size: clamp(3.8rem, 18vw, 6rem);
+    overflow-wrap: anywhere;
+  }
+
+  .signature-story__lead {
+    font-size: 0.94rem;
+  }
+
+  .signature-story__stack {
+    gap: 1.5rem;
+    padding-bottom: 0;
+  }
+
+  .signature-story__panel {
+    position: relative;
+    top: auto;
+    min-height: 0;
+    box-shadow: none;
+  }
+
+  .signature-story__panel-head {
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .signature-story__panel-head > span:last-child,
+  .signature-story__panel-head p {
+    max-width: none;
+    text-align: left;
+  }
+
+  .signature-story__panel--problem,
+  .signature-story__panel--evidence {
+    padding: 1.4rem;
+  }
+
+  .signature-story__problem-copy {
+    padding: 5rem 0;
+  }
+
+  .signature-story__problem-copy h4 {
+    max-width: 100%;
+    font-size: clamp(2.8rem, 13vw, 4.7rem);
+  }
+
+  .signature-story__problem-copy p {
+    margin-left: 0;
+    font-size: 0.92rem;
+  }
+
+  .signature-story__facts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .signature-story__facts div,
+  .signature-story__facts div + div {
+    padding: 1rem 0;
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .signature-story__panel--route {
+    padding: 0.75rem;
+  }
+
+  .signature-story__panel--route .signature-story__panel-head {
+    padding: 0.65rem;
+  }
+
+  .signature-story__panel--route .case-signal {
+    min-height: 31rem;
+  }
+
+  .signature-story__panel--evidence {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    gap: 4rem;
+  }
+
+  .signature-story__panel--evidence .signature-story__panel-head,
+  .signature-story__disclosure {
+    grid-column: 1;
+  }
+
+  .signature-story__outcome strong {
+    font-size: clamp(5.5rem, 28vw, 8rem);
+  }
+
   .case-index {
     margin-top: 7rem;
   }
@@ -232,5 +659,55 @@
 
   .case-index__result .case-study__open {
     justify-content: flex-start;
+  }
+}
+
+@media (max-height: 820px) and (min-width: 721px) {
+  .signature-story__anchor h3 {
+    margin-top: 2rem;
+    font-size: clamp(3.6rem, 5.4vw, 5.8rem);
+  }
+
+  .signature-story__anchor .case-study__tags {
+    margin-top: 1.5rem;
+  }
+
+  .signature-story__lead {
+    margin-top: 2rem;
+    font-size: 0.86rem;
+  }
+
+  .signature-story__anchor .case-study__open {
+    margin-top: 1.35rem;
+  }
+
+  .signature-story__progress {
+    display: none;
+  }
+
+  .signature-story__panel--problem,
+  .signature-story__panel--evidence {
+    padding: 2rem;
+  }
+
+  .signature-story__problem-copy {
+    padding: 2.5rem 0;
+  }
+
+  .signature-story__problem-copy h4 {
+    font-size: clamp(2.8rem, 4vw, 4.5rem);
+  }
+
+  .signature-story__problem-copy p {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+  }
+
+  .signature-story__panel--evidence {
+    gap: 3rem;
+  }
+
+  .signature-story__outcome strong {
+    font-size: clamp(5.5rem, 8vw, 8rem);
   }
 }

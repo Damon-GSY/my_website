@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { signals, work } from '@/lib/content'
 import CaseSignal from '@/components/case-signal'
+import BlurText from '@/components/ui/blur-text'
 import './work-section-layout.css'
 
 export default function WorkSection() {
@@ -36,41 +37,84 @@ export default function WorkSection() {
               <span>{signatureProject.stage} · {signatureProject.year}</span>
             </header>
 
-            <div className="case-study__body">
-              <div className="case-study__title">
+            <div className="signature-story">
+              <aside className="signature-story__anchor">
+                <span className="signature-story__eyebrow">Signature case / production system</span>
                 <h3><Link href={`/work/${signatureProject.id}`}>{signatureProject.title}</Link></h3>
                 <div className="case-study__tags">
                   {signatureProject.tags.map((tag) => <span key={tag}>{tag}</span>)}
                 </div>
+                <p className="signature-story__lead">{signatureProject.statement}</p>
                 <Link className="case-study__open" href={`/work/${signatureProject.id}`}>
-                  Open signature case <i aria-hidden="true">↗</i>
+                  Read the complete case <i aria-hidden="true">↗</i>
                 </Link>
-              </div>
 
-              <div className="case-study__visual">
-                <CaseSignal type={signatureProject.visual} />
-              </div>
-
-              <div className="case-study__description">
-                <span>System brief</span>
-                <p>{signatureProject.statement}</p>
-              </div>
-
-              <div className="case-study__details">
-                <span>System decisions</span>
-                <ol>
-                  {signatureProject.details.map((detail) => <li key={detail}>{detail}</li>)}
+                <ol className="signature-story__progress" aria-label="Case narrative">
+                  <li><b>01</b><span>The risk</span></li>
+                  <li><b>02</b><span>The control layer</span></li>
+                  <li><b>03</b><span>The evidence</span></li>
                 </ol>
-              </div>
-
-              <aside className="case-study__result">
-                <span>Observed outcome</span>
-                <strong className={signatureProject.outcome.value.length > 4 ? 'is-word' : undefined}>
-                  {signatureProject.outcome.value}
-                </strong>
-                <p>{signatureProject.outcome.label}</p>
-                <small>{signatureProject.outcome.evidence}</small>
               </aside>
+
+              <div className="signature-story__stack">
+                <section className="signature-story__panel signature-story__panel--problem">
+                  <div className="signature-story__panel-head">
+                    <span>01 / The risk</span>
+                    <span>Why this system exists</span>
+                  </div>
+                  <div className="signature-story__problem-copy">
+                    <h4>
+                      <BlurText
+                        text={signatureProject.constraintTitle}
+                        animateBy="words"
+                        delay={55}
+                        direction="bottom"
+                        rootMargin="-12% 0px"
+                      />
+                    </h4>
+                    <p>{signatureProject.context}</p>
+                  </div>
+                  <dl className="signature-story__facts">
+                    <div><dt>Scope</dt><dd>12 production scenarios</dd></div>
+                    <div><dt>Failure cost</dt><dd>Not uniformly reversible</dd></div>
+                    <div><dt>Design principle</dt><dd>Route authority before execution</dd></div>
+                  </dl>
+                </section>
+
+                <section className="signature-story__panel signature-story__panel--route">
+                  <div className="signature-story__panel-head">
+                    <span>02 / The control layer</span>
+                    <p>{signatureProject.visualCaption}</p>
+                  </div>
+                  <div className="case-study__visual">
+                    <CaseSignal type={signatureProject.visual} />
+                  </div>
+                </section>
+
+                <section className="signature-story__panel signature-story__panel--evidence">
+                  <div className="signature-story__panel-head">
+                    <span>03 / The evidence</span>
+                    <span>{signatureProject.proof.evidenceType}</span>
+                  </div>
+                  <div className="signature-story__outcome">
+                    <span>Observed outcome</span>
+                    <strong className={signatureProject.outcome.value.length > 4 ? 'is-word' : undefined}>
+                      {signatureProject.outcome.value}
+                    </strong>
+                    <h4>{signatureProject.outcome.label}</h4>
+                    <p>{signatureProject.outcome.evidence}</p>
+                  </div>
+                  <div className="signature-story__decisions">
+                    <span>What I changed</span>
+                    <ol>
+                      {signatureProject.details.map((detail, index) => (
+                        <li key={detail}><b>0{index + 1}</b><span>{detail}</span></li>
+                      ))}
+                    </ol>
+                  </div>
+                  <p className="signature-story__disclosure">{signatureProject.proof.disclosure}</p>
+                </section>
+              </div>
             </div>
           </article>
 
