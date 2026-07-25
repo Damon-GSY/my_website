@@ -1,27 +1,28 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 import {
   motion,
   type MotionValue,
   useInView,
-  useMotionValueEvent,
+  useMotionValue,
   useReducedMotion,
   useScroll,
   useSpring,
   useTransform,
 } from 'framer-motion'
-import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore, type PointerEvent } from 'react'
 import { heroChapters, profile } from '@/lib/content'
 import {
   resolveScenePerformanceProfile,
   type ScenePerformanceProfile,
 } from '@/lib/scene-performance-profile'
 
-const OptimizationLandscapeScene = dynamic(() => import('@/components/optimization-landscape-scene'), {
-  ssr: false,
-  loading: () => <div className="hero__scene-fallback" aria-hidden="true" />,
-})
+const OptimizationLandscapeScene = dynamic(
+  () => import('@/components/optimization-landscape-scene'),
+  { ssr: false },
+)
 
 type NetworkHints = {
   effectiveType?: string
@@ -30,32 +31,30 @@ type NetworkHints = {
   removeEventListener?: (type: 'change', listener: () => void) => void
 }
 
-const COARSE_SMALL_VIEWPORT_QUERY = '(pointer: coarse) and (max-width: 900px), (pointer: coarse) and (max-width: 1200px) and (max-height: 600px)'
-const NETWORK_CONSTRAINED_CLIENT_QUERY = '(max-width: 1200px), (pointer: coarse)'
+const getNetworkHints = () =>
+  (navigator as Navigator & { connection?: NetworkHints }).connection
 
-const getNetworkHints = () => (navigator as Navigator & { connection?: NetworkHints }).connection
+const COARSE_SMALL_VIEWPORT_QUERY =
+  '(pointer: coarse) and (max-width: 900px), (pointer: coarse) and (max-width: 1200px) and (max-height: 600px)'
+const NETWORK_CONSTRAINED_CLIENT_QUERY = '(max-width: 1200px), (pointer: coarse)'
 
 const subscribeToPerformanceProfile = (onStoreChange: () => void) => {
   const connection = getNetworkHints()
-  const compactCoarseQuery = window.matchMedia(COARSE_SMALL_VIEWPORT_QUERY)
+  const compactQuery = window.matchMedia(COARSE_SMALL_VIEWPORT_QUERY)
   const networkConstrainedQuery = window.matchMedia(NETWORK_CONSTRAINED_CLIENT_QUERY)
   connection?.addEventListener?.('change', onStoreChange)
-  compactCoarseQuery.addEventListener('change', onStoreChange)
+  compactQuery.addEventListener('change', onStoreChange)
   networkConstrainedQuery.addEventListener('change', onStoreChange)
-
   return () => {
     connection?.removeEventListener?.('change', onStoreChange)
-    compactCoarseQuery.removeEventListener('change', onStoreChange)
+    compactQuery.removeEventListener('change', onStoreChange)
     networkConstrainedQuery.removeEventListener('change', onStoreChange)
   }
 }
 
 const getPerformanceProfile = (): ScenePerformanceProfile => {
-  const hints = navigator as Navigator & {
-    deviceMemory?: number
-  }
+  const hints = navigator as Navigator & { deviceMemory?: number }
   const connection = getNetworkHints()
-
   return resolveScenePerformanceProfile({
     compactCoarse: window.matchMedia(COARSE_SMALL_VIEWPORT_QUERY).matches,
     deviceMemory: hints.deviceMemory,
@@ -65,108 +64,103 @@ const getPerformanceProfile = (): ScenePerformanceProfile => {
     saveData: Boolean(connection?.saveData),
   })
 }
+
 const getServerPerformanceProfile = (): ScenePerformanceProfile => 'static-server'
 
-type ChapterMotion = {
-  range: [number, number, number, number]
-  className: string
-}
+type ChapterRange = [number, number, number, number]
 
-const chapterMotion: readonly ChapterMotion[] = [
-  { range: [0.18, 0.27, 0.43, 0.52], className: 'hero__journey--production' },
-  { range: [0.42, 0.51, 0.68, 0.77], className: 'hero__journey--research' },
-  { range: [0.67, 0.76, 0.94, 1], className: 'hero__journey--creator' },
+const chapterMotion: readonly { range: ChapterRange }[] = [
+  { range: [0, 0.08, 0.3, 0.46] },
+  { range: [0.28, 0.42, 0.64, 0.78] },
+  { range: [0.62, 0.74, 0.94, 1] },
 ]
 
-type HeroChapterProps = {
+function HeroChapter({
+  chapter,
+  progress,
+  range,
+}: {
   chapter: (typeof heroChapters)[number]
-  className: string
-  range: [number, number, number, number]
-  scrollProgress: MotionValue<number>
-}
-
-function HeroChapter({ chapter, className, range, scrollProgress }: HeroChapterProps) {
-  const opacity = useTransform(scrollProgress, range, [0, 1, 1, 0])
-  const y = useTransform(scrollProgress, [range[0], range[3]], [26, -12])
-  const railScale = useTransform(scrollProgress, [range[0], range[2]], [0, 1])
+  progress: MotionValue<number>
+  range: ChapterRange
+}) {
+  const opacity = useTransform(progress, range, [0.38, 1, 1, 0.38])
+  const y = useTransform(progress, [range[0], range[1], range[3]], [8, 0, -6])
+  const railScale = useTransform(progress, [range[0], range[2]], [0, 1])
 
   return (
-    <motion.aside
-      aria-hidden="true"
-      className={`hero__journey ${className}`}
-      style={{ opacity, y }}
-    >
+    <motion.article style={{ opacity, y }}>
       <span>{chapter.index}</span>
       <strong>{chapter.title}</strong>
-      <p>{chapter.description}</p>
-      <div className="hero__journey-rail" aria-hidden="true">
-        <motion.i style={{ scaleX: railScale }} />
-      </div>
       <small>{chapter.evidence}</small>
-    </motion.aside>
+      <motion.i aria-hidden="true" style={{ scaleX: railScale }} />
+    </motion.article>
   )
 }
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
-  const [introInteractive, setIntroInteractive] = useState(true)
-  const introInteractiveRef = useRef(true)
+  const portalRef = useRef<HTMLDivElement>(null)
   const preferredReducedMotion = useReducedMotion()
   const [motionPreferenceReady, setMotionPreferenceReady] = useState(false)
   const reduceMotion = motionPreferenceReady && Boolean(preferredReducedMotion)
   const motionEnabled = motionPreferenceReady && !reduceMotion
+  const sceneActive = useInView(sectionRef, { margin: '12% 0px' })
   const performanceProfile = useSyncExternalStore(
     subscribeToPerformanceProfile,
     getPerformanceProfile,
     getServerPerformanceProfile,
   )
-  const sceneActive = useInView(sectionRef, { margin: '15% 0px' })
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start start', 'end end'],
   })
   const storyProgress = useSpring(scrollYProgress, {
-    stiffness: 170,
-    damping: 34,
-    mass: 0.28,
+    stiffness: 120,
+    damping: 28,
+    mass: 0.35,
     restDelta: 0.0005,
   })
-
-  const copyY = useTransform(storyProgress, [0, 0.24], [0, -72])
-  const copyOpacity = useTransform(storyProgress, [0, 0.1, 0.22], [1, 1, 0])
-  const sceneOpacity = useTransform(storyProgress, [0, 0.92, 1], [1, 1, 0.08])
-  const contentInteractive = !motionEnabled || introInteractive
+  const copyOpacity = useTransform(storyProgress, [0, 0.04, 0.08], [1, 1, 0.78])
+  const headingY = useTransform(storyProgress, [0, 1], ['0%', '-10%'])
+  const portalY = useTransform(storyProgress, [0, 1], ['0%', '12%'])
+  const portalScale = useTransform(storyProgress, [0, 0.72, 1], [1, 1.08, 0.92])
+  const sceneOpacity = useTransform(storyProgress, [0, 0.82, 1], [0.72, 0.5, 0])
+  const magnetX = useMotionValue(0)
+  const magnetY = useMotionValue(0)
+  const magnetRotateX = useTransform(magnetY, [-28, 28], [4, -4])
+  const magnetRotateY = useTransform(magnetX, [-28, 28], [-5, 5])
 
   useEffect(() => {
     setMotionPreferenceReady(true)
   }, [])
 
-  useEffect(() => {
-    const nextInteractive = !motionEnabled || storyProgress.get() < 0.24
-    if (introInteractiveRef.current === nextInteractive) return
-    introInteractiveRef.current = nextInteractive
-    setIntroInteractive(nextInteractive)
-  }, [motionEnabled, storyProgress])
+  function handlePointerMove(event: PointerEvent<HTMLDivElement>) {
+    if (reduceMotion || !portalRef.current) return
+    const rect = portalRef.current.getBoundingClientRect()
+    const x = (event.clientX - rect.left - rect.width / 2) / 9
+    const y = (event.clientY - rect.top - rect.height / 2) / 9
+    magnetX.set(Math.max(-28, Math.min(28, x)))
+    magnetY.set(Math.max(-28, Math.min(28, y)))
+  }
 
-  useMotionValueEvent(storyProgress, 'change', (progress) => {
-    const nextInteractive = !motionEnabled || progress < 0.24
-    if (introInteractiveRef.current === nextInteractive) return
-    introInteractiveRef.current = nextInteractive
-    setIntroInteractive(nextInteractive)
-  })
+  function resetPortal() {
+    magnetX.set(0)
+    magnetY.set(0)
+  }
 
   return (
     <section
       ref={sectionRef}
-      className="hero"
+      className="creator-hero"
       data-motion-mode={motionPreferenceReady ? (reduceMotion ? 'reduced' : 'full') : 'pending'}
       id="top"
     >
-      <div className="hero__viewport">
+      <div className="creator-hero__viewport">
         <motion.div
-          className="hero__scene"
+          className="creator-hero__scene"
           data-performance-profile={performanceProfile}
-          style={{ opacity: motionEnabled ? sceneOpacity : 1 }}
+          style={{ opacity: motionEnabled ? sceneOpacity : 0.5 }}
           aria-hidden="true"
         >
           {performanceProfile === 'full' && motionEnabled ? (
@@ -176,62 +170,108 @@ export default function Hero() {
               scrollProgress={storyProgress}
             />
           ) : (
-            <div className="hero__scene-fallback" aria-hidden="true" />
+            <div className="creator-hero__scene-fallback" />
           )}
         </motion.div>
-        <div className="hero__grid" aria-hidden="true" />
-        <div className="hero__wash" aria-hidden="true" />
+        <div className="creator-hero__veil" aria-hidden="true" />
+        {motionEnabled && (
+          <motion.div
+            className="creator-hero__light-sweep"
+            style={{ y: headingY }}
+            aria-hidden="true"
+          />
+        )}
 
-        <motion.div
-          className={`section-shell hero__content${contentInteractive ? '' : ' is-inactive'}`}
-          style={{
-            y: motionEnabled ? copyY : 0,
-            opacity: motionEnabled ? copyOpacity : 1,
-          }}
-        >
-          <p className="hero__eyebrow">
-            <strong>{profile.name}</strong>
-            <span>{profile.role}</span>
-          </p>
+        <div className="creator-shell creator-hero__inner">
+          <motion.p
+            className="creator-hero__eyebrow"
+            initial={motionEnabled ? { opacity: 0, y: -18 } : false}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <span>{profile.name} · Computational creator</span>
+            <span>{profile.role} · {profile.location}</span>
+          </motion.p>
 
-          <h1 aria-label={`${profile.name}. Agent systems, under control.`}>
-            <span className="hero__name">{profile.name}.</span>
-            <span className="hero__claim">Agent systems,<br />under control.</span>
-          </h1>
+          <motion.div
+            className="creator-hero__title"
+            style={{
+              opacity: motionEnabled ? copyOpacity : 1,
+              y: motionEnabled ? headingY : 0,
+            }}
+            initial={motionEnabled ? { opacity: 0, y: 48 } : false}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.12, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <h1
+              aria-label={`${profile.name}. Production agents, research, and field notes.`}
+              data-identity={profile.name}
+              data-positioning="Agent systems, under control."
+            >
+              <span>Damon</span>
+              <span>Guan</span>
+            </h1>
+          </motion.div>
 
-          <div className="hero__lower">
+          <motion.div
+            ref={portalRef}
+            className="creator-hero__portal"
+            style={{
+              x: magnetX,
+              y: motionEnabled ? portalY : 0,
+              scale: motionEnabled ? portalScale : 1,
+              rotateX: magnetRotateX,
+              rotateY: magnetRotateY,
+            }}
+            onPointerMove={handlePointerMove}
+            onPointerLeave={resetPortal}
+            initial={motionEnabled ? { opacity: 0 } : false}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.45, duration: 1.15, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <Image
+              src="/assets/optimization-core-midjourney.webp"
+              alt="Abstract optimization surface with a terracotta minimum path"
+              fill
+              priority
+              sizes="(max-width: 720px) 72vw, 34vw"
+            />
+            <span className="creator-hero__portal-index">DG / 01</span>
+          </motion.div>
+
+          <motion.div
+            className="creator-hero__lower"
+            initial={motionEnabled ? { opacity: 0, y: 24 } : false}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.32, duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+          >
             <p>{profile.thesis}</p>
-            <div className="hero__actions">
-              <a className="primary-link" href="#work" tabIndex={contentInteractive ? 0 : -1}>
-                View selected work <i aria-hidden="true">↓</i>
-              </a>
-              <a className="text-link" href={`mailto:${profile.email}`} tabIndex={contentInteractive ? 0 : -1}>
-                {profile.email}
-              </a>
-            </div>
+            <a href="#work">
+              Explore the systems
+              <i aria-hidden="true">↓</i>
+            </a>
+          </motion.div>
+
+          <div className="creator-hero__chapters" aria-label="Three parts of the practice">
+            {heroChapters.map((chapter, index) => (
+              <HeroChapter
+                chapter={chapter}
+                key={chapter.index}
+                progress={storyProgress}
+                range={chapterMotion[index].range}
+              />
+            ))}
           </div>
 
-          <div className="hero__foot" aria-label="Profile at a glance">
-            {profile.heroProofs.map(([label, value]) => (
+          <div className="creator-hero__proofs" aria-label="Selected proof points">
+            {profile.heroProofs.map(([label, proof]) => (
               <span key={label}>
-                <small>{label}</small>
-                <strong>{value}</strong>
+                <b>{label}</b>
+                {proof}
               </span>
             ))}
           </div>
-        </motion.div>
-
-        {motionEnabled && (
-          heroChapters.map((chapter, index) => (
-            <HeroChapter
-              key={chapter.index}
-              chapter={chapter}
-              className={chapterMotion[index].className}
-              range={chapterMotion[index].range}
-              scrollProgress={storyProgress}
-            />
-          ))
-        )}
+        </div>
       </div>
     </section>
   )

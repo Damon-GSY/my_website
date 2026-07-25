@@ -1,4 +1,8 @@
 import AboutSection from '@/components/about-section'
+import CapabilitiesSection from '@/components/capabilities-section'
+import '@/components/creator-portfolio.css'
+import CreatorManifesto from '@/components/creator-manifesto'
+import CreatorMarquee from '@/components/creator-marquee'
 import FieldNotesSection from '@/components/field-notes-section'
 import EarlierSystemsSection from '@/components/earlier-systems-section'
 import Hero from '@/components/hero'
@@ -39,6 +43,9 @@ export default function Home() {
       <SiteHeader />
       <main>
         <Hero />
+        <CreatorMarquee />
+        <CreatorManifesto />
+        <CapabilitiesSection />
         <WorkSection />
         <ResearchSection />
         <FieldNotesSection />
