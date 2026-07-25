@@ -106,7 +106,7 @@
 }
 
 .project-stack__card--signature .project-stack__visual {
-  min-height: clamp(31rem, 43vw, 46rem);
+  min-height: clamp(28rem, 38vw, 36rem);
 }
 
 .project-stack__card--index,
