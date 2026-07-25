@@ -76,16 +76,31 @@ try {
   await page.goto(targetUrl.toString(), { waitUntil: 'domcontentloaded' })
   await page.waitForLoadState('load')
 
-  const storyLayout = await page.evaluate(() => {
-    const panel = document.querySelector<HTMLElement>('.signature-story__panel')
-    const narrative = document.querySelector<HTMLElement>('.signature-story__problem-copy p')
-    return {
-      bodyWidth: document.body.scrollWidth,
-      narrativeSize: narrative ? Number.parseFloat(getComputedStyle(narrative).fontSize) : 0,
-      panelWidth: panel?.getBoundingClientRect().width ?? 0,
-      viewportWidth: window.innerWidth,
+  let storyLayout = {
+    bodyWidth: 0,
+    narrativeSize: 0,
+    panelWidth: 0,
+    viewportWidth: 0,
+  }
+  for (let attempt = 0; attempt < 50; attempt += 1) {
+    storyLayout = await page.evaluate(() => {
+      const panel = document.querySelector<HTMLElement>('.signature-story__panel')
+      const narrative = document.querySelector<HTMLElement>('.signature-story__problem-copy p')
+      return {
+        bodyWidth: document.body.scrollWidth,
+        narrativeSize: narrative ? Number.parseFloat(getComputedStyle(narrative).fontSize) : 0,
+        panelWidth: panel?.getBoundingClientRect().width ?? 0,
+        viewportWidth: window.innerWidth,
+      }
+    })
+    if (
+      storyLayout.panelWidth >= storyLayout.viewportWidth * 0.5
+      && storyLayout.narrativeSize >= 14
+    ) {
+      break
     }
-  })
+    await page.waitForTimeout(100)
+  }
   if (storyLayout.bodyWidth > storyLayout.viewportWidth + 1) {
     throw new Error('Signature case introduces horizontal page overflow.')
   }

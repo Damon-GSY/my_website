@@ -487,7 +487,7 @@
 
   .signature-story__panel {
     top: 5.5rem;
-    min-height: calc(100dvh - 7rem);
+    min-height: min(52rem, calc(100dvh - 7rem));
   }
 
   .case-index__identity {
@@ -668,6 +668,11 @@
 }
 
 @media (max-height: 820px) and (min-width: 721px) {
+  .signature-story__panel {
+    position: relative;
+    top: auto;
+  }
+
   .signature-story__anchor h3 {
     margin-top: 2rem;
     font-size: clamp(3.6rem, 5.4vw, 5.8rem);
@@ -710,6 +715,19 @@
 
   .signature-story__panel--evidence {
     gap: 3rem;
+  }
+
+  .signature-story__panel--route {
+    padding: 1.25rem;
+  }
+
+  .signature-story__panel--route .case-study__visual {
+    margin-top: 0.75rem;
+  }
+
+  .signature-story__panel--route .case-signal {
+    height: 32rem;
+    min-height: 32rem;
   }
 
   .signature-story__outcome strong {
