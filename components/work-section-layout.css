@@ -88,15 +88,15 @@
 
 .signature-story__stack {
   display: grid;
-  gap: 16dvh;
-  padding-bottom: 18dvh;
+  gap: clamp(6rem, 16dvh, 12rem);
+  padding-bottom: clamp(7rem, 18dvh, 14rem);
 }
 
 .signature-story__panel {
   position: sticky;
   top: 6.6rem;
   display: grid;
-  min-height: calc(100dvh - 8.2rem);
+  min-height: min(52rem, calc(100dvh - 8.2rem));
   overflow: hidden;
   border: 1px solid var(--line-strong);
   background:
@@ -210,14 +210,18 @@
 .signature-story__panel--route .case-study__visual {
   grid-column: 1;
   grid-row: 2;
+  display: grid;
   align-self: stretch;
+  height: 100%;
   width: 100%;
   min-height: 0;
+  align-items: center;
   margin-top: 1.5rem;
 }
 
 .signature-story__panel--route .case-signal {
-  min-height: min(46rem, calc(100dvh - 13rem));
+  height: min(42rem, calc(100dvh - 13rem));
+  min-height: 32rem;
   border-color: rgba(240, 238, 233, 0.11);
 }
 
@@ -580,6 +584,7 @@
   }
 
   .signature-story__panel--route .case-signal {
+    height: 31rem;
     min-height: 31rem;
   }
 
