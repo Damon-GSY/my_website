@@ -7,10 +7,10 @@ import {
 
 const root = process.cwd()
 const scene = readFileSync(resolve(root, 'components/optimization-landscape-scene.tsx'), 'utf8')
-const hero = readFileSync(resolve(root, 'components/hero.tsx'), 'utf8')
+const hero = readFileSync(resolve(root, 'components/rebuild-hero.tsx'), 'utf8')
 const page = readFileSync(resolve(root, 'app/page.tsx'), 'utf8')
 const assets = readFileSync(resolve(root, 'lib/optimization-assets.ts'), 'utf8')
-const css = readFileSync(resolve(root, 'app/globals.css'), 'utf8')
+const css = readFileSync(resolve(root, 'components/rebuild-home.css'), 'utf8')
 const mobileCss = readFileSync(resolve(root, 'app/mobile-excellence.css'), 'utf8')
 const profilePolicy = readFileSync(resolve(root, 'lib/scene-performance-profile.ts'), 'utf8')
 const effectsPath = resolve(root, 'components/optimization-post-effects.tsx')
@@ -23,7 +23,8 @@ const buildInputs = [
   'app/globals.css',
   'app/mobile-excellence.css',
   'app/page.tsx',
-  'components/hero.tsx',
+  'components/rebuild-hero.tsx',
+  'components/rebuild-home.css',
   'components/optimization-landscape-scene.tsx',
   'components/optimization-post-effects.tsx',
   'lib/optimization-assets.ts',
@@ -108,14 +109,11 @@ if (!/function ScrollFrameDriver[\s\S]*scrollProgress\.on\('change', invalidate\
 if (!/useSpring\(scrollYProgress,[\s\S]*stiffness:[\s\S]*damping:[\s\S]*restDelta:/.test(hero)) {
   findings.push('Demand rendering is not driven by a bounded spring clock.')
 }
-if (!/performanceProfile === 'full' && motionEnabled[\s\S]*<OptimizationLandscapeScene[\s\S]*hero__scene-fallback/.test(hero)) {
-  findings.push('Reduced-motion and server-rendered clients still instantiate the WebGL scene.')
+if (!/mounted && sceneEligible && !reducedMotion[\s\S]*<OptimizationLandscapeScene/.test(hero)) {
+  findings.push('Static and reduced-motion clients can still instantiate the WebGL scene.')
 }
-if (!/motionPreferenceReady && !reduceMotion[\s\S]*data-motion-mode=\{motionPreferenceReady[\s\S]*motionEnabled && \(/.test(hero)) {
-  findings.push('The hero does not hold motion-only DOM until the client motion preference is hydration-safe.')
-}
-if (!/saveData[\s\S]*deviceMemory[\s\S]*effectiveType[\s\S]*hardwareConcurrency[\s\S]*NETWORK_CONSTRAINED_CLIENT_QUERY/.test(hero)) {
-  findings.push('The hero performance profile omits a required client capability signal.')
+if (!/min-width: 1100px[\s\S]*min-height: 720px[\s\S]*pointer: fine[\s\S]*hardwareConcurrency[\s\S]*webglAvailable/.test(hero)) {
+  findings.push('The rebuild hero omits a viewport, pointer, CPU, or WebGL capability gate.')
 }
 if (!/static-save-data[\s\S]*static-slow-network[\s\S]*static-low-memory[\s\S]*static-low-cpu[\s\S]*static-compact-coarse/.test(profilePolicy)) {
   findings.push('Constrained clients do not resolve to explicit static performance profiles.')
@@ -130,20 +128,14 @@ if (/remainingFrames/.test(scene)) {
   findings.push('Demand rendering still uses a refresh-rate-dependent frame budget.')
 }
 if (!/dpr=\{\[1, compactViewport \? 1\.1 : 1\.35\]\}/.test(scene)) findings.push('Canvas device-pixel ratio is not capped.')
-if (!/WORLD_PLATE_URLS\.mobile[\s\S]*WORLD_PLATE_MEDIA\.mobilePortrait[\s\S]*WORLD_PLATE_URLS\.standard[\s\S]*WORLD_PLATE_MEDIA\.standard[\s\S]*WORLD_PLATE_URLS\.highDensity[\s\S]*WORLD_PLATE_MEDIA\.highDensityWide/.test(page)) {
-  findings.push('The homepage does not preload each mutually exclusive world-plate profile.')
+if (/WORLD_PLATE_URLS|WORLD_PLATE_MEDIA/.test(page)) {
+  findings.push('The homepage still manually preloads obsolete world plates alongside its LCP art.')
 }
-if (!/mobilePortrait: '\(max-width: 720px\) and \(orientation: portrait\)'[\s\S]*highDensityWide: '\(min-width: 1280px\) and \(min-resolution: 1\.5dppx\)'/.test(assets)) {
-  findings.push('The shared world-plate media rules do not preserve mobile and high-density-wide profiles.')
-}
-if (/imageSrcSet|imageSizes/.test(page)) {
-  findings.push('World-plate preload selection still delegates to a divergent source-set heuristic.')
+if (!/CREATOR_HERO_VISUAL = '\/assets\/creator-hero-v1\.webp'/.test(assets)) {
+  findings.push('The shared hero asset is missing from the visual manifest.')
 }
 if (/image-set\([\s\S]*optimization-world-v2/.test(`${css}\n${mobileCss}`)) {
   findings.push('CSS fallback selection still uses a divergent density source set.')
-}
-if (!/\(min-width: 1280px\) and \(resolution < 1\.5dppx\)/.test(assets)) {
-  findings.push('The standard preload does not exhaustively cover wide screens below the high-density threshold.')
 }
 
 const manifestPath = resolve(root, '.next/react-loadable-manifest.json')
@@ -184,16 +176,16 @@ if (!existsSync(builtHomePath)) {
   findings.push('Built homepage HTML is missing; responsive world-plate preloads are unverified.')
 } else {
   const builtHome = readFileSync(builtHomePath, 'utf8')
-  if (!/rel="preload"[^>]+optimization-world-v2-(?:mobile|1280|1920)\.webp/.test(builtHome)) {
-    findings.push('Built homepage HTML does not emit the landscape image preload.')
+  if (!/rel="preload"[^>]+creator-hero-v1\.webp/.test(builtHome)) {
+    findings.push('Built homepage HTML does not emit the creator hero LCP preload.')
   }
 }
 if (!existsSync(builtCasePath)) {
   findings.push('Built case-study HTML is missing; route-scoped preload behavior is unverified.')
 } else {
   const builtCase = readFileSync(builtCasePath, 'utf8')
-  if (/rel="preload"[^>]+optimization-world-v2-(?:mobile|1280|1920)\.webp/.test(builtCase)) {
-    findings.push('Non-home routes preload the homepage landscape unnecessarily.')
+  if (/rel="preload"[^>]+creator-hero-v1\.webp/.test(builtCase)) {
+    findings.push('Non-home routes preload the homepage hero unnecessarily.')
   }
 }
 

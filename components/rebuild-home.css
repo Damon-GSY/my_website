@@ -62,6 +62,15 @@
   overflow: hidden;
 }
 
+.prompt-hero__eyebrow {
+  margin: 0 0 0.8rem;
+  color: var(--prompt-dim);
+  font-size: clamp(0.66rem, 0.9vw, 0.82rem);
+  letter-spacing: 0.15em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
 .prompt-hero h1,
 .prompt-about h2,
 .prompt-projects > h2 {
@@ -79,11 +88,13 @@
 }
 
 .prompt-hero h1 {
-  width: 100%;
-  padding-inline: 0.75rem;
-  font-size: clamp(3.15rem, 12.55vw, 13.5rem);
+  width: min(100%, 86rem);
+  margin-inline: auto;
+  padding-inline: 1rem;
+  font-size: clamp(3.2rem, 9.1vw, 8.8rem);
+  line-height: 0.86;
   text-align: center;
-  white-space: nowrap;
+  text-wrap: balance;
 }
 
 .prompt-hero__art {
@@ -135,10 +146,22 @@
 
 .prompt-hero__art-frame img { object-fit: cover; }
 
+.prompt-hero__art-image {
+  z-index: 0;
+  object-position: 50% 50%;
+}
+
+.prompt-hero__scene-overlay {
+  z-index: 1;
+  opacity: 0.22;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
 .prompt-hero__art-fallback {
   background:
     linear-gradient(180deg, rgba(8, 9, 9, 0.06), rgba(8, 9, 9, 0.35)),
-    url('/assets/optimization-core-midjourney.webp') center / cover;
+    url('/assets/creator-hero-v1.webp') center / cover;
 }
 
 .prompt-hero__art-shade {
@@ -328,16 +351,15 @@
   z-index: 1;
   width: clamp(7.5rem, 14vw, 13rem);
   aspect-ratio: 1;
-  overflow: hidden;
-  border: 1px solid rgba(215, 226, 234, 0.16);
-  border-radius: 47% 53% 58% 42%;
-  background: #101112;
-  box-shadow: 0 1.6rem 4rem rgba(0, 0, 0, 0.35);
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  filter: drop-shadow(0 1.6rem 3rem rgba(0, 0, 0, 0.48));
 }
 
 .prompt-about__ornament img {
-  object-fit: cover;
-  filter: saturate(0.82) contrast(1.05);
+  object-fit: contain;
+  filter: saturate(0.92) contrast(1.08);
 }
 
 .prompt-about__ornament.is-top-left { top: 5%; left: 3%; transform: rotate(-8deg); }
@@ -433,8 +455,9 @@
 .prompt-project__card {
   position: relative;
   width: 100%;
+  height: calc(100svh - 6rem);
   overflow: hidden;
-  min-height: min(76svh, 52rem);
+  min-height: 0;
   border: 2px solid var(--prompt-text);
   border-radius: clamp(2.25rem, 4.5vw, 4rem);
   color: var(--prompt-text);
@@ -504,13 +527,15 @@
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   gap: 0.75rem;
-  min-height: 42rem;
+  height: calc(100% - 8.5rem);
+  min-height: 0;
   padding: 0.75rem;
 }
 
 .prompt-project__left {
   display: grid;
-  grid-template-rows: minmax(16rem, 1fr) minmax(12rem, 0.7fr);
+  min-height: 0;
+  grid-template-rows: minmax(0, 1fr) minmax(0, 0.7fr);
   gap: 0.75rem;
 }
 
@@ -525,7 +550,7 @@
 }
 
 .prompt-project__signal {
-  min-height: 18rem;
+  min-height: 0;
   background:
     radial-gradient(circle at 50% 50%, rgba(217, 119, 87, 0.11), transparent 34%),
     #0e1012;
@@ -534,6 +559,24 @@
 .prompt-project__signal > * {
   width: 100%;
   height: 100%;
+  min-height: 0;
+}
+
+.prompt-project__signal > .case-signal {
+  min-height: 0;
+}
+
+.prompt-project__signal .case-signal--risk .case-signal__meta {
+  top: 1.25rem;
+  left: 1.25rem;
+}
+
+.prompt-project__signal .case-signal--risk .case-signal__disclosure {
+  top: 4.45rem;
+  right: auto;
+  left: 1.25rem;
+  max-width: calc(100% - 2.5rem);
+  text-align: left;
 }
 
 .prompt-project__summary {
@@ -598,11 +641,7 @@
 
   .prompt-project__slot { height: 100svh; }
 
-  .prompt-project__card header {
-    grid-template-columns: 0.5fr 1fr 2fr;
-  }
-
-  .prompt-project__card header a { display: none; }
+  .prompt-project__card header { grid-template-columns: 0.5fr 1fr 2fr auto; }
   .prompt-project__media { min-height: 38rem; }
 }
 
@@ -618,14 +657,20 @@
     letter-spacing: 0.07em;
   }
 
-  .prompt-hero__heading-wrap { margin-top: 3.25rem; }
-  .prompt-hero h1 { font-size: 12.55vw; }
+  .prompt-hero__heading-wrap { margin-top: 2.5rem; }
+  .prompt-hero__eyebrow {
+    max-width: 18rem;
+    margin: 0 auto 0.8rem;
+    padding-inline: 1rem;
+    line-height: 1.5;
+  }
+  .prompt-hero h1 { font-size: 13vw; }
 
   .prompt-hero__art {
-    top: 43%;
+    top: 58%;
     bottom: auto;
-    width: 74vw;
-    height: 53svh;
+    width: 66vw;
+    height: 42svh;
     translate: -50% -50%;
   }
 
@@ -636,8 +681,9 @@
   }
 
   .prompt-hero__bottom p {
-    max-width: 9.5rem;
-    font-size: 0.7rem;
+    max-width: 11.25rem;
+    font-size: 0.64rem;
+    line-height: 1.4;
   }
 
   .prompt-contact {
@@ -708,6 +754,11 @@
     font-size: 1.55rem;
   }
 
+  .prompt-project__card header a {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
   .prompt-project__media {
     grid-template-columns: 1fr;
     min-height: 0;
@@ -715,7 +766,37 @@
 
   .prompt-project__left { grid-template-rows: 19rem auto; }
   .prompt-project__summary { min-height: 15rem; }
-  .prompt-project__image { min-height: 28rem; }
+  .prompt-project__image {
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+  }
+}
+
+@media (max-width: 900px), (max-height: 700px) {
+  .prompt-project__slot {
+    position: relative;
+    top: auto;
+    height: auto !important;
+    min-height: 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .prompt-project__card {
+    position: relative;
+    top: auto !important;
+    height: auto !important;
+    min-height: 0;
+    transform: none !important;
+  }
+
+  .prompt-project__media {
+    height: auto;
+    min-height: 38rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .prompt-project__media { min-height: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -6,7 +6,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import CaseSignal from '@/components/case-signal'
 import { work } from '@/lib/content'
-import { PORTFOLIO_VISUALS } from '@/lib/optimization-assets'
+import { PROJECT_VISUALS } from '@/lib/optimization-assets'
 
 function ProjectCard({ index, project, total }: {
   index: number
@@ -20,7 +20,14 @@ function ProjectCard({ index, project, total }: {
 
   return (
     <div className="prompt-project__slot" ref={ref}>
-      <motion.article className="prompt-project__card" style={{ scale, top: `calc(6rem + ${index * 1.75}rem)` }}>
+      <motion.article
+        className="prompt-project__card"
+        style={{
+          height: `calc(100svh - 7rem - ${index * 1.75}rem)`,
+          scale,
+          top: `calc(6rem + ${index * 1.75}rem)`,
+        }}
+      >
         <header>
           <strong>{project.index}</strong>
           <span>{project.kicker}</span>
@@ -37,7 +44,12 @@ function ProjectCard({ index, project, total }: {
             </div>
           </div>
           <div className="prompt-project__image">
-            <Image alt="" fill sizes="(max-width: 720px) 100vw, 60vw" src={PORTFOLIO_VISUALS[index]} />
+            <Image
+              alt={`${project.title} — ${project.visualCaption}`}
+              fill
+              sizes="(max-width: 720px) calc(100vw - 3rem), (max-width: 1600px) 60vw, 960px"
+              src={PROJECT_VISUALS[project.visual]}
+            />
             <p>{project.role}</p>
           </div>
         </div>

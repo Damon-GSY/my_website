@@ -1,6 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 import {
   motion,
   useInView,
@@ -12,6 +13,7 @@ import {
 } from 'framer-motion'
 import { Component, useEffect, useRef, useState, type ErrorInfo, type PointerEvent, type ReactNode } from 'react'
 import { profile } from '@/lib/content'
+import { CREATOR_HERO_VISUAL } from '@/lib/optimization-assets'
 
 const OptimizationLandscapeScene = dynamic(
   () => import('@/components/optimization-landscape-scene'),
@@ -92,7 +94,7 @@ class SceneBoundary extends Component<{ children: ReactNode }, { failed: boolean
   }
 
   render() {
-    return this.state.failed ? <div className="prompt-hero__art-fallback" /> : this.props.children
+    return this.state.failed ? null : this.props.children
   }
 }
 
@@ -103,6 +105,7 @@ export function ContactButton() {
 export default function RebuildHero() {
   const sectionRef = useRef<HTMLElement>(null)
   const [mounted, setMounted] = useState(false)
+  const [sceneEligible, setSceneEligible] = useState(false)
   const reducedMotion = useReducedMotion()
   const active = useInView(sectionRef, { margin: '10% 0px' })
   const { scrollYProgress } = useScroll({
@@ -117,7 +120,22 @@ export default function RebuildHero() {
   const artScale = useTransform(progress, [0, 1], [1, 1.08])
   const artY = useTransform(progress, [0, 1], ['0%', '8%'])
 
-  useEffect(() => setMounted(true), [])
+  useEffect(() => {
+    setMounted(true)
+    const query = window.matchMedia('(min-width: 1100px) and (min-height: 720px) and (pointer: fine)')
+    const updateEligibility = () => {
+      const enoughCpu = navigator.hardwareConcurrency === undefined || navigator.hardwareConcurrency > 4
+      const canvas = document.createElement('canvas')
+      const context = canvas.getContext('webgl2', { alpha: true, antialias: false })
+        || canvas.getContext('webgl', { alpha: true, antialias: false })
+      const webglAvailable = Boolean(context)
+      context?.getExtension('WEBGL_lose_context')?.loseContext()
+      setSceneEligible(query.matches && enoughCpu && webglAvailable && !navigator.webdriver)
+    }
+    updateEligibility()
+    query.addEventListener('change', updateEligibility)
+    return () => query.removeEventListener('change', updateEligibility)
+  }, [])
 
   return (
     <section className="prompt-hero" id="top" ref={sectionRef}>
@@ -130,23 +148,32 @@ export default function RebuildHero() {
 
       <div className="prompt-hero__heading-wrap">
         <FadeIn delay={0.15} y={40}>
-          <h1>Hi, I&apos;m Damon</h1>
+          <p className="prompt-hero__eyebrow">Damon Guan · LLM Algorithm Engineer at Alibaba</p>
+          <h1>I build reliable agent systems.</h1>
         </FadeIn>
       </div>
 
       <FadeIn className="prompt-hero__art" delay={0.6} y={30}>
         <Magnet>
           <motion.div className="prompt-hero__art-frame" style={{ scale: artScale, y: artY }}>
+            <Image
+              alt="A terracotta optimization path converging through a graphite computational field"
+              className="prompt-hero__art-image"
+              fill
+              priority
+              sizes="(max-width: 720px) 76vw, 34vw"
+              src={CREATOR_HERO_VISUAL}
+            />
             <SceneBoundary>
-              {mounted && !reducedMotion ? (
-                <OptimizationLandscapeScene
-                  active={active}
-                  reducedMotion={false}
-                  scrollProgress={progress}
-                />
-              ) : (
-                <div className="prompt-hero__art-fallback" />
-              )}
+              {mounted && sceneEligible && !reducedMotion ? (
+                <div className="prompt-hero__scene-overlay">
+                  <OptimizationLandscapeScene
+                    active={active}
+                    reducedMotion={false}
+                    scrollProgress={progress}
+                  />
+                </div>
+              ) : null}
             </SceneBoundary>
             <div className="prompt-hero__art-shade" />
             <span>DG / Computational practice</span>

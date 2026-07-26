@@ -23,12 +23,12 @@ const secondRow = notes.map((entry, index) => ({
 function MarqueeRow({ items }: { items: { image: string; label: string; href: string }[] }) {
   return (
     <div className="prompt-marquee__rail">
-      {[...items, ...items, ...items].map((item, index) => {
+      {[...items, ...items].map((item, index) => {
         const duplicate = index >= items.length
         const external = item.href.startsWith('http')
         return <figure aria-hidden={duplicate} key={`${item.label}-${index}`}>
           <a aria-label={item.label} href={item.href} rel={external ? 'noreferrer' : undefined} tabIndex={duplicate ? -1 : undefined} target={external ? '_blank' : undefined}>
-            <Image alt="" fill loading="lazy" sizes="420px" src={item.image} />
+            <Image alt="" fill loading="lazy" sizes="(max-width: 640px) 280px, 420px" src={item.image} />
             <figcaption>{item.label}</figcaption>
           </a>
         </figure>
