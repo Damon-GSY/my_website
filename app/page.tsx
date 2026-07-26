@@ -1,15 +1,12 @@
 import AboutSection from '@/components/about-section'
-import CapabilitiesSection from '@/components/capabilities-section'
-import '@/components/creator-portfolio.css'
-import CreatorManifesto from '@/components/creator-manifesto'
-import CreatorMarquee from '@/components/creator-marquee'
 import FieldNotesSection from '@/components/field-notes-section'
 import EarlierSystemsSection from '@/components/earlier-systems-section'
-import Hero from '@/components/hero'
+import '@/components/rebuild-home.css'
+import Hero from '@/components/rebuild-hero'
+import WorkSection from '@/components/rebuild-work-section'
 import ResearchSection from '@/components/research-section'
 import SiteFooter from '@/components/site-footer'
 import SiteHeader from '@/components/site-header'
-import WorkSection from '@/components/work-section'
 import { WORLD_PLATE_MEDIA, WORLD_PLATE_URLS } from '@/lib/optimization-assets'
 
 export default function Home() {
@@ -43,9 +40,6 @@ export default function Home() {
       <SiteHeader />
       <main>
         <Hero />
-        <CreatorMarquee />
-        <CreatorManifesto />
-        <CapabilitiesSection />
         <WorkSection />
         <ResearchSection />
         <FieldNotesSection />
