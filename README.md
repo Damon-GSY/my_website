@@ -31,7 +31,7 @@ npm run lint
 npm run build
 ```
 
-The `judge:*` scripts cover scene resilience, perceptual depth, portfolio content, case studies, field notes, navigation, mobile behavior, accessibility, metadata, performance, architecture, and design anti-patterns. They are regression gates—not a substitute for human visual review.
+The current creator homepage acceptance set is `judge:responsive`, `judge:legibility`, `judge:semantics`, `judge:security`, `judge:wpo`, and `judge:metadata`, alongside typecheck, lint, and the production build. Older narrative-order judges remain in `scripts/` for the archived research-dashboard homepage; they intentionally describe that superseded section order and are not acceptance gates for this worktree. Automated checks are not a substitute for human visual review.
 
 ## Project map
 

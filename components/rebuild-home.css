@@ -251,6 +251,7 @@
   inset: 0;
   background: linear-gradient(180deg, transparent 48%, rgba(0, 0, 0, 0.75));
   content: '';
+  pointer-events: none;
 }
 
 .prompt-marquee img {
