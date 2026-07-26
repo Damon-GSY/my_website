@@ -1,126 +1,162 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import Image from 'next/image'
 import {
   motion,
+  useInView,
+  useMotionValue,
   useReducedMotion,
   useScroll,
   useSpring,
   useTransform,
 } from 'framer-motion'
-import { useEffect, useRef, useState } from 'react'
-import { heroChapters, profile } from '@/lib/content'
+import { Component, useEffect, useRef, useState, type ErrorInfo, type PointerEvent, type ReactNode } from 'react'
+import { profile } from '@/lib/content'
 
 const OptimizationLandscapeScene = dynamic(
   () => import('@/components/optimization-landscape-scene'),
   { ssr: false },
 )
 
+export function FadeIn({
+  children,
+  className,
+  delay = 0,
+  x = 0,
+  y = 30,
+}: {
+  children: ReactNode
+  className?: string
+  delay?: number
+  x?: number
+  y?: number
+}) {
+  return (
+    <motion.div
+      className={className}
+      initial={{ opacity: 0, x, y }}
+      whileInView={{ opacity: 1, x: 0, y: 0 }}
+      viewport={{ once: true, margin: '50px', amount: 0 }}
+      transition={{ delay, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+function Magnet({ children }: { children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  const smoothX = useSpring(x, { stiffness: 140, damping: 18 })
+  const smoothY = useSpring(y, { stiffness: 140, damping: 18 })
+
+  function move(event: PointerEvent<HTMLDivElement>) {
+    if (!ref.current || event.pointerType !== 'mouse') return
+    const bounds = ref.current.getBoundingClientRect()
+    x.set((event.clientX - bounds.left - bounds.width / 2) / 3)
+    y.set((event.clientY - bounds.top - bounds.height / 2) / 3)
+  }
+
+  function reset() {
+    x.set(0)
+    y.set(0)
+  }
+
+  return (
+    <motion.div
+      className="prompt-hero__magnet"
+      onPointerLeave={reset}
+      onPointerMove={move}
+      ref={ref}
+      style={{ x: smoothX, y: smoothY }}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+class SceneBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+  state = { failed: false }
+
+  static getDerivedStateFromError() {
+    return { failed: true }
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('The interactive landscape fell back to the static art.', error, info)
+    }
+  }
+
+  render() {
+    return this.state.failed ? <div className="prompt-hero__art-fallback" /> : this.props.children
+  }
+}
+
+export function ContactButton() {
+  return <a className="prompt-contact" href={`mailto:${profile.email}`}>Contact me</a>
+}
+
 export default function RebuildHero() {
   const sectionRef = useRef<HTMLElement>(null)
-  const preferredReducedMotion = useReducedMotion()
   const [mounted, setMounted] = useState(false)
-  const reducedMotion = mounted && Boolean(preferredReducedMotion)
+  const reducedMotion = useReducedMotion()
+  const active = useInView(sectionRef, { margin: '10% 0px' })
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ['start start', 'end end'],
+    offset: ['start start', 'end start'],
   })
   const progress = useSpring(scrollYProgress, {
-    stiffness: 110,
-    damping: 30,
-    mass: 0.35,
+    stiffness: 120,
+    damping: 28,
     restDelta: 0.0005,
   })
-  const firstNameX = useTransform(progress, [0, 0.82], ['0vw', '-17vw'])
-  const lastNameX = useTransform(progress, [0, 0.82], ['0vw', '17vw'])
-  const lensScale = useTransform(progress, [0, 0.72, 1], [1, 2.15, 3.35])
-  const lensRadius = useTransform(progress, [0, 0.62, 1], ['48%', '18%', '0%'])
-  const paperOpacity = useTransform(progress, [0.45, 0.92], [1, 0])
-  const thesisOpacity = useTransform(progress, [0.64, 0.84, 1], [0, 1, 1])
-  const thesisY = useTransform(progress, [0.62, 0.9], [32, 0])
-  const sceneOpacity = useTransform(progress, [0, 0.32, 1], [0.72, 1, 1])
+  const artScale = useTransform(progress, [0, 1], [1, 1.08])
+  const artY = useTransform(progress, [0, 1], ['0%', '8%'])
 
   useEffect(() => setMounted(true), [])
 
   return (
-    <section className="rebuild-hero" id="top" ref={sectionRef}>
-      <div className="rebuild-hero__viewport">
-        <motion.div className="rebuild-hero__paper" style={{ opacity: paperOpacity }} />
+    <section className="prompt-hero" id="top" ref={sectionRef}>
+      <FadeIn className="prompt-hero__nav" y={-20}>
+        <a href="#about">About</a>
+        <a href="#services">Capabilities</a>
+        <a href="#work">Projects</a>
+        <a href={`mailto:${profile.email}`}>Contact</a>
+      </FadeIn>
 
-        <motion.div
-          aria-hidden="true"
-          className="rebuild-hero__lens"
-          style={{
-            borderRadius: reducedMotion ? '18%' : lensRadius,
-            scale: reducedMotion ? 1 : lensScale,
-          }}
-        >
-          <motion.div className="rebuild-hero__scene" style={{ opacity: sceneOpacity }}>
-            {mounted && !reducedMotion ? (
-              <OptimizationLandscapeScene
-                active
-                reducedMotion={false}
-                scrollProgress={progress}
-              />
-            ) : (
-              <Image
-                alt="Terracotta optimization landscape"
-                fill
-                priority
-                sizes="(max-width: 720px) 78vw, 36vw"
-                src="/assets/optimization-core-midjourney.webp"
-              />
-            )}
-          </motion.div>
-          <div className="rebuild-hero__lens-shade" />
-        </motion.div>
-
-        <div className="rebuild-shell rebuild-hero__frame">
-          <motion.div className="rebuild-hero__topline" style={{ opacity: paperOpacity }}>
-            <span>Portfolio / 2026</span>
-            <span>{profile.role} · {profile.company}</span>
-            <span>{profile.location}</span>
-          </motion.div>
-
-          <h1 aria-label={`${profile.name}. Agent systems, research, and field notes.`}>
-            <motion.span style={{ x: reducedMotion ? 0 : firstNameX }}>Damon</motion.span>
-            <motion.span style={{ x: reducedMotion ? 0 : lastNameX }}>Guan</motion.span>
-          </h1>
-
-          <motion.div className="rebuild-hero__margin-note" style={{ opacity: paperOpacity }}>
-            <span>Current inquiry</span>
-            <p>How much authority should an intelligent system be allowed to hold?</p>
-          </motion.div>
-
-          <motion.div
-            className="rebuild-hero__thesis"
-            style={{ opacity: reducedMotion ? 1 : thesisOpacity, y: reducedMotion ? 0 : thesisY }}
-          >
-            <small>Damon Guan / Point of view</small>
-            <p>{profile.thesis}</p>
-            <a href="#work">Enter selected systems <span aria-hidden="true">↓</span></a>
-          </motion.div>
-
-          <motion.div className="rebuild-hero__folio" style={{ opacity: paperOpacity }}>
-            <span>DG</span>
-            <i />
-            <span>01</span>
-          </motion.div>
-        </div>
+      <div className="prompt-hero__heading-wrap">
+        <FadeIn delay={0.15} y={40}>
+          <h1>Hi, I&apos;m Damon</h1>
+        </FadeIn>
       </div>
 
-      <div className="rebuild-identity" aria-label="Damon Guan's practice">
-        <div className="rebuild-shell rebuild-identity__grid">
-          <p>One practice, three operating modes.</p>
-          {heroChapters.map((chapter) => (
-            <article key={chapter.index}>
-              <small>{chapter.index}</small>
-              <h2>{chapter.title}</h2>
-              <p>{chapter.evidence}</p>
-            </article>
-          ))}
-        </div>
+      <FadeIn className="prompt-hero__art" delay={0.6} y={30}>
+        <Magnet>
+          <motion.div className="prompt-hero__art-frame" style={{ scale: artScale, y: artY }}>
+            <SceneBoundary>
+              {mounted && !reducedMotion ? (
+                <OptimizationLandscapeScene
+                  active={active}
+                  reducedMotion={false}
+                  scrollProgress={progress}
+                />
+              ) : (
+                <div className="prompt-hero__art-fallback" />
+              )}
+            </SceneBoundary>
+            <div className="prompt-hero__art-shade" />
+            <span>DG / Computational practice</span>
+          </motion.div>
+        </Magnet>
+      </FadeIn>
+
+      <div className="prompt-hero__bottom">
+        <FadeIn delay={0.35} y={20}>
+          <p>AI researcher and algorithm engineer building reliable agent systems, post-training, and evaluation at Alibaba.</p>
+        </FadeIn>
+        <FadeIn delay={0.5} y={20}><ContactButton /></FadeIn>
       </div>
     </section>
   )

@@ -1,12 +1,9 @@
-import AboutSection from '@/components/about-section'
-import FieldNotesSection from '@/components/field-notes-section'
-import EarlierSystemsSection from '@/components/earlier-systems-section'
 import '@/components/rebuild-home.css'
+import RebuildAbout from '@/components/rebuild-about'
 import Hero from '@/components/rebuild-hero'
+import RebuildMarquee from '@/components/rebuild-marquee'
+import RebuildServices from '@/components/rebuild-services'
 import WorkSection from '@/components/rebuild-work-section'
-import ResearchSection from '@/components/research-section'
-import SiteFooter from '@/components/site-footer'
-import SiteHeader from '@/components/site-header'
 import { WORLD_PLATE_MEDIA, WORLD_PLATE_URLS } from '@/lib/optimization-assets'
 
 export default function Home() {
@@ -37,16 +34,13 @@ export default function Home() {
         Skip to selected work
       </a>
       <div className="page-progress" aria-hidden="true" />
-      <SiteHeader />
       <main>
         <Hero />
+        <RebuildMarquee />
+        <RebuildAbout />
+        <RebuildServices />
         <WorkSection />
-        <ResearchSection />
-        <FieldNotesSection />
-        <AboutSection />
-        <EarlierSystemsSection />
       </main>
-      <SiteFooter />
     </>
   )
 }
