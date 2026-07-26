@@ -22,12 +22,14 @@ export function FadeIn({
   children,
   className,
   delay = 0,
+  duration = 0.7,
   x = 0,
   y = 30,
 }: {
   children: ReactNode
   className?: string
   delay?: number
+  duration?: number
   x?: number
   y?: number
 }) {
@@ -37,7 +39,7 @@ export function FadeIn({
       initial={{ opacity: 0, x, y }}
       whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={{ once: true, margin: '50px', amount: 0 }}
-      transition={{ delay, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+      transition={{ delay, duration, ease: [0.25, 0.1, 0.25, 1] }}
     >
       {children}
     </motion.div>
@@ -154,7 +156,7 @@ export default function RebuildHero() {
 
       <div className="prompt-hero__bottom">
         <FadeIn delay={0.35} y={20}>
-          <p>AI researcher and algorithm engineer building reliable agent systems, post-training, and evaluation at Alibaba.</p>
+          <p>{profile.heroSummary}</p>
         </FadeIn>
         <FadeIn delay={0.5} y={20}><ContactButton /></FadeIn>
       </div>

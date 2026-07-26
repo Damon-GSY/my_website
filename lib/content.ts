@@ -14,6 +14,8 @@ export const profile = {
     'I am an AI researcher and algorithm engineer working where model behavior meets operating reality. At Alibaba, I build post-training, evaluation, and agentic RL systems for workflows where a plausible answer is not enough.',
   creatorLine:
     'Outside the training loop, I turn hard-won engineering lessons into public field notes and research-linked essays for other builders.',
+  heroSummary:
+    'AI researcher and algorithm engineer building reliable agent systems, post-training, and evaluation at Alibaba.',
   principles: [
     {
       index: 'P/01',
@@ -49,6 +51,14 @@ export const profile = {
     'Research collaboration & technical exchange',
   ],
 }
+
+export const capabilities = [
+  ['01', 'Agent system design', 'Control layers for planning, tools, permissions, recovery, and human handoff in production workflows.'],
+  ['02', 'Post-training', 'Capability-first programs spanning continual pretraining, supervised fine-tuning, and reinforcement learning.'],
+  ['03', 'Agent evaluation', 'Trace-level evaluation across planning, tool use, memory, recovery, and long-horizon execution.'],
+  ['04', 'Reward architecture', 'Conditional and hierarchical reward systems for objectives that would otherwise silently conflict.'],
+  ['05', 'Research & writing', 'First-author research and public field notes that turn operating lessons into inspectable methods.'],
+] as const
 
 export const heroChapters = [
   {

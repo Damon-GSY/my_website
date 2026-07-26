@@ -5,6 +5,7 @@ import { motion, type MotionValue, useScroll, useTransform } from 'framer-motion
 import { useRef } from 'react'
 import { ContactButton, FadeIn } from '@/components/rebuild-hero'
 import { profile } from '@/lib/content'
+import { PORTFOLIO_VISUALS } from '@/lib/optimization-assets'
 
 function Character({ character, index, progress, total }: {
   character: string
@@ -17,10 +18,10 @@ function Character({ character, index, progress, total }: {
 }
 
 const ornaments = [
-  { className: 'is-one', image: '/assets/optimization-core-midjourney.webp' },
-  { className: 'is-two', image: '/assets/optimization-world-v2-1280.webp' },
-  { className: 'is-three', image: '/assets/optimization-core-mobile-720.webp' },
-  { className: 'is-four', image: '/assets/optimization-world-v2-mobile.webp' },
+  { className: 'is-top-left', image: PORTFOLIO_VISUALS[0], x: -80 },
+  { className: 'is-bottom-left', image: PORTFOLIO_VISUALS[2], x: -80 },
+  { className: 'is-top-right', image: PORTFOLIO_VISUALS[3], x: 80 },
+  { className: 'is-bottom-right', image: PORTFOLIO_VISUALS[4], x: 80 },
 ] as const
 
 export default function RebuildAbout() {
@@ -31,7 +32,7 @@ export default function RebuildAbout() {
   return (
     <section className="prompt-about" id="about">
       {ornaments.map((ornament, index) => (
-        <FadeIn className={`prompt-about__ornament ${ornament.className}`} delay={0.1 + index * 0.08} key={ornament.className} x={index % 2 ? 80 : -80} y={0}>
+        <FadeIn className={`prompt-about__ornament ${ornament.className}`} delay={0.1 + index * 0.08} duration={0.9} key={ornament.className} x={ornament.x} y={0}>
           <Image alt="" fill sizes="220px" src={ornament.image} />
         </FadeIn>
       ))}

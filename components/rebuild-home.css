@@ -96,13 +96,18 @@
   translate: -50% 0;
 }
 
-.prompt-hero__magnet,
 .prompt-hero__art-frame {
   width: 100%;
   height: 100%;
 }
 
-.prompt-hero__magnet { will-change: transform; }
+.prompt-hero__magnet {
+  width: calc(100% + 300px);
+  height: calc(100% + 300px);
+  margin: -150px;
+  padding: 150px;
+  will-change: transform;
+}
 
 .prompt-hero__art-frame {
   position: relative;
@@ -328,10 +333,10 @@
   filter: saturate(0.82) contrast(1.05);
 }
 
-.prompt-about__ornament.is-one { top: 5%; left: 3%; transform: rotate(-8deg); }
-.prompt-about__ornament.is-two { bottom: 8%; left: 9%; transform: rotate(9deg); }
-.prompt-about__ornament.is-three { top: 6%; right: 3%; transform: rotate(7deg); }
-.prompt-about__ornament.is-four { right: 9%; bottom: 8%; transform: rotate(-9deg); }
+.prompt-about__ornament.is-top-left { top: 5%; left: 3%; transform: rotate(-8deg); }
+.prompt-about__ornament.is-bottom-left { bottom: 8%; left: 9%; transform: rotate(9deg); }
+.prompt-about__ornament.is-top-right { top: 6%; right: 3%; transform: rotate(7deg); }
+.prompt-about__ornament.is-bottom-right { right: 9%; bottom: 8%; transform: rotate(-9deg); }
 
 .prompt-services {
   position: relative;
@@ -651,8 +656,8 @@
   .prompt-about__content > p span { opacity: 1 !important; }
 
   .prompt-about__ornament { width: 6.5rem; }
-  .prompt-about__ornament.is-two { bottom: 4%; left: -1rem; }
-  .prompt-about__ornament.is-four { right: -1rem; bottom: 4%; }
+  .prompt-about__ornament.is-bottom-left { bottom: 4%; left: -1rem; }
+  .prompt-about__ornament.is-bottom-right { right: -1rem; bottom: 4%; }
 
   .prompt-services article {
     grid-template-columns: 5.6rem 1fr;

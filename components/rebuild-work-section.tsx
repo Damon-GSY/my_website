@@ -6,13 +6,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import CaseSignal from '@/components/case-signal'
 import { work } from '@/lib/content'
-
-const projectImages = [
-  '/assets/optimization-world-v2-1920.webp',
-  '/assets/optimization-core-midjourney.webp',
-  '/assets/optimization-world-v2-1280.webp',
-  '/assets/optimization-core-mobile-720.webp',
-] as const
+import { PORTFOLIO_VISUALS } from '@/lib/optimization-assets'
 
 function ProjectCard({ index, project, total }: {
   index: number
@@ -43,7 +37,7 @@ function ProjectCard({ index, project, total }: {
             </div>
           </div>
           <div className="prompt-project__image">
-            <Image alt="" fill sizes="(max-width: 720px) 100vw, 60vw" src={projectImages[index]} />
+            <Image alt="" fill sizes="(max-width: 720px) 100vw, 60vw" src={PORTFOLIO_VISUALS[index]} />
             <p>{project.role}</p>
           </div>
         </div>

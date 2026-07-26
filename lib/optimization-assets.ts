@@ -4,6 +4,14 @@ export const WORLD_PLATE_URLS = {
   highDensity: '/assets/optimization-world-v2-1920.webp',
 } as const
 
+export const PORTFOLIO_VISUALS = [
+  '/assets/optimization-core-midjourney.webp',
+  WORLD_PLATE_URLS.highDensity,
+  WORLD_PLATE_URLS.standard,
+  '/assets/optimization-core-mobile-720.webp',
+  WORLD_PLATE_URLS.mobile,
+] as const
+
 export const WORLD_PLATE_MEDIA = {
   mobilePortrait: '(max-width: 720px) and (orientation: portrait)',
   highDensityWide: '(min-width: 1280px) and (min-resolution: 1.5dppx)',

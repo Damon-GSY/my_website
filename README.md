@@ -2,7 +2,7 @@
 
 Personal portfolio for Damon Guan (publication name: Shengyue Guan), an LLM Algorithm Engineer working across agentic RL, post-training, evaluation, and production agent systems.
 
-The homepage moves through a real Three.js optimization landscape before opening into selected work, research, field notes, and Damon's professional trajectory. Content is centralized in `lib/content.ts`; the legacy Vite application is not part of the current runtime.
+The homepage follows a creator-portfolio rhythm: a Three.js identity hero, a scroll-driven body-of-work marquee, biography, capabilities, and stacked project cases. Long-form research and field notes remain available through their dedicated routes. Content is centralized in `lib/content.ts`; the legacy Vite application is not part of the current runtime.
 
 ## Stack
 
@@ -19,7 +19,7 @@ npm install
 npm run dev
 ```
 
-Open `http://127.0.0.1:4175/` for local review.
+Open `http://127.0.0.1:4187/` for this isolated worktree review.
 
 The development build uses `.next-dev`, so running `npm run build` does not overwrite the live development runtime.
 

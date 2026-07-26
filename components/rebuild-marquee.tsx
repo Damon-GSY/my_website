@@ -4,21 +4,15 @@ import Image from 'next/image'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import { notes, research, work } from '@/lib/content'
-
-const images = [
-  '/assets/optimization-core-midjourney.webp',
-  '/assets/optimization-world-v2-1920.webp',
-  '/assets/optimization-world-v2-1280.webp',
-  '/assets/optimization-core-mobile-720.webp',
-] as const
+import { PORTFOLIO_VISUALS } from '@/lib/optimization-assets'
 
 const firstRow = [...work, ...research].map((entry, index) => ({
-  image: images[index % images.length],
+  image: PORTFOLIO_VISUALS[index % PORTFOLIO_VISUALS.length],
   label: entry.title,
 }))
 
 const secondRow = notes.map((entry, index) => ({
-  image: images[(index + 2) % images.length],
+  image: PORTFOLIO_VISUALS[(index + 2) % PORTFOLIO_VISUALS.length],
   label: entry.title,
 }))
 
