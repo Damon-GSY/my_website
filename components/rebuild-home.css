@@ -240,6 +240,12 @@
   background: #111;
 }
 
+.prompt-marquee figure > a {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
 .prompt-marquee figure::after {
   position: absolute;
   inset: 0;
@@ -418,12 +424,14 @@
 }
 
 .prompt-project__slot {
-  position: relative;
-  height: max(54rem, 92svh);
+  position: sticky;
+  top: 0;
+  height: 100svh;
 }
 
 .prompt-project__card {
-  position: sticky;
+  position: relative;
+  width: 100%;
   overflow: hidden;
   min-height: min(76svh, 52rem);
   border: 2px solid var(--prompt-text);
@@ -587,7 +595,7 @@
     height: min(58svh, 38rem);
   }
 
-  .prompt-project__slot { height: max(50rem, 90svh); }
+  .prompt-project__slot { height: 100svh; }
 
   .prompt-project__card header {
     grid-template-columns: 0.5fr 1fr 2fr;
@@ -669,6 +677,8 @@
   .prompt-projects { padding-inline: 0.75rem; }
 
   .prompt-project__slot {
+    position: relative;
+    top: auto;
     height: auto;
     min-height: 0;
     margin-bottom: 1.5rem;
