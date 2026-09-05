@@ -1,9 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import CaseSignal from '@/components/case-signal'
-import SiteFooter from '@/components/site-footer'
-import SiteHeader from '@/components/site-header'
+import { SiteFooter } from '@/components/fieldwork/site-footer'
+import { SiteHeader } from '@/components/fieldwork/site-header'
 import { profile, work } from '@/lib/content'
 import { socialImage } from '@/lib/metadata'
 import styles from './case-study.module.css'
@@ -19,7 +18,6 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: CaseStudyPageProps): Promise<Metadata> {
   const { slug } = await params
   const project = work.find((entry) => entry.id === slug)
-
   if (!project) return {}
 
   return {
@@ -44,16 +42,15 @@ export async function generateMetadata({ params }: CaseStudyPageProps): Promise<
 export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
   const { slug } = await params
   const projectIndex = work.findIndex((entry) => entry.id === slug)
-
   if (projectIndex === -1) notFound()
 
   const project = work[projectIndex]
   const nextProject = work[(projectIndex + 1) % work.length]
   const proofSteps = [
-    { index: '01', label: 'Baseline', value: project.proof.baseline },
-    { index: '02', label: 'Intervention', value: project.proof.intervention },
-    { index: '03', label: 'Result', value: project.proof.result },
-    { index: '04', label: 'Scope', value: project.proof.scope },
+    { label: 'Baseline', value: project.proof.baseline },
+    { label: 'Intervention', value: project.proof.intervention },
+    { label: 'Result', value: project.proof.result },
+    { label: 'Scope', value: project.proof.scope },
   ]
   const caseStudySchema = {
     '@context': 'https://schema.org',
@@ -71,157 +68,116 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
 
   return (
     <>
-      <a className="skip-link" href="#case-main">Skip to case study</a>
       <SiteHeader />
-      <main className={styles.page} id="case-main">
+      <main className={styles.page} id="main-content">
         <header className={styles.hero}>
-          <div className={`section-shell ${styles.heroShell}`}>
-            <Link className={styles.back} href="/#work">← Selected work</Link>
-
+          <div className={styles.shell}>
+            <nav className={styles.breadcrumbs} aria-label="Breadcrumb">
+              <Link href="/">Home</Link><span aria-hidden="true">/</span>
+              <Link href="/#work">Selected work</Link><span aria-hidden="true">/</span>
+              <span aria-current="page">Case {project.index}</span>
+            </nav>
             <div className={styles.meta}>
-              <span>{project.index} / 04</span>
+              <span>Case study {project.index} / {String(work.length).padStart(2, '0')}</span>
               <span>{project.kicker}</span>
-              <span>{project.stage} · {project.year}</span>
             </div>
-
             <h1>{project.title}</h1>
-
             <div className={styles.heroLower}>
-              <p>{project.statement}</p>
+              <p className={styles.summary}>{project.statement}</p>
               <dl>
-                <div>
-                  <dt>Role</dt>
-                  <dd>{project.role}</dd>
-                </div>
-                <div>
-                  <dt>Outcome</dt>
-                  <dd>{project.outcome.value} {project.outcome.label}</dd>
-                </div>
-                <div>
-                  <dt>Scope</dt>
-                  <dd>{project.tags.join(' · ')}</dd>
-                </div>
+                <div><dt>My role</dt><dd>{project.role}</dd></div>
+                <div><dt>Where / when</dt><dd>{project.stage} · {project.year}</dd></div>
               </dl>
             </div>
+            <ul className={styles.tags} aria-label="Project topics">
+              {project.tags.map((tag) => <li key={tag}>{tag}</li>)}
+            </ul>
           </div>
         </header>
 
-        <section className={styles.visualSection} aria-label={`${project.title} system visualization`}>
-          <div className={`section-shell ${styles.visualShell}`}>
-            <CaseSignal type={project.visual} />
-            <p>{project.visualCaption}</p>
-          </div>
-        </section>
+        <div className={`${styles.shell} ${styles.storyLayout}`}>
+          <aside className={styles.sidebar}>
+            <p className={styles.eyebrow}>Inside this case</p>
+            <nav aria-label="Case study sections">
+              <a href="#context"><span>01</span> The context</a>
+              <a href="#approach"><span>02</span> The approach</a>
+              <a href="#ownership"><span>03</span> My contribution</a>
+              <a href="#evidence"><span>04</span> Outcomes & evidence</a>
+            </nav>
+            <p className={styles.sidebarNote}>A public account of internal work. Scope and disclosure are included with the results.</p>
+          </aside>
 
-        <section className={styles.chapter}>
-          <div className={`section-shell ${styles.chapterGrid}`}>
-            <div className={styles.chapterIndex}>
-              <span>01</span>
-              <small>Operating context</small>
-            </div>
-            <div className={styles.chapterContent}>
-              <p className={styles.eyebrow}>The constraint</p>
-              <h2>{project.constraintTitle}</h2>
+          <div className={styles.story}>
+            <section className={styles.chapter} id="context" aria-labelledby="context-heading">
+              <p className={styles.eyebrow}>01 / The context</p>
+              <h2 id="context-heading">{project.constraintTitle}</h2>
               <p className={styles.prose}>{project.context}</p>
-            </div>
-          </div>
-        </section>
+            </section>
 
-        <section className={`${styles.chapter} ${styles.chapterDark}`}>
-          <div className={`section-shell ${styles.chapterGrid}`}>
-            <div className={styles.chapterIndex}>
-              <span>02</span>
-              <small>System design</small>
-            </div>
-            <div className={styles.chapterContent}>
-              <p className={styles.eyebrow}>Design principle</p>
-              <h2>{project.principle}</h2>
+            <section className={styles.chapter} id="approach" aria-labelledby="approach-heading">
+              <p className={styles.eyebrow}>02 / The approach</p>
+              <h2 id="approach-heading">The principle behind the system.</h2>
+              <blockquote className={styles.principle}>{project.principle}</blockquote>
               <ol className={styles.decisions}>
                 {project.details.map((detail, index) => (
                   <li key={detail}>
-                    <span>0{index + 1}</span>
-                    <p>{detail}</p>
+                    <span aria-hidden="true">0{index + 1}</span><p>{detail}</p>
                   </li>
                 ))}
               </ol>
-            </div>
-          </div>
-        </section>
+            </section>
 
-        <section className={styles.chapter}>
-          <div className={`section-shell ${styles.chapterGrid}`}>
-            <div className={styles.chapterIndex}>
-              <span>03</span>
-              <small>Personal ownership</small>
-            </div>
-            <div className={styles.chapterContent}>
-              <p className={styles.eyebrow}>What Damon designed</p>
-              <h2>{project.ownershipTitle}</h2>
+            <section className={styles.chapter} id="ownership" aria-labelledby="ownership-heading">
+              <p className={styles.eyebrow}>03 / My contribution</p>
+              <h2 id="ownership-heading">{project.ownershipTitle}</h2>
               <p className={styles.prose}>{project.ownership}</p>
-              <div className={styles.trace} aria-label="System trace">
-                {project.flow.map((step, index) => (
-                  <div key={step}>
-                    <span>0{index + 1}</span>
-                    <strong>{step}</strong>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+              <figure className={styles.flowFigure}>
+                <figcaption>System sequence <span>Conceptual overview</span></figcaption>
+                <ol className={styles.trace}>
+                  {project.flow.map((step, index) => (
+                    <li key={step}>
+                      <span aria-hidden="true">0{index + 1}</span><strong>{step}</strong>
+                    </li>
+                  ))}
+                </ol>
+              </figure>
+            </section>
 
-        <section className={styles.evidence}>
-          <div className="section-shell">
-            <header className={styles.evidenceHeader}>
-              <p className={styles.eyebrow}>04 / Observed evidence</p>
-              <h2>{project.evidenceTitle}</h2>
-            </header>
-
-            <div className={styles.evidenceGrid}>
-              <div className={styles.evidenceOutcome} aria-hidden="true">
-                <small className={styles.evidenceType}>{project.proof.evidenceType}</small>
-                <strong className={project.outcome.value.length > 4 ? styles.outcomeWord : undefined}>
+            <section className={styles.chapter} id="evidence" aria-labelledby="evidence-heading">
+              <p className={styles.eyebrow}>04 / Outcomes & evidence</p>
+              <h2 id="evidence-heading">{project.evidenceTitle}</h2>
+              <div className={styles.evidenceOutcome}>
+                <span className={styles.evidenceType}>{project.proof.evidenceType}</span>
+                <strong className={project.outcome.value.length > 5 ? styles.outcomeWord : undefined}>
                   {project.outcome.value}
                 </strong>
                 <span>{project.outcome.label}</span>
-                <small>{project.outcome.evidence}</small>
+                <p>{project.outcome.evidence}</p>
               </div>
-
-              <ol className={styles.evidenceProtocol} aria-label="Evidence protocol">
+              <dl className={styles.evidenceProtocol}>
                 {proofSteps.map((step) => (
-                  <li key={step.label}>
-                    <span>{step.index}</span>
-                    <small>{step.label}</small>
-                    <p>{step.value}</p>
-                  </li>
+                  <div key={step.label}><dt>{step.label}</dt><dd>{step.value}</dd></div>
                 ))}
-              </ol>
-            </div>
+              </dl>
+              <p className={styles.disclosure}>
+                <strong>Disclosure</strong>{project.proof.disclosure}
+              </p>
+            </section>
 
-            <p className={styles.disclosure}>
-              <span>Disclosure</span>
-              {project.proof.disclosure}
-            </p>
-
-            <aside className={styles.notebook} aria-label="Related public field note">
-              <div>
-                <span>From Damon&apos;s notebook</span>
-                <p>The production details stay bounded; the reasoning method is public.</p>
-              </div>
+            <aside className={styles.notebook} aria-label="Related field note">
+              <p className={styles.eyebrow}>From the notebook</p>
               <Link href={project.relatedNote.href}>
-                <small>Read the related field note</small>
-                <strong>{project.relatedNote.label}</strong>
-                <i aria-hidden="true">→</i>
+                <strong>{project.relatedNote.label}</strong><span aria-hidden="true">↗</span>
               </Link>
             </aside>
           </div>
-        </section>
+        </div>
 
         <nav className={styles.next} aria-label="Next case study">
-          <div className="section-shell">
-            <span>Next case / {nextProject.index}</span>
+          <div className={styles.shell}>
+            <p className={styles.eyebrow}>Next case / {nextProject.index}</p>
             <Link href={`/work/${nextProject.id}`}>
-              {nextProject.title}<i aria-hidden="true">↗</i>
+              {nextProject.title}<span aria-hidden="true">↗</span>
             </Link>
           </div>
         </nav>

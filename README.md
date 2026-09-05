@@ -1,8 +1,8 @@
-# Damon — Agent systems, under control
+# Damon Guan — Curiosity, made useful.
 
 Personal portfolio for Damon Guan (publication name: Shengyue Guan), an LLM Algorithm Engineer working across agentic RL, post-training, evaluation, and production agent systems.
 
-The homepage follows a creator-portfolio rhythm: a Three.js identity hero, a scroll-driven body-of-work marquee, biography, capabilities, and stacked project cases. Long-form research and field notes remain available through their dedicated routes. Content is centralized in `lib/content.ts`; the legacy Vite application is not part of the current runtime.
+An editorial portfolio in warm paper, forest green, and terracotta. A pointer- and scroll-responsive mathematical surface introduces four project case studies, three papers, seven field notes, and Damon's background. Content is centralized in `lib/content.ts`; the legacy Vite application is not part of the current runtime.
 
 ## Stack
 
@@ -10,16 +10,16 @@ The homepage follows a creator-portfolio rhythm: a Three.js identity hero, a scr
 - TypeScript
 - Tailwind CSS 4
 - Three.js with React Three Fiber
-- Framer Motion
+- Locally hosted Instrument Serif and DM Sans
 
 ## Local development
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-Open `http://127.0.0.1:4187/` for this isolated worktree review.
+Open `http://127.0.0.1:4193/` for this isolated worktree review. The previous 4175 and 4187 previews are not used by this branch.
 
 The development build uses `.next-dev`, so running `npm run build` does not overwrite the live development runtime.
 
@@ -29,16 +29,20 @@ The development build uses `.next-dev`, so running `npm run build` does not over
 npm run typecheck
 npm run lint
 npm run build
+npm run test:fieldwork
+npm run test:fieldwork:audit
 ```
 
-The current creator homepage acceptance set is `judge:responsive`, `judge:legibility`, `judge:semantics`, `judge:security`, `judge:wpo`, and `judge:metadata`, alongside typecheck, lint, and the production build. Older narrative-order judges remain in `scripts/` for the archived research-dashboard homepage; they intentionally describe that superseded section order and are not acceptance gates for this worktree. Automated checks are not a substitute for human visual review.
+Browser tests require a running server and Playwright Chromium. They accept `BASE_URL` and `QA_OUTPUT`; the default report directory is `/tmp/fieldwork-qa`. To test production, run `npm start -- --hostname 127.0.0.1 --port 4193` after building (stop the dev server first).
+
+The current acceptance set covers 10 end-to-end flows and 42 route/viewport combinations, including automated accessibility checks. Historical `judge:*` scripts describe previous designs and are retained for reference, not as this branch's design contract. See [the architecture and verification notes](docs/fieldwork-redesign.md).
 
 ## Project map
 
 - `app/` — Next routes, metadata, long-form notes, and case-study pages
-- `components/` — homepage chapters and the scroll-driven WebGL scene
+- `components/fieldwork/` — the current homepage, shared shell, and on-demand WebGL scene
 - `lib/content.ts` — verified profile, work, research, writing, and experience data
-- `public/assets/` — optimized optimization-landscape imagery
-- `scripts/` — project-specific regression judges
+- `public/fonts/` — self-hosted typography and OFL licenses
+- `scripts/fieldwork-*.mjs` — the current browser regression suites
 
 The production build currently generates the homepage, four case studies, seven field notes, a custom 404, sitemap, robots file, and a person-led Open Graph image.

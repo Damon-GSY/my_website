@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import SiteFooter from '@/components/site-footer'
-import SiteHeader from '@/components/site-header'
+import { SiteFooter } from '@/components/fieldwork/site-footer'
+import { SiteHeader } from '@/components/fieldwork/site-header'
 import { getReadingTime, notes, profile } from '@/lib/content'
 import { socialImage } from '@/lib/metadata'
 import styles from '../notes.module.css'
@@ -18,7 +18,6 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: NotePageProps): Promise<Metadata> {
   const { slug } = await params
   const note = notes.find((entry) => entry.slug === slug)
-
   if (!note) return {}
 
   return {
@@ -45,11 +44,13 @@ export async function generateMetadata({ params }: NotePageProps): Promise<Metad
 export default async function NotePage({ params }: NotePageProps) {
   const { slug } = await params
   const noteIndex = notes.findIndex((entry) => entry.slug === slug)
-
   if (noteIndex === -1) notFound()
 
   const note = notes[noteIndex]
   const nextNote = notes[(noteIndex + 1) % notes.length]
+  const formattedDate = new Intl.DateTimeFormat('en', {
+    month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC',
+  }).format(new Date(`${note.date}T00:00:00Z`))
   const articleSchema = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -65,71 +66,84 @@ export default async function NotePage({ params }: NotePageProps) {
 
   return (
     <>
-      <a className="skip-link" href="#note-main">Skip to article</a>
       <SiteHeader />
-      <main className={styles.articlePage} id="note-main">
+      <main className={styles.articlePage} id="main-content">
         <header className={styles.articleHero}>
-          <div className={`section-shell ${styles.articleHeroGrid}`}>
-            <Link className={styles.back} href="/#notes">← Field notes</Link>
-            <div className={styles.articleMeta}>
-              <span>{note.category}</span>
-              <time dateTime={note.date}>{note.date}</time>
-              <span>{getReadingTime(note)}</span>
+          <div className={styles.shell}>
+            <nav className={styles.breadcrumbs} aria-label="Breadcrumb">
+              <Link href="/">Home</Link><span aria-hidden="true">/</span>
+              <Link href="/notes">Field notes</Link><span aria-hidden="true">/</span>
+              <span aria-current="page">Note {String(noteIndex + 1).padStart(2, '0')}</span>
+            </nav>
+            <div className={styles.articleTitleBlock}>
+              <div className={styles.articleMeta}>
+                <span>{note.category}</span>
+                <time dateTime={note.date}>{formattedDate}</time>
+                <span>{getReadingTime(note)}</span>
+              </div>
+              <h1>{note.title}</h1>
+              <p>{note.excerpt}</p>
             </div>
-            <h1>{note.title}</h1>
-            <p>{note.excerpt}</p>
           </div>
         </header>
 
-        <article className={styles.articleBody}>
-          <div className={`section-shell ${styles.articleGrid}`}>
-            <aside>
-              <span>Filed under</span>
-              <div>{note.tags.map((tag) => <small key={tag}>{tag}</small>)}</div>
-              <p>{profile.name}<br />{profile.role}</p>
-              <div className={styles.related}>
-                <span>Related evidence</span>
-                {note.related.map((reference) => {
-                  const external = reference.href.startsWith('http')
-                  if (external) return (
-                    <a
-                      key={reference.href}
-                      href={reference.href}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {reference.label}<i aria-hidden="true">↗</i>
-                    </a>
-                  )
-
-                  return (
-                    <Link key={reference.href} href={reference.href}>
-                      {reference.label}<i aria-hidden="true">→</i>
-                    </Link>
-                  )
-                })}
-              </div>
-            </aside>
-
-            <div className={styles.prose}>
-              <p className={styles.intro}>{note.intro}</p>
+        <article className={`${styles.shell} ${styles.articleGrid}`}>
+          <aside className={styles.articleSidebar} aria-label="About this note">
+            <div className={styles.author}>
+              <span className={styles.authorMark} aria-hidden="true">dg.</span>
+              <p><strong>{profile.name}</strong><span>{profile.role}</span></p>
+            </div>
+            <nav className={styles.contents} aria-label="Article sections">
+              <p className={styles.eyebrow}>In this note</p>
               {note.sections.map((section, index) => (
-                <section key={section.title}>
-                  <span>0{index + 1}</span>
-                  <h2>{section.title}</h2>
-                  <p>{section.body}</p>
-                </section>
+                <a key={section.title} href={`#section-${index + 1}`}>
+                  <span>{String(index + 1).padStart(2, '0')}</span>{section.title}
+                </a>
               ))}
+            </nav>
+            <div className={styles.related}>
+              <p className={styles.eyebrow}>Related evidence</p>
+              {note.related.map((reference) => {
+                const external = reference.href.startsWith('http')
+                return external ? (
+                  <a key={reference.href} href={reference.href} target="_blank" rel="noopener noreferrer">
+                    {reference.label}
+                    <span aria-hidden="true">↗</span>
+                    <span className={styles.srOnly}> (opens in a new tab)</span>
+                  </a>
+                ) : (
+                  <Link key={reference.href} href={reference.href}>
+                    {reference.label}<span aria-hidden="true">→</span>
+                  </Link>
+                )
+              })}
+            </div>
+          </aside>
+
+          <div className={styles.prose}>
+            <p className={styles.intro}>{note.intro}</p>
+            {note.sections.map((section, index) => (
+              <section key={section.title} id={`section-${index + 1}`} aria-labelledby={`heading-${index + 1}`}>
+                <p className={styles.sectionNumber}>0{index + 1}</p>
+                <h2 id={`heading-${index + 1}`}>{section.title}</h2>
+                <p>{section.body}</p>
+              </section>
+            ))}
+            <div className={styles.articleEnd}>
+              <span className={styles.endMark} aria-hidden="true">✳</span>
+              <ul aria-label="Article topics">{note.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
+              <Link href="/notes">← All field notes</Link>
             </div>
           </div>
         </article>
 
         <nav className={styles.nextNote} aria-label="Next field note">
-          <div className="section-shell">
-            <span>Continue reading</span>
+          <div className={styles.shell}>
+            <p className={styles.eyebrow}>Keep reading</p>
             <Link href={`/notes/${nextNote.slug}`}>
-              {nextNote.title}<i aria-hidden="true">↗</i>
+              <span>{nextNote.title}</span><span aria-hidden="true">↗</span>
             </Link>
+            <p className={styles.nextMeta}>{nextNote.category} · {getReadingTime(nextNote)}</p>
           </div>
         </nav>
       </main>

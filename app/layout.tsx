@@ -2,7 +2,21 @@ import type { Metadata, Viewport } from 'next'
 import localFont from 'next/font/local'
 import { profile, research, socials } from '@/lib/content'
 import './globals.css'
-import './mobile-excellence.css'
+
+const bodyFont = localFont({
+  variable: '--font-body', display: 'swap',
+  src: [
+    { path: '../public/fonts/DMSans-Regular.ttf', weight: '400', style: 'normal' },
+    { path: '../public/fonts/DMSans-Semibold.ttf', weight: '600', style: 'normal' },
+  ],
+})
+const editorialFont = localFont({
+  variable: '--font-editorial', display: 'swap',
+  src: [
+    { path: '../public/fonts/InstrumentSerif-Regular.ttf', weight: '400', style: 'normal' },
+    { path: '../public/fonts/InstrumentSerif-Italic.ttf', weight: '400', style: 'italic' },
+  ],
+})
 
 const cartograph = localFont({
   variable: '--font-cartograph',
@@ -28,7 +42,7 @@ const cartograph = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL(profile.siteUrl),
-  title: `${profile.name} — Agent Systems, Under Control`,
+  title: `${profile.name} — Curiosity, made useful.`,
   description:
     `${profile.name} is an LLM algorithm engineer at ${profile.company} building reliable agent systems, agentic RL, post-training pipelines, and multi-turn evaluation.`,
   authors: [{ name: profile.name, url: profile.siteUrl }],
@@ -41,14 +55,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: '/',
-    title: `${profile.name} — Agent Systems, Under Control`,
+    title: `${profile.name} — Curiosity, made useful.`,
     description:
       `Production agent systems, post-training, and evaluation research by ${profile.name}.`,
     siteName: profile.name,
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${profile.name} — Agent Systems, Under Control`,
+    title: `${profile.name} — Curiosity, made useful.`,
     description: 'Production agent systems, post-training, and evaluation research.',
   },
 }
@@ -56,8 +70,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#08090c',
-  colorScheme: 'dark',
+  themeColor: '#f5f3ec',
+  colorScheme: 'light',
 }
 
 const personSchema = {
@@ -91,7 +105,7 @@ const personSchema = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={cartograph.variable} data-scroll-behavior="smooth">
+    <html lang="en" className={`${bodyFont.variable} ${editorialFont.variable} ${cartograph.variable}`} data-scroll-behavior="smooth">
       <body>
         {children}
         <script
