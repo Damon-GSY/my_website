@@ -74,6 +74,13 @@ try {
     await page.waitForURL('**' + notes[0])
     assert.equal(await page.locator('h1').count(), 1)
     assert.ok((await page.locator('main').innerText()).length > 1500)
+    const headingType = await page.locator('main h1').evaluate(element => {
+      const style = getComputedStyle(element)
+      return { family: style.fontFamily, weight: style.fontWeight }
+    })
+    assert.match(headingType.family, /-apple-system/, 'Notes must prefer native Apple system typography')
+    assert.doesNotMatch(headingType.family, /editorialFont|Georgia/, 'Notes must not inherit the decorative serif face')
+    assert.equal(headingType.weight, '600')
     await page.screenshot({ path: output + '/05-note-desktop.png' })
   })
   await check('Clipboard contact interaction works without sending a message', async () => {
