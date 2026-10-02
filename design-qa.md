@@ -1,38 +1,37 @@
-# Design QA — three homepage concepts
+# Design QA — three experimental portfolio directions
 
-Final result: **passed**
+## Reference and capture setup
 
-## Source and capture setup
+| Direction | Generated visual reference | Browser route |
+| --- | --- | --- |
+| The Agent’s Path | `/workspace/generated_images/exec-51feba77-68d4-4d46-b666-e6b5a7e7b92c.png` | `/experiences/path` |
+| Field Notes | `/workspace/generated_images/exec-a6d07644-2b07-48f6-b5cf-2f83a392c594.png` | `/experiences/field-notes` |
+| World Model | `/workspace/generated_images/exec-c79b4ce7-c839-4a62-b687-cb5f83d65200.png` | `/experiences/world-model` |
 
-The three user-selected visual references are:
-
-| Concept | Source image | Local preview | Desktop capture | Mobile capture |
-| --- | --- | --- | --- | --- |
-| Editorial | `/workspace/generated_images/exec-6b9e7986-ccb4-44f2-a92e-fe2f8ce07115.png` | `/concepts/editorial` | `/workspace/concept-preview-captures/editorial-desktop.png` | `/workspace/concept-preview-captures/editorial-mobile.png` |
-| Kinetic type | `/workspace/generated_images/exec-4a98fdee-eac0-482d-b394-e482621431d6.png` | `/concepts/kinetic` | `/workspace/concept-preview-captures/kinetic-desktop.png` | `/workspace/concept-preview-captures/kinetic-mobile.png` |
-| Sculpture | `/workspace/generated_images/exec-1def31c6-3463-4f16-9f58-7d4ed4693811.png` | `/concepts/sculpture` | `/workspace/concept-preview-captures/sculpture-desktop.png` | `/workspace/concept-preview-captures/sculpture-mobile.png` |
-
-Desktop captures use a 1003 × 900 CSS pixel viewport, device scale factor 1, reduced motion, and full-page screenshots. Mobile captures use 390 × 844 with the same settings. The references were normalized to 1003 pixels wide before visual comparison. Comparison sheets and hero/work crops are in `/workspace/concept-preview-captures/`, named `{concept}-comparison.png`, `{concept}-hero-comparison.png`, and `{concept}-work-comparison.png`.
+Full-page browser captures are in `/workspace/experience-preview-captures/` as `{direction}-source-width.png` and `{direction}-mobile.png`. The source-width viewport was 1024 CSS pixels wide at device scale factor 1 and with reduced motion enabled; the World Model source was scaled from 860 to 1024 pixels without changing its aspect ratio. Mobile captures use a 390 × 844 CSS pixel viewport. Equal-width side-by-side sheets are named `{direction}-hero-comparison.jpg`, `{direction}-case-comparison.jpg`, and `{direction}-full-comparison.jpg`.
 
 ## Visual comparison
 
 | Surface | Result |
 | --- | --- |
-| Typography | Editorial's large sans headline and italic accent, kinetic's heavy stacked headline, and sculpture's serif headline follow the selected references. Work section type and numbered entries were tuned after screenshot review. |
-| Spacing and hierarchy | Each hero, work section, and lower content area follows its reference's structure. Mobile layouts reflow into a single column with room for the interactive canvas and readable calls to action. |
-| Color | Cobalt, coral, and warm white palettes match the intended directions. The 3D scenes use real-time lighting, so highlights and material depth vary from the rendered stills. |
-| Imagery | Three live Three.js scenes replace the reference's static hero imagery. The gallery uses generated project images on the same topics as the reference cards. |
-| Copy | Headlines, biography, focus, and project subjects match the concepts. Project names and descriptions are sourced from the site's real project data. |
+| Typography | The Path uses large editorial serif type, Field Notes uses condensed display type with monospaced labels, and World Model uses a bold sans headline. Hierarchy follows each reference. |
+| Spacing and composition | Hero and case-study regions retain each reference’s dominant placement and visual rhythm. Mobile layouts reposition art and controls so the text and selected actions remain readable. |
+| Color | Path retains near-black, warm light, and acid yellow; Field Notes retains paper white, red, and blue; World Model retains lavender, cobalt, and coral. |
+| Imagery | Six optimized WebP images retain the detailed concept art. Three.js adds live traces, glass glints, and moving routes over the images. |
+| Copy | Project names, outcomes, and 100+ tools claim match the existing project data; the case studies link to the corresponding project entries. |
 
-## Functional checks
+The Field Notes case diagram is a simplified interactive tool selector in place of the still reference’s printed diagram. It keeps the same editorial contrast and information order. Its hero title sits slightly lower than in the source. These are minor visual differences.
 
-- All three routes render a WebGL canvas; drag input changes each scene.
-- With normal motion enabled, all three heroes play staggered entrance animations and all three WebGL scenes change over time. Project sections reveal as they enter the viewport on desktop and mobile. Reduced-motion settings suppress automatic movement and reveal content immediately.
-- Concept switcher changes routes; main navigation, project links, and email/contact links work. Project deep links scroll to the corresponding entry on `/projects`.
-- At 390 pixels wide, none of the three pages has horizontal overflow. Browser captures produced no page errors.
-- The existing `/` route still renders the original site. Reduced-motion preference stops idle animation while retaining drag interaction.
+## Interaction and technical checks
+
+- All three routes render successfully at desktop and mobile widths. WebGL initialized in Chromium. Screenshots taken at two different times show each scene animating with normal motion settings.
+- Path stage selection changes the active trace and explanation. Field Notes unfolds and closes its trace, changes trace steps, and updates the selected tool. World Model changes the active decision and displayed explanation.
+- The bottom switcher navigates between the three routes. Case-study links target the matching existing project IDs. The original homepage remains available at `/`.
+- A 390-pixel mobile viewport has no horizontal overflow. Browser interaction checks produced no page errors. Reduced-motion captures retain all content and controls without automatic motion.
 - `npm run build`, `npm run lint`, and `git diff --check` pass.
 
-## Review history and remaining differences
+## Review history
 
-Screenshot comparison led to fixes for the concept switcher route, hero copy/orb overlap, mobile canvas overlap, kinetic letter scale, heading weights, and project deep links. Final focused crops show no remaining P0–P2 layout or interaction issues. The kinetic letters have a cleaner surface and looser arrangement than the cinematic reference, and the sculpture is milkier than the reference's refractive glass. These are visual refinement opportunities for the eventual chosen direction, rather than blockers for comparing the three working concepts.
+Initial side-by-side review exposed overlap between controls and the fixed switcher on narrow layouts, low contrast over the World Model hero image, and a hard-to-read Path trace on bright detail. The final styles move the controls, place World Model copy on a solid lavender region, and give the Path trace a dark translucent backing. No remaining P0–P2 visual or interaction issues were found.
+
+Final result: **passed**
