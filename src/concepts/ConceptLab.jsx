@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight, Github, Mail, MapPin, Youtube } from 'lucide-react';
 import { projects } from '../data/projects';
@@ -142,6 +142,32 @@ export default function ConceptLab() {
   const { pathname } = useLocation();
   const variant = pathname.split('/')[2];
   const active = conceptNames.some(([key]) => key === variant) ? variant : 'editorial';
+  useLayoutEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    const page = document.querySelector('.concept-page');
+    const nodes = page?.querySelectorAll([
+      '.editorial-section-intro', '.editorial-project', '.editorial-contact-call', '.editorial-contact-list',
+      '.kinetic-work-intro', '.kinetic-project', '.kinetic-about > div',
+      '.sculpture-work-intro', '.sculpture-project', '.sculpture-about-grid > *',
+    ].join(',')) ?? [];
+    nodes.forEach((node, index) => {
+      node.classList.add('concept-reveal');
+      node.style.setProperty('--reveal-delay', `${index % 3 * 90}ms`);
+    });
+    if (!('IntersectionObserver' in window)) {
+      nodes.forEach((node) => node.classList.add('is-visible'));
+      return undefined;
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -7% 0px' });
+    nodes.forEach((node) => observer.observe(node));
+    return () => observer.disconnect();
+  }, [active]);
   useEffect(() => {
     document.title = `${conceptNames.find(([key]) => key === active)?.[1].slice(5)} — Damon design preview`;
     window.scrollTo(0, 0);

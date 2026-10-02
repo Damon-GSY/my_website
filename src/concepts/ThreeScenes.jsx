@@ -40,6 +40,10 @@ function makeEditorial(group) {
   arc.rotation.set(0.25, -0.25, 0.3);
   arc.position.set(1.0, -0.08, 0.85);
   group.add(arc);
+  return (time) => {
+    orb.position.y = 0.1 + Math.sin(time * 0.7) * 0.12;
+    arc.rotation.z = 0.3 + time * 0.13;
+  };
 }
 
 function makeKinetic(group) {
@@ -50,6 +54,7 @@ function makeKinetic(group) {
     ['A', -1.68, 0.62, 0.08], ['G', 0.6, 0.85, -0.11],
     ['E', -2.15, -1.18, -0.12], ['N', -0.05, -1.15, 0.14], ['T', 2.0, -1.02, -0.08],
   ];
+  const animatedLetters = [];
   letters.forEach(([character, x, y, angle], index) => {
     const geometry = new TextGeometry(character, {
       font, size: 2.38, depth: 0.54, curveSegments: 10,
@@ -64,6 +69,7 @@ function makeKinetic(group) {
     mesh.rotation.z = index % 2 ? 0.08 : -0.035;
     mesh.castShadow = true;
     group.add(mesh);
+    animatedLetters.push({ mesh, y, angle: mesh.rotation.z, index });
   });
   const floor = new THREE.Mesh(
     new THREE.PlaneGeometry(13, 6),
@@ -76,6 +82,14 @@ function makeKinetic(group) {
   group.scale.setScalar(1.35);
   group.position.x = 0.85;
   group.rotation.set(-0.09, -0.17, -0.04);
+  return (time) => {
+    animatedLetters.forEach(({ mesh, y, angle, index }) => {
+      const progress = THREE.MathUtils.clamp((time - index * 0.13) / 1.05, 0, 1);
+      const settle = 1 - Math.pow(1 - progress, 3);
+      mesh.position.y = y + (1 - settle) * 1.15 + Math.sin(time * 1.15 + index * 0.9) * 0.065 * settle;
+      mesh.rotation.z = angle + (1 - settle) * (index % 2 ? 0.17 : -0.17);
+    });
+  };
 }
 
 function makeSculpture(group) {
@@ -91,10 +105,12 @@ function makeSculpture(group) {
     { rot: [-0.48, 0.55, 0.45], material: warmGlass, radius: 2.3 },
     { rot: [0.22, -0.76, 0.22], material: glass, radius: 1.88 },
   ];
+  const animatedRings = [];
   rings.forEach(({ rot, material, radius }) => {
     const mesh = new THREE.Mesh(new THREE.TorusGeometry(radius, 0.31, 28, 168), material);
     mesh.rotation.set(...rot);
     group.add(mesh);
+    animatedRings.push({ mesh, rot });
   });
   const core = new THREE.Mesh(
     new THREE.SphereGeometry(0.95, 64, 48),
@@ -115,6 +131,15 @@ function makeSculpture(group) {
     dot.position.set(x, y, z);
     group.add(dot);
   }
+  return (time) => {
+    animatedRings.forEach(({ mesh, rot }, index) => {
+      mesh.rotation.x = rot[0] + Math.sin(time * 0.35 + index) * 0.11;
+      mesh.rotation.y = rot[1] + time * (index % 2 ? -0.12 : 0.1);
+      mesh.rotation.z = rot[2] + Math.sin(time * 0.42 + index * 1.2) * 0.1;
+    });
+    core.position.y = Math.sin(time * 0.9) * 0.13;
+    orbit.rotation.z = 0.25 + time * 0.08;
+  };
 }
 
 export default function ThreeScene({ variant, className = '' }) {
@@ -147,9 +172,8 @@ export default function ThreeScene({ variant, className = '' }) {
     addLights(scene, variant);
     const group = new THREE.Group();
     scene.add(group);
-    if (variant === 'editorial') makeEditorial(group);
-    if (variant === 'kinetic') makeKinetic(group);
-    if (variant === 'sculpture') makeSculpture(group);
+    const updateScene = variant === 'editorial' ? makeEditorial(group)
+      : variant === 'kinetic' ? makeKinetic(group) : makeSculpture(group);
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const resize = () => {
@@ -203,12 +227,20 @@ export default function ThreeScene({ variant, className = '' }) {
     const visibilityObserver = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; });
     visibilityObserver.observe(host);
     let frame;
-    const animate = () => {
+    let elapsed = 0;
+    let lastFrame = 0;
+    const animate = (now = 0) => {
       frame = requestAnimationFrame(animate);
-      if (!visible || reduceMotion.matches) return;
+      if (!visible || reduceMotion.matches) {
+        lastFrame = 0;
+        return;
+      }
+      elapsed += lastFrame ? Math.min((now - lastFrame) / 1000, 0.05) : 0;
+      lastFrame = now;
+      updateScene(elapsed);
       group.rotation.x += (targetX - group.rotation.x) * 0.04;
-      group.rotation.y += (targetY - group.rotation.y) * 0.04;
-      if (!dragging) group.rotation.y += 0.0005;
+      const idleTurn = dragging ? 0 : Math.sin(elapsed * 0.55) * (variant === 'kinetic' ? 0.06 : 0.035);
+      group.rotation.y += (targetY + idleTurn - group.rotation.y) * 0.04;
       renderer.render(scene, camera);
     };
     resize();

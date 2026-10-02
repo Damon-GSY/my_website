@@ -27,6 +27,7 @@ Desktop captures use a 1003 × 900 CSS pixel viewport, device scale factor 1, re
 ## Functional checks
 
 - All three routes render a WebGL canvas; drag input changes each scene.
+- With normal motion enabled, all three heroes play staggered entrance animations and all three WebGL scenes change over time. Project sections reveal as they enter the viewport on desktop and mobile. Reduced-motion settings suppress automatic movement and reveal content immediately.
 - Concept switcher changes routes; main navigation, project links, and email/contact links work. Project deep links scroll to the corresponding entry on `/projects`.
 - At 390 pixels wide, none of the three pages has horizontal overflow. Browser captures produced no page errors.
 - The existing `/` route still renders the original site. Reduced-motion preference stops idle animation while retaining drag interaction.

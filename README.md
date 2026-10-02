@@ -9,7 +9,7 @@ npm ci
 npm run dev
 ```
 
-Open the URL printed by Vite (usually `http://localhost:5173`). The original homepage is at `/`. Three interactive homepage concepts are available at `/concepts/editorial`, `/concepts/kinetic`, and `/concepts/sculpture`. Drag each 3D hero object to rotate it. The scenes need a browser with WebGL support.
+Open the URL printed by Vite (usually `http://localhost:5173`). The original homepage is at `/`. Three interactive homepage concepts are available at `/concepts/editorial`, `/concepts/kinetic`, and `/concepts/sculpture`. Each has animated entrance, scroll reveals, and a moving 3D hero object that you can drag to rotate. The scenes need a browser with WebGL support. Your system's reduced-motion setting disables automatic animation.
 
 To check the project, run `npm run build` and `npm run lint`.
 
