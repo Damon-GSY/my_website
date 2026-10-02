@@ -57,7 +57,7 @@ function PathExperience() {
         <a href="#work"><i />02 <span>Supply Chain<br />Agent System</span></a>
         <a href="#more-work"><i />03 <span>More Work</span></a>
       </aside>
-      <span className="xp-path-scroll">SCROLL <ArrowDown size={15} /></span>
+      <span className="xp-path-scroll">MOVE / SCROLL <ArrowDown size={15} /></span>
     </section>
     <main>
       <section className="xp-path-case" id="work">
@@ -113,7 +113,7 @@ function FieldNotesExperience() {
         <div className="xp-field-trace-list">{fieldTrace.map(([name], index) => <button type="button" key={name} tabIndex={unfolded ? 0 : -1} className={traceStep === index ? 'is-active' : ''} onClick={() => setTraceStep(index)}><span>0{index + 1}</span>{name}</button>)}</div>
         <p aria-live="polite">{fieldTrace[traceStep][1]}</p>
       </div>
-      <div className="xp-field-bottom"><p>FOCUS<br />Agentic RL<br />Post-Training<br />Evaluation<br />Real-World Deployment</p><span>FIELD NOTES ON AGENT SYSTEMS <em>vol. 1</em></span><a href="#work">SCROLL <ArrowDown size={17} /></a></div>
+      <div className="xp-field-bottom"><p>FOCUS<br />Agentic RL<br />Post-Training<br />Evaluation<br />Real-World Deployment</p><span>FIELD NOTES ON AGENT SYSTEMS <em>vol. 1</em></span><a href="#work">MOVE / SCROLL <ArrowDown size={17} /></a></div>
     </section>
     <main>
       <section className="xp-field-case" id="work">
@@ -142,7 +142,7 @@ function WorldModelExperience() {
       <Header theme="world" />
       <div className="xp-world-copy" data-entrance><p className="xp-overline">AI RESEARCHER &amp; LLM ENGINEER AT ALIBABA</p><h1>What if<br /><em>intelligence</em><br />could act<span>?</span></h1><p>I research and build agent systems that use tools, reason step by step, and work in the real world.</p><a className="xp-world-enter" href="#work">Enter the world <ArrowRight size={20} /></a></div>
       <div className="xp-world-decisions" aria-label="Try an agent decision"><span>TRY A DECISION <ArrowDown size={15} /></span><div>{worldDecisions.map(({ name, short }, index) => <button type="button" key={name} className={decision === index ? 'is-active' : ''} onClick={() => setDecision(index)} aria-pressed={decision === index}><small>0{index + 1}</small><strong>{name}</strong><em>{short}</em></button>)}</div><p aria-live="polite">{worldDecisions[decision].text}</p></div>
-      <span className="xp-world-scroll">SCROLL TO EXPLORE <ArrowDown size={16} /></span>
+      <span className="xp-world-scroll">MOVE / SCROLL TO EXPLORE <ArrowDown size={16} /></span>
     </section>
     <main>
       <section className="xp-world-case" id="work">

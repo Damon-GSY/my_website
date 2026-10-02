@@ -21,6 +21,6 @@ The latest three experimental portfolio directions are:
 
 The bottom switcher moves between all three directions. Earlier concepts remain at `/concepts/editorial`, `/concepts/kinetic`, and `/concepts/sculpture`.
 
-The experimental pages use WebGL for animated details and respect your system's reduced-motion setting. The main visual composition remains visible without WebGL.
+On desktop, move the pointer across the hero and scroll to explore the Three.js parallax. The artwork, paths, cards, and miniature buildings move at different depths. On touchscreens, scrolling and touch movement drive the foreground scene. The pages respect your system's reduced-motion setting and retain their visual composition if WebGL is unavailable.
 
 To check the project, run `npm run build` and `npm run lint`.
