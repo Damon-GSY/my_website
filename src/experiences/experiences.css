@@ -8,9 +8,7 @@
 .xp-full-art { position: absolute; inset: 0; z-index: -2; display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
 .experience-scene { position: absolute; z-index: -1; inset: 0; pointer-events: none; }
 .experience-scene canvas { display: block; width: 100%; height: 100%; }
-@media (min-width: 681px) {
-  .xp-page section:has(> .experience-scene.is-ready) > .xp-full-art { opacity: 0; }
-}
+.xp-page section:has(> .experience-scene.is-ready) > .xp-full-art { opacity: 0; }
 .xp-overline { font: 600 11px/1.7 ui-monospace, SFMono-Regular, monospace; letter-spacing: .17em; }
 
 .xp-switcher { position: fixed; z-index: 1000; bottom: 15px; left: 50%; display: flex; align-items: center; gap: 4px; transform: translateX(-50%); max-width: calc(100vw - 24px); padding: 6px; border: 1px solid rgba(255,255,255,.22); border-radius: 999px; color: #f4f3ec; background: rgba(15,16,20,.93); box-shadow: 0 18px 45px rgba(0,0,0,.25); backdrop-filter: blur(18px); white-space: nowrap; font-size: 12px; }
@@ -32,7 +30,7 @@
 
 /* 01 — A luminous path through decisions. */
 .xp-path { color: #f5f2e9; background: #080807; }
-.xp-path-hero { min-height: max(900px, 100svh); background: #080807; }
+.xp-path-hero { min-height: max(900px, 100svh); background: radial-gradient(ellipse at 78% 47%, #2b2b1c 0%, #11130f 31%, #090a08 65%, #060706 100%); }
 .xp-path-hero-art { object-position: center 47%; }
 .xp-path-copy { position: relative; z-index: 5; width: 55%; max-width: 770px; margin: 35px 0 0 4.8%; }
 .xp-path-copy h1 { margin: 19px 0 19px; font: 500 clamp(100px, 9.8vw, 148px)/.81 Georgia, 'Times New Roman', serif; letter-spacing: -.065em; }
@@ -84,7 +82,7 @@
 
 /* 02 — A tactile, unfolding research notebook. */
 .xp-field { color: #11110f; background: #f8f5ec; }
-.xp-field-hero { min-height: max(940px, 100svh); background: #f7f3ea; }
+.xp-field-hero { min-height: max(940px, 100svh); background: radial-gradient(ellipse at 81% 45%, #e6e5e0 0%, #f5f2e9 45%, #fbf8f0 100%); }
 .xp-field-hero-art { object-position: center center; transition: transform 1.1s cubic-bezier(.18,.8,.2,1), filter 1.1s ease; }
 .xp-field-hero.is-unfolded .xp-field-hero-art { transform: scale(1.08) translateX(-3%); filter: saturate(.85); }
 .xp-field-copy { position: relative; z-index: 6; max-width: 58%; margin: 17px 0 0 5%; pointer-events: none; }
@@ -137,7 +135,7 @@
 
 /* 03 — A miniature operational world that reacts to choices. */
 .xp-world { color: #10152b; background: #efedff; }
-.xp-world-hero { min-height: max(940px, 100svh); background: #e9e8ff; }
+.xp-world-hero { min-height: max(940px, 100svh); background: radial-gradient(ellipse at 78% 47%, #c8d1ff 0%, #e3e5ff 38%, #efedff 100%); }
 .xp-world-hero-art { object-position: center center; transition: transform 1.2s cubic-bezier(.18,.8,.2,1); }
 .xp-world-hero[data-decision='1'] .xp-world-hero-art { transform: scale(1.045) translateX(-1.5%); }
 .xp-world-hero[data-decision='2'] .xp-world-hero-art { transform: scale(1.07) translateX(-3%); }
@@ -221,7 +219,7 @@
   .xp-header nav { justify-content: space-between; width: 100%; gap: 12px; font-size: 12px; }
   .xp-header-contact { font-size: 12px; }
   .xp-overline { font-size: 9px; }
-  .xp-path-hero { min-height: 880px; }
+  .xp-path-hero { min-height: 1000px; }
   .xp-path-hero-art { object-position: 58% center; opacity: .82; }
   .xp-path-copy { width: 90%; margin: 44px 0 0 5%; }
   .xp-path-copy h1 { margin-top: 22px; font-size: clamp(64px, 13.5vw, 88px); }
@@ -229,7 +227,7 @@
   .xp-path-enter { gap: 14px; margin-top: 25px; font-size: 16px; }
   .xp-path-enter > span { width: 51px; height: 51px; }
   .xp-path-cue { margin-left: 65px; font-size: 7px; }
-  .xp-path-stages { top: auto; right: 5%; bottom: 145px; left: 5%; display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px 10px; width: auto; height: auto; }
+  .xp-path-stages { top: auto; right: 5%; bottom: 230px; left: 5%; display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px 10px; width: auto; height: auto; }
   .xp-path-stages button, .xp-path-stages button:nth-child(n) { position: static; max-width: none; min-height: 55px; padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,.38); background: rgba(7,7,7,.65); }
   .xp-path-stages button span { font-size: 12px; }
   .xp-path-stages button small { font-size: 10px; }
@@ -248,7 +246,7 @@
   .xp-path-next h2 { font-size: 53px; }
   .xp-path-next > div a { grid-template-columns: 38px 1fr 20px; min-height: 90px; }
   .xp-path-next > div a strong { font-size: 24px; }
-  .xp-field-hero { min-height: 920px; }
+  .xp-field-hero { min-height: 1000px; }
   .xp-field-hero-art { object-position: 61% bottom; opacity: .9; }
   .xp-field-copy { max-width: 91%; margin: 42px 0 0 5%; }
   .xp-field-copy h1 { margin: 20px 0 17px; font-size: clamp(72px, 16vw, 95px); line-height: .9; }
@@ -269,14 +267,14 @@
   .xp-field-metric strong { font-size: 160px; }
   .xp-field-next { padding: 65px 5% 110px; }
   .xp-field-next a { font-size: 36px; }
-  .xp-world-hero { min-height: 960px; }
+  .xp-world-hero { min-height: 1060px; }
   .xp-world-hero-art { top: auto; height: 53%; object-position: 63% center; }
   .xp-world-hero::before { content: ''; position: absolute; z-index: -2; inset: 0; background: #e8e8ff; }
   .xp-world-copy { width: 90%; margin: 30px 0 0 5%; }
   .xp-world-copy h1 { font-size: clamp(57px, 12.6vw, 78px); }
   .xp-world-copy > p:not(.xp-overline) { max-width: 265px; font-size: 13px; }
   .xp-world-enter { min-height: 47px; margin-top: 17px; padding: 0 18px; font-size: 12px; }
-  .xp-world-decisions { right: 5%; bottom: 210px; left: 5%; width: auto; }
+  .xp-world-decisions { right: 5%; bottom: 290px; left: 5%; width: auto; }
   .xp-world-decisions > div { gap: 5px; }
   .xp-world-decisions button { min-height: 88px; padding: 8px; }
   .xp-world-decisions button strong { font-size: 11px; }

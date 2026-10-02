@@ -104,7 +104,7 @@ function FieldNotesExperience() {
   return <div className="xp-page xp-field" id="top">
     <section className={`xp-field-hero ${unfolded ? 'is-unfolded' : ''}`}>
       <img className="xp-full-art xp-field-hero-art" src="/experience-assets/field-hero.webp" alt="" />
-      <ExperienceScene kind="field" activeStep={traceStep} />
+      <ExperienceScene kind="field" activeStep={unfolded ? traceStep + 1 : 0} />
       <Header theme="light" />
       <div className="xp-field-copy" data-entrance><p className="xp-overline">AI RESEARCHER &nbsp;/&nbsp; LLM ENGINEER<br />AT ALIBABA</p><h1>Intelligence<br />happens<br />in the<br />handoff<span>.</span></h1><p>Researching and building agentic RL, post-training, and evaluation frameworks for real-world systems at Alibaba.</p><button type="button" className="xp-field-open" onClick={openTrace} aria-expanded={unfolded}>{unfolded ? 'Fold the trace' : 'Unfold the work'} <ArrowRight size={23} /></button></div>
       <button type="button" className="xp-field-art-hit" onClick={openTrace} aria-label={unfolded ? 'Fold research trace' : 'Unfold research trace'} />

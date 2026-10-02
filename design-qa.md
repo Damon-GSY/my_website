@@ -1,39 +1,28 @@
 # Design QA — three experimental portfolio directions
 
-## Reference and capture setup
+## Current visual direction
 
-| Direction | Generated visual reference | Browser route |
+The previous WebGL implementation placed bright lines and outlines over still hero art. In response to the user's feedback, each hero now has its own Three.js sculpture:
+
+| Route | 3D object | Current captures |
 | --- | --- | --- |
-| The Agent’s Path | `/workspace/generated_images/exec-51feba77-68d4-4d46-b666-e6b5a7e7b92c.png` | `/experiences/path` |
-| Field Notes | `/workspace/generated_images/exec-a6d07644-2b07-48f6-b5cf-2f83a392c594.png` | `/experiences/field-notes` |
-| World Model | `/workspace/generated_images/exec-c79b4ce7-c839-4a62-b687-cb5f83d65200.png` | `/experiences/world-model` |
+| `/experiences/path` | Brushed metal orbital mechanism with a luminous core and selectable decision nodes | `/workspace/experience-preview-captures/sculpture-v2-path-1440.png`, `/workspace/experience-preview-captures/sculpture-v3-path-390.png` |
+| `/experiences/field-notes` | Curved printed pages, layered paper, spines, and an embossed seal | `/workspace/experience-preview-captures/sculpture-v2-field-notes-1440.png`, `/workspace/experience-preview-captures/sculpture-v3-field-notes-390.png` |
+| `/experiences/world-model` | Isometric operational city with rounded buildings, routes, packages, and moving carriers | `/workspace/experience-preview-captures/sculpture-v2-world-model-1440.png`, `/workspace/experience-preview-captures/sculpture-v3-world-model-390.png` |
 
-Full-page browser captures are in `/workspace/experience-preview-captures/` as `{direction}-source-width.png` and `{direction}-mobile.png`. The source-width viewport was 1024 CSS pixels wide at device scale factor 1 and with reduced motion enabled; the World Model source was scaled from 860 to 1024 pixels without changing its aspect ratio. Mobile captures use a 390 × 844 CSS pixel viewport. Equal-width side-by-side sheets are named `{direction}-hero-comparison.jpg`, `{direction}-case-comparison.jpg`, and `{direction}-full-comparison.jpg`.
+The earlier visual references remain in `/workspace/generated_images/`. They established each page's editorial typography and palette; the hero objects were redesigned as actual 3D geometry after visual review.
 
-## Visual comparison
+## Visual review
 
-| Surface | Result |
-| --- | --- |
-| Typography | The Path uses large editorial serif type, Field Notes uses condensed display type with monospaced labels, and World Model uses a bold sans headline. Hierarchy follows each reference. |
-| Spacing and composition | Hero and case-study regions retain each reference’s dominant placement and visual rhythm. Mobile layouts reposition art and controls so the text and selected actions remain readable. |
-| Color | Path retains near-black, warm light, and acid yellow; Field Notes retains paper white, red, and blue; World Model retains lavender, cobalt, and coral. |
-| Imagery | Six optimized WebP images retain the detailed concept art. Three.js renders each desktop hero image as a depth-separated backdrop, with luminous paths, glass cards, or miniature buildings in front. |
-| Copy | Project names, outcomes, and 100+ tools claim match the existing project data; the case studies link to the corresponding project entries. |
+- The three objects have separate silhouettes, materials, lighting, and movement. The Path uses warm metal and acid yellow against black; Field Notes uses textured paper, cobalt, and coral against warm white; World Model uses white architecture, cobalt routes, and coral parcels against lavender.
+- At 1440 × 900 and 390 × 844 CSS pixels, the headlines, primary action, 3D object, and page controls have readable hierarchy. Mobile objects were resized and repositioned after screenshot review to keep the copy clear.
+- Case-study art remains in the next section. The hero art is used as a fallback when WebGL is unavailable.
 
-The Field Notes case diagram is a simplified interactive tool selector in place of the still reference’s printed diagram. It keeps the same editorial contrast and information order. Its hero title sits slightly lower than in the source. These are minor visual differences.
+## Functional checks
 
-## Interaction and technical checks
-
-- All three routes render successfully at desktop and mobile widths. WebGL initialized in Chromium. Pointer-left and pointer-right screenshots show the artwork and 3D foreground shifting at different rates; scroll changes the camera and foreground elevation. Mobile keeps the original artwork as a reliable base under the touch-driven 3D scene.
-- Path stage selection changes the active trace and explanation. Field Notes unfolds and closes its trace, changes trace steps, and updates the selected tool. World Model changes the active decision and displayed explanation.
-- The bottom switcher navigates between the three routes. Case-study links target the matching existing project IDs. The original homepage remains available at `/`.
-- A 390-pixel mobile viewport has no horizontal overflow. Browser interaction checks produced no page errors. Reduced-motion captures retain all content and controls without automatic motion.
+- Chromium renders a WebGL canvas in all three routes with no page errors. The stage, unfold, and decision controls update their respective 3D objects. Pointer and scroll input change the view; reduced-motion mode leaves content visible without automatic movement.
+- The Field Notes trace sheet remains fully visible in a 1440 × 900 viewport when opened. With WebGL disabled on World Model, the original hero image stays visible and navigation remains usable.
+- The 390-pixel viewport has no horizontal overflow. The project sections and links remain present below the hero.
 - `npm run build`, `npm run lint`, and `git diff --check` pass.
-
-## Review history
-
-Initial side-by-side review exposed overlap between controls and the fixed switcher on narrow layouts, low contrast over the World Model hero image, and a hard-to-read Path trace on bright detail. The final styles move the controls, place World Model copy on a solid lavender region, and give the Path trace a dark translucent backing. No remaining P0–P2 visual or interaction issues were found.
-
-The parallax follow-up replaced the small overlay-only WebGL scenes with rendered hero backdrops and depth-separated Three.js geometry. Final desktop captures at left and right pointer positions and after scrolling are saved as `parallax-{direction}-{left,right,scroll}.png`. On mobile, each case section reveals after entering the viewport, none of the pages overflows horizontally, and no page errors occur. With WebGL disabled, the Path image stays visible and the page remains usable.
 
 Final result: **passed**

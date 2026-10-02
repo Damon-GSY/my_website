@@ -15,12 +15,12 @@ The latest three experimental portfolio directions are:
 
 | Route | Direction | Interaction |
 | --- | --- | --- |
-| `/experiences/path` | The Agent’s Path | Choose a decision stage and follow its illuminated trace. |
-| `/experiences/field-notes` | Field Notes | Unfold a research trace and select tools in the case study. |
-| `/experiences/world-model` | World Model | Select an agent decision and watch its route through the miniature world. |
+| `/experiences/path` | The Agent’s Path | Select a decision stage on a moving orbital sculpture. |
+| `/experiences/field-notes` | Field Notes | Unfold a stack of 3D research pages and inspect the trace. |
+| `/experiences/world-model` | World Model | Select an agent decision to change the route through a miniature operational city. |
 
 The bottom switcher moves between all three directions. Earlier concepts remain at `/concepts/editorial`, `/concepts/kinetic`, and `/concepts/sculpture`.
 
-On desktop, move the pointer across the hero and scroll to explore the Three.js parallax. The artwork, paths, cards, and miniature buildings move at different depths. On touchscreens, scrolling and touch movement drive the foreground scene. The pages respect your system's reduced-motion setting and retain their visual composition if WebGL is unavailable.
+Move the pointer or scroll to explore each Three.js object from different angles. Touch movement also changes the view. The scenes respect your system's reduced-motion setting; if WebGL is unavailable, the original hero artwork appears instead.
 
 To check the project, run `npm run build` and `npm run lint`.
