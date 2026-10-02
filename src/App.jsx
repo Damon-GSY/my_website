@@ -20,6 +20,7 @@ const Blog = lazy(() => import('./components/Blog'));
 const BlogPost = lazy(() => import('./components/BlogPost'));
 const Uses = lazy(() => import('./components/Uses'));
 const NotFound = lazy(() => import('./components/NotFound'));
+const ConceptLab = lazy(() => import('./concepts/ConceptLab'));
 
 const agentOsChapters = [
   { id: 'capabilities', number: '01', shortLabel: 'CAP', label: 'Capabilities' },
@@ -128,6 +129,9 @@ function HomePage() {
 
 export default function App() {
   const location = useLocation();
+  if (location.pathname.startsWith('/concepts')) {
+    return <Suspense fallback={null}><ConceptLab /></Suspense>;
+  }
   return (
     <Layout>
       <ScrollProgress />

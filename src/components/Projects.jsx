@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -37,10 +37,11 @@ function ProjectLink({ project, children, className }) {
 function ProjectRow({ project, index }) {
   return (
     <motion.article
+      id={project.id}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ ...reveal, delay: index * 0.04 }}
-      className="group border-b border-[var(--line)] last:border-b-0"
+      className="group scroll-mt-24 border-b border-[var(--line)] last:border-b-0"
     >
       <ProjectLink project={project} className="block py-8 md:py-10">
         <div className="grid grid-cols-12 gap-4 md:gap-8">
@@ -109,6 +110,11 @@ function ProjectRow({ project, index }) {
 
 export default function Projects() {
   const [active, setActive] = useState('all');
+  useEffect(() => {
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    if (!id) return;
+    requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ block: 'start' }));
+  }, []);
   const filtered = active === 'all' ? projects : projects.filter((p) => p.category === active);
   const counts = useMemo(
     () =>

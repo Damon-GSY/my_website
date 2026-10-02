@@ -1,4 +1,19 @@
-# React + Vite
+# Damon Guo-Siyi — website
+
+## Run locally
+
+Install Node.js 20 or newer, then run from the repository root:
+
+```bash
+npm ci
+npm run dev
+```
+
+Open the URL printed by Vite (usually `http://localhost:5173`). The original homepage is at `/`. Three interactive homepage concepts are available at `/concepts/editorial`, `/concepts/kinetic`, and `/concepts/sculpture`. Drag each 3D hero object to rotate it. The scenes need a browser with WebGL support.
+
+To check the project, run `npm run build` and `npm run lint`.
+
+## Original Vite template notes
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
