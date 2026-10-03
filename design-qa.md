@@ -1,3 +1,17 @@
+# Design QA — complete pasted HTML pages
+
+Reviewed 2026-10-03 on `codex/oil-motion-frame-studies`. The homepage now exposes `/html-studies/index.html`, which separates the exact uploaded Anchor original, the Damon adaptation, and the complete standalone Future Machine page.
+
+- The directory passes desktop 1440px and mobile 390px/320px checks with no horizontal overflow, all three full-image thumbnails loaded, correct destinations, and no page exceptions. The homepage entry also navigates correctly at 320px.
+- Both uploaded attachments have the same SHA-256. The retained original, its HTTP response, and the production copy match that hash exactly; the original source was not rewritten.
+- Chromium displays the original intro and its final feature section. Its 15 CloudFront SVG requests fail in this environment; several original navigation anchors also have no target in the supplied source. The original preview preserves these source limitations rather than claiming to complete missing pages.
+- The Damon adaptation reaches a ready Three.js scene and four project cards through Work navigation. Future Machine completes its 11-piece entrance and retains exactly four main children with no page scrolling. No page exceptions occurred across those checks.
+- `npm run lint`, `npm run build`, and `git diff --check` pass. The build includes the directory and original HTML unchanged. Vite retains the existing shared Three.js size advisory.
+
+Captures and browser results: `/workspace/html-studies-captures/`.
+
+---
+
 # Design QA — Oil Motion frame studies
 
 Reviewed 2026-10-03 on `codex/oil-motion-frame-studies`. Three studies adapt Oil Motion to directly generated image sequences: pointer-driven Porcelain Observer, draggable Silver Bloom, and state-driven Amber Assembly. Source provenance and method: [motion-studies/README.md](motion-studies/README.md).

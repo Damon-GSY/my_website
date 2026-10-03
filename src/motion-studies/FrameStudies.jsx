@@ -59,6 +59,10 @@ function StudiesIndex({ studies }) {
   return (
     <main className="fm-page fm-index">
       <StudyHeader />
+      <a className="fm-html-directory-link" href="/html-studies/index.html" lang="zh-CN">
+        <span>原稿 · 个人站改版 · 独立单页</span>
+        <strong>查看粘贴 HTML 的完整页面 <ArrowRight size={21} aria-hidden="true" /></strong>
+      </a>
       <section className="fm-index-intro" aria-labelledby="fm-index-title">
         <div className="fm-kicker"><span className="fm-dot" /> THE MOTION NOTEBOOK · VOL. 01</div>
         <h1 id="fm-index-title">Still images.<br /><em>New possibilities.</em></h1>

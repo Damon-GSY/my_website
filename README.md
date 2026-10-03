@@ -1,5 +1,17 @@
 # Damon Guo-Siyi — website
 
+## Pasted HTML — complete pages
+
+Open **`/html-studies/index.html`** for the visual directory. The homepage also links to it above the motion studies.
+
+| Page | Route | What is included |
+| --- | --- | --- |
+| Anchor AI original | `/html-studies/anchor-original.html` | Uploaded HTML preserved byte for byte, including its full sphere/tree/cube scene and two content stages |
+| Damon adaptation | `/particle` | The same visual direction adapted to Damon's portfolio, with working project links and accessibility fallbacks |
+| Future Machine | `/future-machine.html` | Complete standalone full-screen hero and SVG helmet assembly, as specified |
+
+The two pasted-text attachments contain identical Anchor AI documents (SHA-256 `f955679e011440034e887db004277172b1c6b94cfc713e3e924433e812efc62c`). The original's 15 external CloudFront SVG logos and badges currently fail to load in the cloud preview, and several navigation anchors have no sections in the supplied source. The preserved original retains those dependencies and links. The Damon adaptation uses local assets and portfolio destinations. Future Machine intentionally contains one screen; its original specification forbids scrolling.
+
 ## Oil Motion — three generated frame studies
 
 Branch: **`codex/oil-motion-frame-studies`**. The homepage `/` and `/motion-lab` open the comparison page.
