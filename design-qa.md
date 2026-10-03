@@ -1,3 +1,17 @@
+# Design QA — Future Machine standalone
+
+Reviewed 2026-10-03 on `codex/future-machine-standalone`. Deliverable: `public/future-machine.html`.
+
+- Independent source review confirms the requested four main children, SVG geometry, gradients, filter, URL-encoded favicon, 11 assembly animations, exact responsive rules/order, and single entrance IIFE. Only the two requested CSS explanations are included as comments.
+- Chromium rendered the complete HTML while offline with zero external requests and zero page errors. This environment's managed Chromium blocks `file://` navigation, so validation loaded the file contents into an offline browser document; an actual double-click launch was not exercised here.
+- Checked 1440×900, 1920×1080, 1280×1024, 1024×768, 768×1024, 800×800, 390×844, 320×568, 844×390, 568×320, 1400×1000, and 1401×1000. All content bounds fit; document/body had no overflow; attempted wheel and programmatic document scrolling remained at zero.
+- All 11 SVG pieces use the specified timings and backwards fill. The page removes `is-entering` after the final reveal. A synthetic persisted `pageshow` event replaces the SVG node and replays entry; this checks the restoration handler, not browser-specific bfcache eligibility.
+- With reduced motion, no CSS animations run and final artwork is immediately visible. No external images, libraries, frameworks, fonts, or media are referenced.
+
+Captures and browser results: `/workspace/future-machine-captures/`. Repository build tools are not needed to run this file.
+
+---
+
 # Design QA — Particle intelligence
 
 Reviewed 2026-10-03 on `codex/particle-intelligence`. The new homepage is `/`; `/particle` is an alias. Reference and implementation notes: [docs/particle-intelligence.md](docs/particle-intelligence.md).

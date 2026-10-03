@@ -1,5 +1,13 @@
 # Damon Guo-Siyi — website
 
+## Future Machine — standalone HTML experiment
+
+Branch: **`codex/future-machine-standalone`**.
+
+Download or open [`public/future-machine.html`](public/future-machine.html) directly in a browser. This is a complete standalone file: inline CSS, JavaScript, SVG helmet and favicon, system fonts, and no external requests. No install, build, or server is required. If you already run this repository's Vite server, the same file is available at `/future-machine.html`.
+
+The page follows the supplied Future Machine specification, including the mechanical assembly entrance, aspect-ratio layout rules, reduced-motion support, and replay on a persisted `pageshow` event.
+
 ## Run locally
 
 Install Node.js 20 or newer, then run from the repository root:
