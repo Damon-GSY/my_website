@@ -1,0 +1,33 @@
+version: 1
+name: Agent Instrument
+status: keyframe-pilot-video-pending
+source_request: Reference oil-oil/oil-motion; user authorized the design interpretation.
+objects:
+  - identity: A rounded, horizontally layered titanium instrument with a cobalt glass core.
+    anchors: [brushed titanium upper shell, cobalt glass interior, fixed lower shell, ivory pedestal]
+style: Sculptural product photography, restrained materials, precise mechanical movement.
+motion_intent: Upper titanium shell rises vertically to reveal the layered cobalt glass core.
+background_owner: video
+scene: Fixed studio camera, warm ivory seamless background, fixed ivory pedestal, soft directional studio light.
+driver: scroll
+input_semantics: continuous
+time_control: scrub
+navigation: continuous
+clip_continuity: chain
+continuity:
+  - Camera position, framing, focus, perspective, and exposure stay fixed.
+  - Pedestal, lower shell, glass core, environment, and contact shadow stay in place.
+  - Upper shell keeps the same shape, material, orientation, and horizontal position.
+  - Opening reveals existing inner layers without morphing, duplication, or new components.
+  - Closing is the exact reversal of the same opening timeline.
+aspect_ratio: '16:9'
+destination:
+  route: /motion
+  max_display_css_px: [1440, 810]
+  target_dpr: 1
+  narrow_screen: The current still-image layout uses a responsive crop. Review the entire moving shell against that crop before enabling a real video.
+  imagery_text: HTML overlay only; no typography baked into the imagery.
+availability:
+  video_generated: false
+  paid_video_requests_submitted: false
+  credential: ZENMUX_API_KEY is not configured; configure only in a secure environment secret, never in chat or source control.

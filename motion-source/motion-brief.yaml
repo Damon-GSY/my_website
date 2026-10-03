@@ -1,0 +1,60 @@
+version: 1
+concept_contract: motion-source/concept-contract.yaml
+identity_bible: null
+parameter_space: linear
+media_access: sequential
+gesture_policy:
+  unit: continuous
+  inertia: coalesce
+  while_active: retarget
+  boundary: clamp
+  programmatic_navigation: observe
+storyboard:
+  - At progress 0 the titanium shell is closed.
+  - From progress 0 to 1 the upper shell lifts vertically, gradually revealing the glass layers.
+  - At progress 1 the shell is open, with all parts retaining their original geometry.
+keyframes:
+  K0: public/motion-assets/agent-closed.webp
+  K1: public/motion-assets/agent-open.webp
+clip_chain:
+  - id: closed-to-open
+    first_frame: K0
+    last_frame: K1
+    status: pending-actual-video-generation
+    target_duration_seconds: 6
+    planned_frames: 180
+rest_state: Closed on initial entry; hold current frame when scroll input stops.
+loop: none
+anchor: fixed-body
+scene_continuity: Keep background, pedestal, lower shell, camera, and lighting locked across both keyframes and every intermediate frame.
+frame_policy: native
+target_fps: 30
+quality_target:
+  target_dpr: 1
+  minimum_source_px: [1440, 810]
+  output_px: [1440, 810]
+  upscaling: forbidden
+  scroll_pages: 3
+  minimum_frames_per_page: 24
+  planned_frames_per_page: 60
+  delivery: baked-video
+  controller: frame-scrub
+  codec: H264
+  audio: none
+  every_frame_keyframe: true
+  budget_report: motion-source/build/motion-budget.json
+pixel_dimensions: 1440x810
+reduced_motion: Show static closed and open keyframes in their respective page sections without automatic motion.
+runtime:
+  persistent_video_elements: 1
+  source_switching_during_scrub: forbidden
+  progress_mapping: frame = round(clamp(progress, 0, 1) * (frameCount - 1)); time = frame / fps
+  reversal: Seek backward within the same clip.
+  missing_video: Present the closed hero and open anatomy illustration in normal document flow; do not claim a continuous clip exists.
+generation:
+  upstream: https://github.com/oil-oil/oil-motion
+  pinned_commit: 8e4d1c3d0eab6aedd656f4a1afcd16b6633f83ee
+  credential_status: pending-secure-environment-configuration
+  video_jobs_submitted: 0
+  local_importer: scripts/prepare-motion-video.mjs
+  publish_gate: Review all intermediate geometry and forward/reverse playback; metadata validation alone does not prove visual continuity.

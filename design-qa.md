@@ -1,4 +1,45 @@
-# Design QA — three experimental portfolio directions
+# Design QA — Oil Motion keyframe pilot
+
+## Scope and status
+
+Route: `/motion`. Visual direction: a titanium-and-cobalt Agent Instrument on warm ivory, with editorial typography and a cobalt contact section. Two custom generated keyframes depict its resting and open states.
+
+**Current delivery: keyframes and responsive page. Continuous video is pending.** The public manifest has `video: null`. There is no generated opening clip and no production video-quality acceptance result. The page uses ordinary scrolling until a valid video reaches its first decoded frame.
+
+## Visual and page checks
+
+- Chromium screenshots reviewed at 1440×900, 1024×768, and 390×844. The mobile hero art was reduced and moved below the primary action after review.
+- Functional viewport checks at 1440×900, 1024×768, 390×844, and 320×740: no horizontal overflow, page errors, or failed asset requests.
+- Both keyframe illustrations load. With `video: null`, the video element has no source and no pinned scroll section is created.
+- Normal-motion scroll reveals show all three work rows after navigating to selected work. Reduced-motion renders content directly.
+- The three reasoning controls expose stable corresponding panels; switching to Tool Resolution displays its content and hides the prior panel. The skip link and project keyboard navigation work.
+- Project links target the existing project IDs; profile, notes, email, and GitHub destinations reuse the portfolio's existing content.
+- Two WebP keyframes total approximately 192 KiB, with no video payload or additional production dependency.
+
+Captures from this environment:
+
+- `/workspace/motion-preview-captures/motion-1440-hero.png`
+- `/workspace/motion-preview-captures/motion-1440-full.png`
+- `/workspace/motion-preview-captures/motion-1024-hero.png`
+- `/workspace/motion-preview-captures/motion-390-hero.png`
+- `/workspace/motion-preview-captures/motion-390-full.png`
+
+## Controller and media-pipeline checks
+
+- Browser harness with mocked media events verifies latest-target seek serialization, initial frame-zero readiness, reverse target updates, StrictMode single-source loading, reduced-motion no-load, resize stability, and error fallback.
+- Load and seek watchdog checks pass: a stalled initial frame falls back after 12 seconds; a stalled seek after 8 seconds. Hidden/offscreen states suspend those budgets.
+- Page integration with mocked media passes: loading retains the normal hero; ready creates the 400svh sequence; at 60% progress the hero stays pinned and its faded copy is inert; reverse scroll restores the copy; reduced motion restores the ordinary poster layout. The same video source loads once, with no page errors.
+- Local importer tested with a temporary synthetic video: output contains 180 I-frames at 30 fps for 6 seconds, H.264 yuv420p at 1440×810, with no audio. A 640×360 source is rejected and existing output hashes remain unchanged. Temporary fixtures were deleted and never published.
+- The strict upstream motion-budget calculation passes for the planned 180-frame source. This is a budget, not proof that generated motion exists.
+- `npm run build`, `npm run lint`, and `git diff --check` pass. Vite retains its existing large Three.js chunk warning for the earlier studies.
+
+## Remaining acceptance gate
+
+Generate or supply the actual source video, inspect structural continuity and lighting throughout the clip, then import it and review real forward/reverse scroll playback, mobile framing, browser decoding, and measured performance. Controller mocks and synthetic importer fixtures do not establish artistic quality or real-device video behavior.
+
+---
+
+# Earlier QA — three experimental portfolio directions
 
 ## Current visual direction
 

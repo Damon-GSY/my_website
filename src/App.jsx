@@ -22,6 +22,7 @@ const Uses = lazy(() => import('./components/Uses'));
 const NotFound = lazy(() => import('./components/NotFound'));
 const ConceptLab = lazy(() => import('./concepts/ConceptLab'));
 const ExperienceLab = lazy(() => import('./experiences/ExperienceLab'));
+const MotionStudy = lazy(() => import('./motion/MotionStudy'));
 
 const agentOsChapters = [
   { id: 'capabilities', number: '01', shortLabel: 'CAP', label: 'Capabilities' },
@@ -130,6 +131,9 @@ function HomePage() {
 
 export default function App() {
   const location = useLocation();
+  if (location.pathname === '/motion') {
+    return <Suspense fallback={null}><MotionStudy /></Suspense>;
+  }
   if (location.pathname.startsWith('/experiences')) {
     return <Suspense fallback={null}><ExperienceLab /></Suspense>;
   }
