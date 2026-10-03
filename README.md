@@ -9,9 +9,31 @@ npm ci
 npm run dev
 ```
 
-Open the URL printed by Vite. The original homepage is at `/`.
+Open the URL printed by Vite. On branch **`codex/particle-intelligence`**, `/` opens the new particle portfolio; `/particle` is an alias. The previous homepage is at `/classic`.
 
-## Latest: four studies from my GitHub stars
+## Particle intelligence — separate branch
+
+Based on the supplied Anchor AI HTML study, adapted to Damon's portfolio: an electric-blue particle sphere unfolds into a tree above a reflective ripple field, then scroll transforms the tree into a rotating particle cube. Research topics orbit the tree; four cards link to the existing project details.
+
+- Real Three.js geometry, custom GPU shaders, pointer repulsion, camera parallax, and scroll-driven morphing.
+- Responsive desktop and mobile composition, pause control, reduced-motion layout, and a local static scene image when WebGL is unavailable.
+- No API key, remote assets, or additional dependencies required.
+
+If the repository already exists on your computer, run these commands **inside that checkout**:
+
+```bash
+git fetch origin
+git switch codex/particle-intelligence
+git pull --ff-only
+npm ci
+npm run dev
+```
+
+Open Vite's printed address directly, without an extra route. If Git reports local changes that would be overwritten, commit or stash those changes before switching branches.
+
+See [implementation and source notes](docs/particle-intelligence.md).
+
+## Four studies from my GitHub stars
 
 Open **`/lab`** for the comparison page and choose an experiment:
 

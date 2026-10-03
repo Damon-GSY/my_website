@@ -1,3 +1,25 @@
+# Design QA — Particle intelligence
+
+Reviewed 2026-10-03 on `codex/particle-intelligence`. The new homepage is `/`; `/particle` is an alias. Reference and implementation notes: [docs/particle-intelligence.md](docs/particle-intelligence.md).
+
+## Visual and functional checks
+
+- Compared actual browser captures against the supplied Anchor AI HTML at 1440×900 and 390×844. Retained the blue particle tree, sphere intro, rippling water/reflection, orbiting pills, pixel typography, and cube morph. Portfolio copy and project destinations replace insurance product content.
+- Desktop, 390×844 mobile, 375×667 short mobile, and 844×390 landscape: no horizontal overflow or page exceptions. Corrected collapsed spaces between animated words. Mobile camera fits the tree; depth compensation keeps particles bright at the increased camera distance.
+- Overview, Thinking, and Work chapter navigation reach their requested scroll positions. All four project cards navigate to matching `/projects#id` elements. The short mobile work panel scrolls to its final card without clipping its action.
+- Live canvas frames change; pausing produces identical successive captures, and resuming changes the frames again. Pointer movement is accepted without errors. Scroll can select another form while paused.
+- Initial and runtime reduced-motion states produce identical successive captures. Content switches to normal flow; turning the preference off restores the animated layout. The static chapter label also follows the visible section.
+- Blocking WebGL creation and dispatching context loss both select the readable static layout with local imagery and all four project cards.
+- Navigating to `/about` leaves no particle canvas and restores the previous title. Browser back creates one ready canvas; no route errors or stale overflow were observed.
+- The production build was served separately and checked in Chromium: homepage scene becomes ready, Work navigation works, four cards are present, no failed asset requests or page errors.
+- `npm run lint`, `npm run build`, and `git diff --check` pass. Vite retains its existing advisory warning for the shared Three.js chunk above 500 kB.
+
+Screenshots: `/workspace/particle-page-captures/`. Reference captures: `/workspace/particle-reference-captures/`. These checks use Chromium with software WebGL; physical-device frame rates and Safari were not measured.
+
+**Result: passed for the implemented portfolio and fallback paths in Chromium.**
+
+---
+
 # Design QA — GitHub star experiments
 
 Reviewed 2026-10-03. The comparison index is `/lab`; actual repository sources and license notices are documented in [docs/star-lab-sources.md](docs/star-lab-sources.md).
