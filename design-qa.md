@@ -1,3 +1,45 @@
+# Design QA — GitHub star experiments
+
+Reviewed 2026-10-03. The comparison index is `/lab`; actual repository sources and license notices are documented in [docs/star-lab-sources.md](docs/star-lab-sources.md).
+
+## Implemented directions
+
+| Route | Visual direction | Actual interaction |
+| --- | --- | --- |
+| `/lab/observatory` | Sandstone arches and bronze screens in a dark-green research exhibition | Three.js camera rails and pointer parallax |
+| `/lab/tactile` | Vermilion, ivory, and charcoal printed research artifacts | Three.js cylindrical paper curl, moving shadow, spring release |
+| `/lab/gallery` | Aubergine archive with six bespoke graphic folios | CSS 3D cylinder, drag/snap, keyboard navigation and shared-layout detail |
+| `/lab/signal` | Acid-yellow typographic poster and dark vector field | Canvas 2D Plan/Resolve/Evaluate transformations and pointer response |
+
+The index uses actual browser captures, totaling approximately 204 KiB of WebP. It mounts no canvas. Each experiment is loaded through its own dynamic import and uses existing dependencies. Both Three.js scenes are procedural geometry with authored canvas textures; no remote scene assets are required.
+
+## Visual checks
+
+- All four routes captured at 1440×900 and 390×844. No horizontal overflow, page exceptions, or failed asset requests in the combined route check.
+- Reviewed desktop/mobile type, art placement, controls, and scrolled content. Fixed the tactile mobile paragraph spacing and gallery controls overlapping the front folio.
+- Observatory initially exposed a blank scene before shaders completed. Shader compilation now precedes the first render and ready state; the architectural fallback remains visible while preparing the scene. Root review confirmed the corrected first view at 1200×750 without scrolling.
+- Mobile and desktop index thumbnails are real captures of the implemented studies, including the gallery and field in their interactive sections.
+
+## Interaction evidence
+
+- Tactile: actual pointer drag reaches a visibly curled state and springs back; range input, End/Home, reset, and reduced motion are exercised. Simulated WebGL context loss exposes three semantic fallback artifact controls; selecting the second updates its project details.
+- Gallery: drag changes the current folio without opening a dialog; arrow keys change selection; Enter opens the matching project. Tab stays inside the native modal; Escape restores focus. Runtime reduced-motion changes switch to a six-card static grid. Project links target existing `/projects#id` entries.
+- Signal: all three mode buttons visibly change the canvas and linked project. Pause and reduced-motion snapshots stay stable, while normal-motion frames change. No global keyboard capture.
+- Each drawing loop includes hidden/offscreen handling and cleanup. No physical-mobile or Safari performance claim is made from the Chromium checks.
+
+Captures: `/workspace/star-lab-captures/`, `/workspace/observatory-preview-captures/`, and `/workspace/gallery-preview-captures/`.
+
+## Final integration result
+
+- `/lab` passes desktop and mobile layout checks; all four thumbnail images decode successfully and the index mounts zero canvases.
+- Observatory passes first-view, chapter navigation, pause, reduced-motion, and no-WebGL checks at desktop/mobile sizes. Discrete chapter buttons now position the document immediately while the Three.js camera eases, avoiding delayed native smooth-scroll events; chapter indicators work independently of WebGL.
+- The paper simulation also passes End/Home in normal-motion mode, with its rendered progress reaching 100% and 0%.
+- `npm run build`, `npm run lint`, and `git diff --check` pass. Vite reports the existing warning for the shared Three.js chunk above 500 kB.
+
+**Result: passed for the four browser studies and comparison index in Chromium.** The separate Oil Motion keyframe pilot below retains its pending continuous-video status.
+
+---
+
 # Design QA — Oil Motion keyframe pilot
 
 ## Scope and status

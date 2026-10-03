@@ -11,7 +11,22 @@ npm run dev
 
 Open the URL printed by Vite. The original homepage is at `/`.
 
-## Latest study: Oil Motion
+## Latest: four studies from my GitHub stars
+
+Open **`/lab`** for the comparison page and choose an experiment:
+
+| Route | Direction | Interaction | Source |
+| --- | --- | --- | --- |
+| `/lab/observatory` | A cinematic research observatory | Three.js architecture, scroll camera rail and pointer parallax | ThreeUI |
+| `/lab/tactile` | A tactile research desk | Three.js paper curl, shadows, drag and spring release | Sticker Forge |
+| `/lab/gallery` | A spatial project archive | CSS 3D carousel, snapping drag and expanded project details | Cult UI |
+| `/lab/signal` | Signal / Noise | Canvas field response and interactive research stages | Cursor Lab |
+
+These are running browser interactions using the existing dependencies. They do not require a generation API key. The comparison images are captures of the implemented pages.
+
+See [source notes](docs/star-lab-sources.md) for the actual starred lists, pinned upstream code, adaptation boundaries, and retained MIT licenses. Each experiment provides controls beyond pointer gestures and a reduced-motion experience.
+
+## Oil Motion visual study
 
 Open `/motion` for **From thought to action**: an ivory and cobalt portfolio built around a custom titanium-and-glass Agent Instrument. The closed and open keyframes, responsive layout, project links, and interactive reasoning section are implemented.
 
