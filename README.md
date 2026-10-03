@@ -1,5 +1,27 @@
 # Damon Guo-Siyi — website
 
+## Oil Motion — three generated frame studies
+
+Branch: **`codex/oil-motion-frame-studies`**. The homepage `/` and `/motion-lab` open the comparison page.
+
+| Route | Visual direction | Interaction |
+| --- | --- | --- |
+| `/motion-lab/observer` | Porcelain Observer: white ceramic robot on cobalt | Horizontal pointer gaze and pose controls |
+| `/motion-lab/bloom` | Silver Bloom: a metal bud on warm ivory | Drag to open or close the petals |
+| `/motion-lab/core` | Amber Assembly: glass blocks on black | Assemble, scatter, and reverse from the current pose |
+
+Each object has **six actual image-generated poses**. The pages select those native images directly, with no crossfade or invented in-between frames. The exported MP4s show the same poses forward and backward at 5 fps. This is deliberate stop-motion exploration, not continuous AI-generated video. No generation key is needed to run it.
+
+```bash
+git fetch origin
+git switch codex/oil-motion-frame-studies
+git pull --ff-only
+npm ci
+npm run dev
+```
+
+Open the address printed by Vite. Source PNGs, measured budgets, encoded-video provenance, and the reproducible media script are documented in [motion-studies/README.md](motion-studies/README.md). The particle portfolio remains at `/particle`.
+
 ## Future Machine — standalone HTML experiment
 
 Branch: **`codex/future-machine-standalone`**.

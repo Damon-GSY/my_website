@@ -1,0 +1,25 @@
+{
+  "sourceSize": [
+    1536,
+    1024
+  ],
+  "mode": "RGBA",
+  "cornerAlpha": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "nativeFrameCount": 6,
+  "adjacentMeanAbsoluteDifference": [
+    27.75975513458252,
+    20.869467735290527,
+    20.202560424804688,
+    14.101839065551758,
+    14.076916694641113
+  ],
+  "allAdjacentFramesDifferent": true,
+  "sceneVideoGenerated": false,
+  "frameInterpolation": false,
+  "manualReview": "Regular 3x2 grid and clear native state changes. Fixed camera and light family retained. Subtle render and alignment variation remains; intended stepped concept study, not smooth video."
+}

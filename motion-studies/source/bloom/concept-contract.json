@@ -1,0 +1,23 @@
+{
+  "name": "Silver Bloom",
+  "subject_count": 1,
+  "identity": "One brushed silver mechanical bud with eight broad rounded petals and a warm vermilion inner hub.",
+  "style": "Premium sculptural 3D object for an experimental personal portfolio",
+  "motion_intent": "Six stages opening from compact bud to radial bloom; petals pivot at the same hub.",
+  "background_owner": "page",
+  "driver": "drag",
+  "input_semantics": "continuous",
+  "time_control": "scrub",
+  "navigation": "none",
+  "clip_continuity": "independent",
+  "continuity": [
+    "Same materials and component count in every pose",
+    "Locked camera, lighting, framing and anchor"
+  ],
+  "aspect_ratio": "1:1",
+  "destination": {
+    "maximumCSS": "512x512",
+    "targetDPR": 1
+  },
+  "production": "Native image-generated pose atlas, intentional stepped animation; no generated video or optical-flow interpolation."
+}

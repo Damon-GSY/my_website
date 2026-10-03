@@ -1,0 +1,9 @@
+{
+  "provider": "Built-in image generation",
+  "originalFilename": "exec-278f92df-02c3-4140-ac0b-ba423d217ab2.png",
+  "promptSummary": "Six equal square cells; same brushed-silver eight-petal mechanical bud with vermilion central hub; incrementally opening; locked camera and light; true alpha; no text.",
+  "requestedCanvas": "1536x1024",
+  "transparentBackgroundRequested": true,
+  "sourceSHA256": "247922c20b0ca46c243450521faf7609587f1d5f3bf031de36d2018ee605b695",
+  "generatedVideo": false
+}

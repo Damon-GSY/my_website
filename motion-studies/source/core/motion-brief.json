@@ -1,0 +1,20 @@
+{
+  "concept_contract": "source/core/concept-contract.json",
+  "parameter_space": "linear",
+  "media_access": "random",
+  "frame_policy": "native",
+  "planned_frames": 6,
+  "layout": {
+    "columns": 3,
+    "rows": 2
+  },
+  "requested_pixels": "1536x1024",
+  "rest_frame": 0,
+  "playback_fps": 5,
+  "reduced_motion": "Static native pose; explicit controls select a pose immediately",
+  "image_generation": "Built-in image generation, true alpha PNG. Inspect actual dimensions and grid before publishing.",
+  "video_generated": false,
+  "actual_pixels": "1536x1024",
+  "actual_cell_pixels": "512x512",
+  "actual_native_frames": 6
+}

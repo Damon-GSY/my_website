@@ -1,0 +1,9 @@
+{
+  "provider": "Built-in image generation",
+  "originalFilename": "exec-095ddd73-9a54-4e80-a84a-242f34d21929.png",
+  "promptSummary": "Six equal square cells; same six amber optical-glass blocks with graphite cores; loose cluster incrementally arranging into two columns and three rows; true alpha; no text.",
+  "requestedCanvas": "1536x1024",
+  "transparentBackgroundRequested": true,
+  "sourceSHA256": "0347790974c8b0d6059bc3f64891fd6fdd7467bbe380426cd0aec7dd71a1fbfe",
+  "generatedVideo": false
+}

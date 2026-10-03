@@ -1,0 +1,25 @@
+{
+  "sourceSize": [
+    1536,
+    1024
+  ],
+  "mode": "RGBA",
+  "cornerAlpha": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "nativeFrameCount": 6,
+  "adjacentMeanAbsoluteDifference": [
+    28.336389541625977,
+    23.90712833404541,
+    24.38793659210205,
+    17.76117992401123,
+    24.926542282104492
+  ],
+  "allAdjacentFramesDifferent": true,
+  "sceneVideoGenerated": false,
+  "frameInterpolation": false,
+  "manualReview": "Regular 3x2 grid with six clear native opening poses, inspected in source order. The silver-petal and red-core identity remains recognizable with consistent camera and lighting. Slight generated variation in hinge geometry and red-core shape or position remains between poses; exact mechanical component continuity is not established. Accepted as an intentionally stepped concept study, not smooth video or a mechanically exact assembly simulation."
+}

@@ -1,0 +1,9 @@
+{
+  "provider": "Built-in image generation",
+  "originalFilename": "exec-90831b79-7760-4235-b4fd-d64b376b6b73.png",
+  "promptSummary": "Six equal square cells; same pearl-white porcelain robot head, dark visor, two orange circular eyes; incremental horizontal yaw; locked lighting and camera; true alpha; no text.",
+  "requestedCanvas": "1536x1024",
+  "transparentBackgroundRequested": true,
+  "sourceSHA256": "3556fd9720bd7883808ee8142bd9e3c0971c91c9a89ecc91e13d70f23deddd42",
+  "generatedVideo": false
+}

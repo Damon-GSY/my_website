@@ -1,0 +1,116 @@
+{
+  "source": "source/bloom/atlas-source.png",
+  "sourceSha256": "247922c20b0ca46c243450521faf7609587f1d5f3bf031de36d2018ee605b695",
+  "uniqueNativePoses": 6,
+  "framePolicy": "native",
+  "interpolation": false,
+  "atlas": {
+    "width": 1536,
+    "height": 1024,
+    "decodedBytes": 6291456,
+    "bytes": 316160,
+    "sha256": "035731d05cd5b504eb1711becfaa104b0e5b9a0be5b2992b05b1060dc3c8ab46"
+  },
+  "frames": [
+    {
+      "x": 0,
+      "y": 0,
+      "width": 512,
+      "height": 512,
+      "sourceCell": 0,
+      "visibleBounds": [
+        122,
+        65,
+        407,
+        423
+      ]
+    },
+    {
+      "x": 512,
+      "y": 0,
+      "width": 512,
+      "height": 512,
+      "sourceCell": 1,
+      "visibleBounds": [
+        87,
+        59,
+        428,
+        422
+      ]
+    },
+    {
+      "x": 1024,
+      "y": 0,
+      "width": 512,
+      "height": 512,
+      "sourceCell": 2,
+      "visibleBounds": [
+        65,
+        64,
+        457,
+        423
+      ]
+    },
+    {
+      "x": 0,
+      "y": 512,
+      "width": 512,
+      "height": 512,
+      "sourceCell": 3,
+      "visibleBounds": [
+        43,
+        54,
+        477,
+        407
+      ]
+    },
+    {
+      "x": 512,
+      "y": 512,
+      "width": 512,
+      "height": 512,
+      "sourceCell": 4,
+      "visibleBounds": [
+        33,
+        59,
+        482,
+        401
+      ]
+    },
+    {
+      "x": 1024,
+      "y": 512,
+      "width": 512,
+      "height": 512,
+      "sourceCell": 5,
+      "visibleBounds": [
+        14,
+        59,
+        501,
+        394
+      ]
+    }
+  ],
+  "preview": {
+    "path": "/motion-studies/bloom-preview.mp4",
+    "codec": "h264",
+    "fps": 5,
+    "frameCount": 10,
+    "duration": 2.0,
+    "poseOrder": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      4,
+      3,
+      2,
+      1
+    ],
+    "bytes": 250819,
+    "sha256": "46c4e450440fd6f5da8557fc7edfc5dc39645257d8a03192386010ffa59ca555",
+    "type": "Encoded native-pose demonstration, not AI-generated video"
+  }
+}

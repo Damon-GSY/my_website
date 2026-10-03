@@ -1,3 +1,20 @@
+# Design QA — Oil Motion frame studies
+
+Reviewed 2026-10-03 on `codex/oil-motion-frame-studies`. Three studies adapt Oil Motion to directly generated image sequences: pointer-driven Porcelain Observer, draggable Silver Bloom, and state-driven Amber Assembly. Source provenance and method: [motion-studies/README.md](motion-studies/README.md).
+
+- Reviewed all 18 native poses over light, dark, and blue backgrounds. Each source is a real-alpha 1536×1024 image with a regular 3×2 grid of 512×512 cells; each decoded RGBA atlas occupies 6 MiB. The measured budgets and source hashes are retained with the study files.
+- Each study contains six distinct source poses. Its H.264 preview is 2 seconds at 5 fps with 10 encoded frames, following a forward/reverse pose order; repeated poses are not additional generated motion. No AI video generation or optical-flow interpolation was used.
+- Desktop and mobile page captures have no horizontal overflow, page exceptions, or failed assets. The UI implementation checks exercise Observer pointer selection, Bloom dragging, and Assembly playback direction.
+- Independent Chromium checks pass for pointer endpoints, preview/pause, runtime reduced motion, keyboard frame selection, Bloom dragging, Assembly reversal from the current pose, hidden-tab suspension, route scroll reset, and an aborted atlas request with a usable fallback. No page exceptions were recorded.
+- The separately served production build loads all three comparison artworks, navigates to a ready study, and selects the last pose by keyboard. Its exported MP4 decodes at 512×512 with a measured 2-second duration and advances during playback.
+- `npm run build`, `npm run lint`, and `git diff --check` pass. Vite retains the existing advisory for the shared Three.js chunk above 500 kB. Physical-device frame rates and Safari were not measured.
+
+**Scope:** these are intentionally stepped concept animations. Bloom retains slight generated variation in the hinges and red core between poses, so the sequence does not establish mechanically exact component continuity. No smooth-video or upstream video-Pilot acceptance is claimed.
+
+Captures and measured review results: `/workspace/motion-studies-captures/`. Source analysis: `motion-studies/qa/`.
+
+---
+
 # Design QA — Future Machine standalone
 
 Reviewed 2026-10-03 on `codex/future-machine-standalone`. Deliverable: `public/future-machine.html`.
