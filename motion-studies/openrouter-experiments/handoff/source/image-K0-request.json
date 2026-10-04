@@ -1,0 +1,9 @@
+{
+  "model": "openai/gpt-image-2",
+  "prompt": "Create a premium tactile miniature automation scene for GDamon's personal AI research website, as a finished opaque 16:9 product photograph. In the right half of a seamless very pale lavender studio, one small orange articulated industrial robot arm stands on a matte warm-white low modular platform. Exactly one simple kraft apricot cardboard parcel rests on the platform in front of the arm. The arm has three coherent rigid links, white rounded joint housings and a dark two-jaw parallel gripper. The open gripper is poised directly above the parcel, aligned ready to grip it from the two sides. One small white autonomous carrier waits off to the right; a thin cobalt route is etched into the platform. Fixed high three-quarter/isometric product camera, soft physical studio lighting, beautiful believable plastic, enamel and brushed metal materials, clean occlusion and contact shadows. The complete scene is center-right at x=68 percent, takes roughly 50 percent of frame height, and has generous margins. Leftmost 35 percent is empty pale lavender floor/background for real HTML type. No text, logos, numbers, people, displays, extra boxes, extra arms or distant warehouse clutter.",
+  "quality": "medium",
+  "background": "opaque",
+  "output_format": "png",
+  "n": 1,
+  "aspect_ratio": "16:9"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "openai/gpt-image-2",
+  "prompt": "Edit this exact miniature robotics photograph into the final frame of one gripping action. Preserve the identical camera, lighting, pale lavender backdrop, fixed white platform, waiting white carrier and cobalt route. The same single orange arm has lowered its end effector, its same two dark gripper jaws have closed firmly on the same apricot parcel, and the parcel is now lifted only 5 centimeters clear of the platform. Show physically correct jaw contact on opposite parcel sides and a small separated parcel shadow. The carton remains rigid and unchanged in shape, color and size. The arm's original rigid links and white joint housings articulate coherently; do not add or remove mechanical parts. Everything else remains exactly fixed. Entire scene remains in the right half, left35 percent clear. Same opaque 16:9 photograph. No words, interface, logos or extra props.",
+  "quality": "medium",
+  "background": "opaque",
+  "output_format": "png",
+  "n": 1,
+  "aspect_ratio": "16:9"
+}

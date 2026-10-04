@@ -1,0 +1,9 @@
+{
+  "model": "openai/gpt-image-2",
+  "prompt": "Edit the supplied exact glass archive photograph into its final keyframe. Keep the identical camera, crop, ivory background, lighting, stone plinth and exactly four glass folios with the same shapes and blue nodes. Change only the foremost glass folio: it has slid gently forward about 15 centimeters, slightly to the left, and rotated 12 degrees around its vertical axis, clearly revealing the three panes behind it. It remains balanced on the same plinth. Keep all four individual folios visible and intact; show convincing transparent overlaps, refractions and new contact shadow. The other three panes do not move. No extra panes, no deformation, no new marks, no camera change. The leftmost 35 percent remains empty for HTML copy. Same opaque 16:9 finished high-end photograph, no text or UI.",
+  "quality": "medium",
+  "background": "opaque",
+  "output_format": "png",
+  "n": 1,
+  "aspect_ratio": "16:9"
+}

@@ -1,0 +1,9 @@
+{
+  "model": "openai/gpt-image-2",
+  "prompt": "Create a premium editorial keyframe for an AI researcher's interactive personal website. Finished opaque 16:9 product photograph. Exactly four vertical translucent pale glass folios arranged as a staggered archive on one low rectangular warm ivory stone plinth, all located in the right half of the image, centered at x=68 percent. Each folio is a thick rectangular sheet with gently rounded corners, subtle frosted edges and a few embedded cobalt blue abstract circular nodes; no writing or lines resembling text. The four panes are parallel with clear visible staggered depth; the foremost pane is closed/aligned with the stack. Refined warm ivory museum backdrop and matte floor, quiet soft afternoon side light, physically realistic refraction, caustics and contact shadows. Fixed nearly frontal three-quarter 85mm product camera. The sculpture fills roughly half the frame height with wide clearance above and below. Keep the leftmost 35 percent beautifully empty for large editable HTML typography. Calm tactile minimalism, architectural product photography. No UI, letters, numbers, logos, people, plants, additional panes or extra props.",
+  "quality": "medium",
+  "background": "opaque",
+  "output_format": "png",
+  "n": 1,
+  "aspect_ratio": "16:9"
+}
