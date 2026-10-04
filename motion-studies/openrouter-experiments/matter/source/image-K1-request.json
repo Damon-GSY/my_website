@@ -1,0 +1,9 @@
+{
+  "model": "openai/gpt-image-2",
+  "prompt": "Edit the supplied exact studio frame into its final keyframe. Preserve the cobalt blue studio background, camera, illumination, framing, floor, empty left 35 percent and precise object center and bottom contact point. Change ONLY the one upright liquid-chrome pebble on the right: it has now flowed into a thick, rounded three-dimensional sculptural capital D. One continuous mirror-polished silver body with a straight vertical left spine and a generous smoothly rounded right curve, a single large open counter/hole through the center showing the blue background. The D should be unmistakable, like a collectible liquid-metal typography sculpture, slightly three-quarter perspective consistent with the original. Maintain the same overall object height and position, widen moderately to form the D. Preserve physically plausible long ivory strip-light reflections and small warm amber reflections on the same chromium material. Base remains resting on the blue floor with a coherent soft contact shadow. Do not add any other letters, printed text, logos, watermarks, objects, people, interface, new lighting or new camera angle. Output the same 16:9 finished opaque photograph.",
+  "quality": "medium",
+  "background": "opaque",
+  "output_format": "png",
+  "n": 1,
+  "aspect_ratio": "16:9"
+}

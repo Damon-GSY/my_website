@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "id": "handoff",
+  "title": "Handoff / Supply Chain Agent",
+  "subject_count": 3,
+  "subjects": [
+    {
+      "identity": "One orange-and-white articulated industrial robot arm, one small apricot parcel, and one low autonomous carrier in a miniature logistics bay."
+    }
+  ],
+  "style": "Premium isometric miniature warehouse, pale lavender and matte white architecture, restrained cobalt and apricot route lights.",
+  "motion_intent": "The arm lowers its gripper, closes around the same parcel, and lifts it a few centimeters with plausible joint articulation and contact.",
+  "background_owner": "video",
+  "scene": "Locked three-quarter isometric camera on one miniature loading bay, soft daylight and physical shadows. Active machinery center-right; left 35 percent quiet lavender for editable HTML copy.",
+  "driver": "scroll",
+  "input_semantics": "continuous",
+  "time_control": "scrub",
+  "navigation": "continuous",
+  "clip_continuity": "independent",
+  "continuity": [
+    "Same one arm, one parcel, one carrier, same dimensions, orange markings and bay architecture throughout.",
+    "The gripper visibly closes on the parcel; parcel does not float or clip through the fingers.",
+    "Only the arm and parcel move; carrier and architecture remain stationary.",
+    "No readable signage, numbers, logos, UI, baked copy or camera movement."
+  ],
+  "aspect_ratio": "16:9",
+  "destination": {
+    "site_role": "Scroll-controlled operations chapter in a complete personal website; project claims and metrics are editable HTML.",
+    "max_display_css_px": [
+      1280,
+      720
+    ],
+    "target_dpr": 1,
+    "mobile": "Contain full 16:9 image without cropping, with HTML project details in normal flow.",
+    "scroll_container": "300svh section with 100svh sticky stage, two viewport heights of travel."
+  }
+}

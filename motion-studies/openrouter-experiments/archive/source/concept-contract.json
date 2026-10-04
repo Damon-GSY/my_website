@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "id": "archive",
+  "title": "Archive / Research Folios",
+  "subject_count": 4,
+  "subjects": [
+    {
+      "identity": "Four distinct upright translucent research folios made from clear glass and warm ivory acrylic, staggered in depth on a warm stone museum surface."
+    }
+  ],
+  "style": "Quiet editorial museum display with fine abstract evaluation marks and restrained cobalt accents.",
+  "motion_intent": "The frontmost folio slides toward the camera and rotates 12 degrees about its vertical axis, revealing the second folio; the other three remain fixed.",
+  "background_owner": "video",
+  "scene": "Locked camera, warm ivory museum surface, soft directional daylight and physical shadows. Folios occupy center-right; left 35 percent remains quiet for editable HTML headline.",
+  "driver": "scroll",
+  "input_semantics": "continuous",
+  "time_control": "scrub",
+  "navigation": "continuous",
+  "clip_continuity": "independent",
+  "continuity": [
+    "Keep exactly four folios and their etched abstract marks, material, dimensions and order consistent.",
+    "Only the front folio moves; it stays upright, does not bend, and never passes through another sheet.",
+    "Camera, museum surface, lighting and shadow direction stay fixed.",
+    "No readable words, numbers, logos, UI, page text or cuts in imagery."
+  ],
+  "aspect_ratio": "16:9",
+  "destination": {
+    "site_role": "Scroll-controlled research chapter; folios frame DOM project links and taxonomy copy in a complete personal website.",
+    "max_display_css_px": [
+      1280,
+      720
+    ],
+    "target_dpr": 1,
+    "mobile": "Contain full 16:9 image without cropping; present HTML copy below if necessary.",
+    "scroll_container": "300svh section with 100svh sticky stage, two viewport heights of travel."
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "model": "openai/gpt-image-2",
+  "prompt": "Create a single opening keyframe for an experimental editorial personal website about artificial intelligence, called GDamon. Finished high-end tactile product photograph, opaque 16:9 image. Exactly one sculptural mirror-polished silver liquid-metal pebble, upright, organic compact capsule shape with a perfectly continuous surface, about 45 percent of frame height. It sits at x=67 percent y=55 percent on a seamless saturated cobalt-blue studio floor and backdrop (#0757ed), with a soft believable contact shadow. Camera is fixed, nearly frontal with a slight three-quarter view, using an 85mm product lens. Refined large ivory strip-light reflections wrap across the chromium surface, subtle cobalt reflections from the surroundings, one tiny warm amber reflection. Beautiful physical material, crisp silhouette, no grain, no cyberpunk graphics. Leave the leftmost 35 percent empty blue for real HTML typography. The entire object and shadow have wide clearance inside the frame. This compact chrome form will later morph into a sculptural capital D, but at this starting frame it is still a closed smooth pebble, with no hole. Do not add writing, letters, logos, UI, watermarks, people, extra objects or a pedestal. Calm, precise, premium art direction.",
+  "quality": "medium",
+  "background": "opaque",
+  "output_format": "png",
+  "n": 1,
+  "aspect_ratio": "16:9"
+}

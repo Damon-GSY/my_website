@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "id": "matter",
+  "title": "Matter / Chrome D",
+  "subject_count": 1,
+  "subjects": [
+    {
+      "identity": "One continuous liquid-chrome pebble or droplet with a polished mirror surface; the same volume becomes a sculptural capital D with one open central cavity."
+    }
+  ],
+  "style": "Premium cobalt studio product photography, restrained, tactile and physically coherent.",
+  "motion_intent": "The single chrome droplet coherently reshapes into a dimensional capital D while conserving its material and apparent mass. The D is a physical sculpture, never overlaid typography.",
+  "background_owner": "video",
+  "scene": "Locked three-quarter camera in a saturated cobalt studio; center-right studio floor and soft grounded shadow; left 35 percent stays quiet for editable HTML copy.",
+  "driver": "scroll",
+  "input_semantics": "continuous",
+  "time_control": "scrub",
+  "navigation": "continuous",
+  "clip_continuity": "independent",
+  "continuity": [
+    "Same single subject, chrome material, cobalt environment, camera, lighting, studio floor and contact shadow throughout.",
+    "No detached fragments, extra droplets, added letters, baked text, interface, logos or camera cuts.",
+    "The final D has a clear negative-space cavity and remains recognizable as a three-dimensional object from the locked view.",
+    "Motion is reversible by seeking backward in the same clip."
+  ],
+  "aspect_ratio": "16:9",
+  "destination": {
+    "site_role": "Scroll-controlled hero in a complete personal website; editable headline and navigation are DOM overlays.",
+    "max_display_css_px": [
+      1280,
+      720
+    ],
+    "target_dpr": 1,
+    "mobile": "Contain the full 16:9 image without cropping; retain DOM text outside the media as needed.",
+    "scroll_container": "300svh section with a 100svh sticky stage, giving two viewport heights of travel."
+  }
+}

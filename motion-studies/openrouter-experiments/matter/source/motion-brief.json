@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "concept_contract": "source/concept-contract.json",
+  "identity_bible": "source/identity-bible.md",
+  "parameter_space": "linear",
+  "media_access": "random",
+  "gesture_policy": {
+    "unit": "continuous",
+    "inertia": "coalesce",
+    "while_active": "retarget",
+    "boundary": "clamp",
+    "programmatic_navigation": "observe"
+  },
+  "storyboard": [
+    "At scroll progress 0 the compact chrome pebble rests on its studio floor.",
+    "The same chrome volume stretches and curls, opening one central cavity without shedding material.",
+    "At scroll progress 1 it resolves into a stable sculptural capital D; project navigation remains separate HTML."
+  ],
+  "keyframes": {
+    "K0": "Compact polished chrome pebble or droplet on cobalt studio floor; center-right; left 35 percent empty.",
+    "K1": "Same chrome material and mass formed into a dimensional capital D with one cavity; same camera and scene."
+  },
+  "clip_chain": [{"id": "K0-to-K1", "first_frame": "K0", "last_frame": "K1", "planned_seconds": 4, "planned_fps": 24, "planned_frames": 96, "status": "not-generated"}],
+  "rest_state": "K0 before interaction; hold exact current frame when scroll stops.",
+  "loop": "none",
+  "anchor": "fixed-body",
+  "scene_continuity": "Studio, studio floor, lens, lighting, left copy-safe area and chrome reflections stay coherent.",
+  "frame_policy": "native",
+  "target_fps": 24,
+  "quality_target": {"source_px": [1280, 720], "max_display_css_px": [1280, 720], "target_dpr": 1, "planned_frames": 96, "scroll_pages": 2, "minimum_frames_per_page": 24, "budget_report": "build/motion-budget.json", "delivery": "baked-video", "controller": "frame-scrub"},
+  "pixel_dimensions": "1280x720",
+  "reduced_motion": "Show the static K0 sculpture with immediately readable HTML headline and links.",
+  "runtime": "Map two viewport heights of scroll travel to the single 0-4 second clip; reverse within the same source, never switch sources mid-scrub."
+}
