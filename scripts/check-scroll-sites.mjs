@@ -253,7 +253,7 @@ try {
       const valid = await page.evaluate(links => links.filter(link => link.href.length > 1).map(link => ({ ...link, exists: Boolean(globalThis.document.getElementById(decodeURIComponent(link.href.slice(1)))) })), anchors);
       assert.ok(valid.length >= 3, 'Scroll chapters need actual anchor destinations.');
       assert.ok(valid.every(link => link.exists), `Missing anchor target: ${JSON.stringify(valid)}`);
-      const chapterLink = valid.find(link => /system|motion|inside|agent/i.test(link.text)) || valid.find(link => link.visible && !/skip/i.test(link.text));
+      const chapterLink = valid.find(link => /deploy|evaluate|system|motion|inside|agent/i.test(link.text)) || valid.find(link => link.visible && !/skip/i.test(link.text));
       await page.locator(`a[href="${chapterLink.href}"]`).filter({ visible: true }).first().click();
       await page.waitForTimeout(800);
       assert.ok(await page.evaluate(() => globalThis.scrollY) > 100, 'Chapter navigation did not scroll the document.');

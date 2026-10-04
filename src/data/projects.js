@@ -16,7 +16,7 @@ export const projects = [
     ],
     tags: ['Agents', 'Supply Chain', 'Production'],
     category: 'production',
-    href: '/about',
+    href: '/projects#supply-chain-agent-system',
     featured: true,
   },
   {
@@ -35,7 +35,7 @@ export const projects = [
     ],
     tags: ['Agentic RL', 'Tool Use', 'Evaluation'],
     category: 'production',
-    href: '/about',
+    href: '/projects#dynamic-tool-resolution-agents',
     featured: true,
   },
   {
@@ -54,7 +54,7 @@ export const projects = [
     ],
     tags: ['LLM', 'SFT', 'RL'],
     category: 'production',
-    href: '/about',
+    href: '/projects#supply-chain-domain-llm',
     featured: true,
   },
   {
@@ -74,7 +74,7 @@ export const projects = [
     ],
     tags: ['Agents', 'Evaluation', 'Survey'],
     category: 'research',
-    href: '/about',
+    href: '/projects#multi-turn-agent-evaluation',
     featured: true,
   },
   {
@@ -94,7 +94,7 @@ export const projects = [
     ],
     tags: ['Benchmark', 'Supply Chain', 'Tool Calling'],
     category: 'research',
-    href: '/about',
+    href: '/projects#supchain-bench',
     featured: false,
   },
   {
@@ -114,7 +114,7 @@ export const projects = [
     ],
     tags: ['VLM', 'DPO', 'Preference Learning'],
     category: 'research',
-    href: '/about',
+    href: '/projects#visualdeltas',
     featured: false,
   },
   {
@@ -134,7 +134,7 @@ export const projects = [
     ],
     tags: ['Memory', 'RAG', 'Copilot'],
     category: 'research',
-    href: '/about',
+    href: '/projects#m365-copilot-memory-eval',
     featured: false,
   },
   {
@@ -154,7 +154,7 @@ export const projects = [
     ],
     tags: ['GRPO', 'Rewards', 'Post-Training'],
     category: 'production',
-    href: '/about',
+    href: '/projects#product-attribute-rl',
     featured: false,
   },
   {

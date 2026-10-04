@@ -141,6 +141,9 @@ export default function App() {
   if (location.pathname === '/oil-lab' || location.pathname.startsWith('/oil-lab/')) {
     return <Suspense fallback={null}><OilLab /></Suspense>;
   }
+  if (location.pathname === '/projects') {
+    return <Suspense fallback={null}><Projects /></Suspense>;
+  }
   if (location.pathname === '/film') {
     return <Suspense fallback={null}><FilmPage /></Suspense>;
   }
@@ -178,7 +181,6 @@ export default function App() {
             <Routes location={location} key={location.pathname}>
               <Route path="/classic" element={<HomePage />} />
               <Route path="/about" element={<PageTransition><About /></PageTransition>} />
-              <Route path="/projects" element={<PageTransition><Projects /></PageTransition>} />
               <Route path="/blog" element={<PageTransition><Blog /></PageTransition>} />
               <Route path="/blog/:slug" element={<PageTransition><BlogPost /></PageTransition>} />
               <Route path="/uses" element={<PageTransition><Uses /></PageTransition>} />

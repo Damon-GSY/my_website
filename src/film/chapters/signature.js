@@ -8,13 +8,13 @@ function cubic(a, b, c, d, t) {
   return q * q * q * a + 3 * q * q * t * b + 3 * q * t * t * c + t * t * t * d;
 }
 
-function makeLayout(width, height, portrait, square) {
+function makeLayout(width, height, portrait, square, artworkOnly = false) {
   const rng = seeded(73421);
   const mask = document.createElement('canvas');
   mask.width = width;
   mask.height = height;
   const ctx = mask.getContext('2d', { willReadFrequently: true });
-  const wordY = height * (portrait ? .315 : square ? .34 : .355);
+  const wordY = height * (artworkOnly ? .5 : portrait ? .315 : square ? .34 : .355);
   const size = fitText(ctx, 'GDAMON', '400 {size}px Anton', width * .875, width * .3);
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
@@ -88,10 +88,10 @@ export function createSignatureChapter() {
       const { width: w, height: h, portrait = false, square = false } = layout;
       const palette = layout.palette || PALETTE;
       const t = clamp(time, 0, 6);
-      const key = `${w}:${h}:${portrait}:${square}`;
+      const key = `${w}:${h}:${portrait}:${square}:${!!layout.artworkOnly}`;
       if (!layouts.has(key)) {
         if (layouts.size >= 4) layouts.delete(layouts.keys().next().value);
-        layouts.set(key, makeLayout(w, h, portrait, square));
+        layouts.set(key, makeLayout(w, h, portrait, square, layout.artworkOnly));
       }
       const data = layouts.get(key);
       const unit = portrait ? w / 720 : square ? w / 900 : w / 1280;
@@ -104,7 +104,7 @@ export function createSignatureChapter() {
 
       const network = smooth((t - .48) / 1.12);
       const resolve = smooth((t - 1.92) / 1.48);
-      const blue = smooth((t - 3.75) / .8);
+      const blue = layout.artworkOnly ? 0 : smooth((t - 3.75) / .8);
       if (blue > 0) {
         ctx.fillStyle = palette.blue;
         ctx.beginPath();
@@ -175,7 +175,7 @@ export function createSignatureChapter() {
       }
       ctx.globalAlpha = 1;
 
-      if (t < 2.75) {
+      if (!layout.artworkOnly && t < 2.75) {
         const first = t < 1.23;
         const label = first ? 'SIGNAL.' : 'SYSTEM.';
         const entrance = first ? 1 : spring(t - 1.23, 3.4, 1);
@@ -186,7 +186,7 @@ export function createSignatureChapter() {
         ctx.restore();
       }
 
-      if (t > 3.6) {
+      if (!layout.artworkOnly && t > 3.6) {
         const settle = clamp(spring(t - 3.74, 2.7, 1));
         const line2 = clamp(spring(t - 3.94, 2.7, 1));
         const baseline = h * (portrait ? .58 : square ? .63 : .68);

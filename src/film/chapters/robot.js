@@ -5,7 +5,8 @@ const WORDS = ['PLAN', 'ACT', 'LEARN'];
 const CAPTIONS = ['Make a plan.', 'Take action.', 'Get better.'];
 const CUES = [0, 1.6, 3.2];
 
-function composition({ width: w, height: h, portrait, square }) {
+function composition({ width: w, height: h, portrait, square, artworkOnly }) {
+  if (artworkOnly) return { model: { x: 0, y: 0, width: w, height: h } };
   if (portrait) return {
     model: { x: w * .015, y: h * .275, width: w * .97, height: h * .55 },
     title: { x: w * .075, y: h * .065, width: w * .85, size: w * .073 },
@@ -99,29 +100,31 @@ export function createRobotChapter() {
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
 
-    const title = rects.title;
-    ctx.fillStyle = palette.ink;
-    if (layout.portrait || layout.square) {
-      fitText(ctx, 'INTELLIGENCE, IN MOTION.', '600 {size}px Arial, Helvetica, sans-serif', title.width, title.size);
-      ctx.fillText('INTELLIGENCE, IN MOTION.', title.x, title.y);
-    } else {
-      fitText(ctx, 'INTELLIGENCE,', '600 {size}px Arial, Helvetica, sans-serif', title.width, title.size);
-      ctx.fillText('INTELLIGENCE,', title.x, title.y);
-      ctx.fillText('IN MOTION.', title.x, title.y + title.size * 1.1);
-    }
+    if (!layout.artworkOnly) {
+      const title = rects.title;
+      ctx.fillStyle = palette.ink;
+      if (layout.portrait || layout.square) {
+        fitText(ctx, 'INTELLIGENCE, IN MOTION.', '600 {size}px Arial, Helvetica, sans-serif', title.width, title.size);
+        ctx.fillText('INTELLIGENCE, IN MOTION.', title.x, title.y);
+      } else {
+        fitText(ctx, 'INTELLIGENCE,', '600 {size}px Arial, Helvetica, sans-serif', title.width, title.size);
+        ctx.fillText('INTELLIGENCE,', title.x, title.y);
+        ctx.fillText('IN MOTION.', title.x, title.y + title.size * 1.1);
+      }
 
-    const word = rects.word;
-    ctx.save();
-    ctx.beginPath();
-    ctx.rect(word.x - 2, word.y, word.width + 4, word.height);
-    ctx.clip();
-    ctx.fillStyle = palette.blue;
-    fitText(ctx, 'LEARN', '400 {size}px Anton', word.width, word.size);
-    if (cue > 0 && transition < 1) {
-      ctx.fillText(WORDS[cue - 1], word.x, word.y - transition * word.height);
+      const word = rects.word;
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(word.x - 2, word.y, word.width + 4, word.height);
+      ctx.clip();
+      ctx.fillStyle = palette.blue;
+      fitText(ctx, 'LEARN', '400 {size}px Anton', word.width, word.size);
+      if (cue > 0 && transition < 1) {
+        ctx.fillText(WORDS[cue - 1], word.x, word.y - transition * word.height);
+      }
+      ctx.fillText(WORDS[cue], word.x, word.y + (1 - transition) * word.height);
+      ctx.restore();
     }
-    ctx.fillText(WORDS[cue], word.x, word.y + (1 - transition) * word.height);
-    ctx.restore();
 
     if (scene) {
       try {
@@ -150,13 +153,15 @@ export function createRobotChapter() {
       fallbackProcessor(ctx, model, t, palette);
     }
 
-    const caption = rects.caption;
-    const lineWidth = Math.min(caption.width * .17, h * .13);
-    ctx.fillStyle = cue === 1 ? palette.orange : palette.lime;
-    ctx.fillRect(caption.x, caption.y - caption.size * .30, lineWidth * mix(.55, 1, transition), Math.max(4, caption.size * .095));
-    ctx.fillStyle = palette.ink;
-    fitText(ctx, CAPTIONS[cue], '500 {size}px Arial, Helvetica, sans-serif', caption.width, caption.size);
-    ctx.fillText(CAPTIONS[cue], caption.x, caption.y);
+    if (!layout.artworkOnly) {
+      const caption = rects.caption;
+      const lineWidth = Math.min(caption.width * .17, h * .13);
+      ctx.fillStyle = cue === 1 ? palette.orange : palette.lime;
+      ctx.fillRect(caption.x, caption.y - caption.size * .30, lineWidth * mix(.55, 1, transition), Math.max(4, caption.size * .095));
+      ctx.fillStyle = palette.ink;
+      fitText(ctx, CAPTIONS[cue], '500 {size}px Arial, Helvetica, sans-serif', caption.width, caption.size);
+      ctx.fillText(CAPTIONS[cue], caption.x, caption.y);
+    }
     ctx.restore();
   }
 

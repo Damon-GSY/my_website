@@ -7,7 +7,7 @@ const CHAPTER_LENGTH = 6;
 const WIPE_LENGTH = .22;
 
 /** One explicit clock drives the live preview and every exported frame. */
-export function createFilm(canvas, { wipeDuration = WIPE_LENGTH } = {}) {
+export function createFilm(canvas, { wipeDuration = WIPE_LENGTH, storyArtwork = false } = {}) {
   const ctx = canvas.getContext('2d', { alpha: false });
   if (!ctx) throw new Error('Canvas drawing is unavailable.');
   const chapters = [];
@@ -23,11 +23,29 @@ export function createFilm(canvas, { wipeDuration = WIPE_LENGTH } = {}) {
   let disposed = false;
   let layout;
   let insetTop = 0, insetBottom = 0;
+  let artworkBounds = null;
   let fullWidth = 0, fullHeight = 0;
   let layer, layerContext;
   const wipeLength = clamp(wipeDuration, .01, 2);
 
   function drawChapter(index, localTime) {
+    if (storyArtwork) {
+      const w = fullWidth, h = fullHeight;
+      const compact = w / h < 1.1 || ((canvas.clientWidth || w) < 800 && (canvas.clientHeight || h) > 600);
+      const rect = artworkBounds || (compact
+        ? { x: w * .10, y: h * .35, width: w * .80, height: h * .24 }
+        : { x: w * .49, y: h * .11, width: w * .50, height: h * .61 });
+      ctx.fillStyle = [PALETTE.blue, PALETTE.paper, PALETTE.ink][index];
+      ctx.fillRect(0, 0, w, h);
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(rect.x, rect.y, rect.width, rect.height);
+      ctx.clip();
+      ctx.translate(rect.x, rect.y);
+      chapters[index].draw(ctx, localTime, { ...layout, ...rect, portrait: false, square: true, artworkOnly: true });
+      ctx.restore();
+      return;
+    }
     if (!insetTop && !insetBottom) {
       ctx.save();
       chapters[index].draw(ctx, localTime, layout);
@@ -88,6 +106,7 @@ export function createFilm(canvas, { wipeDuration = WIPE_LENGTH } = {}) {
     if (insets) {
       insetTop = Math.round(clamp(Number(insets.top) || 0, 0, h * .35));
       insetBottom = Math.round(clamp(Number(insets.bottom) || 0, 0, h * .35));
+      artworkBounds = insets.artworkBounds || null;
     }
     if (canvas.width !== w) canvas.width = w;
     if (canvas.height !== h) canvas.height = h;
@@ -114,7 +133,7 @@ export function createFilm(canvas, { wipeDuration = WIPE_LENGTH } = {}) {
     getMetrics() {
       return {
         ready: !disposed, duration: DURATION, time: currentTime,
-        width: fullWidth, height: fullHeight, contentHeight: layout.height, insetTop, insetBottom,
+        width: fullWidth, height: fullHeight, contentHeight: layout.height, insetTop, insetBottom, artworkBounds,
         chapter: ['intro', 'robot', 'signature'][Math.min(2, Math.floor(currentTime / CHAPTER_LENGTH))],
         robot: chapters[1].getMetrics?.() || null,
       };

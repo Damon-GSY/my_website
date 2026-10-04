@@ -22,9 +22,9 @@ The keyframes were generated with `openai/gpt-image-2` and continuous motion wit
 
 ## Make it useful — a scroll-driven personal website
 
-Open **`http://localhost:4175/film`**, also linked on `/`. Native scrolling advances kinetic typography, a real Three.js robot opening and reassembling, and particles gathering into GDAMON. Scroll upward to reverse the sequence. Chapter navigation jumps through the story; selected projects, biography, writing, and contact continue below it as normal website content.
+Open **`http://localhost:4175/film`**, also linked on `/`. Its three scroll chapters explain Damon's actual work: **Train** covers domain LLMs and multi-objective RL; **Deploy** covers dynamic tool resolution and risk-tiered supply-chain agents; **Evaluate** covers multi-turn evaluation and SupChain-Bench. Each chapter keeps his role, methods, two project links, and concrete results visible alongside layered training artwork, a live Three.js robot, or particles gathering into GDAMON. Internal production figures retain their scope.
 
-The page maps scroll position to the existing deterministic Canvas/Three.js scene, with damping and wider chapter transitions. It has no autoplay clock, audio, video, or player controls. Reduced motion removes the long pinned story; unavailable WebGL uses static artwork and keeps the portfolio readable.
+The page maps native scroll position to a deterministic Canvas/Three.js scene with damping. Scroll upward to reverse the sequence. Five selected projects below it show contributions and outcomes, followed by biography and contact. Reduced motion or unavailable WebGL removes the long pinned interval and makes all three work chapters ordinary readable, linked content. There is no autoplay clock, audio, video, or player UI.
 
 The earlier 18-second player is archived at **`/film?view=player`**. The exporter still uses **`/film?render=1`**; existing MP4 files are retained as earlier studies and are not the default website experience.
 
@@ -48,7 +48,15 @@ CSS and JavaScript are inline, with Schibsted Grotesk and Three.js 0.169 loaded 
 
 The final section pairs the particle signature with five aligned project links, concise descriptions, and a manual horizontal scroller on mobile. Cards do not advance automatically while you read.
 
+Pointer interaction uses the native cursor, with grab/grabbing on the sculpture. Time-based parallax and bounded drag avoid the old lagging cursor overlay and uncontrolled rotation; leaving the window, changing chapters, touch input, and reduced motion reset the interaction. Explicit navigation bypasses wheel cooldown and queues during a transition. The current history entry remembers its chapter, so returning from a case restores Selected work.
+
 The literal **KernelCode reference** remains at [`public/kernelcode/reference.html`](public/kernelcode/reference.html), or **`/kernelcode/reference.html`** locally. It keeps the original copy, four CloudFront images, draggable voxel `<K>`, and sphere → keyboard photograph → `<K>` particle sequence.
+
+## Work index and project cases
+
+**`/projects`** is a dedicated work index. Existing links such as **`/projects#dynamic-tool-resolution-agents`** open the corresponding full case at the top of the page, with context, contributions, outcomes, and next-project navigation. Hashes select a case rather than scrolling into a filtered list. Local reading controls preserve the selected project URL; reload, back/forward, and keyboard focus follow the selected case. The former links to `/about` now open their actual projects.
+
+Browser regression checks cover the film's real work content, reverse scrolling and static fallbacks; bounded pointer interaction and chapter restoration; and case navigation, filters, and small-screen reading. After building and starting `npm run preview -- --port 4176`, run `node scripts/check-portfolio-journey.mjs http://localhost:4176 /tmp/gdamon-portfolio-checks`. The check uses Chromium (`CHROMIUM_EXECUTABLE` can override its path) and writes screenshots and a JSON report to the output directory.
 
 ## Personal websites adapted from the pasted HTML
 

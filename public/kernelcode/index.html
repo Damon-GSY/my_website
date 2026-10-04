@@ -48,14 +48,6 @@
     #loaderFill { height:3px; width:0; background:#fff; transform-origin:left; }
     #loaderPercent { position:absolute; left:0; bottom:17px; transform:translateX(-100%); padding-right:13px; font-size:clamp(20px, 2.15vw, 34px); letter-spacing:-.035em; color:#e8e8e8; }
     #loaderPercent.zero { transform:none; padding-left:13px; }
-    #cursor { position:fixed; top:0; left:0; width:20px; height:20px; margin:-10px 0 0 -10px; border:1.5px solid white; border-radius:50%; mix-blend-mode:difference; z-index:190; pointer-events:none; }
-    #cursor::after { content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); border-radius:50%; background:#fff; width:0; height:0; }
-    #cursor.dot { width:11px; height:11px; margin:-5.5px; border:0; }
-    #cursor.dot::after { width:11px; height:11px; }
-    #cursor.big { width:31px; height:31px; margin:-15.5px; }
-    #cursor.big::after { width:16px; height:16px; }
-    #cursorLabel { position:fixed; top:0; left:0; z-index:190; pointer-events:none; font-size:11.5px; font-weight:600; letter-spacing:-.015em; opacity:0; transition:opacity .3s var(--ease); }
-    #cursorLabel.on { opacity:1; }
     header { position:fixed; top:0; left:0; right:0; z-index:120; height:calc(var(--nav-h) + env(safe-area-inset-top)); padding:env(safe-area-inset-top) max(var(--pad), env(safe-area-inset-right)) 0 max(var(--pad), env(safe-area-inset-left)); display:flex; align-items:center; gap:24px; touch-action:manipulation; background:linear-gradient(#050611eb,#05061166); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); }
     header::after { content:''; position:absolute; bottom:0; left:var(--pad); right:var(--pad); height:1px; background:rgba(196,193,255,.13); }
     .brand { display:flex; align-items:center; gap:11px; line-height:1; white-space:nowrap; }
@@ -153,8 +145,12 @@
     .step:focus-visible::after { transform:scaleX(1); }
     .step:focus-visible .st-link svg { transform:translate(2px,-2px); }
     .navpill::-webkit-scrollbar, #steps::-webkit-scrollbar, .step::-webkit-scrollbar { display:none; }
-    @media (any-pointer:fine) { body, a, button { cursor:none; } }
-    @media (any-pointer:coarse) { #cursor, #cursorLabel, .drag-hint { display:none; } #heroGL { pointer-events:none; } }
+    a, button { cursor:pointer; }
+    @media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference) {
+      #heroGL[data-signature-state='ready'] { cursor:grab; }
+      #heroGL.is-dragging { cursor:grabbing; }
+    }
+    @media (hover:none), (pointer:coarse) { .drag-hint { display:none; } #heroGL { pointer-events:none; } }
     @media (hover:hover) and (pointer:fine) {
       .cta:hover .arrow svg, .btnpair:hover .arrow svg { transform:rotate(45deg); }
       .step:hover::before { transform:translateY(0); }
@@ -257,13 +253,12 @@
       *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; transition-delay:0ms !important; scroll-behavior:auto !important; }
       .rv > span, .fade { opacity:1; filter:none; transform:none; }
       .step::before, .step::after, .st-t, .st-link svg { transition:none; }
+      .drag-hint { display:none; }
     }
   </style>
 </head>
 <body class="loading">
   <div id="loader" aria-label="Loading GDamon"><div id="loaderTrack"><div id="loaderFill"></div></div><span id="loaderPercent" class="zero">0%</span></div>
-  <div id="cursor" aria-hidden="true"></div>
-  <span id="cursorLabel" aria-hidden="true">Scroll Down</span>
   <header>
     <a class="brand" href="#hero" data-section="0" aria-label="GDamon home"><span class="brand-mark" aria-hidden="true">d.</span><span class="brand-name">Damon Guo-Siyi<small>Research &amp; engineering</small></span></a>
     <nav id="sitenav" class="navpill" aria-label="Main navigation"><a href="#hero" data-section="0" aria-current="page"><span>00</span>Overview</a><a href="#s2" data-section="1"><span>01</span>Research</a><a href="#s3" data-section="2"><span>02</span>Systems</a><a href="#s4" data-section="3"><span>03</span>Selected work</a></nav>
@@ -310,17 +305,33 @@
     const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
     const runtime = window.GDamonRuntime = { stage:null, hero:null, y:0, sectionIndex:0, transitioning:false };
     const pointer = { x:0, y:0 };
-    const pointerScreen = { x:innerWidth/2, y:innerHeight/2 };
-    const cursorPosition = { ...pointerScreen };
-    const cursor = $('#cursor'), cursorLabel = $('#cursorLabel');
-    let overHero = false;
+    const pointerTarget = { x:0, y:0 };
+    const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
+    let pointerTime=0;
+    function resetPointer() {
+      pointerTarget.x=pointerTarget.y=0;
+      if(reduceMotion.matches || document.hidden) pointer.x=pointer.y=0;
+      runtime.hero?.resetInteraction?.();
+    }
     window.addEventListener('pointermove', (event) => {
-      pointerScreen.x=event.clientX; pointerScreen.y=event.clientY;
-      pointer.x=event.clientX/innerWidth-.5; pointer.y=event.clientY/innerHeight-.5;
+      if(event.pointerType==='touch' || !finePointer.matches || reduceMotion.matches ||
+        event.target.closest?.('a,button,input,textarea,select') || runtime.transitioning) {
+        pointerTarget.x=pointerTarget.y=0;
+        return;
+      }
+      pointerTarget.x=clamp(event.clientX/Math.max(1,innerWidth)-.5,-.5,.5);
+      pointerTarget.y=clamp(event.clientY/Math.max(1,innerHeight)-.5,-.5,.5);
     }, { passive:true });
+    document.documentElement.addEventListener('pointerleave',resetPointer);
+    window.addEventListener('pointerdown',event => { if(event.pointerType==='touch') resetPointer(); },{passive:true});
+    window.addEventListener('blur',resetPointer);
+    window.addEventListener('keydown',resetPointer);
+    document.addEventListener('visibilitychange',resetPointer);
+    reduceMotion.addEventListener('change',resetPointer);
+    finePointer.addEventListener('change',resetPointer);
     runtime.getPointer = () => pointer;
-    $('#heroGL').addEventListener('pointerenter', () => { overHero=true; });
-    $('#heroGL').addEventListener('pointerleave', () => { overHero=false; });
+    runtime.getPointerMetrics = () => ({ mode:'native', fine:finePointer.matches, reduced:reduceMotion.matches,
+      target:{...pointerTarget}, current:{...pointer}, hero:runtime.hero?.getInteraction?.() ?? null });
 
     document.querySelectorAll('.rv').forEach((line) => {
       const words=line.textContent.trim().split(/\s+/);
@@ -389,7 +400,7 @@
     });
     nav.querySelectorAll('a').forEach(link => link.addEventListener('click',closeMenu));
     document.querySelectorAll('[data-section]').forEach((link) => link.addEventListener('click',(event) => {
-      event.preventDefault(); closeMenu(); go(Number(link.dataset.section)-current);
+      event.preventDefault(); closeMenu(); go(Number(link.dataset.section)-current,{explicit:true});
     }));
     if(location.protocol==='file:') document.querySelectorAll('a[href^="/"]').forEach(link => {
       link.href=new URL(link.getAttribute('href'),'https://damon.ai').href;
@@ -407,8 +418,6 @@
       $('#stage').classList.toggle('on',y>vh*.55);
       $('#rail').classList.toggle('on',y>vh*.75);
       $('#railFill').style.height=`${clamp(y/(vh*3))*100}%`;
-      cursor.classList.toggle('big',y>vh*.70);
-      cursorLabel.classList.toggle('on',y>vh*.70 && y<vh*2.55);
       const t=clamp(y/vh-1,0,2);
       let wA=0,wB=0,wC=0,squeeze=1;
       if(t<.30) wA=1;
@@ -423,19 +432,68 @@
     }
     runtime.applyView=applyView;
     const LEAVE_MS=900, ENTER_MS=750;
-    let current=0, coolUntil=0, tween=null;
+    function readChapter() {
+      const saved=history.state?.gdamonKernelChapter;
+      if(Number.isInteger(saved) && saved>=0 && saved<sections.length) return saved;
+      const linked=sections.findIndex(section => `#${section.id}`===location.hash);
+      return linked<0?0:linked;
+    }
+    function persistChapter(chapter) {
+      try {
+        const previous=history.state && typeof history.state==='object' && !Array.isArray(history.state)?history.state:{};
+        history.replaceState({...previous,gdamonKernelChapter:chapter},'');
+      } catch { /* File previews can disallow history changes. */ }
+    }
+    let current=readChapter(), requested=current, queued=null, coolUntil=0, tween=null;
+    const transitionCancels=new Set();
+    runtime.getNavigationState=()=>({current,requested,queued,historyChapter:readChapter()});
+    function restoreChapter() {
+      transitionCancels.forEach(cancel=>cancel());
+      current=readChapter(); requested=current; queued=null; tween=null; coolUntil=0;
+      runtime.sectionIndex=current; runtime.transitioning=false;
+      closeMenu(); resetPointer();
+      sections.forEach((section,index) => {
+        resetSection(section);
+        section.style.transition='none'; section.style.opacity='';
+        section.classList.remove('out-up','out-down');
+        section.classList.toggle('show',index===current); section.inert=index!==current;
+      });
+      void $('main').offsetWidth;
+      sections.forEach(section=>{section.style.transition='';});
+      persistChapter(current); applyView(current*innerHeight); layout();
+      if(!document.body.classList.contains('loading')) revealSection(sections[current]);
+    }
+    window.addEventListener('pagehide',()=>persistChapter(requested));
+    window.addEventListener('pageshow',event=>{if(event.persisted) restoreChapter();});
+    window.addEventListener('popstate',restoreChapter);
     function afterTransition(element,property,timeout,callback) {
       let finished=false;
-      const finish=() => { if(finished) return; finished=true; clearTimeout(timer); element.removeEventListener('transitionend',onEnd); callback(); };
+      const cancel=() => { finished=true; clearTimeout(timer); element.removeEventListener('transitionend',onEnd); transitionCancels.delete(cancel); };
+      const finish=() => { if(finished) return; cancel(); callback(); };
       const onEnd=(event) => { if(event.target===element && event.propertyName===property) finish(); };
       const timer=setTimeout(finish,timeout);
+      transitionCancels.add(cancel);
       element.addEventListener('transitionend',onEnd);
     }
-    function go(direction) {
-      if(document.body.classList.contains('loading') || runtime.transitioning || performance.now()<coolUntil) return;
+    function finishTransition(cooldown) {
+      runtime.transitioning=false; coolUntil=performance.now()+cooldown; applyView(current*innerHeight);
+      if(queued!==null) {
+        const next=queued; queued=null;
+        go(next-current,{explicit:true});
+      } else persistChapter(current);
+    }
+    function go(direction,{explicit=false}={}) {
       const next=clamp(current+direction,0,sections.length-1);
+      if(explicit) { requested=next; persistChapter(next); }
+      if(document.body.classList.contains('loading') || runtime.transitioning) {
+        if(explicit) queued=next;
+        return;
+      }
+      if(!explicit && performance.now()<coolUntil) return;
       if(next===current) return;
+      requested=next; persistChapter(next);
       runtime.transitioning=true; closeMenu();
+      resetPointer();
       const old=sections[current], incoming=sections[next];
       old.inert=true;
       if(reduceMotion.matches) {
@@ -443,7 +501,7 @@
         current=next; runtime.sectionIndex=current; tween=null;
         incoming.style.opacity=''; incoming.style.transition=''; incoming.classList.add('show'); incoming.inert=false;
         applyView(current*innerHeight); revealSection(incoming); regrid();
-        runtime.transitioning=false; coolUntil=performance.now()+120;
+        finishTransition(120);
         return;
       }
       old.classList.add(direction>0?'out-up':'out-down');
@@ -454,7 +512,7 @@
         incoming.style.opacity='0'; incoming.style.transition='none'; incoming.classList.add('show'); incoming.inert=false;
         void incoming.offsetWidth;
         afterTransition(incoming,'opacity',ENTER_MS+80,() => {
-          runtime.transitioning=false; coolUntil=performance.now()+420; applyView(current*innerHeight);
+          finishTransition(420);
         });
         incoming.style.opacity=''; incoming.style.transition=''; revealSection(incoming);
         regrid();
@@ -544,21 +602,22 @@
       const label=$('#loaderPercent'); label.classList.remove('zero'); label.style.left=`${shown}%`; label.textContent=`${Math.floor(shown)}%`;
       if(shown>=100) {
         finished=true; clearTimeout(loaderFallback); $('#loader').classList.add('done'); document.body.classList.remove('loading');
-        runtime.hero?.resize(); layout(); revealSection($('#hero'),true);
+        if(queued!==null) restoreChapter();
+        runtime.hero?.resize(); layout(); revealSection(sections[current],current===0);
       }
     }
     function frame(now) {
       loaderFrame();
       if(tween) { const k=clamp((now-tween.start)/tween.duration); applyView((tween.from+(tween.to-tween.from)*k)*innerHeight); }
-      const cursorEase=reduceMotion.matches?1:.22;
-      cursorPosition.x+=(pointerScreen.x-cursorPosition.x)*cursorEase; cursorPosition.y+=(pointerScreen.y-cursorPosition.y)*cursorEase;
-      cursor.style.transform=`translate(${cursorPosition.x}px,${cursorPosition.y}px)`;
-      cursor.classList.toggle('dot',overHero||Boolean(runtime.hero?.dragging));
-      cursorLabel.style.transform=`translate(${cursorPosition.x}px,${cursorPosition.y}px) translate(-50%,25px)`;
+      const dt=pointerTime?Math.min((now-pointerTime)/1000,.05):1/60;
+      pointerTime=now;
+      const pointerEase=reduceMotion.matches?1:1-Math.exp(-dt*14);
+      pointer.x+=(pointerTarget.x-pointer.x)*pointerEase;
+      pointer.y+=(pointerTarget.y-pointer.y)*pointerEase;
       runtime.hero?.update(now); runtime.stage?.update(now);
       requestAnimationFrame(frame);
     }
-    applyView(0); layout(); requestAnimationFrame(frame);
+    restoreChapter(); requestAnimationFrame(frame);
   })();
   </script>
   <script type="module">
@@ -989,6 +1048,7 @@ void main(){
 
 function createHeroSignature({ canvas, markReady, getPointer, onGlyphs }) {
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, .1, 200);
   const root = new THREE.Group();
@@ -1105,8 +1165,8 @@ function createHeroSignature({ canvas, markReady, getPointer, onGlyphs }) {
         vec4 clip = projectionMatrix * mv;
         vec2 screen = (clip.xy / clip.w * .5 + .5) * uResolution;
         vec2 delta = screen - uPointer;
-        float influence = (1.0 - smoothstep(0.0, 145.0, length(delta))) * uHover * uMotion;
-        mv.xy += normalize(delta + vec2(.001)) * influence * .34;
+        float influence = (1.0 - smoothstep(0.0, 110.0, length(delta))) * uHover * uMotion;
+        mv.xy += normalize(delta + vec2(.001)) * influence * .12;
         gl_Position = projectionMatrix * mv;
         gl_PointSize = clamp(aSize * 1.75 * uDpr * uDistance / max(1.0, -mv.z), 1.0, 22.0 * uDpr);
         float pulse = pow(max(0.0, sin(aPhase * 2.0 - uTime * 1.15 + aLane * 1.5)), 8.0);
@@ -1140,7 +1200,7 @@ function createHeroSignature({ canvas, markReady, getPointer, onGlyphs }) {
   canvas.dataset.signatureParticles = String(count);
   let width = innerWidth, height = innerHeight;
   let elapsed = 0, lastTime = 0, dragging = false, dragId = null;
-  let lastX = 0, lastY = 0, dragY = 0, dragX = 0, velocity = 0;
+  let lastX = 0, lastY = 0, lastDragTime = 0, dragY = 0, dragX = 0, velocity = 0;
   let fitY = 0, failed = false, pointerInside = false;
   const pointer = new THREE.Vector2(-1000, -1000);
 
@@ -1172,40 +1232,63 @@ function createHeroSignature({ canvas, markReady, getPointer, onGlyphs }) {
     lastTime = 0;
   }
 
+  function canInteract(event) {
+    return !failed && !reduced.matches && finePointer.matches && event.pointerType !== 'touch' &&
+      document.querySelector('#hero')?.classList.contains('show') && !window.GDamonRuntime.transitioning;
+  }
+  function trackPointer(event) {
+    const rect = canvas.getBoundingClientRect();
+    pointerInside = event.clientX >= rect.left && event.clientX <= rect.right &&
+      event.clientY >= rect.top && event.clientY <= rect.bottom;
+    pointer.set(event.clientX - rect.left, rect.height - (event.clientY - rect.top));
+  }
+  function endDrag(reset = false) {
+    const id = dragId;
+    dragging = false; dragId = null;
+    canvas.classList.remove('is-dragging');
+    if (id !== null && canvas.hasPointerCapture(id)) canvas.releasePointerCapture(id);
+    if (reset) {
+      dragY = dragX = velocity = 0;
+      pointerInside = false;
+    }
+  }
+  function resetInteraction() { endDrag(true); }
+  canvas.addEventListener('pointerenter', event => { if(canInteract(event)) trackPointer(event); });
   canvas.addEventListener('pointerdown', event => {
-    if (reduced.matches || event.pointerType === 'touch' || event.button !== 0) return;
+    if (!canInteract(event) || event.button !== 0) return;
     dragging = true; dragId = event.pointerId;
-    lastX = event.clientX; lastY = event.clientY; velocity = 0;
+    canvas.classList.add('is-dragging');
+    trackPointer(event);
+    lastX = event.clientX; lastY = event.clientY; lastDragTime = event.timeStamp; velocity = 0;
     canvas.setPointerCapture(dragId);
     event.preventDefault();
   });
   canvas.addEventListener('pointermove', event => {
-    if (reduced.matches || event.pointerType === 'touch') return;
-    pointerInside = true;
-    pointer.set(event.clientX, height - event.clientY);
+    if (!canInteract(event)) return;
+    trackPointer(event);
     if (!dragging || event.pointerId !== dragId) return;
     const dx = event.clientX - lastX, dy = event.clientY - lastY;
-    dragY += dx * .005;
-    dragX = THREE.MathUtils.clamp(dragX + dy * .003, -.45, .45);
-    velocity = dx * .0003;
-    lastX = event.clientX; lastY = event.clientY;
+    const yaw = dx / width * Math.PI * 1.4;
+    dragY = THREE.MathUtils.clamp(dragY + yaw, -.65, .65);
+    dragX = THREE.MathUtils.clamp(dragX + dy / height * Math.PI * .7, -.32, .32);
+    velocity = THREE.MathUtils.clamp(yaw / Math.max((event.timeStamp - lastDragTime) / 1000, 1 / 120), -.6, .6);
+    lastX = event.clientX; lastY = event.clientY; lastDragTime = event.timeStamp;
   });
   canvas.addEventListener('pointerleave', () => { pointerInside = false; });
   function release(event) {
     if (!dragging || event.pointerId !== dragId) return;
-    dragging = false;
-    if (canvas.hasPointerCapture(dragId)) canvas.releasePointerCapture(dragId);
-    dragId = null;
+    endDrag(event.type === 'pointercancel');
   }
   canvas.addEventListener('pointerup', release);
   canvas.addEventListener('pointercancel', release);
-  canvas.addEventListener('lostpointercapture', () => { dragging = false; dragId = null; });
+  canvas.addEventListener('lostpointercapture', event => { if(event.pointerId === dragId) resetInteraction(); });
   canvas.addEventListener('webglcontextlost', event => {
-    event.preventDefault(); failed = true; fallback();
+    event.preventDefault(); resetInteraction(); failed = true; fallback();
   });
+  finePointer.addEventListener('change',resetInteraction);
   reduced.addEventListener('change', () => {
     uniforms.uMotion.value = reduced.matches ? 0 : 1;
-    if (reduced.matches) { dragging = false; dragId = null; dragY = dragX = velocity = 0; }
+    if (reduced.matches) resetInteraction();
     lastTime = 0;
   });
 
@@ -1220,17 +1303,17 @@ function createHeroSignature({ canvas, markReady, getPointer, onGlyphs }) {
     uniforms.uTime.value = reduced.matches ? 0 : elapsed;
     uniforms.uIntro.value = reduced.matches ? 1 : THREE.MathUtils.smoothstep(elapsed, 0, 1.2);
     uniforms.uPointer.value.copy(pointer);
-    uniforms.uHover.value = reduced.matches ? 0 : Number(pointerInside);
+    const hover = reduced.matches ? 0 : Number(pointerInside && finePointer.matches);
+    uniforms.uHover.value += (hover - uniforms.uHover.value) * (reduced.matches ? 1 : 1 - Math.exp(-dt * 18));
     const mouse = getPointer();
     if (!dragging) {
-      const decay = Math.pow(.988, dt * 60);
-      dragY = (dragY + velocity) * decay;
-      velocity *= Math.pow(.955, dt * 60);
-      dragX *= decay;
+      dragY = THREE.MathUtils.clamp(dragY + velocity * dt, -.65, .65) * Math.exp(-dt * 1.8);
+      velocity *= Math.exp(-dt * 9);
+      dragX *= Math.exp(-dt * 2.5);
     }
-    const targetX = reduced.matches ? -.06 : -.06 + mouse.y * .14 + dragX;
-    const targetY = reduced.matches ? -.12 : -.12 + Math.sin(elapsed * .13) * .20 + mouse.x * .18 + dragY;
-    const easing = reduced.matches ? 1 : 1 - Math.exp(-dt * 4);
+    const targetX = reduced.matches ? -.06 : -.06 + mouse.y * .10 + dragX;
+    const targetY = reduced.matches ? -.12 : -.12 + Math.sin(elapsed * .13) * .12 + mouse.x * .14 + dragY;
+    const easing = reduced.matches ? 1 : 1 - Math.exp(-dt * (dragging ? 24 : 9));
     root.rotation.x += (targetX - root.rotation.x) * easing;
     root.rotation.y += (targetY - root.rotation.y) * easing;
     root.rotation.z = reduced.matches ? -.045 : -.045 + Math.sin(elapsed * .19) * .012;
@@ -1248,7 +1331,9 @@ function createHeroSignature({ canvas, markReady, getPointer, onGlyphs }) {
   resize();
   update(performance.now());
   markReady('glb');
-  return { resize, update, get dragging() { return dragging; } };
+  return { resize, update, resetInteraction, get dragging() { return dragging; },
+    getInteraction:() => ({ dragging, pointerInside, dragX, dragY, velocity, hover:uniforms.uHover.value,
+      rotation:{ x:root.rotation.x, y:root.rotation.y }, dragBounds:{ x:.32, y:.65 } }) };
 }
 
 

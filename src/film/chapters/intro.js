@@ -162,12 +162,74 @@ function mantra(ctx, t, { width: w, height: h, portrait, square, palette: p }) {
   }
 }
 
+function trainingArtwork(ctx, t, { width: w, height: h, palette: p }) {
+  fill(ctx, w, h, p.blue);
+  const unit = Math.min(w, h);
+  const turn = -.12 + Math.sin(t * .45) * .11;
+  const spread = .88 + .12 * Math.sin(t * .6);
+  const project = (x, y, z) => {
+    const rx = x * Math.cos(turn) - y * Math.sin(turn);
+    const ry = x * Math.sin(turn) + y * Math.cos(turn);
+    return [w * .52 + (rx - ry) * unit * .38, h * .58 + (rx + ry) * unit * .16 - z * unit * .30];
+  };
+  const path = (points) => {
+    ctx.beginPath();
+    points.forEach(([x, y], index) => index ? ctx.lineTo(x, y) : ctx.moveTo(x, y));
+    ctx.closePath();
+  };
+  ctx.save();
+  ctx.lineWidth = Math.max(1, unit * .002);
+  for (let layer = 0; layer < 3; layer++) {
+    const z = (layer - .7) * spread;
+    const corners = [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([x, y]) => project(x, y, z));
+    const lower = corners.map(([x, y]) => [x, y + unit * .04]);
+    path([corners[3], corners[2], lower[2], lower[3]]);
+    ctx.fillStyle = '#0144bc'; ctx.fill();
+    ctx.strokeStyle = '#7aabff'; ctx.stroke();
+    path([corners[2], corners[1], lower[1], lower[2]]);
+    ctx.fillStyle = '#063da0'; ctx.fill(); ctx.stroke();
+    path(corners);
+    ctx.fillStyle = ['#1763e7', '#397ff1', '#e2edff'][layer]; ctx.fill();
+    ctx.strokeStyle = layer === 2 ? '#ffffff' : '#9abfff'; ctx.stroke();
+    ctx.strokeStyle = layer === 2 ? '#0757ed33' : '#bcd4ff50';
+    for (let line = 1; line < 10; line++) {
+      const position = -1 + line / 5;
+      for (const ends of [[[-1, position], [1, position]], [[position, -1], [position, 1]]]) {
+        ctx.beginPath();
+        ends.forEach(([x, y], index) => { const point = project(x, y, z); index ? ctx.lineTo(...point) : ctx.moveTo(...point); });
+        ctx.stroke();
+      }
+    }
+    for (let cell = 0; cell < 13; cell++) {
+      const x = -1 + ((cell * 7 + layer * 3) % 10) / 5;
+      const y = -1 + ((cell * 3 + layer) % 10) / 5;
+      const pulse = .28 + .72 * ((Math.sin(t * 1.5 - cell * .63 - layer) + 1) / 2);
+      path([[x + .03, y + .03], [x + .17, y + .03], [x + .17, y + .17], [x + .03, y + .17]].map(([px, py]) => project(px, py, z)));
+      ctx.fillStyle = layer === 2 ? p.blue : p.lime;
+      ctx.globalAlpha = pulse; ctx.fill(); ctx.globalAlpha = 1;
+    }
+  }
+  // Signals travel between model layers; every position is derived from scroll time.
+  for (let i = 0; i < 4; i++) {
+    const x = (i % 2 ? .8 : -.8), y = (i < 2 ? -.8 : .8);
+    const a = project(x, y, -.7 * spread), b = project(x, y, 1.3 * spread);
+    ctx.beginPath(); ctx.moveTo(...a); ctx.lineTo(...b);
+    ctx.strokeStyle = '#ffffff55'; ctx.stroke();
+    const progress = (t * .23 + i * .23) % 1;
+    const py = mix(a[1], b[1], progress);
+    ctx.fillStyle = i % 2 ? p.orange : p.lime;
+    ctx.beginPath(); ctx.arc(a[0], py, unit * .012, 0, TAU); ctx.fill();
+  }
+  ctx.restore();
+}
+
 export function createIntroChapter() {
   return {
     draw(ctx, localTime, layout) {
       const t = clamp(localTime, 0, 6);
       const frame = { ...layout, palette: layout.palette || PALETTE };
       const { width: w, height: h } = frame;
+      if (layout.artworkOnly) { trainingArtwork(ctx, t, frame); return; }
       ctx.save();
       ctx.globalAlpha = 1;
       ctx.globalCompositeOperation = 'source-over';
