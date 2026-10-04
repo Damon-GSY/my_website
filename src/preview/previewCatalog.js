@@ -7,6 +7,21 @@ export const previewFilters = [
 
 export const previews = [
   {
+    id: 'make-it-useful',
+    title: 'GDamon · Make it useful',
+    subtitle: 'An original motion portrait',
+    category: 'motion',
+    href: '/film',
+    image: '/films/gdamon-landscape-poster.webp',
+    video: '/films/gdamon-landscape.mp4',
+    mediaLabel: '18 秒原创个人短片',
+    description: '巨幅文字打开序幕，陶瓷机器人拆开外壳，再由信号与网络汇聚成 GDAMON。三段动作与原创节拍同步。',
+    motion: '身份开场 → 机器人装配 → 粒子签名',
+    interaction: '播放、暂停、拖动时间轴或选择章节；切换横屏、竖屏与方形构图，下载完整短片。',
+    tags: ['原创配乐', '三种构图', 'MP4 短片'],
+    featured: true,
+  },
+  {
     id: 'gdamon',
     title: 'GDamon · AI 粒子变形',
     subtitle: 'Intelligence, engineered.',

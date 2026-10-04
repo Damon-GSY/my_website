@@ -28,6 +28,7 @@ const ParticlePage = lazy(() => import('./particle/ParticlePage'));
 const FrameStudies = lazy(() => import('./motion-studies/FrameStudies'));
 const RobotPortfolio = lazy(() => import('./robot/RobotPortfolio'));
 const PreviewIndex = lazy(() => import('./preview/PreviewIndex'));
+const FilmPage = lazy(() => import('./film/FilmPage'));
 
 const agentOsChapters = [
   { id: 'capabilities', number: '01', shortLabel: 'CAP', label: 'Capabilities' },
@@ -136,6 +137,9 @@ function HomePage() {
 
 export default function App() {
   const location = useLocation();
+  if (location.pathname === '/film') {
+    return <Suspense fallback={null}><FilmPage /></Suspense>;
+  }
   if (['/', '/index', '/index.html'].includes(location.pathname)) {
     return <Suspense fallback={null}><PreviewIndex /></Suspense>;
   }

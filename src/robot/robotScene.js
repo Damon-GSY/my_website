@@ -97,9 +97,9 @@ function curvedVisorGeometry(width, height, radius) {
 }
 
 /** A self-contained, procedural character. Its timeline is controlled by the page. */
-export function createRobotScene(canvas, { onReady } = {}) {
+export function createRobotScene(canvas, { onReady, pixelRatio } = {}) {
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+  renderer.setPixelRatio(pixelRatio == null ? Math.min(window.devicePixelRatio || 1, 1.75) : clamp(pixelRatio, .5, 2));
   renderer.setClearColor(0x0954ed, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -297,10 +297,10 @@ export function createRobotScene(canvas, { onReady } = {}) {
   let gazeX = 0;
   let gazeY = 0;
 
-  function resize() {
+  function resize(explicitWidth, explicitHeight) {
     const rect = canvas.getBoundingClientRect();
-    width = Math.max(1, rect.width);
-    height = Math.max(1, rect.height);
+    width = Math.max(1, Number.isFinite(explicitWidth) ? explicitWidth : rect.width);
+    height = Math.max(1, Number.isFinite(explicitHeight) ? explicitHeight : rect.height);
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     const fullHeight = 4.92;
@@ -311,7 +311,7 @@ export function createRobotScene(canvas, { onReady } = {}) {
     camera.updateProjectionMatrix();
   }
 
-  function update({ time = 0, pointerX = 0, pointerY = 0, explosion = 0, paused = false, reduced = false, gesture = 0 } = {}) {
+  function update({ time = 0, pointerX = 0, pointerY = 0, explosion = 0, paused = false, reduced = false, gesture = 0, entrance = true, greetingTime = null } = {}) {
     if (disposed) return;
     // The host supplies elapsed active time. A slow GPU must not slow the choreography.
     if (!paused && !reduced) {
@@ -325,10 +325,10 @@ export function createRobotScene(canvas, { onReady } = {}) {
       previousGesture = gesture;
       gestureStarted = localTime;
     }
-    const helloTime = localTime - gestureStarted;
+    const helloTime = Number.isFinite(greetingTime) ? greetingTime : localTime - gestureStarted;
     const hello = !reduced && helloTime >= 0 && helloTime < 1.85 ? Math.sin(helloTime / 1.85 * Math.PI) : 0;
     helloStrength = hello;
-    const boot = reduced ? 0 : (1 - smooth(localTime / 1.25)) * .65;
+    const boot = reduced || !entrance ? 0 : (1 - smooth(localTime / 1.25)) * .65;
     // The page already interpolates scroll progress; use that same pose for geometry and copy.
     currentExplosion = clamp(explosion, 0, 1);
     const spread = currentExplosion + boot;

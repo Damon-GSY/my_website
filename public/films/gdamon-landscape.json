@@ -1,0 +1,156 @@
+{
+  "title": "GDamon — Make it useful",
+  "format": "landscape",
+  "width": 1280,
+  "height": 720,
+  "fps": 30,
+  "duration": 18,
+  "frames": 540,
+  "chapters": [
+    {
+      "name": "Hello",
+      "start": 0
+    },
+    {
+      "name": "Intelligence in motion",
+      "start": 6
+    },
+    {
+      "name": "Make it useful",
+      "start": 12
+    }
+  ],
+  "production": "Deterministic frames from the live Canvas/Three.js film; original synthesized audio. Not AI-generated video or interpolated still images.",
+  "source": "src/film",
+  "sourceSHA256": "da1942751e44d85d20e87ef15ecbb435df09198c0ee22d2337edc93b3e2b354a",
+  "file": "/films/gdamon-landscape.mp4",
+  "poster": "/films/gdamon-landscape-poster.webp",
+  "sha256": "cff3a89b9c440b261f9a26df481efb86576d6e41d6931bd7ca3f6a46fd36b562",
+  "audio": {
+    "title": "Make it useful — original score",
+    "production": "Original deterministic synthesized audio; no external samples or generated-provider audio.",
+    "source": "scripts/synthesize-gdamon-score.py",
+    "source_sha256": "88fdda1701e89def5e55d1fd7bb4cf2997cd641b89089a4c01d5d6aea5727d19",
+    "sha256": "73528ee37e80a873d2871e52422489ec6c0849731b2a2ea4a6678c9bce582d90",
+    "duration": 18,
+    "bpm": 120,
+    "sampleRate": 48000,
+    "channels": 2,
+    "chapterStarts": [
+      0,
+      6,
+      12
+    ],
+    "events": {
+      "kick": 32,
+      "hat": 27,
+      "pluck": 25,
+      "pad": 9,
+      "transition": 2,
+      "mechanical": 5
+    },
+    "loudness": {
+      "integratedLUFS": -14.28,
+      "truePeakDBTP": -1.88,
+      "rangeLU": 1.8,
+      "targetLUFS": -14,
+      "ceilingDBTP": -1.5
+    }
+  },
+  "encodedAudioLoudness": {
+    "integratedLUFS": -14.3,
+    "truePeakDBTP": -1.81,
+    "rangeLU": 1.7
+  },
+  "probe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "width": 1280,
+        "height": 720,
+        "pix_fmt": "yuv420p",
+        "r_frame_rate": "30/1",
+        "duration": "18.000000",
+        "nb_frames": "540"
+      },
+      {
+        "codec_name": "aac",
+        "sample_rate": "48000",
+        "channels": 2,
+        "r_frame_rate": "0/0",
+        "duration": "18.000000",
+        "nb_frames": "845"
+      }
+    ],
+    "format": {
+      "duration": "18.000000",
+      "size": "7019112"
+    }
+  },
+  "metrics": {
+    "ready": true,
+    "duration": 18,
+    "time": 17.966666666666665,
+    "width": 1280,
+    "height": 720,
+    "chapter": "signature",
+    "robot": {
+      "renderer": "three",
+      "failure": null,
+      "lastPose": {
+        "time": 8,
+        "explosion": 4.129803850005942e-7,
+        "pointerX": -0.1567884498915695,
+        "pointerY": 0.07212339224829724,
+        "entrance": false,
+        "greetingTime": 1.4000000000000004
+      },
+      "renderedFrames": 188,
+      "explosion": 4.129803850005942e-7,
+      "meshes": 116,
+      "triangles": 58334,
+      "width": 723,
+      "height": 655,
+      "ready": true,
+      "phase": 8,
+      "gesture": 0,
+      "helloStrength": 0.6919388689775459,
+      "blinkAmount": 1,
+      "eyes": [
+        {
+          "position": [
+            -0.5317591337418678,
+            0.03603321342634365,
+            0.343
+          ],
+          "scaleY": 0.676873336212768
+        },
+        {
+          "position": [
+            0.5082408662581323,
+            0.03603321342634365,
+            0.343
+          ],
+          "scaleY": 0.7711541363513379
+        }
+      ],
+      "assemblyParts": 9,
+      "headRotation": [
+        -0.03042973850381476,
+        0,
+        0.010020794051581149
+      ],
+      "modelRotation": [
+        0.04509727174557949,
+        -0.38276928198976334,
+        0
+      ]
+    },
+    "playing": false,
+    "muted": true,
+    "format": "landscape"
+  },
+  "cache": "/tmp/gdamon-film/landscape-da1942751e44d85d-1280x720-30"
+}

@@ -1,0 +1,59 @@
+{
+  "file": "user-pasted-original.txt",
+  "bytes": 40979,
+  "lines": 970,
+  "sha256": "fa74e4c68ff32f414e45156c2a54255880bce1f3b2bc46f5ad3fc8b91186af97",
+  "chapters": [
+    {
+      "line": 1,
+      "title": "01. Pixels - model writes a program, not a video\\"
+    },
+    {
+      "line": 45,
+      "title": "02\\. Setup - install the studio in 10 minutes\\"
+    },
+    {
+      "line": 102,
+      "title": "03\\. One-liner - showreel prompt and why it works\\"
+    },
+    {
+      "line": 189,
+      "title": "04\\. Brand - point the reel at your product\\"
+    },
+    {
+      "line": 257,
+      "title": "05\\. Reference - name a look, feed a frame\\"
+    },
+    {
+      "line": 317,
+      "title": "06\\. Spec  - write the state list, not the vibe\\"
+    },
+    {
+      "line": 450,
+      "title": "07\\. Engine - build the seek(t) renderer\\"
+    },
+    {
+      "line": 559,
+      "title": "08\\. Springs - make motion feel expensive\\"
+    },
+    {
+      "line": 598,
+      "title": "09\\. Sound - score it to the beat\\"
+    },
+    {
+      "line": 703,
+      "title": "10\\. Overnight - write the director's brief\\"
+    },
+    {
+      "line": 835,
+      "title": "11\\. Critique - make Opus watch its own frames\\"
+    },
+    {
+      "line": 902,
+      "title": "12\\. Ship - formats, a skill, and a service\\"
+    }
+  ],
+  "code_prompt_markers_checked": 18,
+  "resource_entries": 8,
+  "scope": "Structural completeness checked against inherited user-pasted text; no independent byte-for-byte source export available. Source-embedded show-more markers retained; videos not included."
+}

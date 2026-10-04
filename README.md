@@ -4,7 +4,15 @@
 
 Open **`http://localhost:4175/`** after starting `npm run dev -- --host 0.0.0.0 --port 4175`. `/index` and `/index.html` open the same gallery; the older `/html-studies/index.html` directory redirects here.
 
-The seven current directions are GDamon Signature, the continuous Inner Workings film, Hello, human., Matrix, DAMON Signature, Neural, and the original Particle Tree. Each card describes its motion and opens the full experience in a new tab. The GDamon and mechanical-core cards play actual rendered previews, with Pause/Play controls. Autoplay pauses offscreen and in background tabs; reduced motion starts with a poster.
+The eight current directions are Make it useful, GDamon Signature, the continuous Inner Workings film, Hello, human., Matrix, DAMON Signature, Neural, and the original Particle Tree. Each card describes its motion and opens the full experience in a new tab. Film and particle cards play actual rendered previews, with Pause/Play controls. Autoplay pauses offscreen and in background tabs; reduced motion starts with a poster.
+
+## Make it useful — GDamon film
+
+Open **`http://localhost:4175/film`**, also linked as the first card on `/`. An original 18-second film introduces Damon with kinetic type, opens and reassembles the real Three.js robot, and resolves organized signals into a particle signature. Playback includes seeking, chapter jumps, sound, and separately composed landscape, portrait, and square formats.
+
+The same explicit timestamp drives the browser scene and exported MP4 frames. Typography and particles use Canvas 2D; the ceramic character uses the existing Three.js geometry. The score is synthesized locally on a 120 BPM grid. This is code-rendered motion, not an AI video or an interpolated keyframe slideshow. The final second is a deliberate closing hold; the film does not claim a seamless loop.
+
+See the [shared animation direction](docs/film/ANIMATION_GUIDE.md), [rendering instructions](docs/film/RENDERING.md), and [original reference receipt](reference/motion-code2video-0xmovez/INDEX.txt). The complete supplied article was restored and its SHA-256 verified; its embedded videos were not played or independently validated.
 
 The same page includes the Oil Motion pose studies, original HTML references, and earlier experiments. The index runs no WebGL scenes itself.
 

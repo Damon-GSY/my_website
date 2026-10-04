@@ -107,7 +107,7 @@ export default function PreviewIndex() {
       <main className="pv-main">
         <section className="pv-intro" aria-labelledby="pv-title">
           <div><p className="pv-eyebrow"><span /> WORK IN MOTION</p><h1 id="pv-title">网站预览室<span>。</span></h1>
-            <p className="pv-intro-copy">最近在看的七个方向都在这里。<br />先看动效，再进入完整页面。</p>
+            <p className="pv-intro-copy">最近在看的 {previews.length} 个方向都在这里。<br />先看动效，再进入完整页面。</p>
           </div>
           <div className="pv-intro-aside"><span className="pv-count">{String(previews.length).padStart(2, '0')}<span> / CURRENT</span></span><p>每个方案在新标签页打开，方便来回比较。<br />星尘变形和机械短片可直接预览。</p><a href="#versions">开始浏览 <ArrowDown size={17} aria-hidden="true" /></a></div>
         </section>

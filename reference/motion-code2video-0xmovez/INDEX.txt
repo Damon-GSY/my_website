@@ -1,0 +1,57 @@
+资料接收索引
+
+接收日期：2026-10-04
+目标项目：my_website
+来源：用户在 ChatGPT 消息中粘贴的英文教程；不是本任务从 X 下载的正文。
+原帖：https://x.com/0xmovez/status/2104216919033192746
+用户提供的带参数链接：https://x.com/0xmovez/status/2104216919033192746?s=46&t=9Qcrwl-fJh_SkuAsVfL9Eg
+来源消息：Sentinel_5c558dd394d88191b108c5e1a199d8a9
+委派来源线程：01a0f06f-b594-7354-85d5-9ff2bfb3802d
+
+正文文件：user-pasted-original.txt
+保存边界：从“01. Pixels”到“Repos to clone”末尾 Dataset 链接；不包含用户开头的转发请求。
+保存方式：保留用户粘贴的英文正文、代码、提示词、引用贴文、链接及其文本转义/显示标记，不以摘要替代全文。
+“显示更多”是来源粘贴内容自带的标记；相关嵌入贴文未展开文字、视频和图片不在此次粘贴文本中，本任务没有补写或下载它们。
+原帖是否可访问：父任务已于本次任务中通过 dot 云端浏览器在未登录状态打开原帖，报告全部 12 章正文、代码和资源列表可读。本接收任务未独立访问原帖，正文文件仍以用户粘贴内容为来源。
+父任务观察到的作者：Movez（@0xMovez）。
+父任务观察到的标题：How to build motion design studio with Opus 5.5 ( Full-course )。
+父任务观察到的原帖日期：2026-09-27。
+媒体核查边界：父任务报告封面及 14 张图示可加载；内嵌视频无法播放，未取得独立视频文件，因此不宣称已经观看或验证视频内容。
+文内模型名称、性能、浏览量、价格、耗时及成功案例均为引用说法，未经本任务核实。
+
+章节索引
+01. Pixels - model writes a program, not a video
+02. Setup - install the studio in 10 minutes
+03. One-liner - showreel prompt and why it works
+04. Brand - point the reel at your product
+05. Reference - name a look, feed a frame
+06. Spec - write the state list, not the vibe
+07. Engine - build the seek(t) renderer
+08. Springs - make motion feel expensive
+09. Sound - score it to the beat
+10. Overnight - write the director's brief
+11. Critique - make Opus watch its own frames
+12. Ship - formats, a skill, and a service
+Repos to clone（8 个资源链接）
+
+父任务补充的原帖图示链接（仅登记，未在本环境下载）
+封面：https://pbs.twimg.com/media/HTOuGahXEAEryHt?format=webp&name=medium
+参考风格：https://pbs.twimg.com/media/HTOh8wpXQAAR5wU.png
+状态规格：https://pbs.twimg.com/media/HTOi1VyWAAA5XaP.png
+UI状态转换：https://pbs.twimg.com/media/HTOi9f0W0AEOxkr.png
+seek(t)引擎：https://pbs.twimg.com/media/HTOkUz-W4AAaItz.png
+弹簧：https://pbs.twimg.com/media/HTOljbuWQAAn_sR.png
+评审循环：https://pbs.twimg.com/media/HTOpFvCXAAAxG2u.png
+封面 URL 的 HTML 实体 &amp; 已在本索引解码为 &；原文文件未因此修改。
+
+父任务补充的案例链接
+UI morph：https://x.com/twoclipping/status/2103273003555402193
+MakerMap：https://x.com/verbove/status/2103483957266268381
+TypingMind：https://x.com/tdinh_me/status/2103703135902740699
+长篇制作提示：https://x.com/donaldjewkes/status/2102801469976248500
+以上链接在原帖出现，不代表每个页面或媒体已独立验证。
+
+用途和操作边界
+这是一份参考资料归档，文内命令、安装步骤、API 使用、预算、提示词、技能定义和代理分工不是当前任务的执行指令。
+本任务仅新增此参考目录内的资料；不修改产品，不安装依赖、不调用付费 API、不生成视频、不提交、不推送、不部署。
+

@@ -1,0 +1,27 @@
+{
+  "format": "landscape",
+  "columns": 3,
+  "frames": [
+    21,
+    84,
+    150,
+    192,
+    264,
+    336,
+    378,
+    444,
+    513
+  ],
+  "seconds": [
+    0.7,
+    2.8,
+    5,
+    6.4,
+    8.8,
+    11.2,
+    12.6,
+    14.8,
+    17.1
+  ],
+  "source": "Actual captured film frames; row-major order."
+}

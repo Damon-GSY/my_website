@@ -1,3 +1,23 @@
+# Design QA — GDamon / Make it useful
+
+Reviewed 2026-10-04 on `codex/oil-motion-frame-studies`. New route: `/film`, first entry in the unified `/` index.
+
+The original 18-second film combines three chapters: kinetic personal typography, the existing procedural Three.js robot opening to its processor and reassembling, then 9,600 directed particles forming GDAMON. Landscape, portrait, and square compositions use their own layouts. The soundtrack is original deterministic synthesis at 120 BPM. This is code-rendered motion; no OpenRouter video was generated or paid generation submitted.
+
+The complete supplied tutorial was recovered from the separate receipt task and checked against its recorded 970 lines, 40,979 bytes, and SHA-256. It informed the explicit `seek(t)` renderer, parallel chapter production, original sound, and contact-sheet review. Its embedded videos were not played, so this is not presented as a reproduction of their motion.
+
+Visual review inspected nine actual frames per format, including a 360×640 portrait. It found and corrected overlapping square-format THINK / BUILD / REPEAT lines. A pale blue-grey disc now separates the exploded white shell from the ivory background. Mobile playback defaults to portrait with a full-width image and native vertical page scrolling, keeping the controls accessible below the image.
+
+The production-build frame check passes **15/15 arbitrary-order repeat hashes** across the three formats, including robot poses after jumping to other chapters. All three robot contexts report the real Three.js renderer (116 meshes / 58,334 triangles), with zero JavaScript errors. The check also visits both chapter transitions and the exact 18-second endpoint; the endpoint is an intentional closing hold, not a claimed seamless loop. The first development-server run was interrupted by an HMR reload during parallel editing; the complete rerun uses the stable production build.
+
+All three actual MP4s pass full decode, file hash, H.264/AAC, 18.000-second duration, 540-frame count and 30fps verification: 1280×720 landscape (7.02 MB), 720×1280 portrait (6.21 MB), and 900×900 square (6.14 MB). Actual encoded audio measures −14.30 LUFS and −1.81 dBTP. Each export records its source fingerprint and measured media data.
+
+The production player passes **6/6 browser scenarios**: desktop play/pause/replay/scrub/chapter jumps, first sound activation at 8 seconds, final-frame hold; 390×844, 320×568 and 844×390 layouts with reduced motion; forced unavailable WebGL followed by real MP4 decoding/playback; and the index's first-card URL, poster and decoded video. No horizontal overflow, unexpected browser errors, or failed media requests. Measured first sound-on drift was 0.163 seconds. The initial player report omitted evidence return values; the harness was corrected and rerun to retain the measurements. WebGL failure is intentionally injected only for the fallback scenario and its expected console message is recorded separately.
+
+Additional smoke checks confirm all three format selections resize the live canvas and select the matching download; the existing `/robot` still initializes its nine assemblies and 116 meshes. `npm run lint`, `npm run build`, and `git diff --check` pass. The existing shared Three.js bundle-size advisory remains. Actual final frame sheets are in `public/films/gdamon-{landscape,portrait,square}-contact.webp`; timestamp maps accompany them. Detailed frame and player evidence is retained under `/workspace/film-captures/`, including `final/review.json`, `player-final/player-report.json`, and `format-robot-smoke.json`. Software Chromium establishes correct rendering and controls; Safari and physical-device frame rates are not measured.
+
+---
+
 # Design QA — Hello, human. / Three.js character portfolio
 
 Reviewed 2026-10-04 on `codex/oil-motion-frame-studies`.

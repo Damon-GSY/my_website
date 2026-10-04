@@ -1,0 +1,31 @@
+{
+  "title": "Make it useful \u2014 original score",
+  "production": "Original deterministic synthesized audio; no external samples or generated-provider audio.",
+  "source": "scripts/synthesize-gdamon-score.py",
+  "source_sha256": "88fdda1701e89def5e55d1fd7bb4cf2997cd641b89089a4c01d5d6aea5727d19",
+  "sha256": "73528ee37e80a873d2871e52422489ec6c0849731b2a2ea4a6678c9bce582d90",
+  "duration": 18,
+  "bpm": 120,
+  "sampleRate": 48000,
+  "channels": 2,
+  "chapterStarts": [
+    0,
+    6,
+    12
+  ],
+  "events": {
+    "kick": 32,
+    "hat": 27,
+    "pluck": 25,
+    "pad": 9,
+    "transition": 2,
+    "mechanical": 5
+  },
+  "loudness": {
+    "integratedLUFS": -14.28,
+    "truePeakDBTP": -1.88,
+    "rangeLU": 1.8,
+    "targetLUFS": -14,
+    "ceilingDBTP": -1.5
+  }
+}
