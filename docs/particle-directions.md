@@ -17,7 +17,9 @@ The three new scenes use procedural Three.js geometry, shaders, and a locally dr
 
 ## Robot motion
 
-`/robot` retains the supplied SVG helmet geometry and the complete personal portfolio. Its motion connects directional part assembly, pointer depth, scroll-controlled separation, project reveals, the research diagram, notes, and contact. Replay restarts assembly; Pause allows the page to be read without ongoing motion. Reduced motion presents readable final content.
+`/robot` now opens **Hello, human.**, a complete personal portfolio built around a procedural Three.js ceramic robot. The head and eyes follow the pointer, the character blinks, and **Say hello** triggers a nod. Scrolling or choosing **Meet the system** opens the shell to reveal the processor and mechanical core, connecting **Plan / Act / Learn** to Damon's work. The page continues through cream project panels, a dark navy biography, notes, and a cobalt contact section.
+
+**Reassemble** returns to the introduction; **Replay** restarts the entrance, and **Pause** stops the character's motion. Reduced motion presents a static pose and readable content. The earlier SVG helmet implementation has been superseded on `/robot`; the original SVG reference remains at `/future-machine.html`.
 
 ## Review
 

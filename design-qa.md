@@ -1,3 +1,39 @@
+# Design QA — Hello, human. / Three.js character portfolio
+
+Reviewed 2026-10-04 on `codex/oil-motion-frame-studies`.
+
+## Result and visual direction
+
+`/robot` is rebuilt around an expressive real-time ceramic character: cobalt **HELLO, HUMAN.**, an ivory **INSIDE THE AGENT.** inspection scene, lime Plan / Act / Learn, cream project panels, a navy biography, notes, and a cobalt contact section. The robot has nine independently animated assemblies, a convex visor, luminous eyes, machined ear housings, an antenna, and a visible processor. No model downloads, new dependencies, or generated-video claims are involved.
+
+Three generated art-direction images informed the hero, inspection, and biography. Source dimensions were 1505×1045; browser captures were 1440×1000, the same aspect ratio to rounding. Paired comparisons normalize both to 720×500 in the same image input: `comparison-hero.png`, `comparison-inspection.png`, and `comparison-about.png` under `/workspace/robot-redesign-captures/`. Typography hierarchy, cobalt/ivory/lime contrast, generous spacing, section composition, robot visibility, and personal copy were reviewed together.
+
+Intentional adaptations: the live character has a friendly rounded visor, smile, and antenna instead of the generated concept's photoreal helmet. Its processor is a stylized mechanical core, animated as actual geometry. The biography uses readable profile copy and research rows instead of another running robot canvas. The result follows the art direction; it is not claimed as a pixel-exact copy of the generated images.
+
+## Fixed findings
+
+- **P1 — Inspection occlusion:** at the pointer position used to click the hero CTA, the visor initially hid the processor. Inspection now limits pointer rotation, swings the visor aside, and brings the processor forward. Desktop and mobile captures confirm that the core stays exposed.
+- **P1 — Short-viewport controls:** a minimum scene height placed controls below the fold on landscape phones. The stage now fits the viewport; short-screen typography and CTA layout keep controls and copy in view.
+- **P2 — Animation timing:** capped frame deltas made entrance and gestures slow on software WebGL. Active wall time now drives choreography; the page supplies the single interpolated explosion value to both geometry and text.
+- **P2 — Pause and reduced motion:** pause freezes the pointer pose as well as the clock. Reduced motion shows a fully assembled static model, while explicit inspection navigation remains usable. The disabled greeting no longer overrides its hidden state during inspection.
+- **P2 — Geometry and layout:** removed coplanar ear surfaces that caused flicker, centered the mobile canvas, added a height ceiling to large type, and separated the hero heading from its description and CTA.
+
+No unresolved P0/P1/P2 findings remain in the reviewed surfaces.
+
+## Validation
+
+- **27/27 production-browser checks pass**, with no page errors: actual geometry draws (58,334 triangles, nine assemblies), autoplay, eye/head tracking, greeting, Pause/Resume behavior, scroll opening while paused, hidden-control focus, reassembly, replay, offscreen suspension, four project links, three article entries, real project navigation, controller disposal on route change, reduced motion, gallery metadata/thumbnail, and WebGL failure/loss fallback.
+- Six viewports pass layout assertions: **1440×900, 1024×768, 844×390, 390×844, 390×667, 320×568**. No horizontal overflow; the hero title clears its body copy and the controls remain inside the viewport. Final visual review also covers the full desktop inspection, mobile inspection, short landscape inspection, work, and biography.
+- The initial dev harness checked the project immediately after its URL changed, before React's lazy route mounted. It was corrected to await the actual project element and controller disposal; both production checks pass. The early pause check similarly needed to await the state/render transition before comparing poses.
+- The shared index has an updated actual-page WebP thumbnail and robot description. A transparent WebP rendered from the same real model supplies the WebGL fallback. No WebGL scene runs inside the gallery.
+- `npm run lint`, `npm run build`, and `git diff --check` pass. The existing shared Three.js chunk-size advisory remains. Original supplied HTML references are unchanged.
+
+Evidence: `/workspace/robot-redesign-captures/functional-qa.json`, `verified-hero-desktop.png`, `verified-inspection-desktop.png`, `verified-hero-mobile.png`, `verified-inspection-mobile.png`, `verified-inspection-landscape.png`, `final-work.png`, `final-about.png`, plus the paired comparison images. Testing used Chromium with software WebGL; Safari and physical-device GPU performance were not measured.
+
+final result: passed
+
+---
+
 # Design QA — signature hero and continuous core film
 
 Reviewed 2026-10-04 on `codex/oil-motion-frame-studies`.

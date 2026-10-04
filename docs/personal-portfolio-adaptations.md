@@ -5,7 +5,7 @@ The pasted designs are visual references for Damon's personal website. Their ada
 ## Pages
 
 - `/particle`: Matrix character rain now opens the personal portfolio, with three new scenes forming DAMON. The original blue sphere, tree, reflective water, and cube remain at `?scene=tree`. All modes include selected projects, biography, notes, and contact. See [particle directions](particle-directions.md).
-- `/robot`: the cobalt and white helmet assembly becomes an agent-themed personal portfolio with selected work, research background, notes, and contact.
+- `/robot`: **Hello, human.**, an agent-themed personal portfolio with a live Three.js ceramic robot, oversized cobalt-and-cream typography, selected work, a dark navy biography, notes, and contact.
 - `/html-studies/index.html`: comparison of the two personal sites, with smaller links to the preserved original references.
 - `/`: the motion-study index exposes direct links to both personal sites above the image experiments.
 
@@ -24,6 +24,6 @@ Use the displayed name Damon Guo-Siyi. Do not infer degree titles or add publica
 
 ## Motion
 
-The particle page uses actual Three.js geometry and shaders. The helmet page uses the supplied SVG pieces and coordinated assembly animation; it is not a Three.js model. Both pages must retain readable final states with reduced motion and meaningful links on narrow screens.
+The particle page uses actual Three.js geometry and shaders. The robot page now uses procedural Three.js geometry, replacing its earlier SVG helmet implementation. Its head and eyes follow the pointer, it blinks and nods in response to **Say hello**, and scrolling opens its ceramic shell around a mechanical core. **Meet the system**, **Reassemble**, **Pause**, and **Replay** provide explicit scene controls. Both pages must retain readable final states with reduced motion and meaningful links on narrow screens.
 
 Browser review evidence and implementation limits are recorded in `design-qa.md`.

@@ -4,9 +4,17 @@
 
 Open **`http://localhost:4175/`** after starting `npm run dev -- --host 0.0.0.0 --port 4175`. `/index` and `/index.html` open the same gallery; the older `/html-studies/index.html` directory redirects here.
 
-The seven current directions are GDamon Signature, the continuous Inner Workings film, Agent Assembly, Matrix, DAMON Signature, Neural, and the original Particle Tree. Each card describes its motion and opens the full experience in a new tab. The GDamon and mechanical-core cards play actual rendered previews, with Pause/Play controls. Autoplay pauses offscreen and in background tabs; reduced motion starts with a poster.
+The seven current directions are GDamon Signature, the continuous Inner Workings film, Hello, human., Matrix, DAMON Signature, Neural, and the original Particle Tree. Each card describes its motion and opens the full experience in a new tab. The GDamon and mechanical-core cards play actual rendered previews, with Pause/Play controls. Autoplay pauses offscreen and in background tabs; reduced motion starts with a poster.
 
 The same page includes the Oil Motion pose studies, original HTML references, and earlier experiments. The index runs no WebGL scenes itself.
+
+## Hello, human. — a Three.js character portfolio
+
+Open **`http://localhost:4175/robot`** for Damon's redesigned robot portfolio. An expressive white ceramic robot sits alongside oversized **HELLO, HUMAN.** typography on cobalt blue. This is a live Three.js sculpture: its head and luminous eyes follow the pointer, it blinks, and **Say hello** triggers a nod.
+
+Scroll, or choose **Meet the system**, to open the ceramic shell and expose the processor and mechanical core. The **Plan / Act / Learn** sequence connects the character to Damon's work on reasoning, tools, and evaluation. **Reassemble** returns to the introduction; **Pause** and **Replay** control the scene, and the page respects reduced-motion preferences.
+
+The full portfolio continues through cream project panels, a dark navy biography, research notes, and a cobalt contact section. Projects, figures, writing, and destinations come from the existing personal-site data. The gallery uses a screenshot for this version; the character animation runs on `/robot` itself.
 
 ## GDamon — AI particle morph
 
@@ -26,9 +34,9 @@ Open **`/html-studies/index.html`** to compare the complete personal websites an
 | DAMON | `/particle?scene=signature` | Violet particle ribbons weave into the name, then an orbital structure |
 | Neural | `/particle?scene=neural` | Amber/cyan connected nodes and traveling signals resolve into DAMON |
 | Tree baseline | `/particle?scene=tree` | Original Three.js sphere/tree/cube scene |
-| Agent Assembly | `/robot` | Panel assembly, pointer depth, scroll-controlled exploded diagram, and motion throughout the personal portfolio |
+| Hello, human. | `/robot` | Live Three.js ceramic robot, pointer gaze, blink and nod, scroll-controlled shell opening, and a complete personal portfolio |
 
-All particle modes include selected work, biography, notes, creator channels, and contact. Use **Reveal DAMON** to go directly to the name formation, or scroll through the sequence. The robot page offers **Pause motion** and **Replay**. Both pages respect reduced motion. See [scene and motion notes](docs/particle-directions.md).
+All particle modes include selected work, biography, notes, creator channels, and contact. Use **Reveal DAMON** to go directly to the name formation, or scroll through the sequence. The robot page offers **Pause** and **Replay**. Both pages respect reduced motion. See [scene and motion notes](docs/particle-directions.md).
 
 For a fresh checkout of this preview branch:
 
