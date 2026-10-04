@@ -51,6 +51,10 @@ Both adaptations use the existing project and article data and real destinations
 
 The two pasted-text attachments contain identical Anchor AI documents (SHA-256 `f955679e011440034e887db004277172b1c6b94cfc713e3e924433e812efc62c`). The original's 15 external CloudFront SVG logos and badges currently fail to load in the cloud preview, and several navigation anchors have no sections in the supplied source. The preserved original retains those dependencies and links. The Damon adaptation uses local assets and portfolio destinations. Future Machine intentionally contains one screen; its original specification forbids scrolling.
 
+## OpenRouter generation pilot
+
+An [OpenRouter / Oil Motion robot pilot](motion-studies/openrouter-pilot/README.md) is prepared with a dedicated image/video API adapter, a character identity reference, a four-second greeting brief, and a verified media budget. Public model discovery works; actual generation is pending the cloud environment's `OPENROUTER_API_KEY` binding; no new AI clip is claimed or added to the gallery yet. The helper reads credentials only at generation time, outside the website bundle.
+
 ## Oil Motion studies and continuous core film
 
 Branch: **`codex/oil-motion-frame-studies`**. `/` is the shared preview index; `/motion-lab` collects the three motion studies.

@@ -1,0 +1,42 @@
+{
+  "name": "Hello, human. \u2014 OpenRouter greeting pilot",
+  "status": "prepared; generation blocked by missing runtime secret",
+  "subject_count": 1,
+  "subjects": [
+    {
+      "identity": "The existing GDamon ceramic robot: pearl-white crown, dark rounded visor, two luminous lime eyes, small smile, chrome/cobalt circular ear housings, orange accents, single antenna, short machined collar."
+    }
+  ],
+  "reference": "public/robot-assets/robot-still.webp",
+  "style": "Sculptural studio character animation for Damon's personal AI research website",
+  "motion_intent": "The robot notices the viewer, blinks once, gives one small friendly nod, and returns to its initial pose in one continuous shot.",
+  "background_owner": "video",
+  "scene": "Cobalt studio backdrop, fixed camera, soft grounded shadow and consistent cool-white product lighting. No text or UI inside the image.",
+  "driver": "time",
+  "input_semantics": "event",
+  "time_control": "autonomous",
+  "navigation": "none",
+  "clip_continuity": "independent",
+  "continuity": [
+    "One subject only",
+    "Preserve the identity and component count",
+    "Fixed framing, scale, light and background",
+    "No cuts, extra limbs or melting geometry",
+    "Use the same accepted image for both first and last frame"
+  ],
+  "aspect_ratio": "16:9",
+  "destination": {
+    "planned_route": "/motion-lab/openrouter",
+    "max_display_css_px": [
+      1280,
+      720
+    ],
+    "target_dpr": 1,
+    "mobile": "Contain the complete 16:9 frame; do not crop the antenna or collar"
+  },
+  "availability": {
+    "image_generated": false,
+    "video_generated": false,
+    "paid_requests_submitted": false
+  }
+}

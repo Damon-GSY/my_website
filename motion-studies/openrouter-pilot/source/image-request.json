@@ -1,0 +1,9 @@
+{
+  "model": "openai/gpt-image-2",
+  "prompt": "Create the opening keyframe of a premium robotics studio film for GDamon's personal AI research website. The attached image is the character identity reference. Preserve exactly one pearl-white ceramic robot head, dark rounded visor, two luminous lime capsule eyes, a small curved smile, chrome and cobalt circular ear housings, orange accents, one antenna, and the short machined collar. Give the same character refined physically plausible ceramic, glass and machined-metal materials and soft studio reflections. Present the complete robot in a three-quarter view, centered in a 16:9 cobalt-blue studio composition with generous clearance around its antenna, ears and collar. A subtle stable floor shadow anchors it. The subject is attentive and friendly. Camera and lighting will remain fixed for the entire animation. No text, no interface, no watermarks, no extra parts or characters. Opaque finished studio background, no transparency or checkerboard.",
+  "quality": "medium",
+  "background": "opaque",
+  "output_format": "png",
+  "n": 1,
+  "aspect_ratio": "16:9"
+}

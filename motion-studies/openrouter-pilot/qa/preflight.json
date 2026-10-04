@@ -1,0 +1,39 @@
+{
+  "checked_at": "2026-10-04T11:38:28Z",
+  "credential_variable": "OPENROUTER_API_KEY",
+  "runtime_credential_present": false,
+  "cloud_secret_has_saved_binding": false,
+  "cloud_secret_requirement_saved": true,
+  "allowed_destination": "openrouter.ai",
+  "public_catalog_probe": "HTTP 200 after saved domain configuration propagated",
+  "paid_requests_submitted": 0,
+  "video_generated": false,
+  "budget_passed": true,
+  "docs_verified_from": "Official OpenRouterTeam/docs repository",
+  "next_requirement": "Save the OPENROUTER_API_KEY secret value in this cloud environment, then repeat authenticated preflight.",
+  "offline_validation": {
+    "protocol_error_and_security_tests": 19,
+    "passed": 19,
+    "test_transport": "mocked; no paid API requests",
+    "image_request_dry_run": "passed",
+    "pilot_budget_strict": "passed",
+    "syntax": "passed"
+  },
+  "initial_public_catalog_probe": "HTTPS proxy tunnel 403 Forbidden",
+  "public_catalog": {
+    "image_models": 57,
+    "video_models": 30,
+    "image_model": "openai/gpt-image-2",
+    "image_aspect_ratio": "16:9",
+    "video_model": "google/veo-3.1-lite",
+    "video_duration_seconds": 4,
+    "video_resolution": "720p",
+    "video_frame_images": [
+      "first_frame",
+      "last_frame"
+    ],
+    "video_price_per_second_usd": 0.03,
+    "estimated_video_cost_usd": 0.12
+  },
+  "authenticated_access_verified": false
+}
