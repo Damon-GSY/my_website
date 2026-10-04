@@ -1,5 +1,11 @@
 # Damon Guo-Siyi — website
 
+## KernelCode — standalone four-screen experiment
+
+Open [`public/kernelcode/index.html`](public/kernelcode/index.html) directly in a browser with an Internet connection, or visit **`/kernelcode/index.html`** on the local preview server. This is one complete HTML file with inline CSS and JavaScript, the specified Schibsted Grotesk font and Three.js 0.169 CDN imports, and the four original CloudFront image URLs. It has no build step or framework dependency.
+
+The literal KernelCode reference includes a photographic hero with a draggable voxel wordmark, followed by a single 30,000-point system morphing through a sphere, keyboard photograph, and `<K>`. Wheel, touch, and keyboard input move one screen at a time. The homepage and comparison directory link to this experiment separately from the Damon portfolios.
+
 ## Personal websites adapted from the pasted HTML
 
 Open **`/html-studies/index.html`** to compare the complete personal websites and three new particle directions. The homepage also links directly to each preview.

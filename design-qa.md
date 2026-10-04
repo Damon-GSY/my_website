@@ -1,3 +1,22 @@
+# Design QA — KernelCode standalone
+
+Reviewed 2026-10-04 on `codex/oil-motion-frame-studies`. Deliverable: [public/kernelcode/index.html](public/kernelcode/index.html), served at `/kernelcode/index.html`. The independent reference experiment retains the supplied KernelCode branding, copy, assets, and inline CSS/JavaScript.
+
+- Static review confirms the required body sibling order, exact four CloudFront URLs, Google font URL, Three.js 0.169.0 import map, particle shaders, 30,000-point attributes, transparent panels, canvas visibility coupling, and all requested breakpoint queries.
+- Chromium loaded all four original CloudFront images, Schibsted Grotesk, and Three.js r169 successfully. Both the sampled keyboard and voxel-derived particle wordmark report ready. No replacement assets or request mocks were used.
+- Functional QA: **17 checks pass**, with no JavaScript or shader errors. Coverage includes native wheel navigation, the 48px accumulation threshold, 420ms cooldown, keyboard navigation, native mobile section swipes, horizontal navigation/card scrolling, nested-note wheel/touch scrolling, menu controls and resize closure, 4.2-second card advance, 12-second pointer pause, and viewport resize during a morph.
+- All three settled sections show `#stage.on` at opacity 1, transparent panels, exact sphere/keyboard/wordmark weights, and continuous draws of 30,000 points. Framebuffer reads at 1440×900 detected 42,904 visible sphere pixels, 30,249 keyboard pixels, and 37,727 wordmark pixels; these checks establish that the clouds are actually rendered. The X/Z squeeze also reaches its transition phase and returns to 1 when settled.
+- Initial wheel-burst and immediate-resize assertions were sensitive to browser automation timing. Retests dispatch both accumulation events in one page task and await the resize handler; native wheel navigation and CDP touch gestures are checked separately. The report preserves those initial harness attempts.
+- Captured all four screens at 1440×900, 1024×768, 390×844, 320×568, 844×390, 1280×500, and 320×500: 28 captures with no document scrolling, heading overflow, JavaScript errors, or shader errors. The original photograph, voxel geometry, and three particle forms remain visible.
+- **Known specification conflict:** the literal Form C sizing and negative `OY` can overlap the top of the step cards, especially in short landscape. At 844×390 the prescribed cloud is about 140px tall while the gap between heading and cards is about 106px. `OY=-23` also moves the desktop cloud below the viewport center in Three.js's Y-up coordinates. The supplied formulas and card dimensions are retained; the separate “clears the step cards” visual criterion is not claimed as passing. A later adaptation should fit the cloud to the measured heading/card gap.
+- `npm run lint`, `npm run build`, and `git diff --check` pass. The production copy of the standalone HTML is byte-for-byte identical to its source. The existing shared Three.js chunk-size advisory remains unrelated to this CDN-based standalone file.
+- Six final smoke checks pass for real hero dragging/release, homepage/directory entries at 1440px and 320px, and navigation into a ready standalone page. The directory's implicit `/favicon.ico` request was its only missing resource; it now uses the existing `/favicon.svg`.
+- Direct `file://` launch is **environment-blocked**: managed Chromium rejects it with `ERR_BLOCKED_BY_ADMINISTRATOR`. HTTP execution is verified; a double-click launch is not claimed as tested. Physical-device performance and Safari were not measured.
+
+Captures and structured reports: `/workspace/kernelcode-captures/` (`functional-qa.json`, `visual-qa.json`).
+
+---
+
 # Design QA — DAMON particle scenes and full robot motion
 
 Reviewed 2026-10-04 on `codex/oil-motion-frame-studies`. `/particle` defaults to Matrix; `?scene=signature`, `?scene=neural`, and `?scene=tree` expose the other directions. `/robot` now connects its SVG assembly to pointer depth, a scroll-controlled exploded diagram, and section reveals throughout the portfolio.

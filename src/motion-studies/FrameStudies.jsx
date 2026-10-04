@@ -88,6 +88,10 @@ function StudiesIndex({ studies }) {
           </div>
         </div>
       </section>
+      <aside className="fm-standalone-experiment" lang="zh-CN" aria-label="独立单页实验">
+        <p><strong>KernelCode</strong><span>按原规格复原的独立实验 · 摄影、体素与粒子</span></p>
+        <a href="/kernelcode/index.html">打开单页 <ArrowUpRight size={14} aria-hidden="true" /></a>
+      </aside>
       <section className="fm-index-intro" aria-labelledby="fm-index-title">
         <div className="fm-kicker"><span className="fm-dot" /> THE MOTION NOTEBOOK · VOL. 01</div>
         <h1 id="fm-index-title">Still images.<br /><em>New possibilities.</em></h1>
