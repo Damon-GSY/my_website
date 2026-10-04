@@ -249,6 +249,75 @@
       h1 { text-shadow:0 2px 16px rgba(0,0,0,.55); }
       #heroAside p { max-height:24vh; text-align:left; overflow:auto; }
     }
+    /* Keep the shape in its own space; the same reading region can scroll on smaller displays. */
+    main, main > section { touch-action:pan-y; }
+    #s2, #s3 { display:flex; flex-direction:column; gap:26px; padding:calc(var(--header-h) + 28px) max(48px, env(safe-area-inset-right)) max(28px, env(safe-area-inset-bottom)) max(var(--pad), env(safe-area-inset-left)); }
+    .panel-heading { flex:none; display:flex; justify-content:space-between; align-items:flex-end; gap:28px; }
+    .panel-kicker { color:#b8adff; font-size:10px; letter-spacing:.13em; text-transform:uppercase; margin-bottom:16px; }
+    #s2 h2, #s3 h2 { position:static; inset:auto; width:auto; max-width:100%; font-size:clamp(34px,4.7vw,76px); text-align:left; }
+    .panel-heading-side { max-width:205px; padding-bottom:6px; font-size:12px; line-height:1.6; color:#9290a5; }
+    .panel-heading-side span { display:block; color:#d6d1e8; }
+    .panel-body { flex:1; min-height:0; display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1.12fr); grid-template-rows:auto minmax(180px,1fr) auto; gap:0 clamp(36px,7vw,112px); overflow-x:hidden; overflow-y:auto; overscroll-behavior-y:contain; touch-action:pan-y; scrollbar-width:thin; scrollbar-color:#5e5678 transparent; padding:4px 4px 6px; margin:0 -4px; }
+    .panel-body:focus-visible { outline:1px solid #b8adff80; outline-offset:3px; }
+    .panel-intro { grid-column:1; grid-row:1; max-width:520px; font-size:clamp(14px,1.22vw,18px); line-height:1.55; color:#c4c0d2; }
+    .method-list { grid-column:1; grid-row:2; align-self:start; list-style:none; margin:22px 0 0; padding:0; }
+    .method-list li { display:grid; grid-template-columns:26px 1fr; gap:16px; padding:15px 0; border-top:1px solid #b7adff25; }
+    .method-list .method-number { color:#8d80bd; font-size:10px; padding-top:4px; font-variant-numeric:tabular-nums; }
+    .method-list h3 { font-size:16px; font-weight:500; letter-spacing:-.025em; }
+    .method-list p { margin-top:6px; max-width:47ch; color:#a5a0b6; font-size:13px; line-height:1.55; }
+    .visual-window { grid-column:2; grid-row:1 / 3; position:relative; min-height:230px; margin:0 0 22px; pointer-events:none; }
+    .visual-caption { position:absolute; bottom:0; left:0; right:0; display:flex; justify-content:space-between; gap:14px; color:#8e889f; font-size:9px; letter-spacing:.1em; text-transform:uppercase; }
+    .visual-caption span:first-child { color:#b9afff; }
+    .evidence-grid { grid-column:2; grid-row:3; display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+    .evidence-card { display:block; min-width:0; padding:16px 0 6px; border-top:1px solid #b7adff55; }
+    .evidence-metric { display:flex; align-items:baseline; flex-wrap:wrap; gap:6px 11px; margin-bottom:14px; }
+    .evidence-metric strong { font-size:clamp(28px,3vw,44px); font-weight:400; letter-spacing:-.055em; line-height:1; color:#c8bdff; }
+    .evidence-metric span { font-size:10px; line-height:1.4; color:#b2aabd; }
+    .evidence-card h3 { display:flex; justify-content:space-between; gap:12px; font-size:13px; line-height:1.35; font-weight:500; color:#ebe5ff; }
+    .evidence-card h3 svg, .panel-footnote a svg { width:13px; height:13px; flex-shrink:0; vertical-align:middle; color:#b9afff; }
+    .evidence-card p { margin-top:7px; color:#a5a0b6; font-size:12px; line-height:1.5; max-width:34ch; }
+    .evidence-card:hover h3 { color:#fff; text-decoration:underline; text-underline-offset:4px; }
+    .panel-footnote { grid-column:1; grid-row:3; align-self:end; max-width:46ch; color:#9992a9; font-size:11px; line-height:1.65; padding:16px 0 6px; }
+    .panel-footnote a { display:inline-block; color:#cfc4ee; margin-top:10px; font-size:12px; border-bottom:1px solid #b9afff55; padding-bottom:4px; }
+    #s3 .panel-heading { flex-direction:row-reverse; }
+    #s3 .panel-heading>div:first-child { text-align:right; }
+    #s3 h2 { text-align:right; }
+    #s3 .panel-intro, #s3 .method-list, #s3 .panel-footnote { grid-column:2; }
+    #s3 .visual-window, #s3 .evidence-grid { grid-column:1; }
+    @media (max-width:900px) {
+      #s2, #s3 { padding:calc(var(--header-h) + 20px) max(24px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(var(--pad),env(safe-area-inset-left)); gap:18px; }
+      .panel-kicker { margin-bottom:10px; font-size:9px; }
+      #s2 h2, #s3 h2 { font-size:clamp(29px,6vw,50px); }
+      .panel-heading-side { display:none; }
+      .panel-body { grid-template-columns:minmax(0,1fr); grid-template-rows:none; grid-auto-rows:max-content; gap:20px; padding-right:7px; }
+      #s2 .panel-body>*, #s3 .panel-body>* { grid-column:1; grid-row:auto; }
+      .panel-intro { order:0; font-size:14px; }
+      .visual-window { order:1; min-height:0; height:clamp(145px,23vh,210px); margin:0; }
+      .method-list { order:2; margin:0; }
+      .method-list li { padding:14px 0; gap:12px; }
+      .method-list h3 { font-size:16px; }
+      .method-list p { font-size:13px; }
+      .evidence-grid { order:3; gap:20px; }
+      .panel-footnote { order:4; max-width:none; padding:0 0 12px; }
+      .evidence-card { padding-top:14px; }
+      .evidence-card h3 { font-size:13px; }
+      .evidence-card p { font-size:12px; }
+      .visual-caption { font-size:8px; }
+    }
+    @media (max-height:650px) and (min-width:901px) {
+      #s2, #s3 { gap:18px; padding-top:calc(var(--header-h) + 18px); padding-bottom:18px; }
+      #s2 h2, #s3 h2 { font-size:clamp(32px,4.1vw,54px); }
+      .panel-body { grid-template-rows:auto auto auto; }
+      .panel-intro { font-size:14px; }
+      .method-list { margin-top:14px; }
+      .method-list li { padding:11px 0; }
+    }
+    @media (max-height:560px) and (max-width:900px) {
+      #s2, #s3 { padding-top:calc(var(--header-h) + 12px); gap:12px; }
+      #s2 h2, #s3 h2 { font-size:clamp(26px,4.7vw,36px); }
+      .panel-kicker { margin-bottom:7px; }
+      .visual-window { height:160px; }
+    }
     @media (prefers-reduced-motion:reduce) {
       *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; transition-delay:0ms !important; scroll-behavior:auto !important; }
       .rv > span, .fade { opacity:1; filter:none; transform:none; }
@@ -270,19 +339,45 @@
   <main>
     <section id="hero" class="show" aria-label="AI that works. Built by GDamon.">
       <div id="heroBg" aria-hidden="true"></div><canvas id="heroGL" aria-label="Interactive violet particle signature"></canvas>
-      <div class="hero-meta"><span>A signature in motion / 01</span><a href="/">All experiments<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12 12 4M4 4h8v8" stroke="currentColor" stroke-width="1.3"/></svg></a></div>
+      <div class="hero-meta"><span>Alibaba · Hangzhou / AI research &amp; engineering</span><a href="/">All experiments<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12 12 4M4 4h8v8" stroke="currentColor" stroke-width="1.3"/></svg></a></div>
       <div id="heroCopy">
         <h1><span class="rv">AI that works.</span><span class="rv" data-dot="1" data-d="240">Built by GDamon.</span></h1>
         <aside id="heroAside"><p class="fade">I’m Damon Guo-Siyi, an AI researcher and LLM engineer at Alibaba. I work on agentic RL, post-training, and evaluation to turn research into useful agent systems.</p><a class="btnpair fade" href="#s2" data-section="1"><span class="arrow"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="button-text">Explore research</span></a><span class="hero-hint">SCROLL TO TRANSFORM ↓<span class="drag-hint"> · DRAG TO EXPLORE</span></span></aside>
       </div>
     </section>
     <section id="s2" class="panel" aria-label="Intelligence starts with a question." inert>
-      <h2><span class="rv">Intelligence starts</span><span class="rv" data-d="140">with a question.</span></h2>
-      <p class="note fade">What makes an agent useful beyond a demo? I study how models learn, reason, and recover from mistakes — connecting agentic reinforcement learning with benchmarks grounded in real tasks.</p>
+      <div class="panel-heading"><div><p class="panel-kicker fade">01 / Research &amp; evaluation</p><h2><span class="rv">Intelligence starts</span><span class="rv" data-d="140">with a question.</span></h2></div><p class="panel-heading-side fade">My research loop<span>Benchmark → Train → Evaluate</span></p></div>
+      <div class="panel-body" tabindex="0" role="region" aria-label="Research methods and project evidence">
+        <p class="panel-intro fade">I study how agents learn, use tools, and recover across turns. My work connects model training with evaluation grounded in real tasks.</p>
+        <ol class="method-list fade">
+          <li><span class="method-number">01</span><div><h3>Benchmark before training.</h3><p>Define knowledge QA and tool-use benchmarks, then measure the capabilities that need to improve.</p></div></li>
+          <li><span class="method-number">02</span><div><h3>Train for the domain.</h3><p>Combine continual pretraining, SFT, and reinforcement learning for supply-chain knowledge and tool use.</p></div></li>
+          <li><span class="method-number">03</span><div><h3>Evaluate the whole conversation.</h3><p>Examine planning, memory, tool use, and recovery — including the steps behind the final answer.</p></div></li>
+        </ol>
+        <div class="visual-window" aria-hidden="true"><div class="visual-caption"><span>Intelligence / core</span><span>Question → evidence</span></div></div>
+        <div class="evidence-grid fade">
+          <a class="evidence-card" href="/projects#multi-turn-agent-evaluation"><div class="evidence-metric"><strong>~250</strong><span>papers reviewed</span></div><h3>Multi-turn agent evaluation<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></h3><p>A taxonomy for planning, memory, tool use, and intermediate-step judgment.</p></a>
+          <a class="evidence-card" href="/projects#supchain-bench"><div class="evidence-metric"><strong>530</strong><span>real-world samples</span></div><h3>SupChain-Bench<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></h3><p>Annotated tasks spanning logistics, fulfillment, finance, and customs workflows.</p></a>
+        </div>
+        <p class="panel-footnote fade">From benchmark design to model training and agent evaluation.<br><a href="/projects#supply-chain-domain-llm">Explore domain post-training <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+      </div>
     </section>
     <section id="s3" class="panel" aria-label="Agents that connect the dots." inert>
-      <h2><span class="rv" data-dot="1">Agents that</span><span class="rv" data-dot="1" data-d="140">connect the dots.</span></h2>
-      <p class="note fade">Planning, memory, tools, and evaluation work together. At Alibaba, I build agents that select tools dynamically and handle real supply-chain workflows, with clear boundaries for human collaboration.</p>
+      <div class="panel-heading"><div><p class="panel-kicker fade">02 / Systems in production</p><h2><span class="rv" data-dot="1">Agents that</span><span class="rv" data-dot="1" data-d="140">connect the dots.</span></h2></div><p class="panel-heading-side fade">From decisions to execution<span>Tools → Actions → Human handoff</span></p></div>
+      <div class="panel-body" tabindex="0" role="region" aria-label="Production workflow and project results">
+        <p class="panel-intro fade">At Alibaba, I build tool-using agents for ticket resolution and supply-chain operations, with explicit boundaries for automation and human handoff.</p>
+        <ol class="method-list fade">
+          <li><span class="method-number">01</span><div><h3>Register the right tools.</h3><p>Give agents access to a changing pool of 100+ internal tools through dynamic registration.</p></div></li>
+          <li><span class="method-number">02</span><div><h3>Learn the decisions.</h3><p>Train tool-use decisions and trace wrong-tool, missing-tool, and unnecessary-call failures.</p></div></li>
+          <li><span class="method-number">03</span><div><h3>Confirm. Execute. Hand off.</h3><p>Use risk-tiered confirmations and clear exception paths across 12 supply-chain scenarios.</p></div></li>
+        </ol>
+        <div class="visual-window" aria-hidden="true"><div class="visual-caption"><span>Agents / connected system</span><span>Plan → act → recover</span></div></div>
+        <div class="evidence-grid fade">
+          <a class="evidence-card" href="/projects#dynamic-tool-resolution-agents"><div class="evidence-metric"><strong>90%</strong><span>less manual ticket handling</span></div><h3>Dynamic tool resolution<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></h3><p>Agentic RL and dynamic registration for 100+ tools in supported internal workflows.</p></a>
+          <a class="evidence-card" href="/projects#supply-chain-agent-system"><div class="evidence-metric"><strong>&lt;1s</strong><span>exception handoff</span></div><h3>Supply-chain agent system<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></h3><p>Risk-tiered decisions, progressive confirmations, and human collaboration across 12 scenarios.</p></a>
+        </div>
+        <p class="panel-footnote fade">Results describe the supported internal workflows in each case.<br><a href="/projects">Read the project cases <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
+      </div>
     </section>
     <section id="s4" class="panel" aria-label="GDamon — research made real." inert>
       <h2><span class="rv">Research,</span><span class="rv" data-d="140">made real.</span></h2>
@@ -444,6 +539,16 @@
         history.replaceState({...previous,gdamonKernelChapter:chapter},'');
       } catch { /* File previews can disallow history changes. */ }
     }
+    function persistReading() {
+      const reading=Object.fromEntries(['s2','s3'].map(id=>[id,$(`#${id} .panel-body`).scrollTop]));
+      try { history.replaceState({...history.state,gdamonKernelReading:reading},''); } catch { /* History can be unavailable in file previews. */ }
+    }
+    function restoreReading() {
+      ['s2','s3'].forEach(id=>{
+        const saved=history.state?.gdamonKernelReading?.[id];
+        if(Number.isFinite(saved)) $(`#${id} .panel-body`).scrollTop=Math.max(0,saved);
+      });
+    }
     let current=readChapter(), requested=current, queued=null, coolUntil=0, tween=null;
     const transitionCancels=new Set();
     runtime.getNavigationState=()=>({current,requested,queued,historyChapter:readChapter()});
@@ -461,9 +566,11 @@
       void $('main').offsetWidth;
       sections.forEach(section=>{section.style.transition='';});
       persistChapter(current); applyView(current*innerHeight); layout();
+      restoreReading(); runtime.stage?.resize();
       if(!document.body.classList.contains('loading')) revealSection(sections[current]);
     }
-    window.addEventListener('pagehide',()=>persistChapter(requested));
+    window.addEventListener('pagehide',()=>{persistChapter(requested);persistReading();});
+    document.querySelectorAll('.panel-body a').forEach(link=>link.addEventListener('click',persistReading));
     window.addEventListener('pageshow',event=>{if(event.persisted) restoreChapter();});
     window.addEventListener('popstate',restoreChapter);
     function afterTransition(element,property,timeout,callback) {
@@ -522,7 +629,7 @@
       const element=target instanceof Element?target:target?.parentElement;
       const scrollers=[];
       for(let node=element;node && node!==document.body;node=node.parentElement) {
-        if(node.matches('#steps,.navpill,.note,.step,#heroAside') || node.parentElement?.id==='heroAside') scrollers.push(node);
+        if(node.matches('#steps,.navpill,.note,.step,#heroAside,.panel-body') || node.parentElement?.id==='heroAside') scrollers.push(node);
       }
       return scrollers.some((box) => {
         const vertical=Math.abs(deltaY)>=Math.abs(deltaX);
@@ -547,10 +654,15 @@
       if(Math.abs(wheelAccum)>=48) { const direction=Math.sign(wheelAccum); wheelAccum=0; go(direction); }
     },{passive:false});
     let touch=null;
-    window.addEventListener('touchstart',(event) => { if(event.touches.length!==1) {touch=null;return;} const t=event.touches[0];touch={x:t.clientX,y:t.clientY,target:event.target}; },{passive:true});
+    window.addEventListener('touchstart',(event) => {
+      if(event.touches.length!==1) {touch=null;return;}
+      const t=event.touches[0], scroller=event.target.closest?.('.panel-body,#steps,.navpill,.note,#heroAside');
+      touch={x:t.clientX,y:t.clientY,target:event.target,scroller,scrollTop:scroller?.scrollTop,scrollLeft:scroller?.scrollLeft};
+    },{passive:true});
     window.addEventListener('touchend',(event) => {
       if(!touch || !event.changedTouches.length) return;
       const start=touch; touch=null; const end=event.changedTouches[0]; const dx=start.x-end.clientX,dy=start.y-end.clientY;
+      if(start.scroller && (start.scroller.scrollTop!==start.scrollTop || start.scroller.scrollLeft!==start.scrollLeft)) return;
       if(innerCanScroll(start.target,dx,dy) || Math.abs(dx)>Math.abs(dy)) return;
       if(Math.abs(dy)>48) go(Math.sign(dy));
     },{passive:true});
@@ -561,7 +673,9 @@
       if(event.defaultPrevented || event.isComposing || event.altKey || event.ctrlKey || event.metaKey ||
         target?.closest('a,button,input,select,textarea,[contenteditable]:not([contenteditable="false"]),[role="button"],[role="slider"],[role="textbox"]')) return;
       if(['ArrowDown','PageDown',' ','Spacebar','ArrowUp','PageUp'].includes(event.key)) {
-        event.preventDefault(); go(event.key==='ArrowUp'||event.key==='PageUp'?-1:1);
+        const direction=event.key==='ArrowUp'||event.key==='PageUp'?-1:1;
+        if(innerCanScroll(target,0,direction)) return;
+        event.preventDefault(); go(direction);
       }
     });
 
@@ -603,7 +717,7 @@
       if(shown>=100) {
         finished=true; clearTimeout(loaderFallback); $('#loader').classList.add('done'); document.body.classList.remove('loading');
         if(queued!==null) restoreChapter();
-        runtime.hero?.resize(); layout(); revealSection(sections[current],current===0);
+        runtime.hero?.resize(); layout(); restoreReading(); runtime.stage?.resize(); revealSection(sections[current],current===0);
       }
     }
     function frame(now) {
@@ -912,6 +1026,20 @@ void main(){
   // Fit the actual shape between the heading and the note/cards, including short landscape.
   function fitForm(sectionId, size, preferredWidth) {
     const section = document.getElementById(sectionId);
+    const windowEl = section.querySelector('.visual-window');
+    if(windowEl) {
+      const rect=windowEl.getBoundingClientRect();
+      const body=section.querySelector('.panel-body');
+      const bodyRect=body.getBoundingClientRect();
+      const availableHeight=Math.max(24,rect.height-30);
+      let scale=Math.min(rect.width*.9/size.x,availableHeight*.92/size.y,preferredWidth/size.x);
+      scale/=sectionId==='s2'?Math.sqrt(1+(size.z*scale/(2*camera.position.z))**2):1+size.z*scale/(2*camera.position.z);
+      const centerX=rect.left+rect.width/2, centerY=rect.top+availableHeight/2;
+      framing[sectionId]={top:rect.top,bottom:rect.bottom-30,centerX,centerY,scale,width:size.x*scale,height:size.y*scale,
+        offsetX:centerX-innerWidth/2,offsetY:innerHeight/2-centerY,scrollTop:body.scrollTop,
+        body,clipTop:bodyRect.top,clipBottom:bodyRect.bottom,left:rect.left,right:rect.right};
+      return {scale};
+    }
     const heading = section.querySelector('h2');
     const footer = section.querySelector('.note, #steps');
     const top = Math.max(document.querySelector('header').offsetHeight + 12, heading.offsetTop + heading.offsetHeight + 20);
@@ -922,13 +1050,12 @@ void main(){
     const perspectiveGuard = 1 + size.z * scale / camera.position.z;
     scale /= perspectiveGuard;
     const centerY = (top + bottom) / 2;
-    framing[sectionId] = { top, bottom, centerY, scale, width:size.x*scale, height:size.y*scale };
-    return { scale, offsetY:innerHeight / 2 - centerY };
+    framing[sectionId] = { top, bottom, centerY, scale, width:size.x*scale, height:size.y*scale,offsetX:0,offsetY:innerHeight/2-centerY };
+    return { scale };
   }
 
   function layoutA() {
-    const film = innerWidth >= 1100 && innerHeight >= 700;
-    const scale = film ? 1 : Math.min(1, innerWidth / 1100, innerHeight / 780);
+    const {scale}=fitForm('s2',{x:R*2,y:R*2,z:R*2},604);
     for (let i=0; i<PN; i++) {
       pA[i*3]=pA0[i*3]*scale;
       pA[i*3+1]=pA0[i*3+1]*scale;
@@ -938,10 +1065,10 @@ void main(){
   }
 
   function layoutB() {
-    const { scale, offsetY } = fitForm('s3', neuralSize, 1160);
+    const { scale } = fitForm('s3', neuralSize, 1160);
     for (let i=0; i<PN; i++) {
       pB[i*3]=neuralRaw[i*3]*scale;
-      pB[i*3+1]=neuralRaw[i*3+1]*scale+offsetY;
+      pB[i*3+1]=neuralRaw[i*3+1]*scale;
       pB[i*3+2]=neuralRaw[i*3+2]*scale;
     }
     geo.attributes.pB.needsUpdate = true;
@@ -949,10 +1076,10 @@ void main(){
 
   function layoutC() {
     if (wordmarkRaw && wordmarkSize) {
-      const { scale, offsetY } = fitForm('s4', wordmarkSize, 1160);
+      const { scale } = fitForm('s4', wordmarkSize, 1160);
       for (let i=0; i<PN; i++) {
         pC[i*3]=wordmarkRaw[i*3]*scale;
-        pC[i*3+1]=wordmarkRaw[i*3+1]*scale+offsetY;
+        pC[i*3+1]=wordmarkRaw[i*3+1]*scale;
         pC[i*3+2]=wordmarkRaw[i*3+2]*scale;
       }
     }
@@ -1037,13 +1164,34 @@ void main(){
     if(!reduceMotion.matches) spin += dt * (0.085 * uni.wA.value + 0.006 * (uni.wB.value + uni.wC.value));
     points.rotation.y = reduceMotion.matches ? 0 : spin * uni.wA.value + pointer.x * 0.16;
     points.rotation.x = reduceMotion.matches ? 0 : pointer.y * 0.09;
+    const forms=[['s2',uni.wA.value],['s3',uni.wB.value],['s4',uni.wC.value]];
+    uni.psize.value=innerWidth<=900?1.15:2.2;
+    points.position.set(0,0,0);
+    forms.forEach(([id,weight])=>{
+      const bounds=framing[id];
+      if(!bounds) return;
+      const scrollDelta=bounds.body?bounds.body.scrollTop-bounds.scrollTop:0;
+      points.position.x+=(bounds.offsetX||0)*weight;
+      points.position.y+=((bounds.offsetY||0)+scrollDelta)*weight;
+    });
+    // A scrolled reading region must not paint its particles over the fixed heading.
+    const activeId=uni.wA.value===1?'s2':uni.wB.value===1?'s3':null;
+    const bounds=activeId&&framing[activeId];
+    let clip='none';
+    if(bounds?.body && !window.GDamonRuntime.transitioning) {
+      const delta=bounds.body.scrollTop-bounds.scrollTop;
+      const top=Math.max(0,bounds.top-delta,bounds.clipTop);
+      const bottom=Math.max(top,Math.min(innerHeight,bounds.bottom-delta,bounds.clipBottom));
+      clip=`inset(${Math.min(innerHeight,top)}px ${Math.max(0,innerWidth-bounds.right)}px ${Math.max(0,innerHeight-bottom)}px ${Math.max(0,bounds.left)}px)`;
+    }
+    if(canvas.style.clipPath!==clip) canvas.style.clipPath=clip;
     renderer.render(scene, camera);
     frameCount++;
     if (frameCount === 1 || frameCount % 30 === 0) canvas.dataset.renderFrames = String(frameCount);
   }
 
   resize();
-  return { uni, resize, update, setWordmark, getFraming:()=>framing };
+  return { uni, resize, update, setWordmark, getFraming:()=>Object.fromEntries(Object.entries(framing).map(([id,{body,...bounds}])=>[id,{...bounds,scrollTop:body?.scrollTop||0}])) };
 }
 
 function createHeroSignature({ canvas, markReady, getPointer, onGlyphs }) {

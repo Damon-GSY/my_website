@@ -48,9 +48,13 @@ CSS and JavaScript are inline, with Schibsted Grotesk and Three.js 0.169 loaded 
 
 The final section pairs the particle signature with five aligned project links, concise descriptions, and a manual horizontal scroller on mobile. Cards do not advance automatically while you read.
 
+Research now explains the benchmark → training → evaluation loop and links to the multi-turn taxonomy (~250 papers) and SupChain-Bench (530 annotated samples). Systems explains dynamic tool registration, decision training, and confirmation/handoff, with scoped production results and links to both cases. The sphere and network occupy their own measured regions. On smaller displays, each chapter has a keyboard- and touch-scrollable reading region; it consumes scrolling before changing chapters. Returning from a case restores both the chapter and its reading position.
+
 Pointer interaction uses the native cursor, with grab/grabbing on the sculpture. Time-based parallax and bounded drag avoid the old lagging cursor overlay and uncontrolled rotation; leaving the window, changing chapters, touch input, and reduced motion reset the interaction. Explicit navigation bypasses wheel cooldown and queues during a transition. The current history entry remembers its chapter, so returning from a case restores Selected work.
 
 The literal **KernelCode reference** remains at [`public/kernelcode/reference.html`](public/kernelcode/reference.html), or **`/kernelcode/reference.html`** locally. It keeps the original copy, four CloudFront images, draggable voxel `<K>`, and sphere → keyboard photograph → `<K>` particle sequence.
+
+Run the focused browser check against the local server with `node scripts/check-kernel-density.mjs http://localhost:4175 /tmp/gdamon-density-checks`. It covers five viewport sizes, inner scroll ownership, case links and return positions, reduced motion, and the live 30,000-point morph.
 
 ## Work index and project cases
 
