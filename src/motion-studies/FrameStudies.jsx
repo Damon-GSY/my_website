@@ -43,7 +43,7 @@ function useTitle(title) {
 function StudyHeader({ dark = false }) {
   return (
     <header className={`fm-header${dark ? ' fm-header-dark' : ''}`}>
-      <Link className="fm-wordmark" to="/motion-lab" aria-label="Damon — motion studies home">damon<ArrowUpRight size={12} aria-hidden="true" /></Link>
+      <Link className="fm-wordmark" to="/" aria-label="Damon — all previews">damon<ArrowUpRight size={12} aria-hidden="true" /></Link>
       <span className="fm-header-note">INDEPENDENT EXPLORATIONS<br />INTELLIGENCE IN MOTION</span>
       <nav aria-label="Primary navigation">
         <Link to="/projects">Work <ArrowUpRight size={13} /></Link>
@@ -59,42 +59,6 @@ function StudiesIndex({ studies }) {
   return (
     <main className="fm-page fm-index">
       <StudyHeader />
-      <section className="fm-personal-sites" lang="zh-CN" aria-labelledby="fm-personal-sites-title">
-        <div className="fm-personal-sites-intro">
-          <span>PERSONAL WEBSITES / 01—02</span>
-          <h2 id="fm-personal-sites-title">我的网站，两种表达。</h2>
-          <p>研究、项目、关于、笔记与联系。</p>
-          <a href="/html-studies/index.html">查看完整预览与原始参考 <ArrowUpRight size={13} aria-hidden="true" /></a>
-        </div>
-        <nav aria-label="个人网站版本">
-          <Link className="fm-personal-site-link fm-personal-particle" to="/particle">
-            <span>01 / 粒子个人站</span>
-            <strong>Particle<br />Intelligence</strong>
-            <span className="fm-personal-site-enter">进入完整网站 <ArrowUpRight size={20} aria-hidden="true" /></span>
-          </Link>
-          <Link className="fm-personal-site-link fm-personal-robot" to="/robot">
-            <span>02 / 机器人个人站</span>
-            <strong>Agent<br />Assembly</strong>
-            <span className="fm-personal-site-enter">进入完整网站 <ArrowUpRight size={20} aria-hidden="true" /></span>
-          </Link>
-        </nav>
-        <div className="fm-particle-shortcuts" role="group" aria-label="粒子个人站的三维场景">
-          <p>实时三维场景 <span>选择一个版本进入粒子个人站</span></p>
-          <div>
-            <Link to="/particle?scene=matrix">01 数字矩阵 <ArrowUpRight size={12} aria-hidden="true" /></Link>
-            <Link to="/particle?scene=signature">02 DAMON 星尘签名 <ArrowUpRight size={12} aria-hidden="true" /></Link>
-            <Link to="/particle?scene=neural">03 神经网络 <ArrowUpRight size={12} aria-hidden="true" /></Link>
-            <Link className="fm-tree-baseline" to="/particle?scene=tree">原始粒子树</Link>
-          </div>
-        </div>
-      </section>
-      <aside className="fm-standalone-experiment" lang="zh-CN" aria-label="独立单页实验">
-        <p><strong>GDamon / AI 粒子变形</strong><span>智能核心 → 神经网络 → GDAMON · 研究与个人签名</span></p>
-        <div className="fm-standalone-links">
-          <a href="/kernelcode/index.html">打开 GDamon <ArrowUpRight size={14} aria-hidden="true" /></a>
-          <a className="fm-standalone-reference" href="/kernelcode/reference.html">KernelCode 原版 <ArrowUpRight size={12} aria-hidden="true" /></a>
-        </div>
-      </aside>
       <section className="fm-index-intro" aria-labelledby="fm-index-title">
         <div className="fm-kicker"><span className="fm-dot" /> THE MOTION NOTEBOOK · VOL. 01</div>
         <h1 id="fm-index-title">Still images.<br /><em>New possibilities.</em></h1>
@@ -246,7 +210,7 @@ function StudyPage({ study }) {
       <StudyHeader dark={study.id !== 'bloom'} />
       <section className="fm-hero" aria-labelledby="fm-study-title">
         <div className="fm-hero-topline">
-          <Link to="/motion-lab"><ArrowLeft size={14} /> All studies</Link>
+          <Link to="/"><ArrowLeft size={14} /> All previews</Link>
           <span>{direction.number} / 03 <span className="fm-topline-divider">—</span> {direction.name}</span>
           <span className="fm-edition">EXPERIMENTS IN INTELLIGENCE</span>
         </div>

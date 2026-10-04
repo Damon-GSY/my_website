@@ -1,3 +1,19 @@
+# Design QA — unified preview index
+
+Reviewed 2026-10-04 on `codex/oil-motion-frame-studies`. `/`, `/index`, and `/index.html` now open one gallery. The older `/html-studies/index.html` redirects to `/#versions`; `/motion-lab` retains only its original three frame studies.
+
+- Six primary entries expose GDamon AI, Agent Assembly, Matrix, DAMON Signature, Neural, and Particle Tree. All have genuine browser thumbnails, motion descriptions, interaction instructions, and new-tab links. Particle/AI and robot filters yield five and one entries respectively. Three Oil Motion studies and 13 earlier/reference pages remain accessible below the main gallery.
+- The GDamon card plays an actual keyboard-driven recording of sphere → neural network → GDAMON → neural network → sphere. Capture telemetry confirms blended weights and squeeze values as low as 0.0767. The H.264/yuv420p/faststart MP4 is 960×600, 11.72 seconds, and 1,653,692 bytes. Full video decode passes. No generated animation or mocked particle rendering is used.
+- Screenshot previews are optimized WebPs. The tree image was freshly captured from `?scene=tree` after finding that the older generic particle thumbnail duplicated Matrix. The gallery creates zero canvases and loads no active 3D scene; complete experiences open separately.
+- Chromium checks pass for all six route targets, decoded screenshots, real GDamon/robot/tree popup navigation, archive expansion, route aliases and legacy redirect, keyboard filtering, and layouts at 1440px, 1024px, 390px, 320px, and 844×390. There is no horizontal overflow or page error.
+- The separately served production build passes seven checks, including actual video-frame advancement, Pause/Play, offscreen suspension/resume, manual-pause persistence, aliases, keyboard controls, and a blocked-video fallback with a usable full-experience link. Reduced motion starts with the poster and allows explicit playback. Native playback is muted. Runtime and asset errors are absent in the unblocked checks.
+- The first playback harness omitted a serialized parameter in its pause assertion; its resulting manual pause also affected the next resume assertion. Corrected production checks pass both paths; those initial harness failures are retained in the report rather than attributed to the app.
+- `npm run lint`, `npm run build`, and `git diff --check` pass. The existing shared Three.js bundle advisory remains. No dependencies were added; the current experience pages and preserved original HTML files are unchanged.
+
+Captures and structured reports: `/workspace/preview-index-captures/`. Browser tests use Chromium; Safari and physical-device performance were not measured.
+
+---
+
 # Design QA — GDamon / AI morph
 
 Reviewed 2026-10-04 on `codex/oil-motion-frame-studies`. The current `/kernelcode/index.html` now presents GDamon's AI research, with the original KernelCode page preserved at `/kernelcode/reference.html`.

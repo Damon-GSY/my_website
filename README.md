@@ -1,5 +1,13 @@
 # Damon Guo-Siyi — website
 
+## Unified preview index
+
+Open **`http://localhost:4175/`** after starting `npm run dev -- --host 0.0.0.0 --port 4175`. `/index` and `/index.html` open the same gallery; the older `/html-studies/index.html` directory redirects here.
+
+The six current directions are GDamon AI, Agent Assembly, Matrix, DAMON Signature, Neural, and the original Particle Tree. Every card has a real screenshot, motion description, and a link that opens the complete experience in a new tab. The GDamon card plays an 11.72-second recording of the actual sphere → neural network → GDAMON → neural network → sphere transitions, with Pause/Play controls. Autoplay pauses offscreen and in background tabs; reduced motion starts with the poster.
+
+The same page includes all three Oil Motion frame studies, original HTML references, and the earlier spatial/visual experiments. The index runs no WebGL scenes itself. Browser captures and source recordings are used for its previews, not generated substitutes.
+
 ## GDamon — AI particle morph
 
 Open [`public/kernelcode/index.html`](public/kernelcode/index.html) directly in a browser with an Internet connection, or visit **`/kernelcode/index.html`** on the local preview server. This standalone HTML adapts the four-screen experiment to GDamon's AI research: a 30,000-point cloud morphs from an intelligence core sphere into a neural network and then the **GDAMON** signature. Its copy draws on the existing profile's agentic RL, post-training, evaluation, and production agent work.
