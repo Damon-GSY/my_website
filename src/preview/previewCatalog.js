@@ -2,6 +2,7 @@ export const previewFilters = [
   { id: 'all', label: '全部方案' },
   { id: 'particle', label: '粒子与 AI' },
   { id: 'robot', label: '机器人' },
+  { id: 'motion', label: '连续短片' },
 ];
 
 export const previews = [
@@ -12,10 +13,27 @@ export const previews = [
     category: 'particle',
     href: '/kernelcode/index.html',
     image: '/preview-assets/gdamon-poster.webp',
-    description: '从可拖拽的〈AI〉体素进入黑色舞台，让 30,000 个白色粒子逐屏重组成个人签名。',
-    motion: '核心球体 → 神经网络 → GDAMON',
-    interaction: '滚轮、上下方向键或上下滑动切屏；首屏拖动〈AI〉旋转。',
-    tags: ['滚动变形', '30,000 粒子', '三维体素'],
+    video: '/preview-assets/gdamon-motion.mp4',
+    mediaLabel: '星尘与变形实录',
+    description: '蓝紫色星尘织成空间丝带，再进入 30,000 个白色粒子构成的研究、系统与个人签名。',
+    motion: '星尘丝带 → 核心球体 → 神经网络 → GDAMON',
+    interaction: '拖拽星尘探索视角；滚轮、方向键、上下滑动或顶部导航切屏。',
+    tags: ['星尘首屏', '滚动变形', '章节导航'],
+    featured: true,
+  },
+  {
+    id: 'core-film',
+    title: '机械核心 · 连续装配短片',
+    subtitle: 'Inner Workings',
+    category: 'motion',
+    href: '/motion-lab/core',
+    image: '/motion-studies/core-film-poster.webp',
+    video: '/motion-studies/core-film.mp4',
+    mediaLabel: '连续 3D 短片',
+    description: '石墨色机械环拆解为轨道，逐层归位，点亮琥珀色核心。进入页面即可播放完整循环。',
+    motion: '拆解 → 环绕 → 装配 → 核心点亮',
+    interaction: '播放、暂停、重播或拖动时间轴；可下载完整 MP4。',
+    tags: ['连续运动', 'Three.js', 'MP4 短片'],
     featured: true,
   },
   {
@@ -88,8 +106,8 @@ export const previews = [
 export const archiveGroups = [
   {
     id: 'motion-studies',
-    title: 'Oil Motion 分镜实验',
-    description: '每组包含六个生成姿态，可逐帧查看与往返播放。',
+    title: 'Oil Motion 与动态实验',
+    description: '观察者与机械花保留六帧造型实验；机械核心已升级为连续 3D 短片。',
     items: [
       {
         id: 'observer',
@@ -107,7 +125,7 @@ export const archiveGroups = [
         id: 'core',
         title: '机械核心 · Inner Workings',
         href: '/motion-lab/core',
-        description: '正放或倒放六个分镜，在散开部件与完整核心之间切换。',
+        description: '连续拆解、环绕与装配的机械核心，支持播放控制和 MP4 下载。',
       },
     ],
   },

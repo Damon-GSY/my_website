@@ -40,17 +40,17 @@ function MotionPreview({ preview }) {
 
   return (
     <>
-      <a className="pv-media-link" href={preview.href} target="_blank" rel="noopener" aria-label="打开 GDamon 完整体验（新标签页）">
-        <video ref={videoRef} poster="/preview-assets/gdamon-poster.webp" muted loop playsInline preload="none"
+      <a className="pv-media-link" href={preview.href} target="_blank" rel="noopener" aria-label={`打开${preview.title}完整体验（新标签页）`}>
+        <video ref={videoRef} poster={preview.image} muted loop playsInline preload="none"
           onPlaying={() => setPlaying(true)} onPause={() => setPlaying(false)} onError={() => setFailed(true)} aria-hidden="true">
-          <source src="/preview-assets/gdamon-motion.mp4" type="video/mp4" onError={() => setFailed(true)} />
+          <source src={preview.video} type="video/mp4" onError={() => setFailed(true)} />
         </video>
       </a>
-      <span className="pv-media-label"><i />变形实录</span>
+      <span className="pv-media-label"><i />{preview.mediaLabel}</span>
       {!failed && <button className="pv-play-toggle" type="button" onClick={() => setManualPlay(!playing)}
-        aria-label={`${playing ? '暂停' : '播放'} GDamon 粒子变形预览`} aria-pressed={playing}>
+        aria-label={`${playing ? '暂停' : '播放'}${preview.title}预览`} aria-pressed={playing}>
         {playing ? <Pause size={13} aria-hidden="true" /> : <Play size={13} aria-hidden="true" />}
-        <span>{playing ? '暂停预览' : '播放变形'}</span>
+        <span>{playing ? '暂停预览' : '播放预览'}</span>
       </button>}
     </>
   );
@@ -60,7 +60,7 @@ function PreviewCard({ preview, number }) {
   return (
     <article className={`pv-card${preview.featured ? ' pv-card-featured' : ''}`} data-preview={preview.id}>
       <div className="pv-card-media">
-        {preview.featured ? <MotionPreview preview={preview} /> :
+        {preview.video ? <MotionPreview preview={preview} /> :
           <a className="pv-media-link" href={preview.href} target="_blank" rel="noopener" aria-label={`打开${preview.title}（新标签页）`}>
             <img src={preview.image} alt={preview.title + '的实际页面截图'} width="1100" height="688" loading="lazy" decoding="async" />
           </a>}
@@ -107,9 +107,9 @@ export default function PreviewIndex() {
       <main className="pv-main">
         <section className="pv-intro" aria-labelledby="pv-title">
           <div><p className="pv-eyebrow"><span /> WORK IN MOTION</p><h1 id="pv-title">网站预览室<span>。</span></h1>
-            <p className="pv-intro-copy">最近在看的六个方向都在这里。<br />先看动效，再进入完整页面。</p>
+            <p className="pv-intro-copy">最近在看的七个方向都在这里。<br />先看动效，再进入完整页面。</p>
           </div>
-          <div className="pv-intro-aside"><span className="pv-count">06<span> / CURRENT</span></span><p>每个方案在新标签页打开，方便来回比较。<br />GDamon 卡片可直接播放粒子变形。</p><a href="#versions">开始浏览 <ArrowDown size={17} aria-hidden="true" /></a></div>
+          <div className="pv-intro-aside"><span className="pv-count">{String(previews.length).padStart(2, '0')}<span> / CURRENT</span></span><p>每个方案在新标签页打开，方便来回比较。<br />星尘变形和机械短片可直接预览。</p><a href="#versions">开始浏览 <ArrowDown size={17} aria-hidden="true" /></a></div>
         </section>
 
         <section id="versions" className="pv-versions" aria-label="当前网站方案">
@@ -123,9 +123,9 @@ export default function PreviewIndex() {
         </section>
 
         <section className="pv-studies" id="studies" aria-labelledby="pv-studies-title">
-          <div className="pv-section-heading"><div><p className="pv-eyebrow">FRAME BY FRAME</p><h2 id="pv-studies-title">分镜与造型实验</h2></div><p>{studies.description}</p></div>
+          <div className="pv-section-heading"><div><p className="pv-eyebrow">STUDIES IN MOTION</p><h2 id="pv-studies-title">分镜与动态实验</h2></div><p>{studies.description}</p></div>
           <div className="pv-study-grid">{studies.items.map((study, index) => <a href={study.href} key={study.id} target="_blank" rel="noopener" className={`pv-study pv-study-${study.id}`}>
-            <span className="pv-study-top">0{index + 1} / OIL MOTION <ArrowUpRight size={17} aria-hidden="true" /></span><h3>{study.title}</h3><p>{study.description}</p><span className="pv-study-open">打开实验 <ArrowUpRight size={14} aria-hidden="true" /></span>
+            <span className="pv-study-top">0{index + 1} / {study.id === 'core' ? 'CONTINUOUS FILM' : 'OIL MOTION'} <ArrowUpRight size={17} aria-hidden="true" /></span><h3>{study.title}</h3><p>{study.description}</p><span className="pv-study-open">打开实验 <ArrowUpRight size={14} aria-hidden="true" /></span>
           </a>)}</div>
         </section>
 

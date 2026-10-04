@@ -1,3 +1,20 @@
+# Design QA — signature hero and continuous core film
+
+Reviewed 2026-10-04 on `codex/oil-motion-frame-studies`.
+
+- `/kernelcode/index.html`: replaces the desert/AI voxel hero with the chosen signature direction: five woven violet ribbons, 11,000 real particles, traveling brightness, pointer parallax, drag inertia. Navigation now has an identity lockup, numbered chapter links with an active state, a contact action, and a keyboard-accessible mobile menu. The original reference is unchanged.
+- The following 30,000-point sphere → network → GDAMON morph remains intact, including intermediate squeeze. Reduced motion freezes both particle systems and disables auto-advancing cards; focused controls retain native keyboard activation.
+- `/motion-lab/core`: replaces the default-paused six-pose sequence with continuous procedural 3D. An 18-second loop separates titanium/amber ring segments, brings them into orbits, assembles them, then activates the center. Playback starts immediately; Pause, Play, Replay, chapter selection, and a continuous scrubber control the same scene. Reduced motion starts still, and hidden tabs suspend rendering.
+- A real MP4 was rendered from that scene at exact 1/30-second timestamps: **1280×800, H.264/yuv420p, 18.000 seconds, 540 frames, 6,383,299 bytes**, faststart enabled. Source geometry, the reproducible export script, poster, and production metadata are in the repository. This is authored procedural animation; no AI video service or image interpolation was used. The X reference returned a CONNECT 403 in the cloud environment and was not viewed.
+- The shared index now has seven primary cards, including a directly playable core film, an updated star-ribbon/GDamon recording, and a film filter. Observer and Bloom keep their existing native-pose studies. No WebGL context runs in the index.
+- **31 browser assertions pass**, with zero page errors: visible particle forms and exact settled weights, live morph squeeze, signature movement/drag, six viewport sizes (320×568 through 1280×720 plus tablet/landscape), keyboard menu, reduced motion, core autoplay/pause/replay/seek, MP4 serving, gallery filtering, and manual video playback under reduced motion. The first preference-change check used a fixed 100ms wait; it was corrected to wait for the browser's media-change event/state. The completed run passes.
+- Final production checks pass: both preview videos advance (12.92s GDamon and 18s core), both complete routes initialize, the motion directory loads the new poster, and no page errors occur. Both MP4s fully decode without errors. The production harness was corrected to await lazy-loaded globals and directory assets before assertions. `npm run lint`, `npm run build`, and `git diff --check` pass.
+- Visual captures reviewed: desktop and mobile signature/nav, desktop and mobile mechanical sculpture, multiple film timestamps, and the actual exported poster. Captures and reports are under `/workspace/refined-motion-qa/` and `/workspace/gdamon-refined-captures/`.
+
+Chromium with software WebGL is verified; Safari and physical-device GPU performance were not measured. The WebGL-failure path for the core has a poster and an accessible film download. The existing shared Three.js bundle-size advisory remains.
+
+---
+
 # Design QA — unified preview index
 
 Reviewed 2026-10-04 on `codex/oil-motion-frame-studies`. `/`, `/index`, and `/index.html` now open one gallery. The older `/html-studies/index.html` redirects to `/#versions`; `/motion-lab` retains only its original three frame studies.

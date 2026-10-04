@@ -20,7 +20,7 @@
   </script>
   <style>
     :root {
-      --bg:#000; --pad:22px; --nav-h:98px;
+      --bg:#000; --pad:32px; --nav-h:94px;
       --fs-hero:clamp(42px, 7.05vw, 112px);
       --fs-h2:clamp(38px, 6.17vw, 104px);
       --fs-note:clamp(11.5px, 1.04vw, 18px);
@@ -30,6 +30,7 @@
       --ls-disp:-.038em; --btn-h:47px; --header-h:var(--nav-h);
       --ease:cubic-bezier(.16,1,.3,1);
       --hair:rgba(255,255,255,.17);
+      --dot-pitch:6.5px;
       --dots:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 13 13'%3E%3Crect width='10' height='10' fill='white'/%3E%3C/svg%3E");
     }
     * { box-sizing:border-box; }
@@ -55,16 +56,24 @@
     #cursor.big::after { width:16px; height:16px; }
     #cursorLabel { position:fixed; top:0; left:0; z-index:190; pointer-events:none; font-size:11.5px; font-weight:600; letter-spacing:-.015em; opacity:0; transition:opacity .3s var(--ease); }
     #cursorLabel.on { opacity:1; }
-    header { position:fixed; top:0; left:0; right:0; z-index:120; height:calc(var(--nav-h) + env(safe-area-inset-top)); padding:env(safe-area-inset-top) max(var(--pad), env(safe-area-inset-right)) 0 max(var(--pad), env(safe-area-inset-left)); display:flex; align-items:center; touch-action:manipulation; }
-    .brand { font-size:var(--fs-logo); letter-spacing:-.045em; line-height:1; white-space:nowrap; }
-    .brand .kernel { color:rgba(255,255,255,.60); font-style:normal; display:inline-block; transform:skewX(-10deg); }
-    .brand .code { color:#fff; }
-    .navpill { position:absolute; left:50%; transform:translateX(-50%); display:flex; align-items:stretch; height:42px; border-radius:999px; background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); white-space:nowrap; touch-action:pan-x; }
-    .navpill a { display:flex; align-items:center; flex-shrink:0; font-size:var(--fs-nav); letter-spacing:-.03em; padding:0 16px; color:rgba(255,255,255,.95); }
-    .navpill a + a { border-left:1px solid rgba(255,255,255,.15); }
-    .navpill a:hover { color:#fff; }
+    header { position:fixed; top:0; left:0; right:0; z-index:120; height:calc(var(--nav-h) + env(safe-area-inset-top)); padding:env(safe-area-inset-top) max(var(--pad), env(safe-area-inset-right)) 0 max(var(--pad), env(safe-area-inset-left)); display:flex; align-items:center; gap:24px; touch-action:manipulation; background:linear-gradient(#050611eb,#05061166); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); }
+    header::after { content:''; position:absolute; bottom:0; left:var(--pad); right:var(--pad); height:1px; background:rgba(196,193,255,.13); }
+    .brand { display:flex; align-items:center; gap:11px; line-height:1; white-space:nowrap; }
+    .brand-mark { font-size:39px; font-weight:650; letter-spacing:-.12em; padding-right:5px; color:#c1baff; }
+    .brand-name { display:flex; flex-direction:column; gap:7px; font-size:15px; font-weight:550; letter-spacing:-.025em; }
+    .brand-name small { font-size:8px; color:#8e91a8; letter-spacing:.15em; font-weight:400; text-transform:uppercase; }
+    .navpill { position:absolute; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:4px; height:44px; white-space:nowrap; touch-action:pan-x; }
+    .navpill a { display:flex; gap:7px; align-items:center; flex-shrink:0; font-size:12px; letter-spacing:-.015em; padding:12px 14px; color:#aaaabd; border:1px solid transparent; border-radius:8px; transition:background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease); }
+    .navpill a span { font-size:8px; color:#73758a; font-variant-numeric:tabular-nums; }
+    .navpill a:hover { color:#fff; background:#ffffff08; }
+    .navpill a[aria-current='page'] { color:#e4e0ff; background:#aaa0ff12; border-color:#aaa0ff26; }
+    .navpill a[aria-current='page'] span { color:#b7adff; }
     .cta, .btnpair { display:inline-flex; align-items:center; width:max-content; pointer-events:auto; }
-    .cta { margin-left:auto; }
+    .cta { margin-left:auto; gap:10px; border:1px solid #bdb6ff40; border-radius:8px; padding:11px 15px; font-size:12px; color:#e3deff; transition:background .3s var(--ease); }
+    .cta::before { content:''; width:5px; height:5px; border-radius:50%; background:#b7adff; box-shadow:0 0 9px #b7adff55; }
+    .cta svg { width:12px; height:12px; transition:transform .45s var(--ease); }
+    .cta:hover { background:#aaa0ff18; }
+    .cta:hover svg { transform:rotate(45deg); }
     .arrow { display:grid; place-items:center; width:var(--btn-h); height:var(--btn-h); border-radius:50%; background:#fff; color:#131313; position:relative; z-index:2; flex-shrink:0; }
     .arrow svg { width:13px; height:13px; transition:transform .45s var(--ease); }
     .button-text { display:flex; align-items:center; height:var(--btn-h); border-radius:999px; color:#141414; background:#fff; padding:0 18px; margin-left:-7px; font-size:var(--fs-btn); letter-spacing:-.035em; white-space:nowrap; }
@@ -98,20 +107,24 @@
     main > section.out-up, main > section.out-down { visibility:visible; pointer-events:none; opacity:0; z-index:3; transition:opacity .9s var(--ease), transform .9s var(--ease); }
     main > section.out-up { transform:translateY(-100%); }
     main > section.out-down { transform:translateY(100%); }
-    #hero { background:linear-gradient(to bottom, #466e87 0%, #58829b 40%, #6d96b2 100%); }
-    #heroBg { position:absolute; left:0; right:0; top:6%; height:100%; z-index:0; background-image:url('https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260923_000931_48441d07-5cf5-450a-8407-d0c86799b8a7.png'); background-size:cover; background-position:center; will-change:transform; filter:saturate(.86) brightness(1); }
-    #heroSky { position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(to bottom, rgba(20,80,130,.42) 0%, rgba(20,80,130,.42) 34%, transparent 46%); }
-    #heroNums { position:absolute; inset:0; z-index:2; pointer-events:none; mask-image:linear-gradient(to bottom, #000 0%, #000 20%, rgba(0,0,0,.55) 36%, rgba(0,0,0,.14) 48%, transparent 58%); -webkit-mask-image:linear-gradient(to bottom, #000 0%, #000 20%, rgba(0,0,0,.55) 36%, rgba(0,0,0,.14) 48%, transparent 58%); }
-    #heroShade { position:absolute; inset:0; z-index:3; pointer-events:none; background:linear-gradient(to bottom, transparent 50%, rgba(0,0,0,.18) 62%, rgba(0,0,0,.45) 74%, rgba(0,0,0,.80) 84%, rgba(0,0,0,.90) 100%); }
+    #hero { background:#04050c; }
+    #heroBg { position:absolute; inset:0; z-index:0; background:radial-gradient(ellipse at 51% 42%, #1b174046, #080a1c44 46%, transparent 74%); }
+    .hero-meta { position:absolute; top:calc(var(--header-h) + 28px); left:var(--pad); right:var(--pad); z-index:5; display:flex; justify-content:space-between; gap:16px; color:#8c8da8; font-size:9px; letter-spacing:.14em; text-transform:uppercase; pointer-events:none; }
+    .hero-meta a { pointer-events:auto; color:#b3aed3; letter-spacing:.04em; text-transform:none; }
+    .hero-meta a svg { width:10px; height:10px; margin-left:4px; vertical-align:middle; }
+    .hero-meta a:hover { color:#fff; }
     #heroGL { position:absolute; inset:0; z-index:4; touch-action:none; }
     #heroCopy { position:absolute; inset:0; z-index:5; pointer-events:none; }
     h1 { position:absolute; left:max(var(--pad), env(safe-area-inset-left)); bottom:calc(4.4vh + env(safe-area-inset-bottom)); max-width:calc(100vw - 2*var(--pad)); font-size:var(--fs-hero); font-weight:400; letter-spacing:var(--ls-disp); line-height:1.011; }
     #heroAside { position:absolute; right:max(var(--pad), env(safe-area-inset-right)); bottom:calc(4.43vh + env(safe-area-inset-bottom)); width:20.1vw; min-width:200px; }
     #heroAside p { font-size:var(--fs-note); font-weight:500; line-height:1.31; letter-spacing:-.02em; text-align:justify; margin-bottom:clamp(13px, 2vh, 22px); pointer-events:auto; touch-action:pan-y; }
+    #heroAside p { color:#a4a3b8; font-weight:400; line-height:1.5; text-align:left; }
+    #hero .arrow, #hero .button-text { background:#b9afff; color:#100e20; }
+    .hero-hint { display:block; margin-top:17px; font-size:9px; color:#858399; letter-spacing:.08em; }
     .rv { display:block; white-space:nowrap; }
     .rv > span { display:inline-block; opacity:0; filter:blur(13px); transform:translateY(.12em); transition:opacity .85s var(--ease), filter .85s var(--ease), transform .85s var(--ease); }
     .rv.in > span { opacity:1; filter:blur(0); transform:none; }
-    .dotfill { background-image:var(--dots); background-size:6.5px 6.5px; background-repeat:repeat; background-clip:text; -webkit-background-clip:text; color:transparent; -webkit-text-stroke:.4px rgba(255,255,255,.11); }
+    .dotfill { background-image:var(--dots); background-size:var(--dot-pitch) var(--dot-pitch); background-repeat:repeat; background-clip:text; -webkit-background-clip:text; color:transparent; -webkit-text-stroke:.4px rgba(255,255,255,.11); }
     .fade { opacity:0; transform:translateY(14px); transition:opacity .9s var(--ease), transform .9s var(--ease); }
     .fade.in { opacity:1; transform:none; }
     h2 { position:absolute; top:max(12.50vh, calc(var(--header-h) + 12px)); font-size:var(--fs-h2); font-weight:400; letter-spacing:-.038em; line-height:1.011; z-index:6; }
@@ -136,7 +149,7 @@
     .st-t svg { display:inline-block; width:.65em; height:.65em; margin-left:.3em; vertical-align:baseline; }
     .navpill::-webkit-scrollbar, #steps::-webkit-scrollbar, .step::-webkit-scrollbar { display:none; }
     @media (any-pointer:fine) { body, a, button { cursor:none; } }
-    @media (any-pointer:coarse) { #cursor, #cursorLabel { display:none; } #heroGL { pointer-events:none; } }
+    @media (any-pointer:coarse) { #cursor, #cursorLabel, .drag-hint { display:none; } #heroGL { pointer-events:none; } }
     @media (hover:hover) and (pointer:fine) {
       .cta:hover .arrow svg, .btnpair:hover .arrow svg { transform:rotate(45deg); }
       .step:hover::before { transform:translateY(0); }
@@ -144,11 +157,12 @@
       .step:hover .st-n { color:rgba(0,0,0,.40); }
     }
     @media (max-width:1040px) {
-      :root { --nav-h:108px; --pad:16px; --btn-h:40px; --fs-nav:13px; }
-      header { display:grid; grid-template-columns:minmax(0,1fr) auto; grid-template-rows:40px 38px; gap:8px 10px; align-content:center; }
+      :root { --nav-h:80px; --pad:20px; --btn-h:40px; --fs-nav:13px; }
+      header { gap:14px; }
       .brand { min-width:0; overflow:hidden; text-overflow:ellipsis; }
-      .cta { grid-column:2; grid-row:1; }
-      .navpill { grid-column:1 / -1; grid-row:2; position:static; transform:none; width:100%; height:38px; padding:0 14px; overflow-x:auto; scrollbar-width:none; }
+      .brand-name { font-size:13px; }
+      .navpill a { padding:11px 9px; }
+      .navpill a span { display:none; }
     }
     @media (max-width:900px) {
       #s2, #s3, #s4 { display:flex; flex-direction:column; padding:calc(var(--header-h) + 14px) max(var(--pad), env(safe-area-inset-right)) max(14px, env(safe-area-inset-bottom)) max(var(--pad), env(safe-area-inset-left)); gap:14px; }
@@ -163,12 +177,20 @@
       .st-b { font-size:14px; line-height:1.35; }
     }
     @media (max-width:800px) {
+      :root { --nav-h:76px; }
+      .navtoggle { display:block; border-radius:8px; width:36px; height:36px; background:transparent; }
+      .navpill { display:none; }
+      .navpill.open { display:flex; position:fixed; left:var(--pad); right:var(--pad); top:calc(var(--header-h) + 8px); transform:none; width:auto; height:auto; max-height:calc(100dvh - var(--header-h) - 24px); flex-direction:column; align-items:stretch; border:1px solid #bdb6ff30; border-radius:12px; overflow:auto; padding:8px; background:#0d0d1df7; touch-action:pan-y; }
+      .navpill a { min-height:46px; padding:12px 16px; }
+      .navpill a span { display:inline; }
+      .cta { padding:10px 11px; font-size:11px; }
+      .hero-meta { top:calc(var(--header-h) + 22px); font-size:8px; }
       #heroCopy { display:flex; flex-direction:column; justify-content:flex-end; padding:var(--pad) max(var(--pad), env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom)) max(var(--pad), env(safe-area-inset-left)); gap:12px; }
       h1, #heroAside { position:relative; inset:auto; width:auto; min-width:0; }
       #heroAside p { text-align:left; max-height:28dvh; overflow:auto; }
     }
     @media (max-width:720px) {
-      :root { --fs-hero:clamp(28px, 9.2vw, 56px); --fs-h2:clamp(26px, 8.4vw, 48px); --fs-note:13.5px; --fs-logo:clamp(18px, 5.4vw, 28px); --fs-btn:13px; }
+      :root { --fs-hero:clamp(28px, 9.2vw, 56px); --fs-h2:clamp(26px, 8.4vw, 48px); --fs-note:13.5px; --fs-logo:clamp(18px, 5.4vw, 28px); --fs-btn:13px; --dot-pitch:3.5px; }
       #heroAside p { text-align:left; }
     }
     @media (max-height:640px) { #steps { max-height:48dvh; } .step { max-height:48dvh; } }
@@ -188,14 +210,19 @@
       header { display:flex; gap:10px; }
       .navtoggle { display:block; }
       .navpill { display:none; }
-      .navpill.open { display:flex; position:fixed; left:calc(10px + env(safe-area-inset-left)); right:calc(10px + env(safe-area-inset-right)); top:calc(var(--header-h) + 8px); width:auto; height:auto; max-height:calc(100dvh - var(--header-h) - 24px); flex-direction:column; border-radius:16px; overflow:auto; padding:0 14px; touch-action:pan-y; }
+      .navpill.open { display:flex; position:fixed; left:var(--pad); right:var(--pad); top:calc(var(--header-h) + 8px); transform:none; width:auto; height:auto; max-height:calc(100dvh - var(--header-h) - 24px); flex-direction:column; align-items:stretch; border:1px solid #bdb6ff30; border-radius:12px; overflow:auto; padding:8px; background:#0d0d1df7; touch-action:pan-y; }
       .navpill a { min-height:44px; }
-      .navpill a + a { border-left:0; border-top:1px solid rgba(255,255,255,.15); }
+      .hero-meta, .hero-hint { display:none; }
     }
     @media (max-width:380px) {
       :root { --pad:12px; --fs-btn:12px; --btn-h:36px; }
       .navpill { padding:0 11px; }
       .arrow svg { width:12px; height:12px; }
+      .brand-mark { font-size:33px; }
+      .brand-name { font-size:12px; }
+      .brand-name small { font-size:6px; }
+      header { gap:9px; }
+      .cta::before { display:none; }
     }
     @media (max-height:430px) {
       #heroAside p { max-height:18vh; }
@@ -208,6 +235,11 @@
       h1 { text-shadow:0 2px 16px rgba(0,0,0,.55); }
       #heroAside p { max-height:24vh; text-align:left; overflow:auto; }
     }
+    @media (prefers-reduced-motion:reduce) {
+      *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; transition-delay:0ms !important; scroll-behavior:auto !important; }
+      .rv > span, .fade { opacity:1; filter:none; transform:none; }
+      .step.act::after { animation:none; }
+    }
   </style>
 </head>
 <body class="loading">
@@ -215,19 +247,20 @@
   <div id="cursor" aria-hidden="true"></div>
   <span id="cursorLabel" aria-hidden="true">Scroll Down</span>
   <header>
-    <a class="brand" href="#hero" data-section="0" aria-label="GDamon home"><span class="kernel">G</span><span class="code">Damon</span></a>
-    <nav id="sitenav" class="navpill" aria-label="Main navigation"><a href="#s2" data-section="1">/Research</a><a href="#s3" data-section="2">/Systems</a><a href="#s4" data-section="3">/GDamon</a><a href="/projects">/Work</a><a href="/blog">/Notes</a></nav>
-    <a class="cta" href="mailto:hello@damon.ai"><span class="arrow"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="button-text">Let’s talk</span></a>
+    <a class="brand" href="#hero" data-section="0" aria-label="GDamon home"><span class="brand-mark" aria-hidden="true">d.</span><span class="brand-name">Damon Guo-Siyi<small>Research &amp; engineering</small></span></a>
+    <nav id="sitenav" class="navpill" aria-label="Main navigation"><a href="#hero" data-section="0" aria-current="page"><span>00</span>Overview</a><a href="#s2" data-section="1"><span>01</span>Research</a><a href="#s3" data-section="2"><span>02</span>Systems</a><a href="#s4" data-section="3"><span>03</span>Selected work</a></nav>
+    <a class="cta" href="mailto:hello@damon.ai">Let’s talk<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     <button class="navtoggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sitenav"><span></span><span></span><span></span></button>
   </header>
   <canvas id="stage" aria-hidden="true"></canvas>
   <div id="rail" aria-hidden="true"><div id="railFill"></div></div>
   <main>
     <section id="hero" class="show" aria-label="AI that works. Built by GDamon.">
-      <div id="heroBg"></div><div id="heroSky"></div><canvas id="heroNums" aria-hidden="true"></canvas><div id="heroShade"></div><canvas id="heroGL" aria-label="Draggable three-dimensional AI wordmark"></canvas>
+      <div id="heroBg" aria-hidden="true"></div><canvas id="heroGL" aria-label="Interactive violet particle signature"></canvas>
+      <div class="hero-meta"><span>A signature in motion / 01</span><a href="/">All experiments<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12 12 4M4 4h8v8" stroke="currentColor" stroke-width="1.3"/></svg></a></div>
       <div id="heroCopy">
         <h1><span class="rv">AI that works.</span><span class="rv" data-dot="1" data-d="240">Built by GDamon.</span></h1>
-        <aside id="heroAside"><p class="fade">I’m Damon Guo-Siyi, an AI researcher and LLM engineer at Alibaba. I work on agentic RL, post-training, and evaluation to turn research into useful agent systems.</p><a class="btnpair fade" href="#s2" data-section="1"><span class="arrow"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="button-text">Explore research</span></a></aside>
+        <aside id="heroAside"><p class="fade">I’m Damon Guo-Siyi, an AI researcher and LLM engineer at Alibaba. I work on agentic RL, post-training, and evaluation to turn research into useful agent systems.</p><a class="btnpair fade" href="#s2" data-section="1"><span class="arrow"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="button-text">Explore research</span></a><span class="hero-hint">SCROLL TO TRANSFORM ↓<span class="drag-hint"> · DRAG TO EXPLORE</span></span></aside>
       </div>
     </section>
     <section id="s2" class="panel" aria-label="Intelligence starts with a question." inert>
@@ -251,14 +284,12 @@
   </main>
   <script>
   (() => {
-    const ASSETS = {
-      hero:'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260923_000931_48441d07-5cf5-450a-8407-d0c86799b8a7.png',
-    };
     const $ = (selector) => document.querySelector(selector);
     const sections = [...document.querySelectorAll('main > section')];
     const clamp = (value, min=0, max=1) => Math.min(max, Math.max(min, value));
     const smoothstep = (t) => t*t*(3-2*t);
-    const runtime = window.GDamonRuntime = { ASSETS, stage:null, hero:null, y:0, sectionIndex:0, transitioning:false };
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+    const runtime = window.GDamonRuntime = { stage:null, hero:null, y:0, sectionIndex:0, transitioning:false };
     const pointer = { x:0, y:0 };
     const pointerScreen = { x:innerWidth/2, y:innerHeight/2 };
     const cursorPosition = { ...pointerScreen };
@@ -293,7 +324,8 @@
     function revealSection(section, first=false) {
       const timers=[];
       section.querySelectorAll('.rv, .fade').forEach((element,index) => {
-        timers.push(setTimeout(() => play(element), first ? 140+index*110 : 40+index*90));
+        if(reduceMotion.matches) play(element);
+        else timers.push(setTimeout(() => play(element), first ? 140+index*110 : 40+index*90));
       });
       revealTimers.set(section,timers);
     }
@@ -305,11 +337,12 @@
       });
     }
     function regrid() {
+      const pitch=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--dot-pitch')) || 6.5;
       document.querySelectorAll('.rv[data-dot="1"]').forEach((line) => {
         const host=line.getBoundingClientRect();
         line.querySelectorAll('.dotfill').forEach((span) => {
           const rect=span.getBoundingClientRect();
-          span.style.backgroundPosition=`${-((rect.left-host.left)%6.5)}px ${-((rect.top-host.top)%6.5)}px`;
+          span.style.backgroundPosition=`${-((rect.left-host.left)%pitch)}px ${-((rect.top-host.top)%pitch)}px`;
         });
       });
     }
@@ -335,6 +368,7 @@
       const open=!nav.classList.contains('open'); nav.classList.toggle('open',open); toggle.classList.toggle('open',open);
       toggle.setAttribute('aria-expanded',String(open)); toggle.setAttribute('aria-label',open?'Close menu':'Open menu');
     });
+    nav.querySelectorAll('a').forEach(link => link.addEventListener('click',closeMenu));
     document.querySelectorAll('[data-section]').forEach((link) => link.addEventListener('click',(event) => {
       event.preventDefault(); closeMenu(); go(Number(link.dataset.section)-current);
     }));
@@ -345,6 +379,11 @@
     function applyView(y) {
       runtime.y=y;
       const vh=innerHeight;
+      const chapter=Math.round(y/vh);
+      nav.querySelectorAll('[data-section]').forEach(link => {
+        if(Number(link.dataset.section)===chapter) link.setAttribute('aria-current','page');
+        else link.removeAttribute('aria-current');
+      });
       $('#heroBg').style.transform=`translateY(${y*.30}px)`;
       $('#stage').classList.toggle('on',y>vh*.55);
       $('#rail').classList.toggle('on',y>vh*.75);
@@ -380,6 +419,14 @@
       runtime.transitioning=true; closeMenu();
       const old=sections[current], incoming=sections[next];
       old.inert=true;
+      if(reduceMotion.matches) {
+        old.classList.remove('show','out-up','out-down'); resetSection(old);
+        current=next; runtime.sectionIndex=current; tween=null;
+        incoming.style.opacity=''; incoming.style.transition=''; incoming.classList.add('show'); incoming.inert=false;
+        applyView(current*innerHeight); revealSection(incoming); regrid();
+        runtime.transitioning=false; coolUntil=performance.now()+120;
+        return;
+      }
       old.classList.add(direction>0?'out-up':'out-down');
       tween={ from:runtime.y/innerHeight, to:next, start:performance.now(), duration:LEAVE_MS };
       afterTransition(old,'transform',LEAVE_MS+80,() => {
@@ -433,6 +480,9 @@
     window.addEventListener('touchcancel',() => {touch=null;},{passive:true});
     window.addEventListener('keydown',(event) => {
       if(event.key==='Escape') { closeMenu(); return; }
+      const target=event.target instanceof Element?event.target:null;
+      if(event.defaultPrevented || event.isComposing || event.altKey || event.ctrlKey || event.metaKey ||
+        target?.closest('a,button,input,select,textarea,[contenteditable]:not([contenteditable="false"]),[role="button"],[role="slider"],[role="textbox"]')) return;
       if(['ArrowDown','PageDown',' ','Spacebar','ArrowUp','PageUp'].includes(event.key)) {
         event.preventDefault(); go(event.key==='ArrowUp'||event.key==='PageUp'?-1:1);
       }
@@ -447,32 +497,20 @@
       const card=cards[activeStep]; card.style.setProperty('--dwell',`${DWELL}ms`); void card.offsetWidth; card.classList.add('act');
       if(current===3 && steps.scrollWidth>steps.clientWidth+1) {
         const padding=parseFloat(getComputedStyle(steps).paddingLeft);
-        steps.scrollTo({left:card.offsetLeft-padding,behavior:'smooth'});
+        steps.scrollTo({left:card.offsetLeft-padding,behavior:reduceMotion.matches?'auto':'smooth'});
       }
       stepDue=now+DWELL;
     }
     steps.addEventListener('pointerdown',() => {pauseUntil=performance.now()+12000; stepDue=pauseUntil; cards[activeStep]?.classList.remove('act');});
+    reduceMotion.addEventListener('change',() => {
+      cards.forEach(card=>card.classList.remove('act'));
+      stepDue=performance.now()+DWELL;
+    });
 
-    const numbers=$('#heroNums'), ctx=numbers.getContext('2d');
-    let numberTime=0,lastNumbers=0;
-    const hash=(c,r)=>{const n=Math.sin(c*127.1+r*311.7)*43758.5453;return n-Math.floor(n);};
-    function drawNumbers() {
-      if(!ctx) return;
-      const ratio=Math.min(devicePixelRatio||1,2);
-      ctx.setTransform(ratio,0,0,ratio,0,0); ctx.clearRect(0,0,innerWidth,innerHeight);
-      ctx.font='500 20px "Schibsted Grotesk", Helvetica, sans-serif'; ctx.textBaseline='top';
-      const columns=Math.ceil(innerWidth/47)+1,rows=Math.ceil(innerHeight*.66/33);
-      for(let c=0;c<columns;c++) for(let r=0;r<rows;r++) {
-        if(hash(c,r)<.12) continue;
-        const value=clamp(Math.round(50+49*Math.sin(c*.19+r*.075+numberTime*.22)*Math.cos(r*.14-numberTime*.09+c*.03)),0,99);
-        ctx.fillStyle=`rgba(255,255,255,${.17+.33*hash(r,c)})`;ctx.fillText(String(value),c*47+10,r*33+7);
-      }
-    }
     function layout() {
       document.documentElement.style.setProperty('--header-h',`${$('header').offsetHeight}px`);
       if(getComputedStyle(toggle).display==='none') closeMenu();
       fitHeadings();
-      const ratio=Math.min(devicePixelRatio||1,2); numbers.width=Math.round(innerWidth*ratio); numbers.height=Math.round(innerHeight*ratio); drawNumbers();
       runtime.hero?.resize(); runtime.stage?.resize();
       if(!runtime.transitioning) applyView(current*innerHeight);
     }
@@ -483,7 +521,7 @@
     const got=new Set(); let shown=6,finished=false;
     const markReady=(key) => { got.add(key); };
     runtime.markReady=markReady;
-    const bg=new Image(); bg.onload=bg.onerror=() => markReady('bg'); bg.src=ASSETS.hero;
+    markReady('bg');
     document.fonts.ready.then(()=>{markReady('font'); layout();});
     const loaderFallback=setTimeout(()=>['bg','glb','network','font'].forEach(markReady),15000);
     function loaderFrame() {
@@ -500,12 +538,12 @@
     function frame(now) {
       loaderFrame();
       if(tween) { const k=clamp((now-tween.start)/tween.duration); applyView((tween.from+(tween.to-tween.from)*k)*innerHeight); }
-      cursorPosition.x+=(pointerScreen.x-cursorPosition.x)*.22; cursorPosition.y+=(pointerScreen.y-cursorPosition.y)*.22;
+      const cursorEase=reduceMotion.matches?1:.22;
+      cursorPosition.x+=(pointerScreen.x-cursorPosition.x)*cursorEase; cursorPosition.y+=(pointerScreen.y-cursorPosition.y)*cursorEase;
       cursor.style.transform=`translate(${cursorPosition.x}px,${cursorPosition.y}px)`;
       cursor.classList.toggle('dot',overHero||Boolean(runtime.hero?.dragging));
       cursorLabel.style.transform=`translate(${cursorPosition.x}px,${cursorPosition.y}px) translate(-50%,25px)`;
-      if(now-lastNumbers>=110) {lastNumbers=now;numberTime+=.08;drawNumbers();}
-      if(now>=pauseUntil && now>=stepDue) advanceStep(now);
+      if(!reduceMotion.matches && now>=pauseUntil && now>=stepDue) advanceStep(now);
       runtime.hero?.update(now); runtime.stage?.update(now);
       requestAnimationFrame(frame);
     }
@@ -685,6 +723,7 @@ function createNeuralSamples(count) {
 
     function createParticleSystem({ canvas, markReady, getPointer }) {
   const PN = 30000;
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
   renderer.setSize(innerWidth, innerHeight, false);
@@ -921,13 +960,13 @@ void main(){
   markReady('network');
 
   function update(now) {
-    const dt = lastTime === null ? 0 : Math.max(0, (now - lastTime) / 1000);
+    const dt = lastTime === null ? 0 : Math.max(0, Math.min(.08, (now - lastTime) / 1000));
     lastTime = now;
     const pointer = getPointer();
-    uni.time.value = now / 1000;
-    spin += dt * (0.085 * uni.wA.value + 0.006 * (uni.wB.value + uni.wC.value));
-    points.rotation.y = spin * uni.wA.value + pointer.x * 0.16;
-    points.rotation.x = pointer.y * 0.09;
+    uni.time.value = reduceMotion.matches ? 0 : now / 1000;
+    if(!reduceMotion.matches) spin += dt * (0.085 * uni.wA.value + 0.006 * (uni.wB.value + uni.wC.value));
+    points.rotation.y = reduceMotion.matches ? 0 : spin * uni.wA.value + pointer.x * 0.16;
+    points.rotation.x = reduceMotion.matches ? 0 : pointer.y * 0.09;
     renderer.render(scene, camera);
     frameCount++;
     if (frameCount === 1 || frameCount % 30 === 0) canvas.dataset.renderFrames = String(frameCount);
@@ -937,160 +976,210 @@ void main(){
   return { uni, resize, update, setWordmark, getFraming:()=>framing };
 }
 
-    function createHeroWordmark({ canvas, markReady, getPointer, onGlyphs }) {
+function createHeroSignature({ canvas, markReady, getPointer, onGlyphs }) {
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(32, innerWidth / innerHeight, 1, 6000);
-  camera.position.z = 600;
+  const camera = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, .1, 200);
+  const root = new THREE.Group();
+  scene.add(root);
+  canvas.dataset.wordmarkLabel = 'SIGNATURE';
+  canvas.setAttribute('role', 'img');
+  canvas.setAttribute('aria-label', 'Five luminous violet particle ribbons, woven into a living signature. Drag to turn the sculpture.');
+
+  // The final chapter samples its own lettering, independently of the hero sculpture.
+  const sampleMaterial = new THREE.MeshBasicMaterial();
+  try {
+    const samplingWordmark = createVoxelText('GDAMON', sampleMaterial);
+    onGlyphs(samplingWordmark);
+    samplingWordmark.traverse(mesh => { if (mesh.isMesh) mesh.geometry.dispose(); });
+  } finally { sampleMaterial.dispose(); }
+
+  function fallback() {
+    if (canvas.parentNode?.querySelector('.signature-fallback')) return;
+    canvas.dataset.signatureState = 'fallback';
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 1000 500');
+    svg.setAttribute('class', 'signature-fallback');
+    svg.setAttribute('role', 'img');
+    svg.setAttribute('aria-label', 'Five interwoven violet signature ribbons');
+    Object.assign(svg.style, { position:'absolute', left:'8%', top:'18%', width:'84%', height:'48%', zIndex:'4', pointerEvents:'none', overflow:'visible' });
+    for (let i = 0; i < 5; i++) {
+      const path = document.createElementNS(svg.namespaceURI, 'path');
+      path.setAttribute('d', 'M80 250C80 40 330 40 500 250S920 460 920 250 670 40 500 250 80 460 80 250Z');
+      path.setAttribute('fill', 'none');
+      path.setAttribute('stroke', i % 2 ? '#c7a5ff' : '#8596ff');
+      path.setAttribute('stroke-width', '1.8');
+      path.setAttribute('stroke-dasharray', '1 4');
+      path.setAttribute('transform', `translate(0 ${(i - 2) * 13})`);
+      svg.append(path);
+    }
+    canvas.insertAdjacentElement('afterend', svg);
+  }
+
   let renderer;
   try {
-    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
-    renderer.setSize(innerWidth, innerHeight, false);
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.05;
+    renderer = new THREE.WebGLRenderer({ canvas, antialias:false, alpha:true, powerPreference:'high-performance' });
     renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.setClearColor(0x000000, 0);
+    renderer.setClearColor(0x030514, 0);
   } catch (error) {
-    console.error('GDamon hero WebGL could not initialize.', error);
+    console.warn('The signature sculpture is using its static fallback.', error);
+    fallback();
     markReady('glb');
     return { resize() {}, update() {}, get dragging() { return false; } };
   }
 
-  const environmentCanvas = document.createElement('canvas');
-  environmentCanvas.width = 1024;
-  environmentCanvas.height = 512;
-  const environmentContext = environmentCanvas.getContext('2d');
-  const sky = environmentContext.createLinearGradient(0, 0, 0, 256);
-  sky.addColorStop(0, '#eef5fb');
-  sky.addColorStop(0.55, '#b6cddc');
-  sky.addColorStop(1, '#6d8ea3');
-  environmentContext.fillStyle = sky;
-  environmentContext.fillRect(0, 0, 1024, 256);
-  const ground = environmentContext.createLinearGradient(0, 254, 0, 512);
-  ground.addColorStop(0, '#f6efe6');
-  ground.addColorStop(0.07, '#a8836c');
-  ground.addColorStop(0.26, '#5a3b2e');
-  ground.addColorStop(1, '#241812');
-  environmentContext.fillStyle = ground;
-  environmentContext.fillRect(0, 254, 1024, 258);
-  const key = environmentContext.createRadialGradient(300, 84, 0, 300, 84, 210);
-  key.addColorStop(0, 'rgba(255,255,255,1)');
-  key.addColorStop(0.3, 'rgba(255,255,255,.92)');
-  key.addColorStop(1, 'rgba(255,255,255,0)');
-  environmentContext.fillStyle = key;
-  environmentContext.fillRect(0, 0, 1024, 512);
-  const environmentTexture = new THREE.CanvasTexture(environmentCanvas);
-  environmentTexture.mapping = THREE.EquirectangularReflectionMapping;
-  environmentTexture.colorSpace = THREE.SRGBColorSpace;
-  const pmrem = new THREE.PMREMGenerator(renderer);
-  const environment = pmrem.fromEquirectangular(environmentTexture);
-  scene.environment = environment.texture;
-  environmentTexture.dispose();
-  pmrem.dispose();
-
-  scene.add(new THREE.HemisphereLight(0xe6f1fa, 0x4a352c, 0.22));
-  const whiteLight = new THREE.DirectionalLight(0xffffff, 0.60);
-  whiteLight.position.set(-3, 2.4, 3.4);
-  scene.add(whiteLight);
-  const warmLight = new THREE.DirectionalLight(0xffe6c9, 0.22);
-  warmLight.position.set(2.7, -1.5, 1.5);
-  scene.add(warmLight);
-
-  const chevronMaterial = new THREE.MeshPhysicalMaterial({
-    color: 0xeef3f8,
-    metalness: 0.88,
-    roughness: 0.09,
-    clearcoat: 1,
-    clearcoatRoughness: 0.05,
-    iridescence: 1,
-    iridescenceIOR: 1.32,
-    iridescenceThicknessRange: [130, 540],
-    envMapIntensity: 1.45,
-    reflectivity: 0.94
+  const count = 11000;
+  const positions = new Float32Array(count * 3);
+  const phases = new Float32Array(count);
+  const sizes = new Float32Array(count);
+  const tints = new Float32Array(count);
+  const lanes = new Float32Array(count);
+  let seed = 51083;
+  const random = () => {
+    seed += 0x6D2B79F5;
+    let n = seed;
+    n = Math.imul(n ^ n >>> 15, n | 1);
+    n ^= n + Math.imul(n ^ n >>> 7, n | 61);
+    return ((n ^ n >>> 14) >>> 0) / 4294967296;
+  };
+  for (let i = 0; i < count; i++) {
+    const ribbon = i % 5;
+    const angle = (i * .618033988749895 % 1) * Math.PI * 2;
+    const ribbonPhase = ribbon * Math.PI * 2 / 5;
+    const transverse = (random() - .5) * .10;
+    const ribbonOffset = (ribbon - 2) * .14;
+    positions.set([
+      Math.sin(angle) * 5.3 + Math.cos(angle) * transverse,
+      Math.sin(angle * 2 + (ribbon - 2) * .13) * 1.7 + ribbonOffset + transverse,
+      Math.cos(angle) * 1.5 + Math.sin(angle * 3 + ribbonPhase) * .4 + transverse * .6
+    ], i * 3);
+    sizes[i] = 1.2 + random() * 1.6;
+    phases[i] = angle;
+    lanes[i] = ribbon / 4;
+    tints[i] = .2 + ribbon / 6;
+  }
+  const geometry = new THREE.BufferGeometry();
+  for (const [name, data, itemSize] of [
+    ['position', positions, 3], ['aPhase', phases, 1], ['aSize', sizes, 1],
+    ['aTint', tints, 1], ['aLane', lanes, 1]
+  ]) geometry.setAttribute(name, new THREE.BufferAttribute(data, itemSize));
+  geometry.computeBoundingSphere();
+  const uniforms = {
+    uTime:{ value:0 }, uDpr:{ value:1 }, uDistance:{ value:18 },
+    uIntro:{ value:reduced.matches ? 1 : 0 },
+    uPointer:{ value:new THREE.Vector2(-1000, -1000) },
+    uResolution:{ value:new THREE.Vector2(innerWidth, innerHeight) },
+    uHover:{ value:0 }, uMotion:{ value:reduced.matches ? 0 : 1 },
+    uPrimary:{ value:new THREE.Color(0x718aff) },
+    uSecondary:{ value:new THREE.Color(0xcea4ff) }
+  };
+  const material = new THREE.ShaderMaterial({
+    uniforms, transparent:true, depthWrite:false, depthTest:false,
+    blending:THREE.AdditiveBlending,
+    vertexShader:`
+      attribute float aPhase;
+      attribute float aSize;
+      attribute float aTint;
+      attribute float aLane;
+      uniform float uTime, uDpr, uDistance, uIntro, uHover, uMotion;
+      uniform vec2 uPointer, uResolution;
+      varying float vTint;
+      varying float vAlpha;
+      void main() {
+        vec3 p = position;
+        float phase = aPhase + uTime * .32;
+        p += vec3(sin(phase + position.y), cos(phase + position.x), sin(phase)) * .075 * uMotion;
+        p.y += sin(aPhase * 3.0 + uTime * .48 + aLane * 2.0) * .06 * uMotion;
+        vec4 mv = modelViewMatrix * vec4(p, 1.0);
+        vec4 clip = projectionMatrix * mv;
+        vec2 screen = (clip.xy / clip.w * .5 + .5) * uResolution;
+        vec2 delta = screen - uPointer;
+        float influence = (1.0 - smoothstep(0.0, 145.0, length(delta))) * uHover * uMotion;
+        mv.xy += normalize(delta + vec2(.001)) * influence * .34;
+        gl_Position = projectionMatrix * mv;
+        gl_PointSize = clamp(aSize * 1.75 * uDpr * uDistance / max(1.0, -mv.z), 1.0, 22.0 * uDpr);
+        float pulse = pow(max(0.0, sin(aPhase * 2.0 - uTime * 1.15 + aLane * 1.5)), 8.0);
+        float twinkle = .76 + .24 * sin(aPhase * 3.1 + uTime * 1.2);
+        vTint = aTint + pulse * .12;
+        vAlpha = (.63 + aTint * .54 + pulse * .25 * uMotion) * mix(1.0, twinkle, uMotion) * uIntro;
+      }
+    `,
+    fragmentShader:`
+      uniform vec3 uPrimary, uSecondary;
+      varying float vTint;
+      varying float vAlpha;
+      void main() {
+        float d = length(gl_PointCoord - .5) * 2.0;
+        if (d > 1.0) discard;
+        float core = exp(-d * d * 14.0);
+        float halo = pow(1.0 - d, 1.8);
+        float opacity = core * .8 + halo * .55;
+        if (opacity < .012) discard;
+        vec3 color = mix(uPrimary, uSecondary, smoothstep(.4, 1.0, vTint));
+        color += core * .32;
+        gl_FragColor = vec4(color, opacity * vAlpha);
+        #include <tonemapping_fragment>
+        #include <colorspace_fragment>
+      }
+    `
   });
-  const kMaterial = new THREE.MeshPhysicalMaterial({
-    color: 0x5d768d,
-    metalness: 0.94,
-    roughness: 0.15,
-    clearcoat: 1,
-    clearcoatRoughness: 0.09,
-    iridescence: 0.45,
-    iridescenceIOR: 1.28,
-    iridescenceThicknessRange: [160, 470],
-    envMapIntensity: 1.15,
-    reflectivity: 0.86
-  });
-
-  const root = new THREE.Group();
-  const bobber = new THREE.Group();
-  const spinner = new THREE.Group();
-  root.add(bobber);
-  bobber.add(spinner);
-  scene.add(root);
-  spinner.rotation.set(-0.07, 0.22, 0);
-  let span = null;
-  let worldPerPx = 1;
-  let dragging = false;
-  let dragId = null;
-  let lastX = 0;
-  let lastY = 0;
-  let bias = 0;
-  let velocityY = 0;
-  let targetX = -0.07;
+  const points = new THREE.Points(geometry, material);
+  points.frustumCulled = false;
+  root.add(points);
+  canvas.dataset.signatureParticles = String(count);
+  let width = innerWidth, height = innerHeight;
+  let elapsed = 0, lastTime = 0, dragging = false, dragId = null;
+  let lastX = 0, lastY = 0, dragY = 0, dragX = 0, velocity = 0;
+  let fitY = 0, failed = false, pointerInside = false;
+  const pointer = new THREE.Vector2(-1000, -1000);
 
   function resize() {
-    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
-    renderer.setSize(innerWidth, innerHeight, false);
-    camera.aspect = innerWidth / innerHeight;
-    if (span) {
-      let fraction = 0.535;
-      let centerY = innerHeight / 2 - 84;
-      if (innerWidth < 1100 || innerHeight < 700) {
-        const header = document.querySelector('header');
-        const heading = document.querySelector('#hero h1');
-        const aside = document.querySelector('#heroAside');
-        const headerBottom = header ? header.getBoundingClientRect().bottom : 98;
-        const headingTop = heading ? heading.getBoundingClientRect().top : innerHeight * 0.74;
-        const asideTop = aside ? aside.getBoundingClientRect().top : headingTop;
-        const textTop = Math.min(headingTop, asideTop);
-        const bandTop = headerBottom + 8;
-        const bandBottom = Math.max(bandTop + 1, textTop - 46);
-        const band = bandBottom - bandTop;
-        fraction = Math.max(0.16, Math.min(0.535, (band * 0.52 / span.y) * span.x / innerWidth));
-        centerY = bandTop + band * 0.32;
-        if (innerHeight < 560) {
-          const room = Math.max(1, textTop - headerBottom - 16);
-          fraction = Math.min(fraction, (room / span.y) * span.x / innerWidth);
-          centerY = headerBottom + 8 + room / 2;
-        }
-      }
-      worldPerPx = span.x / (fraction * innerWidth);
-      camera.position.z = (innerHeight * worldPerPx / 2) / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
-      root.position.y = (innerHeight / 2 - centerY) * worldPerPx;
-    }
+    if (failed) return;
+    width = Math.max(1, innerWidth);
+    height = Math.max(1, innerHeight);
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, width < 700 ? 1.3 : 1.5));
+    renderer.setSize(width, height, false);
+    camera.aspect = width / height;
+    const headerBottom = document.querySelector('header')?.getBoundingClientRect().bottom || 98;
+    const headingTop = document.querySelector('#hero h1')?.getBoundingClientRect().top || height * .74;
+    const asideTop = document.querySelector('#heroAside')?.getBoundingClientRect().top || headingTop;
+    const top = headerBottom + (height < 560 ? 8 : 22);
+    const bottom = Math.max(top + 44, Math.min(headingTop, asideTop) - (height < 560 ? 12 : 30));
+    const band = Math.max(44, bottom - top);
+    const field = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+    const widthFit = 11.6 / (field * camera.aspect * (width < 700 ? .92 : .86));
+    const heightFit = 5.1 / (field * (band / height));
+    camera.position.z = Math.max(widthFit, heightFit, 13) + 1.8;
+    const worldPerPx = camera.position.z * field / height;
+    fitY = (height * .5 - (top + band * .5)) * worldPerPx;
+    root.position.y = fitY;
     camera.updateProjectionMatrix();
+    uniforms.uDpr.value = renderer.getPixelRatio();
+    uniforms.uDistance.value = Math.min(22, camera.position.z);
+    uniforms.uResolution.value.set(width, height);
+    canvas.dataset.signatureFit = `${Math.round(top)},${Math.round(bottom)}`;
+    lastTime = 0;
   }
 
   canvas.addEventListener('pointerdown', event => {
-    if (event.button !== 0 || (dragging && event.pointerId !== dragId)) return;
-    dragging = true;
-    dragId = event.pointerId;
-    lastX = event.clientX;
-    lastY = event.clientY;
-    velocityY = 0;
-    canvas.setPointerCapture(event.pointerId);
+    if (reduced.matches || event.pointerType === 'touch' || event.button !== 0) return;
+    dragging = true; dragId = event.pointerId;
+    lastX = event.clientX; lastY = event.clientY; velocity = 0;
+    canvas.setPointerCapture(dragId);
     event.preventDefault();
   });
   canvas.addEventListener('pointermove', event => {
+    if (reduced.matches || event.pointerType === 'touch') return;
+    pointerInside = true;
+    pointer.set(event.clientX, height - event.clientY);
     if (!dragging || event.pointerId !== dragId) return;
-    const dx = event.clientX - lastX;
-    const dy = event.clientY - lastY;
-    bias += dx * 0.0092;
-    targetX = THREE.MathUtils.clamp(targetX + dy * 0.0062, -0.62, 0.62);
-    velocityY = dx * 0.0007;
-    lastX = event.clientX;
-    lastY = event.clientY;
+    const dx = event.clientX - lastX, dy = event.clientY - lastY;
+    dragY += dx * .005;
+    dragX = THREE.MathUtils.clamp(dragX + dy * .003, -.45, .45);
+    velocity = dx * .0003;
+    lastX = event.clientX; lastY = event.clientY;
   });
+  canvas.addEventListener('pointerleave', () => { pointerInside = false; });
   function release(event) {
     if (!dragging || event.pointerId !== dragId) return;
     dragging = false;
@@ -1100,41 +1189,57 @@ void main(){
   canvas.addEventListener('pointerup', release);
   canvas.addEventListener('pointercancel', release);
   canvas.addEventListener('lostpointercapture', () => { dragging = false; dragId = null; });
-
-  try {
-    const wordmark = createVoxelText('<AI>', kMaterial, chevronMaterial);
-    span = new THREE.Box3().setFromObject(wordmark).getSize(new THREE.Vector3());
-    spinner.add(wordmark);
-    canvas.dataset.wordmarkLabel = '<AI>';
-    const samplingWordmark = createVoxelText('GDAMON', kMaterial, chevronMaterial);
-    onGlyphs(samplingWordmark);
-    samplingWordmark.traverse(mesh => { if(mesh.isMesh) mesh.geometry.dispose(); });
-    resize();
-  } catch(error) { console.error('GDamon voxel wordmark could not initialize.', error); }
-  finally { markReady('glb'); }
+  canvas.addEventListener('webglcontextlost', event => {
+    event.preventDefault(); failed = true; fallback();
+  });
+  reduced.addEventListener('change', () => {
+    uniforms.uMotion.value = reduced.matches ? 0 : 1;
+    if (reduced.matches) { dragging = false; dragId = null; dragY = dragX = velocity = 0; }
+    lastTime = 0;
+  });
 
   function update(now) {
-    const t = now / 1000;
-    const pointer = getPointer();
-    if (!dragging) {
-      bias += velocityY;
-      velocityY *= 0.955;
-      bias *= 0.992;
-      targetX = -0.06 + pointer.y * 0.10;
+    if (failed || document.hidden || !document.querySelector('#hero')?.classList.contains('show')) {
+      lastTime = 0;
+      return;
     }
-    const amplitude = 0.30 * (innerHeight < 560 ? 0.35 : 1);
-    const targetY = 0.22 + Math.sin(t * Math.PI * 2 / 13) * amplitude + bias;
-    spinner.rotation.x += (targetX - spinner.rotation.x) * 0.085;
-    spinner.rotation.y += (targetY - spinner.rotation.y) * 0.085;
-    bobber.position.y = Math.sin(t * 0.62) * 7 * worldPerPx;
-    bobber.rotation.z = Math.sin(t * 0.43) * 0.012;
-    bobber.rotation.y = pointer.x * 0.09;
-    renderer.render(scene, camera);
+    const dt = lastTime ? Math.min((now - lastTime) / 1000, .08) : 1 / 60;
+    lastTime = now;
+    if (!reduced.matches) elapsed += dt;
+    uniforms.uTime.value = reduced.matches ? 0 : elapsed;
+    uniforms.uIntro.value = reduced.matches ? 1 : THREE.MathUtils.smoothstep(elapsed, 0, 1.2);
+    uniforms.uPointer.value.copy(pointer);
+    uniforms.uHover.value = reduced.matches ? 0 : Number(pointerInside);
+    const mouse = getPointer();
+    if (!dragging) {
+      const decay = Math.pow(.988, dt * 60);
+      dragY = (dragY + velocity) * decay;
+      velocity *= Math.pow(.955, dt * 60);
+      dragX *= decay;
+    }
+    const targetX = reduced.matches ? -.06 : -.06 + mouse.y * .14 + dragX;
+    const targetY = reduced.matches ? -.12 : -.12 + Math.sin(elapsed * .13) * .20 + mouse.x * .18 + dragY;
+    const easing = reduced.matches ? 1 : 1 - Math.exp(-dt * 4);
+    root.rotation.x += (targetX - root.rotation.x) * easing;
+    root.rotation.y += (targetY - root.rotation.y) * easing;
+    root.rotation.z = reduced.matches ? -.045 : -.045 + Math.sin(elapsed * .19) * .012;
+    root.position.y = fitY + (reduced.matches ? 0 : Math.sin(elapsed * .4) * .045);
+    try {
+      renderer.render(scene, camera);
+      canvas.dataset.signatureState = 'ready';
+      canvas.dataset.signatureFrames = String(renderer.info.render.frame);
+      canvas.dataset.signatureTime = uniforms.uTime.value.toFixed(3);
+    } catch (error) {
+      failed = true; fallback();
+      console.warn('The signature sculpture is using its static fallback.', error);
+    }
   }
-
   resize();
+  update(performance.now());
+  markReady('glb');
   return { resize, update, get dragging() { return dragging; } };
 }
+
 
     const runtime = window.GDamonRuntime;
     try {
@@ -1142,7 +1247,7 @@ void main(){
       runtime.applyView(runtime.y);
     } catch(error) { console.error('GDamon particle renderer could not start.',error); runtime.markReady('network'); }
     try {
-      runtime.hero = createHeroWordmark({ canvas:document.querySelector('#heroGL'), markReady:runtime.markReady, getPointer:runtime.getPointer, onGlyphs:(group)=>runtime.stage?.setWordmark(group) });
+      runtime.hero = createHeroSignature({ canvas:document.querySelector('#heroGL'), markReady:runtime.markReady, getPointer:runtime.getPointer, onGlyphs:(group)=>runtime.stage?.setWordmark(group) });
     } catch(error) { console.error('GDamon hero renderer could not start.',error); runtime.markReady('glb'); }
     runtime.layout();
   </script>

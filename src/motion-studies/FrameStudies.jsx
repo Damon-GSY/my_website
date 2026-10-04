@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, Route, Routes, useParams } from 'react-router-dom';
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Pause, Play } from 'lucide-react';
 import PoseCanvas from './PoseCanvas';
+import CoreMotion from './CoreMotion';
 import './frame-studies.css';
 
 const DIRECTIONS = {
@@ -25,7 +26,7 @@ const DIRECTIONS = {
     number: '03', name: 'Inner Workings', type: 'STRUCTURE / ASSEMBLY',
     title: <>Order from<br /><em>uncertainty.</em></>,
     description: 'Tools, memory, and decisions. Exploring how individual parts become a system that works.',
-    chinese: '黑色与琥珀。结构拆解、再装配，可随时反向播放。',
+    chinese: '钛金属与琥珀光。十八秒连续运动：拆解、连接、装配、激活。',
     gesture: 'Take it apart. Put it together.', start: 'SCATTERED', end: 'ASSEMBLED',
     accessible: 'A machine core shown in six stages from separated parts to assembled',
   },
@@ -61,10 +62,10 @@ function StudiesIndex({ studies }) {
       <StudyHeader />
       <section className="fm-index-intro" aria-labelledby="fm-index-title">
         <div className="fm-kicker"><span className="fm-dot" /> THE MOTION NOTEBOOK · VOL. 01</div>
-        <h1 id="fm-index-title">Still images.<br /><em>New possibilities.</em></h1>
+        <h1 id="fm-index-title">Ideas in motion.<br /><em>New possibilities.</em></h1>
         <div className="fm-index-intro-bottom">
           <p>Three little experiments in giving ideas a life of their own.</p>
-          <p lang="zh-CN">三种视觉方向，三种交互。<br />从生成画面出发，探索逐帧的可能性。</p>
+          <p lang="zh-CN">三种视觉方向，三种交互。<br />从角色姿态，到连续的三维机械运动。</p>
           <a href="#studies" className="fm-round-link" aria-label="Explore the three studies"><ArrowDown size={23} /></a>
         </div>
       </section>
@@ -74,21 +75,21 @@ function StudiesIndex({ studies }) {
           return (
             <Link className={`fm-study-row fm-row-${study.id}`} to={`/motion-lab/${study.id}`} key={study.id}>
               <span className="fm-row-number">{direction.number}<span>/</span></span>
-              <div className="fm-row-art"><PoseCanvas study={study} frame={study.restFrame ?? 0} /></div>
+              <div className="fm-row-art">{study.id === 'core' ? <img src="/motion-studies/core-film-poster.webp" alt="A titanium machine core with amber edge lighting" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <PoseCanvas study={study} frame={study.restFrame ?? 0} />}</div>
               <div className="fm-row-copy">
                 <span className="fm-kicker">{direction.type}</span>
                 <h2>{direction.name}</h2>
                 <p lang="zh-CN">{direction.chinese}</p>
                 <span className="fm-row-enter">Explore study <ArrowUpRight size={18} /></span>
               </div>
-              <span className="fm-row-native">{study.frameCount} POSES<br />FRAME BY FRAME</span>
+              <span className="fm-row-native">{study.id === 'core' ? <>18 SECONDS<br />CONTINUOUS 3D</> : <>{study.frameCount} POSES<br />FRAME BY FRAME</>}</span>
             </Link>
           );
         })}
       </section>
       <footer className="fm-index-footer">
         <div><strong>Made of curiosity.</strong><p>AI research & engineering — Damon Guo-Siyi, Alibaba.</p></div>
-        <p lang="zh-CN">基于 Oil Motion 的分镜思路。<br />六个原生姿态，往返预览；并非连续视频。</p>
+        <p lang="zh-CN">基于 Oil Motion 的分镜思路。<br />前两版是六姿态研究；机械核心是连续三维动画。</p>
         <Link to="/lab">More experiments <ArrowUpRight size={15} /></Link>
       </footer>
     </main>
@@ -290,6 +291,7 @@ function StudyPage({ study }) {
 
 function StudyRoute({ studies }) {
   const { id } = useParams();
+  if (id === 'core') return <CoreMotion />;
   const study = studies.find((entry) => entry.id === id && DIRECTIONS[entry.id]);
   if (!study) return <main className="fm-page fm-message"><h1>Study not found.</h1><Link to="/motion-lab">Return to the notebook <ArrowRight size={18} /></Link></main>;
   return <StudyPage study={study} key={study.id} />;

@@ -4,13 +4,13 @@
 
 Open **`http://localhost:4175/`** after starting `npm run dev -- --host 0.0.0.0 --port 4175`. `/index` and `/index.html` open the same gallery; the older `/html-studies/index.html` directory redirects here.
 
-The six current directions are GDamon AI, Agent Assembly, Matrix, DAMON Signature, Neural, and the original Particle Tree. Every card has a real screenshot, motion description, and a link that opens the complete experience in a new tab. The GDamon card plays an 11.72-second recording of the actual sphere → neural network → GDAMON → neural network → sphere transitions, with Pause/Play controls. Autoplay pauses offscreen and in background tabs; reduced motion starts with the poster.
+The seven current directions are GDamon Signature, the continuous Inner Workings film, Agent Assembly, Matrix, DAMON Signature, Neural, and the original Particle Tree. Each card describes its motion and opens the full experience in a new tab. The GDamon and mechanical-core cards play actual rendered previews, with Pause/Play controls. Autoplay pauses offscreen and in background tabs; reduced motion starts with a poster.
 
-The same page includes all three Oil Motion frame studies, original HTML references, and the earlier spatial/visual experiments. The index runs no WebGL scenes itself. Browser captures and source recordings are used for its previews, not generated substitutes.
+The same page includes the Oil Motion pose studies, original HTML references, and earlier experiments. The index runs no WebGL scenes itself.
 
 ## GDamon — AI particle morph
 
-Open [`public/kernelcode/index.html`](public/kernelcode/index.html) directly in a browser with an Internet connection, or visit **`/kernelcode/index.html`** on the local preview server. This standalone HTML adapts the four-screen experiment to GDamon's AI research: a 30,000-point cloud morphs from an intelligence core sphere into a neural network and then the **GDAMON** signature. Its copy draws on the existing profile's agentic RL, post-training, evaluation, and production agent work.
+Open [`public/kernelcode/index.html`](public/kernelcode/index.html) directly in a browser with an Internet connection, or visit **`/kernelcode/index.html`** on the local preview server. This standalone HTML opens with 11,000 violet points woven into five living ribbons, adapted from the signature particle page. Drag the sculpture to change its orientation. The redesigned navigation highlights the current chapter and collapses into a keyboard-accessible menu on mobile. After the hero, a 30,000-point cloud morphs from an intelligence core sphere into a neural network and then the **GDAMON** signature. Its copy draws on the existing profile's agentic RL, post-training, evaluation, and production agent work.
 
 CSS and JavaScript are inline, with Schibsted Grotesk and Three.js 0.169 loaded from their CDNs; no framework or build step is needed. Wheel, touch, and keyboard input move one screen at a time. The homepage and comparison directory link to this version and the preserved original.
 
@@ -43,17 +43,19 @@ Both adaptations use the existing project and article data and real destinations
 
 The two pasted-text attachments contain identical Anchor AI documents (SHA-256 `f955679e011440034e887db004277172b1c6b94cfc713e3e924433e812efc62c`). The original's 15 external CloudFront SVG logos and badges currently fail to load in the cloud preview, and several navigation anchors have no sections in the supplied source. The preserved original retains those dependencies and links. The Damon adaptation uses local assets and portfolio destinations. Future Machine intentionally contains one screen; its original specification forbids scrolling.
 
-## Oil Motion — three generated frame studies
+## Oil Motion studies and continuous core film
 
-Branch: **`codex/oil-motion-frame-studies`**. The homepage `/` and `/motion-lab` open the comparison page.
+Branch: **`codex/oil-motion-frame-studies`**. `/` is the shared preview index; `/motion-lab` collects the three motion studies.
 
 | Route | Visual direction | Interaction |
 | --- | --- | --- |
 | `/motion-lab/observer` | Porcelain Observer: white ceramic robot on cobalt | Horizontal pointer gaze and pose controls |
 | `/motion-lab/bloom` | Silver Bloom: a metal bud on warm ivory | Drag to open or close the petals |
-| `/motion-lab/core` | Amber Assembly: glass blocks on black | Assemble, scatter, and reverse from the current pose |
+| `/motion-lab/core` | Inner Workings: titanium and amber mechanical core | Continuous 18-second loop; pause, seek, replay, download MP4 |
 
-Each object has **six actual image-generated poses**. The pages select those native images directly, with no crossfade or invented in-between frames. The exported MP4s show the same poses forward and backward at 5 fps. This is deliberate stop-motion exploration, not continuous AI-generated video. No generation key is needed to run it.
+Observer and Bloom keep their **six actual image-generated poses** and 5 fps pose previews. Core now uses real Three.js geometry: concentric machined segments separate, orbit, reassemble, and activate. It begins playing immediately, pauses in background tabs, and respects reduced motion. The downloadable [18-second MP4](public/motion-studies/core-film.mp4) is rendered at 30 fps from the exact same deterministic scene, with no still-image interpolation or video-generation API. The previous six core poses remain in the source assets.
+
+To reproduce the core film, start Vite, install Chromium and FFmpeg, then run `node scripts/render-core-film.mjs http://localhost:4175`. Set `CHROMIUM_EXECUTABLE` if Chromium is installed elsewhere. Frame timestamps and provenance are recorded in [core-film.json](public/motion-studies/core-film.json). The supplied X reference could not be accessed in this environment, so this is an original motion direction.
 
 ```bash
 git fetch origin

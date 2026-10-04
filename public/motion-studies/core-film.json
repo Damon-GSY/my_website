@@ -1,0 +1,19 @@
+{
+  "title": "Inner Workings",
+  "renderer": "Three.js procedural geometry",
+  "source": "src/motion-studies/coreScene.js",
+  "duration": 18,
+  "width": 1280,
+  "height": 800,
+  "fps": 30,
+  "frames": 540,
+  "codec": "H.264",
+  "pixelFormat": "yuv420p",
+  "chapters": [
+    "Separate",
+    "Connect",
+    "Assemble",
+    "Activate"
+  ],
+  "production": "Deterministic frames rendered from the live scene; not an AI-generated video or interpolated still-image sequence."
+}
