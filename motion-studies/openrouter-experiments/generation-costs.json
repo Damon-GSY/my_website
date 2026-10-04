@@ -1,0 +1,98 @@
+{
+  "currency": "USD",
+  "image_generations": 6,
+  "video_generations": 6,
+  "includes_rejected_attempts": true,
+  "images": [
+    {
+      "study": "matter",
+      "images": [
+        "K0.png",
+        "K1.png"
+      ],
+      "cost_usd": 0.077453,
+      "measurement": "Combined authenticated key remaining-limit delta; individual API response usage was not retained for these first two requests."
+    },
+    {
+      "study": "archive",
+      "image": "K0.png",
+      "cost_usd": 0.033465,
+      "measurement": "API response usage metadata",
+      "record": "public/oil-lab/archive/K0.generation.json"
+    },
+    {
+      "study": "archive",
+      "image": "K1.png",
+      "cost_usd": 0.043563,
+      "measurement": "API response usage metadata",
+      "record": "public/oil-lab/archive/K1.generation.json"
+    },
+    {
+      "study": "handoff",
+      "image": "K0.png",
+      "cost_usd": 0.033535,
+      "measurement": "API response usage metadata",
+      "record": "public/oil-lab/handoff/K0.generation.json"
+    },
+    {
+      "study": "handoff",
+      "image": "K1.png",
+      "cost_usd": 0.043588,
+      "measurement": "API response usage metadata",
+      "record": "public/oil-lab/handoff/K1.generation.json"
+    }
+  ],
+  "videos": [
+    {
+      "study": "archive",
+      "source": "original.mp4",
+      "status": "completed",
+      "cost_usd": 0.1188,
+      "measurement": "API job record",
+      "record": "motion-studies/openrouter-experiments/archive/pilot/original.job.json"
+    },
+    {
+      "study": "archive",
+      "source": "slide.mp4",
+      "status": "completed",
+      "cost_usd": 0.1188,
+      "measurement": "API job record",
+      "record": "motion-studies/openrouter-experiments/archive/pilot/slide.job.json"
+    },
+    {
+      "study": "archive",
+      "source": "upright.mp4",
+      "status": "completed",
+      "cost_usd": 0.1188,
+      "measurement": "API job record",
+      "record": "motion-studies/openrouter-experiments/archive/pilot/upright.job.json"
+    },
+    {
+      "study": "handoff",
+      "source": "original.mp4",
+      "status": "completed",
+      "cost_usd": 0.1188,
+      "measurement": "API job record",
+      "record": "motion-studies/openrouter-experiments/handoff/pilot/original.job.json"
+    },
+    {
+      "study": "matter",
+      "source": "connected.mp4",
+      "status": "completed",
+      "cost_usd": 0.1188,
+      "measurement": "API job record",
+      "record": "motion-studies/openrouter-experiments/matter/pilot/connected.job.json"
+    },
+    {
+      "study": "matter",
+      "source": "original.mp4",
+      "status": "completed",
+      "cost_usd": 0.1188,
+      "measurement": "API job record",
+      "record": "motion-studies/openrouter-experiments/matter/pilot/original.job.json"
+    }
+  ],
+  "total_usd": 0.944404,
+  "credential": "OPEN_ROUTER_KEY (value never recorded)",
+  "automatic_retries": false
+}

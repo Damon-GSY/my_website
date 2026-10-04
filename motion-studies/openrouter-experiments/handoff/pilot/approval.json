@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "passed": true,
+  "approvedAt": "2026-10-04T15:46:44.010094+00:00",
+  "reviewer": "Codex source and browser reviewers",
+  "continuityMode": "independent",
+  "notes": "Reviewed all 96 frames and native contact samples: one box remains in gripper contact through the lift. Final browser checks pass on desktop, phone and short viewports, including reverse, exact frames, no autoplay, idle RAF zero, reduced motion and media failure. Final copy says Lift, matching the visible action.",
+  "artifacts": {
+    "conceptContract": {
+      "path": "/workspace/my_website/motion-studies/openrouter-experiments/handoff/source/concept-contract.json",
+      "bytes": 1840,
+      "sha256": "749af176e90d101687774841b5b1c96f54023daa9b30f0791b28fe0779da5ed5"
+    },
+    "firstFrame": {
+      "path": "/workspace/my_website/public/oil-lab/handoff/K0.png",
+      "bytes": 1452553,
+      "sha256": "4ad17bfe95daf5f69e2e6ea45bf69fff90ffefe14f29a0c8e93c10bf43fe7c4e"
+    },
+    "lastFrame": {
+      "path": "/workspace/my_website/public/oil-lab/handoff/K1.png",
+      "bytes": 1540809,
+      "sha256": "abc08154c6d63859c97646b0f525c2d9fd19732f5ec3ad0acca6370ff6ad2abe"
+    },
+    "pilotVideo": {
+      "path": "/workspace/my_website/motion-studies/openrouter-experiments/handoff/pilot/original.mp4",
+      "bytes": 612227,
+      "sha256": "7a8e4f6babfae156193d6df3ec2c18989472df7230508d9f9d07e9dbc2568259"
+    },
+    "pageEvidence": {
+      "path": "/workspace/my_website/motion-studies/openrouter-experiments/handoff/qa/browser-acceptance.json",
+      "bytes": 90235,
+      "sha256": "be523df33095279cd3acc49b87648e1412d3f2a1058231064d96ddeb5242abd7"
+    },
+    "identityBible": {
+      "path": "/workspace/my_website/motion-studies/openrouter-experiments/handoff/source/identity-bible.md",
+      "bytes": 859,
+      "sha256": "8010dbe31ffd1827a641fd0d956e7232e1cfa58543df3259d12ff1d36d69f394"
+    }
+  }
+}

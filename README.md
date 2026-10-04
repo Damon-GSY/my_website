@@ -4,11 +4,25 @@
 
 Open **`http://localhost:4175/`** after starting `npm run dev -- --host 0.0.0.0 --port 4175`. `/index` and `/index.html` open the same gallery; the older `/html-studies/index.html` directory redirects here.
 
-The eight current directions are the GDamon scroll story, GDamon Signature, the continuous Inner Workings film, Hello, human., Matrix, DAMON Signature, Neural, and the original Particle Tree. Each card describes its motion and opens the full experience in a new tab. The scroll story opens a website; selected other cards retain rendered previews with Pause/Play controls. Preview playback pauses offscreen and in background tabs; reduced motion starts with a poster.
+The newest directions are three Oil Motion websites: liquid chrome becoming a D, a glass research archive, and a miniature robot picking up a parcel. They sit alongside the GDamon scroll story, GDamon Signature, Inner Workings, Hello, human., and the particle experiments. Each card describes its motion and opens the full experience in a new tab. The new Oil Motion cards use static thumbnails; their motion follows native scrolling inside the websites. Selected older cards retain rendered previews with Pause/Play controls.
+
+## Oil Motion / OpenRouter — three scroll websites
+
+Open **`http://localhost:4175/oil-lab`** to compare the new directions, or choose their cards on `/`:
+
+| Route | Direction |
+| --- | --- |
+| `/oil-lab/matter` | Cobalt and liquid chrome; a connected metal form becomes Damon's D |
+| `/oil-lab/archive` | Warm ivory and glass; a research folio moves forward to reveal its layers |
+| `/oil-lab/handoff` | Lavender and orange; a miniature robot grips and lifts a parcel |
+
+Each website continues into selected work, biography, research links, and contact. Native scrolling advances the generated motion; scrolling back reverses it and stopping holds the current frame. The media stays paused, without autoplay or player controls. Reduced motion and unavailable media show a static poster and remove the long pinned interval.
+
+The keyframes were generated with `openai/gpt-image-2` and continuous motion with `google/veo-3.1-lite` through OpenRouter. The server-side helper reads `OPEN_ROUTER_KEY`; no key is bundled into the website. See the [generation, review, and reproduction records](motion-studies/openrouter-experiments/README.md).
 
 ## Make it useful — a scroll-driven personal website
 
-Open **`http://localhost:4175/film`**, also linked as the first card on `/`. Native scrolling advances kinetic typography, a real Three.js robot opening and reassembling, and particles gathering into GDAMON. Scroll upward to reverse the sequence. Chapter navigation jumps through the story; selected projects, biography, writing, and contact continue below it as normal website content.
+Open **`http://localhost:4175/film`**, also linked on `/`. Native scrolling advances kinetic typography, a real Three.js robot opening and reassembling, and particles gathering into GDAMON. Scroll upward to reverse the sequence. Chapter navigation jumps through the story; selected projects, biography, writing, and contact continue below it as normal website content.
 
 The page maps scroll position to the existing deterministic Canvas/Three.js scene, with damping and wider chapter transitions. It has no autoplay clock, audio, video, or player controls. Reduced motion removes the long pinned story; unavailable WebGL uses static artwork and keeps the portfolio readable.
 
@@ -65,7 +79,7 @@ The two pasted-text attachments contain identical Anchor AI documents (SHA-256 `
 
 ## OpenRouter generation pilot
 
-An [OpenRouter / Oil Motion robot pilot](motion-studies/openrouter-pilot/README.md) is prepared with a dedicated image/video API adapter, a character identity reference, a four-second greeting brief, and a measured media budget. The cloud environment's `OPEN_ROUTER_KEY` passed a read-only authentication check. No paid generation or new AI clip is claimed; the helper reads credentials outside the website bundle.
+The earlier [OpenRouter / Oil Motion robot greeting plan](motion-studies/openrouter-pilot/README.md) remains as a separate, ungenerated character study. The same credential-aware adapter now powers the actual [three generated scroll websites](motion-studies/openrouter-experiments/README.md) above.
 
 ## Oil Motion studies and continuous core film
 

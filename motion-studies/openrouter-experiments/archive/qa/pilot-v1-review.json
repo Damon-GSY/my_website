@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "media": "pilot/original.mp4",
+  "decision": "reject",
+  "review_type": "manual visual review",
+  "evidence": [
+    "/workspace/oil-lab-qa/archive/contact.jpg",
+    "/workspace/oil-lab-qa/archive/all-frames.jpg",
+    "/workspace/oil-lab-qa/archive/frame-001.jpg",
+    "/workspace/oil-lab-qa/archive/frame-049.jpg",
+    "/workspace/oil-lab-qa/archive/frame-096.jpg"
+  ],
+  "findings": [
+    "The front folio tips roughly 60 degrees away from upright around frame 49, rather than rotating about its vertical axis by approximately 12 degrees.",
+    "Its bottom edge appears to act as a hinge and the sheet sweeps to the left; this violates the specified rigid upright slide toward camera.",
+    "The motion returns toward the starting arrangement after the extreme tip, despite the requested single open transition from K0 to K1. This is unsuitable for a monotonic scroll scrub.",
+    "The background and three rear sheets remain broadly recognizable, but this does not offset the central motion failure."
+  ],
+  "recommendation": "Generate a new pilot with the front folio kept vertically upright at all times, its motion limited to a short straight forward translation and at most 12 degrees of yaw about its own vertical centerline. No bottom-edge hinge, toppling, swing or return to K0."
+}

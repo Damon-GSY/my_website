@@ -4,7 +4,13 @@
   "identity_bible": "source/identity-bible.md",
   "parameter_space": "linear",
   "media_access": "random",
-  "gesture_policy": {"unit": "continuous", "inertia": "coalesce", "while_active": "retarget", "boundary": "clamp", "programmatic_navigation": "observe"},
+  "gesture_policy": {
+    "unit": "continuous",
+    "inertia": "coalesce",
+    "while_active": "retarget",
+    "boundary": "clamp",
+    "programmatic_navigation": "observe"
+  },
   "storyboard": [
     "K0: the robot gripper hovers above the parcel at the loading bay.",
     "Its joints articulate as it descends; the gripper closes around the parcel and raises it slightly.",
@@ -14,15 +20,46 @@
     "K0": "One orange-and-white arm above one apricot parcel, one stationary low carrier, pale-lavender miniature bay; left 35 percent quiet.",
     "K1": "Same camera, arm, parcel, carrier and bay; gripper securely holds the same parcel a few centimeters above its initial surface."
   },
-  "clip_chain": [{"id": "K0-to-K1", "first_frame": "K0", "last_frame": "K1", "planned_seconds": 4, "planned_fps": 24, "planned_frames": 96, "status": "not-generated"}],
+  "clip_chain": [
+    {
+      "id": "K0-to-K1",
+      "first_frame": "K0",
+      "last_frame": "K1",
+      "planned_seconds": 4,
+      "planned_fps": 24,
+      "planned_frames": 96,
+      "status": "accepted-and-browser-verified",
+      "actual_seconds": 4,
+      "actual_fps": 24,
+      "actual_frames": 96,
+      "source": "../pilot/original.mp4",
+      "request": "video-request.json"
+    }
+  ],
   "rest_state": "K0 on entry; hold exact current frame when scroll stops.",
   "loop": "none",
   "anchor": "fixed-body",
   "scene_continuity": "Warehouse geometry, cobalt/apricot route lights, carrier, daylight and ground shadows are locked.",
   "frame_policy": "native",
   "target_fps": 24,
-  "quality_target": {"source_px": [1280, 720], "max_display_css_px": [1280, 720], "target_dpr": 1, "planned_frames": 96, "scroll_pages": 2, "minimum_frames_per_page": 24, "budget_report": "build/motion-budget.json", "delivery": "baked-video", "controller": "frame-scrub"},
+  "quality_target": {
+    "source_px": [
+      1280,
+      720
+    ],
+    "max_display_css_px": [
+      1280,
+      720
+    ],
+    "target_dpr": 1,
+    "planned_frames": 96,
+    "scroll_pages": 2,
+    "minimum_frames_per_page": 24,
+    "budget_report": "build/motion-budget.json",
+    "delivery": "baked-video",
+    "controller": "frame-scrub"
+  },
   "pixel_dimensions": "1280x720",
-  "reduced_motion": "Show the static K1 held parcel and present the case-study information in normal HTML flow.",
+  "reduced_motion": "Show a static K0 poster immediately, with all personal-site content in ordinary HTML and no pinned scroll interval.",
   "runtime": "Map two viewport heights of scroll travel to one 0-4 second clip; backward scroll seeks back through the same source."
 }

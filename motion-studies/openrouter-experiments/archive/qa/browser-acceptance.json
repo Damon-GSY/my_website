@@ -1,0 +1,2404 @@
+{
+  "base": "http://localhost:4176",
+  "studies": [
+    "archive"
+  ],
+  "viewportSelection": "all",
+  "startedAt": "2026-10-04T15:43:55.060Z",
+  "checks": [
+    {
+      "name": "archive: native scrub, reverse, exact frames and layout at 1440×900",
+      "pass": true,
+      "elapsedMs": 6993,
+      "evidence": {
+        "initial": {
+          "id": "archive",
+          "control": "frame-scrub",
+          "status": "ready",
+          "progress": 0,
+          "targetFrame": 0,
+          "currentFrame": 0,
+          "currentTime": 0,
+          "duration": 4,
+          "fps": 24,
+          "frameCount": 96,
+          "pendingFrame": null,
+          "seeking": false,
+          "seekCount": 0,
+          "lastSeekMs": 0,
+          "animating": false,
+          "visible": true,
+          "hidden": false,
+          "settled": true,
+          "paused": true,
+          "reduced": false,
+          "source": "desktop.mp4",
+          "failure": null
+        },
+        "samples": [
+          {
+            "label": "start",
+            "geometry": {
+              "top": 0,
+              "travel": 1800,
+              "requestedProgress": 0
+            },
+            "state": {
+              "id": "archive",
+              "control": "frame-scrub",
+              "status": "ready",
+              "progress": 0,
+              "targetFrame": 0,
+              "currentFrame": 0,
+              "currentTime": 0,
+              "duration": 4,
+              "fps": 24,
+              "frameCount": 96,
+              "pendingFrame": null,
+              "seeking": false,
+              "seekCount": 4,
+              "lastSeekMs": 20.80000001192093,
+              "animating": false,
+              "visible": true,
+              "hidden": false,
+              "settled": true,
+              "paused": true,
+              "reduced": false,
+              "source": "desktop.mp4",
+              "failure": null
+            },
+            "frame": {
+              "differenceFromStart": null,
+              "width": 1280,
+              "height": 720,
+              "source": "http://localhost:4176/oil-lab/archive/desktop.mp4",
+              "paused": true,
+              "autoplay": false,
+              "loop": false,
+              "controls": false,
+              "pixelSHA256": "4031130eda1b02e0b109213f023de05d82aa08550f206d0acbba943197128079"
+            },
+            "layout": {
+              "viewport": [
+                1440,
+                900
+              ],
+              "documentWidth": 1440,
+              "stagePosition": "sticky",
+              "header": {
+                "x": 0,
+                "y": 0,
+                "width": 1440,
+                "height": 89,
+                "top": 0,
+                "bottom": 89,
+                "left": 0,
+                "right": 1440
+              },
+              "heading": {
+                "x": 72,
+                "y": 234,
+                "width": 561.59375,
+                "height": 333.21875,
+                "top": 234,
+                "bottom": 567.21875,
+                "left": 72,
+                "right": 633.59375
+              },
+              "title": {
+                "x": 72,
+                "y": 286.78125,
+                "width": 561.59375,
+                "height": 158.40625,
+                "top": 286.78125,
+                "bottom": 445.1875,
+                "left": 72,
+                "right": 633.59375
+              },
+              "artwork": {
+                "x": 0,
+                "y": 117,
+                "width": 1440,
+                "height": 639,
+                "top": 117,
+                "bottom": 756,
+                "left": 0,
+                "right": 1440
+              },
+              "states": {
+                "x": 72,
+                "y": 769,
+                "width": 1296,
+                "height": 59,
+                "top": 769,
+                "bottom": 828,
+                "left": 72,
+                "right": 1368
+              },
+              "stage": {
+                "x": 0,
+                "y": 0,
+                "width": 1440,
+                "height": 900,
+                "top": 0,
+                "bottom": 900,
+                "left": 0,
+                "right": 1440
+              }
+            }
+          },
+          {
+            "label": "middle",
+            "geometry": {
+              "top": 0,
+              "travel": 1800,
+              "requestedProgress": 0.5
+            },
+            "state": {
+              "id": "archive",
+              "control": "frame-scrub",
+              "status": "ready",
+              "progress": 0.5,
+              "targetFrame": 48,
+              "currentFrame": 48,
+              "currentTime": 2,
+              "duration": 4,
+              "fps": 24,
+              "frameCount": 96,
+              "pendingFrame": null,
+              "seeking": false,
+              "seekCount": 19,
+              "lastSeekMs": 16,
+              "animating": false,
+              "visible": true,
+              "hidden": false,
+              "settled": true,
+              "paused": true,
+              "reduced": false,
+              "source": "desktop.mp4",
+              "failure": null
+            },
+            "frame": {
+              "differenceFromStart": 3.770763888888889,
+              "width": 1280,
+              "height": 720,
+              "source": "http://localhost:4176/oil-lab/archive/desktop.mp4",
+              "paused": true,
+              "autoplay": false,
+              "loop": false,
+              "controls": false,
+              "pixelSHA256": "60696035c8852e5cebb6a302cd1d7c5f6a028930878cf1c87acacbda9fc1e696"
+            },
+            "layout": {
+              "viewport": [
+                1440,
+                900
+              ],
+              "documentWidth": 1440,
+              "stagePosition": "sticky",
+              "header": {
+                "x": 0,
+                "y": 0,
+                "width": 1440,
+                "height": 89,
+                "top": 0,
+                "bottom": 89,
+                "left": 0,
+                "right": 1440
+              },
+              "heading": {
+                "x": 72,
+                "y": 234,
+                "width": 561.59375,
+                "height": 333.21875,
+                "top": 234,
+                "bottom": 567.21875,
+                "left": 72,
+                "right": 633.59375
+              },
+              "title": {
+                "x": 72,
+                "y": 286.78125,
+                "width": 561.59375,
+                "height": 158.40625,
+                "top": 286.78125,
+                "bottom": 445.1875,
+                "left": 72,
+                "right": 633.59375
+              },
+              "artwork": {
+                "x": 0,
+                "y": 117,
+                "width": 1440,
+                "height": 639,
+                "top": 117,
+                "bottom": 756,
+                "left": 0,
+                "right": 1440
+              },
+              "states": {
+                "x": 72,
+                "y": 769,
+                "width": 1296,
+                "height": 59,
+                "top": 769,
+                "bottom": 828,
+                "left": 72,
+                "right": 1368
+              },
+              "stage": {
+                "x": 0,
+                "y": 0,
+                "width": 1440,
+                "height": 900,
+                "top": 0,
+                "bottom": 900,
+                "left": 0,
+                "right": 1440
+              }
+            }
+          },
+          {
+            "label": "finish",
+            "geometry": {
+              "top": 0,
+              "travel": 1800,
+              "requestedProgress": 1
+            },
+            "state": {
+              "id": "archive",
+              "control": "frame-scrub",
+              "status": "ready",
+              "progress": 1,
+              "targetFrame": 95,
+              "currentFrame": 95,
+              "currentTime": 3.958333,
+              "duration": 4,
+              "fps": 24,
+              "frameCount": 96,
+              "pendingFrame": null,
+              "seeking": false,
+              "seekCount": 34,
+              "lastSeekMs": 6.799999982118607,
+              "animating": false,
+              "visible": true,
+              "hidden": false,
+              "settled": true,
+              "paused": true,
+              "reduced": false,
+              "source": "desktop.mp4",
+              "failure": null
+            },
+            "frame": {
+              "differenceFromStart": 4.987847222222222,
+              "width": 1280,
+              "height": 720,
+              "source": "http://localhost:4176/oil-lab/archive/desktop.mp4",
+              "paused": true,
+              "autoplay": false,
+              "loop": false,
+              "controls": false,
+              "pixelSHA256": "efe157651005225d06774816129b292b119bd07de80bc94c9f73396177fdea7a"
+            },
+            "layout": {
+              "viewport": [
+                1440,
+                900
+              ],
+              "documentWidth": 1440,
+              "stagePosition": "sticky",
+              "header": {
+                "x": 0,
+                "y": 0,
+                "width": 1440,
+                "height": 89,
+                "top": 0,
+                "bottom": 89,
+                "left": 0,
+                "right": 1440
+              },
+              "heading": {
+                "x": 72,
+                "y": 234,
+                "width": 561.59375,
+                "height": 333.21875,
+                "top": 234,
+                "bottom": 567.21875,
+                "left": 72,
+                "right": 633.59375
+              },
+              "title": {
+                "x": 72,
+                "y": 286.78125,
+                "width": 561.59375,
+                "height": 158.40625,
+                "top": 286.78125,
+                "bottom": 445.1875,
+                "left": 72,
+                "right": 633.59375
+              },
+              "artwork": {
+                "x": 0,
+                "y": 117,
+                "width": 1440,
+                "height": 639,
+                "top": 117,
+                "bottom": 756,
+                "left": 0,
+                "right": 1440
+              },
+              "states": {
+                "x": 72,
+                "y": 769,
+                "width": 1296,
+                "height": 59,
+                "top": 769,
+                "bottom": 828,
+                "left": 72,
+                "right": 1368
+              },
+              "stage": {
+                "x": 0,
+                "y": 0,
+                "width": 1440,
+                "height": 900,
+                "top": 0,
+                "bottom": 900,
+                "left": 0,
+                "right": 1440
+              }
+            }
+          },
+          {
+            "label": "reverse",
+            "geometry": {
+              "top": 0,
+              "travel": 1800,
+              "requestedProgress": 0.2
+            },
+            "state": {
+              "id": "archive",
+              "control": "frame-scrub",
+              "status": "ready",
+              "progress": 0.2,
+              "targetFrame": 19,
+              "currentFrame": 19,
+              "currentTime": 0.791666,
+              "duration": 4,
+              "fps": 24,
+              "frameCount": 96,
+              "pendingFrame": null,
+              "seeking": false,
+              "seekCount": 56,
+              "lastSeekMs": 13.900000005960464,
+              "animating": false,
+              "visible": true,
+              "hidden": false,
+              "settled": true,
+              "paused": true,
+              "reduced": false,
+              "source": "desktop.mp4",
+              "failure": null
+            },
+            "frame": {
+              "differenceFromStart": 1.9277314814814814,
+              "width": 1280,
+              "height": 720,
+              "source": "http://localhost:4176/oil-lab/archive/desktop.mp4",
+              "paused": true,
+              "autoplay": false,
+              "loop": false,
+              "controls": false,
+              "pixelSHA256": "8e60a768e632161355127dcd58ad347997e2b215200716a601361ecc93aa0c22"
+            },
+            "layout": {
+              "viewport": [
+                1440,
+                900
+              ],
+              "documentWidth": 1440,
+              "stagePosition": "sticky",
+              "header": {
+                "x": 0,
+                "y": 0,
+                "width": 1440,
+                "height": 89,
+                "top": 0,
+                "bottom": 89,
+                "left": 0,
+                "right": 1440
+              },
+              "heading": {
+                "x": 72,
+                "y": 234,
+                "width": 561.59375,
+                "height": 333.21875,
+                "top": 234,
+                "bottom": 567.21875,
+                "left": 72,
+                "right": 633.59375
+              },
+              "title": {
+                "x": 72,
+                "y": 286.78125,
+                "width": 561.59375,
+                "height": 158.40625,
+                "top": 286.78125,
+                "bottom": 445.1875,
+                "left": 72,
+                "right": 633.59375
+              },
+              "artwork": {
+                "x": 0,
+                "y": 117,
+                "width": 1440,
+                "height": 639,
+                "top": 117,
+                "bottom": 756,
+                "left": 0,
+                "right": 1440
+              },
+              "states": {
+                "x": 72,
+                "y": 769,
+                "width": 1296,
+                "height": 59,
+                "top": 769,
+                "bottom": 828,
+                "left": 72,
+                "right": 1368
+              },
+              "stage": {
+                "x": 0,
+                "y": 0,
+                "width": 1440,
+                "height": 900,
+                "top": 0,
+                "bottom": 900,
+                "left": 0,
+                "right": 1440
+              }
+            }
+          }
+        ],
+        "latest": {
+          "id": "archive",
+          "control": "frame-scrub",
+          "status": "ready",
+          "progress": 0.27,
+          "targetFrame": 26,
+          "currentFrame": 26,
+          "currentTime": 1.083333,
+          "duration": 4,
+          "fps": 24,
+          "frameCount": 96,
+          "pendingFrame": null,
+          "seeking": false,
+          "seekCount": 60,
+          "lastSeekMs": 15.5,
+          "animating": false,
+          "visible": true,
+          "hidden": false,
+          "settled": true,
+          "paused": true,
+          "reduced": false,
+          "source": "desktop.mp4",
+          "failure": null
+        },
+        "latestSeekMs": 129,
+        "idleBefore": {
+          "state": {
+            "id": "archive",
+            "control": "frame-scrub",
+            "status": "ready",
+            "progress": 0.27,
+            "targetFrame": 26,
+            "currentFrame": 26,
+            "currentTime": 1.083333,
+            "duration": 4,
+            "fps": 24,
+            "frameCount": 96,
+            "pendingFrame": null,
+            "seeking": false,
+            "seekCount": 60,
+            "lastSeekMs": 15.5,
+            "animating": false,
+            "visible": true,
+            "hidden": false,
+            "settled": true,
+            "paused": true,
+            "reduced": false,
+            "source": "desktop.mp4",
+            "failure": null
+          },
+          "probe": {
+            "scheduled": 627,
+            "fired": 626,
+            "cancelled": 2,
+            "pending": 0,
+            "playCalls": 0,
+            "playEvents": 0
+          }
+        },
+        "idleAfter": {
+          "state": {
+            "id": "archive",
+            "control": "frame-scrub",
+            "status": "ready",
+            "progress": 0.27,
+            "targetFrame": 26,
+            "currentFrame": 26,
+            "currentTime": 1.083333,
+            "duration": 4,
+            "fps": 24,
+            "frameCount": 96,
+            "pendingFrame": null,
+            "seeking": false,
+            "seekCount": 60,
+            "lastSeekMs": 15.5,
+            "animating": false,
+            "visible": true,
+            "hidden": false,
+            "settled": true,
+            "paused": true,
+            "reduced": false,
+            "source": "desktop.mp4",
+            "failure": null
+          },
+          "probe": {
+            "scheduled": 627,
+            "fired": 626,
+            "cancelled": 2,
+            "pending": 0,
+            "playCalls": 0,
+            "playEvents": 0
+          }
+        },
+        "destinations": {
+          "links": [
+            {
+              "href": "/projects#multi-turn-agent-evaluation",
+              "text": "01Research / PaperMulti-Turn Agent Evaluation TaxonomyA survey and evaluation taxonomy for LLM-based agents in multi-turn conversation, covering planning, tool use, memory, and Agent-as-Judge scoring.Agents · Evaluation · Survey"
+            },
+            {
+              "href": "/projects#supchain-bench",
+              "text": "02Research / PaperSupChain-BenchA unified supply-chain benchmark spanning logistics collaboration, warehouse fulfillment, and finance/customs workflows with 530 annotated real-world samples.Benchmark · Supply Chain · Tool Calling"
+            },
+            {
+              "href": "/projects#visualdeltas",
+              "text": "03Research / PaperVisualDeltasPreference learning from visual quality-induced reasoning, using controlled image-resolution degradation to create positive/negative preference pairs.VLM · DPO · Preference Learning"
+            },
+            {
+              "href": "/about",
+              "text": "My story"
+            },
+            {
+              "href": "/blog",
+              "text": "Research notes"
+            },
+            {
+              "href": "mailto:hello@damon.ai",
+              "text": "hello@damon.ai"
+            },
+            {
+              "href": "/oil-lab",
+              "text": "Oil Motion studies"
+            },
+            {
+              "href": "https://github.com/Damon-GSY",
+              "text": "GitHub"
+            },
+            {
+              "href": "https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA",
+              "text": "YouTube"
+            },
+            {
+              "href": "/",
+              "text": "All studies"
+            },
+            {
+              "href": "https://github.com/oil-oil/oil-motion",
+              "text": "Made with Oil Motion."
+            }
+          ],
+          "anchors": [
+            {
+              "href": "#oil-work",
+              "exists": true
+            },
+            {
+              "href": "#oil-work",
+              "exists": true
+            },
+            {
+              "href": "#oil-about",
+              "exists": true
+            },
+            {
+              "href": "#oil-contact",
+              "exists": true
+            },
+            {
+              "href": "#oil-work",
+              "exists": true
+            }
+          ]
+        },
+        "offscreen": {
+          "id": "archive",
+          "control": "frame-scrub",
+          "status": "ready",
+          "progress": 1,
+          "targetFrame": 95,
+          "currentFrame": 28,
+          "currentTime": 1.166666,
+          "duration": 4,
+          "fps": 24,
+          "frameCount": 96,
+          "pendingFrame": 29,
+          "seeking": false,
+          "seekCount": 62,
+          "lastSeekMs": 16.100000023841858,
+          "animating": false,
+          "visible": false,
+          "hidden": false,
+          "settled": false,
+          "paused": true,
+          "reduced": false,
+          "source": "desktop.mp4",
+          "failure": null
+        }
+      }
+    },
+    {
+      "name": "archive: native scrub, reverse, exact frames and layout at 390×844",
+      "pass": true,
+      "elapsedMs": 5819,
+      "evidence": {
+        "initial": {
+          "id": "archive",
+          "control": "frame-scrub",
+          "status": "ready",
+          "progress": 0,
+          "targetFrame": 0,
+          "currentFrame": 0,
+          "currentTime": 0,
+          "duration": 4,
+          "fps": 24,
+          "frameCount": 96,
+          "pendingFrame": null,
+          "seeking": false,
+          "seekCount": 0,
+          "lastSeekMs": 0,
+          "animating": false,
+          "visible": true,
+          "hidden": false,
+          "settled": true,
+          "paused": true,
+          "reduced": false,
+          "source": "mobile.mp4",
+          "failure": null
+        },
+        "samples": [
+          {
+            "label": "start",
+            "geometry": {
+              "top": 0,
+              "travel": 1688,
+              "requestedProgress": 0
+            },
+            "state": {
+              "id": "archive",
+              "control": "frame-scrub",
+              "status": "ready",
+              "progress": 0,
+              "targetFrame": 0,
+              "currentFrame": 0,
+              "currentTime": 0,
+              "duration": 4,
+              "fps": 24,
+              "frameCount": 96,
+              "pendingFrame": null,
+              "seeking": false,
+              "seekCount": 4,
+              "lastSeekMs": 7,
+              "animating": false,
+              "visible": true,
+              "hidden": false,
+              "settled": true,
+              "paused": true,
+              "reduced": false,
+              "source": "mobile.mp4",
+              "failure": null
+            },
+            "frame": {
+              "differenceFromStart": null,
+              "width": 720,
+              "height": 404,
+              "source": "http://localhost:4176/oil-lab/archive/mobile.mp4",
+              "paused": true,
+              "autoplay": false,
+              "loop": false,
+              "controls": false,
+              "pixelSHA256": "3bc1cbd87bc1b724469ed713dd1ebcd40ac2bb4c8b593f3a0b4cc19b2bcf273c"
+            },
+            "layout": {
+              "viewport": [
+                390,
+                844
+              ],
+              "documentWidth": 390,
+              "stagePosition": "sticky",
+              "header": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 70,
+                "top": 0,
+                "bottom": 70,
+                "left": 0,
+                "right": 390
+              },
+              "heading": {
+                "x": 23,
+                "y": 109.71875,
+                "width": 344,
+                "height": 207.984375,
+                "top": 109.71875,
+                "bottom": 317.703125,
+                "left": 23,
+                "right": 367
+              },
+              "title": {
+                "x": 23,
+                "y": 137.515625,
+                "width": 344,
+                "height": 93.59375,
+                "top": 137.515625,
+                "bottom": 231.109375,
+                "left": 23,
+                "right": 367
+              },
+              "artwork": {
+                "x": 0,
+                "y": 295.390625,
+                "width": 390,
+                "height": 396.703125,
+                "top": 295.390625,
+                "bottom": 692.09375,
+                "left": 0,
+                "right": 390
+              },
+              "states": {
+                "x": 23,
+                "y": 720.734375,
+                "width": 344,
+                "height": 64.1875,
+                "top": 720.734375,
+                "bottom": 784.921875,
+                "left": 23,
+                "right": 367
+              },
+              "stage": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 844,
+                "top": 0,
+                "bottom": 844,
+                "left": 0,
+                "right": 390
+              }
+            }
+          },
+          {
+            "label": "middle",
+            "geometry": {
+              "top": 0,
+              "travel": 1688,
+              "requestedProgress": 0.5
+            },
+            "state": {
+              "id": "archive",
+              "control": "frame-scrub",
+              "status": "ready",
+              "progress": 0.5,
+              "targetFrame": 48,
+              "currentFrame": 48,
+              "currentTime": 2,
+              "duration": 4,
+              "fps": 24,
+              "frameCount": 96,
+              "pendingFrame": null,
+              "seeking": false,
+              "seekCount": 21,
+              "lastSeekMs": 4.800000011920929,
+              "animating": false,
+              "visible": true,
+              "hidden": false,
+              "settled": true,
+              "paused": true,
+              "reduced": false,
+              "source": "mobile.mp4",
+              "failure": null
+            },
+            "frame": {
+              "differenceFromStart": 3.663125,
+              "width": 720,
+              "height": 404,
+              "source": "http://localhost:4176/oil-lab/archive/mobile.mp4",
+              "paused": true,
+              "autoplay": false,
+              "loop": false,
+              "controls": false,
+              "pixelSHA256": "9d9b807fff7c359c5e2261a7f191949a1526c426ae798540109808b0c9623469"
+            },
+            "layout": {
+              "viewport": [
+                390,
+                844
+              ],
+              "documentWidth": 390,
+              "stagePosition": "sticky",
+              "header": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 70,
+                "top": 0,
+                "bottom": 70,
+                "left": 0,
+                "right": 390
+              },
+              "heading": {
+                "x": 23,
+                "y": 109.71875,
+                "width": 344,
+                "height": 207.984375,
+                "top": 109.71875,
+                "bottom": 317.703125,
+                "left": 23,
+                "right": 367
+              },
+              "title": {
+                "x": 23,
+                "y": 137.515625,
+                "width": 344,
+                "height": 93.59375,
+                "top": 137.515625,
+                "bottom": 231.109375,
+                "left": 23,
+                "right": 367
+              },
+              "artwork": {
+                "x": 0,
+                "y": 295.390625,
+                "width": 390,
+                "height": 396.703125,
+                "top": 295.390625,
+                "bottom": 692.09375,
+                "left": 0,
+                "right": 390
+              },
+              "states": {
+                "x": 23,
+                "y": 720.734375,
+                "width": 344,
+                "height": 64.1875,
+                "top": 720.734375,
+                "bottom": 784.921875,
+                "left": 23,
+                "right": 367
+              },
+              "stage": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 844,
+                "top": 0,
+                "bottom": 844,
+                "left": 0,
+                "right": 390
+              }
+            }
+          },
+          {
+            "label": "finish",
+            "geometry": {
+              "top": 0,
+              "travel": 1688,
+              "requestedProgress": 1
+            },
+            "state": {
+              "id": "archive",
+              "control": "frame-scrub",
+              "status": "ready",
+              "progress": 1,
+              "targetFrame": 95,
+              "currentFrame": 95,
+              "currentTime": 3.958333,
+              "duration": 4,
+              "fps": 24,
+              "frameCount": 96,
+              "pendingFrame": null,
+              "seeking": false,
+              "seekCount": 37,
+              "lastSeekMs": 2.5,
+              "animating": false,
+              "visible": true,
+              "hidden": false,
+              "settled": true,
+              "paused": true,
+              "reduced": false,
+              "source": "mobile.mp4",
+              "failure": null
+            },
+            "frame": {
+              "differenceFromStart": 4.7831018518518515,
+              "width": 720,
+              "height": 404,
+              "source": "http://localhost:4176/oil-lab/archive/mobile.mp4",
+              "paused": true,
+              "autoplay": false,
+              "loop": false,
+              "controls": false,
+              "pixelSHA256": "4e2a5594ae21dda47bf2e1e5f3ca3ad79ad840fc7900f1cb7f4c930142d96baf"
+            },
+            "layout": {
+              "viewport": [
+                390,
+                844
+              ],
+              "documentWidth": 390,
+              "stagePosition": "sticky",
+              "header": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 70,
+                "top": 0,
+                "bottom": 70,
+                "left": 0,
+                "right": 390
+              },
+              "heading": {
+                "x": 23,
+                "y": 109.71875,
+                "width": 344,
+                "height": 207.984375,
+                "top": 109.71875,
+                "bottom": 317.703125,
+                "left": 23,
+                "right": 367
+              },
+              "title": {
+                "x": 23,
+                "y": 137.515625,
+                "width": 344,
+                "height": 93.59375,
+                "top": 137.515625,
+                "bottom": 231.109375,
+                "left": 23,
+                "right": 367
+              },
+              "artwork": {
+                "x": 0,
+                "y": 295.390625,
+                "width": 390,
+                "height": 396.703125,
+                "top": 295.390625,
+                "bottom": 692.09375,
+                "left": 0,
+                "right": 390
+              },
+              "states": {
+                "x": 23,
+                "y": 720.734375,
+                "width": 344,
+                "height": 64.1875,
+                "top": 720.734375,
+                "bottom": 784.921875,
+                "left": 23,
+                "right": 367
+              },
+              "stage": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 844,
+                "top": 0,
+                "bottom": 844,
+                "left": 0,
+                "right": 390
+              }
+            }
+          },
+          {
+            "label": "reverse",
+            "geometry": {
+              "top": 0,
+              "travel": 1688,
+              "requestedProgress": 0.2
+            },
+            "state": {
+              "id": "archive",
+              "control": "frame-scrub",
+              "status": "ready",
+              "progress": 0.20023696682464456,
+              "targetFrame": 19,
+              "currentFrame": 19,
+              "currentTime": 0.791666,
+              "duration": 4,
+              "fps": 24,
+              "frameCount": 96,
+              "pendingFrame": null,
+              "seeking": false,
+              "seekCount": 60,
+              "lastSeekMs": 6.899999976158142,
+              "animating": false,
+              "visible": true,
+              "hidden": false,
+              "settled": true,
+              "paused": true,
+              "reduced": false,
+              "source": "mobile.mp4",
+              "failure": null
+            },
+            "frame": {
+              "differenceFromStart": 1.9228472222222222,
+              "width": 720,
+              "height": 404,
+              "source": "http://localhost:4176/oil-lab/archive/mobile.mp4",
+              "paused": true,
+              "autoplay": false,
+              "loop": false,
+              "controls": false,
+              "pixelSHA256": "5c320220defcf3bc2dfd46eff3aefb90db60157c235c780aae1645bb01772fc1"
+            },
+            "layout": {
+              "viewport": [
+                390,
+                844
+              ],
+              "documentWidth": 390,
+              "stagePosition": "sticky",
+              "header": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 70,
+                "top": 0,
+                "bottom": 70,
+                "left": 0,
+                "right": 390
+              },
+              "heading": {
+                "x": 23,
+                "y": 109.71875,
+                "width": 344,
+                "height": 207.984375,
+                "top": 109.71875,
+                "bottom": 317.703125,
+                "left": 23,
+                "right": 367
+              },
+              "title": {
+                "x": 23,
+                "y": 137.515625,
+                "width": 344,
+                "height": 93.59375,
+                "top": 137.515625,
+                "bottom": 231.109375,
+                "left": 23,
+                "right": 367
+              },
+              "artwork": {
+                "x": 0,
+                "y": 295.390625,
+                "width": 390,
+                "height": 396.703125,
+                "top": 295.390625,
+                "bottom": 692.09375,
+                "left": 0,
+                "right": 390
+              },
+              "states": {
+                "x": 23,
+                "y": 720.734375,
+                "width": 344,
+                "height": 64.1875,
+                "top": 720.734375,
+                "bottom": 784.921875,
+                "left": 23,
+                "right": 367
+              },
+              "stage": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 844,
+                "top": 0,
+                "bottom": 844,
+                "left": 0,
+                "right": 390
+              }
+            }
+          }
+        ],
+        "latest": {
+          "id": "archive",
+          "control": "frame-scrub",
+          "status": "ready",
+          "progress": 0.27014218009478674,
+          "targetFrame": 26,
+          "currentFrame": 26,
+          "currentTime": 1.083333,
+          "duration": 4,
+          "fps": 24,
+          "frameCount": 96,
+          "pendingFrame": null,
+          "seeking": false,
+          "seekCount": 64,
+          "lastSeekMs": 6,
+          "animating": false,
+          "visible": true,
+          "hidden": false,
+          "settled": true,
+          "paused": true,
+          "reduced": false,
+          "source": "mobile.mp4",
+          "failure": null
+        },
+        "latestSeekMs": 155,
+        "idleBefore": {
+          "state": {
+            "id": "archive",
+            "control": "frame-scrub",
+            "status": "ready",
+            "progress": 0.27014218009478674,
+            "targetFrame": 26,
+            "currentFrame": 26,
+            "currentTime": 1.083333,
+            "duration": 4,
+            "fps": 24,
+            "frameCount": 96,
+            "pendingFrame": null,
+            "seeking": false,
+            "seekCount": 64,
+            "lastSeekMs": 6,
+            "animating": false,
+            "visible": true,
+            "hidden": false,
+            "settled": true,
+            "paused": true,
+            "reduced": false,
+            "source": "mobile.mp4",
+            "failure": null
+          },
+          "probe": {
+            "scheduled": 633,
+            "fired": 632,
+            "cancelled": 2,
+            "pending": 0,
+            "playCalls": 0,
+            "playEvents": 0
+          }
+        },
+        "idleAfter": {
+          "state": {
+            "id": "archive",
+            "control": "frame-scrub",
+            "status": "ready",
+            "progress": 0.27014218009478674,
+            "targetFrame": 26,
+            "currentFrame": 26,
+            "currentTime": 1.083333,
+            "duration": 4,
+            "fps": 24,
+            "frameCount": 96,
+            "pendingFrame": null,
+            "seeking": false,
+            "seekCount": 64,
+            "lastSeekMs": 6,
+            "animating": false,
+            "visible": true,
+            "hidden": false,
+            "settled": true,
+            "paused": true,
+            "reduced": false,
+            "source": "mobile.mp4",
+            "failure": null
+          },
+          "probe": {
+            "scheduled": 633,
+            "fired": 632,
+            "cancelled": 2,
+            "pending": 0,
+            "playCalls": 0,
+            "playEvents": 0
+          }
+        },
+        "destinations": {
+          "links": [
+            {
+              "href": "/projects#multi-turn-agent-evaluation",
+              "text": "01Research / PaperMulti-Turn Agent Evaluation TaxonomyA survey and evaluation taxonomy for LLM-based agents in multi-turn conversation, covering planning, tool use, memory, and Agent-as-Judge scoring.Agents · Evaluation · Survey"
+            },
+            {
+              "href": "/projects#supchain-bench",
+              "text": "02Research / PaperSupChain-BenchA unified supply-chain benchmark spanning logistics collaboration, warehouse fulfillment, and finance/customs workflows with 530 annotated real-world samples.Benchmark · Supply Chain · Tool Calling"
+            },
+            {
+              "href": "/projects#visualdeltas",
+              "text": "03Research / PaperVisualDeltasPreference learning from visual quality-induced reasoning, using controlled image-resolution degradation to create positive/negative preference pairs.VLM · DPO · Preference Learning"
+            },
+            {
+              "href": "/about",
+              "text": "My story"
+            },
+            {
+              "href": "/blog",
+              "text": "Research notes"
+            },
+            {
+              "href": "mailto:hello@damon.ai",
+              "text": "hello@damon.ai"
+            },
+            {
+              "href": "/oil-lab",
+              "text": "Oil Motion studies"
+            },
+            {
+              "href": "https://github.com/Damon-GSY",
+              "text": "GitHub"
+            },
+            {
+              "href": "https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA",
+              "text": "YouTube"
+            },
+            {
+              "href": "/",
+              "text": "All studies"
+            },
+            {
+              "href": "https://github.com/oil-oil/oil-motion",
+              "text": "Made with Oil Motion."
+            }
+          ],
+          "anchors": [
+            {
+              "href": "#oil-work",
+              "exists": true
+            },
+            {
+              "href": "#oil-work",
+              "exists": true
+            },
+            {
+              "href": "#oil-about",
+              "exists": true
+            },
+            {
+              "href": "#oil-contact",
+              "exists": true
+            },
+            {
+              "href": "#oil-work",
+              "exists": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "archive: native scrub, reverse, exact frames and layout at 844×390",
+      "pass": true,
+      "elapsedMs": 5964,
+      "evidence": {
+        "initial": {
+          "id": "archive",
+          "control": "frame-scrub",
+          "status": "ready",
+          "progress": 0,
+          "targetFrame": 0,
+          "currentFrame": 0,
+          "currentTime": 0,
+          "duration": 4,
+          "fps": 24,
+          "frameCount": 96,
+          "pendingFrame": null,
+          "seeking": false,
+          "seekCount": 0,
+          "lastSeekMs": 0,
+          "animating": false,
+          "visible": true,
+          "hidden": false,
+          "settled": true,
+          "paused": true,
+          "reduced": false,
+          "source": "desktop.mp4",
+          "failure": null
+        },
+        "samples": [
+          {
+            "label": "start",
+            "geometry": {
+              "top": 0,
+              "travel": 780,
+              "requestedProgress": 0
+            },
+            "state": {
+              "id": "archive",
+              "control": "frame-scrub",
+              "status": "ready",
+              "progress": 0,
+              "targetFrame": 0,
+              "currentFrame": 0,
+              "currentTime": 0,
+              "duration": 4,
+              "fps": 24,
+              "frameCount": 96,
+              "pendingFrame": null,
+              "seeking": false,
+              "seekCount": 7,
+              "lastSeekMs": 20.799999982118607,
+              "animating": false,
+              "visible": true,
+              "hidden": false,
+              "settled": true,
+              "paused": true,
+              "reduced": false,
+              "source": "desktop.mp4",
+              "failure": null
+            },
+            "frame": {
+              "differenceFromStart": null,
+              "width": 1280,
+              "height": 720,
+              "source": "http://localhost:4176/oil-lab/archive/desktop.mp4",
+              "paused": true,
+              "autoplay": false,
+              "loop": false,
+              "controls": false,
+              "pixelSHA256": "4031130eda1b02e0b109213f023de05d82aa08550f206d0acbba943197128079"
+            },
+            "layout": {
+              "viewport": [
+                844,
+                390
+              ],
+              "documentWidth": 844,
+              "stagePosition": "sticky",
+              "header": {
+                "x": 0,
+                "y": 0,
+                "width": 844,
+                "height": 58,
+                "top": 0,
+                "bottom": 58,
+                "left": 0,
+                "right": 844
+              },
+              "heading": {
+                "x": 42.1875,
+                "y": 78,
+                "width": 320.71875,
+                "height": 126.1875,
+                "top": 78,
+                "bottom": 204.1875,
+                "left": 42.1875,
+                "right": 362.90625
+              },
+              "title": {
+                "x": 42.1875,
+                "y": 100.1875,
+                "width": 320.71875,
+                "height": 64,
+                "top": 100.1875,
+                "bottom": 164.1875,
+                "left": 42.1875,
+                "right": 362.90625
+              },
+              "artwork": {
+                "x": 0,
+                "y": 54.59375,
+                "width": 844,
+                "height": 265.21875,
+                "top": 54.59375,
+                "bottom": 319.8125,
+                "left": 0,
+                "right": 844
+              },
+              "states": {
+                "x": 42.1875,
+                "y": 329.703125,
+                "width": 759.625,
+                "height": 33,
+                "top": 329.703125,
+                "bottom": 362.703125,
+                "left": 42.1875,
+                "right": 801.8125
+              },
+              "stage": {
+                "x": 0,
+                "y": 0,
+                "width": 844,
+                "height": 390,
+                "top": 0,
+                "bottom": 390,
+                "left": 0,
+                "right": 844
+              }
+            }
+          },
+          {
+            "label": "middle",
+            "geometry": {
+              "top": 0,
+              "travel": 780,
+              "requestedProgress": 0.5
+            },
+            "state": {
+              "id": "archive",
+              "control": "frame-scrub",
+              "status": "ready",
+              "progress": 0.5,
+              "targetFrame": 48,
+              "currentFrame": 48,
+              "currentTime": 2,
+              "duration": 4,
+              "fps": 24,
+              "frameCount": 96,
+              "pendingFrame": null,
+              "seeking": false,
+              "seekCount": 23,
+              "lastSeekMs": 20,
+              "animating": false,
+              "visible": true,
+              "hidden": false,
+              "settled": true,
+              "paused": true,
+              "reduced": false,
+              "source": "desktop.mp4",
+              "failure": null
+            },
+            "frame": {
+              "differenceFromStart": 3.770763888888889,
+              "width": 1280,
+              "height": 720,
+              "source": "http://localhost:4176/oil-lab/archive/desktop.mp4",
+              "paused": true,
+              "autoplay": false,
+              "loop": false,
+              "controls": false,
+              "pixelSHA256": "60696035c8852e5cebb6a302cd1d7c5f6a028930878cf1c87acacbda9fc1e696"
+            },
+            "layout": {
+              "viewport": [
+                844,
+                390
+              ],
+              "documentWidth": 844,
+              "stagePosition": "sticky",
+              "header": {
+                "x": 0,
+                "y": 0,
+                "width": 844,
+                "height": 58,
+                "top": 0,
+                "bottom": 58,
+                "left": 0,
+                "right": 844
+              },
+              "heading": {
+                "x": 42.1875,
+                "y": 78,
+                "width": 320.71875,
+                "height": 126.1875,
+                "top": 78,
+                "bottom": 204.1875,
+                "left": 42.1875,
+                "right": 362.90625
+              },
+              "title": {
+                "x": 42.1875,
+                "y": 100.1875,
+                "width": 320.71875,
+                "height": 64,
+                "top": 100.1875,
+                "bottom": 164.1875,
+                "left": 42.1875,
+                "right": 362.90625
+              },
+              "artwork": {
+                "x": 0,
+                "y": 54.59375,
+                "width": 844,
+                "height": 265.21875,
+                "top": 54.59375,
+                "bottom": 319.8125,
+                "left": 0,
+                "right": 844
+              },
+              "states": {
+                "x": 42.1875,
+                "y": 329.703125,
+                "width": 759.625,
+                "height": 33,
+                "top": 329.703125,
+                "bottom": 362.703125,
+                "left": 42.1875,
+                "right": 801.8125
+              },
+              "stage": {
+                "x": 0,
+                "y": 0,
+                "width": 844,
+                "height": 390,
+                "top": 0,
+                "bottom": 390,
+                "left": 0,
+                "right": 844
+              }
+            }
+          },
+          {
+            "label": "finish",
+            "geometry": {
+              "top": 0,
+              "travel": 780,
+              "requestedProgress": 1
+            },
+            "state": {
+              "id": "archive",
+              "control": "frame-scrub",
+              "status": "ready",
+              "progress": 1,
+              "targetFrame": 95,
+              "currentFrame": 95,
+              "currentTime": 3.958333,
+              "duration": 4,
+              "fps": 24,
+              "frameCount": 96,
+              "pendingFrame": null,
+              "seeking": false,
+              "seekCount": 38,
+              "lastSeekMs": 8.300000011920929,
+              "animating": false,
+              "visible": true,
+              "hidden": false,
+              "settled": true,
+              "paused": true,
+              "reduced": false,
+              "source": "desktop.mp4",
+              "failure": null
+            },
+            "frame": {
+              "differenceFromStart": 4.987847222222222,
+              "width": 1280,
+              "height": 720,
+              "source": "http://localhost:4176/oil-lab/archive/desktop.mp4",
+              "paused": true,
+              "autoplay": false,
+              "loop": false,
+              "controls": false,
+              "pixelSHA256": "efe157651005225d06774816129b292b119bd07de80bc94c9f73396177fdea7a"
+            },
+            "layout": {
+              "viewport": [
+                844,
+                390
+              ],
+              "documentWidth": 844,
+              "stagePosition": "sticky",
+              "header": {
+                "x": 0,
+                "y": 0,
+                "width": 844,
+                "height": 58,
+                "top": 0,
+                "bottom": 58,
+                "left": 0,
+                "right": 844
+              },
+              "heading": {
+                "x": 42.1875,
+                "y": 78,
+                "width": 320.71875,
+                "height": 126.1875,
+                "top": 78,
+                "bottom": 204.1875,
+                "left": 42.1875,
+                "right": 362.90625
+              },
+              "title": {
+                "x": 42.1875,
+                "y": 100.1875,
+                "width": 320.71875,
+                "height": 64,
+                "top": 100.1875,
+                "bottom": 164.1875,
+                "left": 42.1875,
+                "right": 362.90625
+              },
+              "artwork": {
+                "x": 0,
+                "y": 54.59375,
+                "width": 844,
+                "height": 265.21875,
+                "top": 54.59375,
+                "bottom": 319.8125,
+                "left": 0,
+                "right": 844
+              },
+              "states": {
+                "x": 42.1875,
+                "y": 329.703125,
+                "width": 759.625,
+                "height": 33,
+                "top": 329.703125,
+                "bottom": 362.703125,
+                "left": 42.1875,
+                "right": 801.8125
+              },
+              "stage": {
+                "x": 0,
+                "y": 0,
+                "width": 844,
+                "height": 390,
+                "top": 0,
+                "bottom": 390,
+                "left": 0,
+                "right": 844
+              }
+            }
+          },
+          {
+            "label": "reverse",
+            "geometry": {
+              "top": 0,
+              "travel": 780,
+              "requestedProgress": 0.2
+            },
+            "state": {
+              "id": "archive",
+              "control": "frame-scrub",
+              "status": "ready",
+              "progress": 0.2,
+              "targetFrame": 19,
+              "currentFrame": 19,
+              "currentTime": 0.791666,
+              "duration": 4,
+              "fps": 24,
+              "frameCount": 96,
+              "pendingFrame": null,
+              "seeking": false,
+              "seekCount": 56,
+              "lastSeekMs": 15.099999994039536,
+              "animating": false,
+              "visible": true,
+              "hidden": false,
+              "settled": true,
+              "paused": true,
+              "reduced": false,
+              "source": "desktop.mp4",
+              "failure": null
+            },
+            "frame": {
+              "differenceFromStart": 1.9277314814814814,
+              "width": 1280,
+              "height": 720,
+              "source": "http://localhost:4176/oil-lab/archive/desktop.mp4",
+              "paused": true,
+              "autoplay": false,
+              "loop": false,
+              "controls": false,
+              "pixelSHA256": "8e60a768e632161355127dcd58ad347997e2b215200716a601361ecc93aa0c22"
+            },
+            "layout": {
+              "viewport": [
+                844,
+                390
+              ],
+              "documentWidth": 844,
+              "stagePosition": "sticky",
+              "header": {
+                "x": 0,
+                "y": 0,
+                "width": 844,
+                "height": 58,
+                "top": 0,
+                "bottom": 58,
+                "left": 0,
+                "right": 844
+              },
+              "heading": {
+                "x": 42.1875,
+                "y": 78,
+                "width": 320.71875,
+                "height": 126.1875,
+                "top": 78,
+                "bottom": 204.1875,
+                "left": 42.1875,
+                "right": 362.90625
+              },
+              "title": {
+                "x": 42.1875,
+                "y": 100.1875,
+                "width": 320.71875,
+                "height": 64,
+                "top": 100.1875,
+                "bottom": 164.1875,
+                "left": 42.1875,
+                "right": 362.90625
+              },
+              "artwork": {
+                "x": 0,
+                "y": 54.59375,
+                "width": 844,
+                "height": 265.21875,
+                "top": 54.59375,
+                "bottom": 319.8125,
+                "left": 0,
+                "right": 844
+              },
+              "states": {
+                "x": 42.1875,
+                "y": 329.703125,
+                "width": 759.625,
+                "height": 33,
+                "top": 329.703125,
+                "bottom": 362.703125,
+                "left": 42.1875,
+                "right": 801.8125
+              },
+              "stage": {
+                "x": 0,
+                "y": 0,
+                "width": 844,
+                "height": 390,
+                "top": 0,
+                "bottom": 390,
+                "left": 0,
+                "right": 844
+              }
+            }
+          }
+        ],
+        "latest": {
+          "id": "archive",
+          "control": "frame-scrub",
+          "status": "ready",
+          "progress": 0.2705128205128205,
+          "targetFrame": 26,
+          "currentFrame": 26,
+          "currentTime": 1.083333,
+          "duration": 4,
+          "fps": 24,
+          "frameCount": 96,
+          "pendingFrame": null,
+          "seeking": false,
+          "seekCount": 60,
+          "lastSeekMs": 15,
+          "animating": false,
+          "visible": true,
+          "hidden": false,
+          "settled": true,
+          "paused": true,
+          "reduced": false,
+          "source": "desktop.mp4",
+          "failure": null
+        },
+        "latestSeekMs": 147,
+        "idleBefore": {
+          "state": {
+            "id": "archive",
+            "control": "frame-scrub",
+            "status": "ready",
+            "progress": 0.2705128205128205,
+            "targetFrame": 26,
+            "currentFrame": 26,
+            "currentTime": 1.083333,
+            "duration": 4,
+            "fps": 24,
+            "frameCount": 96,
+            "pendingFrame": null,
+            "seeking": false,
+            "seekCount": 60,
+            "lastSeekMs": 15,
+            "animating": false,
+            "visible": true,
+            "hidden": false,
+            "settled": true,
+            "paused": true,
+            "reduced": false,
+            "source": "desktop.mp4",
+            "failure": null
+          },
+          "probe": {
+            "scheduled": 639,
+            "fired": 638,
+            "cancelled": 2,
+            "pending": 0,
+            "playCalls": 0,
+            "playEvents": 0
+          }
+        },
+        "idleAfter": {
+          "state": {
+            "id": "archive",
+            "control": "frame-scrub",
+            "status": "ready",
+            "progress": 0.2705128205128205,
+            "targetFrame": 26,
+            "currentFrame": 26,
+            "currentTime": 1.083333,
+            "duration": 4,
+            "fps": 24,
+            "frameCount": 96,
+            "pendingFrame": null,
+            "seeking": false,
+            "seekCount": 60,
+            "lastSeekMs": 15,
+            "animating": false,
+            "visible": true,
+            "hidden": false,
+            "settled": true,
+            "paused": true,
+            "reduced": false,
+            "source": "desktop.mp4",
+            "failure": null
+          },
+          "probe": {
+            "scheduled": 639,
+            "fired": 638,
+            "cancelled": 2,
+            "pending": 0,
+            "playCalls": 0,
+            "playEvents": 0
+          }
+        },
+        "destinations": {
+          "links": [
+            {
+              "href": "/projects#multi-turn-agent-evaluation",
+              "text": "01Research / PaperMulti-Turn Agent Evaluation TaxonomyA survey and evaluation taxonomy for LLM-based agents in multi-turn conversation, covering planning, tool use, memory, and Agent-as-Judge scoring.Agents · Evaluation · Survey"
+            },
+            {
+              "href": "/projects#supchain-bench",
+              "text": "02Research / PaperSupChain-BenchA unified supply-chain benchmark spanning logistics collaboration, warehouse fulfillment, and finance/customs workflows with 530 annotated real-world samples.Benchmark · Supply Chain · Tool Calling"
+            },
+            {
+              "href": "/projects#visualdeltas",
+              "text": "03Research / PaperVisualDeltasPreference learning from visual quality-induced reasoning, using controlled image-resolution degradation to create positive/negative preference pairs.VLM · DPO · Preference Learning"
+            },
+            {
+              "href": "/about",
+              "text": "My story"
+            },
+            {
+              "href": "/blog",
+              "text": "Research notes"
+            },
+            {
+              "href": "mailto:hello@damon.ai",
+              "text": "hello@damon.ai"
+            },
+            {
+              "href": "/oil-lab",
+              "text": "Oil Motion studies"
+            },
+            {
+              "href": "https://github.com/Damon-GSY",
+              "text": "GitHub"
+            },
+            {
+              "href": "https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA",
+              "text": "YouTube"
+            },
+            {
+              "href": "/",
+              "text": "All studies"
+            },
+            {
+              "href": "https://github.com/oil-oil/oil-motion",
+              "text": "Made with Oil Motion."
+            }
+          ],
+          "anchors": [
+            {
+              "href": "#oil-work",
+              "exists": true
+            },
+            {
+              "href": "#oil-work",
+              "exists": true
+            },
+            {
+              "href": "#oil-about",
+              "exists": true
+            },
+            {
+              "href": "#oil-contact",
+              "exists": true
+            },
+            {
+              "href": "#oil-work",
+              "exists": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "archive: reduced motion loads only the static artwork and unpins the story",
+      "pass": true,
+      "elapsedMs": 710,
+      "evidence": {
+        "state": {
+          "id": "archive",
+          "control": "frame-scrub",
+          "status": "static",
+          "progress": 0,
+          "targetFrame": 0,
+          "currentFrame": 0,
+          "currentTime": 0,
+          "duration": 0,
+          "fps": null,
+          "frameCount": null,
+          "pendingFrame": null,
+          "seeking": false,
+          "seekCount": 0,
+          "lastSeekMs": 0,
+          "animating": false,
+          "visible": true,
+          "hidden": false,
+          "settled": false,
+          "paused": true,
+          "reduced": true,
+          "source": "mobile.mp4",
+          "failure": null
+        },
+        "layout": {
+          "viewport": [
+            390,
+            844
+          ],
+          "documentWidth": 390,
+          "stagePosition": "relative",
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 70,
+            "top": 0,
+            "bottom": 70,
+            "left": 0,
+            "right": 390
+          },
+          "heading": {
+            "x": 23,
+            "y": 109.71875,
+            "width": 344,
+            "height": 207.984375,
+            "top": 109.71875,
+            "bottom": 317.703125,
+            "left": 23,
+            "right": 367
+          },
+          "title": {
+            "x": 23,
+            "y": 137.515625,
+            "width": 344,
+            "height": 93.59375,
+            "top": 137.515625,
+            "bottom": 231.109375,
+            "left": 23,
+            "right": 367
+          },
+          "artwork": {
+            "x": 0,
+            "y": 295.390625,
+            "width": 390,
+            "height": 396.703125,
+            "top": 295.390625,
+            "bottom": 692.09375,
+            "left": 0,
+            "right": 390
+          },
+          "states": {
+            "x": 23,
+            "y": 720.734375,
+            "width": 344,
+            "height": 64.1875,
+            "top": 720.734375,
+            "bottom": 784.921875,
+            "left": 23,
+            "right": 367
+          },
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 844,
+            "top": 0,
+            "bottom": 844,
+            "left": 0,
+            "right": 390
+          }
+        },
+        "requests": [
+          {
+            "scenario": "archive-reduced",
+            "url": "http://localhost:4176/oil-lab/archive/poster.webp",
+            "type": "image"
+          }
+        ],
+        "destinations": {
+          "links": [
+            {
+              "href": "/projects#multi-turn-agent-evaluation",
+              "text": "01Research / PaperMulti-Turn Agent Evaluation TaxonomyA survey and evaluation taxonomy for LLM-based agents in multi-turn conversation, covering planning, tool use, memory, and Agent-as-Judge scoring.Agents · Evaluation · Survey"
+            },
+            {
+              "href": "/projects#supchain-bench",
+              "text": "02Research / PaperSupChain-BenchA unified supply-chain benchmark spanning logistics collaboration, warehouse fulfillment, and finance/customs workflows with 530 annotated real-world samples.Benchmark · Supply Chain · Tool Calling"
+            },
+            {
+              "href": "/projects#visualdeltas",
+              "text": "03Research / PaperVisualDeltasPreference learning from visual quality-induced reasoning, using controlled image-resolution degradation to create positive/negative preference pairs.VLM · DPO · Preference Learning"
+            },
+            {
+              "href": "/about",
+              "text": "My story"
+            },
+            {
+              "href": "/blog",
+              "text": "Research notes"
+            },
+            {
+              "href": "mailto:hello@damon.ai",
+              "text": "hello@damon.ai"
+            },
+            {
+              "href": "/oil-lab",
+              "text": "Oil Motion studies"
+            },
+            {
+              "href": "https://github.com/Damon-GSY",
+              "text": "GitHub"
+            },
+            {
+              "href": "https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA",
+              "text": "YouTube"
+            },
+            {
+              "href": "/",
+              "text": "All studies"
+            },
+            {
+              "href": "https://github.com/oil-oil/oil-motion",
+              "text": "Made with Oil Motion."
+            }
+          ],
+          "anchors": [
+            {
+              "href": "#oil-work",
+              "exists": true
+            },
+            {
+              "href": "#oil-work",
+              "exists": true
+            },
+            {
+              "href": "#oil-about",
+              "exists": true
+            },
+            {
+              "href": "#oil-contact",
+              "exists": true
+            },
+            {
+              "href": "#oil-work",
+              "exists": true
+            }
+          ]
+        },
+        "contactReachable": true
+      }
+    },
+    {
+      "name": "archive: blocked video reveals its poster and leaves portfolio navigation usable",
+      "pass": true,
+      "elapsedMs": 796,
+      "evidence": {
+        "state": {
+          "id": "archive",
+          "control": "frame-scrub",
+          "status": "error",
+          "progress": 0,
+          "targetFrame": 0,
+          "currentFrame": 0,
+          "currentTime": 0,
+          "duration": 0,
+          "fps": 24,
+          "frameCount": 96,
+          "pendingFrame": null,
+          "seeking": false,
+          "seekCount": 0,
+          "lastSeekMs": 0,
+          "animating": false,
+          "visible": true,
+          "hidden": false,
+          "settled": false,
+          "paused": true,
+          "reduced": false,
+          "source": "desktop.mp4",
+          "failure": "The artwork could not be loaded."
+        },
+        "layout": {
+          "viewport": [
+            1440,
+            900
+          ],
+          "documentWidth": 1440,
+          "stagePosition": "relative",
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 89,
+            "top": 0,
+            "bottom": 89,
+            "left": 0,
+            "right": 1440
+          },
+          "heading": {
+            "x": 72,
+            "y": 234,
+            "width": 561.59375,
+            "height": 333.21875,
+            "top": 234,
+            "bottom": 567.21875,
+            "left": 72,
+            "right": 633.59375
+          },
+          "title": {
+            "x": 72,
+            "y": 286.78125,
+            "width": 561.59375,
+            "height": 158.40625,
+            "top": 286.78125,
+            "bottom": 445.1875,
+            "left": 72,
+            "right": 633.59375
+          },
+          "artwork": {
+            "x": 0,
+            "y": 117,
+            "width": 1440,
+            "height": 639,
+            "top": 117,
+            "bottom": 756,
+            "left": 0,
+            "right": 1440
+          },
+          "states": {
+            "x": 72,
+            "y": 769,
+            "width": 1296,
+            "height": 59,
+            "top": 769,
+            "bottom": 828,
+            "left": 72,
+            "right": 1368
+          },
+          "stage": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 900,
+            "top": 0,
+            "bottom": 900,
+            "left": 0,
+            "right": 1440
+          }
+        },
+        "poster": {
+          "width": 1280,
+          "height": 720,
+          "visibility": "visible"
+        },
+        "destinations": {
+          "links": [
+            {
+              "href": "/projects#multi-turn-agent-evaluation",
+              "text": "01Research / PaperMulti-Turn Agent Evaluation TaxonomyA survey and evaluation taxonomy for LLM-based agents in multi-turn conversation, covering planning, tool use, memory, and Agent-as-Judge scoring.Agents · Evaluation · Survey"
+            },
+            {
+              "href": "/projects#supchain-bench",
+              "text": "02Research / PaperSupChain-BenchA unified supply-chain benchmark spanning logistics collaboration, warehouse fulfillment, and finance/customs workflows with 530 annotated real-world samples.Benchmark · Supply Chain · Tool Calling"
+            },
+            {
+              "href": "/projects#visualdeltas",
+              "text": "03Research / PaperVisualDeltasPreference learning from visual quality-induced reasoning, using controlled image-resolution degradation to create positive/negative preference pairs.VLM · DPO · Preference Learning"
+            },
+            {
+              "href": "/about",
+              "text": "My story"
+            },
+            {
+              "href": "/blog",
+              "text": "Research notes"
+            },
+            {
+              "href": "mailto:hello@damon.ai",
+              "text": "hello@damon.ai"
+            },
+            {
+              "href": "/oil-lab",
+              "text": "Oil Motion studies"
+            },
+            {
+              "href": "https://github.com/Damon-GSY",
+              "text": "GitHub"
+            },
+            {
+              "href": "https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA",
+              "text": "YouTube"
+            },
+            {
+              "href": "/",
+              "text": "All studies"
+            },
+            {
+              "href": "https://github.com/oil-oil/oil-motion",
+              "text": "Made with Oil Motion."
+            }
+          ],
+          "anchors": [
+            {
+              "href": "#oil-work",
+              "exists": true
+            },
+            {
+              "href": "#oil-work",
+              "exists": true
+            },
+            {
+              "href": "#oil-about",
+              "exists": true
+            },
+            {
+              "href": "#oil-contact",
+              "exists": true
+            },
+            {
+              "href": "#oil-work",
+              "exists": true
+            }
+          ]
+        },
+        "workReachable": true
+      }
+    }
+  ],
+  "browserErrors": [],
+  "expectedResourceErrors": [
+    {
+      "scenario": "archive-blocked",
+      "type": "console",
+      "message": "Failed to load resource: net::ERR_FAILED"
+    }
+  ],
+  "failedResponses": [],
+  "requests": [
+    {
+      "scenario": "archive-1440x900",
+      "url": "http://localhost:4176/oil-lab/archive/poster.webp",
+      "type": "image"
+    },
+    {
+      "scenario": "archive-1440x900",
+      "url": "http://localhost:4176/oil-lab/archive/timeline.json",
+      "type": "fetch"
+    },
+    {
+      "scenario": "archive-1440x900",
+      "url": "http://localhost:4176/oil-lab/archive/desktop.mp4",
+      "type": "media"
+    },
+    {
+      "scenario": "archive-390x844",
+      "url": "http://localhost:4176/oil-lab/archive/poster.webp",
+      "type": "image"
+    },
+    {
+      "scenario": "archive-390x844",
+      "url": "http://localhost:4176/oil-lab/archive/timeline.json",
+      "type": "fetch"
+    },
+    {
+      "scenario": "archive-390x844",
+      "url": "http://localhost:4176/oil-lab/archive/mobile.mp4",
+      "type": "media"
+    },
+    {
+      "scenario": "archive-844x390",
+      "url": "http://localhost:4176/oil-lab/archive/poster.webp",
+      "type": "image"
+    },
+    {
+      "scenario": "archive-844x390",
+      "url": "http://localhost:4176/oil-lab/archive/timeline.json",
+      "type": "fetch"
+    },
+    {
+      "scenario": "archive-844x390",
+      "url": "http://localhost:4176/oil-lab/archive/desktop.mp4",
+      "type": "media"
+    },
+    {
+      "scenario": "archive-reduced",
+      "url": "http://localhost:4176/oil-lab/archive/poster.webp",
+      "type": "image"
+    },
+    {
+      "scenario": "archive-blocked",
+      "url": "http://localhost:4176/oil-lab/archive/poster.webp",
+      "type": "image"
+    },
+    {
+      "scenario": "archive-blocked",
+      "url": "http://localhost:4176/oil-lab/archive/timeline.json",
+      "type": "fetch"
+    },
+    {
+      "scenario": "archive-blocked",
+      "url": "http://localhost:4176/oil-lab/archive/desktop.mp4",
+      "type": "media"
+    }
+  ],
+  "screenshots": [
+    "/workspace/oil-lab-checks/final-archive/archive-1440x900-start.png",
+    "/workspace/oil-lab-checks/final-archive/archive-1440x900-middle.png",
+    "/workspace/oil-lab-checks/final-archive/archive-1440x900-finish.png",
+    "/workspace/oil-lab-checks/final-archive/archive-1440x900-reverse.png",
+    "/workspace/oil-lab-checks/final-archive/archive-selected-work.png",
+    "/workspace/oil-lab-checks/final-archive/archive-work-section.png",
+    "/workspace/oil-lab-checks/final-archive/archive-about-section.png",
+    "/workspace/oil-lab-checks/final-archive/archive-contact-section.png",
+    "/workspace/oil-lab-checks/final-archive/archive-390x844-start.png",
+    "/workspace/oil-lab-checks/final-archive/archive-390x844-middle.png",
+    "/workspace/oil-lab-checks/final-archive/archive-390x844-finish.png",
+    "/workspace/oil-lab-checks/final-archive/archive-390x844-reverse.png",
+    "/workspace/oil-lab-checks/final-archive/archive-844x390-start.png",
+    "/workspace/oil-lab-checks/final-archive/archive-844x390-middle.png",
+    "/workspace/oil-lab-checks/final-archive/archive-844x390-finish.png",
+    "/workspace/oil-lab-checks/final-archive/archive-844x390-reverse.png",
+    "/workspace/oil-lab-checks/final-archive/archive-reduced-poster.png",
+    "/workspace/oil-lab-checks/final-archive/archive-blocked-poster.png"
+  ],
+  "finishedAt": "2026-10-04T15:44:15.601Z",
+  "pass": true
+}

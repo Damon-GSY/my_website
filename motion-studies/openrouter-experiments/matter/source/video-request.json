@@ -1,0 +1,24 @@
+{
+  "model": "google/veo-3.1-lite",
+  "prompt": "One single continuous locked-camera transformation, four seconds. The exact mirror-polished chrome pebble in the first image slowly and smoothly redistributes its own liquid metal into the sculptural capital D shown in the final image. A hollow opens gently through its center as its left side straightens and the right side expands into a rounded loop. The object stays planted at the same floor contact, with stable apparent mass and coherent strip-light reflections that flow with the surface. Calm controlled motion, liquid metal with high surface tension, no splashes, no fragments, no melting into the floor. Camera, cobalt studio, illumination and empty left-side copy space remain absolutely fixed. No cuts, no zoom, no flicker, no extra objects, no additional text. Reach the supplied final D cleanly and hold it at the end. Every intermediate silhouette must be crisp and physically coherent; no motion blur. Silent.",
+  "duration": 4,
+  "resolution": "720p",
+  "aspect_ratio": "16:9",
+  "generate_audio": false,
+  "frame_images": [
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://raw.githubusercontent.com/Damon-GSY/my_website/7219b8bf70ff4a3fd8239accf63ecb825da1decd/public/oil-lab/matter/K0.png"
+      },
+      "frame_type": "first_frame"
+    },
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://raw.githubusercontent.com/Damon-GSY/my_website/7219b8bf70ff4a3fd8239accf63ecb825da1decd/public/oil-lab/matter/K1.png"
+      },
+      "frame_type": "last_frame"
+    }
+  ]
+}

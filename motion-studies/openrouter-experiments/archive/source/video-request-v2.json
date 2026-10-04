@@ -1,0 +1,24 @@
+{
+  "model": "google/veo-3.1-lite",
+  "prompt": "Locked-camera continuous product motion. Preserve the supplied exact first and final frames. FOUR RIGID VERTICAL glass panels with the same cobalt diagrams stand on a stone plinth. The front panel performs ONLY A SHORT STRAIGHT HORIZONTAL SLIDE forward toward the camera, maintaining its UPRIGHT VERTICAL orientation throughout the entire clip. The top edge and bottom edge move together at precisely the same speed. There is NO hinge, NO tipping, NO tilting, NO falling over, NO turning a page, NO book-opening action, NO flip, NO bend. Its long edges stay close to vertical at ALL times. Use only the very slight vertical-axis orientation change necessary to match the final supplied frame, never more than twelve degrees, and NEVER rotate about a horizontal axis. Three rear panels, plinth, floor, background and lighting remain completely fixed. The foreground sheet slides smoothly and slowly for the first three seconds, then settles at the supplied final position. Keep its bottom edge grounded, coherent rigid glass reflections and exact diagram arrangement. No camera motion, no zoom, no cuts, no dissolves, no extra sheets, no additional objects, no text. Silent.",
+  "duration": 4,
+  "resolution": "720p",
+  "aspect_ratio": "16:9",
+  "generate_audio": false,
+  "frame_images": [
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://raw.githubusercontent.com/Damon-GSY/my_website/0aba11d5500ace613feac8d856ec1d8d96a04103/public/oil-lab/archive/K0.png"
+      },
+      "frame_type": "first_frame"
+    },
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://raw.githubusercontent.com/Damon-GSY/my_website/0aba11d5500ace613feac8d856ec1d8d96a04103/public/oil-lab/archive/K1.png"
+      },
+      "frame_type": "last_frame"
+    }
+  ]
+}

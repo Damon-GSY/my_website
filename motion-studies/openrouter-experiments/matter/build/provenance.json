@@ -1,0 +1,41 @@
+{
+  "provider": "openrouter",
+  "image_model": "openai/gpt-image-2",
+  "video_model": "google/veo-3.1-lite",
+  "accepted_source": "pilot/connected.mp4",
+  "source_sha256": "cd29775a6674e8c2ac2cea6d089d4279a9ab93480702871d1dee87400971a8a1",
+  "source_frames": 96,
+  "source_fps": 24,
+  "duration_seconds": 4,
+  "frame_policy": "native",
+  "interpolated": false,
+  "audio": false,
+  "runtime": "paused video with integer-frame scroll seeking",
+  "files": {
+    "desktop.mp4": {
+      "bytes": 3496667,
+      "sha256": "6f6f993fb809118dd74415e101cefe663d44b0e10e7251a8b63f61957a4f51dc"
+    },
+    "mobile.mp4": {
+      "bytes": 961930,
+      "sha256": "808233bb117c2ab3f22eb875de9296b495896948f3fa6e863ec04ce3bd7e86e4"
+    },
+    "poster.webp": {
+      "bytes": 20470,
+      "sha256": "5843dc96aad3299fd235540d98aa48190f48fb06784cee722f8aec0709404f36"
+    },
+    "timeline.json": {
+      "bytes": 756,
+      "sha256": "ae9eec2f93c25238693f15bc58dd49d549d8d2d898870e920a1cdc97c3c341c4"
+    }
+  },
+  "desktop_size": [
+    1280,
+    720
+  ],
+  "mobile_size": [
+    720,
+    404
+  ],
+  "all_frames_keyframes": true
+}

@@ -1,0 +1,10 @@
+{
+  "decision": "reject",
+  "reviewer": "Codex visual review",
+  "reason": "A detached thin metal strip appears to the left during the transformation, violating the single connected material constraint.",
+  "source": "pilot/original.mp4",
+  "duration": 4,
+  "frames": 96,
+  "model": "google/veo-3.1-lite",
+  "actual_video_cost_usd": 0.1188
+}

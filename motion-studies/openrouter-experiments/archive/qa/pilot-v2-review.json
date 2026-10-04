@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "media": "pilot/upright.mp4",
+  "decision": "reject",
+  "review_type": "manual visual review at native 1280x720 resolution",
+  "evidence": [
+    "/workspace/oil-lab-qa/archive-v2/contact.jpg",
+    "/workspace/oil-lab-qa/archive-v2/all-frames.jpg",
+    "pilot/upright.mp4 frames 36, 48 and 60"
+  ],
+  "findings": [
+    "The front folio visibly pitches roughly 35–45 degrees left at frame 48 with its lower edge near the plinth. This is bottom-edge toppling, not a small 12-degree yaw about the vertical axis or only a refraction effect.",
+    "A new bright diagonal edge appears across the rear stack near the mid-clip extreme, making the four rigid folios difficult to track.",
+    "The front folio moves back toward its initial arrangement before the final frame, violating the one-way K0-to-K1 progression needed for scroll scrub."
+  ],
+  "recommendation": "Keep the front sheet vertically upright in every frame. Restrict motion to a short straight translation toward the camera, with at most a subtle yaw about its own vertical centerline. The bottom edge must remain parallel to the plinth; forbid pitching, rolling, bottom-edge hinges, swinging and return motion."
+}

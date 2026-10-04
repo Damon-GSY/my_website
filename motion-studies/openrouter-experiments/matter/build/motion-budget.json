@@ -17,7 +17,15 @@
     "sheetCount": 7
   },
   "decodedFrameMemoryMiB": 337.5,
-  "sourceCheck": null,
+  "sourceCheck": {
+    "width": 1280,
+    "height": 720,
+    "required_width": 1280,
+    "required_height": 720,
+    "width_ratio": 1.0,
+    "height_ratio": 1.0,
+    "passes": true
+  },
   "cellCheck": null,
   "temporalCheck": {
     "scrollPages": 2.0,
@@ -29,7 +37,7 @@
   "driver": "scroll",
   "parameterSpace": "linear",
   "timeControl": "scrub",
-  "access": "sequential",
+  "access": "random",
   "backgroundOwner": "video",
   "delivery": {
     "selected": "baked-video",

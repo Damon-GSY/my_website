@@ -1,8 +1,8 @@
 # OpenRouter / Oil Motion robot pilot
 
-Prepared for the user's OpenRouter trial. **No image or video generation has run yet.** The current cloud runtime has no `OPENROUTER_API_KEY` and its configuration binding has no saved value. The initial proxy 403 cleared after the OpenRouter domain configuration propagated: public image and video catalogs now return HTTP 200. Authentication and actual generation remain unverified.
+This directory preserves the original robot-greeting pilot plan. **That specific robot clip has not been generated.** OpenRouter authentication now works through the cloud secret `OPEN_ROUTER_KEY`, and the separate [Oil Motion experiments](../openrouter-experiments/README.md) have produced accepted Matter, Archive and Handoff source videos with compiled desktop/mobile media and completed integrated Chromium verification. Their generation and acceptance records belong to that experiment directory, not this older pilot. Physical-device Safari was not tested.
 
-The cloud configuration draft now declares `OPENROUTER_API_KEY` for `openrouter.ai`. Supply the value through that environment's Secrets settings. Do not put it into a browser bundle, command argument, repository file, or chat. The normal website preview does not need this key.
+The adapter reads `OPEN_ROUTER_KEY` first and `OPENROUTER_API_KEY` as a fallback. Keep credentials in the cloud environment's Secrets settings, outside browser bundles, command arguments, repository files and chat. The normal website preview does not need a generation key. `qa/preflight.json` is the historical pre-authentication preparation record; it is not a statement about the current environment.
 
 ## Pilot
 
@@ -17,7 +17,7 @@ The four sources remain separate:
 - `build/motion-budget.json`: actual budget-tool result.
 - `build/timeline.json`: intentionally absent until there is a real decoded video.
 
-The image request's candidate model is `openai/gpt-image-2`; the video candidate is `google/veo-3.1-lite`. Both identifiers are present in the live public catalogs (57 image models and 30 video models at review time); this does not establish account access. The image model accepts 16:9, medium quality, opaque background and an input reference, so the prepared request uses those fields instead of an unlisted explicit pixel size. Veo supports four seconds, 720p, 16:9 and both first/last frames. Its 720p no-audio price is $0.03 per second, approximately $0.12 for this pilot, excluding the image request. Recheck capabilities and pricing before submitting. Do not silently drop first/last-frame constraints or change models after an API rejection.
+The image request's candidate model is `openai/gpt-image-2`; the video candidate is `google/veo-3.1-lite`. Both have since been used successfully for the three separate experiments. The image model accepts 16:9, medium quality, opaque background and an input reference, so this prepared request uses those fields instead of an unlisted explicit pixel size. Veo supports four seconds, 720p, 16:9 and both first/last frames. Its reviewed 720p no-audio price is $0.03 per second, approximately $0.12 for this pilot, excluding the image request; the completed experimental jobs each recorded $0.1188. The [six-image/six-video experiment ledger](../openrouter-experiments/generation-costs.json) totals $0.944404 including rejected attempts. Recheck capabilities and pricing before a new submission. Do not silently drop first/last-frame constraints or change models after an API rejection.
 
 ## Prepared CLI
 
@@ -48,13 +48,13 @@ python3 scripts/openrouter-motion.py resume \
   --output motion-studies/openrouter-pilot/pilot/greeting.mp4
 ```
 
-`--dry-run` validates local inputs without authentication, generation or network access. It does not establish model availability. Existing output files are not overwritten. The helper never prints API response bodies, key values, image base64 or signed download links, and forwards authorization only to the fixed OpenRouter origin. Generated video requests, frames and clips are intentionally absent until they actually exist.
+`--dry-run` validates local inputs without authentication, generation or network access. It does not establish model availability. Existing output files are not overwritten. The helper never prints API response bodies, key values, image base64 or signed download links, and forwards authorization only to the fixed OpenRouter origin. Image billing numbers and dimensions are saved in adjacent `.generation.json` files; video jobs use `.job.json`. Neither path retries a paid request automatically. This robot pilot's generated video request, frames and clip remain absent until it is actually produced.
 
 ## API differences
 
 The current OpenRouter APIs are `POST /api/v1/images` and asynchronous `POST /api/v1/videos`. Video first/last images use `frame_images` and `frame_type`; jobs complete with `status: completed`, followed by an authenticated content download. Oil Motion's default ZenMux scripts use different paths, fields and success states. Replacing only the URL would be incorrect.
 
-The preparation follows [Oil Motion](https://github.com/oil-oil/oil-motion) and its pilot/identity/QA workflow. API details were verified from official OpenRouter documentation mirrored in its public GitHub repository:
+The preparation follows [Oil Motion](https://github.com/oil-oil/oil-motion), pinned to [`8e4d1c3d0eab6aedd656f4a1afcd16b6633f83ee`](https://github.com/oil-oil/oil-motion/tree/8e4d1c3d0eab6aedd656f4a1afcd16b6633f83ee), and its pilot/identity/QA workflow. Oil Motion is by Lin Zhihuang under the [MIT License](../LICENSE). API details were verified from official OpenRouter documentation mirrored in its public GitHub repository:
 
 - [Image generation](https://github.com/OpenRouterTeam/docs/blob/main/guides/overview/multimodal/image-generation.mdx)
 - [Video generation](https://github.com/OpenRouterTeam/docs/blob/main/guides/overview/multimodal/video-generation.mdx)
@@ -66,4 +66,4 @@ Inspect the opening keyframe against `source/identity-bible.md`. Provide accepte
 
 ## Verified preparation
 
-The CLI passes 19 mocked protocol, error and credential-handling checks, including image decoding, pending-to-completed video state, persisted failed jobs, resume without another POST, missing credentials, unsupported capabilities, write protection and redirect handling. The real read-only preflight reaches both public catalogs and exits nonzero because the key is absent. The image request dry run, strict Oil Motion resource budget and Python syntax check pass. None of these checks is presented as a successful authenticated generation.
+The initial preparation passed 19 mocked protocol, error and credential-handling checks, including image decoding, pending-to-completed video state, persisted failed jobs, resume without another POST, missing credentials, unsupported capabilities, write protection and redirect handling. At that historical checkpoint, the public catalogs worked but authentication was blocked by the missing original variable. The current helper also has verified credential-alias handling and numeric-only image-usage persistence; live authentication and all three experimental source generations have now succeeded. This pilot's image dry run, planned Oil Motion budget and Python syntax checks do not constitute acceptance of an ungenerated robot clip.

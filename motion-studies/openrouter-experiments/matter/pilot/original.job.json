@@ -1,0 +1,7 @@
+{
+  "provider": "openrouter",
+  "id": "gen-vid-1791127255-mjWR9Ml7cLnXU5InldFV",
+  "status": "completed",
+  "model": "google/veo-3.1-lite",
+  "cost_usd": 0.1188
+}

@@ -2,12 +2,16 @@
 """One-image / one-video OpenRouter runner for Oil Motion studies (stdlib only).
 
 Uses /images and /videos, not Oil Motion's ZenMux request protocol. Credentials
-stay in OPENROUTER_API_KEY; request files and saved job files never contain them.
+stay in OPEN_ROUTER_KEY (or OPENROUTER_API_KEY as a fallback); request files and
+saved job files never contain them.
+Image usage is saved beside each PNG as .generation.json. Generation requests
+are submitted once; errors never trigger an automatic retry.
 """
 
 import argparse
 import base64
 import json
+import math
 import mimetypes
 import os
 from pathlib import Path
@@ -95,10 +99,18 @@ def load_json(path):
     return result
 
 
+def credential():
+    for name in ("OPEN_ROUTER_KEY", "OPENROUTER_API_KEY"):
+        key = os.environ.get(name, "").strip()
+        if key:
+            return key, name
+    return "", None
+
+
 def require_key():
-    key = os.environ.get("OPENROUTER_API_KEY", "").strip()
+    key, _ = credential()
     if not key:
-        raise MotionError("OPENROUTER_API_KEY is not available in this environment. Save/bind the secret before running.")
+        raise MotionError("OPEN_ROUTER_KEY or OPENROUTER_API_KEY is not available in this environment. Save/bind the secret before running.")
     return key
 
 
@@ -112,6 +124,43 @@ def prepare_parent(path):
     with tempfile.TemporaryFile(dir=path.parent) as test:
         test.write(b"ready")
         test.flush()
+
+
+def image_generation_metadata(response, model, data):
+    """Keep only billing numbers, an opaque generation ID and PNG dimensions."""
+    usage_fields = {"cost", "cost_usd", "prompt_tokens", "completion_tokens", "total_tokens",
+                    "input_tokens", "output_tokens", "image_tokens", "text_tokens",
+                    "cached_tokens", "reasoning_tokens"}
+    detail_fields = {"prompt_tokens_details", "completion_tokens_details",
+                     "input_tokens_details", "output_tokens_details"}
+
+    def numeric_usage(value):
+        safe = {}
+        if not isinstance(value, dict):
+            return safe
+        for name, item in value.items():
+            if name in usage_fields and type(item) in (int, float) and math.isfinite(item) and item >= 0:
+                safe[name] = item
+            elif name in detail_fields and isinstance(item, dict):
+                details = numeric_usage(item)
+                if details:
+                    safe[name] = details
+        return safe
+
+    usage = numeric_usage(response.get("usage"))
+    metadata = {"provider": "openrouter", "model": model, "usage": usage,
+                "width": int.from_bytes(data[16:20], "big"),
+                "height": int.from_bytes(data[20:24], "big"),
+                "automatic_retry": False}
+    cost = usage.get("cost", usage.get("cost_usd"))
+    if cost is not None:
+        metadata["cost_usd"] = cost
+    generation_id = response.get("id")
+    if isinstance(generation_id, str) and re.fullmatch(
+            r"(?:gen|img|image|resp|req)[_-][A-Za-z0-9_-]{1,180}|[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}",
+            generation_id):
+        metadata["id"] = generation_id
+    return metadata
 
 
 def validate_payload(payload, kind):
@@ -219,8 +268,10 @@ def finish_video(job, path, output, key, interval, timeout):
 
 def run(args):
     if args.command == "check":
-        key = os.environ.get("OPENROUTER_API_KEY", "").strip()
+        key, name = credential()
         print("Credential present: " + ("yes" if key else "no"))
+        if name:
+            print("Credential variable: " + name)
         if args.dry_run:
             print("Dry run: no network requests.")
             return
@@ -243,7 +294,7 @@ def run(args):
                               if isinstance(cost, (int, float)) or re.fullmatch(r"[0-9.eE+-]+", str(cost))}
                     print("Video pricing SKUs (inspect units): " + json.dumps(prices))
         if not key:
-            raise MotionError("Public catalogs are readable, but OPENROUTER_API_KEY is absent; generation is not ready.")
+            raise MotionError("Public catalogs are readable, but OPEN_ROUTER_KEY and OPENROUTER_API_KEY are absent; generation is not ready.")
         return
     output = Path(args.output)
     no_overwrite(output)
@@ -280,17 +331,28 @@ def run(args):
     key = require_key()
     prepare_parent(output)
     if args.command == "image":
+        metadata_path = output.with_suffix(".generation.json")
+        no_overwrite(metadata_path)
         result = api("/images", key, payload)
         try:
             data = base64.b64decode(result["data"][0]["b64_json"], validate=True)
         except (KeyError, IndexError, TypeError, ValueError):
             raise MotionError("Image response did not contain valid base64 image data.") from None
-        if not data.startswith(b"\x89PNG\r\n\x1a\n"):
+        if (len(data) < 33 or not data.startswith(b"\x89PNG\r\n\x1a\n")
+                or data[12:16] != b"IHDR" or not int.from_bytes(data[16:20], "big")
+                or not int.from_bytes(data[20:24], "big")):
             raise MotionError("Image response is not PNG; nothing was written.")
+        metadata = image_generation_metadata(result, payload["model"], data)
         output.parent.mkdir(parents=True, exist_ok=True)
-        with output.open("xb") as stream:
-            stream.write(data)
-        print(f"Image saved ({len(data)} bytes).")
+        try:
+            with metadata_path.open("x") as stream:
+                json.dump(metadata, stream, indent=2, allow_nan=False)
+                stream.write("\n")
+            with output.open("xb") as stream:
+                stream.write(data)
+        except OSError:
+            raise MotionError("Image generation completed, but local output could not be fully saved. Check the PNG and .generation.json; do not resubmit automatically.") from None
+        print(f"Image saved ({len(data)} bytes); sanitized usage metadata saved. No automatic retry.")
         return
     job_path = Path(args.job) if args.job else output.with_suffix(".job.json")
     no_overwrite(job_path)

@@ -26,3 +26,7 @@ dist-ssr
 # Generated motion-review artifacts (Playwright webm/mp4/gif + frame sequences + audits)
 tools/out/
 motion-audit/
+
+# Reproducible copies of the published Oil Motion media.
+motion-studies/openrouter-experiments/*/build/compiled/final/
+motion-studies/openrouter-experiments/*/build/compiled/frame-preparation/

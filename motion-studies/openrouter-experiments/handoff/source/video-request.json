@@ -1,0 +1,24 @@
+{
+  "model": "google/veo-3.1-lite",
+  "prompt": "A single continuous four-second miniature industrial robot action between the supplied exact first and final frames. The SAME orange robot arm with white circular joints uses its SAME black two-finger parallel gripper to pick up the ONE cardboard parcel. The end effector lowers slightly, the two rigid fingers close against opposite sides of the box, then the arm lifts the parcel gently five centimeters into the exact final pose. Once gripping, the box stays rigidly attached to the gripper with stable physical contact; no floating or slipping. Preserve exact robot link count, joint arrangement, gripper shape, box size and tape markings. The white platform, cobalt route line, white mobile carrier, camera and soft lavender studio lighting remain completely still. Move with precise deliberate mechanical articulation, then settle during the final half-second. No extra arms, fingers, parcels or vehicles, no teleportation, no shape morphing, no cuts, zoom, text, particles or camera motion. Silent.",
+  "duration": 4,
+  "resolution": "720p",
+  "aspect_ratio": "16:9",
+  "generate_audio": false,
+  "frame_images": [
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://raw.githubusercontent.com/Damon-GSY/my_website/0aba11d5500ace613feac8d856ec1d8d96a04103/public/oil-lab/handoff/K0.png"
+      },
+      "frame_type": "first_frame"
+    },
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://raw.githubusercontent.com/Damon-GSY/my_website/0aba11d5500ace613feac8d856ec1d8d96a04103/public/oil-lab/handoff/K1.png"
+      },
+      "frame_type": "last_frame"
+    }
+  ]
+}

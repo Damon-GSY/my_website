@@ -1,0 +1,39 @@
+{
+  "errors": [],
+  "failed": [],
+  "index": [
+    {
+      "id": "matter",
+      "href": "/oil-lab/matter",
+      "poster": {
+        "src": "http://localhost:4176/oil-lab/matter/poster.webp",
+        "width": 1280,
+        "height": 720
+      }
+    },
+    {
+      "id": "handoff",
+      "href": "/oil-lab/handoff",
+      "poster": {
+        "src": "http://localhost:4176/oil-lab/handoff/poster.webp",
+        "width": 1280,
+        "height": 720
+      }
+    }
+  ],
+  "allOilLinks": [
+    "/oil-lab/matter",
+    "/oil-lab/archive",
+    "/oil-lab/handoff"
+  ],
+  "classic": {
+    "title": "Damon — Agent Systems & AI Research",
+    "heading": "Buildingagentsystemsthatshipevaluate.",
+    "hero": true,
+    "contact": true,
+    "width": 1440,
+    "viewport": 1440,
+    "mainSections": 7
+  },
+  "pass": true
+}

@@ -1,0 +1,146 @@
+{
+  "generatedAt": "2026-10-04T15:46:02.425345+00:00",
+  "description": "Fifteen latest verified Chromium scenarios. Detailed evidence is stored once per study. Corrected desktop reruns supersede the initial harness assertion that mistook an intentionally visible 18px anchor margin for a completely offscreen stage.",
+  "sourceReports": [
+    "/workspace/oil-lab-checks/final-matter-handoff/oil-lab-report.json",
+    "/workspace/oil-lab-checks/final-desktop/oil-lab-report.json",
+    "/workspace/oil-lab-checks/final-archive/oil-lab-report.json"
+  ],
+  "checks": [
+    {
+      "name": "matter: native scrub, reverse, exact frames and layout at 1440\u00d7900",
+      "pass": true,
+      "elapsedMs": 7265,
+      "sourceReport": "/workspace/oil-lab-checks/final-desktop/oil-lab-report.json",
+      "evidenceReport": "../matter/qa/browser-acceptance.json"
+    },
+    {
+      "name": "matter: native scrub, reverse, exact frames and layout at 390\u00d7844",
+      "pass": true,
+      "elapsedMs": 6390,
+      "sourceReport": "/workspace/oil-lab-checks/final-matter-handoff/oil-lab-report.json",
+      "evidenceReport": "../matter/qa/browser-acceptance.json"
+    },
+    {
+      "name": "matter: native scrub, reverse, exact frames and layout at 844\u00d7390",
+      "pass": true,
+      "elapsedMs": 6535,
+      "sourceReport": "/workspace/oil-lab-checks/final-matter-handoff/oil-lab-report.json",
+      "evidenceReport": "../matter/qa/browser-acceptance.json"
+    },
+    {
+      "name": "matter: reduced motion loads only the static artwork and unpins the story",
+      "pass": true,
+      "elapsedMs": 1044,
+      "sourceReport": "/workspace/oil-lab-checks/final-desktop/oil-lab-report.json",
+      "evidenceReport": "../matter/qa/browser-acceptance.json"
+    },
+    {
+      "name": "matter: blocked video reveals its poster and leaves portfolio navigation usable",
+      "pass": true,
+      "elapsedMs": 847,
+      "sourceReport": "/workspace/oil-lab-checks/final-desktop/oil-lab-report.json",
+      "evidenceReport": "../matter/qa/browser-acceptance.json"
+    },
+    {
+      "name": "handoff: native scrub, reverse, exact frames and layout at 1440\u00d7900",
+      "pass": true,
+      "elapsedMs": 6974,
+      "sourceReport": "/workspace/oil-lab-checks/final-desktop/oil-lab-report.json",
+      "evidenceReport": "../handoff/qa/browser-acceptance.json"
+    },
+    {
+      "name": "handoff: native scrub, reverse, exact frames and layout at 390\u00d7844",
+      "pass": true,
+      "elapsedMs": 6414,
+      "sourceReport": "/workspace/oil-lab-checks/final-matter-handoff/oil-lab-report.json",
+      "evidenceReport": "../handoff/qa/browser-acceptance.json"
+    },
+    {
+      "name": "handoff: native scrub, reverse, exact frames and layout at 844\u00d7390",
+      "pass": true,
+      "elapsedMs": 5899,
+      "sourceReport": "/workspace/oil-lab-checks/final-matter-handoff/oil-lab-report.json",
+      "evidenceReport": "../handoff/qa/browser-acceptance.json"
+    },
+    {
+      "name": "handoff: reduced motion loads only the static artwork and unpins the story",
+      "pass": true,
+      "elapsedMs": 1374,
+      "sourceReport": "/workspace/oil-lab-checks/final-desktop/oil-lab-report.json",
+      "evidenceReport": "../handoff/qa/browser-acceptance.json"
+    },
+    {
+      "name": "handoff: blocked video reveals its poster and leaves portfolio navigation usable",
+      "pass": true,
+      "elapsedMs": 1673,
+      "sourceReport": "/workspace/oil-lab-checks/final-desktop/oil-lab-report.json",
+      "evidenceReport": "../handoff/qa/browser-acceptance.json"
+    },
+    {
+      "name": "archive: native scrub, reverse, exact frames and layout at 1440\u00d7900",
+      "pass": true,
+      "elapsedMs": 6993,
+      "sourceReport": "/workspace/oil-lab-checks/final-archive/oil-lab-report.json",
+      "evidenceReport": "../archive/qa/browser-acceptance.json"
+    },
+    {
+      "name": "archive: native scrub, reverse, exact frames and layout at 390\u00d7844",
+      "pass": true,
+      "elapsedMs": 5819,
+      "sourceReport": "/workspace/oil-lab-checks/final-archive/oil-lab-report.json",
+      "evidenceReport": "../archive/qa/browser-acceptance.json"
+    },
+    {
+      "name": "archive: native scrub, reverse, exact frames and layout at 844\u00d7390",
+      "pass": true,
+      "elapsedMs": 5964,
+      "sourceReport": "/workspace/oil-lab-checks/final-archive/oil-lab-report.json",
+      "evidenceReport": "../archive/qa/browser-acceptance.json"
+    },
+    {
+      "name": "archive: reduced motion loads only the static artwork and unpins the story",
+      "pass": true,
+      "elapsedMs": 710,
+      "sourceReport": "/workspace/oil-lab-checks/final-archive/oil-lab-report.json",
+      "evidenceReport": "../archive/qa/browser-acceptance.json"
+    },
+    {
+      "name": "archive: blocked video reveals its poster and leaves portfolio navigation usable",
+      "pass": true,
+      "elapsedMs": 796,
+      "sourceReport": "/workspace/oil-lab-checks/final-archive/oil-lab-report.json",
+      "evidenceReport": "../archive/qa/browser-acceptance.json"
+    }
+  ],
+  "browserErrors": [],
+  "failedResponses": [],
+  "expectedResourceErrors": [
+    {
+      "scenario": "matter-blocked",
+      "type": "console",
+      "message": "Failed to load resource: net::ERR_FAILED"
+    },
+    {
+      "scenario": "handoff-blocked",
+      "type": "console",
+      "message": "Failed to load resource: net::ERR_FAILED"
+    },
+    {
+      "scenario": "matter-blocked",
+      "type": "console",
+      "message": "Failed to load resource: net::ERR_FAILED"
+    },
+    {
+      "scenario": "handoff-blocked",
+      "type": "console",
+      "message": "Failed to load resource: net::ERR_FAILED"
+    },
+    {
+      "scenario": "archive-blocked",
+      "type": "console",
+      "message": "Failed to load resource: net::ERR_FAILED"
+    }
+  ],
+  "pass": true
+}

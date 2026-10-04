@@ -1,0 +1,246 @@
+.oil-site,.oil-gallery { --oil-blue:#0757ed; --oil-paper:#f2f0e6; --oil-ink:#111a23; --oil-lime:#d8fc59; --oil-pad:clamp(22px,5vw,84px); font-family:Arial,Helvetica,sans-serif; -webkit-font-smoothing:antialiased; color:var(--oil-ink); overflow-x:clip; }
+.oil-site { --oil-bg:var(--oil-blue); --oil-fg:var(--oil-paper); --oil-accent:var(--oil-lime); --oil-display:'Anton',Arial,sans-serif; background:var(--oil-paper); }
+.oil-site--archive { --oil-bg:#eeebe3; --oil-fg:#2a302b; --oil-accent:#bb532e; --oil-display:Georgia,'Times New Roman',serif; }
+.oil-site--handoff { --oil-bg:#dcd4ed; --oil-fg:#241c33; --oil-accent:#ed692b; }
+.oil-site *,.oil-gallery *,.oil-site *::before,.oil-gallery *::before { box-sizing:border-box; }
+.oil-site a,.oil-gallery a { color:inherit; text-decoration:none; }
+.oil-site a:focus-visible,.oil-gallery a:focus-visible { outline:2px solid currentColor; outline-offset:6px; }
+.oil-site h1,.oil-site h2,.oil-site h3,.oil-site p,.oil-gallery h1,.oil-gallery h2,.oil-gallery p { margin:0; }
+.oil-site section[id] { scroll-margin-top:18px; }
+.oil-skip { position:fixed; top:12px; left:12px; z-index:100; padding:14px 20px; background:var(--oil-lime); color:var(--oil-ink)!important; transform:translateY(-150%); }
+.oil-skip:focus { transform:none; }
+.oil-story { position:relative; height:300svh; color:var(--oil-fg); background:var(--oil-bg); }
+.oil-stage { position:sticky; top:0; height:100svh; min-height:600px; isolation:isolate; overflow:hidden; background:var(--oil-bg); }
+.oil-site--still .oil-story { height:auto; }
+.oil-site--still .oil-stage { position:relative; }
+.oil-header { position:absolute; top:0; left:0; width:100%; height:89px; z-index:6; display:flex; justify-content:space-between; align-items:center; gap:25px; padding:20px var(--oil-pad); }
+.oil-brand { display:inline-flex; gap:10px; align-items:center; font:800 28px/1 Arial,Helvetica,sans-serif; letter-spacing:-.07em; }
+.oil-brand svg { width:27px; height:27px; color:var(--oil-accent,var(--oil-blue)); stroke-width:3; }
+.oil-header-note { font-size:11px; opacity:.72; }
+.oil-header nav { display:flex; align-items:center; gap:30px; font-size:12px; }
+.oil-header nav a { display:inline-flex; align-items:center; gap:5px; padding-block:10px; }
+.oil-heading { position:absolute; z-index:3; left:var(--oil-pad); top:22%; width:37%; pointer-events:none; }
+.oil-eyebrow { max-width:310px; font-size:9px; text-transform:uppercase; letter-spacing:.115em; line-height:1.6; }
+.oil-heading h1 { margin:24px 0; font:400 clamp(43px,5.65vw,89px)/1.01 var(--oil-display); letter-spacing:-.02em; }
+.oil-heading h1 span { display:block; }
+.oil-introduction { max-width:265px; font-size:clamp(13px,1.15vw,17px); line-height:1.45; letter-spacing:-.015em; }
+.oil-work-link { display:inline-flex; gap:25px; align-items:center; margin-top:24px; border-bottom:1px solid currentColor; padding-bottom:8px; font-size:11px; pointer-events:auto; }
+.oil-artwork { position:absolute; inset:13% 0 16%; z-index:1; pointer-events:none; }
+.oil-media,.oil-poster { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); display:block; width:100%; height:100%; max-width:1280px; max-height:720px; object-fit:contain; }
+.oil-media { opacity:0; }
+.oil-media.is-ready { opacity:1; }
+.oil-poster.is-hidden { visibility:hidden; }
+.oil-states { position:absolute; z-index:3; bottom:8%; right:var(--oil-pad); left:var(--oil-pad); display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:25px; }
+.oil-states>div { display:flex; align-items:flex-start; gap:13px; padding-top:15px; border-top:1px solid currentColor; opacity:.38; }
+.oil-states>div.is-current { opacity:1; }
+.oil-states>div>span { font-size:9px; margin-top:2px; }
+.oil-states strong { font-size:12px; font-weight:500; }
+.oil-states p { margin-top:5px; font-size:10px; line-height:1.4; }
+.oil-scroll-hint { position:absolute; bottom:24px; left:var(--oil-pad); right:var(--oil-pad); display:flex; align-items:center; justify-content:space-between; z-index:3; font-size:9px; opacity:.76; }
+.oil-section-top { display:flex; align-items:center; justify-content:space-between; gap:20px; font-size:9px; text-transform:uppercase; letter-spacing:.1em; }
+.oil-section-top a { display:inline-flex; align-items:center; gap:9px; text-transform:none; letter-spacing:0; font-size:12px; }
+.oil-work { padding:55px var(--oil-pad) 80px; background:var(--oil-paper); }
+.oil-work-heading { display:grid; grid-template-columns:1.7fr 1fr; align-items:end; gap:9%; margin:66px 0 50px; }
+.oil-work h2 { font:400 clamp(43px,5.2vw,88px)/1.03 var(--oil-display); letter-spacing:-.015em; }
+.oil-work h2 span { display:block; }
+.oil-work h2 span:last-child { color:var(--oil-blue); }
+.oil-work-heading>p { max-width:325px; font-size:clamp(16px,1.6vw,22px); line-height:1.4; letter-spacing:-.035em; }
+.oil-project { display:grid; grid-template-columns:.35fr 2fr 38px; gap:30px; padding:33px 0; border-top:1px solid #111a233d; }
+.oil-project:last-child { border-bottom:1px solid #111a233d; }
+.oil-project-number { font:400 clamp(45px,5.5vw,82px)/1 var(--oil-display); color:var(--oil-blue); }
+.oil-kicker { font-size:9px; text-transform:uppercase; letter-spacing:.1em; }
+.oil-project h3 { font-size:clamp(24px,2.7vw,40px); line-height:1.1; letter-spacing:-.04em; font-weight:500; margin:13px 0; }
+.oil-project-summary { max-width:690px; color:#565d60; font-size:14px; line-height:1.55; }
+.oil-tags { display:block; margin-top:21px; font-size:10px; color:#666e74; }
+.oil-project-arrow { align-self:center; justify-self:end; width:29px; height:29px; stroke-width:1.5; }
+.oil-about { padding:54px var(--oil-pad) 50px; background:var(--oil-lime); }
+.oil-about-grid { display:grid; grid-template-columns:1.25fr 1fr; gap:12%; margin:73px 0 56px; }
+.oil-about h2 { font:400 clamp(55px,7.9vw,122px)/.97 var(--oil-display); letter-spacing:-.025em; }
+.oil-about h2 span { display:block; }
+.oil-about-copy { max-width:430px; }
+.oil-about-copy .oil-about-lead { font-size:clamp(24px,2.4vw,36px); line-height:1.12; letter-spacing:-.04em; margin-bottom:25px; }
+.oil-about-copy>p:not(.oil-about-lead) { margin-top:15px; font-size:14px; line-height:1.6; }
+.oil-about-links { display:flex; flex-wrap:wrap; gap:25px; margin-top:27px; }
+.oil-about-links a { display:inline-flex; align-items:center; gap:16px; padding-bottom:8px; border-bottom:1px solid currentColor; font-size:12px; }
+.oil-facts { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:25px; border-top:1px solid #111a235e; padding-top:23px; margin:0; }
+.oil-facts dt { font-size:9px; text-transform:uppercase; letter-spacing:.1em; }
+.oil-facts dd { font-size:clamp(20px,2.2vw,31px); margin:15px 0 0; letter-spacing:-.04em; }
+.oil-contact { padding:53px var(--oil-pad) 0; background:var(--oil-blue); color:var(--oil-paper); }
+.oil-contact h2 { position:relative; font:400 clamp(70px,12.8vw,200px)/1 'Anton',Arial,sans-serif; letter-spacing:-.025em; margin:67px 0 50px; }
+.oil-contact h2>span { color:var(--oil-lime); }
+.oil-contact h2>svg { position:absolute; width:13vw; height:13vw; right:3%; top:7%; color:var(--oil-lime); stroke-width:3; }
+.oil-contact-row { display:flex; justify-content:space-between; align-items:end; gap:25px; margin-bottom:67px; }
+.oil-contact-row>a { display:inline-flex; align-items:center; gap:28px; font-size:clamp(25px,3.1vw,46px); letter-spacing:-.04em; border-bottom:1px solid #ffffff7a; padding-bottom:9px; }
+.oil-contact-row>a svg { width:31px; height:31px; stroke-width:1.5; }
+.oil-contact-row>p { font-size:13px; line-height:1.6; }
+.oil-footer { display:flex; align-items:center; justify-content:space-between; gap:28px; flex-wrap:wrap; border-top:1px solid #ffffff57; padding:27px 0; font-size:10px; }
+.oil-footer>a { display:flex; align-items:center; gap:8px; }
+.oil-footer>div { display:flex; gap:25px; }
+.oil-footer>a:last-child { opacity:.7; }
+
+.oil-site--archive .oil-heading { width:39%; top:26%; }
+.oil-site--archive .oil-heading h1 { font-size:clamp(44px,5.5vw,82px); letter-spacing:-.065em; line-height:1; }
+.oil-site--archive .oil-introduction { max-width:240px; }
+.oil-site--archive .oil-eyebrow { max-width:230px; }
+.oil-site--archive .oil-header { border-bottom:1px solid #2a302b24; }
+.oil-site--archive .oil-work { background:#f8f5ee; }
+.oil-site--archive .oil-work-heading { grid-template-columns:1.3fr 1fr; }
+.oil-site--archive .oil-work h2 { text-transform:none; font-size:clamp(43px,5vw,79px); letter-spacing:-.06em; }
+.oil-site--archive .oil-work h2 span:last-child { color:#8d6349; }
+.oil-site--archive .oil-projects { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:28px; }
+.oil-site--archive .oil-project { display:flex; flex-direction:column; align-items:flex-start; gap:22px; border-bottom:0; }
+.oil-site--archive .oil-project-number { color:#8d6349; font-size:58px; }
+.oil-site--archive .oil-project h3 { font:400 clamp(23px,2.4vw,35px)/1.1 Georgia,serif; letter-spacing:-.04em; }
+.oil-site--archive .oil-project-summary { font-size:13px; }
+.oil-site--archive .oil-project-arrow { align-self:flex-start; margin-top:auto; }
+.oil-site--archive .oil-about { background:#dedbce; }
+.oil-site--archive .oil-about h2 { font-size:clamp(53px,6.8vw,104px); letter-spacing:-.055em; line-height:1; }
+.oil-site--archive .oil-contact { background:#303c32; }
+.oil-site--archive .oil-contact h2 { font-family:Georgia,serif; font-size:clamp(58px,10.5vw,160px); letter-spacing:-.075em; }
+.oil-site--archive .oil-contact h2>span,.oil-site--archive .oil-contact h2>svg { color:#d7c4a4; }
+.oil-site--handoff .oil-heading { width:40%; top:24%; }
+.oil-site--handoff .oil-heading h1 { font-size:clamp(47px,5.7vw,88px); line-height:.99; }
+.oil-site--handoff .oil-work h2 span:last-child,.oil-site--handoff .oil-project-number { color:#bd4915; }
+.oil-site--handoff .oil-about { background:#ee742f; color:#231b29; }
+.oil-site--handoff .oil-contact { background:#241c33; }
+.oil-site--handoff .oil-contact h2>span,.oil-site--handoff .oil-contact h2>svg { color:#dcd4ed; }
+
+.oil-gallery { min-height:100svh; padding:0 var(--oil-pad); background:var(--oil-paper); }
+.oil-gallery>header { display:flex; justify-content:space-between; align-items:center; height:88px; border-bottom:1px solid #111a2338; }
+.oil-gallery>header>a:last-child { display:flex; gap:7px; align-items:center; font-size:12px; }
+.oil-gallery-label { padding-top:60px; font-size:10px; text-transform:uppercase; letter-spacing:.1em; }
+.oil-gallery h1 { margin:29px 0; font:400 clamp(56px,9vw,140px)/.98 'Anton',Arial,sans-serif; letter-spacing:-.025em; }
+.oil-gallery h1 span { color:var(--oil-blue); }
+.oil-gallery-intro { max-width:440px; font-size:17px; line-height:1.45; }
+.oil-gallery-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr)); gap:45px 28px; margin:60px 0 70px; }
+.oil-gallery-card>div { aspect-ratio:16/9; overflow:hidden; background:var(--oil-blue); }
+.oil-gallery-card img { display:block; width:100%; height:100%; object-fit:contain; }
+.oil-gallery-card--archive>div { background:#eeebe3; }
+.oil-gallery-card--handoff>div { background:#dcd4ed; }
+.oil-gallery-card>span { display:block; margin-top:22px; font-size:9px; text-transform:uppercase; letter-spacing:.1em; }
+.oil-gallery-card h2 { display:flex; align-items:start; justify-content:space-between; gap:20px; margin:12px 0; font-size:27px; line-height:1.1; letter-spacing:-.04em; font-weight:500; }
+.oil-gallery-card h2 svg { flex-shrink:0; width:23px; height:23px; }
+.oil-gallery-card>p { max-width:380px; font-size:13px; line-height:1.5; color:#555c63; }
+.oil-gallery>footer { border-top:1px solid #111a2338; padding:25px 0; font-size:10px; }
+@media(hover:hover) and (pointer:fine) {
+  .oil-header nav a:hover,.oil-footer a:hover { text-decoration:underline; text-underline-offset:4px; }
+  .oil-project:hover h3,.oil-project:hover .oil-project-arrow { color:var(--oil-blue); }
+  .oil-gallery-card:hover h2 { color:var(--oil-blue); }
+}
+@media(max-width:1000px) {
+  .oil-header-note { display:none; }
+  .oil-heading { width:42%; }
+  .oil-heading h1 { font-size:5.7vw; }
+  .oil-work-heading { grid-template-columns:1.5fr 1fr; gap:7%; }
+  .oil-work h2 { font-size:5.5vw; }
+  .oil-about-grid { gap:7%; }
+  .oil-site--archive .oil-projects { gap:20px; }
+}
+@media(max-width:700px) {
+  .oil-site,.oil-gallery { --oil-pad:23px; }
+  .oil-stage { min-height:670px; }
+  .oil-header { height:70px; padding-top:19px; padding-bottom:19px; gap:20px; }
+  .oil-brand { font-size:24px; gap:7px; }
+  .oil-brand svg { width:23px; height:23px; }
+  .oil-header nav { gap:17px; font-size:10px; }
+  .oil-header nav svg { display:none; }
+  .oil-heading,.oil-site--archive .oil-heading,.oil-site--handoff .oil-heading { top:13%; width:calc(100% - var(--oil-pad)*2); pointer-events:none; }
+  .oil-eyebrow { font-size:8px; max-width:290px; letter-spacing:.08em; }
+  .oil-heading h1 { font-size:clamp(38px,12vw,71px); margin:15px 0 14px; line-height:.98; }
+  .oil-heading h1 span { display:inline; }
+  .oil-heading h1 span::after { content:' '; }
+  .oil-heading h1 span:last-child { display:block; }
+  .oil-introduction { max-width:260px; font-size:12px; line-height:1.4; }
+  .oil-work-link { font-size:10px; gap:17px; margin-top:15px; padding-bottom:6px; }
+  .oil-artwork { inset:35% 0 18%; }
+  .oil-states { bottom:7%; gap:14px; }
+  .oil-states>div { display:block; padding-top:11px; }
+  .oil-states>div>span { display:none; }
+  .oil-states strong { font-size:10px; }
+  .oil-states p { font-size:8px; line-height:1.45; margin-top:5px; }
+  .oil-scroll-hint { bottom:19px; font-size:8px; }
+  .oil-site--archive .oil-heading h1 { font-size:clamp(44px,12vw,72px); line-height:1; }
+  .oil-site--archive .oil-heading h1 span { display:block; }
+  .oil-site--handoff .oil-heading h1 { font-size:clamp(43px,12.5vw,75px); }
+  .oil-site--handoff .oil-heading h1 span { display:block; }
+  .oil-section-top { font-size:8px; letter-spacing:.075em; gap:15px; }
+  .oil-section-top a { font-size:10px; gap:4px; }
+  .oil-work { padding-top:35px; padding-bottom:45px; }
+  .oil-work-heading,.oil-site--archive .oil-work-heading { display:block; margin:39px 0 32px; }
+  .oil-work h2,.oil-site--archive .oil-work h2 { font-size:clamp(38px,9.6vw,64px); }
+  .oil-work-heading>p { margin-top:23px; max-width:340px; font-size:16px; }
+  .oil-project { grid-template-columns:31px 1fr 19px; gap:12px; padding:27px 0; }
+  .oil-project-number { font-size:35px; }
+  .oil-kicker { font-size:8px; line-height:1.5; letter-spacing:.04em; }
+  .oil-project h3 { font-size:23px; margin:10px 0 12px; line-height:1.14; }
+  .oil-project-summary { font-size:12px; line-height:1.6; }
+  .oil-tags { font-size:8px; margin-top:17px; line-height:1.4; }
+  .oil-project-arrow { width:20px; height:20px; align-self:start; margin-top:22px; }
+  .oil-about { padding-top:35px; padding-bottom:39px; }
+  .oil-about-grid { display:block; margin:43px 0 39px; }
+  .oil-about h2,.oil-site--archive .oil-about h2 { font-size:clamp(50px,13vw,88px); }
+  .oil-about-copy { margin-top:35px; }
+  .oil-about-copy .oil-about-lead { font-size:27px; }
+  .oil-about-copy>p:not(.oil-about-lead) { font-size:13px; }
+  .oil-about-links a { font-size:11px; gap:11px; }
+  .oil-facts { grid-template-columns:1fr; gap:24px; }
+  .oil-facts>div { display:grid; grid-template-columns:95px 1fr; align-items:baseline; gap:15px; }
+  .oil-facts dt { font-size:8px; }
+  .oil-facts dd { margin:0; font-size:22px; }
+  .oil-contact { padding-top:35px; }
+  .oil-contact h2 { font-size:clamp(58px,15vw,102px); margin:45px 0 35px; }
+  .oil-contact h2>svg { right:0; width:12vw; height:12vw; }
+  .oil-contact-row { display:block; margin-bottom:43px; }
+  .oil-contact-row>a { font-size:31px; gap:24px; }
+  .oil-contact-row>a svg { width:24px; height:24px; }
+  .oil-contact-row>p { margin-top:22px; font-size:12px; }
+  .oil-footer { font-size:9px; gap:22px 16px; }
+  .oil-footer>div { gap:17px; }
+  .oil-footer>a:last-child { flex-basis:100%; }
+  .oil-site--archive .oil-projects { display:block; }
+  .oil-site--archive .oil-project { display:grid; grid-template-columns:40px 1fr 20px; gap:15px; }
+  .oil-site--archive .oil-project-number { font-size:38px; }
+  .oil-site--archive .oil-project h3 { font-size:27px; }
+  .oil-site--archive .oil-project-arrow { margin-top:22px; }
+  .oil-site--archive .oil-contact h2 { font-size:clamp(50px,12.8vw,85px); }
+  .oil-gallery>header { height:72px; }
+  .oil-gallery-label { padding-top:40px; font-size:8px; }
+  .oil-gallery h1 { font-size:clamp(45px,11vw,76px); margin:23px 0; }
+  .oil-gallery-intro { font-size:15px; }
+  .oil-gallery-grid { margin:40px 0 50px; }
+}
+@media(max-width:370px) {
+  .oil-site,.oil-gallery { --oil-pad:18px; }
+  .oil-header nav { gap:12px; font-size:9px; }
+  .oil-brand { font-size:22px; }
+  .oil-heading h1 { font-size:38px; }
+  .oil-work h2 { font-size:34px; }
+  .oil-project { grid-template-columns:27px 1fr 16px; gap:10px; }
+  .oil-project-number { font-size:31px; }
+  .oil-project h3 { font-size:21px; }
+  .oil-contact-row>a { font-size:28px; }
+}
+@media(max-height:700px) and (max-width:700px) {
+  .oil-stage { min-height:600px; }
+  .oil-heading { top:13%; }
+  .oil-heading h1 { font-size:clamp(34px,10.8vw,55px); }
+  .oil-introduction { font-size:11px; }
+  .oil-work-link { display:none; }
+  .oil-artwork { inset:39% 0 18%; }
+}
+@media(max-height:550px) and (min-width:701px) {
+  .oil-stage { min-height:390px; }
+  .oil-header { height:58px; padding-block:12px; }
+  .oil-brand { font-size:23px; }
+  .oil-heading,.oil-site--archive .oil-heading,.oil-site--handoff .oil-heading { top:20%; width:38%; }
+  .oil-heading h1,.oil-site--archive .oil-heading h1,.oil-site--handoff .oil-heading h1 { font-size:clamp(32px,7.6svh,43px); margin:11px 0; }
+  .oil-eyebrow { font-size:7px; }
+  .oil-introduction { font-size:10px; max-width:205px; }
+  .oil-work-link { display:none; }
+  .oil-artwork { inset:14% 0 18%; }
+  .oil-states { bottom:7%; gap:19px; }
+  .oil-states>div { padding-top:8px; gap:8px; }
+  .oil-states strong { font-size:9px; }
+  .oil-states p { display:none; }
+  .oil-scroll-hint { bottom:9px; font-size:8px; }
+}

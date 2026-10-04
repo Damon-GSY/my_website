@@ -4,7 +4,13 @@
   "identity_bible": "source/identity-bible.md",
   "parameter_space": "linear",
   "media_access": "random",
-  "gesture_policy": {"unit": "continuous", "inertia": "coalesce", "while_active": "retarget", "boundary": "clamp", "programmatic_navigation": "observe"},
+  "gesture_policy": {
+    "unit": "continuous",
+    "inertia": "coalesce",
+    "while_active": "retarget",
+    "boundary": "clamp",
+    "programmatic_navigation": "observe"
+  },
   "storyboard": [
     "K0: four overlapping folios stand on the same stone surface.",
     "The front folio glides toward the camera and turns 12 degrees, making the second folio visible without moving it.",
@@ -14,15 +20,46 @@
     "K0": "Four upright staggered translucent folios on warm stone; front folio centered-right; left 35 percent clear.",
     "K1": "Same four folios, same scene; only front folio translated toward camera and rotated 12 degrees on vertical axis."
   },
-  "clip_chain": [{"id": "K0-to-K1", "first_frame": "K0", "last_frame": "K1", "planned_seconds": 4, "planned_fps": 24, "planned_frames": 96, "status": "not-generated"}],
+  "clip_chain": [
+    {
+      "id": "K0-to-K1",
+      "first_frame": "K0",
+      "last_frame": "K1",
+      "planned_seconds": 4,
+      "planned_fps": 24,
+      "planned_frames": 96,
+      "status": "accepted-and-browser-verified",
+      "actual_seconds": 4,
+      "actual_fps": 24,
+      "actual_frames": 96,
+      "source": "../pilot/slide.mp4",
+      "request": "video-request-v3.json"
+    }
+  ],
   "rest_state": "Hold current frame when scrolling stops; K0 on entry.",
   "loop": "none",
   "anchor": "fixed-body",
   "scene_continuity": "Keep all folio marks, refractions, ground contact and background lighting coherent.",
   "frame_policy": "native",
   "target_fps": 24,
-  "quality_target": {"source_px": [1280, 720], "max_display_css_px": [1280, 720], "target_dpr": 1, "planned_frames": 96, "scroll_pages": 2, "minimum_frames_per_page": 24, "budget_report": "build/motion-budget.json", "delivery": "baked-video", "controller": "frame-scrub"},
+  "quality_target": {
+    "source_px": [
+      1280,
+      720
+    ],
+    "max_display_css_px": [
+      1280,
+      720
+    ],
+    "target_dpr": 1,
+    "planned_frames": 96,
+    "scroll_pages": 2,
+    "minimum_frames_per_page": 24,
+    "budget_report": "build/motion-budget.json",
+    "delivery": "baked-video",
+    "controller": "frame-scrub"
+  },
   "pixel_dimensions": "1280x720",
-  "reduced_motion": "Show a static K1 frame, with all taxonomy details as ordinary HTML content.",
+  "reduced_motion": "Show a static K0 poster immediately, with all personal-site content in ordinary HTML and no pinned scroll interval.",
   "runtime": "Map two viewport heights of scroll travel to a single 0-4 second clip; reverse by seeking within the same source."
 }

@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "media": "pilot/original.mp4",
+  "decision": "pass",
+  "review_type": "manual visual review",
+  "evidence": [
+    "/workspace/oil-lab-qa/handoff/contact.jpg",
+    "/workspace/oil-lab-qa/handoff/all-frames.jpg",
+    "/tmp/handoff-native-48.png",
+    "/tmp/handoff-native-72.png"
+  ],
+  "findings": [
+    "One orange arm, one parcel, one carrier and the bay remain identifiable throughout the 96 sampled frames.",
+    "The two gripper fingers remain at the parcel sides after closing; the same parcel lifts from the pad without visible detachment, clipping or duplication in the inspected native-size frames.",
+    "The carrier and bay stay fixed; the arm articulates plausibly and the held parcel reaches a stable raised endpoint matching K1.",
+    "The left portion remains open for editable page text, and no readable words or logos appear in the scene."
+  ],
+  "limitations": "This pass covers the visual source motion and its endpoints. Browser scroll scrubbing, reversal, loading and mobile containment require separate runtime verification."
+}

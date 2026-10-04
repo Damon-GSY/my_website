@@ -1,0 +1,112 @@
+{
+  "errors": [],
+  "sites": [
+    {
+      "metrics": {
+        "id": "matter",
+        "control": "frame-scrub",
+        "status": "ready",
+        "progress": 0.8,
+        "targetFrame": 76,
+        "currentFrame": 76,
+        "currentTime": 3.166666,
+        "duration": 4,
+        "fps": 24,
+        "frameCount": 96,
+        "pendingFrame": null,
+        "seeking": false,
+        "seekCount": 23,
+        "lastSeekMs": 9.299999982118607,
+        "animating": false,
+        "visible": true,
+        "hidden": false,
+        "settled": true,
+        "paused": true,
+        "reduced": false,
+        "source": "desktop.mp4",
+        "failure": null
+      },
+      "phases": [
+        "Potential",
+        "Transformation",
+        "Purpose"
+      ]
+    },
+    {
+      "metrics": {
+        "id": "archive",
+        "control": "frame-scrub",
+        "status": "ready",
+        "progress": 0.8,
+        "targetFrame": 76,
+        "currentFrame": 76,
+        "currentTime": 3.166666,
+        "duration": 4,
+        "fps": 24,
+        "frameCount": 96,
+        "pendingFrame": null,
+        "seeking": false,
+        "seekCount": 20,
+        "lastSeekMs": 16.400000005960464,
+        "animating": false,
+        "visible": true,
+        "hidden": false,
+        "settled": true,
+        "paused": true,
+        "reduced": false,
+        "source": "desktop.mp4",
+        "failure": null
+      },
+      "phases": [
+        "Question",
+        "Investigate",
+        "Share"
+      ]
+    },
+    {
+      "metrics": {
+        "id": "handoff",
+        "control": "frame-scrub",
+        "status": "ready",
+        "progress": 0.8,
+        "targetFrame": 76,
+        "currentFrame": 76,
+        "currentTime": 3.166666,
+        "duration": 4,
+        "fps": 24,
+        "frameCount": 96,
+        "pendingFrame": null,
+        "seeking": false,
+        "seekCount": 23,
+        "lastSeekMs": 11.400000005960464,
+        "animating": false,
+        "visible": true,
+        "hidden": false,
+        "settled": true,
+        "paused": true,
+        "reduced": false,
+        "source": "desktop.mp4",
+        "failure": null
+      },
+      "phases": [
+        "Understand",
+        "Act",
+        "Lift"
+      ]
+    }
+  ],
+  "gallery": [
+    {
+      "href": "/oil-lab/matter",
+      "title": "Thinking, taking shape."
+    },
+    {
+      "href": "/oil-lab/archive",
+      "title": "An open research practice."
+    },
+    {
+      "href": "/oil-lab/handoff",
+      "title": "From thinking to doing."
+    }
+  ]
+}

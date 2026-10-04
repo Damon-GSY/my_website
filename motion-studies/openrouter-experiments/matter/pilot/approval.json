@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "passed": true,
+  "approvedAt": "2026-10-04T15:30:40.038527+00:00",
+  "reviewer": "Codex visual and browser review",
+  "continuityMode": "independent",
+  "notes": "All96decodedframesreviewed;connectedchromesurfaceandstablecamera. Scrollforward/reverse/resttested; sourcev1rejectedandretainedseparately. QA/pilot-browser.json holds metrics.",
+  "artifacts": {
+    "conceptContract": {
+      "path": "/workspace/my_website/motion-studies/openrouter-experiments/matter/source/concept-contract.json",
+      "bytes": 1884,
+      "sha256": "54b5df28d6e1150d6e034a88d827aeacced3de0db207740456837a8d1a1c3313"
+    },
+    "firstFrame": {
+      "path": "/workspace/my_website/public/oil-lab/matter/K0.png",
+      "bytes": 1280942,
+      "sha256": "9913b8ff164c85771d12a728ab07150a92d51f401eabe4bb02de0d9fcf35d8c9"
+    },
+    "lastFrame": {
+      "path": "/workspace/my_website/public/oil-lab/matter/K1.png",
+      "bytes": 1405401,
+      "sha256": "7276d7a63b86c5ca6876fd703dcd89b229ca13724da265167e320ed669737cb6"
+    },
+    "pilotVideo": {
+      "path": "/workspace/my_website/motion-studies/openrouter-experiments/matter/pilot/connected.mp4",
+      "bytes": 754009,
+      "sha256": "cd29775a6674e8c2ac2cea6d089d4279a9ab93480702871d1dee87400971a8a1"
+    },
+    "pageEvidence": {
+      "path": "/workspace/my_website/motion-studies/openrouter-experiments/matter/qa/pilot-page.png",
+      "bytes": 421236,
+      "sha256": "57de93707af66f6c304dd8507e5809d6bc0a3e16772d89f47a66accc7e281f16"
+    },
+    "identityBible": {
+      "path": "/workspace/my_website/motion-studies/openrouter-experiments/matter/source/identity-bible.md",
+      "bytes": 808,
+      "sha256": "c8fbe036808d68e53bed63a29d21acd6a34158cb8e7f3b1507e8c56fcff29de7"
+    }
+  }
+}

@@ -4,13 +4,10 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Layout from './components/Layout';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import Hero from './components/Hero';
-import Marquee from './components/Marquee';
 import Capabilities from './components/sections/Capabilities';
 import SystemShowcase from './components/sections/SystemShowcase';
 import Work from './components/sections/Work';
 import Journal from './components/sections/Journal';
-import Contact from './components/sections/Contact';
 import ScrollProgress from './components/ui/scroll-progress';
 import FloatingWindow from './components/FloatingWindow';
 
@@ -29,6 +26,10 @@ const FrameStudies = lazy(() => import('./motion-studies/FrameStudies'));
 const RobotPortfolio = lazy(() => import('./robot/RobotPortfolio'));
 const PreviewIndex = lazy(() => import('./preview/PreviewIndex'));
 const FilmPage = lazy(() => import('./film/FilmPage'));
+const OilLab = lazy(() => import('./oil-lab/OilLab'));
+const Hero = lazy(() => import('./components/Hero'));
+const Marquee = lazy(() => import('./components/Marquee'));
+const Contact = lazy(() => import('./components/sections/Contact'));
 
 const agentOsChapters = [
   { id: 'capabilities', number: '01', shortLabel: 'CAP', label: 'Capabilities' },
@@ -137,6 +138,9 @@ function HomePage() {
 
 export default function App() {
   const location = useLocation();
+  if (location.pathname === '/oil-lab' || location.pathname.startsWith('/oil-lab/')) {
+    return <Suspense fallback={null}><OilLab /></Suspense>;
+  }
   if (location.pathname === '/film') {
     return <Suspense fallback={null}><FilmPage /></Suspense>;
   }

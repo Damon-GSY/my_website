@@ -1,0 +1,24 @@
+{
+  "model": "google/veo-3.1-lite",
+  "prompt": "A quiet museum product shot with a completely locked camera. Four rectangular panes of rigid glass stand upright on a stone base. The front pane SLIDES straight toward the camera by five centimeters, like a rigid drawer on a horizontal rail. One slow monotonic translation from first reference to last reference, ending still. Its top edge stays horizontal and its two side edges stay vertical: all four corners move together at exactly the same speed and stay coplanar. Keep the front face facing the viewer. The glass stays rigid and upright for all four seconds. The rear three panes, their blue diagrams, stone base and lighting are still. No tilting, tipping, hinge, falling, bending, flapping, oscillation or return trip. No new diagonal edges. No change to the glass artwork. No camera motion. Silent.",
+  "duration": 4,
+  "resolution": "720p",
+  "aspect_ratio": "16:9",
+  "generate_audio": false,
+  "frame_images": [
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://raw.githubusercontent.com/Damon-GSY/my_website/0aba11d5500ace613feac8d856ec1d8d96a04103/public/oil-lab/archive/K0.png"
+      },
+      "frame_type": "first_frame"
+    },
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://raw.githubusercontent.com/Damon-GSY/my_website/0aba11d5500ace613feac8d856ec1d8d96a04103/public/oil-lab/archive/K1.png"
+      },
+      "frame_type": "last_frame"
+    }
+  ]
+}

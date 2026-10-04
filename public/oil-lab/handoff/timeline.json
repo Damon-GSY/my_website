@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "fps": 24.0,
+  "frameDuration": 0.041666666666666664,
+  "frameCount": 96,
+  "initialState": "form",
+  "states": [
+    {
+      "id": "form",
+      "frame": 0,
+      "hold": 0.0
+    },
+    {
+      "id": "resolve",
+      "frame": 95,
+      "hold": 3.9583333333333335
+    }
+  ],
+  "segments": [
+    {
+      "id": "form->resolve",
+      "from": "form",
+      "to": "resolve",
+      "sourceFrames": {
+        "start": 0,
+        "hold": 95,
+        "endExclusive": 96
+      },
+      "frames": {
+        "start": 0,
+        "hold": 95,
+        "endExclusive": 96
+      },
+      "start": 0.0,
+      "hold": 3.9583333333333335,
+      "endExclusive": 4.0,
+      "curve": {
+        "type": "constant",
+        "rate": 1.0
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "model": "google/veo-3.1-lite",
+  "prompt": "Fixed-camera continuous liquid-metal deformation from the supplied first frame to the supplied final frame. Exactly ONE unbroken connected chrome body must remain connected throughout every frame. Start with the compact upright pebble. First its LEFT EDGE gently straightens in place while its right outer edge becomes a rounded D-shaped perimeter. Then a dimple appears in the CENTER of the solid object, gradually deepens into a blue opening, and expands into the final D counter. The hole opens INSIDE the same solid object; do not build the D out of separate bars. The continuous top bridge and bottom bridge remain joined to the left and right sides AT ALL TIMES. Nothing detaches, nothing appears from outside, nothing splits into multiple pieces, no floating stripe or rod, no added left spine. Preserve smooth high-surface-tension chrome with plausible flowing reflections and grounded stable contact. The same mass slowly reshapes, never dissolves or crossfades. Static cobalt studio, static camera and light, empty left 35 percent. Movement begins immediately and resolves smoothly to the supplied D during the final second. No cuts, no zoom, no added text, no blur, no flicker, no particles. Silent.",
+  "duration": 4,
+  "resolution": "720p",
+  "aspect_ratio": "16:9",
+  "generate_audio": false,
+  "frame_images": [
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://raw.githubusercontent.com/Damon-GSY/my_website/7219b8bf70ff4a3fd8239accf63ecb825da1decd/public/oil-lab/matter/K0.png"
+      },
+      "frame_type": "first_frame"
+    },
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://raw.githubusercontent.com/Damon-GSY/my_website/7219b8bf70ff4a3fd8239accf63ecb825da1decd/public/oil-lab/matter/K1.png"
+      },
+      "frame_type": "last_frame"
+    }
+  ]
+}

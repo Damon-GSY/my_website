@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "media": "pilot/slide.mp4",
+  "decision": "pass",
+  "review_type": "manual visual review at native 1280x720 resolution",
+  "evidence": [
+    "/workspace/oil-lab-qa/archive-v3/contact.jpg",
+    "/workspace/oil-lab-qa/archive-v3/all-frames.jpg",
+    "pilot/slide.mp4 frames 0, 24, 48, 72 and 95"
+  ],
+  "findings": [
+    "The four folios remain upright, rectangular and individually recognizable throughout the sampled 96-frame clip.",
+    "The front folio moves steadily toward its K1 position while the rear three remain fixed; its bottom edge stays on the plinth without the prior bottom-edge toppling or an extra diagonal sheet.",
+    "The front sheet reaches the intended slightly angled K1 pose and holds; no return to K0 appears before the final frame.",
+    "Blue marks, stone plinth, studio lighting and text-safe left side remain coherent."
+  ],
+  "limitations": "This approval covers source motion. Browser scroll scrubbing, reverse seeking, loading and mobile containment require separate runtime verification."
+}

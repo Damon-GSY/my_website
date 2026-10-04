@@ -1,0 +1,47 @@
+export const oilStudies = [
+  {
+    id: 'matter', available: true, number: '01', name: 'Thinking, taking shape.',
+    eyebrow: 'Damon Guo-Siyi / AI researcher & LLM engineer',
+    headline: ['INTELLIGENCE,', 'TAKING', 'SHAPE.'],
+    introduction: 'I turn research into agent systems that do useful work.',
+    description: 'Liquid chrome becomes a signature. An exploration of intelligence in motion.',
+    workTitle: ['IDEAS ARE GOOD.', 'WORKING IS BETTER.'],
+    aboutTitle: ['A HUMAN', 'IN THE LOOP.'],
+    phases: [
+      { id: 'potential', title: 'Potential', copy: 'Start with a better question.' },
+      { id: 'transformation', title: 'Transformation', copy: 'Give an idea a working form.' },
+      { id: 'purpose', title: 'Purpose', copy: 'Make the result useful.' },
+    ],
+    projectIds: ['supply-chain-agent-system', 'dynamic-tool-resolution-agents', 'multi-turn-agent-evaluation'],
+  },
+  {
+    id: 'archive', available: true, number: '02', name: 'An open research practice.',
+    eyebrow: 'Damon Guo-Siyi / Research, in practice',
+    headline: ['RESEARCH,', 'OPENED UP.'],
+    introduction: 'A working collection of questions, evaluations, and agent systems.',
+    description: 'Translucent research folios unfold into an open, layered archive.',
+    workTitle: ['FROM THE', 'WORKING ARCHIVE.'],
+    aboutTitle: ['ALWAYS', 'ASKING WHY.'],
+    phases: [
+      { id: 'question', title: 'Question', copy: 'Find what is worth understanding.' },
+      { id: 'investigate', title: 'Investigate', copy: 'Make the evidence visible.' },
+      { id: 'share', title: 'Share', copy: 'Keep the research open.' },
+    ],
+    projectIds: ['multi-turn-agent-evaluation', 'supchain-bench', 'visualdeltas'],
+  },
+  {
+    id: 'handoff', available: true, number: '03', name: 'From thinking to doing.',
+    eyebrow: 'Damon Guo-Siyi / Building useful agents',
+    headline: ['FROM THINKING', 'TO DOING.'],
+    introduction: 'Agents become useful when they can act in the world around them.',
+    description: 'A small mechanical handoff. A bigger question about putting AI to work.',
+    workTitle: ['BUILT FOR', 'THE REAL WORLD.'],
+    aboutTitle: ['RESEARCH.', 'THEN REALITY.'],
+    phases: [
+      { id: 'understand', title: 'Understand', copy: 'Know what needs to happen.' },
+      { id: 'act', title: 'Act', copy: 'Connect reasoning with the right tool.' },
+      { id: 'lift', title: 'Lift', copy: 'Turn a plan into a real action.' },
+    ],
+    projectIds: ['supply-chain-agent-system', 'dynamic-tool-resolution-agents', 'supply-chain-domain-llm'],
+  },
+];

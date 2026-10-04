@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "passed": true,
+  "approvedAt": "2026-10-04T15:46:43.877333+00:00",
+  "reviewer": "Codex source and browser reviewers",
+  "continuityMode": "independent",
+  "notes": "Reviewed all 96 frames and native samples: four upright rigid folios, monotonic front-sheet slide. Rejected first two versions. Final browser checks pass on desktop, phone and short viewports, including reverse, exact frames, no autoplay, idle RAF zero, reduced motion and media failure.",
+  "artifacts": {
+    "conceptContract": {
+      "path": "/workspace/my_website/motion-studies/openrouter-experiments/archive/source/concept-contract.json",
+      "bytes": 1804,
+      "sha256": "c5f896179597d45bb511beab27157dc0c4ad9ece45810b7dc08bcb268e0df4b4"
+    },
+    "firstFrame": {
+      "path": "/workspace/my_website/public/oil-lab/archive/K0.png",
+      "bytes": 1663439,
+      "sha256": "07a5604df99bdf22a281d2bee014b82e93fcbfa8580ef341a47d7e490512841a"
+    },
+    "lastFrame": {
+      "path": "/workspace/my_website/public/oil-lab/archive/K1.png",
+      "bytes": 1788837,
+      "sha256": "6bc6707de29f2ce32aaa8ee5229e5717c614e73b1fd46e3b92bb84eb80c83f2a"
+    },
+    "pilotVideo": {
+      "path": "/workspace/my_website/motion-studies/openrouter-experiments/archive/pilot/slide.mp4",
+      "bytes": 1074105,
+      "sha256": "54d6808a14f3b4a014bf7e51b6c355178b6dbdc9b91357571856a5a5917ab216"
+    },
+    "pageEvidence": {
+      "path": "/workspace/my_website/motion-studies/openrouter-experiments/archive/qa/browser-acceptance.json",
+      "bytes": 71953,
+      "sha256": "f331573403acdeda62226c10cfa07956164fc306f526234b0470da58e092f938"
+    },
+    "identityBible": {
+      "path": "/workspace/my_website/motion-studies/openrouter-experiments/archive/source/identity-bible.md",
+      "bytes": 848,
+      "sha256": "12474d113b044fc7f1c0b94a0dde51af3b8c55bec48e0cf1c4e2169ea4214220"
+    }
+  }
+}

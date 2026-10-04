@@ -1,0 +1,24 @@
+{
+  "model": "google/veo-3.1-lite",
+  "prompt": "A single continuous four-second museum product shot between the supplied exact first and final frames. Exactly FOUR thin frosted glass folios, each with the SAME cobalt circle diagram, stand on the SAME warm stone plinth. Only the foremost folio slowly glides forward about fifteen centimeters and gently rotates twelve degrees toward the left, revealing the next pane. The other THREE folios remain absolutely fixed. Keep all four rigid panes present and coherent; no added sheets, no changing symbols, no bending glass, no dissolves. The foreground pane stays grounded on the stone surface while moving; refractions and occlusion must change naturally. Camera, plinth, wall, light and empty left region are locked. Movement begins gently, follows a smooth measured ease, and completely settles during the final half-second. No cuts, zoom, wobble, text, particles or new objects. Silent.",
+  "duration": 4,
+  "resolution": "720p",
+  "aspect_ratio": "16:9",
+  "generate_audio": false,
+  "frame_images": [
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://raw.githubusercontent.com/Damon-GSY/my_website/0aba11d5500ace613feac8d856ec1d8d96a04103/public/oil-lab/archive/K0.png"
+      },
+      "frame_type": "first_frame"
+    },
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://raw.githubusercontent.com/Damon-GSY/my_website/0aba11d5500ace613feac8d856ec1d8d96a04103/public/oil-lab/archive/K1.png"
+      },
+      "frame_type": "last_frame"
+    }
+  ]
+}

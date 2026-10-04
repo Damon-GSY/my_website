@@ -1,0 +1,2667 @@
+{
+  "study": "handoff",
+  "reports": [
+    {
+      "source_report": "/workspace/oil-lab-checks/final-desktop/oil-lab-report.json",
+      "started_at": "2026-10-04T15:41:43.950Z",
+      "checks": [
+        {
+          "name": "handoff: native scrub, reverse, exact frames and layout at 1440\u00d7900",
+          "pass": true,
+          "elapsedMs": 6974,
+          "evidence": {
+            "initial": {
+              "id": "handoff",
+              "control": "frame-scrub",
+              "status": "ready",
+              "progress": 0,
+              "targetFrame": 0,
+              "currentFrame": 0,
+              "currentTime": 0,
+              "duration": 4,
+              "fps": 24,
+              "frameCount": 96,
+              "pendingFrame": null,
+              "seeking": false,
+              "seekCount": 0,
+              "lastSeekMs": 0,
+              "animating": false,
+              "visible": true,
+              "hidden": false,
+              "settled": true,
+              "paused": true,
+              "reduced": false,
+              "source": "desktop.mp4",
+              "failure": null
+            },
+            "samples": [
+              {
+                "label": "start",
+                "geometry": {
+                  "top": 0,
+                  "travel": 1800,
+                  "requestedProgress": 0
+                },
+                "state": {
+                  "id": "handoff",
+                  "control": "frame-scrub",
+                  "status": "ready",
+                  "progress": 0,
+                  "targetFrame": 0,
+                  "currentFrame": 0,
+                  "currentTime": 0,
+                  "duration": 4,
+                  "fps": 24,
+                  "frameCount": 96,
+                  "pendingFrame": null,
+                  "seeking": false,
+                  "seekCount": 4,
+                  "lastSeekMs": 14,
+                  "animating": false,
+                  "visible": true,
+                  "hidden": false,
+                  "settled": true,
+                  "paused": true,
+                  "reduced": false,
+                  "source": "desktop.mp4",
+                  "failure": null
+                },
+                "frame": {
+                  "differenceFromStart": null,
+                  "width": 1280,
+                  "height": 720,
+                  "source": "http://localhost:4176/oil-lab/handoff/desktop.mp4",
+                  "paused": true,
+                  "autoplay": false,
+                  "loop": false,
+                  "controls": false,
+                  "pixelSHA256": "906e2a2c37fb020e9735200b412a9025918d9bd9d45f201877cad93f7e5456e0"
+                },
+                "layout": {
+                  "viewport": [
+                    1440,
+                    900
+                  ],
+                  "documentWidth": 1440,
+                  "stagePosition": "sticky",
+                  "header": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 1440,
+                    "height": 89,
+                    "top": 0,
+                    "bottom": 89,
+                    "left": 0,
+                    "right": 1440
+                  },
+                  "heading": {
+                    "x": 72,
+                    "y": 216,
+                    "width": 576,
+                    "height": 322.921875,
+                    "top": 216,
+                    "bottom": 538.921875,
+                    "left": 72,
+                    "right": 648
+                  },
+                  "title": {
+                    "x": 72,
+                    "y": 254.390625,
+                    "width": 576,
+                    "height": 162.5,
+                    "top": 254.390625,
+                    "bottom": 416.890625,
+                    "left": 72,
+                    "right": 648
+                  },
+                  "artwork": {
+                    "x": 0,
+                    "y": 117,
+                    "width": 1440,
+                    "height": 639,
+                    "top": 117,
+                    "bottom": 756,
+                    "left": 0,
+                    "right": 1440
+                  },
+                  "states": {
+                    "x": 72,
+                    "y": 769,
+                    "width": 1296,
+                    "height": 59,
+                    "top": 769,
+                    "bottom": 828,
+                    "left": 72,
+                    "right": 1368
+                  },
+                  "stage": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 1440,
+                    "height": 900,
+                    "top": 0,
+                    "bottom": 900,
+                    "left": 0,
+                    "right": 1440
+                  }
+                }
+              },
+              {
+                "label": "middle",
+                "geometry": {
+                  "top": 0,
+                  "travel": 1800,
+                  "requestedProgress": 0.5
+                },
+                "state": {
+                  "id": "handoff",
+                  "control": "frame-scrub",
+                  "status": "ready",
+                  "progress": 0.5,
+                  "targetFrame": 48,
+                  "currentFrame": 48,
+                  "currentTime": 2,
+                  "duration": 4,
+                  "fps": 24,
+                  "frameCount": 96,
+                  "pendingFrame": null,
+                  "seeking": false,
+                  "seekCount": 21,
+                  "lastSeekMs": 14.200000017881393,
+                  "animating": false,
+                  "visible": true,
+                  "hidden": false,
+                  "settled": true,
+                  "paused": true,
+                  "reduced": false,
+                  "source": "desktop.mp4",
+                  "failure": null
+                },
+                "frame": {
+                  "differenceFromStart": 2.077847222222222,
+                  "width": 1280,
+                  "height": 720,
+                  "source": "http://localhost:4176/oil-lab/handoff/desktop.mp4",
+                  "paused": true,
+                  "autoplay": false,
+                  "loop": false,
+                  "controls": false,
+                  "pixelSHA256": "58f08e1b4c20e9831ac3642029300b7c62eb5ef2ff189bcd789d7a286f204392"
+                },
+                "layout": {
+                  "viewport": [
+                    1440,
+                    900
+                  ],
+                  "documentWidth": 1440,
+                  "stagePosition": "sticky",
+                  "header": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 1440,
+                    "height": 89,
+                    "top": 0,
+                    "bottom": 89,
+                    "left": 0,
+                    "right": 1440
+                  },
+                  "heading": {
+                    "x": 72,
+                    "y": 216,
+                    "width": 576,
+                    "height": 322.921875,
+                    "top": 216,
+                    "bottom": 538.921875,
+                    "left": 72,
+                    "right": 648
+                  },
+                  "title": {
+                    "x": 72,
+                    "y": 254.390625,
+                    "width": 576,
+                    "height": 162.5,
+                    "top": 254.390625,
+                    "bottom": 416.890625,
+                    "left": 72,
+                    "right": 648
+                  },
+                  "artwork": {
+                    "x": 0,
+                    "y": 117,
+                    "width": 1440,
+                    "height": 639,
+                    "top": 117,
+                    "bottom": 756,
+                    "left": 0,
+                    "right": 1440
+                  },
+                  "states": {
+                    "x": 72,
+                    "y": 769,
+                    "width": 1296,
+                    "height": 59,
+                    "top": 769,
+                    "bottom": 828,
+                    "left": 72,
+                    "right": 1368
+                  },
+                  "stage": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 1440,
+                    "height": 900,
+                    "top": 0,
+                    "bottom": 900,
+                    "left": 0,
+                    "right": 1440
+                  }
+                }
+              },
+              {
+                "label": "finish",
+                "geometry": {
+                  "top": 0,
+                  "travel": 1800,
+                  "requestedProgress": 1
+                },
+                "state": {
+                  "id": "handoff",
+                  "control": "frame-scrub",
+                  "status": "ready",
+                  "progress": 1,
+                  "targetFrame": 95,
+                  "currentFrame": 95,
+                  "currentTime": 3.958333,
+                  "duration": 4,
+                  "fps": 24,
+                  "frameCount": 96,
+                  "pendingFrame": null,
+                  "seeking": false,
+                  "seekCount": 37,
+                  "lastSeekMs": 4.9000000059604645,
+                  "animating": false,
+                  "visible": true,
+                  "hidden": false,
+                  "settled": true,
+                  "paused": true,
+                  "reduced": false,
+                  "source": "desktop.mp4",
+                  "failure": null
+                },
+                "frame": {
+                  "differenceFromStart": 7.119652777777778,
+                  "width": 1280,
+                  "height": 720,
+                  "source": "http://localhost:4176/oil-lab/handoff/desktop.mp4",
+                  "paused": true,
+                  "autoplay": false,
+                  "loop": false,
+                  "controls": false,
+                  "pixelSHA256": "987a728436106878f5e9e438ab5064e1b3620bd9470331b9c70db8b4c7a6268f"
+                },
+                "layout": {
+                  "viewport": [
+                    1440,
+                    900
+                  ],
+                  "documentWidth": 1440,
+                  "stagePosition": "sticky",
+                  "header": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 1440,
+                    "height": 89,
+                    "top": 0,
+                    "bottom": 89,
+                    "left": 0,
+                    "right": 1440
+                  },
+                  "heading": {
+                    "x": 72,
+                    "y": 216,
+                    "width": 576,
+                    "height": 322.921875,
+                    "top": 216,
+                    "bottom": 538.921875,
+                    "left": 72,
+                    "right": 648
+                  },
+                  "title": {
+                    "x": 72,
+                    "y": 254.390625,
+                    "width": 576,
+                    "height": 162.5,
+                    "top": 254.390625,
+                    "bottom": 416.890625,
+                    "left": 72,
+                    "right": 648
+                  },
+                  "artwork": {
+                    "x": 0,
+                    "y": 117,
+                    "width": 1440,
+                    "height": 639,
+                    "top": 117,
+                    "bottom": 756,
+                    "left": 0,
+                    "right": 1440
+                  },
+                  "states": {
+                    "x": 72,
+                    "y": 769,
+                    "width": 1296,
+                    "height": 59,
+                    "top": 769,
+                    "bottom": 828,
+                    "left": 72,
+                    "right": 1368
+                  },
+                  "stage": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 1440,
+                    "height": 900,
+                    "top": 0,
+                    "bottom": 900,
+                    "left": 0,
+                    "right": 1440
+                  }
+                }
+              },
+              {
+                "label": "reverse",
+                "geometry": {
+                  "top": 0,
+                  "travel": 1800,
+                  "requestedProgress": 0.2
+                },
+                "state": {
+                  "id": "handoff",
+                  "control": "frame-scrub",
+                  "status": "ready",
+                  "progress": 0.2,
+                  "targetFrame": 19,
+                  "currentFrame": 19,
+                  "currentTime": 0.791666,
+                  "duration": 4,
+                  "fps": 24,
+                  "frameCount": 96,
+                  "pendingFrame": null,
+                  "seeking": false,
+                  "seekCount": 60,
+                  "lastSeekMs": 10.100000023841858,
+                  "animating": false,
+                  "visible": true,
+                  "hidden": false,
+                  "settled": true,
+                  "paused": true,
+                  "reduced": false,
+                  "source": "desktop.mp4",
+                  "failure": null
+                },
+                "frame": {
+                  "differenceFromStart": 2.1011342592592595,
+                  "width": 1280,
+                  "height": 720,
+                  "source": "http://localhost:4176/oil-lab/handoff/desktop.mp4",
+                  "paused": true,
+                  "autoplay": false,
+                  "loop": false,
+                  "controls": false,
+                  "pixelSHA256": "12696c1878bf5959a81f8b68be5fdf16798a6251597d1256afc5766327d04d35"
+                },
+                "layout": {
+                  "viewport": [
+                    1440,
+                    900
+                  ],
+                  "documentWidth": 1440,
+                  "stagePosition": "sticky",
+                  "header": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 1440,
+                    "height": 89,
+                    "top": 0,
+                    "bottom": 89,
+                    "left": 0,
+                    "right": 1440
+                  },
+                  "heading": {
+                    "x": 72,
+                    "y": 216,
+                    "width": 576,
+                    "height": 322.921875,
+                    "top": 216,
+                    "bottom": 538.921875,
+                    "left": 72,
+                    "right": 648
+                  },
+                  "title": {
+                    "x": 72,
+                    "y": 254.390625,
+                    "width": 576,
+                    "height": 162.5,
+                    "top": 254.390625,
+                    "bottom": 416.890625,
+                    "left": 72,
+                    "right": 648
+                  },
+                  "artwork": {
+                    "x": 0,
+                    "y": 117,
+                    "width": 1440,
+                    "height": 639,
+                    "top": 117,
+                    "bottom": 756,
+                    "left": 0,
+                    "right": 1440
+                  },
+                  "states": {
+                    "x": 72,
+                    "y": 769,
+                    "width": 1296,
+                    "height": 59,
+                    "top": 769,
+                    "bottom": 828,
+                    "left": 72,
+                    "right": 1368
+                  },
+                  "stage": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 1440,
+                    "height": 900,
+                    "top": 0,
+                    "bottom": 900,
+                    "left": 0,
+                    "right": 1440
+                  }
+                }
+              }
+            ],
+            "latest": {
+              "id": "handoff",
+              "control": "frame-scrub",
+              "status": "ready",
+              "progress": 0.27,
+              "targetFrame": 26,
+              "currentFrame": 26,
+              "currentTime": 1.083333,
+              "duration": 4,
+              "fps": 24,
+              "frameCount": 96,
+              "pendingFrame": null,
+              "seeking": false,
+              "seekCount": 64,
+              "lastSeekMs": 12.5,
+              "animating": false,
+              "visible": true,
+              "hidden": false,
+              "settled": true,
+              "paused": true,
+              "reduced": false,
+              "source": "desktop.mp4",
+              "failure": null
+            },
+            "latestSeekMs": 132,
+            "idleBefore": {
+              "state": {
+                "id": "handoff",
+                "control": "frame-scrub",
+                "status": "ready",
+                "progress": 0.27,
+                "targetFrame": 26,
+                "currentFrame": 26,
+                "currentTime": 1.083333,
+                "duration": 4,
+                "fps": 24,
+                "frameCount": 96,
+                "pendingFrame": null,
+                "seeking": false,
+                "seekCount": 64,
+                "lastSeekMs": 12.5,
+                "animating": false,
+                "visible": true,
+                "hidden": false,
+                "settled": true,
+                "paused": true,
+                "reduced": false,
+                "source": "desktop.mp4",
+                "failure": null
+              },
+              "probe": {
+                "scheduled": 629,
+                "fired": 628,
+                "cancelled": 2,
+                "pending": 0,
+                "playCalls": 0,
+                "playEvents": 0
+              }
+            },
+            "idleAfter": {
+              "state": {
+                "id": "handoff",
+                "control": "frame-scrub",
+                "status": "ready",
+                "progress": 0.27,
+                "targetFrame": 26,
+                "currentFrame": 26,
+                "currentTime": 1.083333,
+                "duration": 4,
+                "fps": 24,
+                "frameCount": 96,
+                "pendingFrame": null,
+                "seeking": false,
+                "seekCount": 64,
+                "lastSeekMs": 12.5,
+                "animating": false,
+                "visible": true,
+                "hidden": false,
+                "settled": true,
+                "paused": true,
+                "reduced": false,
+                "source": "desktop.mp4",
+                "failure": null
+              },
+              "probe": {
+                "scheduled": 629,
+                "fired": 628,
+                "cancelled": 2,
+                "pending": 0,
+                "playCalls": 0,
+                "playEvents": 0
+              }
+            },
+            "destinations": {
+              "links": [
+                {
+                  "href": "/projects#supply-chain-agent-system",
+                  "text": "01Production AI / AlibabaSupply Chain Agent SystemA risk-tiered multi-turn decision framework for 12 supply-chain scenarios, with progressive confirmations, explicit automation boundaries, and sub-second exception handoff.Agents \u00b7 Supply Chain \u00b7 Production"
+                },
+                {
+                  "href": "/projects#dynamic-tool-resolution-agents",
+                  "text": "02Agentic RL / AlibabaDynamic Tool Resolution AgentsAgentic RL training for ticket-resolution assistants using dynamic tool registration and Meta Tool access to a changing pool of 100+ tools.Agentic RL \u00b7 Tool Use \u00b7 Evaluation"
+                },
+                {
+                  "href": "/projects#supply-chain-domain-llm",
+                  "text": "03Post-Training / AlibabaSupply-Chain Domain LLMEnd-to-end domain LLM training for supply-chain knowledge QA and tool use, combining benchmark design, continual pretraining, SFT, and RL.LLM \u00b7 SFT \u00b7 RL"
+                },
+                {
+                  "href": "/about",
+                  "text": "My story"
+                },
+                {
+                  "href": "/blog",
+                  "text": "Research notes"
+                },
+                {
+                  "href": "mailto:hello@damon.ai",
+                  "text": "hello@damon.ai"
+                },
+                {
+                  "href": "/oil-lab",
+                  "text": "Oil Motion studies"
+                },
+                {
+                  "href": "https://github.com/Damon-GSY",
+                  "text": "GitHub"
+                },
+                {
+                  "href": "https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA",
+                  "text": "YouTube"
+                },
+                {
+                  "href": "/",
+                  "text": "All studies"
+                },
+                {
+                  "href": "https://github.com/oil-oil/oil-motion",
+                  "text": "Made with Oil Motion."
+                }
+              ],
+              "anchors": [
+                {
+                  "href": "#oil-work",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-work",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-about",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-contact",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-work",
+                  "exists": true
+                }
+              ]
+            },
+            "offscreen": {
+              "id": "handoff",
+              "control": "frame-scrub",
+              "status": "ready",
+              "progress": 1,
+              "targetFrame": 95,
+              "currentFrame": 27,
+              "currentTime": 1.125,
+              "duration": 4,
+              "fps": 24,
+              "frameCount": 96,
+              "pendingFrame": 29,
+              "seeking": false,
+              "seekCount": 65,
+              "lastSeekMs": 23.100000023841858,
+              "animating": false,
+              "visible": false,
+              "hidden": false,
+              "settled": false,
+              "paused": true,
+              "reduced": false,
+              "source": "desktop.mp4",
+              "failure": null
+            }
+          }
+        },
+        {
+          "name": "handoff: reduced motion loads only the static artwork and unpins the story",
+          "pass": true,
+          "elapsedMs": 1374,
+          "evidence": {
+            "state": {
+              "id": "handoff",
+              "control": "frame-scrub",
+              "status": "static",
+              "progress": 0,
+              "targetFrame": 0,
+              "currentFrame": 0,
+              "currentTime": 0,
+              "duration": 0,
+              "fps": null,
+              "frameCount": null,
+              "pendingFrame": null,
+              "seeking": false,
+              "seekCount": 0,
+              "lastSeekMs": 0,
+              "animating": false,
+              "visible": true,
+              "hidden": false,
+              "settled": false,
+              "paused": true,
+              "reduced": true,
+              "source": "mobile.mp4",
+              "failure": null
+            },
+            "layout": {
+              "viewport": [
+                390,
+                844
+              ],
+              "documentWidth": 390,
+              "stagePosition": "relative",
+              "header": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 70,
+                "top": 0,
+                "bottom": 70,
+                "left": 0,
+                "right": 390
+              },
+              "heading": {
+                "x": 23,
+                "y": 109.71875,
+                "width": 344,
+                "height": 210.890625,
+                "top": 109.71875,
+                "bottom": 320.609375,
+                "left": 23,
+                "right": 367
+              },
+              "title": {
+                "x": 23,
+                "y": 137.515625,
+                "width": 344,
+                "height": 96.5,
+                "top": 137.515625,
+                "bottom": 234.015625,
+                "left": 23,
+                "right": 367
+              },
+              "artwork": {
+                "x": 0,
+                "y": 295.390625,
+                "width": 390,
+                "height": 396.703125,
+                "top": 295.390625,
+                "bottom": 692.09375,
+                "left": 0,
+                "right": 390
+              },
+              "states": {
+                "x": 23,
+                "y": 720.734375,
+                "width": 344,
+                "height": 64.1875,
+                "top": 720.734375,
+                "bottom": 784.921875,
+                "left": 23,
+                "right": 367
+              },
+              "stage": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 844,
+                "top": 0,
+                "bottom": 844,
+                "left": 0,
+                "right": 390
+              }
+            },
+            "requests": [
+              {
+                "scenario": "handoff-reduced",
+                "url": "http://localhost:4176/oil-lab/handoff/poster.webp",
+                "type": "image"
+              }
+            ],
+            "destinations": {
+              "links": [
+                {
+                  "href": "/projects#supply-chain-agent-system",
+                  "text": "01Production AI / AlibabaSupply Chain Agent SystemA risk-tiered multi-turn decision framework for 12 supply-chain scenarios, with progressive confirmations, explicit automation boundaries, and sub-second exception handoff.Agents \u00b7 Supply Chain \u00b7 Production"
+                },
+                {
+                  "href": "/projects#dynamic-tool-resolution-agents",
+                  "text": "02Agentic RL / AlibabaDynamic Tool Resolution AgentsAgentic RL training for ticket-resolution assistants using dynamic tool registration and Meta Tool access to a changing pool of 100+ tools.Agentic RL \u00b7 Tool Use \u00b7 Evaluation"
+                },
+                {
+                  "href": "/projects#supply-chain-domain-llm",
+                  "text": "03Post-Training / AlibabaSupply-Chain Domain LLMEnd-to-end domain LLM training for supply-chain knowledge QA and tool use, combining benchmark design, continual pretraining, SFT, and RL.LLM \u00b7 SFT \u00b7 RL"
+                },
+                {
+                  "href": "/about",
+                  "text": "My story"
+                },
+                {
+                  "href": "/blog",
+                  "text": "Research notes"
+                },
+                {
+                  "href": "mailto:hello@damon.ai",
+                  "text": "hello@damon.ai"
+                },
+                {
+                  "href": "/oil-lab",
+                  "text": "Oil Motion studies"
+                },
+                {
+                  "href": "https://github.com/Damon-GSY",
+                  "text": "GitHub"
+                },
+                {
+                  "href": "https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA",
+                  "text": "YouTube"
+                },
+                {
+                  "href": "/",
+                  "text": "All studies"
+                },
+                {
+                  "href": "https://github.com/oil-oil/oil-motion",
+                  "text": "Made with Oil Motion."
+                }
+              ],
+              "anchors": [
+                {
+                  "href": "#oil-work",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-work",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-about",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-contact",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-work",
+                  "exists": true
+                }
+              ]
+            },
+            "contactReachable": true
+          }
+        },
+        {
+          "name": "handoff: blocked video reveals its poster and leaves portfolio navigation usable",
+          "pass": true,
+          "elapsedMs": 1673,
+          "evidence": {
+            "state": {
+              "id": "handoff",
+              "control": "frame-scrub",
+              "status": "error",
+              "progress": 0,
+              "targetFrame": 0,
+              "currentFrame": 0,
+              "currentTime": 0,
+              "duration": 0,
+              "fps": 24,
+              "frameCount": 96,
+              "pendingFrame": null,
+              "seeking": false,
+              "seekCount": 0,
+              "lastSeekMs": 0,
+              "animating": false,
+              "visible": true,
+              "hidden": false,
+              "settled": false,
+              "paused": true,
+              "reduced": false,
+              "source": "desktop.mp4",
+              "failure": "The artwork could not be loaded."
+            },
+            "layout": {
+              "viewport": [
+                1440,
+                900
+              ],
+              "documentWidth": 1440,
+              "stagePosition": "relative",
+              "header": {
+                "x": 0,
+                "y": 0,
+                "width": 1440,
+                "height": 89,
+                "top": 0,
+                "bottom": 89,
+                "left": 0,
+                "right": 1440
+              },
+              "heading": {
+                "x": 72,
+                "y": 216,
+                "width": 576,
+                "height": 322.921875,
+                "top": 216,
+                "bottom": 538.921875,
+                "left": 72,
+                "right": 648
+              },
+              "title": {
+                "x": 72,
+                "y": 254.390625,
+                "width": 576,
+                "height": 162.5,
+                "top": 254.390625,
+                "bottom": 416.890625,
+                "left": 72,
+                "right": 648
+              },
+              "artwork": {
+                "x": 0,
+                "y": 117,
+                "width": 1440,
+                "height": 639,
+                "top": 117,
+                "bottom": 756,
+                "left": 0,
+                "right": 1440
+              },
+              "states": {
+                "x": 72,
+                "y": 769,
+                "width": 1296,
+                "height": 59,
+                "top": 769,
+                "bottom": 828,
+                "left": 72,
+                "right": 1368
+              },
+              "stage": {
+                "x": 0,
+                "y": 0,
+                "width": 1440,
+                "height": 900,
+                "top": 0,
+                "bottom": 900,
+                "left": 0,
+                "right": 1440
+              }
+            },
+            "poster": {
+              "width": 1280,
+              "height": 720,
+              "visibility": "visible"
+            },
+            "destinations": {
+              "links": [
+                {
+                  "href": "/projects#supply-chain-agent-system",
+                  "text": "01Production AI / AlibabaSupply Chain Agent SystemA risk-tiered multi-turn decision framework for 12 supply-chain scenarios, with progressive confirmations, explicit automation boundaries, and sub-second exception handoff.Agents \u00b7 Supply Chain \u00b7 Production"
+                },
+                {
+                  "href": "/projects#dynamic-tool-resolution-agents",
+                  "text": "02Agentic RL / AlibabaDynamic Tool Resolution AgentsAgentic RL training for ticket-resolution assistants using dynamic tool registration and Meta Tool access to a changing pool of 100+ tools.Agentic RL \u00b7 Tool Use \u00b7 Evaluation"
+                },
+                {
+                  "href": "/projects#supply-chain-domain-llm",
+                  "text": "03Post-Training / AlibabaSupply-Chain Domain LLMEnd-to-end domain LLM training for supply-chain knowledge QA and tool use, combining benchmark design, continual pretraining, SFT, and RL.LLM \u00b7 SFT \u00b7 RL"
+                },
+                {
+                  "href": "/about",
+                  "text": "My story"
+                },
+                {
+                  "href": "/blog",
+                  "text": "Research notes"
+                },
+                {
+                  "href": "mailto:hello@damon.ai",
+                  "text": "hello@damon.ai"
+                },
+                {
+                  "href": "/oil-lab",
+                  "text": "Oil Motion studies"
+                },
+                {
+                  "href": "https://github.com/Damon-GSY",
+                  "text": "GitHub"
+                },
+                {
+                  "href": "https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA",
+                  "text": "YouTube"
+                },
+                {
+                  "href": "/",
+                  "text": "All studies"
+                },
+                {
+                  "href": "https://github.com/oil-oil/oil-motion",
+                  "text": "Made with Oil Motion."
+                }
+              ],
+              "anchors": [
+                {
+                  "href": "#oil-work",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-work",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-about",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-contact",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-work",
+                  "exists": true
+                }
+              ]
+            },
+            "workReachable": true
+          }
+        }
+      ]
+    },
+    {
+      "source_report": "/workspace/oil-lab-checks/final-matter-handoff/oil-lab-report.json",
+      "started_at": "2026-10-04T15:40:03.260Z",
+      "checks": [
+        {
+          "name": "handoff: native scrub, reverse, exact frames and layout at 390\u00d7844",
+          "pass": true,
+          "elapsedMs": 6414,
+          "evidence": {
+            "initial": {
+              "id": "handoff",
+              "control": "frame-scrub",
+              "status": "ready",
+              "progress": 0,
+              "targetFrame": 0,
+              "currentFrame": 0,
+              "currentTime": 0,
+              "duration": 4,
+              "fps": 24,
+              "frameCount": 96,
+              "pendingFrame": null,
+              "seeking": false,
+              "seekCount": 0,
+              "lastSeekMs": 0,
+              "animating": false,
+              "visible": true,
+              "hidden": false,
+              "settled": true,
+              "paused": true,
+              "reduced": false,
+              "source": "mobile.mp4",
+              "failure": null
+            },
+            "samples": [
+              {
+                "label": "start",
+                "geometry": {
+                  "top": 0,
+                  "travel": 1688,
+                  "requestedProgress": 0
+                },
+                "state": {
+                  "id": "handoff",
+                  "control": "frame-scrub",
+                  "status": "ready",
+                  "progress": 0,
+                  "targetFrame": 0,
+                  "currentFrame": 0,
+                  "currentTime": 0,
+                  "duration": 4,
+                  "fps": 24,
+                  "frameCount": 96,
+                  "pendingFrame": null,
+                  "seeking": false,
+                  "seekCount": 4,
+                  "lastSeekMs": 5.300000011920929,
+                  "animating": false,
+                  "visible": true,
+                  "hidden": false,
+                  "settled": true,
+                  "paused": true,
+                  "reduced": false,
+                  "source": "mobile.mp4",
+                  "failure": null
+                },
+                "frame": {
+                  "differenceFromStart": null,
+                  "width": 720,
+                  "height": 404,
+                  "source": "http://localhost:4176/oil-lab/handoff/mobile.mp4",
+                  "paused": true,
+                  "autoplay": false,
+                  "loop": false,
+                  "controls": false,
+                  "pixelSHA256": "29553b79eb2972bdea305a5110dfb1c838497bcea7e1900b1d44e7395db03098"
+                },
+                "layout": {
+                  "viewport": [
+                    390,
+                    844
+                  ],
+                  "documentWidth": 390,
+                  "stagePosition": "sticky",
+                  "header": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 390,
+                    "height": 70,
+                    "top": 0,
+                    "bottom": 70,
+                    "left": 0,
+                    "right": 390
+                  },
+                  "heading": {
+                    "x": 23,
+                    "y": 109.71875,
+                    "width": 344,
+                    "height": 210.890625,
+                    "top": 109.71875,
+                    "bottom": 320.609375,
+                    "left": 23,
+                    "right": 367
+                  },
+                  "title": {
+                    "x": 23,
+                    "y": 137.515625,
+                    "width": 344,
+                    "height": 96.5,
+                    "top": 137.515625,
+                    "bottom": 234.015625,
+                    "left": 23,
+                    "right": 367
+                  },
+                  "artwork": {
+                    "x": 0,
+                    "y": 295.390625,
+                    "width": 390,
+                    "height": 396.703125,
+                    "top": 295.390625,
+                    "bottom": 692.09375,
+                    "left": 0,
+                    "right": 390
+                  },
+                  "states": {
+                    "x": 23,
+                    "y": 720.734375,
+                    "width": 344,
+                    "height": 64.1875,
+                    "top": 720.734375,
+                    "bottom": 784.921875,
+                    "left": 23,
+                    "right": 367
+                  },
+                  "stage": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 390,
+                    "height": 844,
+                    "top": 0,
+                    "bottom": 844,
+                    "left": 0,
+                    "right": 390
+                  }
+                }
+              },
+              {
+                "label": "middle",
+                "geometry": {
+                  "top": 0,
+                  "travel": 1688,
+                  "requestedProgress": 0.5
+                },
+                "state": {
+                  "id": "handoff",
+                  "control": "frame-scrub",
+                  "status": "ready",
+                  "progress": 0.5,
+                  "targetFrame": 48,
+                  "currentFrame": 48,
+                  "currentTime": 2,
+                  "duration": 4,
+                  "fps": 24,
+                  "frameCount": 96,
+                  "pendingFrame": null,
+                  "seeking": false,
+                  "seekCount": 21,
+                  "lastSeekMs": 4.200000017881393,
+                  "animating": false,
+                  "visible": true,
+                  "hidden": false,
+                  "settled": true,
+                  "paused": true,
+                  "reduced": false,
+                  "source": "mobile.mp4",
+                  "failure": null
+                },
+                "frame": {
+                  "differenceFromStart": 2.1460416666666666,
+                  "width": 720,
+                  "height": 404,
+                  "source": "http://localhost:4176/oil-lab/handoff/mobile.mp4",
+                  "paused": true,
+                  "autoplay": false,
+                  "loop": false,
+                  "controls": false,
+                  "pixelSHA256": "ad6610b4264cd952441a3bded8b979e4e545a3f1ef59bb0e5b66bafdd1c5e4ae"
+                },
+                "layout": {
+                  "viewport": [
+                    390,
+                    844
+                  ],
+                  "documentWidth": 390,
+                  "stagePosition": "sticky",
+                  "header": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 390,
+                    "height": 70,
+                    "top": 0,
+                    "bottom": 70,
+                    "left": 0,
+                    "right": 390
+                  },
+                  "heading": {
+                    "x": 23,
+                    "y": 109.71875,
+                    "width": 344,
+                    "height": 210.890625,
+                    "top": 109.71875,
+                    "bottom": 320.609375,
+                    "left": 23,
+                    "right": 367
+                  },
+                  "title": {
+                    "x": 23,
+                    "y": 137.515625,
+                    "width": 344,
+                    "height": 96.5,
+                    "top": 137.515625,
+                    "bottom": 234.015625,
+                    "left": 23,
+                    "right": 367
+                  },
+                  "artwork": {
+                    "x": 0,
+                    "y": 295.390625,
+                    "width": 390,
+                    "height": 396.703125,
+                    "top": 295.390625,
+                    "bottom": 692.09375,
+                    "left": 0,
+                    "right": 390
+                  },
+                  "states": {
+                    "x": 23,
+                    "y": 720.734375,
+                    "width": 344,
+                    "height": 64.1875,
+                    "top": 720.734375,
+                    "bottom": 784.921875,
+                    "left": 23,
+                    "right": 367
+                  },
+                  "stage": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 390,
+                    "height": 844,
+                    "top": 0,
+                    "bottom": 844,
+                    "left": 0,
+                    "right": 390
+                  }
+                }
+              },
+              {
+                "label": "finish",
+                "geometry": {
+                  "top": 0,
+                  "travel": 1688,
+                  "requestedProgress": 1
+                },
+                "state": {
+                  "id": "handoff",
+                  "control": "frame-scrub",
+                  "status": "ready",
+                  "progress": 1,
+                  "targetFrame": 95,
+                  "currentFrame": 95,
+                  "currentTime": 3.958333,
+                  "duration": 4,
+                  "fps": 24,
+                  "frameCount": 96,
+                  "pendingFrame": null,
+                  "seeking": false,
+                  "seekCount": 37,
+                  "lastSeekMs": 2.5,
+                  "animating": false,
+                  "visible": true,
+                  "hidden": false,
+                  "settled": true,
+                  "paused": true,
+                  "reduced": false,
+                  "source": "mobile.mp4",
+                  "failure": null
+                },
+                "frame": {
+                  "differenceFromStart": 6.816226851851852,
+                  "width": 720,
+                  "height": 404,
+                  "source": "http://localhost:4176/oil-lab/handoff/mobile.mp4",
+                  "paused": true,
+                  "autoplay": false,
+                  "loop": false,
+                  "controls": false,
+                  "pixelSHA256": "2b6fa8554178a0e68719af14093a1c66f7d6bb8f5927862edb4e78eef7f3dbeb"
+                },
+                "layout": {
+                  "viewport": [
+                    390,
+                    844
+                  ],
+                  "documentWidth": 390,
+                  "stagePosition": "sticky",
+                  "header": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 390,
+                    "height": 70,
+                    "top": 0,
+                    "bottom": 70,
+                    "left": 0,
+                    "right": 390
+                  },
+                  "heading": {
+                    "x": 23,
+                    "y": 109.71875,
+                    "width": 344,
+                    "height": 210.890625,
+                    "top": 109.71875,
+                    "bottom": 320.609375,
+                    "left": 23,
+                    "right": 367
+                  },
+                  "title": {
+                    "x": 23,
+                    "y": 137.515625,
+                    "width": 344,
+                    "height": 96.5,
+                    "top": 137.515625,
+                    "bottom": 234.015625,
+                    "left": 23,
+                    "right": 367
+                  },
+                  "artwork": {
+                    "x": 0,
+                    "y": 295.390625,
+                    "width": 390,
+                    "height": 396.703125,
+                    "top": 295.390625,
+                    "bottom": 692.09375,
+                    "left": 0,
+                    "right": 390
+                  },
+                  "states": {
+                    "x": 23,
+                    "y": 720.734375,
+                    "width": 344,
+                    "height": 64.1875,
+                    "top": 720.734375,
+                    "bottom": 784.921875,
+                    "left": 23,
+                    "right": 367
+                  },
+                  "stage": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 390,
+                    "height": 844,
+                    "top": 0,
+                    "bottom": 844,
+                    "left": 0,
+                    "right": 390
+                  }
+                }
+              },
+              {
+                "label": "reverse",
+                "geometry": {
+                  "top": 0,
+                  "travel": 1688,
+                  "requestedProgress": 0.2
+                },
+                "state": {
+                  "id": "handoff",
+                  "control": "frame-scrub",
+                  "status": "ready",
+                  "progress": 0.20023696682464456,
+                  "targetFrame": 19,
+                  "currentFrame": 19,
+                  "currentTime": 0.791666,
+                  "duration": 4,
+                  "fps": 24,
+                  "frameCount": 96,
+                  "pendingFrame": null,
+                  "seeking": false,
+                  "seekCount": 60,
+                  "lastSeekMs": 3.9000000059604645,
+                  "animating": false,
+                  "visible": true,
+                  "hidden": false,
+                  "settled": true,
+                  "paused": true,
+                  "reduced": false,
+                  "source": "mobile.mp4",
+                  "failure": null
+                },
+                "frame": {
+                  "differenceFromStart": 2.183726851851852,
+                  "width": 720,
+                  "height": 404,
+                  "source": "http://localhost:4176/oil-lab/handoff/mobile.mp4",
+                  "paused": true,
+                  "autoplay": false,
+                  "loop": false,
+                  "controls": false,
+                  "pixelSHA256": "ebc282b533715fe2c33cd7dafeeef7a71275558745acffa19522db101bc09cd2"
+                },
+                "layout": {
+                  "viewport": [
+                    390,
+                    844
+                  ],
+                  "documentWidth": 390,
+                  "stagePosition": "sticky",
+                  "header": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 390,
+                    "height": 70,
+                    "top": 0,
+                    "bottom": 70,
+                    "left": 0,
+                    "right": 390
+                  },
+                  "heading": {
+                    "x": 23,
+                    "y": 109.71875,
+                    "width": 344,
+                    "height": 210.890625,
+                    "top": 109.71875,
+                    "bottom": 320.609375,
+                    "left": 23,
+                    "right": 367
+                  },
+                  "title": {
+                    "x": 23,
+                    "y": 137.515625,
+                    "width": 344,
+                    "height": 96.5,
+                    "top": 137.515625,
+                    "bottom": 234.015625,
+                    "left": 23,
+                    "right": 367
+                  },
+                  "artwork": {
+                    "x": 0,
+                    "y": 295.390625,
+                    "width": 390,
+                    "height": 396.703125,
+                    "top": 295.390625,
+                    "bottom": 692.09375,
+                    "left": 0,
+                    "right": 390
+                  },
+                  "states": {
+                    "x": 23,
+                    "y": 720.734375,
+                    "width": 344,
+                    "height": 64.1875,
+                    "top": 720.734375,
+                    "bottom": 784.921875,
+                    "left": 23,
+                    "right": 367
+                  },
+                  "stage": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 390,
+                    "height": 844,
+                    "top": 0,
+                    "bottom": 844,
+                    "left": 0,
+                    "right": 390
+                  }
+                }
+              }
+            ],
+            "latest": {
+              "id": "handoff",
+              "control": "frame-scrub",
+              "status": "ready",
+              "progress": 0.27014218009478674,
+              "targetFrame": 26,
+              "currentFrame": 26,
+              "currentTime": 1.083333,
+              "duration": 4,
+              "fps": 24,
+              "frameCount": 96,
+              "pendingFrame": null,
+              "seeking": false,
+              "seekCount": 66,
+              "lastSeekMs": 4.100000023841858,
+              "animating": false,
+              "visible": true,
+              "hidden": false,
+              "settled": true,
+              "paused": true,
+              "reduced": false,
+              "source": "mobile.mp4",
+              "failure": null
+            },
+            "latestSeekMs": 745,
+            "idleBefore": {
+              "state": {
+                "id": "handoff",
+                "control": "frame-scrub",
+                "status": "ready",
+                "progress": 0.27014218009478674,
+                "targetFrame": 26,
+                "currentFrame": 26,
+                "currentTime": 1.083333,
+                "duration": 4,
+                "fps": 24,
+                "frameCount": 96,
+                "pendingFrame": null,
+                "seeking": false,
+                "seekCount": 66,
+                "lastSeekMs": 4.100000023841858,
+                "animating": false,
+                "visible": true,
+                "hidden": false,
+                "settled": true,
+                "paused": true,
+                "reduced": false,
+                "source": "mobile.mp4",
+                "failure": null
+              },
+              "probe": {
+                "scheduled": 711,
+                "fired": 710,
+                "cancelled": 2,
+                "pending": 0,
+                "playCalls": 0,
+                "playEvents": 0
+              }
+            },
+            "idleAfter": {
+              "state": {
+                "id": "handoff",
+                "control": "frame-scrub",
+                "status": "ready",
+                "progress": 0.27014218009478674,
+                "targetFrame": 26,
+                "currentFrame": 26,
+                "currentTime": 1.083333,
+                "duration": 4,
+                "fps": 24,
+                "frameCount": 96,
+                "pendingFrame": null,
+                "seeking": false,
+                "seekCount": 66,
+                "lastSeekMs": 4.100000023841858,
+                "animating": false,
+                "visible": true,
+                "hidden": false,
+                "settled": true,
+                "paused": true,
+                "reduced": false,
+                "source": "mobile.mp4",
+                "failure": null
+              },
+              "probe": {
+                "scheduled": 711,
+                "fired": 710,
+                "cancelled": 2,
+                "pending": 0,
+                "playCalls": 0,
+                "playEvents": 0
+              }
+            },
+            "destinations": {
+              "links": [
+                {
+                  "href": "/projects#supply-chain-agent-system",
+                  "text": "01Production AI / AlibabaSupply Chain Agent SystemA risk-tiered multi-turn decision framework for 12 supply-chain scenarios, with progressive confirmations, explicit automation boundaries, and sub-second exception handoff.Agents \u00b7 Supply Chain \u00b7 Production"
+                },
+                {
+                  "href": "/projects#dynamic-tool-resolution-agents",
+                  "text": "02Agentic RL / AlibabaDynamic Tool Resolution AgentsAgentic RL training for ticket-resolution assistants using dynamic tool registration and Meta Tool access to a changing pool of 100+ tools.Agentic RL \u00b7 Tool Use \u00b7 Evaluation"
+                },
+                {
+                  "href": "/projects#supply-chain-domain-llm",
+                  "text": "03Post-Training / AlibabaSupply-Chain Domain LLMEnd-to-end domain LLM training for supply-chain knowledge QA and tool use, combining benchmark design, continual pretraining, SFT, and RL.LLM \u00b7 SFT \u00b7 RL"
+                },
+                {
+                  "href": "/about",
+                  "text": "My story"
+                },
+                {
+                  "href": "/blog",
+                  "text": "Research notes"
+                },
+                {
+                  "href": "mailto:hello@damon.ai",
+                  "text": "hello@damon.ai"
+                },
+                {
+                  "href": "/oil-lab",
+                  "text": "Oil Motion studies"
+                },
+                {
+                  "href": "https://github.com/Damon-GSY",
+                  "text": "GitHub"
+                },
+                {
+                  "href": "https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA",
+                  "text": "YouTube"
+                },
+                {
+                  "href": "/",
+                  "text": "All studies"
+                },
+                {
+                  "href": "https://github.com/oil-oil/oil-motion",
+                  "text": "Made with Oil Motion."
+                }
+              ],
+              "anchors": [
+                {
+                  "href": "#oil-work",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-work",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-about",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-contact",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-work",
+                  "exists": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "handoff: native scrub, reverse, exact frames and layout at 844\u00d7390",
+          "pass": true,
+          "elapsedMs": 5899,
+          "evidence": {
+            "initial": {
+              "id": "handoff",
+              "control": "frame-scrub",
+              "status": "ready",
+              "progress": 0,
+              "targetFrame": 0,
+              "currentFrame": 0,
+              "currentTime": 0,
+              "duration": 4,
+              "fps": 24,
+              "frameCount": 96,
+              "pendingFrame": null,
+              "seeking": false,
+              "seekCount": 0,
+              "lastSeekMs": 0,
+              "animating": false,
+              "visible": true,
+              "hidden": false,
+              "settled": true,
+              "paused": true,
+              "reduced": false,
+              "source": "desktop.mp4",
+              "failure": null
+            },
+            "samples": [
+              {
+                "label": "start",
+                "geometry": {
+                  "top": 0,
+                  "travel": 780,
+                  "requestedProgress": 0
+                },
+                "state": {
+                  "id": "handoff",
+                  "control": "frame-scrub",
+                  "status": "ready",
+                  "progress": 0,
+                  "targetFrame": 0,
+                  "currentFrame": 0,
+                  "currentTime": 0,
+                  "duration": 4,
+                  "fps": 24,
+                  "frameCount": 96,
+                  "pendingFrame": null,
+                  "seeking": false,
+                  "seekCount": 8,
+                  "lastSeekMs": 13.799999982118607,
+                  "animating": false,
+                  "visible": true,
+                  "hidden": false,
+                  "settled": true,
+                  "paused": true,
+                  "reduced": false,
+                  "source": "desktop.mp4",
+                  "failure": null
+                },
+                "frame": {
+                  "differenceFromStart": null,
+                  "width": 1280,
+                  "height": 720,
+                  "source": "http://localhost:4176/oil-lab/handoff/desktop.mp4",
+                  "paused": true,
+                  "autoplay": false,
+                  "loop": false,
+                  "controls": false,
+                  "pixelSHA256": "906e2a2c37fb020e9735200b412a9025918d9bd9d45f201877cad93f7e5456e0"
+                },
+                "layout": {
+                  "viewport": [
+                    844,
+                    390
+                  ],
+                  "documentWidth": 844,
+                  "stagePosition": "sticky",
+                  "header": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 844,
+                    "height": 58,
+                    "top": 0,
+                    "bottom": 58,
+                    "left": 0,
+                    "right": 844
+                  },
+                  "heading": {
+                    "x": 42.1875,
+                    "y": 78,
+                    "width": 320.71875,
+                    "height": 125.53125,
+                    "top": 78,
+                    "bottom": 203.53125,
+                    "left": 42.1875,
+                    "right": 362.90625
+                  },
+                  "title": {
+                    "x": 42.1875,
+                    "y": 100.1875,
+                    "width": 320.71875,
+                    "height": 63.34375,
+                    "top": 100.1875,
+                    "bottom": 163.53125,
+                    "left": 42.1875,
+                    "right": 362.90625
+                  },
+                  "artwork": {
+                    "x": 0,
+                    "y": 54.59375,
+                    "width": 844,
+                    "height": 265.21875,
+                    "top": 54.59375,
+                    "bottom": 319.8125,
+                    "left": 0,
+                    "right": 844
+                  },
+                  "states": {
+                    "x": 42.1875,
+                    "y": 329.703125,
+                    "width": 759.625,
+                    "height": 33,
+                    "top": 329.703125,
+                    "bottom": 362.703125,
+                    "left": 42.1875,
+                    "right": 801.8125
+                  },
+                  "stage": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 844,
+                    "height": 390,
+                    "top": 0,
+                    "bottom": 390,
+                    "left": 0,
+                    "right": 844
+                  }
+                }
+              },
+              {
+                "label": "middle",
+                "geometry": {
+                  "top": 0,
+                  "travel": 780,
+                  "requestedProgress": 0.5
+                },
+                "state": {
+                  "id": "handoff",
+                  "control": "frame-scrub",
+                  "status": "ready",
+                  "progress": 0.5,
+                  "targetFrame": 48,
+                  "currentFrame": 48,
+                  "currentTime": 2,
+                  "duration": 4,
+                  "fps": 24,
+                  "frameCount": 96,
+                  "pendingFrame": null,
+                  "seeking": false,
+                  "seekCount": 25,
+                  "lastSeekMs": 11.099999994039536,
+                  "animating": false,
+                  "visible": true,
+                  "hidden": false,
+                  "settled": true,
+                  "paused": true,
+                  "reduced": false,
+                  "source": "desktop.mp4",
+                  "failure": null
+                },
+                "frame": {
+                  "differenceFromStart": 2.077847222222222,
+                  "width": 1280,
+                  "height": 720,
+                  "source": "http://localhost:4176/oil-lab/handoff/desktop.mp4",
+                  "paused": true,
+                  "autoplay": false,
+                  "loop": false,
+                  "controls": false,
+                  "pixelSHA256": "58f08e1b4c20e9831ac3642029300b7c62eb5ef2ff189bcd789d7a286f204392"
+                },
+                "layout": {
+                  "viewport": [
+                    844,
+                    390
+                  ],
+                  "documentWidth": 844,
+                  "stagePosition": "sticky",
+                  "header": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 844,
+                    "height": 58,
+                    "top": 0,
+                    "bottom": 58,
+                    "left": 0,
+                    "right": 844
+                  },
+                  "heading": {
+                    "x": 42.1875,
+                    "y": 78,
+                    "width": 320.71875,
+                    "height": 125.53125,
+                    "top": 78,
+                    "bottom": 203.53125,
+                    "left": 42.1875,
+                    "right": 362.90625
+                  },
+                  "title": {
+                    "x": 42.1875,
+                    "y": 100.1875,
+                    "width": 320.71875,
+                    "height": 63.34375,
+                    "top": 100.1875,
+                    "bottom": 163.53125,
+                    "left": 42.1875,
+                    "right": 362.90625
+                  },
+                  "artwork": {
+                    "x": 0,
+                    "y": 54.59375,
+                    "width": 844,
+                    "height": 265.21875,
+                    "top": 54.59375,
+                    "bottom": 319.8125,
+                    "left": 0,
+                    "right": 844
+                  },
+                  "states": {
+                    "x": 42.1875,
+                    "y": 329.703125,
+                    "width": 759.625,
+                    "height": 33,
+                    "top": 329.703125,
+                    "bottom": 362.703125,
+                    "left": 42.1875,
+                    "right": 801.8125
+                  },
+                  "stage": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 844,
+                    "height": 390,
+                    "top": 0,
+                    "bottom": 390,
+                    "left": 0,
+                    "right": 844
+                  }
+                }
+              },
+              {
+                "label": "finish",
+                "geometry": {
+                  "top": 0,
+                  "travel": 780,
+                  "requestedProgress": 1
+                },
+                "state": {
+                  "id": "handoff",
+                  "control": "frame-scrub",
+                  "status": "ready",
+                  "progress": 1,
+                  "targetFrame": 95,
+                  "currentFrame": 95,
+                  "currentTime": 3.958333,
+                  "duration": 4,
+                  "fps": 24,
+                  "frameCount": 96,
+                  "pendingFrame": null,
+                  "seeking": false,
+                  "seekCount": 41,
+                  "lastSeekMs": 4.9000000059604645,
+                  "animating": false,
+                  "visible": true,
+                  "hidden": false,
+                  "settled": true,
+                  "paused": true,
+                  "reduced": false,
+                  "source": "desktop.mp4",
+                  "failure": null
+                },
+                "frame": {
+                  "differenceFromStart": 7.119652777777778,
+                  "width": 1280,
+                  "height": 720,
+                  "source": "http://localhost:4176/oil-lab/handoff/desktop.mp4",
+                  "paused": true,
+                  "autoplay": false,
+                  "loop": false,
+                  "controls": false,
+                  "pixelSHA256": "987a728436106878f5e9e438ab5064e1b3620bd9470331b9c70db8b4c7a6268f"
+                },
+                "layout": {
+                  "viewport": [
+                    844,
+                    390
+                  ],
+                  "documentWidth": 844,
+                  "stagePosition": "sticky",
+                  "header": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 844,
+                    "height": 58,
+                    "top": 0,
+                    "bottom": 58,
+                    "left": 0,
+                    "right": 844
+                  },
+                  "heading": {
+                    "x": 42.1875,
+                    "y": 78,
+                    "width": 320.71875,
+                    "height": 125.53125,
+                    "top": 78,
+                    "bottom": 203.53125,
+                    "left": 42.1875,
+                    "right": 362.90625
+                  },
+                  "title": {
+                    "x": 42.1875,
+                    "y": 100.1875,
+                    "width": 320.71875,
+                    "height": 63.34375,
+                    "top": 100.1875,
+                    "bottom": 163.53125,
+                    "left": 42.1875,
+                    "right": 362.90625
+                  },
+                  "artwork": {
+                    "x": 0,
+                    "y": 54.59375,
+                    "width": 844,
+                    "height": 265.21875,
+                    "top": 54.59375,
+                    "bottom": 319.8125,
+                    "left": 0,
+                    "right": 844
+                  },
+                  "states": {
+                    "x": 42.1875,
+                    "y": 329.703125,
+                    "width": 759.625,
+                    "height": 33,
+                    "top": 329.703125,
+                    "bottom": 362.703125,
+                    "left": 42.1875,
+                    "right": 801.8125
+                  },
+                  "stage": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 844,
+                    "height": 390,
+                    "top": 0,
+                    "bottom": 390,
+                    "left": 0,
+                    "right": 844
+                  }
+                }
+              },
+              {
+                "label": "reverse",
+                "geometry": {
+                  "top": 0,
+                  "travel": 780,
+                  "requestedProgress": 0.2
+                },
+                "state": {
+                  "id": "handoff",
+                  "control": "frame-scrub",
+                  "status": "ready",
+                  "progress": 0.2,
+                  "targetFrame": 19,
+                  "currentFrame": 19,
+                  "currentTime": 0.791666,
+                  "duration": 4,
+                  "fps": 24,
+                  "frameCount": 96,
+                  "pendingFrame": null,
+                  "seeking": false,
+                  "seekCount": 64,
+                  "lastSeekMs": 11.600000023841858,
+                  "animating": false,
+                  "visible": true,
+                  "hidden": false,
+                  "settled": true,
+                  "paused": true,
+                  "reduced": false,
+                  "source": "desktop.mp4",
+                  "failure": null
+                },
+                "frame": {
+                  "differenceFromStart": 2.1011342592592595,
+                  "width": 1280,
+                  "height": 720,
+                  "source": "http://localhost:4176/oil-lab/handoff/desktop.mp4",
+                  "paused": true,
+                  "autoplay": false,
+                  "loop": false,
+                  "controls": false,
+                  "pixelSHA256": "12696c1878bf5959a81f8b68be5fdf16798a6251597d1256afc5766327d04d35"
+                },
+                "layout": {
+                  "viewport": [
+                    844,
+                    390
+                  ],
+                  "documentWidth": 844,
+                  "stagePosition": "sticky",
+                  "header": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 844,
+                    "height": 58,
+                    "top": 0,
+                    "bottom": 58,
+                    "left": 0,
+                    "right": 844
+                  },
+                  "heading": {
+                    "x": 42.1875,
+                    "y": 78,
+                    "width": 320.71875,
+                    "height": 125.53125,
+                    "top": 78,
+                    "bottom": 203.53125,
+                    "left": 42.1875,
+                    "right": 362.90625
+                  },
+                  "title": {
+                    "x": 42.1875,
+                    "y": 100.1875,
+                    "width": 320.71875,
+                    "height": 63.34375,
+                    "top": 100.1875,
+                    "bottom": 163.53125,
+                    "left": 42.1875,
+                    "right": 362.90625
+                  },
+                  "artwork": {
+                    "x": 0,
+                    "y": 54.59375,
+                    "width": 844,
+                    "height": 265.21875,
+                    "top": 54.59375,
+                    "bottom": 319.8125,
+                    "left": 0,
+                    "right": 844
+                  },
+                  "states": {
+                    "x": 42.1875,
+                    "y": 329.703125,
+                    "width": 759.625,
+                    "height": 33,
+                    "top": 329.703125,
+                    "bottom": 362.703125,
+                    "left": 42.1875,
+                    "right": 801.8125
+                  },
+                  "stage": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 844,
+                    "height": 390,
+                    "top": 0,
+                    "bottom": 390,
+                    "left": 0,
+                    "right": 844
+                  }
+                }
+              }
+            ],
+            "latest": {
+              "id": "handoff",
+              "control": "frame-scrub",
+              "status": "ready",
+              "progress": 0.2705128205128205,
+              "targetFrame": 26,
+              "currentFrame": 26,
+              "currentTime": 1.083333,
+              "duration": 4,
+              "fps": 24,
+              "frameCount": 96,
+              "pendingFrame": null,
+              "seeking": false,
+              "seekCount": 69,
+              "lastSeekMs": 18.5,
+              "animating": false,
+              "visible": true,
+              "hidden": false,
+              "settled": true,
+              "paused": true,
+              "reduced": false,
+              "source": "desktop.mp4",
+              "failure": null
+            },
+            "latestSeekMs": 173,
+            "idleBefore": {
+              "state": {
+                "id": "handoff",
+                "control": "frame-scrub",
+                "status": "ready",
+                "progress": 0.2705128205128205,
+                "targetFrame": 26,
+                "currentFrame": 26,
+                "currentTime": 1.083333,
+                "duration": 4,
+                "fps": 24,
+                "frameCount": 96,
+                "pendingFrame": null,
+                "seeking": false,
+                "seekCount": 69,
+                "lastSeekMs": 18.5,
+                "animating": false,
+                "visible": true,
+                "hidden": false,
+                "settled": true,
+                "paused": true,
+                "reduced": false,
+                "source": "desktop.mp4",
+                "failure": null
+              },
+              "probe": {
+                "scheduled": 649,
+                "fired": 648,
+                "cancelled": 2,
+                "pending": 0,
+                "playCalls": 0,
+                "playEvents": 0
+              }
+            },
+            "idleAfter": {
+              "state": {
+                "id": "handoff",
+                "control": "frame-scrub",
+                "status": "ready",
+                "progress": 0.2705128205128205,
+                "targetFrame": 26,
+                "currentFrame": 26,
+                "currentTime": 1.083333,
+                "duration": 4,
+                "fps": 24,
+                "frameCount": 96,
+                "pendingFrame": null,
+                "seeking": false,
+                "seekCount": 69,
+                "lastSeekMs": 18.5,
+                "animating": false,
+                "visible": true,
+                "hidden": false,
+                "settled": true,
+                "paused": true,
+                "reduced": false,
+                "source": "desktop.mp4",
+                "failure": null
+              },
+              "probe": {
+                "scheduled": 649,
+                "fired": 648,
+                "cancelled": 2,
+                "pending": 0,
+                "playCalls": 0,
+                "playEvents": 0
+              }
+            },
+            "destinations": {
+              "links": [
+                {
+                  "href": "/projects#supply-chain-agent-system",
+                  "text": "01Production AI / AlibabaSupply Chain Agent SystemA risk-tiered multi-turn decision framework for 12 supply-chain scenarios, with progressive confirmations, explicit automation boundaries, and sub-second exception handoff.Agents \u00b7 Supply Chain \u00b7 Production"
+                },
+                {
+                  "href": "/projects#dynamic-tool-resolution-agents",
+                  "text": "02Agentic RL / AlibabaDynamic Tool Resolution AgentsAgentic RL training for ticket-resolution assistants using dynamic tool registration and Meta Tool access to a changing pool of 100+ tools.Agentic RL \u00b7 Tool Use \u00b7 Evaluation"
+                },
+                {
+                  "href": "/projects#supply-chain-domain-llm",
+                  "text": "03Post-Training / AlibabaSupply-Chain Domain LLMEnd-to-end domain LLM training for supply-chain knowledge QA and tool use, combining benchmark design, continual pretraining, SFT, and RL.LLM \u00b7 SFT \u00b7 RL"
+                },
+                {
+                  "href": "/about",
+                  "text": "My story"
+                },
+                {
+                  "href": "/blog",
+                  "text": "Research notes"
+                },
+                {
+                  "href": "mailto:hello@damon.ai",
+                  "text": "hello@damon.ai"
+                },
+                {
+                  "href": "/oil-lab",
+                  "text": "Oil Motion studies"
+                },
+                {
+                  "href": "https://github.com/Damon-GSY",
+                  "text": "GitHub"
+                },
+                {
+                  "href": "https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA",
+                  "text": "YouTube"
+                },
+                {
+                  "href": "/",
+                  "text": "All studies"
+                },
+                {
+                  "href": "https://github.com/oil-oil/oil-motion",
+                  "text": "Made with Oil Motion."
+                }
+              ],
+              "anchors": [
+                {
+                  "href": "#oil-work",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-work",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-about",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-contact",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-work",
+                  "exists": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "handoff: reduced motion loads only the static artwork and unpins the story",
+          "pass": true,
+          "elapsedMs": 720,
+          "evidence": {
+            "state": {
+              "id": "handoff",
+              "control": "frame-scrub",
+              "status": "static",
+              "progress": 0,
+              "targetFrame": 0,
+              "currentFrame": 0,
+              "currentTime": 0,
+              "duration": 0,
+              "fps": null,
+              "frameCount": null,
+              "pendingFrame": null,
+              "seeking": false,
+              "seekCount": 0,
+              "lastSeekMs": 0,
+              "animating": false,
+              "visible": true,
+              "hidden": false,
+              "settled": false,
+              "paused": true,
+              "reduced": true,
+              "source": "mobile.mp4",
+              "failure": null
+            },
+            "layout": {
+              "viewport": [
+                390,
+                844
+              ],
+              "documentWidth": 390,
+              "stagePosition": "relative",
+              "header": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 70,
+                "top": 0,
+                "bottom": 70,
+                "left": 0,
+                "right": 390
+              },
+              "heading": {
+                "x": 23,
+                "y": 109.71875,
+                "width": 344,
+                "height": 210.890625,
+                "top": 109.71875,
+                "bottom": 320.609375,
+                "left": 23,
+                "right": 367
+              },
+              "title": {
+                "x": 23,
+                "y": 137.515625,
+                "width": 344,
+                "height": 96.5,
+                "top": 137.515625,
+                "bottom": 234.015625,
+                "left": 23,
+                "right": 367
+              },
+              "artwork": {
+                "x": 0,
+                "y": 295.390625,
+                "width": 390,
+                "height": 396.703125,
+                "top": 295.390625,
+                "bottom": 692.09375,
+                "left": 0,
+                "right": 390
+              },
+              "states": {
+                "x": 23,
+                "y": 720.734375,
+                "width": 344,
+                "height": 64.1875,
+                "top": 720.734375,
+                "bottom": 784.921875,
+                "left": 23,
+                "right": 367
+              },
+              "stage": {
+                "x": 0,
+                "y": 0,
+                "width": 390,
+                "height": 844,
+                "top": 0,
+                "bottom": 844,
+                "left": 0,
+                "right": 390
+              }
+            },
+            "requests": [
+              {
+                "scenario": "handoff-reduced",
+                "url": "http://localhost:4176/oil-lab/handoff/poster.webp",
+                "type": "image"
+              }
+            ],
+            "destinations": {
+              "links": [
+                {
+                  "href": "/projects#supply-chain-agent-system",
+                  "text": "01Production AI / AlibabaSupply Chain Agent SystemA risk-tiered multi-turn decision framework for 12 supply-chain scenarios, with progressive confirmations, explicit automation boundaries, and sub-second exception handoff.Agents \u00b7 Supply Chain \u00b7 Production"
+                },
+                {
+                  "href": "/projects#dynamic-tool-resolution-agents",
+                  "text": "02Agentic RL / AlibabaDynamic Tool Resolution AgentsAgentic RL training for ticket-resolution assistants using dynamic tool registration and Meta Tool access to a changing pool of 100+ tools.Agentic RL \u00b7 Tool Use \u00b7 Evaluation"
+                },
+                {
+                  "href": "/projects#supply-chain-domain-llm",
+                  "text": "03Post-Training / AlibabaSupply-Chain Domain LLMEnd-to-end domain LLM training for supply-chain knowledge QA and tool use, combining benchmark design, continual pretraining, SFT, and RL.LLM \u00b7 SFT \u00b7 RL"
+                },
+                {
+                  "href": "/about",
+                  "text": "My story"
+                },
+                {
+                  "href": "/blog",
+                  "text": "Research notes"
+                },
+                {
+                  "href": "mailto:hello@damon.ai",
+                  "text": "hello@damon.ai"
+                },
+                {
+                  "href": "/oil-lab",
+                  "text": "Oil Motion studies"
+                },
+                {
+                  "href": "https://github.com/Damon-GSY",
+                  "text": "GitHub"
+                },
+                {
+                  "href": "https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA",
+                  "text": "YouTube"
+                },
+                {
+                  "href": "/",
+                  "text": "All studies"
+                },
+                {
+                  "href": "https://github.com/oil-oil/oil-motion",
+                  "text": "Made with Oil Motion."
+                }
+              ],
+              "anchors": [
+                {
+                  "href": "#oil-work",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-work",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-about",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-contact",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-work",
+                  "exists": true
+                }
+              ]
+            },
+            "contactReachable": true
+          }
+        },
+        {
+          "name": "handoff: blocked video reveals its poster and leaves portfolio navigation usable",
+          "pass": true,
+          "elapsedMs": 777,
+          "evidence": {
+            "state": {
+              "id": "handoff",
+              "control": "frame-scrub",
+              "status": "error",
+              "progress": 0,
+              "targetFrame": 0,
+              "currentFrame": 0,
+              "currentTime": 0,
+              "duration": 0,
+              "fps": 24,
+              "frameCount": 96,
+              "pendingFrame": null,
+              "seeking": false,
+              "seekCount": 0,
+              "lastSeekMs": 0,
+              "animating": false,
+              "visible": true,
+              "hidden": false,
+              "settled": false,
+              "paused": true,
+              "reduced": false,
+              "source": "desktop.mp4",
+              "failure": "The artwork could not be loaded."
+            },
+            "layout": {
+              "viewport": [
+                1440,
+                900
+              ],
+              "documentWidth": 1440,
+              "stagePosition": "relative",
+              "header": {
+                "x": 0,
+                "y": 0,
+                "width": 1440,
+                "height": 89,
+                "top": 0,
+                "bottom": 89,
+                "left": 0,
+                "right": 1440
+              },
+              "heading": {
+                "x": 72,
+                "y": 216,
+                "width": 576,
+                "height": 322.921875,
+                "top": 216,
+                "bottom": 538.921875,
+                "left": 72,
+                "right": 648
+              },
+              "title": {
+                "x": 72,
+                "y": 254.390625,
+                "width": 576,
+                "height": 162.5,
+                "top": 254.390625,
+                "bottom": 416.890625,
+                "left": 72,
+                "right": 648
+              },
+              "artwork": {
+                "x": 0,
+                "y": 117,
+                "width": 1440,
+                "height": 639,
+                "top": 117,
+                "bottom": 756,
+                "left": 0,
+                "right": 1440
+              },
+              "states": {
+                "x": 72,
+                "y": 769,
+                "width": 1296,
+                "height": 59,
+                "top": 769,
+                "bottom": 828,
+                "left": 72,
+                "right": 1368
+              },
+              "stage": {
+                "x": 0,
+                "y": 0,
+                "width": 1440,
+                "height": 900,
+                "top": 0,
+                "bottom": 900,
+                "left": 0,
+                "right": 1440
+              }
+            },
+            "poster": {
+              "width": 1280,
+              "height": 720,
+              "visibility": "visible"
+            },
+            "destinations": {
+              "links": [
+                {
+                  "href": "/projects#supply-chain-agent-system",
+                  "text": "01Production AI / AlibabaSupply Chain Agent SystemA risk-tiered multi-turn decision framework for 12 supply-chain scenarios, with progressive confirmations, explicit automation boundaries, and sub-second exception handoff.Agents \u00b7 Supply Chain \u00b7 Production"
+                },
+                {
+                  "href": "/projects#dynamic-tool-resolution-agents",
+                  "text": "02Agentic RL / AlibabaDynamic Tool Resolution AgentsAgentic RL training for ticket-resolution assistants using dynamic tool registration and Meta Tool access to a changing pool of 100+ tools.Agentic RL \u00b7 Tool Use \u00b7 Evaluation"
+                },
+                {
+                  "href": "/projects#supply-chain-domain-llm",
+                  "text": "03Post-Training / AlibabaSupply-Chain Domain LLMEnd-to-end domain LLM training for supply-chain knowledge QA and tool use, combining benchmark design, continual pretraining, SFT, and RL.LLM \u00b7 SFT \u00b7 RL"
+                },
+                {
+                  "href": "/about",
+                  "text": "My story"
+                },
+                {
+                  "href": "/blog",
+                  "text": "Research notes"
+                },
+                {
+                  "href": "mailto:hello@damon.ai",
+                  "text": "hello@damon.ai"
+                },
+                {
+                  "href": "/oil-lab",
+                  "text": "Oil Motion studies"
+                },
+                {
+                  "href": "https://github.com/Damon-GSY",
+                  "text": "GitHub"
+                },
+                {
+                  "href": "https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA",
+                  "text": "YouTube"
+                },
+                {
+                  "href": "/",
+                  "text": "All studies"
+                },
+                {
+                  "href": "https://github.com/oil-oil/oil-motion",
+                  "text": "Made with Oil Motion."
+                }
+              ],
+              "anchors": [
+                {
+                  "href": "#oil-work",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-work",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-about",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-contact",
+                  "exists": true
+                },
+                {
+                  "href": "#oil-work",
+                  "exists": true
+                }
+              ]
+            },
+            "workReachable": true
+          }
+        }
+      ]
+    }
+  ],
+  "notes": "Desktop rerun clears the intentional 18px anchor scroll margin before testing complete offscreen suspension. Source media unchanged; handoff final phase copy revised to Lift after these motion checks.",
+  "passed": true
+}
