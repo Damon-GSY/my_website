@@ -130,31 +130,37 @@
     h2 { position:absolute; top:max(12.50vh, calc(var(--header-h) + 12px)); font-size:var(--fs-h2); font-weight:400; letter-spacing:-.038em; line-height:1.011; z-index:6; }
     #s2 h2 { left:13.60vw; }
     #s3 h2 { right:15.10vw; text-align:right; }
-    #s4 h2 { left:max(var(--pad), env(safe-area-inset-left)); }
+    #s4 h2 { left:max(var(--pad), env(safe-area-inset-left)); font-size:clamp(34px, 4.8vw, 74px); }
     .note { position:absolute; bottom:calc(3.71vh + env(safe-area-inset-bottom)); font-size:var(--fs-note); font-weight:500; line-height:1.31; letter-spacing:-.02em; color:rgba(255,255,255,.95); z-index:6; touch-action:pan-y; }
     #s2 .note { right:max(var(--pad), env(safe-area-inset-right)); width:22.3vw; min-width:210px; }
     #s3 .note { left:max(var(--pad), env(safe-area-inset-left)); width:21.2vw; min-width:200px; }
-    #steps { position:absolute; left:0; right:0; bottom:calc(2.8vh + env(safe-area-inset-bottom)); z-index:7; padding-left:max(var(--pad), env(safe-area-inset-left)); padding-right:max(var(--pad), env(safe-area-inset-right)); display:grid; grid-template-columns:repeat(5, minmax(0, 1fr)); border-top:1px solid var(--hair); touch-action:pan-x; scrollbar-width:none; }
-    .step { position:relative; padding:17px 15px 33px; height:clamp(168px, 23.9vh, 250px); display:flex; flex-direction:column; overflow-x:hidden; overflow-y:auto; scrollbar-width:none; isolation:isolate; touch-action:auto; }
-    .step + .step { border-left:1px solid var(--hair); }
-    .step::before { content:''; position:absolute; inset:0; background:#fff; transform:translateY(101%); transition:transform .55s var(--ease); z-index:-1; }
-    .step::after { content:''; position:absolute; left:0; bottom:0; width:100%; height:3px; background:#fff; transform:scaleX(0); transform-origin:left; }
-    .step.act::after { animation:stepfill var(--dwell, 4200ms) linear forwards; }
-    @keyframes stepfill { from { transform:scaleX(0); } to { transform:scaleX(1); } }
-    .st-n { align-self:flex-end; font-size:clamp(10px, .90vw, 15px); font-weight:500; color:rgba(255,255,255,.36); }
-    .st-n b { color:#fff; font-weight:500; }
-    .st-t { margin-top:auto; font-size:clamp(15px, 1.46vw, 24px); font-weight:700; letter-spacing:-.04em; }
-    .st-b { margin-top:21px; font-size:clamp(10px, .90vw, 15px); font-weight:500; line-height:1.33; letter-spacing:-.02em; }
-    .st-t a { text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:4px; }
-    .st-t svg { display:inline-block; width:.65em; height:.65em; margin-left:.3em; vertical-align:baseline; }
+    .work-caption { position:absolute; top:max(12.50vh, calc(var(--header-h) + 12px)); right:max(var(--pad), env(safe-area-inset-right)); display:flex; flex-direction:column; align-items:flex-end; gap:13px; color:#9d9bb0; font-size:11px; line-height:1.4; letter-spacing:.04em; z-index:7; }
+    .work-caption a { display:inline-flex; align-items:center; gap:18px; color:#dbd5ff; letter-spacing:-.015em; font-size:13px; padding:8px 0; border-bottom:1px solid #b8acff50; }
+    .work-caption svg { width:12px; height:12px; }
+    #steps { position:absolute; left:0; right:0; bottom:max(18px, env(safe-area-inset-bottom)); z-index:7; padding-left:max(var(--pad), env(safe-area-inset-left)); padding-right:max(var(--pad), env(safe-area-inset-right)); display:grid; grid-template-columns:repeat(5, minmax(0, 1fr)); touch-action:pan-x; scrollbar-width:none; }
+    .step { position:relative; min-width:0; padding:18px 20px; height:clamp(220px, 26vh, 250px); display:grid; grid-template-rows:18px 2.3em minmax(0, 1fr) 22px; row-gap:14px; overflow:hidden; isolation:isolate; border-top:1px solid #b8acff3d; background:linear-gradient(180deg, #b8acff03, #b8acff0b); font-size:clamp(18px, 1.6vw, 26px); touch-action:pan-x; }
+    .step + .step { border-left:1px solid #b8acff24; }
+    .step::before { content:''; position:absolute; inset:0; background:linear-gradient(145deg, #b8acff1c, #b8acff0c); transform:translateY(101%); transition:transform .55s var(--ease); z-index:-1; }
+    .step::after { content:''; position:absolute; left:0; right:0; top:0; height:2px; background:#c5baff; transform:scaleX(0); transform-origin:left; transition:transform .55s var(--ease); }
+    .st-n { display:flex; justify-content:space-between; align-items:center; gap:8px; font-size:9px; font-weight:500; color:#9996ae; letter-spacing:.05em; text-transform:uppercase; white-space:nowrap; }
+    .st-n b { color:#bfb3fa; font-size:12px; font-weight:500; font-variant-numeric:tabular-nums; letter-spacing:.01em; }
+    .st-t { font-size:inherit; line-height:1.15; font-weight:500; letter-spacing:-.04em; color:#f4f2ff; transition:transform .55s var(--ease); }
+    .st-b { max-width:28ch; font-size:clamp(11px, .91vw, 14px); font-weight:400; line-height:1.45; letter-spacing:-.015em; color:#a4a1b5; }
+    .st-link { display:flex; justify-content:space-between; align-items:center; gap:10px; color:#dcd5ff; font-size:11px; font-weight:500; letter-spacing:-.01em; }
+    .st-link svg { width:15px; height:15px; transition:transform .45s var(--ease); }
+    .step:focus-visible { outline:2px solid #d4caff; outline-offset:-3px; }
+    .step:focus-visible::before { transform:translateY(0); }
+    .step:focus-visible::after { transform:scaleX(1); }
+    .step:focus-visible .st-link svg { transform:translate(2px,-2px); }
     .navpill::-webkit-scrollbar, #steps::-webkit-scrollbar, .step::-webkit-scrollbar { display:none; }
     @media (any-pointer:fine) { body, a, button { cursor:none; } }
     @media (any-pointer:coarse) { #cursor, #cursorLabel, .drag-hint { display:none; } #heroGL { pointer-events:none; } }
     @media (hover:hover) and (pointer:fine) {
       .cta:hover .arrow svg, .btnpair:hover .arrow svg { transform:rotate(45deg); }
       .step:hover::before { transform:translateY(0); }
-      .step:hover .st-t, .step:hover .st-b, .step:hover .st-n b { color:#000; }
-      .step:hover .st-n { color:rgba(0,0,0,.40); }
+      .step:hover::after { transform:scaleX(1); }
+      .step:hover .st-t { transform:translateY(-2px); }
+      .step:hover .st-link svg { transform:translate(2px,-2px); }
     }
     @media (max-width:1040px) {
       :root { --nav-h:80px; --pad:20px; --btn-h:40px; --fs-nav:13px; }
@@ -171,10 +177,15 @@
       .note { margin-top:auto; max-height:36%; overflow:auto; }
       #rail { right:max(8px, env(safe-area-inset-right)); height:120px; }
       #steps { position:relative; inset:auto; margin-top:auto; display:flex; overflow-x:auto; flex-shrink:0; scroll-snap-type:x mandatory; scrollbar-width:none; width:calc(100% + 2*var(--pad)); margin-left:calc(-1*var(--pad)); }
-      .step { flex:0 0 min(86vw, 340px); height:auto; scroll-snap-align:start; scroll-snap-stop:always; }
-      .st-n { font-size:12px; }
-      .st-t { font-size:18px; }
-      .st-b { font-size:14px; line-height:1.35; }
+      #steps { scroll-padding-left:var(--pad); scroll-padding-right:var(--pad); }
+      .step { flex:0 0 min(76vw, 300px); height:224px; font-size:24px; scroll-snap-align:start; scroll-snap-stop:always; }
+      .st-n { font-size:9px; }
+      .st-b { font-size:12px; line-height:1.45; }
+      .work-caption { top:calc(var(--header-h) + 12px); font-size:9px; }
+      .work-caption > span { display:none; }
+      .work-caption a { gap:10px; font-size:11px; }
+      #s4 h2 { font-size:clamp(30px, 6.4vw, 52px); max-width:70%; }
+
     }
     @media (max-width:800px) {
       :root { --nav-h:76px; }
@@ -193,16 +204,23 @@
       :root { --fs-hero:clamp(28px, 9.2vw, 56px); --fs-h2:clamp(26px, 8.4vw, 48px); --fs-note:13.5px; --fs-logo:clamp(18px, 5.4vw, 28px); --fs-btn:13px; --dot-pitch:3.5px; }
       #heroAside p { text-align:left; }
     }
-    @media (max-height:640px) { #steps { max-height:48dvh; } .step { max-height:48dvh; } }
+    @media (max-height:640px) { .step { height:196px; padding:14px 16px; row-gap:10px; font-size:20px; } }
     @media (max-height:560px) {
       :root { --fs-hero:clamp(22px, min(7.05vw, 7.2vh), 64px); --fs-h2:clamp(22px, min(6.17vw, 6.4vh), 56px); --fs-note:12.5px; }
       #heroAside { margin-bottom:8px; }
-      .step { padding:8px 10px 14px; }
-      .st-b { margin-top:8px; }
+      #s4 h2 { font-size:clamp(24px, 4vw, 38px); }
+      #s4 h2 .rv { display:inline-block; }
+      #s4 h2 .rv + .rv { margin-left:.2em; }
+      .step { height:156px; padding:12px 15px; grid-template-rows:15px 2.3em minmax(0,1fr) 15px; row-gap:7px; font-size:18px; }
+      .st-b { font-size:10px; line-height:1.35; }
+      .st-n { font-size:8px; }
+      .st-link { font-size:10px; }
+      .st-link svg { width:12px; height:12px; }
+      .work-caption > span { display:none; }
+
     }
     @media (max-height:560px) and (min-width:901px) {
-      .step { height:clamp(110px, 32vh, 180px); padding:8px 10px 16px; }
-      .st-b { margin-top:10px; }
+      .step { height:156px; padding:12px 15px; }
     }
     @media (max-height:560px) and (min-width:1041px) { :root { --nav-h:64px; --btn-h:36px; } .navpill { height:34px; } }
     @media (max-width:1040px) and (max-height:560px) {
@@ -238,7 +256,7 @@
     @media (prefers-reduced-motion:reduce) {
       *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; transition-delay:0ms !important; scroll-behavior:auto !important; }
       .rv > span, .fade { opacity:1; filter:none; transform:none; }
-      .step.act::after { animation:none; }
+      .step::before, .step::after, .st-t, .st-link svg { transition:none; }
     }
   </style>
 </head>
@@ -273,12 +291,13 @@
     </section>
     <section id="s4" class="panel" aria-label="GDamon — research made real." inert>
       <h2><span class="rv">Research,</span><span class="rv" data-d="140">made real.</span></h2>
+      <div class="work-caption"><span>Selected work / Alibaba &amp; beyond</span><a href="/projects">All projects <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
       <div id="steps" aria-label="Selected research and work">
-        <article class="step"><p class="st-n">&lt;p&gt;<b>01</b>&lt;/p&gt;</p><h3 class="st-t"><a href="/projects#supply-chain-agent-system">Agent systems<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></h3><p class="st-b">A risk-tiered decision framework for real supply-chain operations, with progressive confirmations and human handoffs.</p></article>
-        <article class="step"><p class="st-n">&lt;p&gt;<b>02</b>&lt;/p&gt;</p><h3 class="st-t"><a href="/projects#dynamic-tool-resolution-agents">Dynamic tools<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></h3><p class="st-b">Agentic RL and dynamic tool registration, helping agents resolve tasks with a changing pool of more than 100 tools.</p></article>
-        <article class="step"><p class="st-n">&lt;p&gt;<b>03</b>&lt;/p&gt;</p><h3 class="st-t"><a href="/projects#supply-chain-domain-llm">Post-training<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></h3><p class="st-b">From benchmark design to continual pretraining, SFT, and RL: building domain models around measurable capabilities.</p></article>
-        <article class="step"><p class="st-n">&lt;p&gt;<b>04</b>&lt;/p&gt;</p><h3 class="st-t"><a href="/projects#multi-turn-agent-evaluation">Agent evaluation<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></h3><p class="st-b">A multi-turn evaluation taxonomy covering planning, tool use, memory, and judging the steps behind an answer.</p></article>
-        <article class="step"><p class="st-n">&lt;p&gt;<b>05</b>&lt;/p&gt;</p><h3 class="st-t"><a href="/blog">Notes &amp; ideas<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></h3><p class="st-b">Research notes and lessons from deployment. Exploring what it takes to make AI reliable, capable, and useful.</p></article>
+        <a class="step" href="/projects#supply-chain-agent-system"><div class="st-n"><b>01</b><span>Production AI</span></div><h3 class="st-t">Supply-chain<br>agents</h3><p class="st-b">Agent decisions for real operations, with clear human handoffs.</p><span class="st-link">View project<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <a class="step" href="/projects#dynamic-tool-resolution-agents"><div class="st-n"><b>02</b><span>Agentic RL</span></div><h3 class="st-t">Dynamic tool<br>resolution</h3><p class="st-b">Learning to choose the right action from a changing pool of 100+ tools.</p><span class="st-link">View project<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <a class="step" href="/projects#supply-chain-domain-llm"><div class="st-n"><b>03</b><span>Post-training</span></div><h3 class="st-t">Domain<br>post-training</h3><p class="st-b">From domain knowledge to reliable tool use, across SFT and RL.</p><span class="st-link">View project<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <a class="step" href="/projects#multi-turn-agent-evaluation"><div class="st-n"><b>04</b><span>Research</span></div><h3 class="st-t">Agent<br>evaluation</h3><p class="st-b">Evaluating planning, memory, and the steps behind an answer.</p><span class="st-link">View research<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <a class="step" href="/blog"><div class="st-n"><b>05</b><span>Writing</span></div><h3 class="st-t">Notes &amp;<br>ideas</h3><p class="st-b">Field notes on making AI reliable, capable, and useful.</p><span class="st-link">Read the notes<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
       </div>
     </section>
   </main>
@@ -488,23 +507,16 @@
       }
     });
 
-    const steps=$('#steps'), cards=[...steps.children];
-    const DWELL=4200;
-    let activeStep=-1,stepDue=performance.now(),pauseUntil=0;
-    function advanceStep(now) {
-      cards.forEach((card)=>card.classList.remove('act'));
-      activeStep=(activeStep+1)%cards.length;
-      const card=cards[activeStep]; card.style.setProperty('--dwell',`${DWELL}ms`); void card.offsetWidth; card.classList.add('act');
-      if(current===3 && steps.scrollWidth>steps.clientWidth+1) {
-        const padding=parseFloat(getComputedStyle(steps).paddingLeft);
-        steps.scrollTo({left:card.offsetLeft-padding,behavior:reduceMotion.matches?'auto':'smooth'});
+    const steps=$('#steps');
+    steps.addEventListener('focusin',(event) => {
+      const card=event.target.closest('.step');
+      if(!card || steps.scrollWidth<=steps.clientWidth+1) return;
+      const padding=parseFloat(getComputedStyle(steps).paddingLeft);
+      const left=card.offsetLeft-padding;
+      const right=left+card.offsetWidth;
+      if(left<steps.scrollLeft || right>steps.scrollLeft+steps.clientWidth-padding*2) {
+        steps.scrollTo({left,behavior:reduceMotion.matches?'auto':'smooth'});
       }
-      stepDue=now+DWELL;
-    }
-    steps.addEventListener('pointerdown',() => {pauseUntil=performance.now()+12000; stepDue=pauseUntil; cards[activeStep]?.classList.remove('act');});
-    reduceMotion.addEventListener('change',() => {
-      cards.forEach(card=>card.classList.remove('act'));
-      stepDue=performance.now()+DWELL;
     });
 
     function layout() {
@@ -543,7 +555,6 @@
       cursor.style.transform=`translate(${cursorPosition.x}px,${cursorPosition.y}px)`;
       cursor.classList.toggle('dot',overHero||Boolean(runtime.hero?.dragging));
       cursorLabel.style.transform=`translate(${cursorPosition.x}px,${cursorPosition.y}px) translate(-50%,25px)`;
-      if(!reduceMotion.matches && now>=pauseUntil && now>=stepDue) advanceStep(now);
       runtime.hero?.update(now); runtime.stage?.update(now);
       requestAnimationFrame(frame);
     }

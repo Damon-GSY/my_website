@@ -1,3 +1,23 @@
+# Design QA — Scroll websites / Film, KernelCode, Robot
+
+Reviewed 2026-10-04 on `codex/oil-motion-frame-studies`. This revision supersedes the default `/film` player described in the historical entry below.
+
+- `/film` now uses native vertical scrolling to drive typography, real Three.js robot assembly and the particle signature. The scene rests when scrolling stops and reverses when scrolling upward. Website navigation leads into actual project links, biography, research notes and contact. No video, audio, playback controls or download links load on the default route. Reduced motion and unavailable WebGL use a single static hero with readable portfolio content, without the 500svh pinned sequence.
+- `/kernelcode/index.html` has five consistently aligned, whole-card project links with concise copy, categories and clear destinations. Literal HTML-style indices and title underlines were removed. Mobile cards scroll manually without the former automatic advance. The original `reference.html` is unchanged.
+- `/robot` now opens, holds the inspection pose, reassembles, and transitions into the lime work section. One damped progress controls model, copy and background; pointer input is smoothed separately. The previous matching foreground/background colors at the middle of the transition no longer hide the header and copy. The mobile canvas keeps the same width across chapters.
+
+Visual review inspected desktop, portrait phone, 320px phone and short landscape screenshots. It caught and fixed two short-landscape Film collisions: the identity paragraph entering the HELLO wordmark and the robot chapter's title touching ACT. The website composition reserves navigation space and extends only corner colors behind it, avoiding stretched rail artwork. The homepage uses an actual screenshot of the new website and describes its scroll interaction.
+
+**13 browser scenarios pass across the final targeted results:** 7 Film scenarios, 5 Robot scenarios and 1 Kernel scenario covering five viewport sizes (1440×900, 1024×768, 390×844, 844×390, 320×568). Film verifies real native wheel input, exact settled scroll mapping, reversal, stable resting pixels, chapter links, real project destinations, reduced motion and forced WebGL failure. The initial settlement assertion sampled before the asynchronous scroll frame; the harness was corrected to await both the requested progress and `time === targetTime`, then all seven Film scenarios passed. No unexpected browser errors, failed requests or video/audio requests occurred in those website checks.
+
+Kernel's actual particle bounds remain between its heading and cards: approximately 1138×238px on the 1440px desktop, 343×74px on the 390px phone and 286×65px in short landscape. Its mobile scroller remained at 296px after 4.7 seconds, and keyboard focus brought the fifth project into view. Robot checks cover open/hold/reassembly/handoff, reverse scrolling, pause with intentional scrolling, reduced motion, and mobile content/control clearance.
+
+Evidence: `/workspace/scroll-revision/checks/scroll-report.json` for Robot/Kernel, `/workspace/scroll-revision/film-final/scroll-report.json` for the final Film check, and actual screenshots in those directories. The reusable check is `scripts/check-scroll-sites.mjs`; an optional fourth argument selects `film`, `robot`, or `kernel`. Testing used Chromium with software WebGL. Safari and physical-device frame rates were not measured.
+
+The archived player and export API remain available only at `/film?view=player` and `/film?render=1`. Both pass a real-Three.js smoke check at 8.8 seconds; the export frame repeats identically after an arbitrary seek. The index's first card loads the actual 1440×900 website screenshot and has no video element. Evidence is in `/workspace/scroll-revision/index-archive-smoke.json`. `npm run lint`, `npm run build` and `git diff --check` pass; the existing shared Three.js chunk-size advisory remains. No MP4 was generated for this revision. Existing media and prior validation below describe the earlier film release.
+
+---
+
 # Design QA — GDamon / Make it useful
 
 Reviewed 2026-10-04 on `codex/oil-motion-frame-studies`. New route: `/film`, first entry in the unified `/` index.

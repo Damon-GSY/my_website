@@ -7,7 +7,7 @@ const CHAPTER_LENGTH = 6;
 const WIPE_LENGTH = .22;
 
 /** One explicit clock drives the live preview and every exported frame. */
-export function createFilm(canvas) {
+export function createFilm(canvas, { wipeDuration = WIPE_LENGTH } = {}) {
   const ctx = canvas.getContext('2d', { alpha: false });
   if (!ctx) throw new Error('Canvas drawing is unavailable.');
   const chapters = [];
@@ -22,11 +22,25 @@ export function createFilm(canvas) {
   let currentTime = 0;
   let disposed = false;
   let layout;
+  let insetTop = 0, insetBottom = 0;
+  let fullWidth = 0, fullHeight = 0;
+  let layer, layerContext;
+  const wipeLength = clamp(wipeDuration, .01, 2);
 
   function drawChapter(index, localTime) {
-    ctx.save();
-    chapters[index].draw(ctx, localTime, layout);
-    ctx.restore();
+    if (!insetTop && !insetBottom) {
+      ctx.save();
+      chapters[index].draw(ctx, localTime, layout);
+      ctx.restore();
+      return;
+    }
+    layerContext.save();
+    chapters[index].draw(layerContext, localTime, layout);
+    layerContext.restore();
+    // Extend the corner color behind navigation without stretching artwork into the safe area.
+    if (insetTop) ctx.drawImage(layer, 0, 0, 1, 1, 0, 0, fullWidth, insetTop);
+    ctx.drawImage(layer, 0, insetTop);
+    if (insetBottom) ctx.drawImage(layer, 0, layout.height - 1, 1, 1, 0, fullHeight - insetBottom, fullWidth, insetBottom);
   }
 
   function seek(value) {
@@ -39,10 +53,10 @@ export function createFilm(canvas) {
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = 'source-over';
     ctx.filter = 'none';
-    if (index > 0 && localTime < WIPE_LENGTH) {
+    if (index > 0 && localTime < wipeLength) {
       drawChapter(index - 1, CHAPTER_LENGTH);
-      const progress = smooth(localTime / WIPE_LENGTH);
-      const { width: w, height: h } = layout;
+      const progress = smooth(localTime / wipeLength);
+      const w = fullWidth, h = fullHeight;
       ctx.save();
       ctx.beginPath();
       if (layout.portrait) {
@@ -66,13 +80,25 @@ export function createFilm(canvas) {
     return currentTime;
   }
 
-  function setSize(width, height) {
+  function setSize(width, height, insets) {
     if (!Number.isFinite(width) || !Number.isFinite(height)) throw new TypeError('Film size must be finite.');
     const w = Math.round(clamp(width, 64, 4096));
     const h = Math.round(clamp(height, 64, 4096));
+    fullWidth = w; fullHeight = h;
+    if (insets) {
+      insetTop = Math.round(clamp(Number(insets.top) || 0, 0, h * .35));
+      insetBottom = Math.round(clamp(Number(insets.bottom) || 0, 0, h * .35));
+    }
     if (canvas.width !== w) canvas.width = w;
     if (canvas.height !== h) canvas.height = h;
-    layout = { width: w, height: h, portrait: h > w * 1.15, square: Math.abs(w / h - 1) < .15, palette: PALETTE };
+    const contentHeight = h - insetTop - insetBottom;
+    layout = { width: w, height: contentHeight, portrait: contentHeight > w * 1.15, square: Math.abs(w / contentHeight - 1) < .15, palette: PALETTE };
+    if (insetTop || insetBottom) {
+      if (!layer) { layer = document.createElement('canvas'); layerContext = layer.getContext('2d', { alpha: false }); }
+      if (!layerContext) throw new Error('Canvas composition is unavailable.');
+      if (layer.width !== w) layer.width = w;
+      if (layer.height !== contentHeight) layer.height = contentHeight;
+    }
     seek(currentTime);
   }
 
@@ -88,7 +114,7 @@ export function createFilm(canvas) {
     getMetrics() {
       return {
         ready: !disposed, duration: DURATION, time: currentTime,
-        width: layout.width, height: layout.height,
+        width: fullWidth, height: fullHeight, contentHeight: layout.height, insetTop, insetBottom,
         chapter: ['intro', 'robot', 'signature'][Math.min(2, Math.floor(currentTime / CHAPTER_LENGTH))],
         robot: chapters[1].getMetrics?.() || null,
       };
@@ -96,6 +122,7 @@ export function createFilm(canvas) {
     dispose() {
       disposed = true;
       chapters.forEach((chapter) => chapter.dispose?.());
+      if (layer) layer.width = layer.height = 1;
     },
   };
 }

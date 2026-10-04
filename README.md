@@ -4,23 +4,25 @@
 
 Open **`http://localhost:4175/`** after starting `npm run dev -- --host 0.0.0.0 --port 4175`. `/index` and `/index.html` open the same gallery; the older `/html-studies/index.html` directory redirects here.
 
-The eight current directions are Make it useful, GDamon Signature, the continuous Inner Workings film, Hello, human., Matrix, DAMON Signature, Neural, and the original Particle Tree. Each card describes its motion and opens the full experience in a new tab. Film and particle cards play actual rendered previews, with Pause/Play controls. Autoplay pauses offscreen and in background tabs; reduced motion starts with a poster.
+The eight current directions are the GDamon scroll story, GDamon Signature, the continuous Inner Workings film, Hello, human., Matrix, DAMON Signature, Neural, and the original Particle Tree. Each card describes its motion and opens the full experience in a new tab. The scroll story opens a website; selected other cards retain rendered previews with Pause/Play controls. Preview playback pauses offscreen and in background tabs; reduced motion starts with a poster.
 
-## Make it useful — GDamon film
+## Make it useful — a scroll-driven personal website
 
-Open **`http://localhost:4175/film`**, also linked as the first card on `/`. An original 18-second film introduces Damon with kinetic type, opens and reassembles the real Three.js robot, and resolves organized signals into a particle signature. Playback includes seeking, chapter jumps, sound, and separately composed landscape, portrait, and square formats.
+Open **`http://localhost:4175/film`**, also linked as the first card on `/`. Native scrolling advances kinetic typography, a real Three.js robot opening and reassembling, and particles gathering into GDAMON. Scroll upward to reverse the sequence. Chapter navigation jumps through the story; selected projects, biography, writing, and contact continue below it as normal website content.
 
-The same explicit timestamp drives the browser scene and exported MP4 frames. Typography and particles use Canvas 2D; the ceramic character uses the existing Three.js geometry. The score is synthesized locally on a 120 BPM grid. This is code-rendered motion, not an AI video or an interpolated keyframe slideshow. The final second is a deliberate closing hold; the film does not claim a seamless loop.
+The page maps scroll position to the existing deterministic Canvas/Three.js scene, with damping and wider chapter transitions. It has no autoplay clock, audio, video, or player controls. Reduced motion removes the long pinned story; unavailable WebGL uses static artwork and keeps the portfolio readable.
+
+The earlier 18-second player is archived at **`/film?view=player`**. The exporter still uses **`/film?render=1`**; existing MP4 files are retained as earlier studies and are not the default website experience.
 
 See the [shared animation direction](docs/film/ANIMATION_GUIDE.md), [rendering instructions](docs/film/RENDERING.md), and [original reference receipt](reference/motion-code2video-0xmovez/INDEX.txt). The complete supplied article was restored and its SHA-256 verified; its embedded videos were not played or independently validated.
 
-The same page includes the Oil Motion pose studies, original HTML references, and earlier experiments. The index runs no WebGL scenes itself.
+The preview index also includes the Oil Motion pose studies, original HTML references, and earlier experiments. The index runs no WebGL scenes itself.
 
 ## Hello, human. — a Three.js character portfolio
 
 Open **`http://localhost:4175/robot`** for Damon's redesigned robot portfolio. An expressive white ceramic robot sits alongside oversized **HELLO, HUMAN.** typography on cobalt blue. This is a live Three.js sculpture: its head and luminous eyes follow the pointer, it blinks, and **Say hello** triggers a nod.
 
-Scroll, or choose **Meet the system**, to open the ceramic shell and expose the processor and mechanical core. The **Plan / Act / Learn** sequence connects the character to Damon's work on reasoning, tools, and evaluation. **Reassemble** returns to the introduction; **Pause** and **Replay** control the scene, and the page respects reduced-motion preferences.
+Scroll, or choose **Meet the system**, to open the ceramic shell and expose the processor and mechanical core. Continued scrolling holds the open view, reassembles the robot, then blends into the lime **Plan / Act / Learn** section. Model, typography, color, and pointer response follow damped progress. **Reassemble** returns to the introduction; **Pause** and **Replay** control the scene, and the page respects reduced-motion preferences.
 
 The full portfolio continues through cream project panels, a dark navy biography, research notes, and a cobalt contact section. Projects, figures, writing, and destinations come from the existing personal-site data. The gallery uses a screenshot for this version; the character animation runs on `/robot` itself.
 
@@ -29,6 +31,8 @@ The full portfolio continues through cream project panels, a dark navy biography
 Open [`public/kernelcode/index.html`](public/kernelcode/index.html) directly in a browser with an Internet connection, or visit **`/kernelcode/index.html`** on the local preview server. This standalone HTML opens with 11,000 violet points woven into five living ribbons, adapted from the signature particle page. Drag the sculpture to change its orientation. The redesigned navigation highlights the current chapter and collapses into a keyboard-accessible menu on mobile. After the hero, a 30,000-point cloud morphs from an intelligence core sphere into a neural network and then the **GDAMON** signature. Its copy draws on the existing profile's agentic RL, post-training, evaluation, and production agent work.
 
 CSS and JavaScript are inline, with Schibsted Grotesk and Three.js 0.169 loaded from their CDNs; no framework or build step is needed. Wheel, touch, and keyboard input move one screen at a time. The homepage and comparison directory link to this version and the preserved original.
+
+The final section pairs the particle signature with five aligned project links, concise descriptions, and a manual horizontal scroller on mobile. Cards do not advance automatically while you read.
 
 The literal **KernelCode reference** remains at [`public/kernelcode/reference.html`](public/kernelcode/reference.html), or **`/kernelcode/reference.html`** locally. It keeps the original copy, four CloudFront images, draggable voxel `<K>`, and sphere → keyboard photograph → `<K>` particle sequence.
 
@@ -61,7 +65,7 @@ The two pasted-text attachments contain identical Anchor AI documents (SHA-256 `
 
 ## OpenRouter generation pilot
 
-An [OpenRouter / Oil Motion robot pilot](motion-studies/openrouter-pilot/README.md) is prepared with a dedicated image/video API adapter, a character identity reference, a four-second greeting brief, and a verified media budget. Public model discovery works; actual generation is pending the cloud environment's `OPENROUTER_API_KEY` binding; no new AI clip is claimed or added to the gallery yet. The helper reads credentials only at generation time, outside the website bundle.
+An [OpenRouter / Oil Motion robot pilot](motion-studies/openrouter-pilot/README.md) is prepared with a dedicated image/video API adapter, a character identity reference, a four-second greeting brief, and a measured media budget. The cloud environment's `OPEN_ROUTER_KEY` passed a read-only authentication check. No paid generation or new AI clip is claimed; the helper reads credentials outside the website bundle.
 
 ## Oil Motion studies and continuous core film
 

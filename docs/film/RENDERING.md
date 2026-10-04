@@ -1,5 +1,7 @@
 # Rendering GDamon — Make it useful
 
+These instructions cover the archived film player at `/film?view=player` and the export endpoint `/film?render=1`. The default `/film` is now a scroll-driven personal website with no audio/video playback. Its browser regression check is `node scripts/check-scroll-sites.mjs http://localhost:4176 /tmp/gdamon-scroll-review`. Existing MP4 files represent the earlier film release; changing the website does not regenerate them.
+
 The 18-second film uses the actual live Canvas/Three.js scene at explicit timestamps. Each of its three six-second chapters is aligned to the original 120 BPM score. This is code-to-video production, not an AI-generated clip or frame interpolation.
 
 Start the website, then render through its dedicated API. Only run one Chromium capture at a time on the cloud software GPU.

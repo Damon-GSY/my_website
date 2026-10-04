@@ -66,7 +66,7 @@ async function withPage(name, options, run, blockWebGL = false) {
 }
 
 async function ready(page, expected = 'ready') {
-  await page.goto(url('/film'), { waitUntil: 'domcontentloaded', timeout: 60000 });
+  await page.goto(url('/film?view=player'), { waitUntil: 'domcontentloaded', timeout: 60000 });
   await page.waitForFunction(() => {
     const status = globalThis.document.querySelector('.film-page')?.dataset.status;
     return status && status !== 'loading';
@@ -212,35 +212,20 @@ try {
     return { metadata, playback, reportedFailure: await page.evaluate(() => globalThis.GDamonFilmError) };
   }, true));
 
-  await check('Index first card links to /film and decodes its actual media', () => withPage('index', { viewport: { width: 1440, height: 1000 } }, async page => {
+  await check('Index first card opens the scroll website with a static preview', () => withPage('index', { viewport: { width: 1440, height: 1000 } }, async page => {
     await page.goto(url('/'), { waitUntil: 'domcontentloaded', timeout: 60000 });
     const first = page.locator('.pv-card').first();
     await first.waitFor();
     assert.equal(await first.getAttribute('data-preview'), 'make-it-useful');
     assert.equal(await first.locator('.pv-media-link').getAttribute('href'), '/film');
-    const video = first.locator('video');
-    await video.scrollIntoViewIfNeeded();
-    await page.waitForFunction(() => {
-      const video = globalThis.document.querySelector('.pv-card video');
-      return video?.readyState >= 2 && video.currentTime > .1;
-    }, null, { timeout: 30000 });
-    const media = await video.evaluate(video => ({ source: video.currentSrc, poster: video.poster, duration: video.duration, width: video.videoWidth, height: video.videoHeight, decodedFrames: video.getVideoPlaybackQuality().totalVideoFrames, error: video.error?.message || null }));
-    assert.ok(media.source.endsWith('/films/gdamon-landscape.mp4'));
-    assert.ok(media.poster.endsWith('/films/gdamon-landscape-poster.webp'));
-    assert.ok(Math.abs(media.duration - 18) < .05);
-    assert.ok(media.decodedFrames > 0);
-    assert.equal(media.error, null);
-    const poster = await page.evaluate(async source => {
-      const image = new globalThis.Image(); image.src = source; await image.decode();
-      return { width: image.naturalWidth, height: image.naturalHeight };
-    }, media.poster);
-    assert.deepEqual([poster.width, poster.height], [1280, 720]);
-    for (const path of [media.source, media.poster]) {
-      const response = await page.request.get(path, { headers: { Range: 'bytes=0-1023' } });
-      assert.ok(response.status() === 200 || response.status() === 206, `Media request failed: ${response.status()} ${path}`);
-    }
+    assert.equal(await first.locator('video').count(), 0);
+    const poster = first.locator('.pv-media-link img');
+    await poster.scrollIntoViewIfNeeded();
+    await poster.evaluate(image => image.decode());
+    const image = await poster.evaluate(image => ({ source: image.currentSrc, width: image.naturalWidth, height: image.naturalHeight }));
+    assert.ok(image.width > 0 && image.height > 0);
     await shot(page, 'index-first-card');
-    return { media, poster };
+    return { image };
   }));
 } catch (error) {
   report.checks.push({ name: 'Harness initialization', pass: false, error: error.stack || String(error) });

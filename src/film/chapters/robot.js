@@ -20,7 +20,7 @@ function composition({ width: w, height: h, portrait, square }) {
   };
   return {
     model: { x: w * .42, y: h * .04, width: w * .565, height: h * .91 },
-    title: { x: w * .065, y: h * .13, width: w * .39, size: w * .037 },
+    title: { x: w * .065, y: h * .13, width: w * .39, size: Math.min(w * .037, h * .075) },
     word: { x: w * .06, y: h * .295, width: w * .41, height: h * .36, size: w * .205 },
     caption: { x: w * .065, y: h * .755, width: w * .36, size: w * .042 },
   };
