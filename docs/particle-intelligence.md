@@ -2,8 +2,9 @@
 
 ## Branch and routes
 
+- The complete personal-site extension is on `codex/oil-motion-frame-studies` at `/particle`, with About, research, Notes, and Contact following the cinematic scene. Compare it with `/robot` from `/html-studies/index.html`.
 - Branch: `codex/particle-intelligence`, based on `d586def` from `codex/three-concept-previews`.
-- `/` and `/particle`: this portfolio interpretation of the uploaded HTML.
+- On the original particle branch, `/` and `/particle` show this interpretation of the uploaded HTML.
 - `/classic`: previous homepage.
 - The previous `/lab`, `/motion`, `/experiences`, and `/concepts` routes remain available.
 
@@ -31,13 +32,13 @@ The original referenced 15 CloudFront SVG assets. Those requests failed in this 
 
 ## Runtime behavior
 
-- Uses the native document scroll. Chapter links jump the document to the requested stage, while the scene eases its camera and rotation.
+- Uses native document scroll within a 360svh cinematic wrapper and a sticky viewport. Progress is measured against that wrapper, so subsequent personal content does not stretch the morph timeline. Chapter links jump to the requested stage while the scene eases its camera and rotation.
 - Pointer movement affects the sculpture's view and repels nearby particles in screen space.
 - Desktop keeps the reference's particle density; narrow screens use fewer particles and a fitted camera. Rendering is capped at 30 fps with a bounded pixel ratio.
 - Pause freezes elapsed animation time; scrolling can still select a different stage.
-- Reduced motion presents both content sections in ordinary document flow with a still scene. No floating pills, automatic camera movement, or intro animation runs.
+- Reduced motion presents all content sections in ordinary document flow with a still scene. No floating pills, automatic camera movement, or intro animation runs.
 - If WebGL creation or rendering fails, the local scene poster remains visible and both sections remain readable. There is no blocking loading screen or simulated progress percentage.
-- Hidden tabs stop rendering. Unmounting removes listeners and disposes geometry, materials, composer passes, render targets, and renderer. The renderer also tolerates React StrictMode setup/cleanup.
+- Hidden tabs and offscreen cinematic viewports stop rendering. Unmounting removes listeners and disposes geometry, materials, composer passes, render targets, and renderer. The renderer also tolerates React StrictMode setup/cleanup.
 - Small-height screens allow the work panel to scroll so all four cards remain reachable.
 
 ## Checks

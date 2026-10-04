@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#f2f0e8" />
-    <meta name="description" content="查看 Anchor AI 原始 HTML、Damon 粒子个人站与 Future Machine 独立单页的完整设计。" />
-    <title>完整网页设计 — Damon</title>
+    <meta name="description" content="Damon Guo-Siyi 的两个完整个人网站：Particle Intelligence 与 Agent Assembly。研究、项目、关于、笔记与联系。" />
+    <title>两个个人网站 — Damon Guo-Siyi</title>
     <style>
       :root { font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif; color: #262921; background: #f2f0e8; font-synthesis: none; }
       * { box-sizing: border-box; }
@@ -16,30 +16,37 @@
       .brand { font-size: 29px; font-weight: 750; letter-spacing: -1.6px; }
       .back { font-size: 12px; }
       .back span { margin-left: 15px; }
-      main { max-width: 1650px; margin: 0 auto; padding: 66px 4% 70px; }
+      main { max-width: 1650px; margin: 0 auto; padding: 66px 4% 52px; }
       .eyebrow { margin: 0 0 24px; color: #6b725b; font-size: 10px; letter-spacing: 1.8px; }
       .eyebrow::before { display: inline-block; content: ""; width: 6px; height: 6px; border-radius: 50%; margin-right: 12px; background: #e95e34; vertical-align: 1px; }
       h1 { margin: 0; font-size: clamp(35px, 4.4vw, 68px); font-weight: 500; line-height: 1.25; letter-spacing: -2px; }
-      .intro { margin: 21px 0 0; font-size: 14px; color: #6e7465; line-height: 1.8; }
-      .pages { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 27px; margin-top: 52px; }
+      .intro { margin: 21px 0 0; max-width: 690px; font-size: 14px; color: #6e7465; line-height: 1.8; }
+      .identity { display: flex; align-items: center; flex-wrap: wrap; gap: 9px 21px; margin: 26px 0 0; font-size: 10px; line-height: 1.6; letter-spacing: .35px; }
+      .identity span { color: #747a68; }
+      .pages { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px; margin-top: 49px; }
       .page { display: flex; flex-direction: column; min-width: 0; }
       .preview { aspect-ratio: 16 / 10; overflow: hidden; background: #dbddd1; border: 1px solid rgb(38 41 33 / 12%); }
       .preview img { width: 100%; height: 100%; display: block; object-fit: contain; object-position: center; }
       .page-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 23px; font-size: 10px; letter-spacing: 1px; }
       .page-top span:last-child { color: #71765f; letter-spacing: .5px; }
-      h2 { margin: 15px 0 10px; font-size: clamp(23px, 2.25vw, 34px); font-weight: 500; letter-spacing: -.8px; line-height: 1.2; }
-      .description { margin: 0; min-height: 75px; max-width: 360px; font-size: 13px; line-height: 1.9; color: #5d6657; }
-      .detail { margin: 13px 0 22px; color: #747a6b; font-size: 11px; line-height: 1.7; }
+      h2 { margin: 15px 0 12px; font-size: clamp(25px, 3vw, 43px); font-weight: 500; letter-spacing: -1.25px; line-height: 1.2; }
+      .description { margin: 0; min-height: 54px; max-width: 535px; font-size: 13px; line-height: 1.9; color: #5d6657; }
+      .detail { margin: 15px 0 24px; color: #747a6b; font-size: 10px; line-height: 1.7; letter-spacing: .2px; }
       .enter { margin-top: auto; padding: 15px 0; border-top: 1px solid #bec3b1; display: flex; align-items: center; justify-content: space-between; font-size: 13px; }
       .enter span:last-child { font-size: 21px; line-height: 1; }
       .page:hover .enter { color: #075fe5; border-top-color: #075fe5; }
+      .references { display: grid; grid-template-columns: 1fr 1.3fr; align-items: start; gap: 26px; margin-top: 62px; padding-top: 28px; border-top: 1px solid #d1d2c6; }
+      .references h2 { margin: 0 0 8px; font-size: 14px; letter-spacing: 0; }
+      .references p { margin: 0; max-width: 390px; color: #747a6b; font-size: 11px; line-height: 1.8; }
+      .reference-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 15px 28px; padding-top: 2px; }
+      .reference-links a { font-size: 11px; padding-bottom: 5px; border-bottom: 1px solid #bec3b1; }
+      .reference-links span { margin-left: 12px; }
       footer { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin: 0 4%; padding: 27px 0 35px; border-top: 1px solid #d1d2c6; font-size: 11px; color: #6a715f; }
       footer p { margin: 0; line-height: 1.7; }
       footer a { color: #262921; white-space: nowrap; }
       @media (max-width: 900px) {
-        .pages { gap: 20px; }
-        .description { font-size: 12px; min-height: 105px; }
-        .detail { min-height: 38px; }
+        .pages { gap: 25px; }
+        .description { font-size: 12px; min-height: 70px; }
       }
       @media (max-width: 680px) {
         header { margin: 0 6%; padding: 24px 0; }
@@ -49,12 +56,17 @@
         main { padding: 46px 6% 45px; }
         h1 { font-size: clamp(32px, 7.8vw, 46px); letter-spacing: -1.5px; }
         .intro { font-size: 12px; margin-top: 18px; }
+        .identity { font-size: 9px; gap: 4px; flex-direction: column; align-items: start; margin-top: 21px; }
         .pages { grid-template-columns: 1fr; margin-top: 35px; gap: 42px; }
         .preview { aspect-ratio: 16 / 10; }
         .page-top { margin-top: 18px; }
         h2 { font-size: 30px; margin-top: 13px; }
         .description { min-height: 0; max-width: none; font-size: 13px; }
         .detail { min-height: 0; margin: 11px 0 18px; }
+        .references { grid-template-columns: 1fr; gap: 19px; margin-top: 41px; padding-top: 24px; }
+        .references h2 { font-size: 14px; }
+        .reference-links { justify-content: flex-start; gap: 19px; }
+        .reference-links a { font-size: 10px; }
         footer { margin: 0 6%; align-items: start; }
         footer p { max-width: 170px; font-size: 10px; }
         footer a { font-size: 10px; }
@@ -67,38 +79,41 @@
       <a class="back" href="/motion-lab">返回图片动态实验 <span aria-hidden="true">↗</span></a>
     </header>
     <main>
-      <p class="eyebrow">THE COMPLETE PAGES / 01—03</p>
-      <h1>完整设计，从这里打开。</h1>
-      <p class="intro">原始 HTML、个人站改版、独立单页，各自保留完整页面。<br />点击下面的预览，直接进入对应作品。</p>
-      <section class="pages" aria-label="三个完整网页">
-        <a class="page" href="/html-studies/anchor-original.html">
-          <div class="preview"><img src="/html-studies/anchor-preview.png" alt="Anchor AI 原始网页预览" width="1440" height="900" /></div>
-          <div class="page-top"><span>01 / ORIGINAL</span><span>粘贴的原始 HTML</span></div>
-          <h2>Anchor AI</h2>
-          <p class="description">直接打开上传的原稿，保留原有内容、粒子效果和完整滚动布局。</p>
-          <p class="detail">原稿中的外部 Logo 资源可能无法加载。</p>
-          <div class="enter"><span>打开完整原稿</span><span aria-hidden="true">↗</span></div>
-        </a>
+      <p class="eyebrow">PERSONAL WEBSITES / 01—02</p>
+      <h1>同一位研究者，<br />两种个人站。</h1>
+      <p class="intro">从两份设计出发，为 Damon 重新组织完整的网站。<br />研究方向、项目、关于、笔记与联系，都在各自的页面里。</p>
+      <p class="identity">DAMON GUO-SIYI <span>AI Researcher &amp; LLM Engineer at Alibaba</span></p>
+      <section class="pages" aria-label="两个完整个人网站">
         <a class="page" href="/particle">
           <div class="preview"><img src="/html-studies/particle-preview.png" alt="Damon 粒子个人网站预览" width="1440" height="900" /></div>
-          <div class="page-top"><span>02 / ADAPTED</span><span>Damon 个人站改版</span></div>
+          <div class="page-top"><span>01 / PARTICLE</span><span>粒子个人站</span></div>
           <h2>Particle Intelligence</h2>
-          <p class="description">把原稿改为 Damon 的个人介绍与项目。继续向下滚动，粒子树逐渐汇聚成立方体。</p>
-          <p class="detail">包含完整滚动场景和项目内容。</p>
-          <div class="enter"><span>打开完整个人站</span><span aria-hidden="true">↗</span></div>
+          <p class="description">粒子树、水波倒影与滚动变形。向下探索，从研究方向和项目，走到个人介绍、笔记与联系。</p>
+          <p class="detail">研究 / 项目 / 关于 / 笔记 / 联系</p>
+          <div class="enter"><span>浏览完整粒子个人站</span><span aria-hidden="true">↗</span></div>
         </a>
-        <a class="page" href="/future-machine.html">
-          <div class="preview"><img src="/html-studies/future-preview.png" alt="Future Machine 蓝色机器人单页预览" width="1440" height="900" /></div>
-          <div class="page-top"><span>03 / STANDALONE</span><span>独立 HTML 单页</span></div>
-          <h2>Future Machine™</h2>
-          <p class="description">钴蓝背景、白色机器人与 SVG 机械装配入场。按原要求，它是一张完整的全屏首页。</p>
-          <p class="detail">单屏设计，无下方滚动内容；所有资源内联。</p>
-          <div class="enter"><span>打开完整单页</span><span aria-hidden="true">↗</span></div>
+        <a class="page" href="/robot">
+          <div class="preview"><img src="/html-studies/robot-preview.png" alt="Damon 机器人个人网站预览" width="1440" height="900" /></div>
+          <div class="page-top"><span>02 / ASSEMBLY</span><span>机器人个人站</span></div>
+          <h2>Agent Assembly</h2>
+          <p class="description">钴蓝、奶白与逐片装配的机器人。围绕 Agent 研究与工程工作，串起项目、关于、笔记和联系。</p>
+          <p class="detail">研究 / 项目 / 关于 / 笔记 / 联系</p>
+          <div class="enter"><span>浏览完整机器人个人站</span><span aria-hidden="true">↗</span></div>
         </a>
       </section>
+      <aside class="references" aria-labelledby="references-title">
+        <div>
+          <h2 id="references-title">原始参考</h2>
+          <p>保留原稿，方便对照。Anchor AI 的外部 Logo 资源可能无法加载；Future Machine 原稿是单屏设计。</p>
+        </div>
+        <div class="reference-links">
+          <a href="/html-studies/anchor-original.html">Anchor AI 原始 HTML <span aria-hidden="true">↗</span></a>
+          <a href="/future-machine.html">Future Machine 原始单页 <span aria-hidden="true">↗</span></a>
+        </div>
+      </aside>
     </main>
     <footer>
-      <p>DAMON GUO-SIYI<br />A collection of interface experiments.</p>
+      <p>DAMON GUO-SIYI<br />Research, engineering &amp; experiments.</p>
       <a href="/motion-lab">查看三组图片动态实验 →</a>
     </footer>
   </body>

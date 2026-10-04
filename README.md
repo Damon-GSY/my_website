@@ -1,14 +1,15 @@
 # Damon Guo-Siyi — website
 
-## Pasted HTML — complete pages
+## Personal websites adapted from the pasted HTML
 
-Open **`/html-studies/index.html`** for the visual directory. The homepage also links to it above the motion studies.
+Open **`/html-studies/index.html`** to compare the two complete personal websites. The homepage has direct links to both above the motion studies.
 
 | Page | Route | What is included |
 | --- | --- | --- |
-| Anchor AI original | `/html-studies/anchor-original.html` | Uploaded HTML preserved byte for byte, including its full sphere/tree/cube scene and two content stages |
-| Damon adaptation | `/particle` | The same visual direction adapted to Damon's portfolio, with working project links and accessibility fallbacks |
-| Future Machine | `/future-machine.html` | Complete standalone full-screen hero and SVG helmet assembly, as specified |
+| Particle Intelligence | `/particle` | Three.js sphere/tree/cube scene, selected work, biography and research, notes, creator channels, contact |
+| Agent Assembly | `/robot` | Cobalt helmet assembly reworked around Damon, followed by selected work, research background, notes, and contact |
+
+Both adaptations use the existing project and article data and real destinations from this repository. See [content and implementation notes](docs/personal-portfolio-adaptations.md). The exact original references remain available at `/html-studies/anchor-original.html` and `/future-machine.html` from smaller links below the personal-site previews.
 
 The two pasted-text attachments contain identical Anchor AI documents (SHA-256 `f955679e011440034e887db004277172b1c6b94cfc713e3e924433e812efc62c`). The original's 15 external CloudFront SVG logos and badges currently fail to load in the cloud preview, and several navigation anchors have no sections in the supplied source. The preserved original retains those dependencies and links. The Damon adaptation uses local assets and portfolio destinations. Future Machine intentionally contains one screen; its original specification forbids scrolling.
 

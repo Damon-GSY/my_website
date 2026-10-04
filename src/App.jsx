@@ -26,6 +26,7 @@ const MotionStudy = lazy(() => import('./motion/MotionStudy'));
 const LabRouter = lazy(() => import('./lab/LabRouter'));
 const ParticlePage = lazy(() => import('./particle/ParticlePage'));
 const FrameStudies = lazy(() => import('./motion-studies/FrameStudies'));
+const RobotPortfolio = lazy(() => import('./robot/RobotPortfolio'));
 
 const agentOsChapters = [
   { id: 'capabilities', number: '01', shortLabel: 'CAP', label: 'Capabilities' },
@@ -139,6 +140,9 @@ export default function App() {
   }
   if (location.pathname === '/particle') {
     return <Suspense fallback={null}><ParticlePage /></Suspense>;
+  }
+  if (location.pathname === '/robot') {
+    return <Suspense fallback={null}><RobotPortfolio /></Suspense>;
   }
   if (location.pathname === '/lab' || location.pathname.startsWith('/lab/')) {
     return <Suspense fallback={null}><LabRouter /></Suspense>;

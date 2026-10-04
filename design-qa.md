@@ -1,3 +1,18 @@
+# Design QA — personal portfolio adaptations
+
+Reviewed 2026-10-04 on `codex/oil-motion-frame-studies`. `/particle` and `/robot` now provide complete personal portfolios using Damon's existing biography, projects, articles, and contact destinations. The directory and homepage prioritize these adaptations; both original HTML files remain unchanged.
+
+- Particle: 27 targeted Chromium checks pass across desktop, 390px, and 320px. All five navigation links fit; all four projects remain reachable in the short mobile work panel. About, Notes, and Contact follow the cinematic section without canvas overlap, and the morph progress remains scoped to the scene.
+- Instrumented WebGL draw counts confirm pause/resume, offscreen suspension, and disposal on route change. Reduced-motion and disabled-WebGL modes retain the personal sections, project links, three notes, and contact; the static work heading clears the mobile header.
+- Robot: desktop 1440×900, tablet 768×1024, mobile 390×844, small 320×740, and landscape 844×390 have no horizontal overflow, missing assets, or page exceptions. All four project and three article destinations match the existing data. Its four section links reach visible headings, and actual project/article navigation renders the correct destinations.
+- Robot replay restarts all 11 SVG pieces and releases animation hints afterward. Initial and runtime reduced motion show the final artwork with zero animations; the replay control is disabled. The artwork is SVG assembly, not a Three.js model.
+- The directory and homepage links pass desktop, 390px, and 320px checks with both new screenshots decoded. The separately served production build loads both portfolios and the directory, reaches Particle's Contact section, and reports no missing assets or page exceptions.
+- `npm run lint`, `npm run build`, and `git diff --check` pass. No dependencies were added. The existing shared Three.js chunk-size advisory remains; physical-device frame rates and Safari were not measured.
+
+Captures and structured results: `/workspace/personal-portfolio-captures/`. Content and implementation notes: [docs/personal-portfolio-adaptations.md](docs/personal-portfolio-adaptations.md).
+
+---
+
 # Design QA — complete pasted HTML pages
 
 Reviewed 2026-10-03 on `codex/oil-motion-frame-studies`. The homepage now exposes `/html-studies/index.html`, which separates the exact uploaded Anchor original, the Damon adaptation, and the complete standalone Future Machine page.

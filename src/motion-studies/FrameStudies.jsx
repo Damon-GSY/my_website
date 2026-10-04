@@ -59,10 +59,26 @@ function StudiesIndex({ studies }) {
   return (
     <main className="fm-page fm-index">
       <StudyHeader />
-      <a className="fm-html-directory-link" href="/html-studies/index.html" lang="zh-CN">
-        <span>原稿 · 个人站改版 · 独立单页</span>
-        <strong>查看粘贴 HTML 的完整页面 <ArrowRight size={21} aria-hidden="true" /></strong>
-      </a>
+      <section className="fm-personal-sites" lang="zh-CN" aria-labelledby="fm-personal-sites-title">
+        <div className="fm-personal-sites-intro">
+          <span>PERSONAL WEBSITES / 01—02</span>
+          <h2 id="fm-personal-sites-title">我的网站，两种表达。</h2>
+          <p>研究、项目、关于、笔记与联系。</p>
+          <a href="/html-studies/index.html">查看完整预览与原始参考 <ArrowUpRight size={13} aria-hidden="true" /></a>
+        </div>
+        <nav aria-label="个人网站版本">
+          <Link className="fm-personal-site-link fm-personal-particle" to="/particle">
+            <span>01 / 粒子个人站</span>
+            <strong>Particle<br />Intelligence</strong>
+            <span className="fm-personal-site-enter">进入完整网站 <ArrowUpRight size={20} aria-hidden="true" /></span>
+          </Link>
+          <Link className="fm-personal-site-link fm-personal-robot" to="/robot">
+            <span>02 / 机器人个人站</span>
+            <strong>Agent<br />Assembly</strong>
+            <span className="fm-personal-site-enter">进入完整网站 <ArrowUpRight size={20} aria-hidden="true" /></span>
+          </Link>
+        </nav>
+      </section>
       <section className="fm-index-intro" aria-labelledby="fm-index-title">
         <div className="fm-kicker"><span className="fm-dot" /> THE MOTION NOTEBOOK · VOL. 01</div>
         <h1 id="fm-index-title">Still images.<br /><em>New possibilities.</em></h1>
