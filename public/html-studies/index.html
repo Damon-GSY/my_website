@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#f2f0e8" />
-    <meta name="description" content="Damon Guo-Siyi 的两个完整个人网站：Particle Intelligence 与 Agent Assembly。研究、项目、关于、笔记与联系。" />
+    <meta name="description" content="Damon Guo-Siyi 的两个完整个人网站，以及数字矩阵、DAMON 星尘签名和神经网络三种实时三维场景。" />
     <title>两个个人网站 — Damon Guo-Siyi</title>
     <style>
       :root { font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif; color: #262921; background: #f2f0e8; font-synthesis: none; }
@@ -35,6 +35,21 @@
       .enter { margin-top: auto; padding: 15px 0; border-top: 1px solid #bec3b1; display: flex; align-items: center; justify-content: space-between; font-size: 13px; }
       .enter span:last-child { font-size: 21px; line-height: 1; }
       .page:hover .enter { color: #075fe5; border-top-color: #075fe5; }
+      .scene-options { margin-top: 64px; padding-top: 33px; border-top: 1px solid #d1d2c6; }
+      .scene-heading { display: flex; justify-content: space-between; align-items: end; gap: 35px; }
+      .scene-heading .eyebrow { margin-bottom: 16px; font-size: 9px; }
+      .scene-heading h2 { margin: 0; font-size: clamp(24px, 2.5vw, 37px); letter-spacing: -.9px; line-height: 1.4; }
+      .scene-heading > p { margin: 0; max-width: 365px; color: #6e7465; font-size: 12px; line-height: 1.9; }
+      .scene-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 25px; margin-top: 30px; }
+      .scene-option { display: flex; flex-direction: column; min-width: 0; }
+      .scene-option .page-top { margin-top: 18px; font-size: 9px; }
+      .scene-option h3 { margin: 11px 0 9px; font-size: 23px; font-weight: 500; letter-spacing: -.5px; line-height: 1.35; }
+      .scene-option > p { margin: 0 0 19px; min-height: 42px; color: #747a6b; font-size: 11px; line-height: 1.8; }
+      .scene-option .enter { padding: 12px 0; font-size: 11px; }
+      .scene-option:hover .enter { color: #075fe5; border-top-color: #075fe5; }
+      .baseline { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; margin-top: 25px; font-size: 11px; color: #747a6b; }
+      .baseline p { margin: 0; }
+      .baseline a { color: #444d3c; text-decoration: underline; text-underline-offset: 4px; }
       .references { display: grid; grid-template-columns: 1fr 1.3fr; align-items: start; gap: 26px; margin-top: 62px; padding-top: 28px; border-top: 1px solid #d1d2c6; }
       .references h2 { margin: 0 0 8px; font-size: 14px; letter-spacing: 0; }
       .references p { margin: 0; max-width: 390px; color: #747a6b; font-size: 11px; line-height: 1.8; }
@@ -47,6 +62,10 @@
       @media (max-width: 900px) {
         .pages { gap: 25px; }
         .description { font-size: 12px; min-height: 70px; }
+        .scene-heading { align-items: start; flex-direction: column; gap: 17px; }
+        .scene-heading > p { max-width: 530px; }
+        .scene-cards { gap: 19px; }
+        .scene-option h3 { font-size: 20px; }
       }
       @media (max-width: 680px) {
         header { margin: 0 6%; padding: 24px 0; }
@@ -63,6 +82,13 @@
         h2 { font-size: 30px; margin-top: 13px; }
         .description { min-height: 0; max-width: none; font-size: 13px; }
         .detail { min-height: 0; margin: 11px 0 18px; }
+        .scene-options { margin-top: 42px; padding-top: 25px; }
+        .scene-heading h2 { font-size: 26px; }
+        .scene-heading > p { font-size: 11px; }
+        .scene-cards { grid-template-columns: 1fr; gap: 31px; margin-top: 25px; }
+        .scene-option h3 { font-size: 24px; }
+        .scene-option > p { min-height: 0; }
+        .baseline { font-size: 10px; line-height: 1.8; margin-top: 23px; }
         .references { grid-template-columns: 1fr; gap: 19px; margin-top: 41px; padding-top: 24px; }
         .references h2 { font-size: 14px; }
         .reference-links { justify-content: flex-start; gap: 19px; }
@@ -88,8 +114,8 @@
           <div class="preview"><img src="/html-studies/particle-preview.png" alt="Damon 粒子个人网站预览" width="1440" height="900" /></div>
           <div class="page-top"><span>01 / PARTICLE</span><span>粒子个人站</span></div>
           <h2>Particle Intelligence</h2>
-          <p class="description">粒子树、水波倒影与滚动变形。向下探索，从研究方向和项目，走到个人介绍、笔记与联系。</p>
-          <p class="detail">研究 / 项目 / 关于 / 笔记 / 联系</p>
+          <p class="description">从数字矩阵进入研究与项目。三种新的实时三维场景，以及原始粒子树，共同承载完整的个人介绍、笔记与联系。</p>
+          <p class="detail">数字矩阵 / DAMON 星尘签名 / 神经网络 / 原始粒子树</p>
           <div class="enter"><span>浏览完整粒子个人站</span><span aria-hidden="true">↗</span></div>
         </a>
         <a class="page" href="/robot">
@@ -100,6 +126,42 @@
           <p class="detail">研究 / 项目 / 关于 / 笔记 / 联系</p>
           <div class="enter"><span>浏览完整机器人个人站</span><span aria-hidden="true">↗</span></div>
         </a>
+      </section>
+      <section class="scene-options" aria-labelledby="scene-title">
+        <div class="scene-heading">
+          <div>
+            <p class="eyebrow">PARTICLE SCENES / 01—03</p>
+            <h2 id="scene-title">同一网站，三种三维场景。</h2>
+          </div>
+          <p>每个场景都在网页中实时运动。点击一张实际页面预览，进入对应版本；研究、项目与个人内容保持完整。</p>
+        </div>
+        <div class="scene-cards">
+          <a class="scene-option" href="/particle?scene=matrix">
+            <div class="preview"><img src="/html-studies/matrix-preview.png" alt="数字矩阵场景的实际页面截图" width="1440" height="900" loading="lazy" /></div>
+            <div class="page-top"><span>01 / MATRIX</span><span>默认场景</span></div>
+            <h3>数字矩阵</h3>
+            <p>数字字符在三维空间中流动，形成有纵深的数字场。</p>
+            <div class="enter"><span>探索数字矩阵</span><span aria-hidden="true">↗</span></div>
+          </a>
+          <a class="scene-option" href="/particle?scene=signature">
+            <div class="preview"><img src="/html-studies/signature-preview.png" alt="DAMON 星尘签名场景的实际页面截图" width="1440" height="900" loading="lazy" /></div>
+            <div class="page-top"><span>02 / SIGNATURE</span><span>个人签名</span></div>
+            <h3>DAMON 星尘签名</h3>
+            <p>蓝紫色星尘交织成流动的光带，随滚动汇聚成 DAMON。</p>
+            <div class="enter"><span>探索 DAMON 星尘签名</span><span aria-hidden="true">↗</span></div>
+          </a>
+          <a class="scene-option" href="/particle?scene=neural">
+            <div class="preview"><img src="/html-studies/neural-preview.png" alt="神经网络场景的实际页面截图" width="1440" height="900" loading="lazy" /></div>
+            <div class="page-top"><span>03 / NEURAL</span><span>节点与连接</span></div>
+            <h3>神经网络</h3>
+            <p>节点与连接组成空间网络，以运动呈现信息流动的节奏。</p>
+            <div class="enter"><span>探索神经网络</span><span aria-hidden="true">↗</span></div>
+          </a>
+        </div>
+        <div class="baseline">
+          <p>也可以回到最初的蓝色粒子树与水波倒影。</p>
+          <a href="/particle?scene=tree">查看原始粒子树 →</a>
+        </div>
       </section>
       <aside class="references" aria-labelledby="references-title">
         <div>

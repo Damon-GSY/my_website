@@ -4,7 +4,7 @@ The pasted designs are visual references for Damon's personal website. Their ada
 
 ## Pages
 
-- `/particle`: the blue particle sphere, tree, reflective water, and cube lead into a personal portfolio with selected projects, biography, notes, and contact.
+- `/particle`: Matrix character rain now opens the personal portfolio, with three new scenes forming DAMON. The original blue sphere, tree, reflective water, and cube remain at `?scene=tree`. All modes include selected projects, biography, notes, and contact. See [particle directions](particle-directions.md).
 - `/robot`: the cobalt and white helmet assembly becomes an agent-themed personal portfolio with selected work, research background, notes, and contact.
 - `/html-studies/index.html`: comparison of the two personal sites, with smaller links to the preserved original references.
 - `/`: the motion-study index exposes direct links to both personal sites above the image experiments.

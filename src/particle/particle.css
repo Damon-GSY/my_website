@@ -7,6 +7,8 @@
 
 .particle-page {
   --particle-blue: #218eff;
+  --particle-soft: #75b7fb;
+  --particle-ink: #fff;
   --hero-opacity: 1;
   --hero-y: 0px;
   --work-opacity: 0;
@@ -21,15 +23,21 @@
   line-height: 1.4;
   color-scheme: dark;
 }
+.particle-page[data-variant='matrix'] { --particle-blue: #7cefb4; --particle-soft: #a7f6c9; --particle-ink: #05190e; }
+.particle-page[data-variant='signature'] { --particle-blue: #a6b0ff; --particle-soft: #bdc7ff; --particle-ink: #131538; }
+.particle-page[data-variant='neural'] { --particle-blue: #ffc773; --particle-soft: #ffdaaa; --particle-ink: #261b08; }
 .particle-page a { text-decoration: none; }
 /* Keep the scroll-driven scene inside its own chapter; later sections use normal document flow. */
 .particle-cinematic { position: relative; height: 360svh; min-height: 1800px; }
-.particle-viewport { position: sticky; top: 0; height: 100svh; isolation: isolate; overflow: hidden; }
+.particle-viewport { position: sticky; top: 0; height: 100svh; isolation: isolate; overflow: clip; }
 .particle-page :is(a, button) { -webkit-tap-highlight-color: transparent; }
-.particle-page :is(a, button):focus-visible { outline: 2px solid #9bd8ff; outline-offset: 6px; }
+.particle-page :is(a, button):focus-visible { outline: 2px solid var(--particle-soft); outline-offset: 6px; }
 .particle-page button { font: inherit; cursor: pointer; }
 .particle-backdrop, .particle-canvas, .particle-vignette { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-.particle-backdrop { z-index: -3; background: #01040a url('/particle-assets/particle-poster.webp') center / cover no-repeat; }
+.particle-backdrop { z-index: -3; background: #01040a; }
+.particle-page[data-variant='tree'] .particle-backdrop { background: #01040a url('/particle-assets/particle-poster.webp') center / cover no-repeat; }
+.particle-fallback { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; color: var(--particle-blue); pointer-events: none; transition: opacity .5s; }
+.particle-page.is-ready:not(.is-static) .particle-fallback { opacity: 0; }
 .particle-canvas { z-index: -2; display: block; opacity: 0; transition: opacity .7s; }
 .particle-page.is-ready .particle-canvas { opacity: 1; }
 .particle-vignette { z-index: -1; background: radial-gradient(ellipse at 50% 43%, transparent 22%, #00040a22 57%, #000206c9 100%); }
@@ -44,8 +52,8 @@
 .particle-header nav a:hover, .particle-header nav a[aria-current] { color: white; }
 .particle-pill { display: inline-flex; align-items: center; justify-content: center; gap: 12px; padding: 13px 21px; border-radius: 999px; font-size: 14px; font-weight: 500; white-space: nowrap; transition: background .2s, transform .2s; }
 .particle-pill:hover { transform: translateY(-2px); }
-.particle-primary { background: var(--particle-blue); color: #fff; }
-.particle-primary:hover { background: #45a0ff; }
+.particle-primary { background: var(--particle-blue); color: var(--particle-ink); }
+.particle-primary:hover { background: color-mix(in srgb, var(--particle-blue), white 20%); }
 .particle-light { background: #fff; color: #080d17; }
 .particle-light:hover { background: #dcecff; }
 .particle-hero, .particle-work { position: absolute; inset: 0; z-index: 20; pointer-events: none; }
@@ -53,7 +61,7 @@
 .particle-hero :is(a, button), .particle-work :is(a, button) { pointer-events: auto; }
 .particle-hero[inert], .particle-work[inert] { visibility: hidden; }
 .particle-location { position: absolute; right: 40px; top: 132px; font-size: 13px; text-align: right; }
-.particle-status-dot, .particle-kicker > span { display: inline-block; border-radius: 50%; width: 7px; height: 7px; background: var(--particle-blue); margin-right: 8px; box-shadow: 0 0 12px #218eff80; }
+.particle-status-dot, .particle-kicker > span { display: inline-block; border-radius: 50%; width: 7px; height: 7px; background: var(--particle-blue); margin-right: 8px; box-shadow: 0 0 12px color-mix(in srgb, var(--particle-blue), transparent 50%); }
 .particle-location > span:last-child { display: block; margin-top: 8px; color: #98a6be; font-size: 9px; letter-spacing: .13em; }
 .particle-hero-title { position: absolute; left: 40px; bottom: 110px; width: min(650px, 49vw); }
 .particle-kicker { display: inline-flex; align-items: center; margin: 0 0 20px; padding: 10px 15px; border: 1px solid var(--particle-blue); border-radius: 999px; font-size: 11px; letter-spacing: .07em; text-transform: uppercase; background: #06132640; backdrop-filter: blur(8px); }
@@ -64,9 +72,13 @@
 .particle-hero-copy { position: absolute; right: 40px; bottom: 112px; width: min(330px, 26vw); }
 .particle-hero-copy > p { margin: 0; line-height: 1.5; color: #d2dcec; font-size: 15px; }
 .particle-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+.particle-actions .particle-pill { gap: 9px; }
 .particle-orbits { position: absolute; inset: 0; z-index: 25; pointer-events: none; perspective: 1100px; overflow: hidden; }
 .particle-orbit-card { position: absolute; left: 0; top: 0; width: clamp(165px, 16vw, 235px); height: clamp(78px, 8vw, 112px); display: flex; align-items: center; justify-content: center; gap: 14px; padding: 20px; border: 1px solid #ffffff35; border-radius: 999px; background: #6c8da927; box-shadow: 0 20px 50px #0004; backdrop-filter: blur(16px); opacity: 0; font-size: clamp(15px, 1.4vw, 21px); white-space: nowrap; will-change: transform; }
 .particle-orbit-card > span { font-size: 10px; color: #84bfff; align-self: flex-start; }
+.particle-page:not([data-variant='tree']) .particle-orbits { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 19px 28px; inset: 64% auto auto 50%; transform: translateX(-50%); width: min(700px, calc(100% - 80px)); height: auto; overflow: visible; perspective: none; z-index: 15; }
+.particle-page:not([data-variant='tree']) .particle-orbit-card { position: relative; inset: auto; width: auto; height: auto; min-height: 24px; justify-content: flex-start; gap: 11px; padding: 10px 0 0; border: 0; border-top: 1px solid #c8e2d729; border-radius: 0; background: none; box-shadow: none; backdrop-filter: none; font-size: 10px; color: #c9d9d5; letter-spacing: .025em; }
+.particle-page:not([data-variant='tree']) .particle-orbit-card > span { align-self: center; color: var(--particle-blue); font-size: 8px; opacity: .65; }
 .particle-interlude { position: absolute; left: 40px; bottom: 102px; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .35s; }
 .particle-page[data-stage='thinking'] .particle-interlude { opacity: 1; visibility: visible; }
 .particle-interlude > span { font-size: 9px; letter-spacing: .15em; color: #a8c1db; }
@@ -88,13 +100,32 @@
 .particle-project-link { display: flex; justify-content: space-between; align-items: center; font-size: 10px; }
 .particle-page[data-stage='work']:not(.is-static) .particle-project { animation: particle-card .6s cubic-bezier(.22,1,.36,1) calc(var(--card) * .09s) backwards; }
 .particle-controls { position: absolute; z-index: 35; left: 40px; right: 40px; bottom: 27px; display: flex; justify-content: space-between; align-items: center; gap: 14px; font-size: 10px; }
-.particle-chapter { display: flex; gap: 14px; align-items: center; color: #92a4bc; }
-.particle-chapter > span:first-child { color: white; font-size: 12px; font-variant-numeric: tabular-nums; }
+.particle-chapter { display: flex; gap: 14px; align-items: center; min-width: 0; color: #92a4bc; }
+.particle-chapter > span:first-child { flex-shrink: 0; color: white; font-size: 12px; font-variant-numeric: tabular-nums; }
+.particle-chapter > span:last-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .particle-scroll-hint { display: inline-flex; align-items: center; gap: 11px; font-size: 9px; letter-spacing: .13em; color: #99aec6; }
-.particle-pause { display: inline-flex; align-items: center; justify-content: center; gap: 9px; color: #c3d3e7; border: 1px solid #ffffff25; background: #07111c88; border-radius: 999px; min-height: 36px; padding: 7px 12px; }
+.particle-pause { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; gap: 9px; color: #c3d3e7; border: 1px solid #ffffff25; background: #07111c88; border-radius: 999px; min-height: 36px; padding: 7px 12px; white-space: nowrap; }
 .particle-pause:hover { border-color: #8ccaff; }
 .particle-load, .particle-static-label { color: #9eb7d4; }
 .particle-scroll-progress { position: absolute; bottom: 0; left: 0; z-index: 50; width: 100%; height: 2px; background: var(--particle-blue); transform-origin: left; transform: scaleX(var(--progress)); }
+.particle-scene-picker { position: absolute; z-index: 30; left: 40px; top: 110px; width: min(420px, calc(100% - 80px)); transition: opacity .2s; }
+.particle-scene-label { display: block; color: #a6b3c0; font-size: 8px; letter-spacing: .18em; margin-bottom: 12px; }
+.particle-scene-options { display: grid; grid-template-columns: repeat(4, 1fr); padding: 4px; border: 1px solid #ffffff28; border-radius: 10px; background: #061018ba; backdrop-filter: blur(18px); }
+.particle-scene-options button { display: flex; align-items: center; justify-content: center; gap: 7px; min-height: 38px; padding: 8px 10px; border: 0; border-radius: 6px; color: #aebdcb; background: transparent; font-size: 10px; font-weight: 500; letter-spacing: .04em; }
+.particle-scene-options button > span { font-size: 8px; opacity: .58; }
+.particle-scene-options button:hover { background: #ffffff0c; color: #fff; }
+.particle-scene-options button[aria-pressed='true'] { background: var(--particle-blue); color: var(--particle-ink); }
+.particle-scene-picker p { margin: 10px 0 0; color: #a6b8c6; font-size: 11px; letter-spacing: .05em; }
+.particle-page[data-stage='work'] .particle-scene-picker { opacity: 0; visibility: hidden; pointer-events: none; }
+.particle-page[data-variant='matrix'] .particle-personal { background: #060e0c; }
+.particle-page[data-variant='matrix'] .particle-notes { background: #0a1712; }
+.particle-page[data-variant='matrix'] .particle-get-in-touch { background: #0a231a; }
+.particle-page[data-variant='signature'] .particle-personal { background: #0a0b16; }
+.particle-page[data-variant='signature'] .particle-notes { background: #11132a; }
+.particle-page[data-variant='signature'] .particle-get-in-touch { background: #1c2043; }
+.particle-page[data-variant='neural'] .particle-personal { background: #0c1112; }
+.particle-page[data-variant='neural'] .particle-notes { background: #122026; }
+.particle-page[data-variant='neural'] .particle-get-in-touch { background: #182b32; }
 
 @keyframes particle-letter { from { opacity: 0; filter: blur(10px); transform: translateY(15px); } to { opacity: 1; filter: blur(0); transform: translateY(0); } }
 @keyframes particle-card { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
@@ -120,7 +151,8 @@
   .particle-header { top: 22px; left: 24px; right: 24px; }
   .particle-header nav { top: 57px; left: 0; right: 0; transform: none; justify-content: space-between; gap: 12px; padding: 12px 20px; }
   .particle-header nav a { font-size: 12px; }
-  .particle-location { top: 147px; right: 24px; font-size: 11px; }
+  .particle-location { top: 255px; right: 24px; font-size: 11px; }
+  .particle-scene-picker { top: 144px; left: 24px; width: min(420px, calc(100% - 48px)); }
   .particle-hero-title { left: 24px; bottom: 220px; width: 78vw; }
   .particle-hero h1 { font-size: clamp(54px, 7.8vw, 72px); }
   .particle-hero-copy { left: 24px; right: auto; bottom: 93px; width: min(530px, 86vw); }
@@ -139,14 +171,23 @@
   .particle-scroll-hint { display: none; }
   .particle-interlude { left: 24px; }
 }
+@media (max-width: 699px) {
+  .particle-page:not([data-variant='tree']) .particle-orbits { top: 48%; width: min(440px, calc(100% - 48px)); grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 17px 30px; }
+  .particle-page:not([data-variant='tree']) .particle-location { display: none; }
+}
 @media (max-width: 560px) {
   .particle-cinematic { min-height: 0; }
-  .particle-backdrop { background-image: url('/particle-assets/particle-poster-mobile.webp'); }
+  .particle-page[data-variant='tree'] .particle-backdrop { background-image: url('/particle-assets/particle-poster-mobile.webp'); }
   .particle-header { top: 18px; left: 20px; right: 20px; }
   .particle-brand { font-size: 20px; }
   .particle-brand-mark { font-size: 37px; }
   .particle-contact { padding: 10px 15px; font-size: 12px; }
-  .particle-location { top: 140px; right: 20px; font-size: 10px; }
+  .particle-location { top: 252px; right: 20px; font-size: 10px; }
+  .particle-scene-picker { top: 140px; left: 20px; width: calc(100% - 40px); }
+  .particle-scene-label { margin-bottom: 9px; font-size: 7px; }
+  .particle-scene-options button { padding: 8px 3px; gap: 4px; font-size: 9px; }
+  .particle-scene-options button > span { font-size: 7px; }
+  .particle-scene-picker p { margin-top: 9px; font-size: 10px; }
   .particle-location > span:last-child { font-size: 7px; }
   .particle-hero-title { left: 20px; bottom: 238px; width: calc(100% - 40px); }
   .particle-hero h1 { font-size: clamp(43px, 12vw, 62px); max-width: 400px; }
@@ -181,11 +222,28 @@
   .particle-hero-title { bottom: 222px; }
   .particle-hero h1 { font-size: 43px; }
   .particle-kicker { margin-bottom: 10px; }
+  .particle-scene-label { display: none; }
+  .particle-location { display: none; }
+  .particle-page:not([data-variant='tree']) .particle-orbit-card:nth-child(n+5) { display: none; }
+}
+@media (min-width: 901px) and (max-height: 740px) {
+  .particle-page:not([data-variant='tree']) .particle-orbits { top: 61%; }
+  .particle-page:not([data-variant='tree']) .particle-orbit-card:nth-child(n+5) { display: none; }
+}
+@media (max-width: 699px) and (max-height: 620px) {
+  .particle-page:not([data-variant='tree']) .particle-orbits { display: none; }
+  .particle-page.is-ready:not(.is-static):is([data-variant='signature'], [data-variant='neural'])[data-stage='overview'] .particle-canvas { opacity: .25; }
 }
 @media (max-height: 540px) {
-  .particle-hero-title { bottom: 110px; width: 51vw; }
+  .particle-page:not([data-variant='tree']) .particle-orbits { display: none; }
+  .particle-scene-picker { top: 134px; width: min(420px, calc(100% - 48px)); }
+  .particle-scene-options { padding: 2px; }
+  .particle-scene-options button { min-height: 30px; padding-block: 5px; }
+  .particle-scene-picker p { display: none; }
+  .particle-hero-title { top: 187px; bottom: auto; width: 48vw; }
   .particle-hero h1 { font-size: 39px; }
-  .particle-hero-copy { left: auto; right: 24px; bottom: 110px; width: 37vw; }
+  .particle-kicker { display: none; }
+  .particle-hero-copy { top: 188px; left: auto; right: 24px; bottom: auto; width: 39vw; }
   .particle-location { display: none; }
   .particle-hero-copy > p { font-size: 12px; }
   .particle-actions { gap: 6px; }
@@ -193,8 +251,8 @@
 }
 
 .particle-page.is-static { height: auto; min-height: 100svh; }
-.particle-page.is-static .particle-canvas { opacity: .5; }
-.particle-page.is-static :is(.particle-backdrop, .particle-canvas, .particle-vignette) { height: 100svh; }
+.particle-page.is-static .particle-canvas { opacity: 0; }
+.particle-page.is-static :is(.particle-backdrop, .particle-fallback, .particle-canvas, .particle-vignette) { height: 100svh; }
 .particle-page.is-static .particle-cinematic { height: auto; min-height: 0; }
 .particle-page.is-static .particle-viewport { position: relative; top: auto; height: auto; }
 .particle-page.is-static .particle-hero, .particle-page.is-static .particle-work { position: relative; inset: auto; opacity: 1; transform: none; visibility: visible; min-height: 850px; height: 100svh; }
@@ -221,7 +279,7 @@
 .particle-section-top > span { color: #7894b4; font-size: 9px; letter-spacing: .13em; }
 .particle-about-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 8vw; align-items: start; }
 .particle-personal h2 { margin: 0; font-family: 'Particle Geist Pixel', monospace; font-weight: 400; font-size: clamp(40px, 4.7vw, 72px); letter-spacing: -.05em; line-height: 1.03; }
-.particle-personal h2 > span { color: #75b7fb; }
+.particle-personal h2 > span { color: var(--particle-soft); }
 .particle-about-copy { color: #b5c5d9; font-size: 15px; line-height: 1.7; padding-top: 5px; }
 .particle-about-copy > p { margin: 0 0 20px; }
 .particle-about-copy .particle-about-name { color: #fff; font-size: 24px; line-height: 1.3; letter-spacing: -.04em; }
@@ -333,6 +391,7 @@
 @media (max-width: 360px) {
   .particle-header nav { padding-inline: 13px; gap: 8px; }
   .particle-header nav a { font-size: 11px; }
+  .particle-actions .particle-pill { padding: 11px 13px; font-size: 12px; gap: 8px; }
   .particle-content-section { padding-inline: 20px; }
   .particle-background > div { grid-template-columns: 68px 1fr; gap: 12px; }
   .particle-note { grid-template-columns: 25px 1fr 16px; gap: 8px; }

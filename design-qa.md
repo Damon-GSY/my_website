@@ -1,4 +1,23 @@
-# Design QA — personal portfolio adaptations
+# Design QA — DAMON particle scenes and full robot motion
+
+Reviewed 2026-10-04 on `codex/oil-motion-frame-studies`. `/particle` defaults to Matrix; `?scene=signature`, `?scene=neural`, and `?scene=tree` expose the other directions. `/robot` now connects its SVG assembly to pointer depth, a scroll-controlled exploded diagram, and section reveals throughout the portfolio.
+
+- Three distinct procedural WebGL scenes: descending character columns, five woven violet ribbons, and an amber/cyan network with traveling pulses. All three morph their actual point positions into DAMON at 38–60% scroll progress, then into different system forms. The glyph atlas is generated locally. No generation service, downloaded models, or new dependencies are needed.
+- Particle functional QA: 69/69 targeted Chromium checks pass. Real draw counts verify animation, Pause/Resume, offscreen suspension, old-canvas disposal, and one active canvas after switching. Query links and browser Back/Forward work. Reveal DAMON reaches approximately 45% progress. Four projects, biography, three notes, and contact remain reachable.
+- Initial reduced motion and disabled WebGL use a complete static DAMON illustration for each new mode, preserving personal content. The tree retains its original fallback. Controls and navigation fit at 390px and 320px; short landscape was also checked.
+- Following the brightness and ribbon-shape refinement, all three integrated scenes were captured at 1440×900 and 390×844 in hero, DAMON, and system states. All six route/viewport combinations report no page errors, shader errors, or horizontal overflow.
+- Robot targeted checks pass for staged assembly, pointer depth, scroll separation, replay, pause, project reveals, research orbit progress, notes, and contact. Reduced motion disables the controller and presents the complete artwork. The robot uses the supplied SVG geometry with layered transforms; it is not a Three.js mesh.
+- Visual review corrected the exploded helmet colliding with its caption and the large topic pills covering particle interlude text. Desktop uses a short pinned robot scene; mobile follows normal document flow.
+- The final robot framing check measures the bounds of every transformed panel: the complete exploded helmet fits at 1440×900, 1024×768, 390×844, 320×568, and 844×390. Mobile particle cameras also reserve room below the scene selector; short overview scenes dim behind the headline and return to full brightness for DAMON.
+- A later mobile check caught focus scrolling the hidden viewport sideways because the fallback SVG extended beyond its width. The fallback now fits the viewport, the scene uses clipping without an internal scroll area, and the chapter controls constrain long labels.
+- Final production smoke: 30/30 checks pass for the three new modes, mobile name alignment after focus/Pause, complete personal content, robot assembly/replay, live reduced motion, article navigation, and comparison thumbnails/links. Reduced-motion assertions verify all 11 pieces have no transforms and remain stable; Chromium may serialize the cleared SVG style attribute as either absent or empty.
+- `npm run lint`, `npm run build`, and `git diff --check` pass. The existing shared Three.js chunk-size advisory remains. Original supplied HTML files were not modified.
+
+Captures and structured reports: `/workspace/matrix-portfolio-captures/`. Source notes: [docs/particle-directions.md](docs/particle-directions.md). Checks use Chromium with software WebGL; physical-device frame rates and Safari were not measured.
+
+---
+
+# Earlier QA — personal portfolio adaptations
 
 Reviewed 2026-10-04 on `codex/oil-motion-frame-studies`. `/particle` and `/robot` now provide complete personal portfolios using Damon's existing biography, projects, articles, and contact destinations. The directory and homepage prioritize these adaptations; both original HTML files remain unchanged.
 

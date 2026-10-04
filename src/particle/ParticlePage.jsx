@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { ArrowDown, ArrowUpRight, Pause, Play } from 'lucide-react';
 import { projects } from '../data/projects';
 import { aboutProfile } from '../data/about';
@@ -29,6 +29,34 @@ const researchAreas = [
   { title: 'Measure what matters.', label: 'Evaluation / Multi-turn agents', description: 'Evaluating the decisions between the first request and the final result, including memory, recovery, and replanning.' },
 ];
 
+const scenes = [
+  { id: 'matrix', name: 'MATRIX', description: '代码如雨，汇成一个名字。', kicker: 'From signals to systems', chapters: ['A world of signals', 'Signals spell DAMON', 'Ideas become useful'], interlude: ['SIGNAL. IDENTITY. INTELLIGENCE.', 'A name emerges.\nA system takes shape.'] },
+  { id: 'signature', name: 'DAMON', description: '星尘聚拢，写下 DAMON。', kicker: 'A signature in motion', chapters: ['A field of possibilities', 'A signature in motion', 'Research with a purpose'], interlude: ['A HUMAN SIGNATURE.', 'Behind every system,\na curious mind.'] },
+  { id: 'neural', name: 'NEURAL', description: '让想法连接，让智能生长。', kicker: 'Intelligence is connected', chapters: ['Ideas finding each other', 'Connections become DAMON', 'A connected practice'], interlude: ['IDEAS FIND THEIR CONNECTIONS.', 'Different perspectives.\nShared possibilities.'] },
+  { id: 'tree', name: 'TREE', description: '从一颗种子，到不断生长的系统。', kicker: 'Research meets reality', chapters: ['A living intelligence', 'Ideas in orbit', 'Research into systems'], interlude: ['CONNECTED IDEAS. CAPABLE SYSTEMS.', 'Every connection\nchanges what’s possible.'] },
+];
+
+function SceneFallback({ variant }) {
+  if (variant === 'tree') return null;
+  return <svg className={`particle-fallback particle-fallback-${variant}`} viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+    <defs>
+      <radialGradient id={`particle-glow-${variant}`}><stop stopColor="currentColor" stopOpacity=".18" /><stop offset="1" stopColor="currentColor" stopOpacity="0" /></radialGradient>
+      <linearGradient id={`particle-letter-${variant}`} x2="0" y2="1"><stop stopColor="#fff" /><stop offset="1" stopColor="currentColor" /></linearGradient>
+    </defs>
+    <ellipse cx="600" cy="310" rx="540" ry="330" fill={`url(#particle-glow-${variant})`} />
+    {variant === 'matrix' && Array.from({ length: 28 }, (_, index) => <text key={index} x={45 + index * 42} y={60 + (index * 73) % 150} fill="currentColor" opacity={.12 + (index % 4) * .06} fontFamily="monospace" fontSize="15" writingMode="vertical-rl" letterSpacing="12">{index % 2 ? '0101アイ1010エ01' : '1010オ0101カ101'}</text>)}
+    {variant === 'signature' && Array.from({ length: 90 }, (_, index) => <circle key={index} cx={50 + (index * 131) % 1100} cy={65 + (index * 71) % 490} r={index % 4 === 0 ? 2 : 1} fill="currentColor" opacity={.2 + (index % 5) * .1} />)}
+    {variant === 'neural' && <g fill="none" stroke="currentColor" opacity=".28">{Array.from({ length: 14 }, (_, index) => {
+      const angle = index / 14 * Math.PI * 2;
+      const x = 600 + Math.cos(angle) * 410;
+      const y = 310 + Math.sin(angle) * 220;
+      return <g key={index}><path d={`M${x},${y}L600,310L${600 + Math.cos(angle + 1.8) * 410},${310 + Math.sin(angle + 1.8) * 220}`} /><circle cx={x} cy={y} r="5" fill="currentColor" /><ellipse cx="600" cy="310" rx="410" ry="220" /></g>;
+    })}</g>}
+    <text x="600" y="355" textAnchor="middle" fontFamily="Arial, sans-serif" fontSize="145" fontWeight="800" letterSpacing="8" fill={`url(#particle-letter-${variant})`}>DAMON</text>
+    <text x="600" y="395" textAnchor="middle" fontFamily="monospace" fontSize="11" letterSpacing="8" fill="currentColor" opacity=".65">IDEAS INTO INTELLIGENCE</text>
+  </svg>;
+}
+
 const clamp = (value) => Math.max(0, Math.min(1, value));
 const smooth = (from, to, value) => {
   const amount = clamp((value - from) / (to - from));
@@ -51,13 +79,17 @@ function PixelTitle({ children }) {
 }
 
 export default function ParticlePage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedScene = scenes.find((scene) => scene.id === searchParams.get('scene')) || scenes[0];
+  const variant = selectedScene.id;
   const pageRef = useRef(null);
   const cinematicRef = useRef(null);
   const viewportRef = useRef(null);
   const canvasRef = useRef(null);
   const sceneRef = useRef(null);
   const flowRef = useRef({ progress: 0, paused: false, reduced: false, stage: 'overview', elapsed: 0, inView: true });
-  const [status, setStatus] = useState('loading');
+  const [sceneState, setSceneState] = useState({ variant: null, status: 'loading' });
+  const status = sceneState.variant === variant ? sceneState.status : 'loading';
   const [paused, setPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const [stage, setStage] = useState('overview');
@@ -82,24 +114,27 @@ export default function ParticlePage() {
   useEffect(() => {
     let cancelled = false;
     let controller;
-    import('./particleScene').then(({ createParticleScene }) => {
+    const sceneModule = variant === 'tree' ? import('./particleScene') : import('./digitalScene');
+    sceneModule.then((module) => {
       if (cancelled) return;
-      controller = createParticleScene(canvasRef.current, {
-        label: 'Damon',
-        onReady: () => { if (!cancelled) setStatus('ready'); },
-        onError: () => { if (!cancelled) setStatus('fallback'); },
+      const createScene = variant === 'tree' ? module.createParticleScene : module.createDigitalScene;
+      controller = createScene(canvasRef.current, {
+        label: 'DAMON',
+        variant,
+        onReady: () => { if (!cancelled) setSceneState({ variant, status: 'ready' }); },
+        onError: () => { if (!cancelled) setSceneState({ variant, status: 'fallback' }); },
       });
       sceneRef.current = controller;
       controller.setReducedMotion(flowRef.current.reduced);
       controller.setPaused(flowRef.current.paused || !flowRef.current.inView);
       controller.setProgress(flowRef.current.progress);
-    }).catch(() => { if (!cancelled) setStatus('fallback'); });
+    }).catch(() => { if (!cancelled) setSceneState({ variant, status: 'fallback' }); });
     return () => {
       cancelled = true;
       controller?.dispose();
       sceneRef.current = null;
     };
-  }, []);
+  }, [variant]);
 
   useEffect(() => {
     flowRef.current.paused = paused;
@@ -121,6 +156,13 @@ export default function ParticlePage() {
       const progress = flowRef.current.progress;
       const show = smooth(0.16, 0.25, progress) * (1 - smooth(0.55, 0.68, progress));
       cards.forEach((card, index) => {
+        if (variant !== 'tree') {
+          const drift = Math.sin(flowRef.current.elapsed * .5 + index * .7) * 1.5;
+          card.style.opacity = staticView ? 0 : show * .8;
+          card.style.transform = `translateY(${(1 - show) * 8 + drift}px)`;
+          card.style.zIndex = '1';
+          return;
+        }
         const angle = index / cards.length * Math.PI * 2 + flowRef.current.elapsed * 0.13 + progress * 5.8;
         const depth = (Math.sin(angle) + 1) / 2;
         const x = innerWidth * 0.5 + Math.cos(angle) * Math.min(innerWidth * 0.37, 610);
@@ -188,7 +230,7 @@ export default function ParticlePage() {
       window.removeEventListener('resize', onScroll);
       document.removeEventListener('visibilitychange', resume);
     };
-  }, [paused, staticView]);
+  }, [paused, staticView, variant]);
 
   const goTo = (event, target, focus = false) => {
     event.preventDefault();
@@ -199,15 +241,22 @@ export default function ParticlePage() {
       section.scrollIntoView({ behavior: 'instant' });
     } else {
       const offset = cinematic.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({ top: offset + target * (cinematic.offsetHeight - innerHeight), behavior: 'instant' });
+      window.scrollTo({ top: offset + target * (cinematic.offsetHeight - innerHeight), left: 0, behavior: 'instant' });
       // Chapter links jump immediately; the scene eases its own camera and geometry.
       window.dispatchEvent(new Event('scroll'));
     }
     if (focus) requestAnimationFrame(() => root.querySelector('#particle-work h2')?.focus({ preventScroll: true }));
   };
 
+  const selectScene = (id) => {
+    if (id === variant) return;
+    const next = new URLSearchParams(searchParams);
+    next.set('scene', id);
+    setSearchParams(next, { preventScrollReset: true });
+  };
+
   return (
-    <main ref={pageRef} className={`particle-page ${status === 'ready' ? 'is-ready' : ''} ${staticView ? 'is-static' : ''}`} data-stage={stage} data-scene={status}>
+    <main ref={pageRef} className={`particle-page ${status === 'ready' ? 'is-ready' : ''} ${staticView ? 'is-static' : ''}`} data-stage={stage} data-scene={status} data-variant={variant}>
       <a className="particle-skip" href="#particle-work" onClick={(event) => goTo(event, 1, true)}>Skip to selected work</a>
       <header className="particle-header">
         <a className="particle-brand" href="#particle-overview" onClick={(event) => goTo(event, 0)} aria-label="Damon, back to overview">
@@ -227,20 +276,29 @@ export default function ParticlePage() {
       <div ref={cinematicRef} className="particle-cinematic">
         <div ref={viewportRef} className="particle-viewport">
           <div className="particle-backdrop" aria-hidden="true" />
-          <canvas ref={canvasRef} className="particle-canvas" aria-hidden="true" />
+          <SceneFallback variant={variant} />
+          <canvas key={variant} ref={canvasRef} className="particle-canvas" aria-hidden="true" />
           <div className="particle-vignette" aria-hidden="true" />
+
+      <div className="particle-scene-picker">
+        <span className="particle-scene-label">A DIFFERENT PERSPECTIVE</span>
+        <div className="particle-scene-options" role="group" aria-label="Choose a visual direction">
+          {scenes.map((scene, index) => <button type="button" key={scene.id} aria-pressed={scene.id === variant} onClick={() => selectScene(scene.id)}><span>0{index + 1}</span>{scene.name}</button>)}
+        </div>
+        <p lang="zh-CN">{selectedScene.description}</p>
+      </div>
 
       <section className="particle-hero" id="particle-overview" aria-label="Introduction" inert={!staticView && stage !== 'overview'}>
         <div className="particle-location"><span className="particle-status-dot" />Hangzhou, China<span>AI RESEARCHER / LLM ENGINEER</span></div>
         <div className="particle-hero-title">
-          <p className="particle-kicker"><span />Research meets reality</p>
+          <p className="particle-kicker"><span />{selectedScene.kicker}</p>
           <h1 aria-label="Intelligence in the real world."><PixelTitle>Intelligence in the real world.</PixelTitle></h1>
         </div>
         <div className="particle-hero-copy">
           <p>I’m Damon. I build agent systems at Alibaba — connecting agentic RL, post-training, and evaluation to work that matters.</p>
           <div className="particle-actions">
             <a href="#particle-work" className="particle-pill particle-primary" onClick={(event) => goTo(event, 1, true)}>Explore work <ArrowUpRight size={16} /></a>
-            <a href="#particle-about" className="particle-pill particle-light">About me</a>
+            {staticView ? <a href="#particle-about" className="particle-pill particle-light">About me</a> : <a href="#particle-thinking" className="particle-pill particle-light particle-reveal" onClick={(event) => goTo(event, .45)}>{variant === 'tree' ? 'Watch it grow' : 'Reveal DAMON'} <ArrowDown size={15} /></a>}
           </div>
         </div>
       </section>
@@ -248,7 +306,7 @@ export default function ParticlePage() {
       <div className="particle-orbits" id="particle-thinking" aria-hidden="true">
         {topics.map((topic, index) => <div className="particle-orbit-card" key={topic}><span>{String(index + 1).padStart(2, '0')}</span>{topic}</div>)}
       </div>
-      <div className="particle-interlude" aria-hidden="true"><span>CONNECTED IDEAS. CAPABLE SYSTEMS.</span><p>Every connection<br />changes what’s possible.</p></div>
+      <div className="particle-interlude" aria-hidden="true"><span>{selectedScene.interlude[0]}</span><p>{selectedScene.interlude[1].split('\n').map((line, index) => <Fragment key={line}>{index > 0 && <br />}{line}</Fragment>)}</p></div>
 
       <section className="particle-work" id="particle-work" aria-label="Selected work" inert={!staticView && stage !== 'work'}>
         <div className="particle-work-heading">
@@ -268,7 +326,7 @@ export default function ParticlePage() {
       </section>
 
       <footer className="particle-controls">
-        <div className="particle-chapter"><span>{stage === 'overview' ? '01' : stage === 'thinking' ? '02' : '03'}</span><span>{stage === 'overview' ? 'A living intelligence' : stage === 'thinking' ? 'Ideas in orbit' : 'Research into systems'}</span></div>
+        <div className="particle-chapter"><span>{stage === 'overview' ? '01' : stage === 'thinking' ? '02' : '03'}</span><span>{selectedScene.chapters[stage === 'overview' ? 0 : stage === 'thinking' ? 1 : 2]}</span></div>
         <span className="particle-scroll-hint">{stage === 'work' ? 'SCROLL TO MEET DAMON' : 'SCROLL TO TRANSFORM'} <ArrowDown size={14} /></span>
         {status === 'loading' ? <span className="particle-load" role="status">Preparing the scene…</span> : staticView ? <span className="particle-static-label">Static view</span> : <button className="particle-pause" type="button" aria-pressed={paused} aria-label={paused ? 'Resume animation' : 'Pause animation'} onClick={() => setPaused(!paused)}>{paused ? <Play size={13} /> : <Pause size={13} />}<span>{paused ? 'Resume motion' : 'Pause motion'}</span></button>}
       </footer>

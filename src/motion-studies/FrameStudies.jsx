@@ -78,6 +78,15 @@ function StudiesIndex({ studies }) {
             <span className="fm-personal-site-enter">进入完整网站 <ArrowUpRight size={20} aria-hidden="true" /></span>
           </Link>
         </nav>
+        <div className="fm-particle-shortcuts" role="group" aria-label="粒子个人站的三维场景">
+          <p>实时三维场景 <span>选择一个版本进入粒子个人站</span></p>
+          <div>
+            <Link to="/particle?scene=matrix">01 数字矩阵 <ArrowUpRight size={12} aria-hidden="true" /></Link>
+            <Link to="/particle?scene=signature">02 DAMON 星尘签名 <ArrowUpRight size={12} aria-hidden="true" /></Link>
+            <Link to="/particle?scene=neural">03 神经网络 <ArrowUpRight size={12} aria-hidden="true" /></Link>
+            <Link className="fm-tree-baseline" to="/particle?scene=tree">原始粒子树</Link>
+          </div>
+        </div>
       </section>
       <section className="fm-index-intro" aria-labelledby="fm-index-title">
         <div className="fm-kicker"><span className="fm-dot" /> THE MOTION NOTEBOOK · VOL. 01</div>

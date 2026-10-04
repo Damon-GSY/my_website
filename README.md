@@ -2,12 +2,26 @@
 
 ## Personal websites adapted from the pasted HTML
 
-Open **`/html-studies/index.html`** to compare the two complete personal websites. The homepage has direct links to both above the motion studies.
+Open **`/html-studies/index.html`** to compare the complete personal websites and three new particle directions. The homepage also links directly to each preview.
 
 | Page | Route | What is included |
 | --- | --- | --- |
-| Particle Intelligence | `/particle` | Three.js sphere/tree/cube scene, selected work, biography and research, notes, creator channels, contact |
-| Agent Assembly | `/robot` | Cobalt helmet assembly reworked around Damon, followed by selected work, research background, notes, and contact |
+| Matrix | `/particle?scene=matrix` (default) | Layered character rain gathers into DAMON, then a digital system |
+| DAMON | `/particle?scene=signature` | Violet particle ribbons weave into the name, then an orbital structure |
+| Neural | `/particle?scene=neural` | Amber/cyan connected nodes and traveling signals resolve into DAMON |
+| Tree baseline | `/particle?scene=tree` | Original Three.js sphere/tree/cube scene |
+| Agent Assembly | `/robot` | Panel assembly, pointer depth, scroll-controlled exploded diagram, and motion throughout the personal portfolio |
+
+All particle modes include selected work, biography, notes, creator channels, and contact. Use **Reveal DAMON** to go directly to the name formation, or scroll through the sequence. The robot page offers **Pause motion** and **Replay**. Both pages respect reduced motion. See [scene and motion notes](docs/particle-directions.md).
+
+For a fresh checkout of this preview branch:
+
+```bash
+git clone --branch codex/oil-motion-frame-studies --single-branch https://github.com/Damon-GSY/my_website.git damon-motion
+cd damon-motion
+npm ci
+npm run dev -- --port 4175
+```
 
 Both adaptations use the existing project and article data and real destinations from this repository. See [content and implementation notes](docs/personal-portfolio-adaptations.md). The exact original references remain available at `/html-studies/anchor-original.html` and `/future-machine.html` from smaller links below the personal-site previews.
 
