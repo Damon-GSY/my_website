@@ -1,3 +1,21 @@
+# Design QA — GDamon / AI morph
+
+Reviewed 2026-10-04 on `codex/oil-motion-frame-studies`. The current `/kernelcode/index.html` now presents GDamon's AI research, with the original KernelCode page preserved at `/kernelcode/reference.html`.
+
+- The hero is a real, draggable `<AI>` voxel mesh built from authored 5×7 glyphs. The final `GDAMON` particle shape samples a separate voxel mesh by triangle surface area. Both are generated in the file; neither uses a text image or downloaded model.
+- One 30,000-point system morphs from the original sphere into a seeded, five-layer neural graph, then into `GDAMON`. The graph includes neuron shells, curved connections, and three central orbits; shader brightness pulses travel through the connections. The camera responds to pointer movement and the existing X/Z squeeze connects the three forms.
+- Neural and name framing now use the actual gap between heading and note/cards, including perspective padding. This adaptation removes the prior reference's short-landscape card overlap. The sphere retains the original large composition behind the heading.
+- Copy is based on `src/data/about.js` and `src/data/projects.js`. Section navigation and the hero button move through the real panels; work/notes links resolve to existing routes, project titles link to their corresponding project anchors, and contact uses the existing email address. Direct-file links to site routes resolve against `https://damon.ai`.
+- Captured all four panels at 1440×900, 1024×768, 390×844, 320×568, 844×390, 1280×500, and 320×500. The 28-capture run reports no page errors, horizontal/document overflow, or heading overflow. Visual review replaced missing arrow-font glyphs with inline SVGs and restored the original sphere scale after reviewing an overly small fit.
+- Final functional QA: **12/12 checks pass**, with zero JavaScript/shader errors and zero failed requests. Actual GPU draws contain 30,000 points for each shape. Coverage includes AI drag/release, real navigation in both directions, hero CTA, mid-morph squeeze and viewport resize, wheel accumulation, native mobile vertical/horizontal swipes, live project fragment targets, and short-landscape menu/framing.
+- Final framebuffer bounds verify clearance: desktop neural points occupy y369–694 inside a y313–745 gap; GDAMON occupies y359–589 inside y313–635. Mobile GDAMON occupies y387–459 inside y208–639; at 844×390 it occupies y148–223 inside y146–226. The restored desktop sphere spans about 652px. Final captures replace the earlier sphere and arrow-glyph previews.
+- `npm run lint`, `npm run build`, and `git diff --check` pass. Both standalone files are copied into the production build without byte changes. The existing shared Three.js chunk-size advisory remains; no new dependencies were added.
+- The original reference is byte-for-byte identical to the prior committed standalone file: SHA-256 `10592a6eaedee8130928216ba579a2204877a9123f187b335f42dde3fd4c6b81`.
+
+Captures and measured results: `/workspace/gdamon-captures/`. Chromium uses software WebGL; physical-device frame rates and Safari are not measured. As in the reference review, managed Chromium blocks direct `file://` navigation; runtime checks use HTTP.
+
+---
+
 # Design QA — KernelCode standalone
 
 Reviewed 2026-10-04 on `codex/oil-motion-frame-studies`. Deliverable: [public/kernelcode/index.html](public/kernelcode/index.html), served at `/kernelcode/index.html`. The independent reference experiment retains the supplied KernelCode branding, copy, assets, and inline CSS/JavaScript.

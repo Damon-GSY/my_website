@@ -1,10 +1,12 @@
 # Damon Guo-Siyi — website
 
-## KernelCode — standalone four-screen experiment
+## GDamon — AI particle morph
 
-Open [`public/kernelcode/index.html`](public/kernelcode/index.html) directly in a browser with an Internet connection, or visit **`/kernelcode/index.html`** on the local preview server. This is one complete HTML file with inline CSS and JavaScript, the specified Schibsted Grotesk font and Three.js 0.169 CDN imports, and the four original CloudFront image URLs. It has no build step or framework dependency.
+Open [`public/kernelcode/index.html`](public/kernelcode/index.html) directly in a browser with an Internet connection, or visit **`/kernelcode/index.html`** on the local preview server. This standalone HTML adapts the four-screen experiment to GDamon's AI research: a 30,000-point cloud morphs from an intelligence core sphere into a neural network and then the **GDAMON** signature. Its copy draws on the existing profile's agentic RL, post-training, evaluation, and production agent work.
 
-The literal KernelCode reference includes a photographic hero with a draggable voxel wordmark, followed by a single 30,000-point system morphing through a sphere, keyboard photograph, and `<K>`. Wheel, touch, and keyboard input move one screen at a time. The homepage and comparison directory link to this experiment separately from the Damon portfolios.
+CSS and JavaScript are inline, with Schibsted Grotesk and Three.js 0.169 loaded from their CDNs; no framework or build step is needed. Wheel, touch, and keyboard input move one screen at a time. The homepage and comparison directory link to this version and the preserved original.
+
+The literal **KernelCode reference** remains at [`public/kernelcode/reference.html`](public/kernelcode/reference.html), or **`/kernelcode/reference.html`** locally. It keeps the original copy, four CloudFront images, draggable voxel `<K>`, and sphere → keyboard photograph → `<K>` particle sequence.
 
 ## Personal websites adapted from the pasted HTML
 

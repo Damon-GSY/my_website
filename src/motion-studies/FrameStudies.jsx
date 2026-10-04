@@ -89,8 +89,11 @@ function StudiesIndex({ studies }) {
         </div>
       </section>
       <aside className="fm-standalone-experiment" lang="zh-CN" aria-label="独立单页实验">
-        <p><strong>KernelCode</strong><span>按原规格复原的独立实验 · 摄影、体素与粒子</span></p>
-        <a href="/kernelcode/index.html">打开单页 <ArrowUpRight size={14} aria-hidden="true" /></a>
+        <p><strong>GDamon / AI 粒子变形</strong><span>智能核心 → 神经网络 → GDAMON · 研究与个人签名</span></p>
+        <div className="fm-standalone-links">
+          <a href="/kernelcode/index.html">打开 GDamon <ArrowUpRight size={14} aria-hidden="true" /></a>
+          <a className="fm-standalone-reference" href="/kernelcode/reference.html">KernelCode 原版 <ArrowUpRight size={12} aria-hidden="true" /></a>
+        </div>
       </aside>
       <section className="fm-index-intro" aria-labelledby="fm-index-title">
         <div className="fm-kicker"><span className="fm-dot" /> THE MOTION NOTEBOOK · VOL. 01</div>

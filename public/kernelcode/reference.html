@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#000000">
   <link rel="icon" href="data:,">
-  <meta name="description" content="GDamon — Damon Guo-Siyi. AI researcher and LLM engineer working on agentic RL, post-training, and evaluation at Alibaba.">
-  <title>GDamon — Intelligence, engineered.</title>
+  <title>KernelCode — Learn Coding With KernelCode</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
@@ -132,8 +131,6 @@
     .st-n b { color:#fff; font-weight:500; }
     .st-t { margin-top:auto; font-size:clamp(15px, 1.46vw, 24px); font-weight:700; letter-spacing:-.04em; }
     .st-b { margin-top:21px; font-size:clamp(10px, .90vw, 15px); font-weight:500; line-height:1.33; letter-spacing:-.02em; }
-    .st-t a { text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:4px; }
-    .st-t svg { display:inline-block; width:.65em; height:.65em; margin-left:.3em; vertical-align:baseline; }
     .navpill::-webkit-scrollbar, #steps::-webkit-scrollbar, .step::-webkit-scrollbar { display:none; }
     @media (any-pointer:fine) { body, a, button { cursor:none; } }
     @media (any-pointer:coarse) { #cursor, #cursorLabel { display:none; } #heroGL { pointer-events:none; } }
@@ -211,41 +208,41 @@
   </style>
 </head>
 <body class="loading">
-  <div id="loader" aria-label="Loading GDamon"><div id="loaderTrack"><div id="loaderFill"></div></div><span id="loaderPercent" class="zero">0%</span></div>
+  <div id="loader" aria-label="Loading KernelCode"><div id="loaderTrack"><div id="loaderFill"></div></div><span id="loaderPercent" class="zero">0%</span></div>
   <div id="cursor" aria-hidden="true"></div>
   <span id="cursorLabel" aria-hidden="true">Scroll Down</span>
   <header>
-    <a class="brand" href="#hero" data-section="0" aria-label="GDamon home"><span class="kernel">G</span><span class="code">Damon</span></a>
-    <nav id="sitenav" class="navpill" aria-label="Main navigation"><a href="#s2" data-section="1">/Research</a><a href="#s3" data-section="2">/Systems</a><a href="#s4" data-section="3">/GDamon</a><a href="/projects">/Work</a><a href="/blog">/Notes</a></nav>
-    <a class="cta" href="mailto:hello@damon.ai"><span class="arrow"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="button-text">Let’s talk</span></a>
+    <a class="brand" href="#" aria-label="KernelCode"><span class="kernel">Kernel</span><span class="code">Code</span></a>
+    <nav id="sitenav" class="navpill" aria-label="Main navigation"><a href="#">/About</a><a href="#">/Programs</a><a href="#">/AI Workflows</a><a href="#">/Projects</a><a href="#">/Pricing</a></nav>
+    <a class="cta" href="#"><span class="arrow"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="button-text">Start Learning</span></a>
     <button class="navtoggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sitenav"><span></span><span></span><span></span></button>
   </header>
   <canvas id="stage" aria-hidden="true"></canvas>
   <div id="rail" aria-hidden="true"><div id="railFill"></div></div>
   <main>
-    <section id="hero" class="show" aria-label="AI that works. Built by GDamon.">
-      <div id="heroBg"></div><div id="heroSky"></div><canvas id="heroNums" aria-hidden="true"></canvas><div id="heroShade"></div><canvas id="heroGL" aria-label="Draggable three-dimensional AI wordmark"></canvas>
+    <section id="hero" class="show" aria-label="Learn Coding With KernelCode">
+      <div id="heroBg"></div><div id="heroSky"></div><canvas id="heroNums" aria-hidden="true"></canvas><div id="heroShade"></div><canvas id="heroGL" aria-label="Draggable voxel KernelCode wordmark"></canvas>
       <div id="heroCopy">
-        <h1><span class="rv">AI that works.</span><span class="rv" data-dot="1" data-d="240">Built by GDamon.</span></h1>
-        <aside id="heroAside"><p class="fade">I’m Damon Guo-Siyi, an AI researcher and LLM engineer at Alibaba. I work on agentic RL, post-training, and evaluation to turn research into useful agent systems.</p><a class="btnpair fade" href="#s2" data-section="1"><span class="arrow"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="button-text">Explore research</span></a></aside>
+        <h1><span class="rv">Learn Coding</span><span class="rv" data-dot="1" data-d="240">With KernelCode</span></h1>
+        <aside id="heroAside"><p class="fade">Master programming, AI workflows and product thinking in one modern curriculum. Learn to build faster, automate repetitive work and focus on solving real problems.</p><a class="btnpair fade" href="#"><span class="arrow"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="button-text">Explore Curriculum</span></a></aside>
       </div>
     </section>
-    <section id="s2" class="panel" aria-label="Intelligence starts with a question." inert>
-      <h2><span class="rv">Intelligence starts</span><span class="rv" data-d="140">with a question.</span></h2>
-      <p class="note fade">What makes an agent useful beyond a demo? I study how models learn, reason, and recover from mistakes — connecting agentic reinforcement learning with benchmarks grounded in real tasks.</p>
+    <section id="s2" class="panel" aria-label="AI isn't replacing developers." inert>
+      <h2><span class="rv">AI isn't replacing</span><span class="rv" data-d="140">developers.</span></h2>
+      <p class="note fade">Great developers solve problems, make decisions, and design systems. AI accelerates the process, but creativity, critical thinking, and product vision still belong to the person behind the keyboard.</p>
     </section>
-    <section id="s3" class="panel" aria-label="Agents that connect the dots." inert>
-      <h2><span class="rv" data-dot="1">Agents that</span><span class="rv" data-dot="1" data-d="140">connect the dots.</span></h2>
-      <p class="note fade">Planning, memory, tools, and evaluation work together. At Alibaba, I build agents that select tools dynamically and handle real supply-chain workflows, with clear boundaries for human collaboration.</p>
+    <section id="s3" class="panel" aria-label="It's replacing repetition." inert>
+      <h2><span class="rv" data-dot="1">It's replacing</span><span class="rv" data-dot="1" data-d="140">repetition.</span></h2>
+      <p class="note fade">Let AI handle research, boilerplate code, debugging, and documentation while you focus on architecture, user experience, and building products that create real value.</p>
     </section>
-    <section id="s4" class="panel" aria-label="GDamon — research made real." inert>
-      <h2><span class="rv">Research,</span><span class="rv" data-d="140">made real.</span></h2>
-      <div id="steps" aria-label="Selected research and work">
-        <article class="step"><p class="st-n">&lt;p&gt;<b>01</b>&lt;/p&gt;</p><h3 class="st-t"><a href="/projects#supply-chain-agent-system">Agent systems<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></h3><p class="st-b">A risk-tiered decision framework for real supply-chain operations, with progressive confirmations and human handoffs.</p></article>
-        <article class="step"><p class="st-n">&lt;p&gt;<b>02</b>&lt;/p&gt;</p><h3 class="st-t"><a href="/projects#dynamic-tool-resolution-agents">Dynamic tools<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></h3><p class="st-b">Agentic RL and dynamic tool registration, helping agents resolve tasks with a changing pool of more than 100 tools.</p></article>
-        <article class="step"><p class="st-n">&lt;p&gt;<b>03</b>&lt;/p&gt;</p><h3 class="st-t"><a href="/projects#supply-chain-domain-llm">Post-training<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></h3><p class="st-b">From benchmark design to continual pretraining, SFT, and RL: building domain models around measurable capabilities.</p></article>
-        <article class="step"><p class="st-n">&lt;p&gt;<b>04</b>&lt;/p&gt;</p><h3 class="st-t"><a href="/projects#multi-turn-agent-evaluation">Agent evaluation<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></h3><p class="st-b">A multi-turn evaluation taxonomy covering planning, tool use, memory, and judging the steps behind an answer.</p></article>
-        <article class="step"><p class="st-n">&lt;p&gt;<b>05</b>&lt;/p&gt;</p><h3 class="st-t"><a href="/blog">Notes &amp; ideas<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4.2 11.8 11.8 4.2M11.8 4.2H5.6M11.8 4.2v6.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></h3><p class="st-b">Research notes and lessons from deployment. Exploring what it takes to make AI reliable, capable, and useful.</p></article>
+    <section id="s4" class="panel" aria-label="We learn a modern approach." inert>
+      <h2><span class="rv">We learn a modern</span><span class="rv" data-d="140">approach.</span></h2>
+      <div id="steps" aria-label="A modern approach">
+        <article class="step"><p class="st-n">&lt;p&gt;<b>01</b>&lt;/p&gt;</p><h3 class="st-t">Idea</h3><p class="st-b">Every great product begins with an idea. Define the problem, understand the user, and outline the value before writing a single line of code.</p></article>
+        <article class="step"><p class="st-n">&lt;p&gt;<b>02</b>&lt;/p&gt;</p><h3 class="st-t">AI Planning</h3><p class="st-b">Use AI to research, generate architecture, break down complex tasks, compare approaches, and create a clear development roadmap.</p></article>
+        <article class="step"><p class="st-n">&lt;p&gt;<b>03</b>&lt;/p&gt;</p><h3 class="st-t">Prototype</h3><p class="st-b">Create a working prototype in hours instead of weeks. Test assumptions, iterate quickly, and focus on learning before investing in production code.</p></article>
+        <article class="step"><p class="st-n">&lt;p&gt;<b>04</b>&lt;/p&gt;</p><h3 class="st-t">Review</h3><p class="st-b">Review architecture, optimize performance, improve readability, eliminate bugs, and let AI assist with debugging, documentation, and code quality.</p></article>
+        <article class="step"><p class="st-n">&lt;p&gt;<b>05</b>&lt;/p&gt;</p><h3 class="st-t">Ship</h3><p class="st-b">Deploy your product, gather feedback, monitor real usage, and continue improving through rapid AI-assisted iterations.</p></article>
       </div>
     </section>
   </main>
@@ -253,12 +250,15 @@
   (() => {
     const ASSETS = {
       hero:'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260923_000931_48441d07-5cf5-450a-8407-d0c86799b8a7.png',
+      k:'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260922_225529_59ddf7d1-9a17-489b-931d-404bd48f65d0.png',
+      chevron:'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260922_225510_bd69a786-7cc4-4340-8ffe-2c49228d2483.png',
+      keyboard:'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260922_215237_121b02c2-4f84-43ad-91c1-9f44e6b5faf1.png'
     };
     const $ = (selector) => document.querySelector(selector);
     const sections = [...document.querySelectorAll('main > section')];
     const clamp = (value, min=0, max=1) => Math.min(max, Math.max(min, value));
     const smoothstep = (t) => t*t*(3-2*t);
-    const runtime = window.GDamonRuntime = { ASSETS, stage:null, hero:null, y:0, sectionIndex:0, transitioning:false };
+    const runtime = window.KernelRuntime = { ASSETS, stage:null, hero:null, y:0, sectionIndex:0, transitioning:false };
     const pointer = { x:0, y:0 };
     const pointerScreen = { x:innerWidth/2, y:innerHeight/2 };
     const cursorPosition = { ...pointerScreen };
@@ -335,12 +335,7 @@
       const open=!nav.classList.contains('open'); nav.classList.toggle('open',open); toggle.classList.toggle('open',open);
       toggle.setAttribute('aria-expanded',String(open)); toggle.setAttribute('aria-label',open?'Close menu':'Open menu');
     });
-    document.querySelectorAll('[data-section]').forEach((link) => link.addEventListener('click',(event) => {
-      event.preventDefault(); closeMenu(); go(Number(link.dataset.section)-current);
-    }));
-    if(location.protocol==='file:') document.querySelectorAll('a[href^="/"]').forEach(link => {
-      link.href=new URL(link.getAttribute('href'),'https://damon.ai').href;
-    });
+    document.querySelectorAll('a[href="#"]').forEach((link) => link.addEventListener('click',(event) => { event.preventDefault(); if(link.closest('.navpill')) closeMenu(); }));
 
     function applyView(y) {
       runtime.y=y;
@@ -485,7 +480,7 @@
     runtime.markReady=markReady;
     const bg=new Image(); bg.onload=bg.onerror=() => markReady('bg'); bg.src=ASSETS.hero;
     document.fonts.ready.then(()=>{markReady('font'); layout();});
-    const loaderFallback=setTimeout(()=>['bg','glb','network','font'].forEach(markReady),15000);
+    const loaderFallback=setTimeout(()=>['bg','glb','keys','font'].forEach(markReady),15000);
     function loaderFrame() {
       if(finished) return;
       const real=got.size/4*100;
@@ -515,173 +510,7 @@
   <script type="module">
     import * as THREE from 'three';
     import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-function createVoxelText(text, primaryMaterial, accentMaterial = primaryMaterial) {
-  const masks = {
-    '<': ['00010', '00100', '01000', '10000', '01000', '00100', '00010'],
-    '>': ['01000', '00100', '00010', '00001', '00010', '00100', '01000'],
-    A: ['01110', '10001', '10001', '11111', '10001', '10001', '10001'],
-    I: ['11111', '00100', '00100', '00100', '00100', '00100', '11111'],
-    G: ['01110', '10001', '10000', '10111', '10001', '10001', '01110'],
-    D: ['11110', '10001', '10001', '10001', '10001', '10001', '11110'],
-    M: ['10001', '11011', '10101', '10101', '10001', '10001', '10001'],
-    O: ['01110', '10001', '10001', '10001', '10001', '10001', '01110'],
-    N: ['10001', '11001', '11001', '10101', '10011', '10011', '10001']
-  };
-  const letters = String(text).toUpperCase();
-  if (!letters.length || [...letters].some(letter => !masks[letter])) {
-    throw new Error('Voxel text contains an unsupported or empty glyph.');
-  }
-  const wordmark = new THREE.Group();
-  wordmark.name = letters;
-  let cursor = 0;
-  for (const [index, letter] of [...letters].entries()) {
-    const boxes = [];
-    masks[letter].forEach((row, y) => {
-      [...row].forEach((cell, x) => {
-        if (cell !== '1') return;
-        const seed = Math.sin((x + 1) * 127.1 + (y + 1) * 311.7 + index * 73.9) * 43758.5453;
-        const hash = seed - Math.floor(seed);
-        const depth = hash < 0.16 ? 1.04 : hash < 0.34 ? 0.62 : 0.82;
-        const z = hash < 0.16 ? 0.16 : hash < 0.34 ? -0.08 : 0;
-        const box = new THREE.BoxGeometry(0.94, 0.94, depth);
-        box.translate(x, -y, z);
-        boxes.push(box);
-      });
-    });
-    const geometry = mergeGeometries(boxes, false);
-    boxes.forEach(box => box.dispose());
-    geometry.center();
-    geometry.computeBoundingBox();
-    geometry.computeBoundingSphere();
-    const width = geometry.boundingBox.max.x - geometry.boundingBox.min.x;
-    const mesh = new THREE.Mesh(geometry, letter === '<' || letter === '>' ? accentMaterial : primaryMaterial);
-    mesh.name = letter;
-    mesh.position.x = cursor + width / 2;
-    wordmark.add(mesh);
-    cursor += width + 1.06;
-  }
-  wordmark.updateMatrixWorld(true);
-  const bounds = new THREE.Box3().setFromObject(wordmark);
-  const center = bounds.getCenter(new THREE.Vector3());
-  const size = bounds.getSize(new THREE.Vector3());
-  wordmark.children.forEach(mesh => mesh.position.sub(center));
-  wordmark.scale.setScalar(1 / size.y);
-  wordmark.updateMatrixWorld(true);
-  return wordmark;
-}
-
-function createNeuralSamples(count) {
-  const samples = new Float32Array(count * 3);
-  let seed = 0x4744414d;
-  const random = () => {
-    seed += 0x6d2b79f5;
-    let n = Math.imul(seed ^ seed >>> 15, 1 | seed);
-    n ^= n + Math.imul(n ^ n >>> 7, 61 | n);
-    return ((n ^ n >>> 14) >>> 0) / 4294967296;
-  };
-  const tau = Math.PI * 2;
-  const layers = [
-    { x: -454, ys: [116, 0, -116] },
-    { x: -228, ys: [156, 52, -52, -156] },
-    { x: 0, ys: [174, 87, 0, -87, -174] },
-    { x: 228, ys: [156, 52, -52, -156] },
-    { x: 454, ys: [116, 0, -116] }
-  ];
-  const neurons = [];
-  const columns = layers.map((layer, column) => layer.ys.map((y, row) => {
-    const core = column === 2 && row === 2;
-    const neuron = {
-      x: layer.x,
-      y,
-      z: core ? 0 : Math.sin(column * 1.7 + row * 2.3) * 39,
-      radius: core ? 31 : column === 0 || column === 4 ? 20 : 15 + (row % 2) * 3,
-      core
-    };
-    neurons.push(neuron);
-    return neuron;
-  }));
-  const edges = [];
-  columns.slice(0, -1).forEach((column, index) => {
-    column.forEach((a, ai) => columns[index + 1].forEach((b, bi) => {
-      if (Math.abs(a.y - b.y) > 208) return;
-      edges.push({ a, b, arch: ((ai + bi + index) % 2 ? 1 : -1) * (13 + Math.abs(a.y - b.y) * 0.05), depth: Math.sin(ai * 2.1 + bi * 1.9 + index) * 63 });
-    }));
-  });
-  const nodeWeights = [];
-  let nodeTotal = 0;
-  for (const neuron of neurons) {
-    nodeTotal += neuron.radius * neuron.radius;
-    nodeWeights.push(nodeTotal);
-  }
-  const pickNeuron = () => {
-    const weight = random() * nodeTotal;
-    let index = 0;
-    while (weight > nodeWeights[index]) index++;
-    return neurons[index];
-  };
-  const put = (index, x, y, z) => {
-    samples[index * 3] = x;
-    samples[index * 3 + 1] = y;
-    samples[index * 3 + 2] = z;
-  };
-  const nodeCount = Math.floor(count * 0.35);
-  const edgeCount = Math.floor(count * 0.58);
-  for (let index = 0; index < nodeCount; index++) {
-    const node = pickNeuron();
-    const latitude = random() * 2 - 1;
-    const azimuth = random() * tau;
-    const latitudeRadius = Math.sqrt(1 - latitude * latitude);
-    const band = random();
-    const radius = node.radius * (band < 0.65 ? 0.90 + random() * 0.12 : band < 0.93 ? Math.cbrt(random()) * 0.62 : 1.1 + random() * 0.15);
-    put(index, node.x + Math.cos(azimuth) * latitudeRadius * radius, node.y + latitude * radius, node.z + Math.sin(azimuth) * latitudeRadius * radius);
-  }
-  for (let index = nodeCount; index < nodeCount + edgeCount; index++) {
-    const edge = edges[Math.floor(random() * edges.length)];
-    const t = random();
-    const s = 1 - t;
-    const bend = Math.sin(t * Math.PI);
-    const lateral = (random() - 0.5) * 2.8;
-    const depth = (random() - 0.5) * 3.8;
-    // A pair of horizontal tangents makes the synapses read as distinct filaments.
-    const eased = t * t * (3 - 2 * t);
-    put(index,
-      edge.a.x * s + edge.b.x * t,
-      edge.a.y * (1 - eased) + edge.b.y * eased + edge.arch * bend + lateral,
-      edge.a.z * s + edge.b.z * t + edge.depth * bend + depth
-    );
-  }
-  for (let index = nodeCount + edgeCount; index < count; index++) {
-    const angle = random() * tau;
-    const orbit = (index - nodeCount - edgeCount) % 3;
-    const radius = (orbit === 0 ? 62 : orbit === 1 ? 51 : 73) + (random() - 0.5) * 1.8;
-    const x = Math.cos(angle) * radius;
-    const y = Math.sin(angle) * radius;
-    const tilt = orbit === 0 ? 0.40 : orbit === 1 ? -0.92 : 1.17;
-    const yaw = orbit === 0 ? -0.30 : orbit === 1 ? 0.62 : -0.76;
-    const tiltedY = y * Math.cos(tilt);
-    const tiltedZ = y * Math.sin(tilt);
-    put(index, x * Math.cos(yaw) + tiltedZ * Math.sin(yaw), tiltedY, -x * Math.sin(yaw) + tiltedZ * Math.cos(yaw));
-  }
-  // Mix the authored groups so the incoming morph resolves across the entire graph.
-  for (let index = count - 1; index > 0; index--) {
-    const other = Math.floor(random() * (index + 1));
-    for (let axis = 0; axis < 3; axis++) {
-      const held = samples[index * 3 + axis];
-      samples[index * 3 + axis] = samples[other * 3 + axis];
-      samples[other * 3 + axis] = held;
-    }
-  }
-  const low = [Infinity, Infinity, Infinity];
-  const high = [-Infinity, -Infinity, -Infinity];
-  for (let index = 0; index < samples.length; index++) {
-    const axis = index % 3;
-    low[axis] = Math.min(low[axis], samples[index]);
-    high[axis] = Math.max(high[axis], samples[index]);
-  }
-  const center = low.map((value, axis) => (value + high[axis]) / 2);
-  for (let index = 0; index < samples.length; index++) samples[index] -= center[index % 3];
-  return samples;
-}
+    const { ASSETS } = window.KernelRuntime;
 
     function createParticleSystem({ canvas, markReady, getPointer }) {
   const PN = 30000;
@@ -759,8 +588,6 @@ void main(){
   gl_Position = projectionMatrix * mv;
   gl_PointSize = psize * sc * (760.0 / max(1.0, -mv.z));
   vA = al * clamp(1.0 - (-mv.z - 520.0) / 2600.0, .22, 1.0);
-  float signal = pow(.5 + .5*sin(p.x*.026 - time*2.8), 6.0);
-  vA *= mix(1.0, .72 + signal*.75, wB);
   vBoost = clamp(wB + wC, 0.0, 1.0);
 }`,
     fragmentShader: `precision mediump float;
@@ -777,12 +604,12 @@ void main(){
   scene.add(points);
   canvas.dataset.particleCount = String(PN);
   canvas.dataset.sphereReady = 'true';
-  canvas.dataset.neuralReady = 'true';
+  canvas.dataset.keyboardReady = 'false';
   canvas.dataset.wordmarkReady = 'false';
 
-  const neuralRaw = createNeuralSamples(PN);
-  const neuralSize = new THREE.Box3().setFromBufferAttribute(new THREE.BufferAttribute(neuralRaw, 3)).getSize(new THREE.Vector3());
-  const framing = {};
+  let keyboardSamples = null;
+  let sampleWidth = 200;
+  let sampleHeight = 0;
   let wordmarkRaw = null;
   let wordmarkSize = null;
   let spin = 0;
@@ -800,51 +627,66 @@ void main(){
     return low;
   }
 
-  // Fit the actual shape between the heading and the note/cards, including short landscape.
-  function fitForm(sectionId, size, preferredWidth) {
-    const section = document.getElementById(sectionId);
-    const heading = section.querySelector('h2');
-    const footer = section.querySelector('.note, #steps');
-    const top = Math.max(document.querySelector('header').offsetHeight + 12, heading.offsetTop + heading.offsetHeight + 20);
-    const bottom = Math.max(top + 24, footer ? footer.offsetTop - 24 : innerHeight - 24);
-    const room = Math.max(24, bottom - top);
-    let scale = Math.min(preferredWidth, innerWidth * .88) / size.x;
-    scale = Math.min(scale, room * .86 / size.y);
-    const perspectiveGuard = 1 + size.z * scale / camera.position.z;
-    scale /= perspectiveGuard;
-    const centerY = (top + bottom) / 2;
-    framing[sectionId] = { top, bottom, centerY, scale, width:size.x*scale, height:size.y*scale };
-    return { scale, offsetY:innerHeight / 2 - centerY };
-  }
-
   function layoutA() {
     const film = innerWidth >= 1100 && innerHeight >= 700;
     const scale = film ? 1 : Math.min(1, innerWidth / 1100, innerHeight / 780);
-    for (let i=0; i<PN; i++) {
-      pA[i*3]=pA0[i*3]*scale;
-      pA[i*3+1]=pA0[i*3+1]*scale;
-      pA[i*3+2]=pA0[i*3+2]*scale;
-    }
+    for (let i = 0; i < pA.length; i++) pA[i] = pA0[i] * scale;
     geo.attributes.pA.needsUpdate = true;
   }
 
   function layoutB() {
-    const { scale, offsetY } = fitForm('s3', neuralSize, 1160);
-    for (let i=0; i<PN; i++) {
-      pB[i*3]=neuralRaw[i*3]*scale;
-      pB[i*3+1]=neuralRaw[i*3+1]*scale+offsetY;
-      pB[i*3+2]=neuralRaw[i*3+2]*scale;
+    if (keyboardSamples) {
+      const film = innerWidth >= 1100 && innerHeight >= 700;
+      let SRC_W = 1605;
+      let TOP_Y = 148;
+      let OX = -12;
+      let zScale = 1;
+      if (!film) {
+        SRC_W = Math.min(innerWidth * 1.08, 1605 * (innerWidth / 1440));
+        if (SRC_W * sampleHeight / sampleWidth > innerHeight * 0.62) {
+          SRC_W = innerHeight * 0.62 * sampleWidth / sampleHeight;
+        }
+        TOP_Y = Math.min(148 * (innerHeight / 900), innerHeight * 0.18);
+        OX = -12 * (innerWidth / 1440);
+        zScale = Math.min(1, innerWidth / 1440);
+      }
+      const k = SRC_W / sampleWidth;
+      const srcH = SRC_W * sampleHeight / sampleWidth;
+      for (let i = 0; i < PN; i++) {
+        const source = i * 6;
+        const sx = keyboardSamples[source];
+        const sy = keyboardSamples[source + 1];
+        const L = keyboardSamples[source + 2];
+        const j1 = keyboardSamples[source + 3];
+        const j2 = keyboardSamples[source + 4];
+        const j3 = keyboardSamples[source + 5];
+        pB[i * 3] = (sx / sampleWidth - 0.5) * SRC_W + OX + j1 * k * 0.34;
+        pB[i * 3 + 1] = TOP_Y - (sy / sampleHeight) * srcH + j2 * k * 0.34;
+        pB[i * 3 + 2] = j3 * 52 * (0.35 + L) * zScale;
+      }
     }
     geo.attributes.pB.needsUpdate = true;
   }
 
   function layoutC() {
     if (wordmarkRaw && wordmarkSize) {
-      const { scale, offsetY } = fitForm('s4', wordmarkSize, 1160);
-      for (let i=0; i<PN; i++) {
-        pC[i*3]=wordmarkRaw[i*3]*scale;
-        pC[i*3+1]=wordmarkRaw[i*3+1]*scale+offsetY;
-        pC[i*3+2]=wordmarkRaw[i*3+2]*scale;
+      const film = innerWidth >= 1100 && innerHeight >= 700;
+      let markW = 1108;
+      let OY = -23;
+      if (!film) {
+        markW = Math.min(innerWidth * 0.88, 1108 * (innerWidth / 1440));
+        const cap = Math.max(80, innerHeight * 0.36);
+        if (markW * (wordmarkSize.y * 0.669) / wordmarkSize.x > cap) {
+          markW = cap * wordmarkSize.x / (wordmarkSize.y * 0.669);
+        }
+        OY = -Math.min(36, innerHeight * 0.03);
+      }
+      const KX = markW / wordmarkSize.x;
+      const KY = KX * 0.669;
+      for (let i = 0; i < PN; i++) {
+        pC[i * 3] = wordmarkRaw[i * 3] * KX;
+        pC[i * 3 + 1] = wordmarkRaw[i * 3 + 1] * KY + OY;
+        pC[i * 3 + 2] = wordmarkRaw[i * 3 + 2] * KX;
       }
     }
     geo.attributes.pC.needsUpdate = true;
@@ -911,14 +753,63 @@ void main(){
       }
       layoutC();
       canvas.dataset.wordmarkReady = 'true';
-      canvas.dataset.wordmarkLabel = group.name;
     } catch (error) {
       canvas.dataset.wordmarkReady = 'error';
-      console.warn('GDamon particle wordmark could not be sampled.', error);
+      console.warn('KernelCode particle wordmark could not be sampled.', error);
     }
   }
 
-  markReady('network');
+  const keyboard = new Image();
+  keyboard.crossOrigin = 'anonymous';
+  keyboard.onload = () => {
+    try {
+      sampleWidth = 200;
+      sampleHeight = Math.round(sampleWidth * keyboard.height / keyboard.width);
+      const sampleCanvas = document.createElement('canvas');
+      sampleCanvas.width = sampleWidth;
+      sampleCanvas.height = sampleHeight;
+      const context = sampleCanvas.getContext('2d', { willReadFrequently: true });
+      context.drawImage(keyboard, 0, 0, sampleWidth, sampleHeight);
+      const pixels = context.getImageData(0, 0, sampleWidth, sampleHeight).data;
+      const sites = [];
+      const cumulative = [];
+      let totalWeight = 0;
+      for (let y = 0; y < sampleHeight; y++) {
+        for (let x = 0; x < sampleWidth; x++) {
+          const p = (y * sampleWidth + x) * 4;
+          const L = (pixels[p] * 0.299 + pixels[p + 1] * 0.587 + pixels[p + 2] * 0.114) / 255;
+          if (L <= 0.12) continue;
+          sites.push(x, y, L);
+          totalWeight += 0.25 + L * L;
+          cumulative.push(totalWeight);
+        }
+      }
+      if (!(totalWeight > 0)) throw new Error('The keyboard image has no samples above its luminance threshold.');
+      keyboardSamples = new Float32Array(PN * 6);
+      for (let i = 0; i < PN; i++) {
+        const site = sampleIndex(cumulative, Math.random() * totalWeight) * 3;
+        keyboardSamples[i * 6] = sites[site];
+        keyboardSamples[i * 6 + 1] = sites[site + 1];
+        keyboardSamples[i * 6 + 2] = sites[site + 2];
+        keyboardSamples[i * 6 + 3] = Math.random() - 0.5;
+        keyboardSamples[i * 6 + 4] = Math.random() - 0.5;
+        keyboardSamples[i * 6 + 5] = Math.random() - 0.5;
+      }
+      layoutB();
+      canvas.dataset.keyboardReady = 'true';
+    } catch (error) {
+      canvas.dataset.keyboardReady = 'error';
+      console.warn('KernelCode keyboard particles could not be sampled.', error);
+    } finally {
+      markReady('keys');
+    }
+  };
+  keyboard.onerror = () => {
+    canvas.dataset.keyboardReady = 'error';
+    console.warn('KernelCode keyboard image could not be loaded:', ASSETS.keyboard);
+    markReady('keys');
+  };
+  keyboard.src = ASSETS.keyboard;
 
   function update(now) {
     const dt = lastTime === null ? 0 : Math.max(0, (now - lastTime) / 1000);
@@ -934,7 +825,7 @@ void main(){
   }
 
   resize();
-  return { uni, resize, update, setWordmark, getFraming:()=>framing };
+  return { uni, resize, update, setWordmark };
 }
 
     function createHeroWordmark({ canvas, markReady, getPointer, onGlyphs }) {
@@ -951,7 +842,7 @@ void main(){
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.setClearColor(0x000000, 0);
   } catch (error) {
-    console.error('GDamon hero WebGL could not initialize.', error);
+    console.error('KernelCode hero WebGL could not initialize.', error);
     markReady('glb');
     return { resize() {}, update() {}, get dragging() { return false; } };
   }
@@ -1038,6 +929,113 @@ void main(){
   let velocityY = 0;
   let targetX = -0.07;
 
+  function loadGlyph(url) {
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.crossOrigin = 'anonymous';
+      image.onload = () => resolve(image);
+      image.onerror = () => reject(new Error('Unable to load voxel cutout: ' + url));
+      image.src = url;
+    });
+  }
+
+  function voxelGeometry(image, minRows, maxRows) {
+    const source = document.createElement('canvas');
+    source.width = source.height = 320;
+    const context = source.getContext('2d', { willReadFrequently: true });
+    const scale = 320 / Math.max(image.naturalWidth, image.naturalHeight);
+    const width = image.naturalWidth * scale;
+    const height = image.naturalHeight * scale;
+    context.drawImage(image, (320 - width) / 2, (320 - height) / 2, width, height);
+    const rgba = context.getImageData(0, 0, 320, 320).data;
+    const mask = new Uint8Array(320 * 320);
+    let minX = 320, minY = 320, maxX = -1, maxY = -1;
+    for (let y = 0; y < 320; y++) {
+      for (let x = 0; x < 320; x++) {
+        if (rgba[(y * 320 + x) * 4 + 3] > 128) {
+          mask[y * 320 + x] = 1;
+          minX = Math.min(minX, x);
+          minY = Math.min(minY, y);
+          maxX = Math.max(maxX, x);
+          maxY = Math.max(maxY, y);
+        }
+      }
+    }
+    if (maxX < minX || maxY < minY) throw new Error('Voxel cutout has no opaque pixels.');
+    const cropWidth = maxX - minX + 1;
+    const cropHeight = maxY - minY + 1;
+    let best = null;
+    for (let rows = minRows; rows <= maxRows; rows++) {
+      const cell = cropHeight / rows;
+      const columns = Math.max(1, Math.round(cropWidth / cell));
+      const originX = minX + (cropWidth - columns * cell) / 2;
+      const cells = new Uint8Array(rows * columns);
+      let agreements = 0;
+      let evaluated = 0;
+      for (let row = 0; row < rows; row++) {
+        for (let column = 0; column < columns; column++) {
+          const left = originX + column * cell;
+          const top = minY + row * cell;
+          const right = left + cell;
+          const bottom = top + cell;
+          let covered = 0;
+          for (let y = Math.floor(top); y < Math.ceil(bottom); y++) {
+            for (let x = Math.floor(left); x < Math.ceil(right); x++) {
+              if (x < 0 || x >= 320 || y < 0 || y >= 320 || !mask[y * 320 + x]) continue;
+              covered += Math.max(0, Math.min(x + 1, right) - Math.max(x, left)) *
+                Math.max(0, Math.min(y + 1, bottom) - Math.max(y, top));
+            }
+          }
+          const area = cell * cell;
+          const on = covered / area >= 0.5;
+          cells[row * columns + column] = on ? 1 : 0;
+          agreements += on ? covered : area - covered;
+          evaluated += area;
+        }
+      }
+      const score = agreements / evaluated;
+      if (!best || score > best.score) best = { rows, columns, cells, score };
+    }
+    const boxes = [];
+    for (let row = 0; row < best.rows; row++) {
+      for (let column = 0; column < best.columns; column++) {
+        if (!best.cells[row * best.columns + column]) continue;
+        const seed = Math.sin((column + 1) * 127.1 + (row + 1) * 311.7) * 43758.5453;
+        const hash = seed - Math.floor(seed);
+        const depth = hash < 0.14 ? 1.15 : hash < 0.30 ? 0.60 : 0.82;
+        const z = hash < 0.14 ? 0.20 : hash < 0.30 ? -0.10 : 0;
+        const box = new THREE.BoxGeometry(0.97, 0.97, depth);
+        box.translate(column, -row, z);
+        boxes.push(box);
+      }
+    }
+    if (!boxes.length) throw new Error('No voxel cells were found in the cutout.');
+    const geometry = mergeGeometries(boxes, false);
+    boxes.forEach(box => box.dispose());
+    geometry.center();
+    geometry.computeBoundingBox();
+    return { geometry, rows: best.rows };
+  }
+
+  function makeWordmark(k, chevron) {
+    const wordmark = new THREE.Group();
+    const left = new THREE.Mesh(chevron.geometry, chevronMaterial);
+    const middle = new THREE.Mesh(k.geometry, kMaterial);
+    const right = new THREE.Mesh(chevron.geometry, chevronMaterial);
+    right.scale.x = -1;
+    const chevronWidth = chevron.geometry.boundingBox.max.x - chevron.geometry.boundingBox.min.x;
+    const kWidth = k.geometry.boundingBox.max.x - k.geometry.boundingBox.min.x;
+    const GAP = 1;
+    const fullWidth = 2 * chevronWidth + kWidth + 2 * GAP;
+    left.position.x = -fullWidth / 2 + chevronWidth / 2;
+    middle.position.x = -fullWidth / 2 + chevronWidth + GAP + kWidth / 2;
+    right.position.x = fullWidth / 2 - chevronWidth / 2;
+    wordmark.add(left, middle, right);
+    wordmark.scale.setScalar(1 / Math.max(k.rows, chevron.rows));
+    wordmark.updateMatrixWorld(true);
+    return wordmark;
+  }
+
   function resize() {
     renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
     renderer.setSize(innerWidth, innerHeight, false);
@@ -1101,17 +1099,19 @@ void main(){
   canvas.addEventListener('pointercancel', release);
   canvas.addEventListener('lostpointercapture', () => { dragging = false; dragId = null; });
 
-  try {
-    const wordmark = createVoxelText('<AI>', kMaterial, chevronMaterial);
-    span = new THREE.Box3().setFromObject(wordmark).getSize(new THREE.Vector3());
-    spinner.add(wordmark);
-    canvas.dataset.wordmarkLabel = '<AI>';
-    const samplingWordmark = createVoxelText('GDAMON', kMaterial, chevronMaterial);
-    onGlyphs(samplingWordmark);
-    samplingWordmark.traverse(mesh => { if(mesh.isMesh) mesh.geometry.dispose(); });
-    resize();
-  } catch(error) { console.error('GDamon voxel wordmark could not initialize.', error); }
-  finally { markReady('glb'); }
+  Promise.all([loadGlyph(ASSETS.k), loadGlyph(ASSETS.chevron)])
+    .then(([kImage, chevronImage]) => {
+      const k = voxelGeometry(kImage, 7, 10);
+      const chevron = voxelGeometry(chevronImage, 5, 8);
+      const wordmark = makeWordmark(k, chevron);
+      const samplingWordmark = makeWordmark(k, chevron);
+      span = new THREE.Box3().setFromObject(samplingWordmark).getSize(new THREE.Vector3());
+      spinner.add(wordmark);
+      onGlyphs(samplingWordmark);
+      resize();
+    })
+    .catch(error => console.error('KernelCode voxel wordmark could not load.', error))
+    .finally(() => markReady('glb'));
 
   function update(now) {
     const t = now / 1000;
@@ -1136,14 +1136,14 @@ void main(){
   return { resize, update, get dragging() { return dragging; } };
 }
 
-    const runtime = window.GDamonRuntime;
+    const runtime = window.KernelRuntime;
     try {
       runtime.stage = createParticleSystem({ canvas:document.querySelector('#stage'), markReady:runtime.markReady, getPointer:runtime.getPointer });
       runtime.applyView(runtime.y);
-    } catch(error) { console.error('GDamon particle renderer could not start.',error); runtime.markReady('network'); }
+    } catch(error) { console.error('KernelCode particle renderer could not start.',error); runtime.markReady('keys'); }
     try {
       runtime.hero = createHeroWordmark({ canvas:document.querySelector('#heroGL'), markReady:runtime.markReady, getPointer:runtime.getPointer, onGlyphs:(group)=>runtime.stage?.setWordmark(group) });
-    } catch(error) { console.error('GDamon hero renderer could not start.',error); runtime.markReady('glb'); }
+    } catch(error) { console.error('KernelCode hero renderer could not start.',error); runtime.markReady('glb'); }
     runtime.layout();
   </script>
 </body>
