@@ -4,7 +4,7 @@
 
 Open **`http://localhost:4175/`** after starting `npm run dev -- --host 0.0.0.0 --port 4175`. `/index` and `/index.html` open the same gallery; the older `/html-studies/index.html` directory redirects here.
 
-The newest directions are three Oil Motion websites: liquid chrome becoming a D, a glass research archive, and a miniature robot picking up a parcel. They sit alongside the GDamon scroll story, GDamon Signature, Inner Workings, Hello, human., and the particle experiments. Each card describes its motion and opens the full experience in a new tab. The new Oil Motion cards use static thumbnails; their motion follows native scrolling inside the websites. Selected older cards retain rendered previews with Pause/Play controls.
+The index begins with direct entries for the latest GDamon particle website, scroll research story, robot portfolio, and project directory. The same three website versions come first in the full, filterable gallery. All eleven current visual directions remain available, including the three Oil Motion websites and particle experiments. A dedicated section links to all nine project cases; grouped directories collect the original HTML, earlier websites, archived player, personal content, and experimental hubs. Each entry opens in a new tab for comparison. Website cards use actual screenshots; the mechanical core study retains a video preview with Pause/Play controls.
 
 ## Oil Motion / OpenRouter — three scroll websites
 

@@ -5,6 +5,8 @@ export const previewFilters = [
   { id: 'motion', label: '动态叙事' },
 ];
 
+export const reviewOrder = ['gdamon', 'make-it-useful', 'robot'];
+
 export const previews = [
   {
     id: 'oil-matter',
@@ -156,6 +158,18 @@ export const previews = [
 
 export const archiveGroups = [
   {
+    id: 'collections',
+    title: '方案合集与个人内容',
+    description: '所有页面共用的个人资料、研究笔记，以及完整实验合集。',
+    items: [
+      { id: 'oil-lab', title: 'Oil Motion 三个网站', href: '/oil-lab', description: '液态金属、玻璃档案与机械交接的完整合集。' },
+      { id: 'motion-lab', title: '动态实验合集', href: '/motion-lab', description: '观察者、机械花与连续装配核心。' },
+      { id: 'about', title: '关于 Damon', href: '/about', description: '工作经历、教育背景与研究方向。' },
+      { id: 'notes', title: '研究笔记', href: '/blog', description: '论文、智能体与实际开发中的思考。' },
+      { id: 'uses', title: '工具与工作环境', href: '/uses', description: '日常研究与工程使用的工具。' },
+    ],
+  },
+  {
     id: 'motion-studies',
     title: 'Oil Motion 与动态实验',
     description: '观察者与机械花保留六帧造型实验；机械核心已升级为连续 3D 短片。',
@@ -188,6 +202,16 @@ export const archiveGroups = [
       { id: 'kernelcode-reference', title: 'KernelCode 原版', href: '/kernelcode/reference.html', description: '摄影首屏、〈K〉体素与球体、键盘、字标粒子。' },
       { id: 'future-machine', title: 'Future Machine 原版', href: '/future-machine.html', description: '蓝色全屏、白色机器人头盔与部件装配入场。' },
       { id: 'anchor-original', title: 'Anchor AI 原版', href: '/html-studies/anchor-original.html', description: '个人化改写之前的粒子树原始 HTML。' },
+    ],
+  },
+  {
+    id: 'previous-sites',
+    title: '旧版主页与播放器',
+    description: '保留之前的完整页面，方便对照新版本。',
+    items: [
+      { id: 'classic', title: '最初的个人主页', href: '/classic', description: 'Agent OS 导航、能力介绍、项目与笔记。' },
+      { id: 'motion', title: '早期动态主页', href: '/motion', description: '之前的个人网站动态排版方案。' },
+      { id: 'film-player', title: 'Film 归档播放器', href: '/film?view=player', description: '原来的 18 秒时间轴版本；当前网站版本在 /film。' },
     ],
   },
   {

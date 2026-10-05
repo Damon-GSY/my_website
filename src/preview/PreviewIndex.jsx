@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowUpRight, Pause, Play, Plus } from 'lucide-react';
-import { archiveGroups, previewFilters, previews } from './previewCatalog';
+import { archiveGroups, previewFilters, previews, reviewOrder } from './previewCatalog';
+import { projects } from '../data/projects';
 import './preview-index.css';
 
 function MotionPreview({ preview }) {
@@ -64,9 +65,10 @@ function PreviewCard({ preview, number }) {
           <a className="pv-media-link" href={preview.href} target="_blank" rel="noopener" aria-label={`打开${preview.title}（新标签页）`}>
             <img src={preview.image} alt={preview.title + '的实际页面截图'} width="1100" height="688" loading="lazy" decoding="async" />
           </a>}
+        {!preview.video && preview.mediaLabel && <span className="pv-media-label"><i />{preview.mediaLabel}</span>}
       </div>
       <div className="pv-card-copy">
-        <div className="pv-card-topline"><span>{String(number).padStart(2, '0')} / {preview.subtitle}</span>{preview.featured && <span className="pv-latest">最近更新</span>}</div>
+        <div className="pv-card-topline"><span>{String(number).padStart(2, '0')} / {preview.subtitle}</span>{reviewOrder.includes(preview.id) && <span className="pv-latest">本轮查看</span>}</div>
         <h2><a href={preview.href} target="_blank" rel="noopener">{preview.title}<ArrowUpRight size={23} aria-hidden="true" /></a></h2>
         <p className="pv-description">{preview.description}</p>
         <p className="pv-motion">{preview.motion}</p>
@@ -81,7 +83,8 @@ function PreviewCard({ preview, number }) {
 
 export default function PreviewIndex() {
   const [filter, setFilter] = useState('all');
-  const shown = previews.filter(preview => filter === 'all' || preview.category === filter);
+  const ordered = [...reviewOrder.map(id => previews.find(preview => preview.id === id)), ...previews.filter(preview => !reviewOrder.includes(preview.id))];
+  const shown = ordered.filter(preview => filter === 'all' || preview.category === filter);
   const studies = archiveGroups.find(group => group.id === 'motion-studies');
 
   useEffect(() => {
@@ -101,15 +104,22 @@ export default function PreviewIndex() {
       <header className="pv-header">
         <a className="pv-brand" href="/" aria-label="GDamon 预览首页">GDamon<span className="pv-brand-dot" aria-hidden="true" /></a>
         <span className="pv-edition">DESIGN EXPLORATIONS<br />THE PREVIEW INDEX</span>
-        <nav aria-label="预览分类"><a href="#versions">当前方案</a><a href="#studies">分镜实验</a><a href="#archive">更多探索 <ArrowDown size={12} aria-hidden="true" /></a></nav>
+        <nav aria-label="预览分类"><a href="#versions">全部方案</a><a href="#cases">项目案例</a><a href="#archive">更多页面 <ArrowDown size={12} aria-hidden="true" /></a></nav>
       </header>
 
       <main className="pv-main">
         <section className="pv-intro" aria-labelledby="pv-title">
           <div><p className="pv-eyebrow"><span /> WORK IN MOTION</p><h1 id="pv-title">网站预览室<span>。</span></h1>
-            <p className="pv-intro-copy">最近在看的 {previews.length} 个方向都在这里。<br />先看动效，再进入完整页面。</p>
+            <p className="pv-intro-copy">{previews.length} 个视觉方向、{projects.length} 个项目案例，以及全部早期实验。<br />最新修改放在最前面，从这里打开就好。</p>
           </div>
-          <div className="pv-intro-aside"><span className="pv-count">{String(previews.length).padStart(2, '0')}<span> / CURRENT</span></span><p>每个方案在新标签页打开，方便来回比较。<br />星尘变形和机械短片可直接预览。</p><a href="#versions">开始浏览 <ArrowDown size={17} aria-hidden="true" /></a></div>
+          <div className="pv-intro-aside"><span className="pv-count">{String(previews.length).padStart(2, '0')}<span> / DIRECTIONS</span></span><p>查看页面截图，进入完整网站体验动画。<br />每个入口在新标签页打开，方便来回比较。</p><a href="#versions">浏览全部方案 <ArrowDown size={17} aria-hidden="true" /></a></div>
+        </section>
+
+        <section className="pv-review" aria-label="优先查看这次更新">
+          <a href="/kernelcode/index.html" target="_blank" rel="noopener"><span>01 / 信息量已补充<ArrowUpRight size={17} aria-hidden="true" /></span><h2>AI 粒子网站</h2><p>研究方法、系统流程与项目成果</p></a>
+          <a href="/film" target="_blank" rel="noopener"><span>02 / 工作叙事已更新<ArrowUpRight size={17} aria-hidden="true" /></span><h2>滚动研究叙事</h2><p>训练、部署、评估与你的具体贡献</p></a>
+          <a href="/robot" target="_blank" rel="noopener"><span>03 / 连续拆装版本<ArrowUpRight size={17} aria-hidden="true" /></span><h2>机器人个人站</h2><p>角色交互、滚动拆解与完整作品区</p></a>
+          <a href="/projects" target="_blank" rel="noopener"><span>04 / {projects.length} 个完整案例<ArrowUpRight size={17} aria-hidden="true" /></span><h2>项目与研究</h2><p>背景、本人贡献、结果与下一项目</p></a>
         </section>
 
         <section id="versions" className="pv-versions" aria-label="当前网站方案">
@@ -119,7 +129,12 @@ export default function PreviewIndex() {
             </button>)}</div>
             <p className="pv-results" role="status">显示 {shown.length} / {previews.length}</p>
           </div>
-          <div className="pv-grid">{shown.map(preview => <PreviewCard key={preview.id} preview={preview} number={previews.indexOf(preview) + 1} />)}</div>
+          <div className="pv-grid">{shown.map(preview => <PreviewCard key={preview.id} preview={preview} number={ordered.indexOf(preview) + 1} />)}</div>
+        </section>
+
+        <section className="pv-cases" id="cases" aria-labelledby="pv-cases-title">
+          <div className="pv-section-heading"><div><p className="pv-eyebrow">THE WORK BEHIND THE WEBSITES</p><h2 id="pv-cases-title">项目与研究案例</h2></div><p>各个网站里的项目都通向这些完整案例。<br /><a href="/projects" target="_blank" rel="noopener">打开作品目录 <ArrowUpRight size={13} aria-hidden="true" /></a></p></div>
+          <div className="pv-case-grid">{projects.map((project,index)=><a key={project.id} href={`/projects#${project.id}`} target="_blank" rel="noopener"><span>{String(index+1).padStart(2,'0')} / {project.kicker}<ArrowUpRight size={16} aria-hidden="true" /></span><h3>{project.title}</h3><p>{project.stage} · {project.tags.join(' / ')}</p></a>)}</div>
         </section>
 
         <section className="pv-studies" id="studies" aria-labelledby="pv-studies-title">
@@ -130,7 +145,7 @@ export default function PreviewIndex() {
         </section>
 
         <section className="pv-archive" id="archive" aria-labelledby="pv-archive-title">
-          <div className="pv-section-heading"><div><p className="pv-eyebrow">FROM THE ARCHIVE</p><h2 id="pv-archive-title">早期探索与原稿</h2></div><p>旧方向也保留在这里，随时展开对照。</p></div>
+          <div className="pv-section-heading"><div><p className="pv-eyebrow">MORE TO EXPLORE</p><h2 id="pv-archive-title">更多页面与历史版本</h2></div><p>实验合集、个人内容和原稿都可展开查看。</p></div>
           {archiveGroups.filter(group => group.id !== 'motion-studies').map(group => <details key={group.id} id={group.id}>
             <summary><span>{group.title}<small>{group.items.length} 个页面</small></span><Plus size={20} aria-hidden="true" /></summary>
             <p className="pv-archive-description">{group.description}</p><div className="pv-archive-links">{group.items.map(item => <a key={item.id} href={item.href} target="_blank" rel="noopener"><span><strong>{item.title}</strong><small>{item.description}</small></span><ArrowUpRight size={17} aria-hidden="true" /></a>)}</div>
