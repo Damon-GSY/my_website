@@ -5,7 +5,7 @@ export const previewFilters = [
   { id: 'motion', label: '动态叙事' },
 ];
 
-export const reviewOrder = ['gdamon', 'make-it-useful', 'robot'];
+export const reviewOrder = ['make-it-useful', 'oil-matter', 'gdamon', 'robot'];
 
 export const previews = [
   {
@@ -15,10 +15,10 @@ export const previews = [
     category: 'motion',
     href: '/oil-lab/matter',
     image: '/preview-assets/oil-matter.webp',
-    description: 'OpenRouter 生成的镜面金属从封闭形态展开为雕塑字母 D，接入钴蓝色个人网站与真实研究项目。',
-    motion: '金属形态 → 雕塑 D → 研究项目与联系',
-    interaction: '原生滚动逐帧推进变形，向上滚动可回看；停下时画面静止，继续向下浏览完整个人网站。',
-    tags: ['Oil Motion', '生成式动效', '完整个人站'],
+    description: '镜面金属展开为 D，再由同一轮廓转成实时粒子，连接工具网络与评估结构，展示 Damon 的实际工作。',
+    motion: '液态金属 → 粒子 D → 智能体网络 → 评估结构',
+    interaction: '原生滚动同步推动粒子、镜头和工作说明；反向滚动可回看，停下时画面静止，再进入项目案例。',
+    tags: ['Oil Motion', '实时粒子', '连续滚动'],
     featured: true,
   },
   {
@@ -56,7 +56,7 @@ export const previews = [
     image: '/preview-assets/scroll-story.webp',
     description: '从领域模型训练，到动态工具智能体，再到多轮评估：动画旁持续展示 Damon 的职责、实际项目与工作成果。',
     motion: '训练模型 → 部署智能体 → 评估系统 → 项目案例',
-    interaction: '滚动查看训练矩阵、机器人拆装与粒子署名；每章的项目和成果可直接打开完整案例，支持反向回看。',
+    interaction: '同一组粒子随滚动从训练矩阵收束为智能体，再展开成署名；文字、颜色和形态同步衔接，支持反向回看。',
     tags: ['原生滚动', '实时 3D', '完整个人站'],
     featured: true,
   },

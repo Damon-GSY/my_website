@@ -116,9 +116,9 @@ export default function PreviewIndex() {
         </section>
 
         <section className="pv-review" aria-label="优先查看这次更新">
-          <a href="/kernelcode/index.html" target="_blank" rel="noopener"><span>01 / 信息量已补充<ArrowUpRight size={17} aria-hidden="true" /></span><h2>AI 粒子网站</h2><p>研究方法、系统流程与项目成果</p></a>
-          <a href="/film" target="_blank" rel="noopener"><span>02 / 工作叙事已更新<ArrowUpRight size={17} aria-hidden="true" /></span><h2>滚动研究叙事</h2><p>训练、部署、评估与你的具体贡献</p></a>
-          <a href="/robot" target="_blank" rel="noopener"><span>03 / 连续拆装版本<ArrowUpRight size={17} aria-hidden="true" /></span><h2>机器人个人站</h2><p>角色交互、滚动拆解与完整作品区</p></a>
+          <a href="/film" target="_blank" rel="noopener"><span>01 / 连续粒子变形<ArrowUpRight size={17} aria-hidden="true" /></span><h2>滚动研究叙事</h2><p>训练矩阵、智能体与署名连成一体</p></a>
+          <a href="/oil-lab/matter" target="_blank" rel="noopener"><span>02 / 金属到实时粒子<ArrowUpRight size={17} aria-hidden="true" /></span><h2>Matter · 智能涌现</h2><p>金属 D、工具网络与评估结构</p></a>
+          <a href="/kernelcode/index.html" target="_blank" rel="noopener"><span>03 / AI 粒子叙事<ArrowUpRight size={17} aria-hidden="true" /></span><h2>AI 粒子网站</h2><p>研究方法、系统流程与项目成果</p></a>
           <a href="/projects" target="_blank" rel="noopener"><span>04 / {projects.length} 个完整案例<ArrowUpRight size={17} aria-hidden="true" /></span><h2>项目与研究</h2><p>背景、本人贡献、结果与下一项目</p></a>
         </section>
 

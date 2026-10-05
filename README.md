@@ -4,7 +4,7 @@
 
 Open **`http://localhost:4175/`** after starting `npm run dev -- --host 0.0.0.0 --port 4175`. `/index` and `/index.html` open the same gallery; the older `/html-studies/index.html` directory redirects here.
 
-The index begins with direct entries for the latest GDamon particle website, scroll research story, robot portfolio, and project directory. The same three website versions come first in the full, filterable gallery. All eleven current visual directions remain available, including the three Oil Motion websites and particle experiments. A dedicated section links to all nine project cases; grouped directories collect the original HTML, earlier websites, archived player, personal content, and experimental hubs. Each entry opens in a new tab for comparison. Website cards use actual screenshots; the mechanical core study retains a video preview with Pause/Play controls.
+The index begins with direct entries for Film, Matter, the GDamon particle website, and the project directory. The updated Film and Matter websites lead the full, filterable gallery, followed by GDamon and the robot portfolio. All eleven current visual directions remain available, including the three Oil Motion websites and particle experiments. A dedicated section links to all nine project cases; grouped directories collect the original HTML, earlier websites, archived player, personal content, and experimental hubs. Each entry opens in a new tab for comparison. Website cards use actual screenshots; the mechanical core study retains a video preview with Pause/Play controls.
 
 ## Oil Motion / OpenRouter — three scroll websites
 
@@ -16,17 +16,21 @@ Open **`http://localhost:4175/oil-lab`** to compare the new directions, or choos
 | `/oil-lab/archive` | Warm ivory and glass; a research folio moves forward to reveal its layers |
 | `/oil-lab/handoff` | Lavender and orange; a miniature robot grips and lifts a parcel |
 
-Each website continues into selected work, biography, research links, and contact. Native scrolling advances the generated motion; scrolling back reverses it and stopping holds the current frame. The media stays paused, without autoplay or player controls. Reduced motion and unavailable media show a static poster and remove the long pinned interval.
+Each website continues into selected work, biography, research links, and contact. Native scrolling advances the generated motion; scrolling back reverses it and stopping holds the current frame. The media stays paused, without autoplay or player controls. Reduced motion removes the long pinned interval and presents readable chapters. Archive and Handoff also do this when media is unavailable; Matter can continue from its final still into live particles, with readable static chapters if WebGL is unavailable.
+
+Matter extends that sequence into a live particle story: the generated chrome D hands over to points sampled from its own silhouette, then those points form a connected agent network and evaluation structure. One damped scroll position controls the artwork and the contribution text. Archive and Handoff retain their original generated sequences.
 
 The keyframes were generated with `openai/gpt-image-2` and continuous motion with `google/veo-3.1-lite` through OpenRouter. The server-side helper reads `OPEN_ROUTER_KEY`; no key is bundled into the website. See the [generation, review, and reproduction records](motion-studies/openrouter-experiments/README.md).
 
 ## Make it useful — a scroll-driven personal website
 
-Open **`http://localhost:4175/film`**, also linked on `/`. Its three scroll chapters explain Damon's actual work: **Train** covers domain LLMs and multi-objective RL; **Deploy** covers dynamic tool resolution and risk-tiered supply-chain agents; **Evaluate** covers multi-turn evaluation and SupChain-Bench. Each chapter keeps his role, methods, two project links, and concrete results visible alongside layered training artwork, a live Three.js robot, or particles gathering into GDAMON. Internal production figures retain their scope.
+Open **`http://localhost:4175/film`**, also linked on `/`. Its three scroll chapters explain Damon's actual work: **Train** covers domain LLMs and multi-objective RL; **Deploy** covers dynamic tool resolution and risk-tiered supply-chain agents; **Evaluate** covers multi-turn evaluation and SupChain-Bench. Each chapter keeps his role, methods, two project links, and concrete results visible alongside a live particle structure: a training lattice, an articulated agent helmet, and the GDAMON signature. Internal production figures retain their scope.
 
-The page maps native scroll position to a deterministic Canvas/Three.js scene with damping. Scroll upward to reverse the sequence. Five selected projects below it show contributions and outcomes, followed by biography and contact. Reduced motion or unavailable WebGL removes the long pinned interval and makes all three work chapters ordinary readable, linked content. There is no autoplay clock, audio, video, or player UI.
+The page maps native scroll position to a Three.js particle scene with damping. A single clock drives shape, compression, color, and text through each transition; scroll upward to reverse it. Rendering rests when input settles. Chapter links, including a direct visit to `/film#fw-agent`, land on their corresponding work chapter. Five selected projects below show contributions and outcomes, followed by biography and contact. Reduced motion or unavailable WebGL removes the long pinned interval and makes all three work chapters ordinary readable, linked content. There is no autoplay clock, audio, video, or player UI.
 
 The earlier 18-second player is archived at **`/film?view=player`**. The exporter still uses **`/film?render=1`**; existing MP4 files are retained as earlier studies and are not the default website experience.
+
+With the local server running, `node scripts/check-scroll-flow.mjs http://localhost:4175 /tmp/gdamon-scroll-check` checks continuous forward/reverse movement, idle rendering, Film anchors, phone/landscape layouts, real project links, reduced motion, media/WebGL fallback, and the archived experiences. It uses Playwright and defaults to `/usr/bin/chromium`; set `CHROMIUM_EXECUTABLE` to a local Chromium executable if needed.
 
 See the [shared animation direction](docs/film/ANIMATION_GUIDE.md), [rendering instructions](docs/film/RENDERING.md), and [original reference receipt](reference/motion-code2video-0xmovez/INDEX.txt). The complete supplied article was restored and its SHA-256 verified; its embedded videos were not played or independently validated.
 

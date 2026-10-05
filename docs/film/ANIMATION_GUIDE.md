@@ -1,5 +1,7 @@
 # GDamon — Make it useful
 
+This guide describes the archived 18-second player/export renderer at `/film?view=player` and `/film?render=1`. The default `/film` website uses a separate GPU particle scene and native scroll clock, with continuous Train → Deploy → Evaluate transitions. Its work content and reduced-motion layout are documented in the main README; the timed archive contract below remains unchanged.
+
 Original 18-second personal-research film. Inspired by the user's complete code-to-video reference, not a reproduction of unviewed embedded videos. Use the existing GDamon robot and verified personal copy. No fabricated product screens, results or awards.
 
 ## Shared production contract

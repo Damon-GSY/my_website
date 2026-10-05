@@ -7,6 +7,7 @@ import { aboutProfile } from '../data/about';
 import { oilStudies } from './studies';
 import { createFrameAnimator, readTimeline } from './frameAnimator';
 import './oil-lab.css';
+import MatterStory from './MatterStory';
 
 const clamp = (value) => Math.max(0, Math.min(1, value));
 
@@ -216,7 +217,6 @@ function StudySite({ study }) {
   const videoRef = useRef(null);
   const { status, phase, reduced } = useScrollArtwork(study, storyRef, stageRef, videoRef);
   const staticMode = reduced || status !== 'ready';
-  const work = study.projectIds.map((id) => projects.find((project) => project.id === id)).filter(Boolean);
   useEffect(() => {
     const previous = document.title;
     document.title = `GDamon — ${study.name}`;
@@ -235,11 +235,26 @@ function StudySite({ study }) {
           {!staticMode && <div className="oil-scroll-hint"><span>Scroll to shape the story</span><ArrowDown size={15} aria-hidden="true" /></div>}
         </div>
       </section>
+      <StudySections study={study} />
+    </main>
+  );
+}
+
+function StudySections({ study }) {
+  const work = study.projectIds.map((id) => projects.find((project) => project.id === id)).filter(Boolean);
+  return <>
       <section className="oil-work" id="oil-work" aria-labelledby="oil-work-title"><div className="oil-section-top"><span>Selected work / 01</span><Link to="/projects">All projects<ArrowUpRight size={16} aria-hidden="true" /></Link></div><div className="oil-work-heading"><h2 id="oil-work-title">{study.workTitle.map((line) => <span key={line}>{line}</span>)}</h2><p>Agentic reinforcement learning, post-training, and evaluation — connected to real work at Alibaba.</p></div><div className="oil-projects">{work.map((project, index) => <Link to={`/projects#${project.id}`} className="oil-project" key={project.id}><span className="oil-project-number">0{index + 1}</span><div><p className="oil-kicker">{project.kicker} / {project.stage}</p><h3>{project.title}</h3><p className="oil-project-summary">{project.description}</p><span className="oil-tags">{project.tags.join(' · ')}</span></div><MoveUpRight className="oil-project-arrow" aria-hidden="true" /></Link>)}</div></section>
       <section className="oil-about" id="oil-about" aria-labelledby="oil-about-title"><div className="oil-section-top"><span>About Damon / 02</span><Asterisk size={23} aria-hidden="true" /></div><div className="oil-about-grid"><h2 id="oil-about-title">{study.aboutTitle.map((line) => <span key={line}>{line}</span>)}</h2><div className="oil-about-copy"><p className="oil-about-lead">I’m Damon Guo-Siyi.<br />Curious about what AI can do next.</p><p>{aboutProfile.intro}</p><p>{aboutProfile.focus}</p><div className="oil-about-links"><Link to="/about">My story<ArrowUpRight size={17} aria-hidden="true" /></Link><Link to="/blog">Research notes<ArrowUpRight size={17} aria-hidden="true" /></Link></div></div></div><dl className="oil-facts"><div><dt>Currently</dt><dd>Alibaba · Hangzhou</dd></div><div><dt>Education</dt><dd>NUS / UNSW</dd></div><div><dt>Working on</dt><dd>Agents that work.</dd></div></dl></section>
       <section className="oil-contact" id="oil-contact" aria-labelledby="oil-contact-title"><div className="oil-section-top"><span>Keep the conversation going / 03</span><span>Hangzhou, China</span></div><h2 id="oil-contact-title">LET’S MAKE<br /><span>IT USEFUL.</span><Asterisk aria-hidden="true" /></h2><div className="oil-contact-row"><a href="mailto:hello@damon.ai">hello@damon.ai<ArrowUpRight aria-hidden="true" /></a><p>Research, ideas, and things<br />worth building together.</p></div><footer className="oil-footer"><Link to="/oil-lab">Oil Motion studies<ArrowUpRight size={14} aria-hidden="true" /></Link><div><a href="https://github.com/Damon-GSY" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.youtube.com/channel/UCEizqDJOPFfjRdQbat0DMmA" target="_blank" rel="noreferrer">YouTube</a><Link to="/">All studies</Link></div><a href="https://github.com/oil-oil/oil-motion" target="_blank" rel="noreferrer">Made with Oil Motion.</a></footer></section>
-    </main>
-  );
+  </>;
+}
+
+function MatterSite({ study }) {
+  return <main className="oil-site oil-site--matter">
+    <a className="oil-skip" href="#oil-work">Skip to selected work</a>
+    <MatterStory />
+    <StudySections study={study} />
+  </main>;
 }
 
 function Gallery({ unavailable = false }) {
@@ -250,5 +265,5 @@ export default function OilLab() {
   const { pathname } = useLocation();
   const id = pathname.split('/').filter(Boolean)[1];
   const study = oilStudies.find((item) => item.id === id && item.available);
-  return study ? <StudySite key={study.id} study={study} /> : <Gallery unavailable={Boolean(id)} />;
+  return study ? study.id === 'matter' ? <MatterSite study={study} /> : <StudySite key={study.id} study={study} /> : <Gallery unavailable={Boolean(id)} />;
 }

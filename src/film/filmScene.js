@@ -1,3 +1,4 @@
+import { createStoryFlow } from './storyFlow';
 import { createIntroChapter } from './chapters/intro';
 import { createRobotChapter } from './chapters/robot';
 import { createSignatureChapter } from './chapters/signature';
@@ -8,6 +9,7 @@ const WIPE_LENGTH = .22;
 
 /** One explicit clock drives the live preview and every exported frame. */
 export function createFilm(canvas, { wipeDuration = WIPE_LENGTH, storyArtwork = false } = {}) {
+  if (storyArtwork) return createStoryFlow(canvas);
   const ctx = canvas.getContext('2d', { alpha: false });
   if (!ctx) throw new Error('Canvas drawing is unavailable.');
   const chapters = [];

@@ -2,6 +2,8 @@
 
 Three original personal-site directions use generated keyframes and real, continuous OpenRouter video. The page maps ordinary document scrolling to the video's measured frames. Copy, project links and navigation remain editable HTML. The scenes have no autoplay, scroll hijacking, synthetic frame interpolation or claim of seamless looping.
 
+The current Matter website extends its accepted clip into a live Three.js particle sequence: chrome D → sampled particle D → tool network → evaluation rings. The source-generation and frame-scrub reviews below describe the original delivery. Current scroll behavior is implemented in `src/oil-lab/MatterStory.jsx` and checked by `scripts/check-scroll-flow.mjs`; Archive and Handoff retain their original controllers. No new generation was needed for this extension.
+
 ## Current delivery status
 
 All three source clips have passed motion review, compilation from measured native frames and final integrated Chromium checks. Source acceptance and runtime behavior are recorded separately.

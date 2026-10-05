@@ -263,9 +263,8 @@
   .fw-story-explanation { top:184px; }
   .fw-evidence-description p { display:none; }
 }
-@media (prefers-reduced-motion:no-preference) {
-  .fw-story-chapter { transition:opacity .26s ease, visibility .26s; }
-}
+.fw-story-heading,.fw-story-explanation,.fw-story-evidence { transform:translate3d(0,var(--fw-reveal-y,0),0); }
+.fw-page--static .fw-story-heading,.fw-page--static .fw-story-explanation,.fw-page--static .fw-story-evidence { transform:none; }
 .fw-page--static .fw-story { height:auto; }
 .fw-page--static .fw-stage { height:auto; padding:175px var(--fw-pad) 40px; }
 .fw-page--static .fw-static-art { display:none; }

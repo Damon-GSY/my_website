@@ -5,6 +5,7 @@ import '@fontsource/anton/latin-400.css';
 import { projects } from '../data/projects';
 import { aboutProfile } from '../data/about';
 import { createFilm } from './filmScene';
+import { storyState } from './storyFlow';
 import './film.css';
 
 const FilmArchive = lazy(() => import('./FilmArchive'));
@@ -22,7 +23,7 @@ const CHAPTERS = [
     ],
   },
   {
-    id: 'fw-agent', name: 'Deploy', time: 6.85, number: '02', theme: 'paper',
+    id: 'fw-agent', name: 'Deploy', time: 6.85, number: '02', theme: 'ink',
     label: 'Agentic RL / Production systems', heading: ['GIVE AGENTS TOOLS.', 'AND BOUNDARIES.'],
     description: 'I train agents to choose from a changing tool pool and design how they act in production: progressive confirmations, clear automation boundaries, and handoffs when an exception needs a human.',
     method: ['Resolve tools', 'Execute', 'Hand off'],
@@ -74,6 +75,12 @@ function ScrollPortfolio() {
     let current = START;
     let target = START;
     let progress = 0;
+    let initialized = false;
+    let scrollDirty = true;
+    let frameCount = 0;
+    let lastFrameMs = 0;
+    let deltaTime = 0;
+    let readability = [1, 0, 0];
     let currentChapter = 0;
     let width = 0;
     let height = 0;
@@ -81,11 +88,14 @@ function ScrollPortfolio() {
     const stage = stageRef.current;
     const canvas = canvasRef.current;
     const root = rootRef.current;
+    const articles = [...stage.querySelectorAll('.fw-story-chapter')];
+    const clearNarrativeStyles = () => articles.forEach((article) => { article.style.opacity = ''; article.style.visibility = ''; article.style.removeProperty('--fw-reveal-y'); });
     const report = () => ({
       ...engine?.getMetrics(),
       control: 'scroll', time: current, targetTime: target, scrollProgress: progress, progress,
       chapter: CHAPTERS[currentChapter].name.toLowerCase(),
       settled: Math.abs(current - target) < .001,
+      motion: { running: !!frame, frames: frameCount, frameMs: lastFrameMs, deltaTime, renderedProgress: clamp((current - START) / (END - START)), readability: [...readability], clock: 'native-scroll' },
       reduced, static: reduced || failed, width, height,
     });
     const fail = (error) => {
@@ -95,41 +105,62 @@ function ScrollPortfolio() {
       engine?.dispose();
       engine = null;
       root.dataset.sceneError = error instanceof Error ? error.message : 'The interactive artwork is unavailable.';
+      clearNarrativeStyles();
       setStatus('fallback');
       setChapter(0);
     };
+    const contextLost = (event) => {
+      event.preventDefault();
+      if (!disposed && !failed && !reduced) fail(new Error('The graphics context was lost. All project information remains available below.'));
+    };
+    canvas.addEventListener('webglcontextlost', contextLost);
     const paint = () => {
       if (!engine || failed || disposed) return;
       try {
         engine.seek(current);
         const robot = engine.getMetrics().robot;
         if (robot && robot.renderer !== 'three') throw new Error(robot.failure || 'The 3D scene is unavailable.');
-        const nextChapter = current < 6 ? 0 : current < 12 ? 1 : 2;
+        const state = storyState(current);
+        const nextChapter = state.chapter;
         if (nextChapter !== currentChapter) { currentChapter = nextChapter; setChapter(nextChapter); }
-        stage.style.setProperty('--fw-progress', progress);
+        readability = state.weights.map((weight) => { const amount = clamp((weight - .42) / .58); return amount * amount * (3 - 2 * amount); });
+        articles.forEach((article, index) => {
+          const opacity = readability[index];
+          article.style.opacity = opacity;
+          article.style.visibility = opacity > .001 ? 'visible' : 'hidden';
+          article.style.setProperty('--fw-reveal-y', `${(index < nextChapter ? -1 : 1) * (1 - opacity) * 14}px`);
+        });
+        stage.style.setProperty('--fw-progress', clamp((current - START) / (END - START)));
+        frameCount++;
       } catch (error) { fail(error); }
     };
     const tick = (now) => {
       frame = 0;
       if (disposed || failed || reduced || document.hidden || !engine) return;
-      const dt = last ? Math.max(0, (now - last) / 1000) : 1 / 60;
+      const start = performance.now();
+      if (scrollDirty) measureScroll();
+      if (current === target) { last = 0; return; }
+      const dt = last ? clamp((now - last) / 1000, 0, .05) : 1 / 60;
+      deltaTime = dt;
       last = now;
-      current += (target - current) * (1 - Math.exp(-dt * 12));
+      current += (target - current) * (1 - Math.exp(-dt * 14));
       if (Math.abs(current - target) < .001) current = target;
       paint();
+      lastFrameMs = performance.now() - start;
       if (Math.abs(current - target) >= .001 && !failed) frame = requestAnimationFrame(tick);
       else last = 0;
     };
     const requestPaint = () => {
       if (!frame && engine && !failed && !reduced && !document.hidden) frame = requestAnimationFrame(tick);
     };
-    const readScroll = () => {
+    const measureScroll = () => {
+      scrollDirty = false;
       const rect = story.getBoundingClientRect();
       const travel = Math.max(1, story.offsetHeight - stage.clientHeight);
       progress = clamp(-rect.top / travel);
       target = START + (END - START) * progress;
-      if (Math.abs(target - current) > .0001) requestPaint();
     };
+    const readScroll = () => { scrollDirty = true; requestPaint(); };
     const resize = () => {
       if (!engine || failed || disposed) return;
       width = stage.clientWidth;
@@ -138,15 +169,16 @@ function ScrollPortfolio() {
       const top = root.querySelector('.fw-header').getBoundingClientRect().height * dpr;
       let artworkBounds = null;
       if (width / height <= 1.1 && height <= 600) {
-        const stageTop = stage.getBoundingClientRect().top;
-        const headingBottom = Math.max(...Array.from(stage.querySelectorAll('.fw-story-heading'), (element) => element.getBoundingClientRect().bottom - stageTop));
-        const explanationTop = Math.min(...Array.from(stage.querySelectorAll('.fw-story-explanation'), (element) => element.getBoundingClientRect().top - stageTop));
+        const headingBottom = Math.max(...Array.from(stage.querySelectorAll('.fw-story-heading'), (element) => element.offsetTop + element.offsetHeight));
+        const explanationTop = Math.min(...Array.from(stage.querySelectorAll('.fw-story-explanation'), (element) => element.offsetTop));
         artworkBounds = { x: width * .1 * dpr, y: (headingBottom + 12) * dpr, width: width * .8 * dpr, height: Math.max(1, explanationTop - headingBottom - 24) * dpr };
       }
       try {
         engine.setSize(Math.round(width * dpr), Math.round(height * dpr), { top, bottom: 20 * dpr, artworkBounds });
-        readScroll();
+        measureScroll();
+        if (!initialized) current = target;
         paint();
+        requestPaint();
       } catch (error) { fail(error); }
     };
     const visibility = () => {
@@ -154,8 +186,17 @@ function ScrollPortfolio() {
       if (document.hidden) { cancelAnimationFrame(frame); frame = 0; }
       else { readScroll(); requestPaint(); }
     };
+    const restoreAnchor = () => {
+      if (disposed) return;
+      const id = window.location.hash.slice(1);
+      if (!id.startsWith('fw-')) return;
+      const chapterIndex = CHAPTERS.findIndex((item) => item.id === id);
+      const anchor = (reduced || failed) && chapterIndex >= 0 ? articles[chapterIndex] : document.getElementById(id);
+      anchor?.scrollIntoView({ behavior: 'instant', block: 'start' });
+    };
     const api = {
       getMetrics: report,
+      capture: () => engine?.capture(current),
       scrollToChapter: (index) => {
         const item = CHAPTERS[clamp(Math.round(index), 0, 2)];
         document.getElementById(item.id)?.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth' });
@@ -166,13 +207,15 @@ function ScrollPortfolio() {
     const initialize = async () => {
       setStatus(reduced ? 'static' : 'loading');
       setChapter(0);
-      if (reduced) return;
+      if (reduced) { clearNarrativeStyles(); requestAnimationFrame(restoreAnchor); return; }
       try {
         await document.fonts.load('400 120px Anton');
         await document.fonts.ready;
         if (disposed) return;
-        engine = createFilm(canvas, { wipeDuration: .7, storyArtwork: true });
+        engine = createFilm(canvas, { storyArtwork: true });
+        restoreAnchor();
         resize();
+        initialized = true;
         if (failed) return;
         setStatus('ready');
         observer = new ResizeObserver(resize);
@@ -181,7 +224,7 @@ function ScrollPortfolio() {
         window.visualViewport?.addEventListener('resize', resize);
         document.addEventListener('visibilitychange', visibility);
         readScroll();
-      } catch (error) { fail(error); }
+      } catch (error) { fail(error); requestAnimationFrame(restoreAnchor); }
     };
     initialize();
     return () => {
@@ -191,6 +234,7 @@ function ScrollPortfolio() {
       window.removeEventListener('scroll', readScroll);
       window.visualViewport?.removeEventListener('resize', resize);
       document.removeEventListener('visibilitychange', visibility);
+      canvas.removeEventListener('webglcontextlost', contextLost);
       engine?.dispose();
       if (window.GDamonSite === api) delete window.GDamonSite;
       document.title = previousTitle;
