@@ -27,6 +27,7 @@ const RobotPortfolio = lazy(() => import('./robot/RobotPortfolio'));
 const PreviewIndex = lazy(() => import('./preview/PreviewIndex'));
 const FilmPage = lazy(() => import('./film/FilmPage'));
 const OilLab = lazy(() => import('./oil-lab/OilLab'));
+const NoirPage = lazy(() => import('./noir/NoirPage'));
 const Hero = lazy(() => import('./components/Hero'));
 const Marquee = lazy(() => import('./components/Marquee'));
 const Contact = lazy(() => import('./components/sections/Contact'));
@@ -138,6 +139,9 @@ function HomePage() {
 
 export default function App() {
   const location = useLocation();
+  if (location.pathname === '/oil-lab/noir' || location.pathname === '/oil-lab/noir/') {
+    return <Suspense fallback={null}><NoirPage /></Suspense>;
+  }
   if (location.pathname === '/oil-lab' || location.pathname.startsWith('/oil-lab/')) {
     return <Suspense fallback={null}><OilLab /></Suspense>;
   }

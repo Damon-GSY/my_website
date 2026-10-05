@@ -1,28 +1,34 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { clamp, DURATION, seeded, smooth } from './motion';
+import { choreographyState, particleChoreography } from '../motion/choreography';
 
 const COUNT = 24000;
 const TAU = Math.PI * 2;
 const HALF_TRANSITION = .8;
-const BACKGROUNDS = ['#0757ed', '#101e34', '#111a23'].map((color) => new THREE.Color(color));
+const BACKGROUNDS = ['#080e11', '#070a0a', '#101411'].map((color) => new THREE.Color(color));
 
 // The artwork and DOM both read these weights; reversing scroll reverses the same path.
 export function storyState(time) {
   const weights = [1, 0, 0];
   let blend = 0;
+  let phase = 0;
   let boundary = 0;
   if (time > 6 - HALF_TRANSITION) {
     boundary = time < 12 - HALF_TRANSITION ? 1 : 2;
-    blend = smooth((time - (boundary * 6 - HALF_TRANSITION)) / (HALF_TRANSITION * 2));
+    phase = clamp((time - (boundary * 6 - HALF_TRANSITION)) / (HALF_TRANSITION * 2));
+    blend = smooth(phase);
     weights.fill(0);
     weights[boundary - 1] = 1 - blend;
     weights[boundary] = blend;
   }
   const chapter = weights.indexOf(Math.max(...weights));
+  const choreography = choreographyState(phase);
   return {
-    weights, chapter, blend, boundary,
-    squeeze: 1 - .72 * Math.sin(blend * Math.PI),
+    weights, chapter, blend, boundary, phase,
+    squeeze: choreography.compression,
+    stretch: choreography.stretch,
+    beat: choreography.beat,
     morphing: blend > 0 && blend < 1,
   };
 }
@@ -122,7 +128,7 @@ export function createStoryFlow(canvas) {
   geometry.setAttribute('detail', new THREE.BufferAttribute(forms.detail, 3));
   geometry.boundingSphere = new THREE.Sphere(new THREE.Vector3(), 4);
   const uniforms = {
-    weights: { value: new THREE.Vector3(1, 0, 0) }, squeeze: { value: 1 },
+    weights: { value: new THREE.Vector3(1, 0, 0) }, transition: { value: new THREE.Vector2() },
     time: { value: 0 }, pointSize: { value: 2.1 }, viewportHeight: { value: 900 },
   };
   const material = new THREE.ShaderMaterial({
@@ -130,15 +136,16 @@ export function createStoryFlow(canvas) {
     vertexShader: `
       attribute vec3 pA, pB, pC, detail;
       uniform vec3 weights;
-      uniform float squeeze, time, pointSize, viewportHeight;
+      uniform vec2 transition;
+      uniform float time, pointSize, viewportHeight;
       varying float alpha, accent;
+      ${particleChoreography}
       void main() {
-        vec3 p = pA * weights.x + pB * weights.y + pC * weights.z;
+        vec3 from = transition.y < 1.5 ? pA : pB;
+        vec3 target = transition.y < 1.5 ? pB : pC;
+        vec3 p = motionPose(from, target, transition.x, detail.x, 1.);
         float phase = detail.x * 6.283185;
-        float displacement = .004 + (1. - squeeze) * .055;
-        p += vec3(sin(phase + time * .6), cos(phase * 1.4 + time * .5), sin(phase * 2.1 + time * .4)) * displacement;
-        p.xz *= squeeze;
-        p.y += sin(phase) * (1. - squeeze) * .12;
+        p += vec3(sin(phase + time * .6), cos(phase * 1.4 + time * .5), sin(phase * 2.1 + time * .4)) * .003;
         vec4 mv = modelViewMatrix * vec4(p, 1.);
         gl_Position = projectionMatrix * mv;
         gl_PointSize = clamp(pointSize * detail.y * viewportHeight / (700. * max(.4, -mv.z / 8.)), 1., 4.);
@@ -151,7 +158,7 @@ export function createStoryFlow(canvas) {
       void main() {
         float grain = 1. - smoothstep(.16, .5, length(gl_PointCoord - .5));
         if (grain < .01) discard;
-        vec3 color = mix(vec3(.84, .94, 1.), vec3(.65, 1., .36), accent);
+        vec3 color = mix(vec3(.94, .96, .91), vec3(.72, 1., .40), accent);
         gl_FragColor = vec4(color, grain * alpha);
       }`,
   });
@@ -169,7 +176,7 @@ export function createStoryFlow(canvas) {
     time = clamp(value, 0, DURATION);
     state = storyState(time);
     uniforms.weights.value.fromArray(state.weights);
-    uniforms.squeeze.value = state.squeeze;
+    uniforms.transition.value.set(state.phase, state.boundary);
     uniforms.time.value = time;
     // Color has no vector mutation API; accumulate in linear light for a seamless palette change.
     background.setRGB(...['r', 'g', 'b'].map((channel) => BACKGROUNDS.reduce((sum, color, index) => sum + color[channel] * state.weights[index], 0)));
@@ -206,7 +213,7 @@ export function createStoryFlow(canvas) {
     capture(value = time) { seek(value); return canvas.toDataURL('image/png'); },
     getMetrics: () => ({ ready: !disposed, duration: DURATION, time, width, height, contentHeight: height - insetTop - insetBottom, insetTop, insetBottom, artworkBounds,
       chapter: ['intro', 'robot', 'signature'][state.chapter],
-      flow: { renderer: 'gpu-particles', count: COUNT, weights: [...state.weights], squeeze: state.squeeze, morphing: state.morphing, renderedFrames: frames, drawCalls: renderer.info.render.calls, drawMs, geometryVersion: geometry.attributes.pA.version, artworkRect: { ...rect } },
+      flow: { renderer: 'gpu-particles', choreography: 'anticipate-arc-settle', count: COUNT, weights: [...state.weights], phase: state.phase, beat: state.beat, squeeze: state.squeeze, stretch: state.stretch, morphing: state.morphing, renderedFrames: frames, drawCalls: renderer.info.render.calls, drawMs, geometryVersion: geometry.attributes.pA.version, artworkRect: { ...rect } },
       robot: { renderer: 'three', renderedFrames: frames, meshes: renderer.info.render.calls, triangles: 0, particleCount: COUNT },
     }),
     dispose() { disposed = true; canvas.removeEventListener('webglcontextlost', contextLost); geometry.dispose(); material.dispose(); renderer.dispose(); },

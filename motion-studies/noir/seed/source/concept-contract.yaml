@@ -1,0 +1,15 @@
+subject_count: 1
+subjects:
+  - identity: seed; one coherent monochrome silver/grain sculpture
+style: black particle-inspired studio; fine silver grain; restrained white rim light
+motion_intent: anticipation, curved expansion, overlapping follow-through, gentle precise settle
+background_owner: video
+scene: near-black 050505 seamless studio, static camera, static low-key lighting
+driver: scroll
+input_semantics: continuous
+time_control: scrub
+navigation: continuous
+clip_continuity: independent
+continuity: [one subject, coherent mass, unchanged camera and lighting, no cuts, no crossfades]
+aspect_ratio: 16:9
+destination: /oil-lab/noir seed chapter; up to 1280x720 CSS at DPR 1; contain with dark surrounding space on phones

@@ -4,21 +4,34 @@
 
 Open **`http://localhost:4175/`** after starting `npm run dev -- --host 0.0.0.0 --port 4175`. `/index` and `/index.html` open the same gallery; the older `/html-studies/index.html` directory redirects here.
 
-The index begins with direct entries for Film, Matter, the GDamon particle website, and the project directory. The updated Film and Matter websites lead the full, filterable gallery, followed by GDamon and the robot portfolio. All eleven current visual directions remain available, including the three Oil Motion websites and particle experiments. A dedicated section links to all nine project cases; grouped directories collect the original HTML, earlier websites, archived player, personal content, and experimental hubs. Each entry opens in a new tab for comparison. Website cards use actual screenshots; the mechanical core study retains a video preview with Pause/Play controls.
+The index begins with direct entries for Noir, Film, Matter, and the project directory. The new black-particle Noir website leads the full, filterable gallery, followed by Film, Matter, GDamon and the robot portfolio. All twelve current visual directions remain available. A dedicated section links to all nine project cases; grouped directories collect the original HTML, earlier websites, archived player, personal content, and experimental hubs. Each entry opens in a new tab for comparison. Website cards use actual screenshots; the mechanical core study retains a video preview with Pause/Play controls.
 
-## Oil Motion / OpenRouter — three scroll websites
+## Noir — black particles and three new Oil Motion sculptures
+
+Open **`http://localhost:4175/oil-lab/noir`**, also first on the shared index. A live silver-grain core opens into a toroidal signal, connects into a tool constellation, and resolves into GDAMON. Native scrolling drives the shape, camera, and accompanying personal-work narrative; scrolling back retraces it and resting stops rendering.
+
+Three newly generated, independent motion chapters follow: **Seed** opens a dense granular core, **Relay** unfolds a connected metal ribbon, and **Lens** separates an optical aperture into layers. Their paused media elements seek through 96 actual source frames per study as the visitor scrolls, with no autoplay or player interface. The chapters explain Damon's domain-model training, deployed tool agents, and multi-turn evaluation, with links to the full project cases. Selected work, biography, notes and contact complete the site. Reduced motion and unavailable media retain readable static chapters.
+
+The [Oil Motion production records](motion-studies/noir/README.md) include the six accepted keyframes, three original generated clips, native-frame reviews, webpage pilot approval, compiled timelines and actual generation costs. Models run through the authorized OpenRouter adapter; no API credential enters browser assets.
+
+Noir, Film and Matter now share restrained anticipation, volume-preserving compression, overlapping particle groups, arced travel and a final settle. See the [twelve animation principles and their implementation](docs/scroll-motion/PRINCIPLES.md), including which principles are composition decisions. This changes the scroll choreography without adding an independently running animation clock.
+
+After building and starting `npm run preview -- --port 4176`, run `node scripts/check-noir-motion.mjs http://localhost:4176 /tmp/noir-motion-check all` for the focused browser checks. See the [validation notes](docs/scroll-motion/QA.md) for viewport coverage, source-media checks and limitations.
+
+## Oil Motion / OpenRouter — scroll websites
 
 Open **`http://localhost:4175/oil-lab`** to compare the new directions, or choose their cards on `/`:
 
 | Route | Direction |
 | --- | --- |
+| `/oil-lab/noir` | Black and silver; realtime particles plus the new Seed, Relay and Lens studies |
 | `/oil-lab/matter` | Cobalt and liquid chrome; a connected metal form becomes Damon's D |
 | `/oil-lab/archive` | Warm ivory and glass; a research folio moves forward to reveal its layers |
 | `/oil-lab/handoff` | Lavender and orange; a miniature robot grips and lifts a parcel |
 
 Each website continues into selected work, biography, research links, and contact. Native scrolling advances the generated motion; scrolling back reverses it and stopping holds the current frame. The media stays paused, without autoplay or player controls. Reduced motion removes the long pinned interval and presents readable chapters. Archive and Handoff also do this when media is unavailable; Matter can continue from its final still into live particles, with readable static chapters if WebGL is unavailable.
 
-Matter extends that sequence into a live particle story: the generated chrome D hands over to points sampled from its own silhouette, then those points form a connected agent network and evaluation structure. One damped scroll position controls the artwork and the contribution text. Archive and Handoff retain their original generated sequences.
+Matter extends that sequence into a live particle story: the generated chrome D hands over to points sampled from its own silhouette, then those points form a connected agent network and evaluation structure against a near-black background. One damped scroll position controls the artwork and the contribution text. On phones, the particle camera fits the measured space between the methods and evidence. Archive and Handoff retain their original generated sequences.
 
 The keyframes were generated with `openai/gpt-image-2` and continuous motion with `google/veo-3.1-lite` through OpenRouter. The server-side helper reads `OPEN_ROUTER_KEY`; no key is bundled into the website. See the [generation, review, and reproduction records](motion-studies/openrouter-experiments/README.md).
 

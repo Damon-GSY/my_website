@@ -1,0 +1,45 @@
+{
+  "decision": "accepted",
+  "reviewer": "Codex visual review",
+  "frames": [
+    {
+      "name": "K0",
+      "file": "public/oil-lab/noir/lens/K0.png",
+      "sha256": "077e482fc0762f0cf11b4a8633a6a39eb40f7d6b94c93eb04d077ab86ccc46b6",
+      "dimensions": [
+        1536,
+        864
+      ],
+      "normalized_subject_bounds": [
+        0.4264322916666667,
+        0.1909722222222222,
+        0.7786458333333334,
+        0.8101851851851852
+      ]
+    },
+    {
+      "name": "K1",
+      "file": "public/oil-lab/noir/lens/K1.png",
+      "sha256": "254423de814dd0e2418d84f29f836c62a38caeddd3222ba313c1e4d5d01b77de",
+      "dimensions": [
+        1536,
+        864
+      ],
+      "normalized_subject_bounds": [
+        0.4205729166666667,
+        0.11226851851851852,
+        0.826171875,
+        0.8726851851851852
+      ]
+    }
+  ],
+  "checks": {
+    "single_coherent_subject": true,
+    "monochrome_silver_black": true,
+    "no_text_or_interface": true,
+    "empty_left_35_percent": true,
+    "no_cutoff": true,
+    "identity_and_material_match": true
+  },
+  "notes": "Actual sculptures are larger than the 45-55% prompt target, but complete in frame and keep HTML left gutter empty; website uses contain to preserve edges. Relay resolves into a coherent four-lobed folded orbit rather than three literal separate ellipses; no disjoint rods. This is an independent original sculpture, not a fixed real product."
+}

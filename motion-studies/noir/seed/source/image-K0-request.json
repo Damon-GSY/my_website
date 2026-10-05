@@ -1,0 +1,9 @@
+{
+  "model": "openai/gpt-image-2",
+  "prompt": "A finished premium monochrome motion-design still for an AI researcher personal website. Opaque 16:9 landscape, a seamless near-black #050505 studio with uniform almost-black edges and no horizon. One single coherent sculptural subject centered at x=64 percent, y=50 percent, occupying 45 percent of frame height; leftmost 35 percent entirely empty for real HTML text. Fixed orthographic-like three-quarter camera, subtle silver-white rim lighting, tactile microscopically fine silver granules, crisp intricate detail, beautiful calm composition. Pure monochrome, no warm tones. No typography, letters, logos, diagrams, interface, people, stars, scattered debris or extra objects. A compact densely silver-grained spherical seed. Its surface is countless tightly coherent silver microbeads in fine flowing meridian ridges. A faint shallow central depression hints at a torus opening but remains a near-sphere. It is solidly volumetric with restrained rim light and dark charcoal center, surrounded by empty black studio.",
+  "quality": "medium",
+  "background": "opaque",
+  "output_format": "png",
+  "n": 1,
+  "aspect_ratio": "16:9"
+}

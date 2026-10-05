@@ -1,0 +1,24 @@
+{
+  "model": "google/veo-3.1-lite",
+  "prompt": "Animate one continuous four-second precision mechanical unfolding between the supplied exact silver optical-core frames. Same coherent concentric ring sculpture, same ring count and thickness throughout, static camera and black studio lighting. First 0.25 seconds show a tiny axial inward preparation. Then each nested ring advances along the SAME central optical axis in a controlled stagger, exposing layered depth and opening the precise evaluation aperture shown in the final image. Motion travels outer rim to inner rim in overlapping offsets of a fraction of a second; no free floating unrelated rings and no lateral wobble. The aperture remains perfectly concentric and the same grain-metal material persists. Slow into the final structure, with a minute trailing layer completion and a calm final half-second hold. Physical continuous structure, no dissolves, no teleportation and no instant jump in outer size. Preserve original center-right composition and completely empty left gutter; uniform near-black background remains unchanged. No camera move, zoom, text, UI, flare, color or added parts. Silent.",
+  "duration": 4,
+  "resolution": "720p",
+  "aspect_ratio": "16:9",
+  "generate_audio": false,
+  "frame_images": [
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://raw.githubusercontent.com/Damon-GSY/my_website/9c64ae590a530598fcccc69cafb727ed950d3b38/public/oil-lab/noir/lens/K0.png"
+      },
+      "frame_type": "first_frame"
+    },
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://raw.githubusercontent.com/Damon-GSY/my_website/9c64ae590a530598fcccc69cafb727ed950d3b38/public/oil-lab/noir/lens/K1.png"
+      },
+      "frame_type": "last_frame"
+    }
+  ]
+}

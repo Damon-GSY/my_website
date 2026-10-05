@@ -1,0 +1,1060 @@
+{
+  "base": "http://localhost:4176",
+  "startedAt": "2026-10-05T13:42:11.254Z",
+  "checks": [
+    {
+      "name": "Noir: reduce fallback keeps work readable",
+      "pass": true,
+      "evidence": {
+        "state": {
+          "hero": {
+            "progress": 0,
+            "target": 0,
+            "phase": 0,
+            "visible": true,
+            "status": "static",
+            "targetProgress": 0,
+            "running": false,
+            "settled": true,
+            "reduced": true,
+            "hidden": false
+          },
+          "chapters": [
+            {
+              "id": "seed",
+              "progress": 0,
+              "target": 0,
+              "frame": 0,
+              "targetFrame": 0,
+              "status": "static",
+              "visible": false,
+              "seeks": 0,
+              "targetProgress": 0,
+              "source": "mobile.mp4",
+              "currentTime": 0,
+              "duration": 0,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": true,
+              "hidden": false
+            },
+            {
+              "id": "relay",
+              "progress": 0,
+              "target": 0,
+              "frame": 0,
+              "targetFrame": 0,
+              "status": "static",
+              "visible": false,
+              "seeks": 0,
+              "targetProgress": 0,
+              "source": "mobile.mp4",
+              "currentTime": 0,
+              "duration": 0,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": true,
+              "hidden": false
+            },
+            {
+              "id": "lens",
+              "progress": 0,
+              "target": 0,
+              "frame": 0,
+              "targetFrame": 0,
+              "status": "static",
+              "visible": false,
+              "seeks": 0,
+              "targetProgress": 0,
+              "source": "mobile.mp4",
+              "currentTime": 0,
+              "duration": 0,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": true,
+              "hidden": false
+            }
+          ]
+        },
+        "geometry": {
+          "viewport": [
+            390,
+            844
+          ],
+          "width": 390,
+          "headings": [
+            {
+              "text": "Intelligence.With intent.",
+              "x": 24,
+              "y": 152,
+              "width": 342,
+              "height": 100.625,
+              "right": 366,
+              "bottom": 252.625
+            },
+            {
+              "text": "Train forcapability.",
+              "x": 24,
+              "y": 441.625,
+              "width": 342,
+              "height": 100.625,
+              "right": 366,
+              "bottom": 542.25
+            },
+            {
+              "text": "Connect tothe real world.",
+              "x": 24,
+              "y": 731.25,
+              "width": 342,
+              "height": 100.625,
+              "right": 366,
+              "bottom": 831.875
+            },
+            {
+              "text": "Make everystep count.",
+              "x": 24,
+              "y": 1038.875,
+              "width": 342,
+              "height": 100.625,
+              "right": 366,
+              "bottom": 1139.5
+            },
+            {
+              "text": "Ideas are a beginning.Useful systems are the work.",
+              "x": 24,
+              "y": 1523,
+              "width": 342,
+              "height": 62.09375,
+              "right": 366,
+              "bottom": 1585.09375
+            },
+            {
+              "text": "From signalto capability.",
+              "x": 24,
+              "y": 2196.40625,
+              "width": 342,
+              "height": 78,
+              "right": 366,
+              "bottom": 2274.40625
+            },
+            {
+              "text": "Reasoning,in motion.",
+              "x": 24,
+              "y": 2976.40625,
+              "width": 342,
+              "height": 78,
+              "right": 366,
+              "bottom": 3054.40625
+            },
+            {
+              "text": "Look closer.Think further.",
+              "x": 24,
+              "y": 3756.40625,
+              "width": 342,
+              "height": 78,
+              "right": 366,
+              "bottom": 3834.40625
+            },
+            {
+              "text": "Built. Tested.Put to work.",
+              "x": 24,
+              "y": 4265.40625,
+              "width": 342,
+              "height": 117.59375,
+              "right": 366,
+              "bottom": 4383
+            },
+            {
+              "text": "DamonGuo-Siyi・",
+              "x": 24,
+              "y": 5298.3125,
+              "width": 342,
+              "height": 148,
+              "right": 366,
+              "bottom": 5446.3125
+            }
+          ],
+          "links": [
+            {
+              "text": "The domain model",
+              "href": "/projects#supply-chain-domain-llm",
+              "x": 24,
+              "y": 613.25,
+              "width": 121.875,
+              "height": 26,
+              "right": 145.875,
+              "bottom": 639.25
+            },
+            {
+              "text": "The tool system",
+              "href": "/projects#dynamic-tool-resolution-agents",
+              "x": 24,
+              "y": 920.875,
+              "width": 110.796875,
+              "height": 26,
+              "right": 134.796875,
+              "bottom": 946.875
+            },
+            {
+              "text": "The evaluation research",
+              "href": "/projects#multi-turn-agent-evaluation",
+              "x": 24,
+              "y": 1210.5,
+              "width": 147.265625,
+              "height": 26,
+              "right": 171.265625,
+              "bottom": 1236.5
+            },
+            {
+              "text": "Explore the domain model",
+              "href": "/projects#supply-chain-domain-llm",
+              "x": 24,
+              "y": 2380.40625,
+              "width": 148.453125,
+              "height": 25,
+              "right": 172.453125,
+              "bottom": 2405.40625
+            },
+            {
+              "text": "Also: multi-objective GRPO",
+              "href": "/projects#product-attribute-rl",
+              "x": 24,
+              "y": 2417.40625,
+              "width": 117.25,
+              "height": 13.5,
+              "right": 141.25,
+              "bottom": 2430.90625
+            },
+            {
+              "text": "Explore dynamic tool agents",
+              "href": "/projects#dynamic-tool-resolution-agents",
+              "x": 24,
+              "y": 3160.40625,
+              "width": 159.125,
+              "height": 25,
+              "right": 183.125,
+              "bottom": 3185.40625
+            },
+            {
+              "text": "Also: risk-tiered agent systems",
+              "href": "/projects#supply-chain-agent-system",
+              "x": 24,
+              "y": 3197.40625,
+              "width": 130.15625,
+              "height": 13.5,
+              "right": 154.15625,
+              "bottom": 3210.90625
+            },
+            {
+              "text": "Explore the evaluation taxonomy",
+              "href": "/projects#multi-turn-agent-evaluation",
+              "x": 24,
+              "y": 3940.40625,
+              "width": 179.234375,
+              "height": 25,
+              "right": 203.234375,
+              "bottom": 3965.40625
+            },
+            {
+              "text": "Also: SupChain-Bench",
+              "href": "/projects#supchain-bench",
+              "x": 24,
+              "y": 3977.40625,
+              "width": 101.875,
+              "height": 13.5,
+              "right": 125.875,
+              "bottom": 3990.90625
+            },
+            {
+              "text": "01Production / AlibabaSupply Chain Agent SystemA risk-tiered decision framework across 12 supply-chain scenarios.",
+              "href": "/projects#supply-chain-agent-system",
+              "x": 24,
+              "y": 4427,
+              "width": 342,
+              "height": 187.375,
+              "right": 366,
+              "bottom": 4614.375
+            },
+            {
+              "text": "02Post-training / AlibabaProduct Attribute RLMulti-objective GRPO with conditional rewards and variance control.",
+              "href": "/projects#product-attribute-rl",
+              "x": 24,
+              "y": 4614.375,
+              "width": 342,
+              "height": 159.78125,
+              "right": 366,
+              "bottom": 4774.15625
+            },
+            {
+              "text": "03Benchmark / ResearchSupChain-Bench530 annotated samples grounded in real supply-chain work.",
+              "href": "/projects#supchain-bench",
+              "x": 24,
+              "y": 4774.15625,
+              "width": 342,
+              "height": 159.78125,
+              "right": 366,
+              "bottom": 4933.9375
+            },
+            {
+              "text": "04Research / MSRAM365 Copilot Memory EvaluationLong-context memory and multi-turn evaluation for email workflows.",
+              "href": "/projects#m365-copilot-memory-eval",
+              "x": 24,
+              "y": 4933.9375,
+              "width": 342,
+              "height": 187.375,
+              "right": 366,
+              "bottom": 5121.3125
+            }
+          ],
+          "videos": [
+            {
+              "source": "",
+              "time": 0,
+              "paused": true,
+              "readyState": 0,
+              "error": null
+            },
+            {
+              "source": "",
+              "time": 0,
+              "paused": true,
+              "readyState": 0,
+              "error": null
+            },
+            {
+              "source": "",
+              "time": 0,
+              "paused": true,
+              "readyState": 0,
+              "error": null
+            }
+          ],
+          "cursor": "auto"
+        }
+      }
+    },
+    {
+      "name": "Noir: webgl fallback keeps work readable",
+      "pass": true,
+      "evidence": {
+        "state": {
+          "hero": {
+            "progress": 0,
+            "target": 0,
+            "phase": 0,
+            "visible": true,
+            "status": "fallback",
+            "targetProgress": 0,
+            "running": false,
+            "settled": true,
+            "reduced": false,
+            "hidden": false
+          },
+          "chapters": [
+            {
+              "id": "seed",
+              "progress": 0,
+              "target": 0,
+              "frame": 0,
+              "targetFrame": 0,
+              "status": "loading",
+              "visible": false,
+              "seeks": 0,
+              "targetProgress": 0,
+              "source": "mobile.mp4",
+              "currentTime": 0,
+              "duration": 0,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": false,
+              "hidden": false
+            },
+            {
+              "id": "relay",
+              "progress": 0,
+              "target": 0,
+              "frame": 0,
+              "targetFrame": 0,
+              "status": "loading",
+              "visible": false,
+              "seeks": 0,
+              "targetProgress": 0,
+              "source": "mobile.mp4",
+              "currentTime": 0,
+              "duration": 0,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": false,
+              "hidden": false
+            },
+            {
+              "id": "lens",
+              "progress": 0,
+              "target": 0,
+              "frame": 0,
+              "targetFrame": 0,
+              "status": "loading",
+              "visible": false,
+              "seeks": 0,
+              "targetProgress": 0,
+              "source": "mobile.mp4",
+              "currentTime": 0,
+              "duration": 0,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": false,
+              "hidden": false
+            }
+          ]
+        },
+        "geometry": {
+          "viewport": [
+            390,
+            844
+          ],
+          "width": 390,
+          "headings": [
+            {
+              "text": "Intelligence.With intent.",
+              "x": 24,
+              "y": 152,
+              "width": 342,
+              "height": 100.625,
+              "right": 366,
+              "bottom": 252.625
+            },
+            {
+              "text": "Train forcapability.",
+              "x": 24,
+              "y": 441.625,
+              "width": 342,
+              "height": 100.625,
+              "right": 366,
+              "bottom": 542.25
+            },
+            {
+              "text": "Connect tothe real world.",
+              "x": 24,
+              "y": 731.25,
+              "width": 342,
+              "height": 100.625,
+              "right": 366,
+              "bottom": 831.875
+            },
+            {
+              "text": "Make everystep count.",
+              "x": 24,
+              "y": 1038.875,
+              "width": 342,
+              "height": 100.625,
+              "right": 366,
+              "bottom": 1139.5
+            },
+            {
+              "text": "Ideas are a beginning.Useful systems are the work.",
+              "x": 24,
+              "y": 1523,
+              "width": 342,
+              "height": 62.09375,
+              "right": 366,
+              "bottom": 1585.09375
+            },
+            {
+              "text": "From signalto capability.",
+              "x": 24,
+              "y": 2315.40625,
+              "width": 342,
+              "height": 78,
+              "right": 366,
+              "bottom": 2393.40625
+            },
+            {
+              "text": "Reasoning,in motion.",
+              "x": 24,
+              "y": 3750.203125,
+              "width": 342,
+              "height": 78,
+              "right": 366,
+              "bottom": 3828.203125
+            },
+            {
+              "text": "Look closer.Think further.",
+              "x": 24,
+              "y": 5185,
+              "width": 342,
+              "height": 78,
+              "right": 366,
+              "bottom": 5263
+            },
+            {
+              "text": "Built. Tested.Put to work.",
+              "x": 24,
+              "y": 6229.796875,
+              "width": 342,
+              "height": 117.59375,
+              "right": 366,
+              "bottom": 6347.390625
+            },
+            {
+              "text": "DamonGuo-Siyi・",
+              "x": 24,
+              "y": 7262.703125,
+              "width": 342,
+              "height": 148,
+              "right": 366,
+              "bottom": 7410.703125
+            }
+          ],
+          "links": [
+            {
+              "text": "The domain model",
+              "href": "/projects#supply-chain-domain-llm",
+              "x": 24,
+              "y": 613.25,
+              "width": 121.875,
+              "height": 26,
+              "right": 145.875,
+              "bottom": 639.25
+            },
+            {
+              "text": "The tool system",
+              "href": "/projects#dynamic-tool-resolution-agents",
+              "x": 24,
+              "y": 920.875,
+              "width": 110.796875,
+              "height": 26,
+              "right": 134.796875,
+              "bottom": 946.875
+            },
+            {
+              "text": "The evaluation research",
+              "href": "/projects#multi-turn-agent-evaluation",
+              "x": 24,
+              "y": 1210.5,
+              "width": 147.265625,
+              "height": 26,
+              "right": 171.265625,
+              "bottom": 1236.5
+            },
+            {
+              "text": "Explore the domain model",
+              "href": "/projects#supply-chain-domain-llm",
+              "x": 24,
+              "y": 2499.40625,
+              "width": 148.453125,
+              "height": 25,
+              "right": 172.453125,
+              "bottom": 2524.40625
+            },
+            {
+              "text": "Also: multi-objective GRPO",
+              "href": "/projects#product-attribute-rl",
+              "x": 24,
+              "y": 2536.40625,
+              "width": 117.25,
+              "height": 13.5,
+              "right": 141.25,
+              "bottom": 2549.90625
+            },
+            {
+              "text": "Explore dynamic tool agents",
+              "href": "/projects#dynamic-tool-resolution-agents",
+              "x": 24,
+              "y": 3934.203125,
+              "width": 159.125,
+              "height": 25,
+              "right": 183.125,
+              "bottom": 3959.203125
+            },
+            {
+              "text": "Also: risk-tiered agent systems",
+              "href": "/projects#supply-chain-agent-system",
+              "x": 24,
+              "y": 3971.203125,
+              "width": 130.15625,
+              "height": 13.5,
+              "right": 154.15625,
+              "bottom": 3984.703125
+            },
+            {
+              "text": "Explore the evaluation taxonomy",
+              "href": "/projects#multi-turn-agent-evaluation",
+              "x": 24,
+              "y": 5369,
+              "width": 179.234375,
+              "height": 25,
+              "right": 203.234375,
+              "bottom": 5394
+            },
+            {
+              "text": "Also: SupChain-Bench",
+              "href": "/projects#supchain-bench",
+              "x": 24,
+              "y": 5406,
+              "width": 101.875,
+              "height": 13.5,
+              "right": 125.875,
+              "bottom": 5419.5
+            },
+            {
+              "text": "01Production / AlibabaSupply Chain Agent SystemA risk-tiered decision framework across 12 supply-chain scenarios.",
+              "href": "/projects#supply-chain-agent-system",
+              "x": 24,
+              "y": 6391.390625,
+              "width": 342,
+              "height": 187.375,
+              "right": 366,
+              "bottom": 6578.765625
+            },
+            {
+              "text": "02Post-training / AlibabaProduct Attribute RLMulti-objective GRPO with conditional rewards and variance control.",
+              "href": "/projects#product-attribute-rl",
+              "x": 24,
+              "y": 6578.765625,
+              "width": 342,
+              "height": 159.78125,
+              "right": 366,
+              "bottom": 6738.546875
+            },
+            {
+              "text": "03Benchmark / ResearchSupChain-Bench530 annotated samples grounded in real supply-chain work.",
+              "href": "/projects#supchain-bench",
+              "x": 24,
+              "y": 6738.546875,
+              "width": 342,
+              "height": 159.78125,
+              "right": 366,
+              "bottom": 6898.328125
+            },
+            {
+              "text": "04Research / MSRAM365 Copilot Memory EvaluationLong-context memory and multi-turn evaluation for email workflows.",
+              "href": "/projects#m365-copilot-memory-eval",
+              "x": 24,
+              "y": 6898.328125,
+              "width": 342,
+              "height": 187.375,
+              "right": 366,
+              "bottom": 7085.703125
+            }
+          ],
+          "videos": [
+            {
+              "source": "",
+              "time": 0,
+              "paused": true,
+              "readyState": 0,
+              "error": null
+            },
+            {
+              "source": "",
+              "time": 0,
+              "paused": true,
+              "readyState": 0,
+              "error": null
+            },
+            {
+              "source": "",
+              "time": 0,
+              "paused": true,
+              "readyState": 0,
+              "error": null
+            }
+          ],
+          "cursor": "auto"
+        }
+      }
+    },
+    {
+      "name": "Noir: media fallback keeps work readable",
+      "pass": true,
+      "evidence": {
+        "state": {
+          "hero": {
+            "progress": 0.14677343635222972,
+            "target": 1,
+            "phase": 0,
+            "visible": false,
+            "status": "ready",
+            "targetProgress": 1,
+            "running": false,
+            "settled": false,
+            "reduced": false,
+            "hidden": false,
+            "count": 15000,
+            "renderedFrames": 6,
+            "weights": [
+              0.933402541621541,
+              0.06659745837845903,
+              0,
+              0
+            ],
+            "width": 390,
+            "height": 844,
+            "drawCalls": 1
+          },
+          "chapters": [
+            {
+              "id": "seed",
+              "progress": 0.2460308411964363,
+              "target": 0,
+              "frame": 0,
+              "targetFrame": 13,
+              "status": "poster",
+              "visible": true,
+              "seeks": 0,
+              "targetProgress": 0,
+              "source": "mobile.mp4",
+              "currentTime": 0,
+              "duration": 0,
+              "paused": true,
+              "seeking": false,
+              "running": true,
+              "settled": false,
+              "reduced": false,
+              "hidden": false
+            },
+            {
+              "id": "relay",
+              "progress": 0,
+              "target": 0,
+              "frame": 0,
+              "targetFrame": 0,
+              "status": "poster",
+              "visible": true,
+              "seeks": 0,
+              "targetProgress": 0,
+              "source": "mobile.mp4",
+              "currentTime": 0,
+              "duration": 0,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": false,
+              "hidden": false
+            },
+            {
+              "id": "lens",
+              "progress": 0,
+              "target": 0,
+              "frame": 0,
+              "targetFrame": 0,
+              "status": "loading",
+              "visible": false,
+              "seeks": 0,
+              "targetProgress": 0,
+              "source": "mobile.mp4",
+              "currentTime": 0,
+              "duration": 0,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": false,
+              "hidden": false
+            }
+          ]
+        },
+        "geometry": {
+          "viewport": [
+            390,
+            844
+          ],
+          "width": 390,
+          "headings": [
+            {
+              "text": "Intelligence.With intent.",
+              "x": 24,
+              "y": 534.375,
+              "width": 342,
+              "height": 100.625,
+              "right": 366,
+              "bottom": 635
+            },
+            {
+              "text": "Train forcapability.",
+              "x": 24,
+              "y": 554.375,
+              "width": 342,
+              "height": 100.625,
+              "right": 366,
+              "bottom": 655
+            },
+            {
+              "text": "Connect tothe real world.",
+              "x": 24,
+              "y": 536.375,
+              "width": 342,
+              "height": 100.625,
+              "right": 366,
+              "bottom": 637
+            },
+            {
+              "text": "Make everystep count.",
+              "x": 24,
+              "y": 554.375,
+              "width": 342,
+              "height": 100.625,
+              "right": 366,
+              "bottom": 655
+            },
+            {
+              "text": "Ideas are a beginning.Useful systems are the work.",
+              "x": 24,
+              "y": 2562.59375,
+              "width": 342,
+              "height": 62.09375,
+              "right": 366,
+              "bottom": 2624.6875
+            },
+            {
+              "text": "From signalto capability.",
+              "x": 24,
+              "y": 3355,
+              "width": 342,
+              "height": 78,
+              "right": 366,
+              "bottom": 3433
+            },
+            {
+              "text": "Reasoning,in motion.",
+              "x": 24,
+              "y": 4789.796875,
+              "width": 342,
+              "height": 78,
+              "right": 366,
+              "bottom": 4867.796875
+            },
+            {
+              "text": "Look closer.Think further.",
+              "x": 24,
+              "y": 6224.59375,
+              "width": 342,
+              "height": 78,
+              "right": 366,
+              "bottom": 6302.59375
+            },
+            {
+              "text": "Built. Tested.Put to work.",
+              "x": 24,
+              "y": 7269.390625,
+              "width": 342,
+              "height": 117.59375,
+              "right": 366,
+              "bottom": 7386.984375
+            },
+            {
+              "text": "DamonGuo-Siyi・",
+              "x": 24,
+              "y": 8302.296875,
+              "width": 342,
+              "height": 148,
+              "right": 366,
+              "bottom": 8450.296875
+            }
+          ],
+          "links": [
+            {
+              "text": "The domain model",
+              "href": "/projects#supply-chain-domain-llm",
+              "x": 24,
+              "y": 726,
+              "width": 121.875,
+              "height": 26,
+              "right": 145.875,
+              "bottom": 752
+            },
+            {
+              "text": "The tool system",
+              "href": "/projects#dynamic-tool-resolution-agents",
+              "x": 24,
+              "y": 726,
+              "width": 110.796875,
+              "height": 26,
+              "right": 134.796875,
+              "bottom": 752
+            },
+            {
+              "text": "The evaluation research",
+              "href": "/projects#multi-turn-agent-evaluation",
+              "x": 24,
+              "y": 726,
+              "width": 147.265625,
+              "height": 26,
+              "right": 171.265625,
+              "bottom": 752
+            },
+            {
+              "text": "Explore the domain model",
+              "href": "/projects#supply-chain-domain-llm",
+              "x": 24,
+              "y": 3539,
+              "width": 148.453125,
+              "height": 25,
+              "right": 172.453125,
+              "bottom": 3564
+            },
+            {
+              "text": "Also: multi-objective GRPO",
+              "href": "/projects#product-attribute-rl",
+              "x": 24,
+              "y": 3576,
+              "width": 117.25,
+              "height": 13.5,
+              "right": 141.25,
+              "bottom": 3589.5
+            },
+            {
+              "text": "Explore dynamic tool agents",
+              "href": "/projects#dynamic-tool-resolution-agents",
+              "x": 24,
+              "y": 4973.796875,
+              "width": 159.125,
+              "height": 25,
+              "right": 183.125,
+              "bottom": 4998.796875
+            },
+            {
+              "text": "Also: risk-tiered agent systems",
+              "href": "/projects#supply-chain-agent-system",
+              "x": 24,
+              "y": 5010.796875,
+              "width": 130.15625,
+              "height": 13.5,
+              "right": 154.15625,
+              "bottom": 5024.296875
+            },
+            {
+              "text": "Explore the evaluation taxonomy",
+              "href": "/projects#multi-turn-agent-evaluation",
+              "x": 24,
+              "y": 6408.59375,
+              "width": 179.234375,
+              "height": 25,
+              "right": 203.234375,
+              "bottom": 6433.59375
+            },
+            {
+              "text": "Also: SupChain-Bench",
+              "href": "/projects#supchain-bench",
+              "x": 24,
+              "y": 6445.59375,
+              "width": 101.875,
+              "height": 13.5,
+              "right": 125.875,
+              "bottom": 6459.09375
+            },
+            {
+              "text": "01Production / AlibabaSupply Chain Agent SystemA risk-tiered decision framework across 12 supply-chain scenarios.",
+              "href": "/projects#supply-chain-agent-system",
+              "x": 24,
+              "y": 7430.984375,
+              "width": 342,
+              "height": 187.375,
+              "right": 366,
+              "bottom": 7618.359375
+            },
+            {
+              "text": "02Post-training / AlibabaProduct Attribute RLMulti-objective GRPO with conditional rewards and variance control.",
+              "href": "/projects#product-attribute-rl",
+              "x": 24,
+              "y": 7618.359375,
+              "width": 342,
+              "height": 159.78125,
+              "right": 366,
+              "bottom": 7778.140625
+            },
+            {
+              "text": "03Benchmark / ResearchSupChain-Bench530 annotated samples grounded in real supply-chain work.",
+              "href": "/projects#supchain-bench",
+              "x": 24,
+              "y": 7778.140625,
+              "width": 342,
+              "height": 159.78125,
+              "right": 366,
+              "bottom": 7937.921875
+            },
+            {
+              "text": "04Research / MSRAM365 Copilot Memory EvaluationLong-context memory and multi-turn evaluation for email workflows.",
+              "href": "/projects#m365-copilot-memory-eval",
+              "x": 24,
+              "y": 7937.921875,
+              "width": 342,
+              "height": 187.375,
+              "right": 366,
+              "bottom": 8125.296875
+            }
+          ],
+          "videos": [
+            {
+              "source": "",
+              "time": 0,
+              "paused": true,
+              "readyState": 0,
+              "error": null
+            },
+            {
+              "source": "",
+              "time": 0,
+              "paused": true,
+              "readyState": 0,
+              "error": null
+            },
+            {
+              "source": "",
+              "time": 0,
+              "paused": true,
+              "readyState": 0,
+              "error": null
+            }
+          ],
+          "cursor": "auto"
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "expectedErrors": [
+    {
+      "scenario": "fallback-webgl",
+      "type": "console",
+      "message": "THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.",
+      "source": "http://localhost:4176/assets/three.module-DeTTMyWL.js"
+    },
+    {
+      "scenario": "fallback-media",
+      "type": "console",
+      "message": "Failed to load resource: net::ERR_FAILED",
+      "source": "http://localhost:4176/oil-lab/noir/seed/mobile.mp4"
+    },
+    {
+      "scenario": "fallback-media",
+      "type": "console",
+      "message": "Failed to load resource: net::ERR_FAILED",
+      "source": "http://localhost:4176/oil-lab/noir/relay/mobile.mp4"
+    }
+  ],
+  "screenshots": [
+    "/workspace/noir-motion-check/fallbacks/noir-fallback-reduce.png",
+    "/workspace/noir-motion-check/fallbacks/noir-fallback-webgl.png",
+    "/workspace/noir-motion-check/fallbacks/noir-fallback-media.png"
+  ],
+  "requests": [],
+  "limitations": [
+    "Chromium uses a software GPU in this environment; these checks do not establish a device frame rate."
+  ],
+  "finishedAt": "2026-10-05T13:42:13.973Z",
+  "pass": true
+}

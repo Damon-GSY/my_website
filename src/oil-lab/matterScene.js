@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { choreographyState, particleChoreography } from '../motion/choreography';
 
 const clamp = (v) => Math.max(0, Math.min(1, v));
 const smooth = (a, b, v) => { const t = clamp((v - a) / (b - a)); return t * t * (3 - 2 * t); };
@@ -75,22 +76,22 @@ export async function createMatterScene(canvas) {
   geometry.setAttribute('seed', new THREE.BufferAttribute(seeds, 1));
   geometry.setAttribute('alpha', new THREE.BufferAttribute(alphas, 1));
   const uniforms = {
-    weights: { value: new THREE.Vector3(1, 0, 0) }, progress: { value: 0 }, squeeze: { value: 1 },
-    opacity: { value: 0 }, pointSize: { value: 1.8 }, movement: { value: 0 }, scale: { value: 1 },
+    weights: { value: new THREE.Vector3(1, 0, 0) }, transition: { value: new THREE.Vector2() },
+    opacity: { value: 0 }, pointSize: { value: 1.8 }, scale: { value: 1 },
   };
   const material = new THREE.ShaderMaterial({
     uniforms, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
     vertexShader: `
       attribute vec3 form0, form1, form2;
       attribute float seed, alpha;
-      uniform vec3 weights;
-      uniform float progress, squeeze, pointSize, movement, scale;
+      uniform vec2 transition;
+      uniform float pointSize, scale;
       varying float vAlpha;
+      ${particleChoreography}
       void main() {
-        vec3 p = form0 * weights.x + form1 * weights.y + form2 * weights.z;
-        p.x *= squeeze;
-        p.z *= squeeze;
-        p += vec3(sin(seed * 47.0 + progress * 8.0), cos(seed * 29.0 + progress * 9.0), sin(seed * 37.0)) * movement * scale * (0.6 + seed);
+        vec3 from = transition.y < 1.5 ? form0 : form1;
+        vec3 target = transition.y < 1.5 ? form1 : form2;
+        vec3 p = motionPose(from, target, transition.x, seed, scale);
         vec4 mv = modelViewMatrix * vec4(p, 1.0);
         gl_Position = projectionMatrix * mv;
         gl_PointSize = pointSize * (0.7 + seed * 0.7);
@@ -104,7 +105,7 @@ export async function createMatterScene(canvas) {
       void main() {
         float m = 1.0 - smoothstep(.17, .5, length(gl_PointCoord - .5));
         if (m < .015) discard;
-        gl_FragColor = vec4(mix(vec3(.84,.92,1.0), vec3(1.0), vAlpha), m * vAlpha * opacity);
+        gl_FragColor = vec4(mix(vec3(.90,.93,.87), vec3(1.0), vAlpha), m * vAlpha * opacity);
       }
     `,
   });
@@ -113,14 +114,18 @@ export async function createMatterScene(canvas) {
   scene.add(points);
   let width = 1;
   let height = 1;
+  let cameraDistance = 1;
+  let phoneStage = null;
   let renders = 0;
+  let choreography = choreographyState(0);
   let sampleBounds = {};
   const resize = () => {
     width = Math.max(1, canvas.clientWidth);
     height = Math.max(1, canvas.clientHeight);
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
-    camera.position.z = (height / 2) / Math.tan(20 * Math.PI / 180);
+    cameraDistance = (height / 2) / Math.tan(20 * Math.PI / 180);
+    camera.position.z = cameraDistance;
     camera.updateProjectionMatrix();
     const imageWidth = Math.min(width, height * 16 / 9);
     const imageHeight = imageWidth * 9 / 16;
@@ -131,6 +136,17 @@ export async function createMatterScene(canvas) {
     const centerX = offsetX + imageWidth * .675 - width / 2;
     const centerY = height / 2 - (offsetY + imageHeight * .55);
     const scale = Math.min(imageHeight * .92, width * .62);
+    phoneStage = null;
+    if (innerWidth <= 700) {
+      const stage = canvas.closest('.matter-stage');
+      const canvasRect = canvas.getBoundingClientRect();
+      const copyBottom = Math.max(...[...stage.querySelectorAll('.matter-method')].map((node) => node.getBoundingClientRect().bottom)) + 14;
+      const evidenceTop = Math.min(...[...stage.querySelectorAll('.matter-proof')].map((node) => node.getBoundingClientRect().top)) - 14;
+      phoneStage = {
+        height: Math.max(100, evidenceTop - copyBottom),
+        centerY: canvasRect.top + height / 2 - (copyBottom + evidenceTop) / 2,
+      };
+    }
     for (let i = 0; i < count; i++) {
       const at = i * 3;
       forms[0][at] = offsetX + rawD[at] * imageWidth - width / 2 - centerX;
@@ -155,18 +171,26 @@ export async function createMatterScene(canvas) {
     render(progress, pointer) {
       const a = smooth(.43, .66, progress);
       const b = smooth(.75, .94, progress);
+      const boundary = progress < .75 ? 1 : 2;
+      const phase = boundary === 1 ? clamp((progress - .43) / .23) : clamp((progress - .75) / .19);
+      choreography = choreographyState(phase);
+      // Reframe after the exact image handoff; short phones retain a clear reading area.
+      const reframe = smooth(.42, .55, progress);
+      const retreat = phoneStage ? Math.max(1, sampleBounds.imageHeight * (.84 + .34 * choreography.envelope) / phoneStage.height) : 1;
+      const cameraScale = 1 + (retreat - 1) * reframe;
+      camera.position.z = cameraDistance * cameraScale;
+      const centerY = phoneStage ? sampleBounds.centerY + (phoneStage.centerY - sampleBounds.centerY) * reframe : sampleBounds.centerY;
+      points.position.set(sampleBounds.centerX * cameraScale, centerY * cameraScale, 0);
       uniforms.weights.value.set(1 - a, a * (1 - b), b);
-      uniforms.progress.value = progress;
+      uniforms.transition.value.set(phase, boundary);
       uniforms.opacity.value = smooth(.30, .42, progress) * 1.2;
-      uniforms.squeeze.value = 1 - .56 * Math.max(Math.sin(a * Math.PI), Math.sin(b * Math.PI));
-      uniforms.movement.value = .025 * Math.max(Math.sin(a * Math.PI), Math.sin(b * Math.PI));
       const spatial = smooth(.4, .54, progress);
       points.rotation.y = (Math.sin(progress * 4) * .18 + pointer.x * .10) * spatial;
       points.rotation.x = pointer.y * .07 * spatial;
       renderer.render(scene, camera);
       renders++;
     },
-    getMetrics: () => ({ count, renders, weights: uniforms.weights.value.toArray(), squeeze: uniforms.squeeze.value, opacity: uniforms.opacity.value, ...sampleBounds }),
+    getMetrics: () => ({ count, renders, choreography: 'anticipate-arc-settle', weights: uniforms.weights.value.toArray(), phase: choreography.phase, beat: choreography.beat, squeeze: choreography.compression, stretch: choreography.stretch, opacity: uniforms.opacity.value, drawCalls: renderer.info.render.calls, geometryVersion: geometry.attributes.form0.version, cameraScale: camera.position.z / cameraDistance, phoneStage, ...sampleBounds }),
     dispose() { geometry.dispose(); material.dispose(); renderer.dispose(); },
   };
 }

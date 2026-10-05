@@ -1,0 +1,1030 @@
+{
+  "base": "http://localhost:4176",
+  "startedAt": "2026-10-05T13:40:31.299Z",
+  "checks": [
+    {
+      "name": "Noir seed: actual generated video scrubs and reverses at 1440×900",
+      "pass": true,
+      "evidence": {
+        "samples": [
+          {
+            "progress": 0,
+            "state": {
+              "id": "seed",
+              "progress": 0,
+              "target": 0,
+              "frame": 0,
+              "targetFrame": 0,
+              "status": "ready",
+              "visible": true,
+              "seeks": 2,
+              "targetProgress": 0,
+              "source": "desktop.mp4",
+              "currentTime": 0,
+              "duration": 4,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": false,
+              "hidden": false
+            }
+          },
+          {
+            "progress": 0.12,
+            "state": {
+              "id": "seed",
+              "progress": 0.12003968253968254,
+              "target": 0.12003968253968254,
+              "frame": 2,
+              "targetFrame": 2,
+              "status": "ready",
+              "visible": true,
+              "seeks": 4,
+              "targetProgress": 0.12003968253968254,
+              "source": "desktop.mp4",
+              "currentTime": 0.083333,
+              "duration": 4,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": false,
+              "hidden": false
+            }
+          },
+          {
+            "progress": 0.3,
+            "state": {
+              "id": "seed",
+              "progress": 0.2994047619047619,
+              "target": 0.2994047619047619,
+              "frame": 20,
+              "targetFrame": 20,
+              "status": "ready",
+              "visible": true,
+              "seeks": 18,
+              "targetProgress": 0.2994047619047619,
+              "source": "desktop.mp4",
+              "currentTime": 0.833333,
+              "duration": 4,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": false,
+              "hidden": false
+            }
+          },
+          {
+            "progress": 0.5,
+            "state": {
+              "id": "seed",
+              "progress": 0.4994047619047619,
+              "target": 0.4994047619047619,
+              "frame": 51,
+              "targetFrame": 51,
+              "status": "ready",
+              "visible": true,
+              "seeks": 34,
+              "targetProgress": 0.4994047619047619,
+              "source": "desktop.mp4",
+              "currentTime": 2.125,
+              "duration": 4,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": false,
+              "hidden": false
+            }
+          },
+          {
+            "progress": 0.72,
+            "state": {
+              "id": "seed",
+              "progress": 0.7200396825396825,
+              "target": 0.7200396825396825,
+              "frame": 83,
+              "targetFrame": 83,
+              "status": "ready",
+              "visible": true,
+              "seeks": 46,
+              "targetProgress": 0.7200396825396825,
+              "source": "desktop.mp4",
+              "currentTime": 3.458333,
+              "duration": 4,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": false,
+              "hidden": false
+            }
+          },
+          {
+            "progress": 0.94,
+            "state": {
+              "id": "seed",
+              "progress": 0.9406746031746032,
+              "target": 0.9406746031746032,
+              "frame": 95,
+              "targetFrame": 95,
+              "status": "ready",
+              "visible": true,
+              "seeks": 52,
+              "targetProgress": 0.9406746031746032,
+              "source": "desktop.mp4",
+              "currentTime": 3.958333,
+              "duration": 4,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": false,
+              "hidden": false
+            }
+          },
+          {
+            "progress": 1,
+            "state": {
+              "id": "seed",
+              "progress": 0.9994047619047619,
+              "target": 0.9994047619047619,
+              "frame": 95,
+              "targetFrame": 95,
+              "status": "ready",
+              "visible": true,
+              "seeks": 52,
+              "targetProgress": 0.9994047619047619,
+              "source": "desktop.mp4",
+              "currentTime": 3.958333,
+              "duration": 4,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": false,
+              "hidden": false
+            }
+          },
+          {
+            "progress": 0.45,
+            "state": {
+              "id": "seed",
+              "progress": 0.4501984126984127,
+              "target": 0.4501984126984127,
+              "frame": 43,
+              "targetFrame": 43,
+              "status": "ready",
+              "visible": true,
+              "seeks": 71,
+              "targetProgress": 0.4501984126984127,
+              "source": "desktop.mp4",
+              "currentTime": 1.791666,
+              "duration": 4,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": false,
+              "hidden": false
+            }
+          },
+          {
+            "progress": 0.1,
+            "state": {
+              "id": "seed",
+              "progress": 0.0994047619047619,
+              "target": 0.0994047619047619,
+              "frame": 1,
+              "targetFrame": 1,
+              "status": "ready",
+              "visible": true,
+              "seeks": 84,
+              "targetProgress": 0.0994047619047619,
+              "source": "desktop.mp4",
+              "currentTime": 0.041666,
+              "duration": 4,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": false,
+              "hidden": false
+            }
+          }
+        ],
+        "geometry": {
+          "viewport": [
+            1440,
+            900
+          ],
+          "width": 1440,
+          "headings": [
+            {
+              "text": "Intelligence.With intent.",
+              "x": 60.46875,
+              "y": -1111.65771484375,
+              "width": 777.59375,
+              "height": 207.34375,
+              "right": 838.0625,
+              "bottom": -904.31396484375
+            },
+            {
+              "text": "Train forcapability.",
+              "x": 60.46875,
+              "y": -1092.28125,
+              "width": 777.59375,
+              "height": 207.34375,
+              "right": 838.0625,
+              "bottom": -884.9375
+            },
+            {
+              "text": "Connect tothe real world.",
+              "x": 60.46875,
+              "y": -1092.28125,
+              "width": 777.59375,
+              "height": 207.34375,
+              "right": 838.0625,
+              "bottom": -884.9375
+            },
+            {
+              "text": "Make everystep count.",
+              "x": 60.46875,
+              "y": -1092.28125,
+              "width": 777.59375,
+              "height": 207.34375,
+              "right": 838.0625,
+              "bottom": -884.9375
+            },
+            {
+              "text": "Ideas are a beginning.Useful systems are the work.",
+              "x": 60.46875,
+              "y": -423,
+              "width": 1319.0625,
+              "height": 144.375,
+              "right": 1379.53125,
+              "bottom": -278.625
+            },
+            {
+              "text": "From signalto capability.",
+              "x": 60.46875,
+              "y": 352.8856506347656,
+              "width": 474.859375,
+              "height": 153.4375,
+              "right": 535.328125,
+              "bottom": 506.3231506347656
+            },
+            {
+              "text": "Reasoning,in motion.",
+              "x": 60.46875,
+              "y": 1800.90625,
+              "width": 474.859375,
+              "height": 153.4375,
+              "right": 535.328125,
+              "bottom": 1954.34375
+            },
+            {
+              "text": "Look closer.Think further.",
+              "x": 60.46875,
+              "y": 2675.90625,
+              "width": 474.859375,
+              "height": 153.4375,
+              "right": 535.328125,
+              "bottom": 2829.34375
+            },
+            {
+              "text": "Built. Tested.Put to work.",
+              "x": 60.46875,
+              "y": 4020.375,
+              "width": 1319.0625,
+              "height": 197.53125,
+              "right": 1379.53125,
+              "bottom": 4217.90625
+            },
+            {
+              "text": "DamonGuo-Siyi・",
+              "x": 60.46875,
+              "y": 5329.90625,
+              "width": 619.53125,
+              "height": 460.4375,
+              "right": 680,
+              "bottom": 5790.34375
+            }
+          ],
+          "links": [
+            {
+              "text": "The domain model",
+              "href": "/projects#supply-chain-domain-llm",
+              "x": 60.46875,
+              "y": -764,
+              "width": 138.65625,
+              "height": 26,
+              "right": 199.125,
+              "bottom": -738
+            },
+            {
+              "text": "The tool system",
+              "href": "/projects#dynamic-tool-resolution-agents",
+              "x": 60.46875,
+              "y": -764,
+              "width": 125.359375,
+              "height": 26,
+              "right": 185.828125,
+              "bottom": -738
+            },
+            {
+              "text": "The evaluation research",
+              "href": "/projects#multi-turn-agent-evaluation",
+              "x": 60.46875,
+              "y": -764,
+              "width": 169.125,
+              "height": 26,
+              "right": 229.59375,
+              "bottom": -738
+            },
+            {
+              "text": "Explore the domain model",
+              "href": "/projects#supply-chain-domain-llm",
+              "x": 60.46875,
+              "y": 646.8231201171875,
+              "width": 180.34375,
+              "height": 26,
+              "right": 240.8125,
+              "bottom": 672.8231201171875
+            },
+            {
+              "text": "Also: multi-objective GRPO",
+              "href": "/projects#product-attribute-rl",
+              "x": 60.46875,
+              "y": 688.8231201171875,
+              "width": 129.671875,
+              "height": 15,
+              "right": 190.140625,
+              "bottom": 703.8231201171875
+            },
+            {
+              "text": "Explore dynamic tool agents",
+              "href": "/projects#dynamic-tool-resolution-agents",
+              "x": 60.46875,
+              "y": 2094.84375,
+              "width": 193.15625,
+              "height": 26,
+              "right": 253.625,
+              "bottom": 2120.84375
+            },
+            {
+              "text": "Also: risk-tiered agent systems",
+              "href": "/projects#supply-chain-agent-system",
+              "x": 60.46875,
+              "y": 2136.84375,
+              "width": 144.328125,
+              "height": 15,
+              "right": 204.796875,
+              "bottom": 2151.84375
+            },
+            {
+              "text": "Explore the evaluation taxonomy",
+              "href": "/projects#multi-turn-agent-evaluation",
+              "x": 60.46875,
+              "y": 2969.84375,
+              "width": 217.28125,
+              "height": 26,
+              "right": 277.75,
+              "bottom": 2995.84375
+            },
+            {
+              "text": "Also: SupChain-Bench",
+              "href": "/projects#supchain-bench",
+              "x": 60.46875,
+              "y": 3011.84375,
+              "width": 112.21875,
+              "height": 15,
+              "right": 172.6875,
+              "bottom": 3026.84375
+            },
+            {
+              "text": "01Production / AlibabaSupply Chain Agent SystemA risk-tiered decision framework across 12 supply-chain scenarios.",
+              "href": "/projects#supply-chain-agent-system",
+              "x": 60.46875,
+              "y": 4280.90625,
+              "width": 1319.0625,
+              "height": 186.5,
+              "right": 1379.53125,
+              "bottom": 4467.40625
+            },
+            {
+              "text": "02Post-training / AlibabaProduct Attribute RLMulti-objective GRPO with conditional rewards and variance control.",
+              "href": "/projects#product-attribute-rl",
+              "x": 60.46875,
+              "y": 4467.40625,
+              "width": 1319.0625,
+              "height": 186.5,
+              "right": 1379.53125,
+              "bottom": 4653.90625
+            },
+            {
+              "text": "03Benchmark / ResearchSupChain-Bench530 annotated samples grounded in real supply-chain work.",
+              "href": "/projects#supchain-bench",
+              "x": 60.46875,
+              "y": 4653.90625,
+              "width": 1319.0625,
+              "height": 186.5,
+              "right": 1379.53125,
+              "bottom": 4840.40625
+            },
+            {
+              "text": "04Research / MSRAM365 Copilot Memory EvaluationLong-context memory and multi-turn evaluation for email workflows.",
+              "href": "/projects#m365-copilot-memory-eval",
+              "x": 60.46875,
+              "y": 4840.40625,
+              "width": 1319.0625,
+              "height": 186.5,
+              "right": 1379.53125,
+              "bottom": 5026.90625
+            }
+          ],
+          "videos": [
+            {
+              "source": "http://localhost:4176/oil-lab/noir/seed/desktop.mp4",
+              "time": 0.041666,
+              "paused": true,
+              "readyState": 4,
+              "error": null
+            },
+            {
+              "source": "http://localhost:4176/oil-lab/noir/relay/desktop.mp4",
+              "time": 0,
+              "paused": true,
+              "readyState": 0,
+              "error": null
+            },
+            {
+              "source": "",
+              "time": 0,
+              "paused": true,
+              "readyState": 0,
+              "error": null
+            }
+          ],
+          "cursor": "auto"
+        },
+        "idleFrames": 0
+      }
+    },
+    {
+      "name": "Noir seed: actual generated video scrubs and reverses at 390×844",
+      "pass": true,
+      "evidence": {
+        "samples": [
+          {
+            "progress": 0,
+            "state": {
+              "id": "seed",
+              "progress": 0,
+              "target": 0,
+              "frame": 0,
+              "targetFrame": 0,
+              "status": "ready",
+              "visible": true,
+              "seeks": 4,
+              "targetProgress": 0,
+              "source": "mobile.mp4",
+              "currentTime": 0,
+              "duration": 4,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": false,
+              "hidden": false
+            }
+          },
+          {
+            "progress": 0.12,
+            "state": {
+              "id": "seed",
+              "progress": 0.12013536379018612,
+              "target": 0.12013536379018612,
+              "frame": 2,
+              "targetFrame": 2,
+              "status": "ready",
+              "visible": true,
+              "seeks": 6,
+              "targetProgress": 0.12013536379018612,
+              "source": "mobile.mp4",
+              "currentTime": 0.083333,
+              "duration": 4,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": false,
+              "hidden": false
+            }
+          },
+          {
+            "progress": 0.3,
+            "state": {
+              "id": "seed",
+              "progress": 0.29949238578680204,
+              "target": 0.29949238578680204,
+              "frame": 20,
+              "targetFrame": 20,
+              "status": "ready",
+              "visible": true,
+              "seeks": 20,
+              "targetProgress": 0.29949238578680204,
+              "source": "mobile.mp4",
+              "currentTime": 0.833333,
+              "duration": 4,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": false,
+              "hidden": false
+            }
+          },
+          {
+            "progress": 0.5,
+            "state": {
+              "id": "seed",
+              "progress": 0.5008460236886633,
+              "target": 0.5008460236886633,
+              "frame": 51,
+              "targetFrame": 51,
+              "status": "ready",
+              "visible": true,
+              "seeks": 36,
+              "targetProgress": 0.5008460236886633,
+              "source": "mobile.mp4",
+              "currentTime": 2.125,
+              "duration": 4,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": false,
+              "hidden": false
+            }
+          },
+          {
+            "progress": 0.72,
+            "state": {
+              "id": "seed",
+              "progress": 0.7208121827411168,
+              "target": 0.7208121827411168,
+              "frame": 83,
+              "targetFrame": 83,
+              "status": "ready",
+              "visible": true,
+              "seeks": 51,
+              "targetProgress": 0.7208121827411168,
+              "source": "mobile.mp4",
+              "currentTime": 3.458333,
+              "duration": 4,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": false,
+              "hidden": false
+            }
+          },
+          {
+            "progress": 0.94,
+            "state": {
+              "id": "seed",
+              "progress": 0.9407783417935702,
+              "target": 0.9407783417935702,
+              "frame": 95,
+              "targetFrame": 95,
+              "status": "ready",
+              "visible": true,
+              "seeks": 58,
+              "targetProgress": 0.9407783417935702,
+              "source": "mobile.mp4",
+              "currentTime": 3.958333,
+              "duration": 4,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": false,
+              "hidden": false
+            }
+          },
+          {
+            "progress": 1,
+            "state": {
+              "id": "seed",
+              "progress": 1,
+              "target": 1,
+              "frame": 95,
+              "targetFrame": 95,
+              "status": "ready",
+              "visible": true,
+              "seeks": 58,
+              "targetProgress": 1,
+              "source": "mobile.mp4",
+              "currentTime": 3.958333,
+              "duration": 4,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": false,
+              "hidden": false
+            }
+          },
+          {
+            "progress": 0.45,
+            "state": {
+              "id": "seed",
+              "progress": 0.4500846023688663,
+              "target": 0.4500846023688663,
+              "frame": 43,
+              "targetFrame": 43,
+              "status": "ready",
+              "visible": true,
+              "seeks": 79,
+              "targetProgress": 0.4500846023688663,
+              "source": "mobile.mp4",
+              "currentTime": 1.791666,
+              "duration": 4,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": false,
+              "hidden": false
+            }
+          },
+          {
+            "progress": 0.1,
+            "state": {
+              "id": "seed",
+              "progress": 0.09983079526226735,
+              "target": 0.09983079526226735,
+              "frame": 1,
+              "targetFrame": 1,
+              "status": "ready",
+              "visible": true,
+              "seeks": 93,
+              "targetProgress": 0.09983079526226735,
+              "source": "mobile.mp4",
+              "currentTime": 0.041666,
+              "duration": 4,
+              "paused": true,
+              "seeking": false,
+              "running": false,
+              "settled": true,
+              "reduced": false,
+              "hidden": false
+            }
+          }
+        ],
+        "geometry": {
+          "viewport": [
+            390,
+            844
+          ],
+          "width": 390,
+          "headings": [
+            {
+              "text": "Intelligence.With intent.",
+              "x": 24,
+              "y": -767.40771484375,
+              "width": 342,
+              "height": 100.625,
+              "right": 366,
+              "bottom": -666.78271484375
+            },
+            {
+              "text": "Train forcapability.",
+              "x": 24,
+              "y": -748.03125,
+              "width": 342,
+              "height": 100.625,
+              "right": 366,
+              "bottom": -647.40625
+            },
+            {
+              "text": "Connect tothe real world.",
+              "x": 24,
+              "y": -766.03125,
+              "width": 342,
+              "height": 100.625,
+              "right": 366,
+              "bottom": -665.40625
+            },
+            {
+              "text": "Make everystep count.",
+              "x": 24,
+              "y": -748.03125,
+              "width": 342,
+              "height": 100.625,
+              "right": 366,
+              "bottom": -647.40625
+            },
+            {
+              "text": "Ideas are a beginning.Useful systems are the work.",
+              "x": 24,
+              "y": -343.40625,
+              "width": 342,
+              "height": 62.09375,
+              "right": 366,
+              "bottom": -281.3125
+            },
+            {
+              "text": "From signalto capability.",
+              "x": 24,
+              "y": 502.3128356933594,
+              "width": 342,
+              "height": 78.00003051757812,
+              "right": 366,
+              "bottom": 580.3128662109375
+            },
+            {
+              "text": "Reasoning,in motion.",
+              "x": 24,
+              "y": 1786.796875,
+              "width": 342,
+              "height": 78,
+              "right": 366,
+              "bottom": 1864.796875
+            },
+            {
+              "text": "Look closer.Think further.",
+              "x": 24,
+              "y": 2663.796875,
+              "width": 342,
+              "height": 78,
+              "right": 366,
+              "bottom": 2741.796875
+            },
+            {
+              "text": "Built. Tested.Put to work.",
+              "x": 24,
+              "y": 3708.59375,
+              "width": 342,
+              "height": 117.59375,
+              "right": 366,
+              "bottom": 3826.1875
+            },
+            {
+              "text": "DamonGuo-Siyi・",
+              "x": 24,
+              "y": 4741.5,
+              "width": 342,
+              "height": 148,
+              "right": 366,
+              "bottom": 4889.5
+            }
+          ],
+          "links": [
+            {
+              "text": "The domain model",
+              "href": "/projects#supply-chain-domain-llm",
+              "x": 24,
+              "y": -576.40625,
+              "width": 121.875,
+              "height": 26,
+              "right": 145.875,
+              "bottom": -550.40625
+            },
+            {
+              "text": "The tool system",
+              "href": "/projects#dynamic-tool-resolution-agents",
+              "x": 24,
+              "y": -576.40625,
+              "width": 110.796875,
+              "height": 26,
+              "right": 134.796875,
+              "bottom": -550.40625
+            },
+            {
+              "text": "The evaluation research",
+              "href": "/projects#multi-turn-agent-evaluation",
+              "x": 24,
+              "y": -576.40625,
+              "width": 147.265625,
+              "height": 26,
+              "right": 171.265625,
+              "bottom": -550.40625
+            },
+            {
+              "text": "Explore the domain model",
+              "href": "/projects#supply-chain-domain-llm",
+              "x": 24,
+              "y": 686.3128662109375,
+              "width": 148.453125,
+              "height": 25,
+              "right": 172.453125,
+              "bottom": 711.3128662109375
+            },
+            {
+              "text": "Also: multi-objective GRPO",
+              "href": "/projects#product-attribute-rl",
+              "x": 24,
+              "y": 723.3128662109375,
+              "width": 117.25,
+              "height": 13.5,
+              "right": 141.25,
+              "bottom": 736.8128662109375
+            },
+            {
+              "text": "Explore dynamic tool agents",
+              "href": "/projects#dynamic-tool-resolution-agents",
+              "x": 24,
+              "y": 1970.796875,
+              "width": 159.125,
+              "height": 25,
+              "right": 183.125,
+              "bottom": 1995.796875
+            },
+            {
+              "text": "Also: risk-tiered agent systems",
+              "href": "/projects#supply-chain-agent-system",
+              "x": 24,
+              "y": 2007.796875,
+              "width": 130.15625,
+              "height": 13.5,
+              "right": 154.15625,
+              "bottom": 2021.296875
+            },
+            {
+              "text": "Explore the evaluation taxonomy",
+              "href": "/projects#multi-turn-agent-evaluation",
+              "x": 24,
+              "y": 2847.796875,
+              "width": 179.234375,
+              "height": 25,
+              "right": 203.234375,
+              "bottom": 2872.796875
+            },
+            {
+              "text": "Also: SupChain-Bench",
+              "href": "/projects#supchain-bench",
+              "x": 24,
+              "y": 2884.796875,
+              "width": 101.875,
+              "height": 13.5,
+              "right": 125.875,
+              "bottom": 2898.296875
+            },
+            {
+              "text": "01Production / AlibabaSupply Chain Agent SystemA risk-tiered decision framework across 12 supply-chain scenarios.",
+              "href": "/projects#supply-chain-agent-system",
+              "x": 24,
+              "y": 3870.1875,
+              "width": 342,
+              "height": 187.375,
+              "right": 366,
+              "bottom": 4057.5625
+            },
+            {
+              "text": "02Post-training / AlibabaProduct Attribute RLMulti-objective GRPO with conditional rewards and variance control.",
+              "href": "/projects#product-attribute-rl",
+              "x": 24,
+              "y": 4057.5625,
+              "width": 342,
+              "height": 159.78125,
+              "right": 366,
+              "bottom": 4217.34375
+            },
+            {
+              "text": "03Benchmark / ResearchSupChain-Bench530 annotated samples grounded in real supply-chain work.",
+              "href": "/projects#supchain-bench",
+              "x": 24,
+              "y": 4217.34375,
+              "width": 342,
+              "height": 159.78125,
+              "right": 366,
+              "bottom": 4377.125
+            },
+            {
+              "text": "04Research / MSRAM365 Copilot Memory EvaluationLong-context memory and multi-turn evaluation for email workflows.",
+              "href": "/projects#m365-copilot-memory-eval",
+              "x": 24,
+              "y": 4377.125,
+              "width": 342,
+              "height": 187.375,
+              "right": 366,
+              "bottom": 4564.5
+            }
+          ],
+          "videos": [
+            {
+              "source": "http://localhost:4176/oil-lab/noir/seed/mobile.mp4",
+              "time": 0.041666,
+              "paused": true,
+              "readyState": 4,
+              "error": null
+            },
+            {
+              "source": "http://localhost:4176/oil-lab/noir/relay/mobile.mp4",
+              "time": 0,
+              "paused": true,
+              "readyState": 0,
+              "error": null
+            },
+            {
+              "source": "",
+              "time": 0,
+              "paused": true,
+              "readyState": 0,
+              "error": null
+            }
+          ],
+          "cursor": "auto"
+        },
+        "idleFrames": 0
+      }
+    }
+  ],
+  "errors": [],
+  "expectedErrors": [],
+  "screenshots": [
+    "/workspace/noir-motion-check/pilot/noir-seed-1440-0.png",
+    "/workspace/noir-motion-check/pilot/noir-seed-1440-12.png",
+    "/workspace/noir-motion-check/pilot/noir-seed-1440-30.png",
+    "/workspace/noir-motion-check/pilot/noir-seed-1440-50.png",
+    "/workspace/noir-motion-check/pilot/noir-seed-1440-72.png",
+    "/workspace/noir-motion-check/pilot/noir-seed-1440-94.png",
+    "/workspace/noir-motion-check/pilot/noir-seed-1440-100.png",
+    "/workspace/noir-motion-check/pilot/noir-seed-1440-45.png",
+    "/workspace/noir-motion-check/pilot/noir-seed-390-0.png",
+    "/workspace/noir-motion-check/pilot/noir-seed-390-12.png",
+    "/workspace/noir-motion-check/pilot/noir-seed-390-30.png",
+    "/workspace/noir-motion-check/pilot/noir-seed-390-50.png",
+    "/workspace/noir-motion-check/pilot/noir-seed-390-72.png",
+    "/workspace/noir-motion-check/pilot/noir-seed-390-94.png",
+    "/workspace/noir-motion-check/pilot/noir-seed-390-100.png",
+    "/workspace/noir-motion-check/pilot/noir-seed-390-45.png"
+  ],
+  "requests": [
+    {
+      "scenario": "seed-1440",
+      "url": "http://localhost:4176/oil-lab/noir/seed/desktop.mp4",
+      "status": 206
+    },
+    {
+      "scenario": "seed-1440",
+      "url": "http://localhost:4176/oil-lab/noir/seed/desktop.mp4",
+      "status": 206
+    },
+    {
+      "scenario": "seed-1440",
+      "url": "http://localhost:4176/oil-lab/noir/seed/desktop.mp4",
+      "status": 206
+    },
+    {
+      "scenario": "seed-1440",
+      "url": "http://localhost:4176/oil-lab/noir/seed/desktop.mp4",
+      "status": 206
+    },
+    {
+      "scenario": "seed-1440",
+      "url": "http://localhost:4176/oil-lab/noir/seed/desktop.mp4",
+      "status": 206
+    },
+    {
+      "scenario": "seed-1440",
+      "url": "http://localhost:4176/oil-lab/noir/seed/desktop.mp4",
+      "status": 206
+    },
+    {
+      "scenario": "seed-1440",
+      "url": "http://localhost:4176/oil-lab/noir/seed/desktop.mp4",
+      "status": 206
+    },
+    {
+      "scenario": "seed-1440",
+      "url": "http://localhost:4176/oil-lab/noir/relay/desktop.mp4",
+      "status": 200
+    },
+    {
+      "scenario": "seed-390",
+      "url": "http://localhost:4176/oil-lab/noir/seed/mobile.mp4",
+      "status": 206
+    },
+    {
+      "scenario": "seed-390",
+      "url": "http://localhost:4176/oil-lab/noir/seed/mobile.mp4",
+      "status": 206
+    },
+    {
+      "scenario": "seed-390",
+      "url": "http://localhost:4176/oil-lab/noir/relay/mobile.mp4",
+      "status": 200
+    }
+  ],
+  "limitations": [
+    "Chromium uses a software GPU in this environment; these checks do not establish a device frame rate."
+  ],
+  "finishedAt": "2026-10-05T13:40:49.908Z",
+  "pass": true
+}

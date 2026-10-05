@@ -1,0 +1,32 @@
+{
+  "delivery": "baked-video",
+  "controller": "frame-scrub",
+  "compile_report": "../build/compiled/compile.json",
+  "artifacts": [
+    {
+      "file": "public/oil-lab/noir/lens/desktop.mp4",
+      "bytes": 5155581,
+      "sha256": "de9e26690b661c184872f58a5fef78ee962a4958d07b3879858fb588591e6f3f"
+    },
+    {
+      "file": "public/oil-lab/noir/lens/mobile.mp4",
+      "bytes": 1176495,
+      "sha256": "9d92069c039ed4e75da63d5f280645643db620a831d2e13483f01451bbe962be"
+    },
+    {
+      "file": "public/oil-lab/noir/lens/poster.webp",
+      "bytes": 59782,
+      "sha256": "ed61b3cc49e573e3d830dfcdb9189f288730734eb166dbd56b9a331b4469eaf2"
+    },
+    {
+      "file": "public/oil-lab/noir/lens/rest.webp",
+      "bytes": 77056,
+      "sha256": "92863346eef3db3ed64ee5b768ea990ac5485829bc67728f8c42454e51f886bb"
+    },
+    {
+      "file": "public/oil-lab/noir/lens/timeline.json",
+      "bytes": 756,
+      "sha256": "ae9eec2f93c25238693f15bc58dd49d549d8d2d898870e920a1cdc97c3c341c4"
+    }
+  ]
+}

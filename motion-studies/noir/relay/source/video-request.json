@@ -1,0 +1,24 @@
+{
+  "model": "google/veo-3.1-lite",
+  "prompt": "Animate one continuous four-second unfolding of the SAME connected thin silver ribbon sculpture between the supplied exact first and last frames. Camera and studio lighting never move. Tiny initial tension/compression anticipates the movement for 0.25 seconds. Then the connected folded bands peel apart along graceful three-dimensional arcing paths into the exact open four-lobed orbital connection structure shown in the final frame. Preserve constant ribbon thickness, smooth continuous surfaces and a shared physical central connection: no disconnected bars, no bars appearing from nowhere, no cut ends breaking free and no rings teleporting. Each ribbon follows with slightly delayed overlap, coherent occlusion and restrained secondary torsion. Decelerate over the final second and settle into the exact final shape by 3.5 seconds; final half-second nearly still. The material remains brushed silver with fine grain, one elegant sculptural object, not a dissolving crossfade. Same fixed center-right anchor, empty left gutter, near-black seamless studio. No cuts, camera shake, zoom, bouncing, extra objects, letters or logos. Silent.",
+  "duration": 4,
+  "resolution": "720p",
+  "aspect_ratio": "16:9",
+  "generate_audio": false,
+  "frame_images": [
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://raw.githubusercontent.com/Damon-GSY/my_website/9c64ae590a530598fcccc69cafb727ed950d3b38/public/oil-lab/noir/relay/K0.png"
+      },
+      "frame_type": "first_frame"
+    },
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://raw.githubusercontent.com/Damon-GSY/my_website/9c64ae590a530598fcccc69cafb727ed950d3b38/public/oil-lab/noir/relay/K1.png"
+      },
+      "frame_type": "last_frame"
+    }
+  ]
+}

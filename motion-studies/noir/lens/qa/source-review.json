@@ -1,0 +1,22 @@
+{
+  "decision": "accepted_for_web_delivery",
+  "reviewer": "Codex visual review",
+  "source": "pilot/original.mp4",
+  "frames_reviewed": 96,
+  "evidence": [
+    "qa/native-frames-00-23.jpg",
+    "qa/native-frames-24-47.jpg",
+    "qa/native-frames-48-71.jpg",
+    "qa/native-frames-72-95.jpg"
+  ],
+  "checks": {
+    "one_coherent_silver_subject": true,
+    "physical_unfolding_not_crossfade": true,
+    "fixed_camera_and_black_background": true,
+    "no_cut_or_teleport": true,
+    "slowing_final_settle": true,
+    "empty_left_gutter": true
+  },
+  "notes": "Every native source frame reviewed. The concentric rings expose deeper gaps progressively through frames 16\u201362 and settle thereafter; inner aperture geometry changes relative to the outer rim, confirming it is not just a uniform image scale. Movement is deliberately subtle compared with Seed and Relay. No disconnected rings, camera move, cut or crossfade. The final 16 frames calmly settle.",
+  "upstream_pilot_approval": "../../seed/pilot/approval.json"
+}

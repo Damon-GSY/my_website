@@ -1,0 +1,22 @@
+{
+  "decision": "accepted_for_web_delivery",
+  "reviewer": "Codex visual review",
+  "source": "pilot/original.mp4",
+  "frames_reviewed": 96,
+  "evidence": [
+    "qa/native-frames-00-23.jpg",
+    "qa/native-frames-24-47.jpg",
+    "qa/native-frames-48-71.jpg",
+    "qa/native-frames-72-95.jpg"
+  ],
+  "checks": {
+    "one_coherent_silver_subject": true,
+    "physical_unfolding_not_crossfade": true,
+    "fixed_camera_and_black_background": true,
+    "no_cut_or_teleport": true,
+    "slowing_final_settle": true,
+    "empty_left_gutter": true
+  },
+  "notes": "Every native source frame reviewed. The tall folded ribbon bends and opens through frames 12\u201348 into four connected orbital lobes; smaller out-of-plane rotation and torsion follows through frames 48\u201376 before a still final arrangement. Center connection remains coherent, no detached bars, no crossfade or camera movement. The lower-right band briefly turns edge-on around frames 54\u201360, then resolves with continuous geometry.",
+  "upstream_pilot_approval": "../../seed/pilot/approval.json"
+}

@@ -1,0 +1,3 @@
+# Public delivery keeps these exact compiled files; avoid duplicate encodes.
+*/build/compiled/final/
+__pycache__/

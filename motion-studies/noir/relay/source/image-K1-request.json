@@ -1,0 +1,9 @@
+{
+  "model": "openai/gpt-image-2",
+  "prompt": "A finished premium monochrome motion-design still for an AI researcher personal website. Opaque 16:9 landscape, a seamless near-black #050505 studio with uniform almost-black edges and no horizon. One single coherent sculptural subject centered at x=64 percent, y=50 percent, occupying 45 percent of frame height; leftmost 35 percent entirely empty for real HTML text. Fixed orthographic-like three-quarter camera, subtle silver-white rim lighting, tactile microscopically fine silver granules, crisp intricate detail, beautiful calm composition. Pure monochrome, no warm tones. No typography, letters, logos, diagrams, interface, people, stars, scattered debris or extra objects. Edit the supplied same ribbon sculpture to its final unfolded pose, preserving exact black studio, center, material and physical band continuity. Three thin connected brushed-silver ribbons now unfold into an open orbital connection sculpture, each tracing a different gracefully arcing elliptical orbit, connected organically at one shared hub. The nested arcs are continuous ribbons with smooth bends and no disconnected bars, floating endpoints, extra rods or isolated satellites. The final sculpture occupies 54 percent of frame height and keeps x64 percent center. Beautiful layered negative space, not a sphere or torus.",
+  "quality": "medium",
+  "background": "opaque",
+  "output_format": "png",
+  "n": 1,
+  "aspect_ratio": "16:9"
+}

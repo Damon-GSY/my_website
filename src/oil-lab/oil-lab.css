@@ -116,6 +116,7 @@
 .oil-gallery-card>div { aspect-ratio:16/9; overflow:hidden; background:var(--oil-blue); }
 .oil-gallery-card img { display:block; width:100%; height:100%; object-fit:contain; }
 .oil-gallery-card--archive>div { background:#eeebe3; }
+.oil-gallery-card--noir>div { background:#050505; }
 .oil-gallery-card--handoff>div { background:#dcd4ed; }
 .oil-gallery-card>span { display:block; margin-top:22px; font-size:9px; text-transform:uppercase; letter-spacing:.1em; }
 .oil-gallery-card h2 { display:flex; align-items:start; justify-content:space-between; gap:20px; margin:12px 0; font-size:27px; line-height:1.1; letter-spacing:-.04em; font-weight:500; }

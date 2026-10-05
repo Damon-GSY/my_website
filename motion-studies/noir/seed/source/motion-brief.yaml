@@ -1,0 +1,22 @@
+concept_contract: source/concept-contract.yaml
+identity_bible: source/identity-bible.md
+parameter_space: linear
+media_access: random
+gesture_policy:
+  unit: continuous
+  inertia: coalesce
+  while_active: retarget
+  boundary: clamp
+  programmatic_navigation: observe
+storyboard: [rest, anticipation, arcing expansion, overlapping settle]
+keyframes: [K0, K1]
+clip_chain: [K0 -> K1]
+rest_state: K0 at entry; input stops at corresponding exact decoded frame
+loop: none
+anchor: center
+scene_continuity: fixed framing, near-black seamless studio, unchanged light
+frame_policy: native
+target_fps: 24
+quality_target: native source resolution; all-keyframe seek; desktop1280/mobile720
+pixel_dimensions: 1280x720
+reduced_motion: K1 static; all readable HTML remains accessible

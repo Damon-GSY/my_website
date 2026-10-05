@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "passed": true,
+  "approvedAt": "2026-10-05T13:44:30.819075+00:00",
+  "reviewer": "Codex source review and dedicated Chromium QA",
+  "continuityMode": "independent",
+  "notes": "All 96 native frames reviewed. Desktop 1440 and mobile 390 actual webpage frame 0 to 95 and reverse passed; paused media, zero idle RAF, no repeat seeks. Reduced motion and WebGL/media failures retain readable work and static artwork. Independent studies, not a chained source. Canonical destination corrected to /oil-lab/noir to match the unchanged tested webpage; source motion and all visual artifacts unchanged.",
+  "artifacts": {
+    "conceptContract": {
+      "path": "/workspace/my_website/motion-studies/noir/seed/source/concept-contract.yaml",
+      "bytes": 727,
+      "sha256": "ac0f21cc1cce43cd54f3b71ef11981116fdd00e256e7b57865a9b1995d3e5ab4"
+    },
+    "firstFrame": {
+      "path": "/workspace/my_website/public/oil-lab/noir/seed/K0.png",
+      "bytes": 1533817,
+      "sha256": "17242fc624534f8b080c65f855e27843af3d6c0751634ce1dc3d15dff5c5dee7"
+    },
+    "lastFrame": {
+      "path": "/workspace/my_website/public/oil-lab/noir/seed/K1.png",
+      "bytes": 1834816,
+      "sha256": "03e95bc874abec2cd9d7b3ff2fc8e397ebaa2051fe9e778ddb01206f18f3e69c"
+    },
+    "pilotVideo": {
+      "path": "/workspace/my_website/motion-studies/noir/seed/pilot/original.mp4",
+      "bytes": 4817792,
+      "sha256": "695638925e46bae729c798251a4ac352df406a05be0d2fe246344328e3f5a347"
+    },
+    "pageEvidence": {
+      "path": "/workspace/my_website/motion-studies/noir/seed/qa/browser-pilot.json",
+      "bytes": 32060,
+      "sha256": "76c0d2f6e169dba14247528e6e060940880e0e06e114bad89a2939def73c07db"
+    },
+    "identityBible": {
+      "path": "/workspace/my_website/motion-studies/noir/seed/source/identity-bible.md",
+      "bytes": 1050,
+      "sha256": "52a24ccb2a91ec7e8663ea78c28b7422dbd7d97673a37139d51802278eeecdff"
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "currency": "USD",
+  "measurement": "Per-response numeric API usage persisted by OpenRouter adapter. No balance inference.",
+  "records": [
+    {
+      "study": "lens",
+      "kind": "image",
+      "record": "motion-studies/noir/lens/source/K0.generation.json",
+      "cost_usd": 0.033415
+    },
+    {
+      "study": "lens",
+      "kind": "image",
+      "record": "motion-studies/noir/lens/source/K1.generation.json",
+      "cost_usd": 0.044043
+    },
+    {
+      "study": "relay",
+      "kind": "image",
+      "record": "motion-studies/noir/relay/source/K0.generation.json",
+      "cost_usd": 0.03343
+    },
+    {
+      "study": "relay",
+      "kind": "image",
+      "record": "motion-studies/noir/relay/source/K1.generation.json",
+      "cost_usd": 0.043978
+    },
+    {
+      "study": "seed",
+      "kind": "image",
+      "record": "motion-studies/noir/seed/source/K0.generation.json",
+      "cost_usd": 0.03339
+    },
+    {
+      "study": "seed",
+      "kind": "image",
+      "record": "motion-studies/noir/seed/source/K1.generation.json",
+      "cost_usd": 0.044028
+    },
+    {
+      "study": "lens",
+      "kind": "video",
+      "record": "motion-studies/noir/lens/pilot/original.job.json",
+      "status": "completed",
+      "cost_usd": 0.1188
+    },
+    {
+      "study": "relay",
+      "kind": "video",
+      "record": "motion-studies/noir/relay/pilot/original.job.json",
+      "status": "completed",
+      "cost_usd": 0.1188
+    },
+    {
+      "study": "seed",
+      "kind": "video",
+      "record": "motion-studies/noir/seed/pilot/original.job.json",
+      "status": "completed",
+      "cost_usd": 0.1188
+    }
+  ],
+  "total_recorded_cost_usd": 0.588684,
+  "complete": true,
+  "automatic_retries": 0
+}

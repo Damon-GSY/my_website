@@ -1,6 +1,6 @@
 .matter-story { height:380svh; position:relative; color:#f3f3e9; background:#0757ed; }
 .matter-stage { --matter-image-opacity:1; --matter-progress:0; --matter-glow:0; position:sticky; top:0; height:100svh; isolation:isolate; overflow:hidden; background:#0757ed; }
-.matter-stage::after { content:''; position:absolute; inset:0; z-index:-1; background:radial-gradient(ellipse at 68% 48%,#153380 0%,#06193d 74%); opacity:var(--matter-glow); }
+.matter-stage::after { content:''; position:absolute; inset:0; z-index:-1; background:radial-gradient(ellipse at 68% 48%,#101815 0%,#050808 74%); opacity:var(--matter-glow); }
 .matter-identity { position:absolute; top:118px; left:var(--oil-pad); z-index:3; font-size:9px; text-transform:uppercase; letter-spacing:.09em; color:#ffffffba; }
 .matter-art { position:absolute; inset:11% 0 13%; z-index:1; pointer-events:none; }
 .matter-art canvas,.matter-plate { position:absolute; inset:0; display:block; width:100%; height:100%; }

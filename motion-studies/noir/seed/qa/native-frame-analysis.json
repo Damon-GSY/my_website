@@ -1,0 +1,974 @@
+{
+  "source": "motion-studies/noir/seed/pilot/original.mp4",
+  "probe": {
+    "width": 1280,
+    "height": 720,
+    "r_frame_rate": "24/1",
+    "duration": "4.000000",
+    "nb_read_frames": "96"
+  },
+  "reviewed_sequence": "every source frame shown in order; these metrics do not replace visual review",
+  "decoded_frames": 96,
+  "adjacent_frames": [
+    {
+      "frame": 0,
+      "mean_absolute_delta": 0,
+      "subject_bounds": [
+        145,
+        28,
+        269,
+        150
+      ]
+    },
+    {
+      "frame": 1,
+      "mean_absolute_delta": 0.2661631944444444,
+      "subject_bounds": [
+        145,
+        28,
+        269,
+        150
+      ]
+    },
+    {
+      "frame": 2,
+      "mean_absolute_delta": 0.12584490740740742,
+      "subject_bounds": [
+        145,
+        28,
+        269,
+        150
+      ]
+    },
+    {
+      "frame": 3,
+      "mean_absolute_delta": 0.18142939814814815,
+      "subject_bounds": [
+        145,
+        28,
+        269,
+        150
+      ]
+    },
+    {
+      "frame": 4,
+      "mean_absolute_delta": 0.26112847222222224,
+      "subject_bounds": [
+        145,
+        28,
+        269,
+        150
+      ]
+    },
+    {
+      "frame": 5,
+      "mean_absolute_delta": 0.5711516203703704,
+      "subject_bounds": [
+        145,
+        28,
+        269,
+        150
+      ]
+    },
+    {
+      "frame": 6,
+      "mean_absolute_delta": 0.6513310185185185,
+      "subject_bounds": [
+        145,
+        28,
+        269,
+        150
+      ]
+    },
+    {
+      "frame": 7,
+      "mean_absolute_delta": 0.7522106481481482,
+      "subject_bounds": [
+        145,
+        28,
+        269,
+        150
+      ]
+    },
+    {
+      "frame": 8,
+      "mean_absolute_delta": 1.067818287037037,
+      "subject_bounds": [
+        145,
+        28,
+        269,
+        150
+      ]
+    },
+    {
+      "frame": 9,
+      "mean_absolute_delta": 1.219814814814815,
+      "subject_bounds": [
+        145,
+        28,
+        269,
+        150
+      ]
+    },
+    {
+      "frame": 10,
+      "mean_absolute_delta": 1.441111111111111,
+      "subject_bounds": [
+        145,
+        28,
+        269,
+        150
+      ]
+    },
+    {
+      "frame": 11,
+      "mean_absolute_delta": 1.7173668981481482,
+      "subject_bounds": [
+        144,
+        27,
+        270,
+        150
+      ]
+    },
+    {
+      "frame": 12,
+      "mean_absolute_delta": 2.1825520833333334,
+      "subject_bounds": [
+        144,
+        27,
+        270,
+        150
+      ]
+    },
+    {
+      "frame": 13,
+      "mean_absolute_delta": 2.4451157407407407,
+      "subject_bounds": [
+        144,
+        27,
+        270,
+        150
+      ]
+    },
+    {
+      "frame": 14,
+      "mean_absolute_delta": 2.561753472222222,
+      "subject_bounds": [
+        144,
+        27,
+        270,
+        150
+      ]
+    },
+    {
+      "frame": 15,
+      "mean_absolute_delta": 2.656741898148148,
+      "subject_bounds": [
+        144,
+        26,
+        270,
+        149
+      ]
+    },
+    {
+      "frame": 16,
+      "mean_absolute_delta": 2.92625,
+      "subject_bounds": [
+        144,
+        26,
+        271,
+        149
+      ]
+    },
+    {
+      "frame": 17,
+      "mean_absolute_delta": 2.927505787037037,
+      "subject_bounds": [
+        144,
+        26,
+        271,
+        152
+      ]
+    },
+    {
+      "frame": 18,
+      "mean_absolute_delta": 3.3056828703703705,
+      "subject_bounds": [
+        143,
+        26,
+        271,
+        152
+      ]
+    },
+    {
+      "frame": 19,
+      "mean_absolute_delta": 3.53671875,
+      "subject_bounds": [
+        142,
+        25,
+        271,
+        152
+      ]
+    },
+    {
+      "frame": 20,
+      "mean_absolute_delta": 3.8987094907407407,
+      "subject_bounds": [
+        142,
+        25,
+        272,
+        152
+      ]
+    },
+    {
+      "frame": 21,
+      "mean_absolute_delta": 4.07640625,
+      "subject_bounds": [
+        141,
+        25,
+        272,
+        152
+      ]
+    },
+    {
+      "frame": 22,
+      "mean_absolute_delta": 3.9940277777777777,
+      "subject_bounds": [
+        141,
+        25,
+        272,
+        152
+      ]
+    },
+    {
+      "frame": 23,
+      "mean_absolute_delta": 3.847939814814815,
+      "subject_bounds": [
+        140,
+        25,
+        273,
+        152
+      ]
+    },
+    {
+      "frame": 24,
+      "mean_absolute_delta": 3.9717534722222223,
+      "subject_bounds": [
+        139,
+        24,
+        273,
+        152
+      ]
+    },
+    {
+      "frame": 25,
+      "mean_absolute_delta": 3.9333622685185183,
+      "subject_bounds": [
+        139,
+        24,
+        274,
+        152
+      ]
+    },
+    {
+      "frame": 26,
+      "mean_absolute_delta": 4.111313657407408,
+      "subject_bounds": [
+        138,
+        24,
+        274,
+        153
+      ]
+    },
+    {
+      "frame": 27,
+      "mean_absolute_delta": 4.453524305555556,
+      "subject_bounds": [
+        137,
+        25,
+        274,
+        153
+      ]
+    },
+    {
+      "frame": 28,
+      "mean_absolute_delta": 4.8795775462962965,
+      "subject_bounds": [
+        137,
+        24,
+        274,
+        152
+      ]
+    },
+    {
+      "frame": 29,
+      "mean_absolute_delta": 4.9840625,
+      "subject_bounds": [
+        137,
+        24,
+        275,
+        152
+      ]
+    },
+    {
+      "frame": 30,
+      "mean_absolute_delta": 4.690335648148148,
+      "subject_bounds": [
+        136,
+        24,
+        275,
+        154
+      ]
+    },
+    {
+      "frame": 31,
+      "mean_absolute_delta": 4.511394675925926,
+      "subject_bounds": [
+        136,
+        23,
+        276,
+        154
+      ]
+    },
+    {
+      "frame": 32,
+      "mean_absolute_delta": 4.46542824074074,
+      "subject_bounds": [
+        135,
+        24,
+        276,
+        154
+      ]
+    },
+    {
+      "frame": 33,
+      "mean_absolute_delta": 4.429959490740741,
+      "subject_bounds": [
+        135,
+        24,
+        276,
+        153
+      ]
+    },
+    {
+      "frame": 34,
+      "mean_absolute_delta": 4.512806712962963,
+      "subject_bounds": [
+        135,
+        24,
+        277,
+        154
+      ]
+    },
+    {
+      "frame": 35,
+      "mean_absolute_delta": 4.682731481481482,
+      "subject_bounds": [
+        134,
+        23,
+        277,
+        155
+      ]
+    },
+    {
+      "frame": 36,
+      "mean_absolute_delta": 5.096805555555555,
+      "subject_bounds": [
+        134,
+        23,
+        277,
+        155
+      ]
+    },
+    {
+      "frame": 37,
+      "mean_absolute_delta": 5.07046875,
+      "subject_bounds": [
+        134,
+        23,
+        278,
+        153
+      ]
+    },
+    {
+      "frame": 38,
+      "mean_absolute_delta": 4.589027777777778,
+      "subject_bounds": [
+        134,
+        23,
+        278,
+        154
+      ]
+    },
+    {
+      "frame": 39,
+      "mean_absolute_delta": 4.277083333333334,
+      "subject_bounds": [
+        135,
+        23,
+        278,
+        154
+      ]
+    },
+    {
+      "frame": 40,
+      "mean_absolute_delta": 4.377141203703704,
+      "subject_bounds": [
+        135,
+        23,
+        278,
+        152
+      ]
+    },
+    {
+      "frame": 41,
+      "mean_absolute_delta": 4.395810185185185,
+      "subject_bounds": [
+        135,
+        23,
+        278,
+        153
+      ]
+    },
+    {
+      "frame": 42,
+      "mean_absolute_delta": 4.438234953703704,
+      "subject_bounds": [
+        135,
+        23,
+        278,
+        152
+      ]
+    },
+    {
+      "frame": 43,
+      "mean_absolute_delta": 4.556313657407407,
+      "subject_bounds": [
+        136,
+        23,
+        279,
+        156
+      ]
+    },
+    {
+      "frame": 44,
+      "mean_absolute_delta": 4.8641550925925925,
+      "subject_bounds": [
+        136,
+        23,
+        279,
+        152
+      ]
+    },
+    {
+      "frame": 45,
+      "mean_absolute_delta": 4.850989583333333,
+      "subject_bounds": [
+        136,
+        24,
+        279,
+        154
+      ]
+    },
+    {
+      "frame": 46,
+      "mean_absolute_delta": 4.438894675925926,
+      "subject_bounds": [
+        136,
+        24,
+        278,
+        153
+      ]
+    },
+    {
+      "frame": 47,
+      "mean_absolute_delta": 4.23884837962963,
+      "subject_bounds": [
+        137,
+        24,
+        279,
+        150
+      ]
+    },
+    {
+      "frame": 48,
+      "mean_absolute_delta": 4.242089120370371,
+      "subject_bounds": [
+        137,
+        24,
+        278,
+        150
+      ]
+    },
+    {
+      "frame": 49,
+      "mean_absolute_delta": 4.2243055555555555,
+      "subject_bounds": [
+        138,
+        23,
+        278,
+        153
+      ]
+    },
+    {
+      "frame": 50,
+      "mean_absolute_delta": 4.257841435185185,
+      "subject_bounds": [
+        138,
+        22,
+        277,
+        153
+      ]
+    },
+    {
+      "frame": 51,
+      "mean_absolute_delta": 4.422974537037037,
+      "subject_bounds": [
+        137,
+        21,
+        277,
+        154
+      ]
+    },
+    {
+      "frame": 52,
+      "mean_absolute_delta": 4.720138888888889,
+      "subject_bounds": [
+        137,
+        20,
+        278,
+        156
+      ]
+    },
+    {
+      "frame": 53,
+      "mean_absolute_delta": 4.682164351851852,
+      "subject_bounds": [
+        137,
+        20,
+        278,
+        155
+      ]
+    },
+    {
+      "frame": 54,
+      "mean_absolute_delta": 4.307210648148148,
+      "subject_bounds": [
+        137,
+        19,
+        278,
+        156
+      ]
+    },
+    {
+      "frame": 55,
+      "mean_absolute_delta": 4.105590277777778,
+      "subject_bounds": [
+        137,
+        19,
+        278,
+        156
+      ]
+    },
+    {
+      "frame": 56,
+      "mean_absolute_delta": 4.202170138888889,
+      "subject_bounds": [
+        136,
+        19,
+        278,
+        157
+      ]
+    },
+    {
+      "frame": 57,
+      "mean_absolute_delta": 4.124837962962963,
+      "subject_bounds": [
+        136,
+        18,
+        278,
+        160
+      ]
+    },
+    {
+      "frame": 58,
+      "mean_absolute_delta": 4.170902777777778,
+      "subject_bounds": [
+        136,
+        18,
+        279,
+        157
+      ]
+    },
+    {
+      "frame": 59,
+      "mean_absolute_delta": 4.259739583333333,
+      "subject_bounds": [
+        136,
+        18,
+        278,
+        160
+      ]
+    },
+    {
+      "frame": 60,
+      "mean_absolute_delta": 4.554716435185185,
+      "subject_bounds": [
+        136,
+        18,
+        278,
+        159
+      ]
+    },
+    {
+      "frame": 61,
+      "mean_absolute_delta": 4.554375,
+      "subject_bounds": [
+        136,
+        17,
+        279,
+        159
+      ]
+    },
+    {
+      "frame": 62,
+      "mean_absolute_delta": 4.181608796296296,
+      "subject_bounds": [
+        136,
+        17,
+        279,
+        159
+      ]
+    },
+    {
+      "frame": 63,
+      "mean_absolute_delta": 4.008032407407407,
+      "subject_bounds": [
+        136,
+        17,
+        279,
+        159
+      ]
+    },
+    {
+      "frame": 64,
+      "mean_absolute_delta": 4.070746527777778,
+      "subject_bounds": [
+        136,
+        17,
+        279,
+        159
+      ]
+    },
+    {
+      "frame": 65,
+      "mean_absolute_delta": 4.020358796296296,
+      "subject_bounds": [
+        136,
+        17,
+        279,
+        161
+      ]
+    },
+    {
+      "frame": 66,
+      "mean_absolute_delta": 4.0978819444444445,
+      "subject_bounds": [
+        136,
+        17,
+        278,
+        160
+      ]
+    },
+    {
+      "frame": 67,
+      "mean_absolute_delta": 4.2285763888888885,
+      "subject_bounds": [
+        136,
+        18,
+        278,
+        159
+      ]
+    },
+    {
+      "frame": 68,
+      "mean_absolute_delta": 4.524126157407407,
+      "subject_bounds": [
+        136,
+        18,
+        279,
+        159
+      ]
+    },
+    {
+      "frame": 69,
+      "mean_absolute_delta": 4.578530092592593,
+      "subject_bounds": [
+        137,
+        18,
+        279,
+        160
+      ]
+    },
+    {
+      "frame": 70,
+      "mean_absolute_delta": 4.282795138888889,
+      "subject_bounds": [
+        137,
+        19,
+        278,
+        159
+      ]
+    },
+    {
+      "frame": 71,
+      "mean_absolute_delta": 4.154149305555555,
+      "subject_bounds": [
+        137,
+        19,
+        278,
+        160
+      ]
+    },
+    {
+      "frame": 72,
+      "mean_absolute_delta": 4.339565972222222,
+      "subject_bounds": [
+        137,
+        19,
+        278,
+        160
+      ]
+    },
+    {
+      "frame": 73,
+      "mean_absolute_delta": 4.457204861111111,
+      "subject_bounds": [
+        136,
+        20,
+        277,
+        158
+      ]
+    },
+    {
+      "frame": 74,
+      "mean_absolute_delta": 4.557743055555555,
+      "subject_bounds": [
+        135,
+        20,
+        277,
+        157
+      ]
+    },
+    {
+      "frame": 75,
+      "mean_absolute_delta": 4.723194444444444,
+      "subject_bounds": [
+        135,
+        20,
+        276,
+        157
+      ]
+    },
+    {
+      "frame": 76,
+      "mean_absolute_delta": 4.979236111111111,
+      "subject_bounds": [
+        134,
+        21,
+        276,
+        160
+      ]
+    },
+    {
+      "frame": 77,
+      "mean_absolute_delta": 4.976724537037037,
+      "subject_bounds": [
+        134,
+        22,
+        276,
+        160
+      ]
+    },
+    {
+      "frame": 78,
+      "mean_absolute_delta": 4.735752314814815,
+      "subject_bounds": [
+        133,
+        21,
+        275,
+        159
+      ]
+    },
+    {
+      "frame": 79,
+      "mean_absolute_delta": 4.6657118055555555,
+      "subject_bounds": [
+        132,
+        21,
+        275,
+        159
+      ]
+    },
+    {
+      "frame": 80,
+      "mean_absolute_delta": 4.855387731481481,
+      "subject_bounds": [
+        132,
+        21,
+        276,
+        159
+      ]
+    },
+    {
+      "frame": 81,
+      "mean_absolute_delta": 4.863333333333333,
+      "subject_bounds": [
+        131,
+        21,
+        276,
+        161
+      ]
+    },
+    {
+      "frame": 82,
+      "mean_absolute_delta": 4.847887731481482,
+      "subject_bounds": [
+        131,
+        20,
+        277,
+        161
+      ]
+    },
+    {
+      "frame": 83,
+      "mean_absolute_delta": 4.919340277777778,
+      "subject_bounds": [
+        130,
+        20,
+        278,
+        160
+      ]
+    },
+    {
+      "frame": 84,
+      "mean_absolute_delta": 5.162627314814815,
+      "subject_bounds": [
+        130,
+        20,
+        279,
+        161
+      ]
+    },
+    {
+      "frame": 85,
+      "mean_absolute_delta": 5.1517129629629625,
+      "subject_bounds": [
+        130,
+        20,
+        280,
+        161
+      ]
+    },
+    {
+      "frame": 86,
+      "mean_absolute_delta": 4.839918981481482,
+      "subject_bounds": [
+        130,
+        20,
+        280,
+        161
+      ]
+    },
+    {
+      "frame": 87,
+      "mean_absolute_delta": 4.631510416666667,
+      "subject_bounds": [
+        129,
+        20,
+        281,
+        161
+      ]
+    },
+    {
+      "frame": 88,
+      "mean_absolute_delta": 4.662922453703704,
+      "subject_bounds": [
+        129,
+        20,
+        282,
+        161
+      ]
+    },
+    {
+      "frame": 89,
+      "mean_absolute_delta": 4.564212962962963,
+      "subject_bounds": [
+        129,
+        20,
+        282,
+        161
+      ]
+    },
+    {
+      "frame": 90,
+      "mean_absolute_delta": 4.583483796296297,
+      "subject_bounds": [
+        128,
+        21,
+        283,
+        161
+      ]
+    },
+    {
+      "frame": 91,
+      "mean_absolute_delta": 4.697679398148148,
+      "subject_bounds": [
+        128,
+        21,
+        283,
+        161
+      ]
+    },
+    {
+      "frame": 92,
+      "mean_absolute_delta": 4.945341435185185,
+      "subject_bounds": [
+        128,
+        21,
+        283,
+        162
+      ]
+    },
+    {
+      "frame": 93,
+      "mean_absolute_delta": 4.871655092592593,
+      "subject_bounds": [
+        128,
+        21,
+        284,
+        162
+      ]
+    },
+    {
+      "frame": 94,
+      "mean_absolute_delta": 4.5830266203703705,
+      "subject_bounds": [
+        128,
+        22,
+        284,
+        161
+      ]
+    },
+    {
+      "frame": 95,
+      "mean_absolute_delta": 4.408252314814815,
+      "subject_bounds": [
+        128,
+        22,
+        285,
+        162
+      ]
+    }
+  ]
+}

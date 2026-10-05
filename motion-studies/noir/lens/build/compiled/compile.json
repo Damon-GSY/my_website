@@ -1,0 +1,338 @@
+{
+  "source": {
+    "path": "/workspace/my_website/motion-studies/noir/lens/pilot/original.mp4",
+    "width": 1280,
+    "height": 720,
+    "probe": {
+      "streams": [
+        {
+          "index": 0,
+          "codec_name": "h264",
+          "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+          "profile": "High",
+          "codec_type": "video",
+          "codec_tag_string": "avc1",
+          "codec_tag": "0x31637661",
+          "width": 1280,
+          "height": 720,
+          "coded_width": 1280,
+          "coded_height": 720,
+          "closed_captions": 0,
+          "film_grain": 0,
+          "has_b_frames": 2,
+          "pix_fmt": "yuv420p",
+          "level": 31,
+          "chroma_location": "left",
+          "field_order": "progressive",
+          "refs": 1,
+          "is_avc": "true",
+          "nal_length_size": "4",
+          "id": "0x1",
+          "r_frame_rate": "24/1",
+          "avg_frame_rate": "24/1",
+          "time_base": "1/12288",
+          "start_pts": 0,
+          "start_time": "0.000000",
+          "duration_ts": 49152,
+          "duration": "4.000000",
+          "bit_rate": "5523172",
+          "bits_per_raw_sample": "8",
+          "nb_frames": "96",
+          "extradata_size": 46,
+          "disposition": {
+            "default": 1,
+            "dub": 0,
+            "original": 0,
+            "comment": 0,
+            "lyrics": 0,
+            "karaoke": 0,
+            "forced": 0,
+            "hearing_impaired": 0,
+            "visual_impaired": 0,
+            "clean_effects": 0,
+            "attached_pic": 0,
+            "timed_thumbnails": 0,
+            "non_diegetic": 0,
+            "captions": 0,
+            "descriptions": 0,
+            "metadata": 0,
+            "dependent": 0,
+            "still_image": 0,
+            "multilayer": 0
+          },
+          "tags": {
+            "language": "und",
+            "handler_name": "VideoHandler",
+            "vendor_id": "[0][0][0][0]"
+          }
+        }
+      ],
+      "format": {
+        "filename": "/workspace/my_website/motion-studies/noir/lens/pilot/original.mp4",
+        "nb_streams": 1,
+        "nb_programs": 0,
+        "nb_stream_groups": 0,
+        "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+        "format_long_name": "QuickTime / MOV",
+        "start_time": "0.000000",
+        "duration": "4.000000",
+        "size": "2820730",
+        "bit_rate": "5641460",
+        "probe_score": 100,
+        "tags": {
+          "major_brand": "isom",
+          "minor_version": "512",
+          "compatible_brands": "isomiso2avc1mp41",
+          "encoder": "Google"
+        }
+      }
+    }
+  },
+  "compile": {
+    "backgroundOwner": "video",
+    "framePolicy": "native",
+    "sourceKeyColor": null,
+    "runtimeKeyColor": null,
+    "sourceKeyValidation": null,
+    "fps": 24.0,
+    "rawFrameCount": 96,
+    "finalFrameCount": 96,
+    "alphaQaFrameCount": 0,
+    "duration": 4.0,
+    "cleanup": "none",
+    "duplicateThreshold": 0.003,
+    "seamWindow": 40,
+    "framePreparationReport": "/workspace/my_website/motion-studies/noir/lens/build/compiled/frame-preparation/frame-preparation-report.json",
+    "framePreparationVerdict": {
+      "passedAutomaticChecks": true,
+      "manualReviewRequired": true
+    },
+    "budgetReport": "/workspace/my_website/motion-studies/noir/lens/build/motion-budget.json",
+    "selection": {
+      "selected": "baked-video",
+      "reasonCodes": [
+        "background-baked-into-video"
+      ],
+      "atlasWithinBudget": false,
+      "thresholds": {
+        "atlasMaxSheets": 1,
+        "atlasMaxDecodedMemoryMiB": 192.0,
+        "linearVideoMinFrames": 180
+      }
+    },
+    "timeline": "/workspace/my_website/motion-studies/noir/lens/build/timeline.json",
+    "postEncodeKeyingReport": null,
+    "postEncodeKeyingPassed": null,
+    "intermediateFramesRetained": false
+  },
+  "runtime": {
+    "type": "baked-video",
+    "frameCount": 96,
+    "fps": 24.0,
+    "keying": null,
+    "anchors": {},
+    "posterFrame": 95,
+    "assets": {
+      "poster": "final/poster.png",
+      "desktop": "final/motion-baked-desktop.mp4",
+      "mobile": "final/motion-baked-mobile.mp4",
+      "timeline": "/workspace/my_website/motion-studies/noir/lens/build/timeline.json"
+    }
+  },
+  "outputs": {
+    "poster": {
+      "path": "/workspace/my_website/motion-studies/noir/lens/build/compiled/final/poster.png",
+      "alpha": false,
+      "sourceFrame": 95,
+      "finalFrame": 95
+    },
+    "desktop": {
+      "path": "/workspace/my_website/motion-studies/noir/lens/build/compiled/final/motion-baked-desktop.mp4",
+      "width": 1280,
+      "height": 720,
+      "bytes": 5155581,
+      "allFramesAreKeyframes": true,
+      "probe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "h264",
+            "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+            "profile": "High",
+            "codec_type": "video",
+            "codec_tag_string": "avc1",
+            "codec_tag": "0x31637661",
+            "width": 1280,
+            "height": 720,
+            "coded_width": 1280,
+            "coded_height": 720,
+            "closed_captions": 0,
+            "film_grain": 0,
+            "has_b_frames": 0,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "16:9",
+            "pix_fmt": "yuv420p",
+            "level": 31,
+            "chroma_location": "left",
+            "field_order": "progressive",
+            "refs": 1,
+            "is_avc": "true",
+            "nal_length_size": "4",
+            "id": "0x1",
+            "r_frame_rate": "24/1",
+            "avg_frame_rate": "24/1",
+            "time_base": "1/12288",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "duration_ts": 49152,
+            "duration": "4.000000",
+            "bit_rate": "10308564",
+            "bits_per_raw_sample": "8",
+            "nb_frames": "96",
+            "extradata_size": 43,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "language": "und",
+              "handler_name": "VideoHandler",
+              "vendor_id": "[0][0][0][0]",
+              "encoder": "Lavc61.19.101 libx264"
+            }
+          }
+        ],
+        "format": {
+          "filename": "/workspace/my_website/motion-studies/noir/lens/build/compiled/final/motion-baked-desktop.mp4",
+          "nb_streams": 1,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "format_long_name": "QuickTime / MOV",
+          "start_time": "0.000000",
+          "duration": "4.000000",
+          "size": "5155581",
+          "bit_rate": "10311162",
+          "probe_score": 100,
+          "tags": {
+            "major_brand": "isom",
+            "minor_version": "512",
+            "compatible_brands": "isomiso2avc1mp41",
+            "encoder": "Lavf61.7.103"
+          }
+        }
+      }
+    },
+    "mobile": {
+      "path": "/workspace/my_website/motion-studies/noir/lens/build/compiled/final/motion-baked-mobile.mp4",
+      "width": 720,
+      "height": 404,
+      "bytes": 1176495,
+      "allFramesAreKeyframes": true,
+      "probe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "h264",
+            "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+            "profile": "High",
+            "codec_type": "video",
+            "codec_tag_string": "avc1",
+            "codec_tag": "0x31637661",
+            "width": 720,
+            "height": 404,
+            "coded_width": 720,
+            "coded_height": 404,
+            "closed_captions": 0,
+            "film_grain": 0,
+            "has_b_frames": 0,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "180:101",
+            "pix_fmt": "yuv420p",
+            "level": 30,
+            "chroma_location": "left",
+            "field_order": "progressive",
+            "refs": 1,
+            "is_avc": "true",
+            "nal_length_size": "4",
+            "id": "0x1",
+            "r_frame_rate": "24/1",
+            "avg_frame_rate": "24/1",
+            "time_base": "1/12288",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "duration_ts": 49152,
+            "duration": "4.000000",
+            "bit_rate": "2350520",
+            "bits_per_raw_sample": "8",
+            "nb_frames": "96",
+            "extradata_size": 43,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0,
+              "multilayer": 0
+            },
+            "tags": {
+              "language": "und",
+              "handler_name": "VideoHandler",
+              "vendor_id": "[0][0][0][0]",
+              "encoder": "Lavc61.19.101 libx264"
+            }
+          }
+        ],
+        "format": {
+          "filename": "/workspace/my_website/motion-studies/noir/lens/build/compiled/final/motion-baked-mobile.mp4",
+          "nb_streams": 1,
+          "nb_programs": 0,
+          "nb_stream_groups": 0,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "format_long_name": "QuickTime / MOV",
+          "start_time": "0.000000",
+          "duration": "4.000000",
+          "size": "1176495",
+          "bit_rate": "2352990",
+          "probe_score": 100,
+          "tags": {
+            "major_brand": "isom",
+            "minor_version": "512",
+            "compatible_brands": "isomiso2avc1mp41",
+            "encoder": "Lavf61.7.103"
+          }
+        }
+      }
+    }
+  }
+}

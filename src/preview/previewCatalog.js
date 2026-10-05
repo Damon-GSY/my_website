@@ -5,9 +5,23 @@ export const previewFilters = [
   { id: 'motion', label: '动态叙事' },
 ];
 
-export const reviewOrder = ['make-it-useful', 'oil-matter', 'gdamon', 'robot'];
+export const reviewOrder = ['noir', 'make-it-useful', 'oil-matter', 'gdamon', 'robot'];
 
 export const previews = [
+  {
+    id: 'noir',
+    title: '黑色粒子 · Noir',
+    subtitle: 'Make intelligence useful.',
+    category: 'motion',
+    href: '/oil-lab/noir',
+    image: '/preview-assets/noir.webp',
+    mediaLabel: '全新 · 三段生成动效与实时粒子',
+    description: '黑底银色颗粒，在凝聚、连接与判断之间变形。三个新的 Oil Motion 雕塑章节，连接领域训练、工具智能体和多轮评估。',
+    motion: '粒子核心 → 工具网络 → GDAMON → Seed / Relay / Lens',
+    interaction: '原生滚动控制粒子的蓄势、弧线移动与落定，也可逐帧前进或倒放三个雕塑；每章都有实际工作和项目入口。',
+    tags: ['Oil Motion', '黑底粒子', '完整个人站'],
+    featured: true,
+  },
   {
     id: 'oil-matter',
     title: '液态金属 · Matter',
@@ -16,7 +30,7 @@ export const previews = [
     href: '/oil-lab/matter',
     image: '/preview-assets/oil-matter.webp',
     description: '镜面金属展开为 D，再由同一轮廓转成实时粒子，连接工具网络与评估结构，展示 Damon 的实际工作。',
-    motion: '液态金属 → 粒子 D → 智能体网络 → 评估结构',
+    motion: '液态金属 → 粒子 D → 黑底智能体网络 → 评估结构',
     interaction: '原生滚动同步推动粒子、镜头和工作说明；反向滚动可回看，停下时画面静止，再进入项目案例。',
     tags: ['Oil Motion', '实时粒子', '连续滚动'],
     featured: true,
@@ -56,7 +70,7 @@ export const previews = [
     image: '/preview-assets/scroll-story.webp',
     description: '从领域模型训练，到动态工具智能体，再到多轮评估：动画旁持续展示 Damon 的职责、实际项目与工作成果。',
     motion: '训练模型 → 部署智能体 → 评估系统 → 项目案例',
-    interaction: '同一组粒子随滚动从训练矩阵收束为智能体，再展开成署名；文字、颜色和形态同步衔接，支持反向回看。',
+    interaction: '黑底粒子先蓄势，再沿弧线分组汇成智能体与署名；文字、颜色和形态同步衔接，支持反向回看。',
     tags: ['原生滚动', '实时 3D', '完整个人站'],
     featured: true,
   },
@@ -162,7 +176,7 @@ export const archiveGroups = [
     title: '方案合集与个人内容',
     description: '所有页面共用的个人资料、研究笔记，以及完整实验合集。',
     items: [
-      { id: 'oil-lab', title: 'Oil Motion 三个网站', href: '/oil-lab', description: '液态金属、玻璃档案与机械交接的完整合集。' },
+      { id: 'oil-lab', title: 'Oil Motion 网站合集', href: '/oil-lab', description: 'Noir 黑色粒子、液态金属、玻璃档案与机械交接。' },
       { id: 'motion-lab', title: '动态实验合集', href: '/motion-lab', description: '观察者、机械花与连续装配核心。' },
       { id: 'about', title: '关于 Damon', href: '/about', description: '工作经历、教育背景与研究方向。' },
       { id: 'notes', title: '研究笔记', href: '/blog', description: '论文、智能体与实际开发中的思考。' },

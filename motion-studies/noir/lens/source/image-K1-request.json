@@ -1,0 +1,9 @@
+{
+  "model": "openai/gpt-image-2",
+  "prompt": "A finished premium monochrome motion-design still for an AI researcher personal website. Opaque 16:9 landscape, a seamless near-black #050505 studio with uniform almost-black edges and no horizon. One single coherent sculptural subject centered at x=64 percent, y=50 percent, occupying 45 percent of frame height; leftmost 35 percent entirely empty for real HTML text. Fixed orthographic-like three-quarter camera, subtle silver-white rim lighting, tactile microscopically fine silver granules, crisp intricate detail, beautiful calm composition. Pure monochrome, no warm tones. No typography, letters, logos, diagrams, interface, people, stars, scattered debris or extra objects. Edit the supplied optical core into its final resolved evaluation aperture while preserving the exact black studio, center, lighting and same six ring layers. Those six concentric silver lens rings have opened and extended forward slightly along their shared optical axis, stepping in elegant nested depth around one precise deep central circular aperture. Finely silver-grained rim surfaces, crisp equally machined edges, restrained highlights and coherent physical alignment. The outer rim is 50 percent of image height, centered x64 percent y50 percent. It is a highly precise layered lens, not a torus or ribbon orbital system; no extra rings or disconnected debris.",
+  "quality": "medium",
+  "background": "opaque",
+  "output_format": "png",
+  "n": 1,
+  "aspect_ratio": "16:9"
+}

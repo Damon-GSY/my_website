@@ -1,0 +1,24 @@
+{
+  "model": "google/veo-3.1-lite",
+  "prompt": "Animate one continuous four-second physical transformation from the supplied exact silver-grained spherical seed into the supplied exact twisted toroidal core. One coherent material mass, no particles scatter away. Static camera and lighting. First 0.25 seconds: a very subtle inward compression anticipates expansion. From 0.25 to 2.7 seconds: the central depression opens, the material curves outward along smooth spiraling arcs and the grain ridges flow continuously into the torus. Preserve believable volume and clean self-occlusion. No double exposures or fading between objects: every intermediate frame must show exactly one solid sculptural surface. From 2.7 to 3.5 seconds, small trailing ridges complete their curved motion after the main silhouette, a restrained overlap. During the final 0.5 seconds settle precisely into the supplied final frame with near-zero motion. Smooth acceleration and deceleration, elegant and tactile, not springy. Subject stays in its original center-right anchor; empty left gutter and seamless near-black background remain perfectly still. No cut, camera move, zoom, added geometry, text, flare or color. Silent.",
+  "duration": 4,
+  "resolution": "720p",
+  "aspect_ratio": "16:9",
+  "generate_audio": false,
+  "frame_images": [
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://raw.githubusercontent.com/Damon-GSY/my_website/9c64ae590a530598fcccc69cafb727ed950d3b38/public/oil-lab/noir/seed/K0.png"
+      },
+      "frame_type": "first_frame"
+    },
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://raw.githubusercontent.com/Damon-GSY/my_website/9c64ae590a530598fcccc69cafb727ed950d3b38/public/oil-lab/noir/seed/K1.png"
+      },
+      "frame_type": "last_frame"
+    }
+  ]
+}
