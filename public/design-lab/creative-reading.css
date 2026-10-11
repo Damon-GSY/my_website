@@ -1,0 +1,22 @@
+/* Shared reading semantics; each direction supplies its own palette, header and display type. */
+body[data-creative]{background:var(--paper);color:var(--ink)}
+body[data-creative] a{color:inherit}
+body[data-creative] button,body[data-creative] summary{touch-action:manipulation}
+body[data-creative] #prototype-home{min-width:0}
+body[data-creative][data-blog-style='site'] #prototype-blog{background:var(--paper);color:var(--ink)}
+body[data-creative][data-blog-style='site'] .blog-index-shell{max-width:1240px;margin:0 auto;padding:60px 48px 90px}
+body[data-creative][data-blog-style='site'] .blog-index-heading h1{font-family:var(--creative-display,Manrope);font-size:clamp(76px,10vw,150px);letter-spacing:-.065em}
+body[data-creative][data-blog-style='site'] .blog-topic h2{font-family:var(--creative-display,Manrope);font-size:clamp(38px,5vw,66px)}
+body[data-creative][data-blog-style='site'] .blog-topic-meta{display:block}
+body[data-creative][data-blog-style='site'] .blog-entry h3{font-size:27px}
+body[data-creative][data-blog-style='site'] .blog-entry p{font-size:16px;line-height:1.9}
+body[data-creative][data-blog-style='site'] .blog-entry figure img{filter:var(--creative-image-filter,invert(1) grayscale(1));mix-blend-mode:var(--creative-image-blend,multiply)}
+body[data-creative][data-blog-style='site'] #prototype-article{background:var(--paper);color:var(--ink);max-width:1240px;margin:0 auto}
+body[data-creative][data-blog-style='site'] #prototype-article .reading-header{background:transparent;border-color:var(--line);padding:55px 48px 38px}
+body[data-creative][data-blog-style='site'] #prototype-article .reading-title{font-family:var(--creative-reading,Manrope),'PingFang SC',sans-serif;color:var(--ink);font-size:clamp(32px,4vw,54px)}
+body[data-creative][data-blog-style='site'] #prototype-article .reading-layout{padding:38px 48px 80px;gap:56px}
+body[data-creative][data-blog-style='site'] #prototype-article .reading-prose{font-size:18px;line-height:1.95;color:var(--ink)}
+body[data-creative][data-blog-style='site'] .reading-pilot{background:var(--paper);border-color:var(--line);color:var(--ink)}
+body[data-creative][data-blog-style='site'] .blog-style-tools button{border-radius:0}
+body[data-creative] .study-bar{font-family:Manrope,'PingFang SC',sans-serif}
+@media(max-width:760px){body[data-creative][data-blog-style='site'] .blog-index-shell{padding:32px 22px 70px}body[data-creative][data-blog-style='site'] .blog-index-heading h1{font-size:80px}body[data-creative][data-blog-style='site'] .blog-topic h2{font-size:42px}body[data-creative][data-blog-style='site'] .blog-entry h3{font-size:24px}body[data-creative][data-blog-style='site'] .blog-topic-meta{display:none}body[data-creative][data-blog-style='site'] #prototype-article .reading-header{padding:32px 22px}body[data-creative][data-blog-style='site'] #prototype-article .reading-layout{padding:28px 22px 80px;gap:24px}body[data-creative][data-blog-style='site'] #prototype-article .reading-prose{font-size:17px}body[data-creative] .study-bar select{max-width:124px}}

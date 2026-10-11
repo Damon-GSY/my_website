@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Orange Thread — Damon Guan</title>
+  <style>
+    @font-face{font-family:Manrope;src:url('../fonts/manrope-latin.woff2') format('woff2');font-style:normal;font-weight:400 800;font-display:block}
+    @font-face{font-family:Cartograph;src:url('/fonts/CartographCF-Regular.woff2') format('woff2');font-style:normal;font-weight:400;font-display:block}
+    :root{color-scheme:light;--paper:#F4F0E7;--ink:#121212;--orange:#FF5A1F}
+    *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}body{background:var(--paper);color:var(--ink);font-family:Manrope,sans-serif;display:grid;grid-template-rows:auto minmax(0,1fr) auto}button,a,input{-webkit-tap-highlight-color:transparent}a{color:inherit;text-decoration:none}button{font:inherit;color:inherit}button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--orange);outline-offset:5px}
+    .film-header{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:22px 4vw;font-size:13px}.film-brand{font:13px Cartograph,monospace;letter-spacing:.06em}.film-header nav{display:flex;align-items:center;gap:26px}.film-header button{border:1px solid currentColor;background:none;padding:7px 11px;cursor:pointer}.stage{position:relative;min-width:0;min-height:0;overflow:hidden}canvas{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:contain}.film-controls{padding:15px 4vw 22px}.film-controls-top{display:flex;justify-content:space-between;align-items:center;gap:20px;font:11px Cartograph,monospace}.film-controls input[type=range]{display:block;width:100%;height:28px;margin:8px 0;accent-color:var(--orange);cursor:ew-resize}.film-time-label{display:flex;align-items:center;gap:10px}.film-time-label input{width:75px;font:12px Cartograph,monospace;background:transparent;color:inherit;border:1px solid currentColor;padding:5px 6px}.film-beats{display:flex;justify-content:space-between;gap:10px}.film-beats button{font:11px Cartograph,monospace;padding:7px 0;border:0;background:none;cursor:pointer}.film-beats button[aria-current]{color:var(--orange)}.film-note{font-size:11px;opacity:.7}.film-end-links{position:absolute;right:5%;bottom:7%;display:flex;gap:28px;font-size:15px}.film-end-links[hidden]{display:none}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    body[data-embedded='true']{display:block}body[data-embedded='true'] .chrome{display:none}body[data-embedded='true'] .stage{width:100%;height:100%}
+    @media(max-width:600px){.film-header{padding:16px 20px}.film-header nav{gap:15px}.film-header nav>a:first-child{display:none}.film-controls{padding:12px 20px 18px}.film-beats button{font-size:9px}.film-note{max-width:170px;text-align:right;font-size:10px}.film-end-links{font-size:12px;gap:15px}}
+  </style>
+</head>
+<body data-ready="false">
+  <header class="film-header chrome">
+    <a class="film-brand" href="./../creative.html?variant=AH&amp;view=home" target="_top">DAMON GUAN</a>
+    <nav aria-label="Film navigation"><a href="./../creative.html?variant=AH&amp;view=home#ah-work" target="_top">Work</a><a href="./../creative.html?variant=AH&amp;view=blog" target="_top">Blog</a><button id="film-language" type="button" aria-label="Switch to English">EN</button></nav>
+  </header>
+  <main class="stage">
+    <canvas id="film" width="1920" height="1080" role="img" aria-label="Orange Thread: Damon Guan, building reliable agents. A silent, reversible two-dimensional motion film."></canvas>
+    <p class="sr-only">Make it work. I build agents. Supply Chain Agent System: approximately 90% fewer misoperations in supported internal workflows. The spring response is a motion study, separate from the project result. Agents, tools, memory, evaluation, Agentic RL. Damon Guan. Building reliable agents. Ideas into action.</p>
+    <nav class="film-end-links chrome" id="film-end-links" aria-label="Continue after the film" hidden><a href="./../creative.html?variant=AH&amp;view=home#ah-work" target="_top">Work ↗</a><a href="./../creative.html?variant=AH&amp;view=blog" target="_top">Blog ↗</a></nav>
+  </main>
+  <footer class="film-controls chrome">
+    <div class="film-controls-top"><label class="film-time-label" for="film-number">Time (seconds)<input id="film-number" type="number" min="0" max="15" step=".5" value="0"></label><output id="film-time" for="film-range film-number">00.00 / 15.00</output><span class="film-note" id="film-note">静音短片 · 拖动时间，不限阅读速度</span></div>
+    <label class="sr-only" for="film-range">Film time in seconds</label><input id="film-range" type="range" min="0" max="15" step=".01" value="0">
+    <nav class="film-beats" aria-label="Film chapters"><button type="button" data-time="0">00 START</button><button type="button" data-time="2">01 BUILD</button><button type="button" data-time="4.8">02 PROOF</button><button type="button" data-time="7.4">03 SHAPE</button><button type="button" data-time="9.4">04 CONNECT</button><button type="button" data-time="12.4">05 DAMON</button></nav>
+  </footer>
+  <script data-film-renderer>
+  (()=>{
+    'use strict';
+    window.createOrangeFilm=function createOrangeFilm(canvas,{embedded:initialEmbedded=true,lang:initialLang='zh'}={}){
+    const W=1920,H=1080,PAPER='#F4F0E7',INK='#121212',ORANGE='#FF5A1F';
+    canvas.width=W;canvas.height=H;
+    const ctx=canvas.getContext('2d',{alpha:false});
+    let lastLang=initialLang;
+    const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+    const mix=(a,b,u)=>a+(b-a)*u;
+    const smooth=u=>{u=clamp(u);return u*u*(3-2*u);};
+    const segment=(t,a,b)=>smooth((t-a)/(b-a));
+    const ease=u=>{u=clamp(u);return u*u*u*(u*(u*6-15)+10);};
+    const travel=(t,a,b)=>ease((t-a)/(b-a));
+    const point=(x,y)=>({x,y});
+    const between=(a,b,u)=>point(mix(a.x,b.x,u),mix(a.y,b.y,u));
+    function cubic(a,b,c,d,u){const v=1-u;return point(v*v*v*a.x+3*v*v*u*b.x+3*v*u*u*c.x+u*u*u*d.x,v*v*v*a.y+3*v*v*u*b.y+3*v*u*u*c.y+u*u*u*d.y);}
+    function font(size,weight=800,mono=false){ctx.font=`${mono?400:weight} ${size}px ${mono?'Cartograph':'Manrope'}`;ctx.textBaseline='alphabetic';ctx.textAlign='left';}
+    function width(text,size,tracking=0,weight=800,mono=false){font(size,weight,mono);return [...text].reduce((sum,ch)=>sum+ctx.measureText(ch).width,0)+Math.max(0,[...text].length-1)*tracking;}
+    function fitted(text,size,maxWidth,tracking=0){const measured=width(text,size,tracking);return measured>maxWidth?size*maxWidth/measured:size;}
+    function letters(text,x,y,size,tracking=0){font(size);let cursor=x;return [...text].map((char,index)=>{const advance=ctx.measureText(char).width,item={char,index,x:cursor,y,width:advance,size};cursor+=advance+tracking;return item;});}
+    function text(value,x,y,size=24,color=INK,weight=400,mono=false,align='left',alpha=1){if(alpha<=0)return;ctx.save();ctx.globalAlpha=clamp(alpha);ctx.fillStyle=color;font(size,weight,mono);ctx.textAlign=align;ctx.fillText(value,x,y);ctx.restore();}
+    function character(item,{x=item.x,y=item.y,alpha=1,angle=0,scale=1,color=INK,stem=false,centered=false}={}){if(alpha<=0||item.char===' ')return;ctx.save();ctx.translate(x,y);ctx.rotate(angle);ctx.scale(scale,scale);if(centered)ctx.translate(-item.width/2,0);ctx.globalAlpha=clamp(alpha);ctx.fillStyle=color;font(item.size);if(stem){ctx.beginPath();ctx.rect(-2,-item.size*.57,item.width+4,item.size*.78);ctx.clip();}ctx.fillText(item.char,0,0);ctx.restore();}
+    function line(x1,y1,x2,y2,color=INK,size=2,alpha=1){ctx.save();ctx.globalAlpha=clamp(alpha);ctx.strokeStyle=color;ctx.lineWidth=size;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.restore();}
+    function circle(x,y,r,color=ORANGE,alpha=1){if(r<=0||alpha<=0)return;ctx.save();ctx.globalAlpha=clamp(alpha);ctx.fillStyle=color;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();ctx.restore();}
+    function rounded(x,y,w,h,r,color,alpha=1){if(alpha<=0)return;r=Math.min(r,w/2,h/2);ctx.save();ctx.globalAlpha=clamp(alpha);ctx.fillStyle=color;ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.fill();ctx.restore();}
+    function cursor(x,y,scale=1,alpha=1){ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);ctx.globalAlpha=clamp(alpha);ctx.fillStyle=PAPER;ctx.strokeStyle=INK;ctx.lineWidth=5;ctx.lineJoin='miter';ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(0,63);ctx.lineTo(17,48);ctx.lineTo(30,76);ctx.lineTo(43,70);ctx.lineTo(30,42);ctx.lineTo(53,42);ctx.closePath();ctx.fill();ctx.stroke();ctx.restore();}
+    function superellipse(cx,cy,w,h,n,rotation,color){ctx.save();ctx.translate(cx,cy);ctx.rotate(rotation);ctx.fillStyle=color;ctx.beginPath();for(let i=0;i<=96;i++){const a=i/96*Math.PI*2,cos=Math.cos(a),sin=Math.sin(a),x=Math.sign(cos)*Math.pow(Math.abs(cos),2/n)*w/2,y=Math.sign(sin)*Math.pow(Math.abs(sin),2/n)*h/2;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.closePath();ctx.fill();ctx.restore();}
+
+    // Closed-form unit-step response. The trace and its head use this exact
+    // function. It is an illustrative motion study, never project time-series.
+    const ZETA=.65,OMEGA_D=2*Math.PI,OMEGA_N=OMEGA_D/Math.sqrt(1-ZETA*ZETA),DECAY=ZETA*OMEGA_N;
+    function spring(u){u=Math.max(0,u);const raw=1-Math.exp(-DECAY*u)*(Math.cos(OMEGA_D*u)+ZETA/Math.sqrt(1-ZETA*ZETA)*Math.sin(OMEGA_D*u));return mix(raw,1,segment(u,1.5,2));}
+    function graphPoint(u){u=clamp(u,0,2);return point(88+1382*u/2,300+500*spring(u));}
+    function graphTrace(u,alpha=1){if(u<=0||alpha<=0)return;ctx.save();ctx.globalAlpha=clamp(alpha);ctx.strokeStyle=ORANGE;ctx.lineWidth=6;ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();const samples=Math.max(2,Math.ceil(u*160));for(let i=0;i<=samples;i++){const p=graphPoint(u*i/samples);if(i)ctx.lineTo(p.x,p.y);else ctx.moveTo(p.x,p.y);}ctx.stroke();ctx.restore();}
+    function frameLayouts(){
+      const makeSize=fitted('Make it work.',238,1430,-13),heroSize=fitted('I build agents.',242,1744,-13),nameSize=fitted('Damon',356,1320,-19);
+      const make=letters('Make it work.',76,596,makeSize,-13),hero=letters('I build agents.',88,606,heroSize,-13);
+      const heroI=hero.find(item=>item.char==='i');
+      const name=letters('Damon',88,485,nameSize,-19),surname=letters('Guan',88,795,nameSize,-19);
+      const surnameEnd=surname.at(-1);
+      return {make,hero,heroI:point(heroI.x+heroI.width*.49,heroI.y-heroSize*.70),heroIRadius:heroSize*.072,name,surname,nameDot:point(surnameEnd.x+surnameEnd.width+47,760)};
+    }
+    const toggle={x:1576,y:432,w:270,h:156,r:64,off:point(1654,510),on:point(1768,510)};
+    const center=point(960,540),gridDestination=point(1490,570),graphExit=point(1730,800);
+    function intro(t,layout,{returning=false}={}){
+      const returningAmount=returning?segment(t,14.58,14.9):1;
+      const outgoing=returning?0:segment(t,1.08,1.52);
+      layout.make.forEach((item,i)=>{const exit=returning?1-returningAmount:segment(t,1.07+i*.012,1.30+i*.012);character(item,{y:item.y-exit*92,alpha:1-exit});});
+      const railAlpha=(1-outgoing)*returningAmount;
+      rounded(toggle.x,toggle.y,toggle.w,toggle.h,toggle.h/2,INK,railAlpha);
+      text('I build agents.',88,929,28,INK,400,true,'left',railAlpha);
+      text('LLM ALGORITHM ENGINEER / DAMON GUAN',88,973,21,INK,400,true,'left',railAlpha);
+      text('SCROLL TO BEGIN',1832,973,21,INK,400,true,'right',railAlpha);
+      line(88,1020,1832,1020,INK,2,railAlpha);
+      if(returning){const cursorP=between(point(toggle.off.x+120,toggle.off.y+135),point(toggle.off.x+41,toggle.off.y+72),segment(t,14.72,14.95));cursor(cursorP.x,cursorP.y,1,returningAmount);return;}
+      const cursorIn=segment(t,0,.5),cursorOut=segment(t,.85,1.25);
+      const cursorP=between(point(toggle.off.x+41,toggle.off.y+72),point(toggle.on.x+23,toggle.on.y+17),cursorIn);
+      cursor(cursorP.x+cursorOut*100,cursorP.y+cursorOut*80,1-.08*Math.sin(Math.PI*clamp((t-.45)/.18)),1-cursorOut);
+    }
+    function build(t,layout){
+      layout.hero.forEach((item,i)=>{const enter=segment(t,1.35+i*.022,1.68+i*.022),exit=segment(t,2.5+i*.009,2.77+i*.009);character(item,{y:item.y+(1-enter)*128-exit*74,alpha:enter*(1-exit),stem:item.char==='i'});});
+      const hold=segment(t,1.8,2.0)*(1-segment(t,2.5,2.75));
+      text('RELIABLE ACTION, BY DESIGN.',94,784,24,INK,400,true,'left',hold);
+    }
+    function proof(t){
+      const alpha=segment(t,2.8,3.05)*(1-segment(t,5.15,5.5));
+      line(88,800,1832,800,INK,2,alpha);
+      graphTrace(clamp(t-3,0,2),alpha);
+      const result=segment(t,3.15,3.5)*(1-segment(t,5.15,5.5));
+      text('≈90%',944,468,fitted('≈90%',318,890,-8),INK,800,false,'left',result);
+      text('fewer misoperations',956,564,fitted('fewer misoperations',77,872),INK,800,false,'left',result);
+      text('SPRING RESPONSE / MOTION STUDY',88,999,21,INK,400,true,'left',alpha);
+      text('Supply Chain Agent System',1832,969,22,INK,400,true,'right',result);
+      text(lastLang==='zh'?'Supported internal workflows · 内部支持场景':'Supported internal workflows',1832,1007,20,INK,400,true,'right',result);
+    }
+    function morph(t){
+      const coverRadius=Math.hypot(Math.max(center.x,W-center.x),Math.max(center.y,H-center.y))+36;
+      if(t<6.5){const from=between(graphExit,center,travel(t,5.5,5.9)),r=mix(mix(19,48,segment(t,5.5,5.9)),coverRadius,travel(t,5.9,6.5));circle(from.x,from.y,r);return {dot:from,radius:r};}
+      ctx.fillStyle=ORANGE;ctx.fillRect(0,0,W,H);
+      if(t<7.12){const u=travel(t,6.5,6.98),size=mix(0,454,u),angle=mix(-Math.PI/4,0,u);superellipse(960,540,size,size,18,angle,INK);return{dot:center,radius:coverRadius};}
+      if(t<7.9){const u=travel(t,7.12,7.8),rotation=Math.sin(Math.PI*u)*Math.PI*.23;superellipse(960,540,mix(454,1020,u),mix(454,238,u),mix(18,3.2,u),rotation,INK);return{dot:center,radius:coverRadius};}
+      const cover=travel(t,7.9,8.34);superellipse(960,540,mix(1020,4400,cover),mix(238,2600,cover),3.2,0,INK);
+      const r=56*segment(t,8.06,8.5);circle(960,540,r);return{dot:center,radius:r};
+    }
+    function ringLetters(){
+      const words=['AGENTS','TOOLS','MEMORY','EVALUATION','AGENTIC RL'],size=76,radius=364;
+      const wordWidths=words.map(word=>width(word,size,-1)),gap=(Math.PI*2*radius-wordWidths.reduce((a,b)=>a+b,0))/words.length;
+      let arc=-Math.PI/2*radius-wordWidths[0]/2,index=0;const result=[];font(size);
+      words.forEach((word,wi)=>{const centerAngle=(arc+wordWidths[wi]/2)/radius,lower=Math.sin(centerAngle)>0;let within=0;for(const char of word){const advance=ctx.measureText(char).width,offset=(within+advance/2-wordWidths[wi]/2)/radius;result.push({char,index:index++,width:advance,size,angle:centerAngle+(lower?-offset:offset),lower});within+=advance-1;}arc+=wordWidths[wi]+gap;});return result;
+    }
+    function grid(t,focus,{end=false,alpha=1}={}){
+      const spread=segment(t,9.25,10.65),exit=end?segment(t,10.8,11.32):0,shift=exit*1500;
+      for(let row=0;row<16;row++)for(let column=0;column<32;column++){
+        const x=-80+column*66+shift,y=54+row*66;
+        const baseX=-80+column*66,originalReveal=segment(spread,clamp((1320-baseX)/1520)*.76,clamp((1320-baseX)/1520)*.76+.24);
+        // The right-hand sheet is already crisp during the orbit hold; its
+        // left edge waits for departing letters rather than sitting under them.
+        const reveal=baseX>=1400?Math.max(originalReveal,segment(t,8.9,9.45)):originalReveal*segment(t,9.75,10.05);
+        const dist=Math.hypot(x-focus.x,y-focus.y),r=2.2+17.5*Math.exp(-dist*dist/(2*335*335));
+        circle(x,y,r,PAPER,alpha*reveal);
+      }
+    }
+    function orbit(t,focus,field=true){
+      if(field)grid(t,focus,{end:true});
+      const spin=mix(-.20,.02,segment(t,8.5,9.55)),enter=segment(t,8.5,8.96);
+      ringLetters().forEach(item=>{
+        const a=item.angle+spin,orbitRadius=mix(48,364,enter),p=point(960+orbitRadius*Math.cos(a),540+orbitRadius*Math.sin(a));
+        const start=9.53+item.index*.014,u=travel(t,start,start+.83),target=point(1240+(item.index%10)*66,318+Math.floor(item.index/10)*66);
+        const at=between(p,target,u),rotation=(a+(item.lower?-Math.PI/2:Math.PI/2))*(1-u),alpha=enter*(1-segment(u,.72,1));
+        character(item,{x:at.x,y:at.y,angle:rotation,scale:mix(.12,1,enter)*mix(1,.13,u),alpha,color:PAPER,centered:true});
+      });
+      const footer=segment(t,8.7,9.1)*(1-segment(t,10.65,11));
+      if(!initialEmbedded){
+        text('CAPABILITIES, CONNECTED.',88,1007,22,PAPER,400,true,'left',footer);
+        text('TOOLS → ACTION → FEEDBACK',1832,1007,22,PAPER,400,true,'right',footer);
+      }
+    }
+    function ending(t,layout,alpha=1){
+      const intro=segment(t,11,11.25),exit=segment(t,13.5,13.85),visible=intro*(1-exit)*alpha;
+      const focus=between(gridDestination,layout.nameDot,travel(t,11,11.3));grid(t,focus,{end:true,alpha:alpha*(1-exit)});
+      const show=item=>{const u=segment(t,11+item.index*.012,11.17+item.index*.012);character(item,{x:item.x-(1-u)*65,y:item.y,alpha:u*(1-exit)*alpha,color:PAPER});};
+      layout.name.forEach(show);layout.surname.forEach(show);
+      text('ENGINEER / RESEARCHER / BUILDER',94,132,23,PAPER,400,true,'left',visible);
+      text('Building reliable agents.',94,906,55,PAPER,700,false,'left',visible);
+      text('Ideas into action.',94,974,55,PAPER,700,false,'left',visible);
+    }
+    function loop(t,layout){
+      let dot;
+      if(t<14.18){
+        ending(t,layout);
+        if(t<13.86)dot=between(layout.nameDot,gridDestination,travel(t,13.5,13.86));
+        else dot=between(gridDestination,graphPoint(2),travel(t,13.86,14.18));
+      }else if(t<14.56){
+        const u=2*(1-travel(t,14.18,14.56));graphTrace(u,.8);line(88,800,1832,800,INK,2,1-segment(t,14.2,14.55));dot=graphPoint(u);
+      }else{
+        dot=cubic(graphPoint(0),point(650,50),point(1530,260),toggle.off,travel(t,14.56,14.9));intro(t,layout,{returning:true});
+      }
+      const radius=t<14.18?mix(34,19,segment(t,13.5,14.18)):mix(19,toggle.r,segment(t,14.56,14.9));
+      circle(dot.x,dot.y,radius);return dot;
+    }
+    function metadata(t){
+      if(t<1.35)return{phase:'toggle',tone:'light',background:PAPER};
+      if(t<2.5)return{phase:'build',tone:'light',background:PAPER};
+      if(t<5.5)return{phase:'spring',tone:'light',background:PAPER};
+      if(t<8.5)return{phase:'morph',tone:t<6.5?'light':t<8.18?'orange':'dark',background:t<6.5?PAPER:t<8.18?ORANGE:INK};
+      if(t<11)return{phase:'orbit',tone:'dark',background:INK};
+      if(t<13.5)return{phase:'end',tone:'dark',background:INK};
+      return{phase:'loop',tone:t<14.18?'dark':'light',background:t<14.18?INK:PAPER};
+    }
+    function seek(time,options={}){
+      const requested=clamp(Number.isFinite(Number(time))?Number(time):0,0,15),t=requested===15?0:requested;
+      const lang=(options.lang===undefined?initialLang:options.lang)==='en'?'en':'zh';
+      lastLang=lang;
+      const state=metadata(t),layout=frameLayouts();
+      ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';ctx.fillStyle=state.background;ctx.fillRect(0,0,W,H);
+      let dot,radius=19;
+      if(t<2.5){
+        intro(t,layout);build(t,layout);
+        const switchU=clamp(spring(Math.max(0,t-.5)*2.4),0,1.035),switched=between(toggle.off,toggle.on,switchU);
+        const flight=travel(t,1.12,1.9);dot=cubic(switched,point(1730,210),point(layout.heroI.x+200,225),layout.heroI,flight);
+        radius=mix(toggle.r,layout.heroIRadius,flight);if(options.actor!==false)circle(dot.x,dot.y,radius);
+      }else if(t<5.5){
+        build(t,layout);proof(t);
+        if(t<3)dot=cubic(layout.heroI,point(layout.heroI.x-50,90),point(-90,300),graphPoint(0),travel(t,2.5,3));
+        else if(t<=5)dot=graphPoint(t-3);
+        else dot=between(graphPoint(2),graphExit,travel(t,5,5.5));
+        radius=mix(layout.heroIRadius,19,segment(t,2.5,3));if(options.actor!==false)circle(dot.x,dot.y,radius);
+      }else if(t<8.5){({dot,radius}=morph(t));}
+      else if(t<11){dot=between(center,gridDestination,travel(t,9.55,10.8));orbit(t,dot,options.field!==false);radius=mix(56,34,segment(t,10.5,11));if(options.actor!==false)circle(dot.x,dot.y,radius);}
+      else if(t<13.5){ending(t,layout);dot=between(gridDestination,layout.nameDot,travel(t,11,11.3));radius=34;if(options.actor!==false)circle(dot.x,dot.y,radius);}
+      else dot=loop(t,layout);
+      return {time:requested,phase:state.phase,tone:state.tone,background:state.background,dot:{x:dot.x,y:dot.y},radius};
+    }
+    const math=Object.freeze({spring,graphPoint,duration:15,width:W,height:H,zeta:ZETA});
+    const ready=Promise.all([document.fonts.load('800 220px Manrope'),document.fonts.load('400 24px Cartograph')]).then(()=>document.fonts.ready);
+    const anchors=()=>{const layout=frameLayouts();return {hero:{...layout.heroI,radius:layout.heroIRadius},graphStart:{...graphPoint(0),radius:19},graphEnd:{...graphPoint(2),radius:19},research:{...center,radius:30},contact:{...layout.nameDot,radius:34}};};
+    return {seek,ready,math,anchors};
+    };
+  })();
+  </script>
+  <script>
+  (()=>{
+    'use strict';
+    const query=new URLSearchParams(location.search),initialEmbedded=query.get('embedded')==='1',initialLang=query.get('lang')==='en'?'en':'zh';
+    const initialTime=Math.max(0,Math.min(15,Number(query.get('t'))||0));
+    const canvas=document.getElementById('film'),range=document.getElementById('film-range'),number=document.getElementById('film-number'),timeOutput=document.getElementById('film-time'),endLinks=document.getElementById('film-end-links');
+    let lastTime=initialTime,lastLang=initialLang,lastEmbedded=initialEmbedded;
+    document.body.dataset.embedded=String(initialEmbedded);
+    const film=window.createOrangeFilm(canvas,{embedded:initialEmbedded,lang:initialLang});
+    function seek(time,options={}){
+      const lang=(options.lang===undefined?initialLang:options.lang)==='en'?'en':'zh',embedded=options.embedded===undefined?initialEmbedded:!!options.embedded;
+      const state=film.seek(time,{lang,embedded}),t=state.time===15?0:state.time;
+      lastTime=state.time;lastLang=lang;lastEmbedded=embedded;
+      document.body.dataset.embedded=String(embedded);document.body.dataset.phase=state.phase;document.body.dataset.tone=state.tone;document.body.style.backgroundColor=state.background;document.body.style.color=state.tone==='dark'?'#F4F0E7':'#121212';
+      range.value=String(state.time);number.value=String(state.time);timeOutput.value=state.time.toFixed(2).padStart(5,'0')+' / 15.00';
+      document.getElementById('film-note').textContent=lang==='zh'?'静音短片 · 拖动时间，不限阅读速度':'Silent film · scrub at your own pace';
+      document.getElementById('film-language').textContent=lang==='zh'?'EN':'中';document.getElementById('film-language').setAttribute('aria-label',lang==='zh'?'Switch to English':'切换为中文');
+      endLinks.hidden=embedded||t<11.3||t>=13.5;
+      document.querySelectorAll('.film-beats button').forEach((button,i)=>{const starts=[0,1.35,2.5,5.5,8.5,11,13.5];if(t>=starts[i]&&t<starts[i+1])button.setAttribute('aria-current','step');else button.removeAttribute('aria-current');});
+      return state;
+    }
+    window.seek=seek;window.filmMath=film.math;
+    range.addEventListener('input',()=>seek(Number(range.value),{lang:lastLang,embedded:lastEmbedded}));
+    number.addEventListener('input',()=>{if(number.value!=='')seek(Number(number.value),{lang:lastLang,embedded:lastEmbedded});});
+    document.querySelectorAll('[data-time]').forEach(button=>button.addEventListener('click',()=>seek(Number(button.dataset.time),{lang:lastLang,embedded:lastEmbedded})));
+    document.getElementById('film-language').addEventListener('click',()=>seek(lastTime,{lang:lastLang==='zh'?'en':'zh',embedded:lastEmbedded}));
+    window.filmReady=film.ready.then(()=>{const state=seek(initialTime,{lang:initialLang,embedded:initialEmbedded});document.body.dataset.ready='true';return state;});
+  })();
+  </script>
+</body>
+</html>
