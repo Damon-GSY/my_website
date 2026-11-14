@@ -24,11 +24,21 @@ npm run dev        # or: npm run build && npm run preview
 
 ## How it was checked
 
-Headless Chromium with software WebGL, 12 scroll positions per route at 1440×900 and 390×844, no console errors. That is all. Not checked:
+Headless Chromium with software WebGL (SwiftShader), production build via `vite preview`.
+
+- First pass: 12 scroll positions per route at 1440×900 and 390×844, no console errors.
+- Second pass (2026-11-14), screenshots looked at by eye:
+  - Static fallback (`prefers-reduced-motion: reduce`) on `/parcel`, `/descent`, `/rollout` at 1440×900 and 390×844: the root gets class `static`, pages are 1050–1340 px tall (no pinned scroll), hero, six work items and footer are readable with no overlap. On phones some secondary text is hidden by design (Parcel card blurbs, Descent row numbers and places, Rollout metric labels).
+  - Chinese mode (`localStorage.lang = 'zh'`) on `/`, `/ink`, and the first and last scroll positions of the three openings at 1440×900: no overflow or clipped text. Project titles, metrics, "step 20 / 20", the Rollout chapter labels (Train, Deploy, Evaluate) and the text painted on the Parcel box stay English.
+  - `/ink` at 390×844 after a 40-step pointer sweep across the wordmark: the blob shows coloured ink (the video was playing), the corner UI does not touch the wordmark.
+  - No console errors or page errors on any route, English or Chinese, film or static.
+  - Fixed: Rollout's "THAT GAP IS MY JOB." rendered as "GAPIS" (tight letter-spacing ate the word space); added `word-spacing`.
+
+Not checked:
 
 - real GPU frame rate, Safari, or a physical phone
-- the static fallback (reduced motion, no WebGL): written, never rendered
-- Chinese mode: strings exist, never rendered
+- the no-WebGL fallback path (only reduced motion was rendered; both set the same `static` class)
+- Chinese mode at phone width, and Chinese at the in-between scroll positions
 - the plan's acceptance checks in section 8 (pixel difference at the DOM handoff, same frame when arriving from above and below)
 
 ## Added after the first handoff
@@ -52,6 +62,7 @@ Headless Chromium with software WebGL, 12 scroll positions per route at 1440×90
 - The visitor does not choose branches; scrolling follows one fixed path.
 - Chapter labels (Train, Deploy, Evaluate) are very small.
 - On phones the tree runs behind the lower part of the hero text.
+- At the very end of the scroll the flat trace slides under the fixed header (the work block scrolls up to reveal the footer).
 - The WebGL trace and its SVG twin are drawn from the same numbers but were not compared pixel by pixel.
 
 **All**

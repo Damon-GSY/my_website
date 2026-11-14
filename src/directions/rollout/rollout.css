@@ -116,6 +116,7 @@
   font-size: clamp(2.2rem, 6.4vw, 6rem);
   line-height: 0.9;
   letter-spacing: -0.04em;
+  word-spacing: 0.12em;
   text-transform: uppercase;
 }
 .rollout .r-body ol {
