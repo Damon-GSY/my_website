@@ -27,6 +27,24 @@ const directions = [
     line: { en: 'Evaluation, as a twenty-sided die.', zh: '把评测做成一枚二十面骰。' },
     glyph: 'M36 3l28 16v26L36 61 8 45V19zM36 3L21 31h30zM21 31L8 45M51 31l13 14M21 31l15 30M51 31L36 61M8 19l13 12M64 19L51 31',
   },
+  {
+    id: 'night',
+    href: '/lab/night/',
+    line: { en: 'A particle night, a ring of text, and a warp into amber.', zh: '粒子夜景、文字圆环，以及一次冲入琥珀色的跃迁。' },
+    glyph: 'M36 32m-22 0a22 9 0 1 0 44 0a22 9 0 1 0-44 0M36 10v44M14 32h44M20 16l32 32M52 16L20 48',
+  },
+  {
+    id: 'pill',
+    href: '/lab/pill/',
+    line: { en: 'A hairline opens into a pill and pushes the name apart.', zh: '一条细线张开成胶囊，把名字向两边推开。' },
+    glyph: 'M22 20h28a12 12 0 0 1 0 24H22a12 12 0 0 1 0-24zM6 32h6M60 32h6',
+  },
+  {
+    id: 'bento',
+    href: '/lab/bento/',
+    line: { en: 'A calm profile: six live cards on one stage.', zh: '一页安静的个人简介：一个舞台，六张会动的卡片。' },
+    glyph: 'M6 8h26v22H6zM38 8h28v22H38zM6 36h18v20H6zM30 36h16v20H30zM52 36h14v20H52z',
+  },
 ];
 
 export default function Chooser() {
@@ -48,7 +66,7 @@ export default function Chooser() {
       <ol>
         {directions.map((d, i) => (
           <li key={d.id}>
-            <a href={`/${d.id}`} data-dir={d.id}>
+            <a href={d.href || `/${d.id}`} data-dir={d.id}>
               <span className="mono">0{i + 1}</span>
               <strong>{d.id}</strong>
               <em>{t(d.line)}</em>
