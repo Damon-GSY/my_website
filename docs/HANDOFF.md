@@ -1,5 +1,17 @@
 # Handoff — dimensional site
 
+## Polish pass (2026-11-14, latest)
+
+- **Evaluate** now opens with the shared ruled head `(03) EVALUATE ... ONE DIE, TWENTY ROLLS` (Home passes it to `D20Chapter` as `head`; `/d20` alone keeps its own small label). Sections run 01-06 without gaps. The heading is larger (5.6vw, 10.4vw on phones), and the closing line "That gap is my job." is set like the other display type (11vw, weight 900, balanced onto two lines). The duplicate `id="evaluate"` (wrapper and chapter) is gone.
+- **Work box** (white `PAPER` printing only): the name face now reads `SIX PROJECTS.`, so the flat net reads "SIX PROJECTS. / I BUILD AGENTS / THAT SHIP." and no longer repeats the hero. The kraft `/parcel` study keeps the name.
+- **Phones:** "Selected work · 06" no longer wraps and "UNPACKED." no longer runs past the card grid.
+- **Fixed bar:** now a solid `--bg` bar with a hairline instead of `mix-blend-mode: difference`, so text scrolling under it no longer runs through the links. It clears the pinned section heads (bar 53 px / 42 px tall, heads at 76 px).
+- **Timeline** (`src/engine/timeline.js`): a jump of more than 0.3 of a film's progress in one frame (anchor link, End key) lands on the target frame at once; ordinary scrolling is still damped.
+
+Verified by looking at screenshots (SwiftShader, `vite preview`): home at 12 positions at 1440x900 and 8 at 390x844; the bar after scrolling down then up at Work, Evaluate (start, middle), Path and Notes, and after tabbing into it, at both sizes; an anchor jump Path -> Evaluate shows the right frame after 400 ms; `/d20` (start, middle, end), `/parcel` (start, end), `/lab` at both sizes; reduced-motion Evaluate with the head; Chinese Evaluate (rolling, end) at desktop. No console errors, no horizontal scroll. `npx eslint .` and `npm run build` pass.
+
+Left alone: during a roll the die's hop can briefly reach the head's rule at the top (die mechanics unchanged); unlanded Parcel cards still show their text only after landing.
+
 ## Update: the real home page (2026-11-14, later)
 
 `/` is now one continuous page; the old chooser moved to `/lab` (it also lists `/d20`). Not committed yet.
@@ -26,7 +38,7 @@ A slim fixed bar (mix-blend difference) appears after the hero, marks the sectio
 
 **Not verified:** real GPU, Safari or iOS (svh, `touch-action: pan-y` while painting), real touch scrolling over the ink hero, the no-WebGL path on the home page (only reduced motion was rendered), screen readers, Chinese at every scroll position.
 
-**Rough edges:** the d20 chapter uses its own label style ("▲ Evaluate") rather than the `(03)` ruled head; the unlanded Parcel cards still show their text only after landing; after a long jump (anchor click), the film needs a moment to catch up with its damping; the box net still prints "DAMON GUAN / I BUILD AGENTS / THAT SHIP." inside the Work chapter, which repeats the hero name.
+**Rough edges (at the time; see the polish pass above for what was fixed):** the d20 chapter used its own label style; unlanded Parcel cards show their text only after landing; long jumps were slow to catch up; the box net repeated the hero name.
 
 ---
 

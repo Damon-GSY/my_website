@@ -64,11 +64,25 @@
   grid-area: die;
   min-height: 0;
 }
+/* the host page's ruled section head, pinned with the chapter (same place as the Work film's) */
+.d20-head {
+  position: absolute;
+  z-index: 2;
+  top: 76px;
+  left: var(--d20-g);
+  right: var(--d20-g);
+}
+.d20.has-head .d20-view {
+  padding-top: 132px;
+}
+.d20.has-head .d20-end {
+  padding-top: 132px;
+}
 
 /* intro */
 .d20-intro {
   grid-area: intro;
-  max-width: 640px;
+  max-width: 760px;
 }
 .d20-label,
 .d20-read,
@@ -98,9 +112,9 @@
 .d20-heading {
   font-weight: 850;
   font-variation-settings: 'wdth' 92;
-  font-size: clamp(2.1rem, 4.3vw, 4.5rem);
-  line-height: 0.94;
-  letter-spacing: -0.04em;
+  font-size: clamp(2.4rem, 5.6vw, 6.6rem);
+  line-height: 0.88;
+  letter-spacing: -0.045em;
   word-spacing: 0.04em;
   text-wrap: balance;
 }
@@ -268,13 +282,14 @@
   vector-effect: non-scaling-stroke;
 }
 .d20-gap {
-  margin-top: clamp(6px, 2vh, 22px);
+  margin: clamp(6px, 2vh, 22px) 0 0 -0.04em;
   font-weight: 900;
   font-variation-settings: 'wdth' 100;
-  font-size: clamp(2.6rem, 8.2vw, 9rem);
-  line-height: 0.88;
-  letter-spacing: -0.045em;
+  font-size: clamp(3.2rem, 11vw, 13rem);
+  line-height: 0.8;
+  letter-spacing: -0.055em;
   word-spacing: 0.06em;
+  text-wrap: balance;
 }
 .d20-principles {
   display: flex;
@@ -315,6 +330,9 @@
 .d20.static .d20-hud {
   display: none;
 }
+.d20.static.has-head .d20-view {
+  padding-top: 140px;
+}
 .d20.static .d20-end {
   position: relative;
   inset: auto;
@@ -329,7 +347,13 @@
     padding: 56px 18px 18px;
   }
   .d20-heading {
-    font-size: clamp(1.75rem, 8.4vw, 2.4rem);
+    font-size: clamp(2.1rem, 10.4vw, 3rem);
+  }
+  .d20.has-head .d20-view {
+    padding-top: 128px;
+  }
+  .d20.has-head .d20-end {
+    padding-top: 128px;
   }
   .d20-sub {
     margin-top: 10px;
@@ -354,7 +378,7 @@
     gap: 16px;
   }
   .d20-gap {
-    font-size: clamp(2.3rem, 11.5vw, 3.4rem);
+    font-size: clamp(2.8rem, 16.5vw, 4.4rem);
   }
   .d20-principles {
     flex-direction: column;
@@ -387,12 +411,12 @@
 .d20:lang(zh) .d20-heading {
   line-height: 1.14;
   letter-spacing: 0;
-  font-size: clamp(1.7rem, 3.4vw, 3.4rem);
+  font-size: clamp(1.9rem, 4.4vw, 5rem);
 }
 .d20:lang(zh) .d20-gap {
   line-height: 1.08;
   letter-spacing: 0;
-  font-size: clamp(2.2rem, 6.4vw, 6.6rem);
+  font-size: clamp(2.4rem, 8.4vw, 9.6rem);
   word-break: keep-all;
 }
 .d20:lang(zh) .d20-verdict {

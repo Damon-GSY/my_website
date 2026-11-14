@@ -277,11 +277,18 @@ export default function Home() {
             </div>
           }
         />
-        <section id="evaluate" className="h-evaluate" aria-label={t({ en: 'Evaluate', zh: '评测' })}>
+        <div id="evaluate" className="h-evaluate">
           <Suspense fallback={null}>
-            <D20Chapter />
+            <D20Chapter
+              id={null}
+              head={
+                <SectionHead n="03" aside={t({ en: 'One die, twenty rolls', zh: '一枚骰子，二十次' })}>
+                  {t({ en: 'Evaluate', zh: '评测' })}
+                </SectionHead>
+              }
+            />
           </Suspense>
-        </section>
+        </div>
         <Path />
         <Notes />
         <Contact />

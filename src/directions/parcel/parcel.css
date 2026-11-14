@@ -72,7 +72,11 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  gap: 16px;
   opacity: 0;
+}
+.parcel .p-work header .eyebrow {
+  white-space: nowrap;
 }
 .parcel .p-work h2 {
   font-weight: 800;
@@ -156,6 +160,9 @@
   }
   .parcel .p-work header {
     width: calc(var(--c) * 2 + 14px);
+  }
+  .parcel .p-work h2 {
+    font-size: clamp(1.4rem, 6.6vw, 2rem);
   }
   .parcel .p-grid {
     grid-template-columns: repeat(2, var(--c));

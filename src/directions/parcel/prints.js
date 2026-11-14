@@ -117,7 +117,13 @@ export function drawOutside(c, S, face, theme = KRAFT) {
   const m = 44;
   // which artwork each face carries: 5 name, 3 headline, 0 headline end, 1 label, 2 handling, 4 weight
   const role = [3, 0, 5, 2, 4, 1][face];
-  if (role === 5) {
+  if (role === 5 && theme === PAPER) {
+    // home page: the hero above already says the name, so this face opens the sentence instead
+    small(c, 'DIELINE 02 — SELECTED WORK', m, 62);
+    small(c, 'FOLD →', S - m - 70, 62);
+    headline(c, ['SIX', 'PROJECTS.'], m - 4, 96, S - m * 2, 190);
+    small(c, 'LLM ALGORITHM ENGINEER', m, S - 48, 19, 600);
+  } else if (role === 5) {
     small(c, 'DIELINE 01 — PERSONAL SITE', m, 62);
     small(c, 'FOLD →', S - m - 70, 62);
     headline(c, ['DAMON', 'GUAN'], m - 4, 96, S - m * 2, 190);

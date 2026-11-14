@@ -59,7 +59,9 @@ function useRows() {
   return rows;
 }
 
-export default function D20Chapter() {
+// `head` replaces the small label with the host page's own section head; `id` can be dropped when
+// the host already carries the anchor.
+export default function D20Chapter({ id = 'evaluate', head = null }) {
   const { t, lang } = useLang();
   const [mode, setMode] = useState(() =>
     window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'static' : 'film',
@@ -175,12 +177,13 @@ export default function D20Chapter() {
   const said = t(verdict(first));
 
   return (
-    <section id="evaluate" className={`d20 ${mode}`}>
+    <section id={id ?? undefined} className={`d20 ${mode}${head ? ' has-head' : ''}`}>
       <div ref={track} className="d20-track">
         <div ref={view} className="d20-view">
           <canvas ref={canvas} className="d20-canvas" aria-hidden="true" />
+          {head && <div className="d20-head">{head}</div>}
           <div ref={intro} className="d20-intro">
-            <p className="d20-label">{t(copy.label)}</p>
+            {!head && <p className="d20-label">{t(copy.label)}</p>}
             <h2 className="d20-heading">
               {heading[0]}
               <em>{heading[1]}</em>

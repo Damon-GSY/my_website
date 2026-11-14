@@ -4,12 +4,14 @@ export const ease = (t) => t * t * t * (t * (t * 6 - 15) + 10);
 export const lerp = (a, b, t) => a + (b - a) * t;
 
 // Native scroll -> damped progress across `track`. Reversible, and it stops ticking when idle.
-export function createTimeline(track, onFrame, damping = 0.14) {
+// A jump larger than `snap` (an anchor link, the end key) lands on the new frame at once instead of
+// playing the whole film through at damped speed.
+export function createTimeline(track, onFrame, damping = 0.14, snap = 0.3) {
   let target = 0;
   let current = -1;
   let raf = 0;
   const tick = () => {
-    current = current < 0 ? target : current + (target - current) * damping;
+    current = current < 0 || Math.abs(target - current) > snap ? target : current + (target - current) * damping;
     if (Math.abs(target - current) < 2e-4) current = target;
     onFrame(current);
     raf = current === target ? 0 : requestAnimationFrame(tick);
