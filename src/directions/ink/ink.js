@@ -244,8 +244,6 @@ export function initInk(hero) {
   let cur = 0;
   let mix = 0;
   let hasVideo = 0;
-  const onPlaying = () => (hasVideo = 1);
-  videos.forEach((v) => v.addEventListener('playing', onPlaying, { once: true }));
   tryPlay();
 
   let vx = 0;
@@ -310,6 +308,9 @@ export function initInk(hero) {
     // loop the video by cross-fading into its twin
     const A = videos[cur];
     const B = videos[1 - cur];
+    // readiness is read from the element each frame, so a missed 'playing' event cannot stall the loop
+    hasVideo = A.readyState >= 2 && A.videoWidth > 0 && !A.error ? 1 : 0;
+    if (hasVideo && A.paused && !A.ended) A.play().catch(() => {});
     if (hasVideo && A.duration) {
       const tail = A.duration - FADE_TAIL;
       if (A.currentTime >= tail || A.ended) {

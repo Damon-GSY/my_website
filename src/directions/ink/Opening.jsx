@@ -4,7 +4,11 @@ import { profile } from '../../content.js';
 import { initInk } from './ink.js';
 import './ink.css';
 
-const VIDEO = '/ink/ink.mp4'; // optional: when the file is missing the ink is generated in the shader
+// The ink video in two encodings; if neither plays, the ink is generated in the shader instead.
+const SOURCES = [
+  <source key="webm" src="/ink/ink.webm" type="video/webm" />,
+  <source key="mp4" src="/ink/ink.mp4" type="video/mp4" />,
+];
 
 export default function InkOpening() {
   const hero = useRef(null);
@@ -56,8 +60,12 @@ export default function InkOpening() {
           {t({ en: 'All openings', zh: '全部方案' })}
         </a>
         <div className="ink-ui ink-br">{t({ en: 'Roam to unveil', zh: '移动光标，揭开画面' })}</div>
-        <video className="ink-video" src={VIDEO} muted playsInline autoPlay preload="auto" />
-        <video className="ink-video" src={VIDEO} muted playsInline preload="auto" />
+        <video className="ink-video" muted playsInline autoPlay preload="auto">
+          {SOURCES}
+        </video>
+        <video className="ink-video" muted playsInline preload="auto">
+          {SOURCES}
+        </video>
       </section>
       <div className="ink-cursor" data-ink-cursor />
     </>

@@ -33,7 +33,7 @@ Headless Chromium with software WebGL, 12 scroll positions per route at 1440×90
 
 ## Added after the first handoff
 
-- `/ink`: full-screen hero, wordmark DAMON GUAN; the pointer paints a gooey trail that reveals moving ink. Built from Damon's pasted reference spec. The reference video could not be downloaded (the host `d8j0ntlcm91z4.cloudfront.net` is blocked by this environment's network policy), so the ink is generated in the shader. Dropping the file at `public/ink/ink.mp4` switches to the video with the two-video cross-fade loop; that path is written but untested.
+- `/ink`: full-screen hero, wordmark DAMON GUAN; the pointer paints a gooey trail that reveals moving ink. Built from Damon's pasted reference spec. The reference video is in `public/ink/` as `ink.webm` (VP9) and `ink.mp4` (H.264), converted from the HEVC original, which most browsers cannot play. It loops by cross-fading two video elements; if neither file plays, the ink is generated in the shader.
 - Damon is no longer based in Hangzhou. The city line is removed from the chooser, the Descent hero and the Parcel label. Still unconfirmed: current city and employer. The Parcel route still ends at `HGH 2025–`.
 
 ## Known rough edges
