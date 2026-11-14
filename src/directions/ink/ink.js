@@ -137,6 +137,19 @@ export function initInk(hero) {
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, source);
   };
 
+  // Video frames go through a 2D canvas first: uploading a <video> straight to a texture gives
+  // black frames on some GL backends, while canvas uploads are reliable everywhere.
+  const grabs = [0, 1].map(() => {
+    const c = document.createElement('canvas');
+    c.width = 960;
+    c.height = 540;
+    return { c, ctx: c.getContext('2d') };
+  });
+  const grab = (i, video) => {
+    grabs[i].ctx.drawImage(video, 0, 0, 960, 540);
+    return grabs[i].c;
+  };
+
   let W = 1;
   let H = 1;
   let DPR = 1;
@@ -330,8 +343,8 @@ export function initInk(hero) {
     const now0 = videos[cur];
     if (hasVideo) {
       try {
-        upload(1, now0);
-        if (mix > 0) upload(3, videos[1 - cur]);
+        upload(1, grab(0, now0));
+        if (mix > 0) upload(3, grab(1, videos[1 - cur]));
       } catch {
         hasVideo = 0;
       }
