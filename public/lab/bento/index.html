@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Damon Guan — profile</title>
+<meta name="description" content="Damon Guan, LLM algorithm engineer: agentic RL, post-training and evaluation.">
+<style>
+@font-face{font-family:'Archivo';src:url('archivo.woff2') format('woff2-variations');font-weight:100 900;font-stretch:62% 125%;font-display:swap}
+@font-face{font-family:'Cartograph CF';src:url('/fonts/CartographCF-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+:root{
+  --page:#EEECE8;--card:#F5F3EF;--line:rgba(0,0,0,.07);--ink:#1E1C1A;--sec:#77736E;--muted:#A7A39D;
+  --chip:#E9E6E1;--orange:#EE6A1F;--green:#3BC45E;--dark:#2A2624;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --shadow:0 1px 2px rgba(30,28,26,.04),0 6px 18px -8px rgba(30,28,26,.10);
+  --shadow-hi:0 2px 4px rgba(30,28,26,.05),0 18px 34px -12px rgba(30,28,26,.20);
+  --mono:'Cartograph CF',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --s:1;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--page);color:var(--ink);font-family:'Archivo',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow:hidden}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--orange);outline-offset:3px;border-radius:6px}
+#clock{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+
+/* ---------- stage ---------- */
+.viewport{position:fixed;inset:0;overflow:hidden}
+.stage{position:absolute;left:50%;top:50%;width:1440px;height:960px;
+  transform:translate(-50%,-50%) scale(var(--s));transform-origin:50% 50%}
+.stage > *, .grid > .card{position:absolute}
+html.anim [data-rise]{opacity:0}
+
+.toplinks{top:36px;right:76px;display:flex;gap:22px;font-size:13.5px;color:var(--sec);letter-spacing:-.005em}
+.toplinks a{text-decoration:none}
+.toplinks a:hover{color:var(--ink)}
+
+.avatar{left:136px;top:82px;width:145px;height:145px;border-radius:11px;background:var(--orange);overflow:hidden;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+.avatar span{position:absolute;left:-7px;bottom:-30px;color:#fff;font-weight:800;font-size:132px;line-height:1;
+  letter-spacing:-.085em;font-stretch:92%}
+
+.headline{left:321px;top:92px;width:900px;font-size:39.5px;line-height:46px;font-weight:520;letter-spacing:-.021em}
+.headline .m{color:var(--muted)}
+.bio{left:321px;top:203px;width:790px;font-size:20.5px;line-height:31px;color:var(--sec);letter-spacing:-.008em}
+
+.pill{height:53px;border-radius:999px;background:#FBFAF8;border:1px solid var(--line);box-shadow:var(--shadow);
+  display:flex;align-items:center}
+.voice{left:321px;top:287px;width:495px;padding:0 18px 0 11px;gap:12px}
+.play{width:29px;height:29px;border-radius:50%;background:var(--orange);flex:none;display:grid;place-items:center;color:#fff}
+.play svg{width:11px;height:11px;display:block}
+.bars{flex:1;min-width:0;height:30px;display:flex;align-items:center;justify-content:space-between}
+.bar{width:2px;border-radius:1px;background:#CFCBC5;flex:none;transform-origin:50% 50%}
+.bar.on{background:var(--ink)}
+.readout{flex:none;font-family:var(--mono);font-size:11.5px;color:var(--sec);letter-spacing:.01em;white-space:nowrap;text-align:right;min-width:150px}
+.readout b{font-weight:400;color:var(--ink)}
+.talk{left:841px;top:287px;width:174px;justify-content:center;gap:11px;font-size:15px;font-weight:500;letter-spacing:-.01em}
+.dot{position:relative;width:9px;height:9px;border-radius:50%;background:var(--green);flex:none}
+.dot i{position:absolute;inset:0;border-radius:50%;background:var(--green);opacity:.35}
+
+/* ---------- grid ---------- */
+.grid{left:0;top:0;width:1440px;height:960px;pointer-events:none}
+.card{pointer-events:auto;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);
+  overflow:hidden;padding:18px 20px;transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow-hi)}
+.c-exp{left:76px;top:390px;width:370px;height:258px}
+.c-res{left:463px;top:390px;width:513px;height:258px}
+.c-note{left:993px;top:390px;width:371px;height:258px}
+.c-work{left:76px;top:665px;width:370px;height:242px}
+.c-num{left:463px;top:665px;width:330px;height:242px}
+.c-how{left:810px;top:665px;width:554px;height:242px}
+
+.chip{display:inline-flex;align-items:center;gap:6px;height:25px;padding:0 10px 0 8px;border-radius:999px;background:var(--chip);
+  font-size:12.5px;font-weight:500;color:var(--ink);letter-spacing:-.003em;position:relative;z-index:2}
+.chip svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;color:var(--sec)}
+
+/* experience */
+.tl-win{position:absolute;left:20px;right:20px;top:56px;bottom:0;overflow:hidden;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 26px,#000 calc(100% - 40px),transparent 100%);
+          mask-image:linear-gradient(to bottom,transparent 0,#000 26px,#000 calc(100% - 40px),transparent 100%)}
+.tl-track{will-change:transform}
+.tl{position:relative;padding-left:22px}
+.tl::before{content:"";position:absolute;left:3.5px;top:0;bottom:0;width:1.5px;background:var(--dark)}
+.tl li{list-style:none;position:relative;padding:9px 0 9px}
+.tl li::before{content:"";position:absolute;left:-22.5px;top:15px;width:8.5px;height:8.5px;border-radius:50%;background:var(--card);
+  box-shadow:inset 0 0 0 1.5px var(--dark)}
+.tl li.cur::before{background:var(--orange);box-shadow:none}
+.tl .t{font-size:15.5px;line-height:21px;font-weight:500;letter-spacing:-.012em}
+.tl .t span{color:var(--sec);font-weight:400}
+.tl .y{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:2px;letter-spacing:.02em}
+
+/* research */
+.res-body{display:flex;gap:22px;margin-top:20px}
+.cover{width:156px;height:156px;flex:none;border-radius:10px;background:#ECE9E4;border:1px solid var(--line);display:grid;place-items:center}
+.cover svg{width:118px;height:118px;display:block}
+.res-info{flex:1;min-width:0;display:flex;flex-direction:column}
+.res-text{height:84px}
+.res-k{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.02em;margin-bottom:6px}
+.res-title{font-size:18px;line-height:23px;font-weight:500;letter-spacing:-.014em}
+.res-sub{font-size:13.5px;line-height:19px;color:var(--sec);margin-top:4px}
+.prog{width:243px;max-width:100%;height:3.5px;border-radius:3px;background:#E2DED8;margin-top:22px;overflow:hidden}
+.prog i{display:block;height:100%;width:100%;background:var(--ink);border-radius:3px;transform-origin:0 50%;transform:scaleX(0)}
+.ctrls{display:flex;align-items:center;gap:10px;margin-top:16px}
+.ctrls button{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:var(--ink)}
+.ctrls button:hover{background:var(--chip)}
+.ctrls .pp{background:var(--ink);color:var(--card);width:34px;height:34px}
+.ctrls .pp:hover{background:var(--dark)}
+.ctrls svg{width:12px;height:12px;display:block}
+.ctrls .idx{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--muted)}
+
+/* field notes */
+.note-title{font-size:25.5px;line-height:35px;font-weight:520;letter-spacing:-.02em;margin-top:18px;width:190px}
+.note-meta{position:absolute;left:20px;bottom:20px;display:flex;flex-direction:column;gap:6px}
+.note-meta .m{font-size:13px;color:var(--muted)}
+.note-meta a{font-size:15px;font-weight:500;color:var(--orange);text-decoration:none;letter-spacing:-.01em}
+.note-meta a:hover{text-decoration:underline;text-underline-offset:3px}
+.sheet{position:absolute;left:222px;top:58px;width:150px;height:220px;background:#FFFEFC;border-radius:4px;
+  box-shadow:0 1px 2px rgba(0,0,0,.06),0 10px 24px -10px rgba(30,28,26,.22);border:1px solid var(--line);transform:rotate(5deg);
+  transform-origin:0 0;padding:18px 16px}
+.sheet .h{height:7px;width:70%;background:#D9D5CF;border-radius:2px;margin-bottom:12px}
+.sheet .l{height:3px;background:#ECE9E4;border-radius:2px;margin-bottom:7px}
+.sheet .o{background:rgba(238,106,31,.55);width:30%}
+
+/* selected work */
+.rows{position:relative;margin-top:12px}
+.rows .hl{position:absolute;left:-10px;right:-10px;top:0;height:34px;border-radius:9px;background:var(--chip)}
+.row{position:relative;display:flex;justify-content:space-between;align-items:center;height:34px;gap:10px}
+.row .n{font-size:14px;font-weight:500;letter-spacing:-.012em;white-space:nowrap}
+.row .v{font-size:12.5px;color:var(--sec);white-space:nowrap;font-stretch:94%}
+.foot{position:absolute;left:20px;bottom:15px;font-size:10px;color:var(--muted)}
+
+/* numbers */
+.num-wrap{position:absolute;left:20px;right:20px;bottom:22px}
+.big{font-size:64px;line-height:64px;font-weight:800;letter-spacing:-.045em;font-variant-numeric:tabular-nums}
+.big .u{color:var(--orange)}
+.num-label{font-size:15px;color:var(--sec);margin-top:10px;letter-spacing:-.01em}
+.num-dots{position:absolute;right:20px;top:27px;display:flex;gap:5px}
+.num-dots i{width:5px;height:5px;border-radius:50%;background:#D8D4CE}
+.num-dots i.on{background:var(--ink)}
+
+/* how I work */
+.how-stage{position:relative;height:96px;margin-top:14px}
+.how-layer{position:absolute;left:0;right:0;top:0}
+.how-t{font-size:29px;line-height:34px;font-weight:520;letter-spacing:-.022em}
+.how-t span{color:var(--muted);font-family:var(--mono);font-size:13px;letter-spacing:0;vertical-align:5px;margin-right:10px}
+.how-b{font-size:15px;line-height:22px;color:var(--sec);margin-top:8px;max-width:470px}
+.seg{position:absolute;left:20px;right:20px;bottom:18px;height:40px;border-radius:999px;background:var(--chip);display:flex;padding:4px}
+.seg .pillbg{position:absolute;top:4px;bottom:4px;left:4px;border-radius:999px;background:var(--dark)}
+.seg button{position:relative;flex:1;border-radius:999px;font-size:12.5px;font-weight:500;color:var(--sec)}
+.seg button.on{color:#fff}
+
+/* ---------- column layout ---------- */
+@media (max-width:820px){
+  body{overflow:auto}
+  .viewport{position:static;overflow:visible}
+  .stage{position:static;width:auto;height:auto;transform:none;padding:20px 16px 40px;display:flex;flex-direction:column}
+  .stage > *, .grid > .card{position:relative;left:auto;top:auto;right:auto}
+  .toplinks{order:-1;align-self:flex-end;margin-bottom:22px}
+  .avatar{width:84px;height:84px}
+  .avatar span{font-size:78px;left:-4px;bottom:-18px}
+  .headline{width:auto;margin-top:22px;font-size:28px;line-height:34px}
+  .headline br{display:none}
+  .bio{width:auto;margin-top:14px;font-size:17px;line-height:26px}
+  .voice{width:100%;max-width:495px;margin-top:20px;padding:0 14px 0 11px;gap:10px}
+  .readout{min-width:0;font-size:10.5px;line-height:14px}
+  .readout .p{display:block}
+  .talk{margin-top:10px}
+  .grid{width:auto;height:auto;display:flex;flex-direction:column;gap:14px;margin-top:28px}
+  .card{width:auto!important}
+  .c-how{height:auto;min-height:242px;padding-bottom:76px}
+  .how-stage{height:150px}
+  .res-body{gap:14px}
+  .cover{width:104px;height:104px}
+  .cover svg{width:80px;height:80px}
+  .c-res{height:auto}
+  .res-text{height:auto;min-height:130px}
+  .row .v{font-size:11.5px}
+}
+@media (prefers-reduced-motion:reduce){
+  .card,.card:hover{transition:none;transform:none}
+}
+</style>
+</head>
+<body>
+<div id="clock" aria-hidden="true"></div>
+<div class="viewport">
+<main class="stage" id="stage">
+  <nav class="toplinks" data-rise aria-label="Site"><a href="/lab">← Design studies</a><a href="/">Home</a></nav>
+
+  <div class="avatar" data-rise role="img" aria-label="Monogram DG"><span aria-hidden="true">DG</span></div>
+
+  <h1 class="headline" data-rise>Hi, I’m Damon Guan — I train language agents and<br> measure whether they work.<span class="m"> LLM algorithm engineer.</span></h1>
+
+  <p class="bio" data-rise>I work on agentic RL, post-training and evaluation: from benchmark design and training loops to agent systems that run real supply-chain decisions.</p>
+
+  <div class="pill voice" data-rise>
+    <button class="play" id="vPlay" aria-label="Play episode"><svg viewBox="0 0 12 12" id="vIcon"><path d="M3 1.6v8.8L10.4 6z" fill="currentColor"/></svg></button>
+    <div class="bars" id="bars" aria-hidden="true"></div>
+    <div class="readout" id="readout" aria-live="off"><span>step <b id="rStep">00</b> / 20</span><span class="p"> · P <b id="rP">100.0%</b></span></div>
+  </div>
+
+  <div class="pill talk" data-rise><span class="dot"><i id="halo"></i></span>Open to talk</div>
+
+  <div class="grid">
+    <!-- Experience -->
+    <section class="card c-exp" data-rise aria-label="Experience">
+      <span class="chip"><svg viewBox="0 0 14 14"><rect x="2" y="4" width="10" height="7.5" rx="1.5"/><path d="M5 4V2.8h4V4"/></svg>Experience</span>
+      <div class="tl-win"><div class="tl-track" id="tlTrack"></div></div>
+    </section>
+
+    <!-- Research -->
+    <section class="card c-res" data-rise aria-label="Research">
+      <span class="chip"><svg viewBox="0 0 14 14"><path d="M3 2h6l2 2v8H3z"/><path d="M5 7h4M5 9.5h3"/></svg>Research</span>
+      <div class="res-body">
+        <div class="cover" id="cover" aria-hidden="true"></div>
+        <div class="res-info">
+          <div class="res-text" id="resText">
+            <div class="res-k" id="resK"></div>
+            <div class="res-title" id="resTitle"></div>
+            <div class="res-sub" id="resSub"></div>
+          </div>
+          <div class="prog"><i id="resProg"></i></div>
+          <div class="ctrls">
+            <button id="rPrev" aria-label="Previous paper"><svg viewBox="0 0 12 12"><path d="M2 2v8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M10 2.2v7.6L4 6z" fill="currentColor"/></svg></button>
+            <button class="pp" id="rPP" aria-label="Pause"><svg viewBox="0 0 12 12" id="rPPi"></svg></button>
+            <button id="rNext" aria-label="Next paper"><svg viewBox="0 0 12 12"><path d="M10 2v8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M2 2.2v7.6L8 6z" fill="currentColor"/></svg></button>
+            <span class="idx" id="rIdx">1 / 3</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Field notes -->
+    <section class="card c-note" data-rise aria-label="Field notes">
+      <span class="chip"><svg viewBox="0 0 14 14"><path d="M9.5 2.5l2 2L5 11H3V9z"/></svg>Field notes</span>
+      <h2 class="note-title">Why Agent Evaluation Is Hard</h2>
+      <div class="note-meta"><span class="m">6 min read</span><a href="/notes/why-agent-evaluation-is-hard">Read →</a></div>
+      <div class="sheet" aria-hidden="true">
+        <div class="h"></div>
+        <div class="l"></div><div class="l" style="width:92%"></div><div class="l" style="width:84%"></div><div class="l o"></div>
+        <div class="l" style="margin-top:12px"></div><div class="l" style="width:88%"></div><div class="l" style="width:95%"></div><div class="l" style="width:60%"></div>
+        <div class="l" style="margin-top:12px"></div><div class="l" style="width:90%"></div><div class="l" style="width:78%"></div><div class="l"></div><div class="l" style="width:70%"></div>
+      </div>
+    </section>
+
+    <!-- Selected work -->
+    <section class="card c-work" data-rise aria-label="Selected work">
+      <span class="chip"><svg viewBox="0 0 14 14"><path d="M2.5 3.5h9M2.5 7h9M2.5 10.5h6"/></svg>Selected work</span>
+      <div class="rows" id="rows">
+        <div class="hl" id="hl"></div>
+        <div class="row"><span class="n">Supply Chain Agent System</span><span class="v">≈90% fewer misoperations</span></div>
+        <div class="row"><span class="n">Dynamic Tool Resolution</span><span class="v">100+ tools</span></div>
+        <div class="row"><span class="n">Supply-Chain Domain LLM</span><span class="v">internal SOTA</span></div>
+        <div class="row"><span class="n">M365 Copilot Memory</span><span class="v">3 memory layers</span></div>
+      </div>
+      <div class="foot">Internal measurements, not public benchmarks.</div>
+    </section>
+
+    <!-- Numbers -->
+    <section class="card c-num" data-rise aria-label="Numbers">
+      <span class="chip"><svg viewBox="0 0 14 14"><path d="M2.5 11.5V7M7 11.5V3M11.5 11.5V5.5"/></svg>Numbers</span>
+      <div class="num-dots" id="numDots"><i></i><i></i><i></i><i></i></div>
+      <div class="num-wrap" id="numWrap">
+        <div class="big" id="numBig">12</div>
+        <div class="num-label" id="numLabel">supply-chain scenarios</div>
+      </div>
+    </section>
+
+    <!-- How I work -->
+    <section class="card c-how" data-rise aria-label="How I work">
+      <span class="chip"><svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="4.5"/><path d="M7 4.5V7l1.8 1.2"/></svg>How I work</span>
+      <div class="how-stage" aria-live="polite">
+        <div class="how-layer" id="howA"></div>
+        <div class="how-layer" id="howB"></div>
+      </div>
+      <div class="seg" id="seg" role="group" aria-label="Steps">
+        <span class="pillbg" id="segPill"></span>
+        <button data-i="0">Step 01</button><button data-i="1">Step 02</button><button data-i="2">Step 03</button><button data-i="3">Step 04</button>
+      </div>
+    </section>
+  </div>
+</main>
+</div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const ease = p => 1 - Math.pow(1 - p, 3);
+  const easeIO = p => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+  const lerp = (a, b, p) => a + (b - a) * p;
+
+  /* ---- scale the stage ---- */
+  const root = document.documentElement;
+  const fit = () => root.style.setProperty('--s', Math.min(innerWidth / 1440, innerHeight / 960));
+  fit(); addEventListener('resize', fit);
+
+  /* ---- the one clock ---- */
+  const clock = $('clock').animate([{ opacity: 0 }, { opacity: 0 }], { duration: 1e10 });
+  if (reduced) clock.pause(); else root.classList.add('anim');
+  const now = () => clock.currentTime || 0;
+
+  /* ---- entrance ---- */
+  const rise = [...document.querySelectorAll('[data-rise]')];
+  const riseEnd = rise.length * 80 + 700;
+
+  /* ---- voice pill: one 20-step episode ---- */
+  let seed = 20250417;
+  const rnd = () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const barsEl = $('bars'), N = 78, heights = [], bars = [];
+  for (let i = 0; i < N; i++) {
+    const env = .55 + .45 * Math.sin(i / N * Math.PI);
+    heights.push(Math.round(5 + (rnd() * .75 + .25) * 21 * env));
+    const b = document.createElement('i'); b.className = 'bar'; b.style.height = heights[i] + 'px';
+    barsEl.appendChild(b); bars.push(b);
+  }
+  const ICON_PLAY = '<path d="M3 1.6v8.8L10.4 6z" fill="currentColor"/>';
+  const ICON_PAUSE = '<rect x="2.2" y="1.8" width="2.6" height="8.4" rx=".6" fill="currentColor"/><rect x="7.2" y="1.8" width="2.6" height="8.4" rx=".6" fill="currentColor"/>';
+  const V = { playing: false, pos: reduced ? 7.5 / 20 : 0, auto: !reduced, hold: 0, lastStep: -1 };
+  const setVIcon = () => { $('vIcon').innerHTML = V.playing ? ICON_PAUSE : ICON_PLAY; $('vPlay').setAttribute('aria-label', V.playing ? 'Pause episode' : 'Play episode'); };
+  $('vPlay').addEventListener('click', () => { V.auto = false; V.playing = !V.playing; if (V.playing && V.pos >= 1) V.pos = 0; setVIcon(); });
+  const renderVoice = t => {
+    const step = Math.min(20, Math.floor(V.pos * 20 + 1e-9));
+    if (step !== V.lastStep) {
+      V.lastStep = step;
+      $('rStep').textContent = String(step).padStart(2, '0');
+      $('rP').textContent = (Math.pow(.95, step) * 100).toFixed(1) + '%';
+    }
+    const ph = V.pos * N;
+    for (let i = 0; i < N; i++) {
+      const on = i + .5 < ph;
+      if (bars[i]._on !== on) { bars[i]._on = on; bars[i].classList.toggle('on', on); }
+      let s = 1;
+      if (V.playing && !reduced) {
+        const d = (i + .5 - ph) / 3;
+        s = 1 + .38 * Math.exp(-d * d) * (.5 + .5 * Math.sin(t / 95 + i * 1.7));
+      }
+      if (bars[i]._s !== s) { bars[i]._s = s; bars[i].style.transform = s === 1 ? '' : `scaleY(${s.toFixed(3)})`; }
+    }
+  };
+
+  /* ---- experience timeline ---- */
+  const EXP = [
+    ['Alibaba', 'LLM Algorithm Engineer', '2025'],
+    ['Microsoft Research Asia', 'LLM Intern', '2024 – 2025'],
+    ['Meituan', 'Algorithm Intern', '2024'],
+    ['National University of Singapore', 'Statistics', '2023 – 2025'],
+    ['Singapore AI Visual', 'Algorithm Intern', '2023'],
+    ['University of New South Wales', 'Computer Science', '2019 – 2022'],
+  ];
+  const list = (hidden) => `<ul class="tl"${hidden ? ' aria-hidden="true"' : ''}>` + EXP.map((e, i) =>
+    `<li${i === 0 ? ' class="cur"' : ''}><div class="t">${e[0]} <span>— ${e[1]}</span></div><div class="y">${e[2]}</div></li>`).join('') + '</ul>';
+  const track = $('tlTrack'); track.innerHTML = list(false) + list(true);
+  const firstList = track.firstElementChild;
+
+  /* ---- research player ---- */
+  const COVERS = [
+    // two-level tree
+    `<svg viewBox="0 0 100 100" fill="none" stroke="#1E1C1A" stroke-width="2" stroke-linecap="round">
+      <path d="M50 20v14M50 34H22v14M50 34h28v14M50 34v14"/>
+      <path d="M22 48v10M22 58h-10v12M22 58h10v12M78 58h-10v12M78 58h10v12M50 58v12" />
+      <path d="M78 48v10" />
+      <circle cx="50" cy="18" r="6" fill="#EE6A1F" stroke="none"/>
+      <circle cx="22" cy="48" r="4" fill="#1E1C1A" stroke="none"/><circle cx="50" cy="48" r="4" fill="#1E1C1A" stroke="none"/><circle cx="78" cy="48" r="4" fill="#1E1C1A" stroke="none"/>
+      ${[12,32,50,68,88].map(x=>`<circle cx="${x}" cy="74" r="3.2" fill="${x===68?'#EE6A1F':'#F5F3EF'}" stroke="${x===68?'#EE6A1F':'#1E1C1A'}" stroke-width="1.6"/>`).join('')}
+      <path d="M8 88h84" stroke-width="1" opacity=".25"/>
+    </svg>`,
+    // 3-column grid of dots
+    `<svg viewBox="0 0 100 100">${(() => { let s = ''; const hot = [[0,1],[1,3],[2,0],[2,2]];
+      for (let c = 0; c < 3; c++) for (let r = 0; r < 5; r++) { const h = hot.some(([a,b]) => a===c && b===r);
+        s += `<circle cx="${26 + c * 24}" cy="${18 + r * 16}" r="${h ? 5 : 4}" fill="${h ? '#EE6A1F' : '#1E1C1A'}" opacity="${h ? 1 : (.35 + ((c*5+r)%3)*.25).toFixed(2)}"/>`; }
+      return s + '<path d="M14 92h72" stroke="#1E1C1A" stroke-width="1" opacity=".25"/>'; })()}</svg>`,
+    // two overlapping squares at different resolutions
+    `<svg viewBox="0 0 100 100">${(() => { let s = '';
+      for (let x = 0; x < 4; x++) for (let y = 0; y < 4; y++) s += `<rect x="${14 + x * 12}" y="${14 + y * 12}" width="12" height="12" fill="#1E1C1A" opacity="${(.18 + ((x * 3 + y * 5) % 4) * .17).toFixed(2)}"/>`;
+      for (let x = 0; x < 12; x++) for (let y = 0; y < 12; y++) if ((x + y) % 2 === 0) s += `<rect x="${38 + x * 4}" y="${38 + y * 4}" width="4" height="4" fill="#EE6A1F" opacity="${(.35 + ((x * 7 + y * 3) % 5) * .13).toFixed(2)}"/>`;
+      return s + '<rect x="38" y="38" width="48" height="48" fill="none" stroke="#EE6A1F" stroke-width="1.6"/><rect x="14" y="14" width="48" height="48" fill="none" stroke="#1E1C1A" stroke-width="1.6"/>'; })()}</svg>`,
+  ];
+  const PAPERS = [
+    ['Survey', 'Evaluating LLM-based Agents for Multi-Turn Conversation', 'Survey · ~250 papers mapped'],
+    ['Benchmark', 'SupChain-Bench', 'ACL Findings 2026 · 530 annotated real-world samples'],
+    ['Method', 'VisualDeltas', 'Preference learning from visual quality · up to +8.2% over baseline'],
+  ];
+  const R = { idx: 0, prog: reduced ? .4 : 0, playing: !reduced, changedAt: -1e9 };
+  const setPaper = (i, t) => {
+    R.idx = (i + 3) % 3; R.prog = 0; R.changedAt = t;
+    const p = PAPERS[R.idx];
+    $('resK').textContent = p[0]; $('resTitle').textContent = p[1]; $('resSub').textContent = p[2];
+    $('cover').innerHTML = COVERS[R.idx]; $('rIdx').textContent = `${R.idx + 1} / 3`;
+  };
+  const setPP = () => { $('rPPi').innerHTML = R.playing ? ICON_PAUSE : ICON_PLAY; $('rPP').setAttribute('aria-label', R.playing ? 'Pause' : 'Play'); };
+  setPaper(0, -1e9); if (reduced) R.prog = .4; setPP();
+  $('rPrev').addEventListener('click', () => setPaper(R.idx - 1, now()));
+  $('rNext').addEventListener('click', () => setPaper(R.idx + 1, now()));
+  $('rPP').addEventListener('click', () => { R.playing = !R.playing; setPP(); });
+
+  /* ---- selected work ---- */
+  const W = { cur: 0, prev: 0, at: -1e9 };
+
+  /* ---- numbers ---- */
+  const NUMS = [
+    { pre: '', n: 12, suf: '', label: 'supply-chain scenarios' },
+    { pre: '', n: 100, suf: '+', label: 'tools resolved at run time' },
+    { pre: '', n: 530, suf: '', label: 'benchmark samples' },
+    { pre: '~', n: 250, suf: '', label: 'papers reviewed' },
+  ];
+  const numDots = [...$('numDots').children];
+  let lastNumHTML = '';
+
+  /* ---- how I work ---- */
+  const STEPS = [
+    ['01', 'Evaluate before training', 'Define the capabilities and the failure types first, then decide what to train.'],
+    ['02', 'Train for the domain', 'Continual pretraining, then SFT and RL, against the benchmark built in step one.'],
+    ['03', 'Bound the authority', 'Risk tiers and progressive confirmation decide what the agent may do alone.'],
+    ['04', 'Read the trace', 'Judge tools, memory and recovery step by step, not only the final answer.'],
+  ];
+  const stepHTML = i => `<div class="how-t"><span>${STEPS[i][0]}</span>${STEPS[i][1]}</div><p class="how-b">${STEPS[i][2]}</p>`;
+  const segBtns = [...document.querySelectorAll('#seg button')];
+  const H = { idx: 0, prev: 0, at: -1e9, next: riseEnd + 1900, hold: 0, inEl: $('howA'), outEl: $('howB') };
+  H.inEl.innerHTML = stepHTML(0); H.outEl.style.opacity = 0;
+  const goStep = (i, t) => {
+    if (i === H.idx) return;
+    H.prev = H.idx; H.idx = i; H.at = t; H.next = t + 1900;
+    [H.inEl, H.outEl] = [H.outEl, H.inEl];
+    H.inEl.innerHTML = stepHTML(i);
+    segBtns.forEach((b, k) => b.setAttribute('aria-pressed', k === i));
+    if (reduced) H.at = -1e9;
+  };
+  segBtns.forEach((b, k) => { b.setAttribute('aria-pressed', k === 0); b.addEventListener('click', () => { const t = now(); goStep(k, t); H.hold = t + 6000; H.next = t + 6000; }); });
+
+  /* ---- loop ---- */
+  let last = 0, rised = false;
+  function frame() {
+    const t = now();
+    const dt = clamp(t - last, 0, 100); last = t;
+
+    // entrance
+    if (!rised && !reduced) {
+      rise.forEach((el, i) => {
+        const p = ease(clamp((t - i * 80) / 700));
+        el.style.opacity = p; el.style.translate = `0 ${(14 * (1 - p)).toFixed(2)}px`;
+      });
+      if (t > riseEnd) { rised = true; rise.forEach(el => { el.style.opacity = ''; el.style.translate = ''; }); root.classList.remove('anim'); }
+    }
+
+    // voice
+    if (V.auto && t >= 1300) { V.auto = false; V.playing = true; setVIcon(); }
+    if (V.playing) {
+      if (V.pos >= 1) { V.hold += dt; if (V.hold > 900) { V.pos = 0; V.hold = 0; } }
+      else V.pos = Math.min(1, V.pos + dt / 7400);
+    }
+    renderVoice(t);
+
+    // talk halo
+    const hp = reduced ? 0 : (t % 1800) / 1800;
+    $('halo').style.transform = `scale(${(1 + 1.7 * ease(hp)).toFixed(3)})`;
+    $('halo').style.opacity = reduced ? .25 : (.45 * (1 - hp)).toFixed(3);
+
+    // timeline drift
+    const loopH = firstList.offsetHeight;
+    if (loopH) track.style.transform = `translate3d(0,${(-((t * .009) % loopH)).toFixed(2)}px,0)`;
+
+    // research
+    if (R.playing) { R.prog += dt / 6000; if (R.prog >= 1) setPaper(R.idx + 1, t); }
+    $('resProg').style.transform = `scaleX(${R.prog.toFixed(4)})`;
+    const rf = ease(clamp((t - R.changedAt) / 380));
+    $('resText').style.opacity = rf; $('resText').style.translate = `0 ${(6 * (1 - rf)).toFixed(2)}px`;
+    $('cover').style.opacity = rf;
+
+    // selected work
+    const wi = reduced ? 0 : Math.floor(t / 2000) % 4;
+    if (wi !== W.cur) { W.prev = W.cur; W.cur = wi; W.at = t; }
+    const wp = easeIO(clamp((t - W.at) / 420));
+    $('hl').style.transform = `translateY(${(lerp(W.prev, W.cur, wp) * 34).toFixed(2)}px)`;
+
+    // numbers
+    const k = reduced ? 0 : Math.floor(t / 2600) % 4, loc = reduced ? 2600 : t % 2600, nn = NUMS[k];
+    const val = Math.round(nn.n * ease(clamp(loc / 1100)));
+    const html = `${nn.pre}${val}<span class="u">${nn.suf}</span>`;
+    if (html !== lastNumHTML) { lastNumHTML = html; $('numBig').innerHTML = html; $('numLabel').textContent = nn.label; numDots.forEach((d, j) => d.classList.toggle('on', j === k)); }
+    let no = 1, ny = 0;
+    if (!reduced) {
+      if (loc < 260) { const p = ease(loc / 260); no = p; ny = 10 * (1 - p); }
+      else if (loc > 2340) { const p = ease((loc - 2340) / 260); no = 1 - p; ny = -10 * p; }
+    }
+    $('numWrap').style.opacity = no.toFixed(3); $('numWrap').style.translate = `0 ${ny.toFixed(2)}px`;
+
+    // how I work
+    if (!reduced && t >= H.next && t >= H.hold) goStep((H.idx + 1) % 4, t);
+    const hp2 = easeIO(clamp((t - H.at) / 420));
+    H.outEl.style.opacity = (1 - hp2).toFixed(3); H.outEl.style.translate = `0 ${(-14 * hp2).toFixed(2)}px`;
+    H.inEl.style.opacity = hp2.toFixed(3); H.inEl.style.translate = `0 ${(14 * (1 - hp2)).toFixed(2)}px`;
+    const segW = (segBtns[0].offsetWidth) || 0;
+    const pill = $('segPill');
+    pill.style.width = segW + 'px';
+    pill.style.transform = `translateX(${(lerp(H.prev, H.idx, hp2) * segW).toFixed(2)}px)`;
+    const shown = hp2 > .5 ? H.idx : H.prev;
+    segBtns.forEach((b, j) => b.classList.toggle('on', j === shown));
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
