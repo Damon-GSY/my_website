@@ -82,9 +82,9 @@ html.anim [data-rise]{opacity:0}
           mask-image:linear-gradient(to bottom,transparent 0,#000 26px,#000 calc(100% - 40px),transparent 100%)}
 .tl-track{will-change:transform}
 .tl{position:relative;padding-left:22px}
-.tl::before{content:"";position:absolute;left:3.5px;top:0;bottom:0;width:1.5px;background:var(--dark)}
+.tl::before{content:"";position:absolute;left:3.5px;top:0;bottom:0;width:1.5px;background:var(--dark);z-index:0}
 .tl li{list-style:none;position:relative;padding:9px 0 9px}
-.tl li::before{content:"";position:absolute;left:-22.5px;top:15px;width:8.5px;height:8.5px;border-radius:50%;background:var(--card);
+.tl li::before{content:"";position:absolute;left:-22.5px;top:15px;width:8.5px;height:8.5px;border-radius:50%;background:var(--card);z-index:1;
   box-shadow:inset 0 0 0 1.5px var(--dark)}
 .tl li.cur::before{background:var(--orange);box-shadow:none}
 .tl .t{font-size:15.5px;line-height:21px;font-weight:500;letter-spacing:-.012em}
@@ -145,7 +145,7 @@ html.anim [data-rise]{opacity:0}
 .how-layer{position:absolute;left:0;right:0;top:0}
 .how-t{font-size:29px;line-height:34px;font-weight:520;letter-spacing:-.022em}
 .how-t span{color:var(--muted);font-family:var(--mono);font-size:13px;letter-spacing:0;vertical-align:5px;margin-right:10px}
-.how-b{font-size:15px;line-height:22px;color:var(--sec);margin-top:8px;max-width:470px}
+.how-b{font-size:15px;line-height:22px;color:var(--sec);margin-top:8px;max-width:510px}
 .seg{position:absolute;left:20px;right:20px;bottom:18px;height:40px;border-radius:999px;background:var(--chip);display:flex;padding:4px}
 .seg .pillbg{position:absolute;top:4px;bottom:4px;left:4px;border-radius:999px;background:var(--dark)}
 .seg button{position:relative;flex:1;border-radius:999px;font-size:12.5px;font-weight:500;color:var(--sec)}
@@ -170,7 +170,7 @@ html.anim [data-rise]{opacity:0}
   .grid{width:auto;height:auto;display:flex;flex-direction:column;gap:14px;margin-top:28px}
   .card{width:auto!important}
   .c-how{height:auto;min-height:242px;padding-bottom:76px}
-  .how-stage{height:150px}
+  .how-stage{height:128px}
   .res-body{gap:14px}
   .cover{width:104px;height:104px}
   .cover svg{width:80px;height:80px}
