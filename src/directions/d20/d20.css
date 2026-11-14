@@ -382,3 +382,19 @@
   align-items: flex-start;
   padding-top: 32px;
 }
+
+/* Chinese: CJK needs more leading and no negative tracking */
+.d20:lang(zh) .d20-heading {
+  line-height: 1.14;
+  letter-spacing: 0;
+  font-size: clamp(1.7rem, 3.4vw, 3.4rem);
+}
+.d20:lang(zh) .d20-gap {
+  line-height: 1.08;
+  letter-spacing: 0;
+  font-size: clamp(2.2rem, 6.4vw, 6.6rem);
+  word-break: keep-all;
+}
+.d20:lang(zh) .d20-verdict {
+  letter-spacing: 0;
+}
