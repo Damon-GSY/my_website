@@ -1,7 +1,7 @@
 import { useFilm } from '../../engine/useFilm.js';
 import { Header, Outro } from '../../components/Chrome.jsx';
 import { useLang } from '../../i18n.jsx';
-import { footnote, profile, work } from '../../content.js';
+import { footnote, joinParts, profile, work } from '../../content.js';
 import { buildDescent } from './Scene.js';
 import './descent.css';
 
@@ -10,13 +10,13 @@ export default function DescentOpening() {
   const { t } = useLang();
   return (
     <div ref={root} className={`film descent ${mode}`}>
-      <canvas ref={canvas} className="stage" aria-hidden="true" />
       <Header />
       <section ref={track} className="track" style={{ '--len': 7 }}>
         <div className="sticky">
+          <canvas ref={canvas} className="stage" aria-hidden="true" />
           <div className="d-hero" data-hero>
             <p className="eyebrow">
-              {profile.name} — {t(profile.role)}, {t(profile.org)}
+              {joinParts([profile.name, joinParts([t(profile.role), t(profile.org)], ', ')], ' — ')}
             </p>
             <h1>
               {t({ en: 'Every agent I train starts somewhere up here', zh: '我训练的每一个智能体，都从这样的高处出发' })}

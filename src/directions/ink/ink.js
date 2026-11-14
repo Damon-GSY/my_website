@@ -229,7 +229,10 @@ export function initInk(hero) {
   };
   const onPointerMove = (e) => {
     if (e.pointerType !== 'touch') moveTo(e.clientX, e.clientY);
-    if (cursor) cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    if (cursor) {
+      cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      cursor.classList.remove('is-out');
+    }
   };
   const onTouch = (e) => {
     if (e.touches[0]) moveTo(e.touches[0].clientX, e.touches[0].clientY);
@@ -237,6 +240,7 @@ export function initInk(hero) {
   const onLeave = () => {
     mouse.active = false;
     mouse.fresh = true;
+    cursor?.classList.add('is-out');
   };
   const tryPlay = () => videos[cur].play().catch(() => {});
   hero.addEventListener('pointermove', onPointerMove);
@@ -269,8 +273,20 @@ export function initInk(hero) {
   let raf = 0;
   const start = last;
 
+  // when the hero is scrolled out of view (home page), stop drawing and pause the video
+  let visible = true;
+  const io = new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    if (visible) {
+      last = performance.now();
+      tryPlay();
+    } else videos.forEach((v) => v.pause());
+  });
+  io.observe(hero);
+
   function frame(now) {
     raf = requestAnimationFrame(frame);
+    if (!visible) return;
     const dt = Math.min(48, now - last) / 16.667;
     last = now;
     tctx.globalCompositeOperation = 'source-over';
@@ -370,6 +386,7 @@ export function initInk(hero) {
 
   return () => {
     cancelAnimationFrame(raf);
+    io.disconnect();
     window.removeEventListener('resize', fit);
     hero.removeEventListener('pointermove', onPointerMove);
     hero.removeEventListener('pointerleave', onLeave);

@@ -1,5 +1,5 @@
 import { useLang } from '../i18n.jsx';
-import { profile } from '../content.js';
+import { joinParts, profile } from '../content.js';
 
 export function Header() {
   const { lang, setLang, t } = useLang();
@@ -7,12 +7,10 @@ export function Header() {
     <header className="chrome">
       <a className="chrome-brand" href="/">
         {profile.name}
-        <span>
-          {t(profile.role)} · {t(profile.org)}
-        </span>
+        <span>{joinParts([t(profile.role), t(profile.org), t(profile.city)])}</span>
       </a>
       <nav>
-        <a href="/">{t({ en: 'All openings', zh: '全部方案' })}</a>
+        <a href="/lab">{t({ en: 'Design studies', zh: '设计研究' })}</a>
         <button type="button" onClick={() => setLang(lang === 'en' ? 'zh' : 'en')} aria-label="Switch language">
           {lang === 'en' ? '中文' : 'EN'}
         </button>

@@ -1,0 +1,81 @@
+import { useEffect } from 'react';
+import { useLang } from '../i18n.jsx';
+import { notes } from '../notes.js';
+import './home.css';
+
+export default function Note() {
+  const { lang, setLang, t } = useLang();
+  const slug = window.location.pathname.replace(/\/+$/, '').split('/').pop();
+  const index = notes.findIndex((n) => n.slug === slug);
+  const note = notes[index];
+  const next = notes[(index + 1) % notes.length];
+
+  useEffect(() => {
+    document.title = note ? `${note.title} — Damon Guan` : 'Note not found — Damon Guan';
+    window.scrollTo(0, 0);
+  }, [note]);
+
+  return (
+    <div className="note">
+      <header className="n-top mono">
+        <a className="n-brand" href="/">
+          Damon Guan
+        </a>
+        <nav>
+          <a href="/#notes">← {t({ en: 'All notes', zh: '全部笔记' })}</a>
+          <button type="button" onClick={() => setLang(lang === 'en' ? 'zh' : 'en')} aria-label="Switch language">
+            {lang === 'en' ? '中文' : 'EN'}
+          </button>
+        </nav>
+      </header>
+      {note ? (
+        <main>
+          <article>
+            <header className="n-head">
+              <p className="h-head mono">
+                <span className="h-num">
+                  {t({ en: 'Field note', zh: '笔记' })} {String(index + 1).padStart(2, '0')}/
+                  {String(notes.length).padStart(2, '0')}
+                </span>
+                <span className="h-label">{note.category}</span>
+                <span className="h-aside">{note.date.replaceAll('-', '.')}</span>
+              </p>
+              <h1>{note.title}</h1>
+              <p className="n-excerpt">{note.excerpt}</p>
+            </header>
+            <div className="n-body">
+              <aside className="n-side mono">
+                <span>{note.readingTime}</span>
+                <b>{note.tags.join(' · ')}</b>
+                {lang === 'zh' && <span>{t({ en: '', zh: '本文仅有英文版。' })}</span>}
+              </aside>
+              {/* trusted, author-written HTML from src/notes.js */}
+              <div className="n-prose" dangerouslySetInnerHTML={{ __html: note.content }} />
+            </div>
+          </article>
+          {next && next !== note && (
+            <a className="n-next" href={`/notes/${next.slug}`}>
+              <span className="mono">{t({ en: 'Next note', zh: '下一篇' })} →</span>
+              <strong>{next.title}</strong>
+            </a>
+          )}
+        </main>
+      ) : (
+        <main className="n-head">
+          <p className="h-head mono">
+            <span className="h-num">404</span>
+            <span className="h-label">{t({ en: 'Not found', zh: '未找到' })}</span>
+          </p>
+          <h1>{t({ en: 'No note here.', zh: '这里没有笔记。' })}</h1>
+          <p className="n-excerpt">
+            <a href="/#notes">← {t({ en: 'All notes', zh: '全部笔记' })}</a>
+          </p>
+        </main>
+      )}
+      <footer className="n-foot mono">
+        <span>© 2026 Damon Guan</span>
+        <a href="/lab">{t({ en: 'Design studies', zh: '设计研究' })} →</a>
+      </footer>
+    </div>
+  );
+}

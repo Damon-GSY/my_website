@@ -4,7 +4,10 @@
 export const profile = {
   name: 'Damon Guan',
   role: { en: 'LLM algorithm engineer', zh: '大模型算法工程师' },
-  org: { en: 'Alibaba', zh: '阿里巴巴' },
+  // Current employer and city are intentionally BLANK until Damon fills them in. Every place that
+  // prints role, org or city must go through joinParts() so empty values leave no stray separators.
+  org: { en: '', zh: '' },
+  city: { en: '', zh: '' },
   email: 'hello@damon.ai', // unconfirmed; change here only
   links: [
     { label: 'GitHub', href: 'https://github.com/Damon-GSY' },
@@ -93,8 +96,57 @@ export const route = [
   { code: 'SYD', years: '2019–22', what: 'UNSW', city: { en: 'Sydney', zh: '悉尼' } },
   { code: 'SIN', years: '2023–25', what: 'NUS', city: { en: 'Singapore', zh: '新加坡' } },
   { code: 'PEK', years: '2024–25', what: 'Meituan · MSRA', city: { en: 'Beijing', zh: '北京' } },
-  { code: 'HGH', years: '2025–', what: 'Alibaba', city: { en: 'Hangzhou', zh: '杭州' } },
+  // Last stop is blank (rendered as a fill-in rule) until the current city is confirmed.
+  { code: '', years: '2025–', what: 'Alibaba', city: { en: '', zh: '' } },
 ];
+
+// Career path, newest first, from the résumé. The first row is now: its blank fields render as fill-in rules.
+export const path = [
+  { when: { en: 'Now', zh: '现在' }, kind: { en: 'Work', zh: '工作' }, org: profile.org, role: profile.role, place: profile.city, now: true },
+  {
+    when: '2025',
+    kind: { en: 'Work', zh: '工作' },
+    org: { en: 'Alibaba', zh: '阿里巴巴' },
+    role: { en: 'LLM Algorithm Engineer', zh: '大模型算法工程师' },
+  },
+  {
+    when: '2024.09–2025.02',
+    kind: { en: 'Work', zh: '工作' },
+    org: { en: 'Microsoft Research Asia', zh: '微软亚洲研究院' },
+    short: 'MSRA',
+    role: { en: 'LLM Intern', zh: '大模型实习生' },
+    place: { en: 'Beijing', zh: '北京' },
+  },
+  {
+    when: '2024.05–2024.08',
+    kind: { en: 'Work', zh: '工作' },
+    org: { en: 'Meituan', zh: '美团' },
+    role: { en: 'Algorithm Intern', zh: '算法实习生' },
+    place: { en: 'Beijing', zh: '北京' },
+  },
+  {
+    when: '2023.08–2025.02',
+    kind: { en: 'Study', zh: '学习' },
+    org: { en: 'National University of Singapore', zh: '新加坡国立大学' },
+    role: { en: 'Statistics', zh: '统计学' },
+  },
+  {
+    when: '2023.07–2023.12',
+    kind: { en: 'Work', zh: '工作' },
+    org: { en: 'Singapore AI Visual', zh: 'Singapore AI Visual' },
+    role: { en: 'Algorithm Intern', zh: '算法实习生' },
+  },
+  {
+    when: '2019.09–2022.12',
+    kind: { en: 'Study', zh: '学习' },
+    org: { en: 'University of New South Wales', zh: '新南威尔士大学' },
+    role: { en: 'Computer Science', zh: '计算机科学' },
+    place: { en: 'Sydney', zh: '悉尼' },
+  },
+];
+
+// Joins the non-empty parts, so blank role/org/city fields never leave ' · ' or ', ' behind.
+export const joinParts = (parts, sep = ' · ') => parts.filter((part) => part && String(part).trim()).join(sep);
 
 export const footnote = {
   en: 'Production figures are internal measurements, not public benchmarks.',

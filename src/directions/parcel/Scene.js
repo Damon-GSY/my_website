@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { clamp, ease, lerp, span } from '../../engine/timeline.js';
 import { dockRect } from '../../engine/dock.js';
-import { drawInside, drawOutside } from './prints.js';
+import { KRAFT, PAPER, drawInside, drawOutside } from './prints.js';
 
 const TEX = 640;
 // face order: 0 base, 1 east, 2 west, 3 north, 4 south, 5 lid. Centres in face units, flat net.
@@ -10,10 +10,10 @@ const CENTRES = [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1], [2, 0]];
 const CARD_OF_FACE = [4, 3, 2, 1, 5, 0];
 const LIGHT = new THREE.Vector3(0.3, 0.45, 0.84).normalize();
 
-function canvasTexture(draw, index) {
+function canvasTexture(draw, index, theme) {
   const canvas = document.createElement('canvas');
   canvas.width = canvas.height = TEX;
-  draw(canvas.getContext('2d'), TEX, index);
+  draw(canvas.getContext('2d'), TEX, index, theme);
   const make = (mirror) => {
     const t = new THREE.CanvasTexture(canvas);
     t.colorSpace = THREE.SRGBColorSpace;
@@ -28,7 +28,7 @@ function canvasTexture(draw, index) {
   return { canvas, make };
 }
 
-export async function buildParcel(stage, root) {
+export async function buildParcel(stage, root, theme = KRAFT) {
   await Promise.all([
     document.fonts.load('800 64px "Archivo Variable"'),
     document.fonts.load('400 20px "Cartograph CF"'),
@@ -54,8 +54,8 @@ export async function buildParcel(stage, root) {
   const disposables = [geo];
 
   CENTRES.forEach((_, face) => {
-    const out = canvasTexture(drawOutside, face);
-    const inn = canvasTexture(drawInside, CARD_OF_FACE[face]);
+    const out = canvasTexture(drawOutside, face, theme);
+    const inn = canvasTexture(drawInside, CARD_OF_FACE[face], theme);
     const front = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ map: out.make(false) }));
     const back = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ map: inn.make(true), side: THREE.BackSide }));
     const holder = new THREE.Group();
@@ -90,8 +90,8 @@ export async function buildParcel(stage, root) {
   shadowCanvas.width = shadowCanvas.height = 128;
   const sc = shadowCanvas.getContext('2d');
   const grad = sc.createRadialGradient(64, 64, 4, 64, 64, 64);
-  grad.addColorStop(0, 'rgba(40,25,10,0.55)');
-  grad.addColorStop(1, 'rgba(40,25,10,0)');
+  grad.addColorStop(0, `rgba(${theme.shadow},0.55)`);
+  grad.addColorStop(1, `rgba(${theme.shadow},0)`);
   sc.fillStyle = grad;
   sc.fillRect(0, 0, 128, 128);
   const shadow = new THREE.Mesh(
@@ -176,3 +176,6 @@ export async function buildParcel(stage, root) {
     },
   };
 }
+
+// The same film printed on white paper, for the home page.
+export const buildParcelPaper = (stage, root) => buildParcel(stage, root, PAPER);

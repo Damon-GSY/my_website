@@ -1,19 +1,40 @@
 // Canvas artwork for the box. Outside faces carry the hero; inside faces carry the card backs.
-const INK = '#17120c';
-const KRAFT = '#c29a66';
-const KRAFT_IN = '#d3b384';
-const ORANGE = '#ff5a1f';
-const LABEL = '#f6f3ea';
+// Two printings of the same box: kraft (the /parcel study) and paper (the home page system).
+export const KRAFT = {
+  ink: '#17120c',
+  board: '#c29a66',
+  boardIn: '#d3b384',
+  fibre: 'rgba(70, 45, 15, 0.08)',
+  flute: 'rgba(70, 45, 15, 0.07)',
+  dieline: 'rgba(23, 18, 12, 0.4)',
+  numeral: 'rgba(23, 18, 12, 0.11)',
+  sticker: '#ff5a1f',
+  label: '#f6f3ea',
+  shadow: '40,25,10',
+};
+export const PAPER = {
+  ink: '#0d0d0d',
+  board: '#fbfbf9',
+  boardIn: '#e9e9e5',
+  fibre: 'rgba(13, 13, 13, 0.025)',
+  flute: 'rgba(13, 13, 13, 0.035)',
+  dieline: 'rgba(13, 13, 13, 0.7)',
+  numeral: 'rgba(13, 13, 13, 0.08)',
+  sticker: '#ff2d8a',
+  label: '#ffffff',
+  shadow: '20,20,24',
+};
+let INK = KRAFT.ink;
 
 const display = (px) => `800 ${px}px "Archivo Variable", sans-serif`;
 const mono = (px, weight = 400) => `${weight} ${px}px "Cartograph CF", monospace`;
 
-function board(c, S, color, seed) {
+function board(c, S, color, seed, fibre) {
   c.fillStyle = color;
   c.fillRect(0, 0, S, S);
   let r = seed;
   const rnd = () => (r = (r * 16807) % 2147483647) / 2147483647;
-  c.strokeStyle = 'rgba(70, 45, 15, 0.08)';
+  c.strokeStyle = fibre;
   c.lineWidth = 1;
   for (let i = 0; i < 320; i++) {
     const x = rnd() * S;
@@ -26,11 +47,11 @@ function board(c, S, color, seed) {
   }
 }
 
-function dieline(c, S) {
+function dieline(c, S, color, width) {
   c.save();
   c.setLineDash([10, 8]);
-  c.strokeStyle = 'rgba(23, 18, 12, 0.4)';
-  c.lineWidth = 1.5;
+  c.strokeStyle = color;
+  c.lineWidth = width;
   c.strokeRect(16, 16, S - 32, S - 32);
   c.restore();
 }
@@ -67,6 +88,12 @@ function barcode(c, text, x, y, w, h) {
   });
 }
 
+// a fill-in rule: the place is not filled in yet
+function blank(c, x, y, w, h = 4) {
+  c.fillStyle = INK;
+  c.fillRect(x, y, w, h);
+}
+
 function arrowUp(c, x, y, s) {
   c.fillStyle = INK;
   c.beginPath();
@@ -83,9 +110,10 @@ function arrowUp(c, x, y, s) {
 }
 
 // face: 0 base, 1 east, 2 west, 3 north, 4 south, 5 lid
-export function drawOutside(c, S, face) {
-  board(c, S, KRAFT, 7 + face * 13);
-  dieline(c, S);
+export function drawOutside(c, S, face, theme = KRAFT) {
+  INK = theme.ink;
+  board(c, S, theme.board, 7 + face * 13, theme.fibre);
+  dieline(c, S, theme.dieline, theme === KRAFT ? 1.5 : 1.2);
   const m = 44;
   // which artwork each face carries: 5 name, 3 headline, 0 headline end, 1 label, 2 handling, 4 weight
   const role = [3, 0, 5, 2, 4, 1][face];
@@ -93,22 +121,21 @@ export function drawOutside(c, S, face) {
     small(c, 'DIELINE 01 — PERSONAL SITE', m, 62);
     small(c, 'FOLD →', S - m - 70, 62);
     headline(c, ['DAMON', 'GUAN'], m - 4, 96, S - m * 2, 190);
-    small(c, 'LLM ALGORITHM ENGINEER', m, S - 76, 19, 600);
-    small(c, 'ALIBABA', m, S - 48, 19);
+    small(c, 'LLM ALGORITHM ENGINEER', m, S - 48, 19, 600);
   } else if (role === 3) {
     small(c, 'CONTENTS', m, 62);
     headline(c, ['I BUILD', 'AGENTS'], m - 4, 110, S - m * 2, 190);
     small(c, 'AGENTIC RL · POST-TRAINING · EVALUATION', m, S - 48, 17);
   } else if (role === 0) {
     headline(c, ['THAT', 'SHIP.'], m - 4, 60, S - m * 2, 220);
-    c.fillStyle = ORANGE;
+    c.fillStyle = theme.sticker;
     c.beginPath();
     c.arc(S - m - 62, S - m - 62, 62, 0, Math.PI * 2);
     c.fill();
     small(c, 'HANDLE WITH', m, S - 76, 19, 600);
     small(c, 'EVALUATION', m, S - 48, 19, 600);
   } else if (role === 1) {
-    c.fillStyle = LABEL;
+    c.fillStyle = theme.label;
     c.fillRect(m, m + 10, S - m * 2, S - m * 2 - 20);
     c.strokeStyle = INK;
     c.lineWidth = 3;
@@ -119,11 +146,12 @@ export function drawOutside(c, S, face) {
     c.fillStyle = INK;
     c.fillText('SYD', x, 190);
     small(c, 'TO', x + 300, 110, 15);
-    c.fillText('HGH', x + 296, 190);
+    blank(c, x + 300, 186, 150);
     small(c, '→', x + 210, 176, 40);
     c.fillRect(m, 214, S - m * 2, 3);
     small(c, 'ROUTE', x, 250, 15);
-    small(c, 'SYD 2019 · SIN 2023 · PEK 2024 · HGH 2025', x, 280, 18, 600);
+    small(c, 'SYD 2019 · SIN 2023 · PEK 2024 ·', x, 280, 18, 600);
+    blank(c, x + c.measureText('SYD 2019 · SIN 2023 · PEK 2024 · ').width, 282, 64, 2);
     small(c, 'UNSW · NUS · MEITUAN / MSRA · ALIBABA', x, 308, 15);
     c.fillRect(m, 332, S - m * 2, 3);
     barcode(c, 'DAMON GUAN LLM', x, 362, S - m * 2 - 52, 120);
@@ -145,9 +173,10 @@ export function drawOutside(c, S, face) {
   }
 }
 
-export function drawInside(c, S, index) {
-  board(c, S, KRAFT_IN, 91 + index * 17);
-  c.strokeStyle = 'rgba(70, 45, 15, 0.07)';
+export function drawInside(c, S, index, theme = KRAFT) {
+  INK = theme.ink;
+  board(c, S, theme.boardIn, 91 + index * 17, theme.fibre);
+  c.strokeStyle = theme.flute;
   c.lineWidth = 2;
   for (let x = 10; x < S; x += 12) {
     c.beginPath();
@@ -156,7 +185,7 @@ export function drawInside(c, S, index) {
     c.stroke();
   }
   c.font = display(330);
-  c.fillStyle = 'rgba(23, 18, 12, 0.11)';
+  c.fillStyle = theme.numeral;
   c.textAlign = 'right';
   c.textBaseline = 'alphabetic';
   c.fillText(`0${index + 1}`, S - 24, S - 34);

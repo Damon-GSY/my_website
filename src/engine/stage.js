@@ -14,8 +14,10 @@ export function createStage(canvas) {
   const size = { w: 1, h: 1 };
 
   function resize() {
-    size.w = window.innerWidth;
-    size.h = window.innerHeight;
+    // the canvas fills its film's pinned viewport; measure that box, not the window
+    const box = canvas.parentElement;
+    size.w = box?.clientWidth || window.innerWidth;
+    size.h = box?.clientHeight || window.innerHeight;
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(size.w, size.h, false);
     camera.aspect = size.w / size.h;

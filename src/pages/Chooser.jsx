@@ -1,5 +1,5 @@
 import { useLang } from '../i18n.jsx';
-import { profile } from '../content.js';
+import { joinParts, profile } from '../content.js';
 
 const directions = [
   {
@@ -22,6 +22,11 @@ const directions = [
     line: { en: 'You are the agent. Twenty steps, one trace.', zh: '你就是智能体：二十步，一条轨迹。' },
     glyph: 'M4 32h64M16 32l8-14M28 32l8 14M40 32l8-14M52 32l8 14M24 18l8-6M36 46l8 6',
   },
+  {
+    id: 'd20',
+    line: { en: 'Evaluation, as a twenty-sided die.', zh: '把评测做成一枚二十面骰。' },
+    glyph: 'M36 3l28 16v26L36 61 8 45V19zM36 3L21 31h30zM21 31L8 45M51 31l13 14M21 31l15 30M51 31L36 61M8 19l13 12M64 19L51 31',
+  },
 ];
 
 export default function Chooser() {
@@ -29,14 +34,17 @@ export default function Chooser() {
   return (
     <main className="chooser">
       <header>
+        <a className="mono" href="/">
+          ← {t({ en: 'Home', zh: '首页' })}
+        </a>
         <p className="mono">
-          {profile.name} — {t(profile.role)}, {t(profile.org)}
+          {joinParts([profile.name, joinParts([t(profile.role), t(profile.org)], ', ')], ' — ')}
         </p>
         <button type="button" className="mono" onClick={() => setLang(lang === 'en' ? 'zh' : 'en')}>
           {lang === 'en' ? '中文' : 'EN'}
         </button>
       </header>
-      <h1>{t({ en: 'Four ways in.', zh: '四种进入方式。' })}</h1>
+      <h1>{t({ en: 'Design studies.', zh: '设计研究。' })}</h1>
       <ol>
         {directions.map((d, i) => (
           <li key={d.id}>

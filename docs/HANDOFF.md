@@ -1,5 +1,37 @@
 # Handoff — dimensional site
 
+## Update: the real home page (2026-11-14, later)
+
+`/` is now one continuous page; the old chooser moved to `/lab` (it also lists `/d20`). Not committed yet.
+
+**System** (`src/pages/home.css`): background #f4f4f2, ink #0d0d0d, muted #8a8a88, hairlines #d9d9d5; one accent per section (cobalt full stop in the statement, magenta sticker and route highlight in Work, tangerine `@` in Contact). Archivo Variable 750–900 for display and body, Cartograph CF for the small uppercase labels. Every section opens with the same ruled mono head: `(nn) label ... aside`.
+
+| Section | Built from | Notes |
+| --- | --- | --- |
+| `#top` | `src/directions/ink/InkHero.jsx` (shared with `/ink`, same `ink.js` shader) | `flow` mode: in normal flow, 100svh, `touch-action: pan-y`; corner nav is the section anchors plus the language switch; bottom-left "Scroll". The render loop and video pause when the hero is off screen. |
+| `#statement` | `Home.jsx` | One sentence in display type; words go from grey to ink as they cross 60% of the viewport (scroll listener plus rAF, no library). Chinese is split with `Intl.Segmenter`. |
+| `#work` | `src/directions/parcel/ParcelFilm.jsx` with `paper` | White carton (`PAPER` theme in `prints.js`): #fbfbf9 faces, black print, black dashed dieline, magenta sticker, #e9e9e5 inside faces. Same fold, turn, unfold and landing. |
+| `#evaluate` | `src/directions/d20/D20Chapter.jsx` (other agent), lazy inside Suspense | Wired. |
+| `#path` | `path` in `src/content.js` | Typographic table, newest first. The "Now" row renders the blank employer and city as fill-in rules. |
+| `#notes` | `src/notes.js` (moved from `main:src/data/posts.js`) | Seven notes; `/notes/<slug>` is the reading page (`src/pages/Note.jsx`), with a 404 state. |
+| `#contact` | `profile` | Big email link, four links, a footer linking to `/lab`. |
+
+A slim fixed bar (mix-blend difference) appears after the hero, marks the section in view, hides while scrolling down and returns on scroll up or keyboard focus.
+
+**Engine change:** the film canvas (`.film .stage`) now sits inside its `.sticky` viewport (`position: absolute`, `z-index: -1` inside the sticky stacking context) instead of `position: fixed`, and `createStage` sizes itself to that box. That lets several films share one page. `/parcel`, `/descent` and `/rollout` were re-checked after the change.
+
+**Content:** `profile.org` and the new `profile.city` are blank strings (comment in `content.js`); everything that prints role/org/city uses `joinParts()`, so there are no stray separators. The Parcel label's destination and last route stop are blank rules, and "ALIBABA" under the name is gone. Past work keeps its Alibaba and MSRA attribution.
+
+**Verified by looking at screenshots** (headless Chromium, SwiftShader, `vite preview`): home at 12 positions at 1440×900 and 8 at 390×844 (no horizontal scroll, no console errors); the d20 chapter in place on desktop and phone; `/parcel`, `/descent` and `/rollout` mid-film and at the end, desktop and phone; `/lab`; two note pages (desktop, phone); `/ink`; home with reduced motion (Parcel static fallback readable); home in Chinese (statement, path) at desktop and statement at phone width. `npx eslint .` and `npm run build` pass.
+
+**Not verified:** real GPU, Safari or iOS (svh, `touch-action: pan-y` while painting), real touch scrolling over the ink hero, the no-WebGL path on the home page (only reduced motion was rendered), screen readers, Chinese at every scroll position.
+
+**Rough edges:** the d20 chapter uses its own label style ("▲ Evaluate") rather than the `(03)` ruled head; the unlanded Parcel cards still show their text only after landing; after a long jump (anchor click), the film needs a moment to catch up with its damping; the box net still prints "DAMON GUAN / I BUILD AGENTS / THAT SHIP." inside the Work chapter, which repeats the hero name.
+
+---
+
+## Earlier state (openings only)
+
 Written 2026-11-14 when the session approached the 5-hour usage limit. Branch: `claude/serene-cori-mookmf`, everything pushed.
 
 ## State

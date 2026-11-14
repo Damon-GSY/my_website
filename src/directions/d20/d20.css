@@ -1,0 +1,384 @@
+/* d20: Evaluate chapter. Everything is scoped under .d20; no reliance on .film/.stage. */
+.d20 {
+  --d20-bg: #f4f4f2;
+  --d20-ink: #0d0d0d;
+  --d20-muted: #8a8a88;
+  --d20-accent: #ff2d8a;
+  --d20-face: #fbfbf9;
+  --d20-g: clamp(18px, 4vw, 56px);
+  --d20-display: 'Archivo Variable', 'PingFang SC', 'Noto Sans SC', sans-serif;
+  --d20-mono: var(--mono, 'Cartograph CF', ui-monospace, monospace);
+  position: relative;
+  background: var(--d20-bg);
+  color: var(--d20-ink);
+  font-family: var(--d20-display);
+}
+.d20 *,
+.d20 *::before,
+.d20 *::after {
+  box-sizing: border-box;
+}
+.d20 h2,
+.d20 p,
+.d20 ol,
+.d20 ul {
+  margin: 0;
+  padding: 0;
+}
+.d20 ol,
+.d20 ul {
+  list-style: none;
+}
+
+.d20-track {
+  position: relative;
+  height: 600svh;
+}
+.d20-view {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 46fr) minmax(0, 54fr);
+  grid-template-rows: 1fr auto auto 1fr;
+  grid-template-areas: '. die' 'intro die' 'hud die' '. die';
+  column-gap: 3vw;
+  padding: clamp(56px, 10vh, 104px) var(--d20-g) clamp(28px, 6vh, 64px);
+}
+.d20-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+.d20-intro,
+.d20-hud,
+.d20-end {
+  position: relative;
+  z-index: 1;
+}
+.d20-slot {
+  grid-area: die;
+  min-height: 0;
+}
+
+/* intro */
+.d20-intro {
+  grid-area: intro;
+  max-width: 640px;
+}
+.d20-label,
+.d20-read,
+.d20-cells,
+.d20-fail,
+.d20-seed,
+.d20-end-head,
+.d20-principles {
+  font-family: var(--d20-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.d20-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: clamp(14px, 2.6vh, 26px);
+}
+.d20-label::before {
+  content: '';
+  width: 9px;
+  height: 9px;
+  background: var(--d20-ink);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+.d20-heading {
+  font-weight: 850;
+  font-variation-settings: 'wdth' 92;
+  font-size: clamp(2.1rem, 4.3vw, 4.5rem);
+  line-height: 0.94;
+  letter-spacing: -0.04em;
+  word-spacing: 0.04em;
+  text-wrap: balance;
+}
+.d20-heading em {
+  font-style: normal;
+  color: var(--d20-accent);
+}
+.d20-sub {
+  margin-top: clamp(14px, 2.4vh, 24px);
+  font-size: clamp(1rem, 1.35vw, 1.25rem);
+  line-height: 1.35;
+  font-weight: 500;
+  color: var(--d20-ink);
+  max-width: 40ch;
+  text-wrap: pretty;
+}
+
+/* HUD */
+.d20-hud {
+  grid-area: hud;
+  margin-top: clamp(22px, 4.5vh, 48px);
+  display: grid;
+  gap: 10px;
+  max-width: 600px;
+}
+.d20-read {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 28px;
+  text-transform: none;
+  font-variant-numeric: tabular-nums;
+}
+.d20-p {
+  display: block;
+}
+.d20-read b {
+  font-weight: 600;
+}
+.d20-read sup {
+  font-size: 0.75em;
+  line-height: 0;
+}
+.d20-read .is-fail,
+.d20-read .is-fail b {
+  color: var(--d20-accent);
+}
+.d20-cells {
+  display: grid;
+  grid-template-columns: repeat(20, minmax(0, 1fr));
+  gap: 4px;
+  margin-top: 4px;
+}
+.d20-cells li {
+  aspect-ratio: 1 / 1.2;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--d20-ink);
+  font-size: 11px;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
+.d20-cells li[data-state='todo'] {
+  border-color: #cfcfcc;
+}
+.d20-cells li[data-state='now'] {
+  background: var(--d20-ink);
+}
+.d20-cells li[data-state='fail'] {
+  background: var(--d20-accent);
+  border-color: var(--d20-accent);
+  color: #fff;
+}
+.d20-fail {
+  min-height: 1.5em;
+  color: var(--d20-accent);
+  text-transform: none;
+}
+.d20-seed {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 14px;
+  color: var(--d20-muted);
+  text-transform: none;
+}
+.d20-seed button {
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: uppercase;
+  color: var(--d20-ink);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  padding: 2px 0;
+  cursor: pointer;
+}
+.d20-seed button:hover {
+  color: var(--d20-accent);
+}
+
+/* closing */
+.d20-end {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(14px, 2.8vh, 30px);
+  padding: clamp(56px, 8vh, 96px) var(--d20-g) clamp(28px, 5vh, 56px);
+}
+.d20-end-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  color: var(--d20-muted);
+}
+.d20-verdict {
+  font-weight: 600;
+  font-size: clamp(1.25rem, 2.3vw, 2.1rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  max-width: 40ch;
+}
+.d20-verdict em {
+  font-style: normal;
+  color: var(--d20-accent);
+}
+.d20-strip {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.d20-tile {
+  fill: var(--d20-face);
+  stroke: var(--d20-ink);
+  stroke-width: 3px;
+  vector-effect: non-scaling-stroke;
+}
+.d20-tile.is-one {
+  fill: var(--d20-accent);
+}
+.d20-num {
+  fill: var(--d20-ink);
+  text-anchor: middle;
+}
+.d20-num.is-one,
+.d20-bar {
+  fill: var(--d20-ink);
+}
+.d20-num.is-one {
+  fill: #fff;
+}
+.d20-mark {
+  stroke: var(--d20-ink);
+  stroke-width: 2px;
+  vector-effect: non-scaling-stroke;
+}
+.d20-mark.is-one {
+  stroke: var(--d20-accent);
+}
+.d20-zero {
+  stroke: #c4c4c1;
+  stroke-width: 1.5px;
+  vector-effect: non-scaling-stroke;
+}
+.d20-gap {
+  margin-top: clamp(6px, 2vh, 22px);
+  font-weight: 900;
+  font-variation-settings: 'wdth' 100;
+  font-size: clamp(2.6rem, 8.2vw, 9rem);
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  word-spacing: 0.06em;
+}
+.d20-principles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 40px;
+  text-transform: none;
+}
+.d20-principles span {
+  color: var(--d20-muted);
+  margin-right: 6px;
+}
+
+/* film: the twin and its marks start hidden; the scene reveals them */
+.d20.film .d20-strip,
+.d20.film .d20-mark,
+.d20.film [data-end] {
+  opacity: 0;
+}
+.d20.film .d20-end {
+  visibility: hidden;
+}
+.d20.film .d20-hud {
+  opacity: 0;
+}
+
+/* static: reduced motion or no WebGL. No pinned track, no die. */
+.d20.static .d20-track {
+  height: auto;
+}
+.d20.static .d20-view {
+  position: relative;
+  height: auto;
+  display: block;
+  padding: clamp(64px, 12vh, 128px) var(--d20-g);
+}
+.d20.static .d20-canvas,
+.d20.static .d20-slot,
+.d20.static .d20-hud {
+  display: none;
+}
+.d20.static .d20-end {
+  position: relative;
+  inset: auto;
+  padding: clamp(40px, 8vh, 80px) 0 0;
+}
+
+@media (max-width: 640px) {
+  .d20-view {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-areas: 'intro' 'die' 'hud';
+    padding: 56px 18px 18px;
+  }
+  .d20-heading {
+    font-size: clamp(1.75rem, 8.4vw, 2.4rem);
+  }
+  .d20-sub {
+    margin-top: 10px;
+    font-size: 0.98rem;
+  }
+  .d20-hud {
+    margin-top: 0;
+    gap: 7px;
+  }
+  .d20-read {
+    gap: 2px 18px;
+    font-size: 11px;
+  }
+  .d20-cells {
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+  }
+  .d20-cells li {
+    aspect-ratio: 1.5 / 1;
+  }
+  .d20-end {
+    padding: 56px 18px 24px;
+    gap: 16px;
+  }
+  .d20-gap {
+    font-size: clamp(2.3rem, 11.5vw, 3.4rem);
+  }
+  .d20-principles {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+/* standalone /d20 page */
+.d20-standalone {
+  background: #f4f4f2;
+  color: #0d0d0d;
+}
+.d20-standalone .d20-spacer {
+  height: 70svh;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 clamp(18px, 4vw, 56px) 32px;
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #8a8a88;
+}
+.d20-standalone .d20-spacer + .d20 + .d20-spacer {
+  align-items: flex-start;
+  padding-top: 32px;
+}

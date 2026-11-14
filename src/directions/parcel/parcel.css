@@ -2,6 +2,24 @@
   --bg: #e9e2d3;
   --ink: #17120c;
 }
+/* the white carton: the home page's Work chapter */
+.parcel.paper {
+  --bg: #f4f4f2;
+  --ink: #0d0d0d;
+}
+.parcel.paper .p-route li.is-on b {
+  color: #ff2d8a;
+}
+.parcel.paper.static .p-card {
+  background: #e9e9e5;
+}
+.parcel .p-blank {
+  display: inline-block;
+  width: 2.6em;
+  height: 0.95em;
+  border-bottom: 1.5px solid currentColor;
+  vertical-align: baseline;
+}
 .parcel .p-fallback {
   display: none;
 }

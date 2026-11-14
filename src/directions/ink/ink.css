@@ -10,6 +10,20 @@
   cursor: none;
   touch-action: none;
 }
+/* home: the hero is the first screen of a scrolling page */
+.ink.is-flow {
+  position: relative;
+  inset: auto;
+  height: 100vh;
+  height: 100svh;
+  touch-action: pan-y;
+}
+.ink-ui a:focus-visible,
+.ink-ui button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
 .ink-word {
   position: absolute;
   left: 0;
@@ -163,7 +177,10 @@
   mix-blend-mode: difference;
   filter: invert(1);
   pointer-events: none;
-  transition: width 0.25s, height 0.25s, margin 0.25s;
+  transition: width 0.25s, height 0.25s, margin 0.25s, opacity 0.2s;
+}
+.ink-cursor.is-out {
+  opacity: 0;
 }
 .ink-cursor.big {
   width: 34px;
