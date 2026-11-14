@@ -23,7 +23,7 @@ export function Header() {
 
 export function Outro({ current }) {
   const { t } = useLang();
-  const others = ['parcel', 'descent', 'rollout'].filter((name) => name !== current);
+  const others = ['ink', 'parcel', 'descent', 'rollout'].filter((name) => name !== current);
   return (
     <footer className="outro">
       <p>

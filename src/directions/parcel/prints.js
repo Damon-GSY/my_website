@@ -94,7 +94,7 @@ export function drawOutside(c, S, face) {
     small(c, 'FOLD →', S - m - 70, 62);
     headline(c, ['DAMON', 'GUAN'], m - 4, 96, S - m * 2, 190);
     small(c, 'LLM ALGORITHM ENGINEER', m, S - 76, 19, 600);
-    small(c, 'ALIBABA · HANGZHOU', m, S - 48, 19);
+    small(c, 'ALIBABA', m, S - 48, 19);
   } else if (role === 3) {
     small(c, 'CONTENTS', m, 62);
     headline(c, ['I BUILD', 'AGENTS'], m - 4, 110, S - m * 2, 190);

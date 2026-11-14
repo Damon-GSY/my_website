@@ -3,6 +3,11 @@ import { profile } from '../content.js';
 
 const directions = [
   {
+    id: 'ink',
+    line: { en: 'Your cursor is wet. The page hides moving ink.', zh: '光标是湿的，页面之下藏着流动的墨。' },
+    glyph: 'M14 34c-6-12 6-24 18-20 8-10 26-4 24 10 10 6 4 24-10 22-8 10-24 6-24-4-8 0-12-4-8-8z',
+  },
+  {
     id: 'parcel',
     line: { en: 'The page folds itself into a box and ships you to the work.', zh: '页面把自己折成一只箱子，把你送到作品面前。' },
     glyph: 'M26 2h20v20H26zM26 22h20v20H26zM6 22h20v20H6zM46 22h20v20H46zM26 42h20v20H26z',
@@ -25,13 +30,13 @@ export default function Chooser() {
     <main className="chooser">
       <header>
         <p className="mono">
-          {profile.name} — {t(profile.role)}, {t(profile.org)} · {t(profile.city)}
+          {profile.name} — {t(profile.role)}, {t(profile.org)}
         </p>
         <button type="button" className="mono" onClick={() => setLang(lang === 'en' ? 'zh' : 'en')}>
           {lang === 'en' ? '中文' : 'EN'}
         </button>
       </header>
-      <h1>{t({ en: 'Three ways in.', zh: '三种进入方式。' })}</h1>
+      <h1>{t({ en: 'Four ways in.', zh: '四种进入方式。' })}</h1>
       <ol>
         {directions.map((d, i) => (
           <li key={d.id}>

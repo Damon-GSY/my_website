@@ -252,6 +252,10 @@ button {
 .chooser li a:focus-visible {
   padding-left: 28px;
 }
+.chooser a[data-dir='ink']:hover {
+  background: #1a3cff;
+  color: #fff;
+}
 .chooser a[data-dir='parcel']:hover {
   background: #c29a66;
 }

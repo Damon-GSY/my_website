@@ -17,7 +17,7 @@ export default function ParcelOpening() {
           <h1 className="sr">{profile.name}. I build agents that ship.</h1>
           <div className="p-fallback">
             <p className="eyebrow">
-              {t(profile.role)} · {t(profile.org)} · {t(profile.city)}
+              {t(profile.role)} · {t(profile.org)}
             </p>
             <p className="p-fallback-title">I build agents that ship.</p>
           </div>

@@ -5,6 +5,7 @@ import Chooser from './pages/Chooser.jsx';
 const routes = {
   '/parcel': lazy(() => import('./directions/parcel/Opening.jsx')),
   '/descent': lazy(() => import('./directions/descent/Opening.jsx')),
+  '/ink': lazy(() => import('./directions/ink/Opening.jsx')),
   '/rollout': lazy(() => import('./directions/rollout/Opening.jsx')),
 };
 

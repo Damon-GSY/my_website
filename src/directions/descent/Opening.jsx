@@ -16,7 +16,7 @@ export default function DescentOpening() {
         <div className="sticky">
           <div className="d-hero" data-hero>
             <p className="eyebrow">
-              {profile.name} — {t(profile.role)}, {t(profile.org)} · {t(profile.city)}
+              {profile.name} — {t(profile.role)}, {t(profile.org)}
             </p>
             <h1>
               {t({ en: 'Every agent I train starts somewhere up here', zh: '我训练的每一个智能体，都从这样的高处出发' })}

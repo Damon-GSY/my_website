@@ -5,7 +5,6 @@ export const profile = {
   name: 'Damon Guan',
   role: { en: 'LLM algorithm engineer', zh: '大模型算法工程师' },
   org: { en: 'Alibaba', zh: '阿里巴巴' },
-  city: { en: 'Hangzhou', zh: '杭州' },
   email: 'hello@damon.ai', // unconfirmed; change here only
   links: [
     { label: 'GitHub', href: 'https://github.com/Damon-GSY' },
