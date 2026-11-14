@@ -1,16 +1,26 @@
-# React + Vite
+# Damon Guan — personal site
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Three opening studies for one site. In each, a 3D object and the 2D page are the same object seen two ways.
 
-Currently, two official plugins are available:
+| Route | Direction | 3D ↔ 2D |
+| --- | --- | --- |
+| `/parcel` | The page is a box net: it folds, ships, and unpacks into the work cards | box ↔ net ↔ grid |
+| `/descent` | The flat page was lying on a loss landscape | terrain ↔ contour map ↔ list rules |
+| `/rollout` | The visitor is the agent; the decision tree collapses into one trace | branching space ↔ flat trace |
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+`/` is the chooser. The plan and the remaining phases are in `docs/plans/2026-11-14-dimensional-site-plan.md`.
 
-## React Compiler
+## Run
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+npm run dev
+```
 
-## Expanding the ESLint configuration
+## Map
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- `src/content.js`: all copy and facts, English and Chinese.
+- `src/engine/`: scroll timeline, pixel-space stage with the perspective-to-flat camera, DOM docking.
+- `src/directions/<name>/`: one scene, one page and one stylesheet per direction.
+
+With reduced motion or without WebGL each route shows a static page with the same content.

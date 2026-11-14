@@ -1,0 +1,206 @@
+.descent {
+  --bg: #f4f0e7;
+  --ink: #121212;
+}
+.descent .d-hero {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  top: 22vh;
+  max-width: 1100px;
+}
+.descent .d-hero h1 {
+  margin-top: 28px;
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(2.5rem, 6.6vw, 6.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  max-width: 13ch;
+}
+:lang(zh) .descent .d-hero h1 {
+  max-width: 11em;
+  font-weight: 400;
+  line-height: 1.16;
+  letter-spacing: 0;
+}
+.descent .d-dot {
+  display: inline-block;
+  width: 0.17em;
+  height: 0.17em;
+  margin-left: 0.05em;
+  border-radius: 50%;
+}
+.descent .d-hint {
+  margin-top: 36px;
+  opacity: 0.7;
+}
+.descent .d-hud {
+  position: absolute;
+  left: var(--gutter);
+  bottom: 32px;
+  display: grid;
+  gap: 8px;
+  opacity: 0;
+  font-size: 11px;
+}
+.descent .d-hud svg {
+  width: 200px;
+  height: 55px;
+  overflow: visible;
+}
+.descent .d-hud polyline {
+  fill: none;
+  stroke: color-mix(in srgb, var(--ink) 22%, transparent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.descent .d-hud polyline[data-curve] {
+  stroke: var(--orange);
+  stroke-width: 1.5;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.descent .d-work {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 96px var(--gutter) 28px;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+.descent .d-work header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: clamp(18px, 4vh, 44px);
+  opacity: 0;
+}
+.descent .d-work h2 {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(2rem, 4.6vw, 4.4rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.descent .d-work li {
+  display: grid;
+  grid-template-columns: 30px 44px minmax(0, 1.5fr) minmax(90px, 0.5fr) minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 16px;
+  padding: clamp(10px, 2vh, 20px) 0;
+  border-top: 1px solid transparent;
+}
+.descent .d-work.is-in li {
+  border-top-color: var(--ink);
+}
+.descent .d-work li > * {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.5s, transform 0.5s;
+}
+.descent .d-work.is-in li > * {
+  opacity: 1;
+  transform: none;
+}
+.descent .d-work.is-in li:nth-child(2) > * { transition-delay: 0.05s; }
+.descent .d-work.is-in li:nth-child(3) > * { transition-delay: 0.1s; }
+.descent .d-work.is-in li:nth-child(4) > * { transition-delay: 0.15s; }
+.descent .d-work.is-in li:nth-child(5) > * { transition-delay: 0.2s; }
+.descent .d-work.is-in li:nth-child(6) > * { transition-delay: 0.25s; }
+.descent .d-work li > .d-cell-dot {
+  opacity: 1;
+  transform: none;
+  transition: none;
+  align-self: center;
+  height: 14px;
+}
+.descent .d-rowdot {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: transparent;
+}
+.descent .d-work.is-in .d-rowdot {
+  background: var(--orange);
+}
+.descent .d-work h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.15rem, 2.2vw, 1.9rem);
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+}
+.descent .d-work strong {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(1.4rem, 2.8vw, 2.5rem);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.descent .d-work em {
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.descent .d-where {
+  font-size: 11px;
+  opacity: 0.7;
+  white-space: nowrap;
+}
+.descent .d-work small {
+  margin-top: 16px;
+  font-size: 10px;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.descent .d-work.is-in small {
+  opacity: 0.65;
+}
+@media (max-width: 760px) {
+  .descent .d-work li {
+    grid-template-columns: 22px minmax(0, 1fr) auto;
+    gap: 4px 10px;
+  }
+  .descent .d-n,
+  .descent .d-where {
+    display: none;
+  }
+  .descent .d-work em {
+    grid-column: 2 / 4;
+  }
+}
+
+/* static fallback */
+.descent.static .d-hero,
+.descent.static .d-work {
+  position: static;
+  padding: 0;
+}
+.descent.static .d-hero {
+  margin-bottom: 72px;
+}
+.descent.static .d-dot,
+.descent.static .d-rowdot {
+  background: var(--orange);
+}
+.descent.static .d-hint,
+.descent.static .d-hud {
+  display: none;
+}
+.descent.static .d-work header,
+.descent.static .d-work li > *,
+.descent.static .d-work small {
+  opacity: 1;
+  transform: none;
+}
+.descent.static .d-work li {
+  border-top-color: var(--ink);
+}
