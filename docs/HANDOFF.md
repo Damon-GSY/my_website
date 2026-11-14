@@ -125,3 +125,38 @@ Not checked:
 1. Damon picks a direction (or a mix).
 2. Fix that direction's rough edges above and run the section 8 acceptance checks.
 3. Phase 3: sections after the opening (Research, Path, Notes, Contact), case and note pages, Chinese typography, and a rendered check of the static fallback.
+
+## Design plans on record (2026-11-14)
+
+### Studies in progress from Damon's three reference prompts
+
+Each is a standalone page under `public/lab/`, served as-is, built by a separate agent. They were started together; check `git log` and the folders to see which ones landed.
+
+| Page | Reference it adapts | What it should be |
+| --- | --- | --- |
+| `/lab/pill/` | "Wild" pill hero | White page with the word GUAN split as GU · pill · AN. A hairline opens into a slit, a circle, then a wide pill showing the ink video, pushing the halves apart; paper background, nav and footer arrive as it opens. Stacks and opens vertically on phones. |
+| `/lab/bento/` | "Maya Lind" bento profile | Calm editorial profile on one 1440×960 stage that scales to any window: intro, a 20-step "episode" player, and six live cards (Experience, Research, Field notes, Selected work, Numbers, How I work). No photos; a DG monogram stands in for the avatar. |
+| `/lab/night/` | "Helion Dispatch" cinematic dark page | WebGL night scene made of particles, a rotating 3D ring of the word "Agents", a zoom-warp into an amber streak shader, then black sections whose window frames show the shader through them, holding white UI panels with his work and research. |
+
+The reference prompts' own media (a third party's hosted videos and portrait photos) are not used: the pill uses the site's ink video, the others are drawn in code.
+
+Once they land: add links to the three pages on `/lab` (`src/pages/Chooser.jsx`), look at their contact sheets, and ask Damon which direction the home page should take.
+
+### Ideas proposed, not built
+
+1. **Name as a mountain range**: the letters of DAMON GUAN are terrain wrapped in contour lines; a ball rolls through the valleys; it flattens back into ordinary type. An upgrade of `/descent`.
+2. **Every link is a parcel**: each work card is a small box; opening a case study unfolds it into the page; tape is torn by dragging. An upgrade of `/parcel`.
+3. **The site behaves like his agent**: the page operates itself with a visible cursor and tool-call log; low-risk actions run alone, high-risk ones stop and ask the visitor to confirm. An overlay for any direction.
+4. **Crumpled paper**: the site is one printed sheet that crumples into a ball between sections and smooths flat again, creases still visible.
+5. **A machine that types the site**: the page is generated word by word with the rejected alternatives floating in 3D behind each word; scrolling back un-writes it.
+6. **Shadow theatre**: a tangle of 3D wire whose shadow, at one exact light angle, spells DAMON GUAN, and at the next a diagram of his work. Claude's pick for impact.
+7. **One long receipt**: a 3D thermal printer feeds out the site as a paper roll; projects are line items, results are totals, contact is the tear-off stub.
+8. **A city built from his numbers**: towers whose heights are the real figures (about 250 papers, 530 samples, 100+ tools, 12 scenarios); the camera rises and the skyline flattens into a bar chart.
+
+Built from this list already: the d20 chapter (`/d20`, and `#evaluate` on the home page).
+
+### Open items from Damon
+
+- Current employer and city: blank on purpose; fill in `src/content.js` (`org`, `city`).
+- Contact email: `hello@damon.ai` is a stand-in he will change, also in `src/content.js`.
+- Usage: resuming a long idle session re-reads the whole conversation and costs about 20 points of the 5-hour limit in one request. Prefer a fresh session that starts from this file, and use subagents for build work.
