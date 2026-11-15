@@ -1,12 +1,33 @@
 # Handoff — dimensional site
 
-## Start here (2026-11-15, latest)
+## Start here (2026-11-15, latest — stopped at the 70% usage line)
 
-All six planned studies now exist. Work stopped because every remaining step needs a decision from Damon (below), not because of the usage limit. Everything below is on `claude/serene-cori-mookmf`. Sections further down are older and partly superseded; this one is current.
+Work stopped because the 5-hour usage window reached Damon's stop line (62% at the last reading, with the final task finishing after it). Everything is committed and pushed on `claude/serene-cori-mookmf`.
 
-### The home page (`/`), composed from the strongest pieces
+### What this round did
 
-With no lens chosen, `/` now runs: ink hero, (01) Statement, (02) Work, (03) Evaluate (d20), **(04) Evidence**, (05) Path, (06) Notes, **(07) More ways in**, (08) Contact. Work is the white-carton Parcel film as before, but the six landed cards are now links to `/lab/parcels/#<slug>`, so a click unfolds that project's parcel ("Open the parcel ↗" on each card; arrow only on phones; the long line moved to the case study so cards stay legible). That lives in a fork, `src/pages/WorkFilm.jsx`, so `/parcel` is untouched. Evidence (`src/directions/home-evidence/`) is a departure board of the eight honest figures (≈90%, 100+, SOTA, GRPO, 3, 530, ~250, +8.2%), each with what it measures and where it comes from; production figures carry a cobalt dagger pointing at the footnote. Tiles flip down and digits settle once on entry; reduced motion shows the finished board. City is not embedded (its numbers were being relabelled). More ways in (`src/pages/MoreWays.jsx`) links Parcels, Agent, Paper, Night, Pill and `/lab` with static previews (`src/pages/more/*.jpg`, captured 2026-11-15; grey until hover). Damon's lens mechanism is kept whole: the dock is folded into a small "Studio Lens +" button (bottom right), and the per-chapter lens bars appear only once a non-default lens is chosen, so the default page reads as one site. The Path "Now" row still shows blank rules for employer and city. Checked by screenshots at 1440x900 and 390x844 (SwiftShader), Chinese, reduced motion and a card click; no console errors, no horizontal scroll. Rough edges: the More ways in previews go stale if the studies change; on phones the dock button can sit over the last line of a section.
+- **Illustrative labels (Damon's decision):** invented values in his typist, receipt and city studies now carry "Illustrative values — not measurements." (en/zh); "verified" wording removed; city's ≈90% tower labelled as a rate. Nothing removed. Receipt's five "Verified" row labels were also renamed "Result" (not asked for; easy to revert). "2025– · Alibaba", city's wording claims ("warehouse", "blast radius", survey topics) left as they are.
+- **Polish:** parcels (phone name strips, larger open net), agent (stronger layered tilt; fixed a bug where clicking the page did not take over), paper (centre-out reopen, hard texture cut while balled, recomposed Statement page).
+- **Home page composed (Claude's choice, for Damon to judge):** ink hero → Statement → Work (carton film; each card opens `/lab/parcels/#<slug>`) → Evaluate (d20) → **Evidence** (new; eight real figures as a type board, production figures marked †) → Path → Notes → **More ways in** (new; static previews linking to parcels, agent, paper, night, pill, /lab) → Contact. Damon's lens mechanism kept, folded into a "Studio Lens +" button; per-chapter lens bars appear only when a lens is chosen. Work film is a fork in `src/pages/WorkFilm.jsx` (update by hand if `ParcelFilm.jsx` changes).
+- **Whole-site QA:** every route and `/lab` page × desktop/phone × reduced motion (+ WebGL off for 3D pages). 39 pass, 14 fixed, 0 open. Report: `docs/reviews/2026-11-15-site-qa.md`.
+- **Performance:** below-the-fold WebGL chapters (Work film, d20) mount about one viewport before they scroll in; three.js no longer loads at the top of `/`. JS before first paint went from 233.0 kB to 97.1 kB gzip. The second ink video waits until the first can play through. Concept boards scale to fit any window.
+
+### Known open items
+
+- "More ways in" previews are screenshots (`src/pages/more/*.jpg`) and will go stale as studies change.
+- The fixed top bar does not list Evidence or More ways in.
+- With WebGL off, three.js logs "could not create a WebGL context" (fallbacks still render).
+- Parcels phone cartons face front (flatter); paper's desktop Contact page has an empty band; `/d20` opens on a near-empty "Scroll ↓" screen by design.
+- Nothing checked on a real GPU, Safari or a physical phone.
+- Some history contains automatic "wip" snapshot commits (made to satisfy a commit-on-stop hook while agents were mid-work); the final state is clean.
+
+### Next steps (Damon decides)
+
+1. Judge the composed home page; keep, change, or pick another direction (night, pill, bento, agent, receipt as whole-site options).
+2. Fill in current employer, city and real email in `src/content.js`.
+3. Decide on "2025– · Alibaba" in typist/receipt and city's wording claims.
+4. Review copy written by Claude: parcels panels ("What it is" / "How it is held"), Evidence labels, More ways in lines.
+5. Real-device checks.
 
 ### What exists now
 
