@@ -29,6 +29,9 @@ code i{font-style:normal;color:var(--accent)}
 
 /* world: three sheets */
 .world{position:fixed;left:0;right:0;top:var(--navh);bottom:0;perspective:1700px;perspective-origin:36% 30%;transform-style:preserve-3d}
+/* the world plane sits in front of the tilted (negative-z) sheets: let hits fall through to them */
+.world{pointer-events:none}
+.page,.log{pointer-events:auto}
 .page,.curLayer{position:absolute;left:24px;top:16px;right:368px;bottom:16px}
 .page{overflow:auto;background:var(--sheet);box-shadow:0 0 0 1px rgba(13,13,13,.08),0 30px 50px -30px rgba(10,20,80,.35);overscroll-behavior:contain}
 .curLayer{pointer-events:none;overflow:hidden}
