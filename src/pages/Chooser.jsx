@@ -57,6 +57,13 @@ const directions = [
     glyph: 'M8 24l14-8 14 8v16l-14 8-14-8zM36 24l14-8 14 8v16l-14 8-14-8zM22 16v32M50 16v32',
   },
   {
+    id: 'paper',
+    href: '/lab/paper/',
+    badge: { en: 'New · Live', zh: '全新 · 可交互' },
+    line: { en: 'One printed sheet that crumples into a ball between sections.', zh: '一张印刷纸，在章节之间揉成纸团，再摊平。' },
+    glyph: 'M14 20l12-8 14 6 12-4 8 14-6 14 4 12-14 6-12-6-14 4-6-14 4-12z',
+  },
+  {
     id: 'agent',
     href: '/lab/agent/',
     badge: { en: 'New · Live', zh: '全新 · 可交互' },

@@ -1,8 +1,8 @@
 # Handoff — dimensional site
 
-## Start here (2026-11-15, stopped at the 75% usage line)
+## Start here (2026-11-15, latest)
 
-Work stopped because the 5-hour usage window reached Damon's stop line (73% when this was written; the parcels build finished just after). Everything below is on `claude/serene-cori-mookmf`. Sections further down are older and partly superseded; this one is current.
+All six planned studies now exist. Work stopped because every remaining step needs a decision from Damon (below), not because of the usage limit. Everything below is on `claude/serene-cori-mookmf`. Sections further down are older and partly superseded; this one is current.
 
 ### What exists now
 
@@ -19,9 +19,10 @@ Work stopped because the 5-hour usage window reached Damon's stop line (73% when
 | `/lab/night/` | Damon's "Helion Dispatch" prompt | Done, checked desktop + phone |
 | `/lab/agent/` | Plan 03 | **Done this session.** All "Done when" items met by script at `?speed=3`; contact sheet looked at |
 | `/lab/parcels/` | Plan 02 | **Done this session.** All four "Done when" items met by script; contact sheet looked at by the build agent. One last fix (a tape stub over the "Next parcel" card) was not re-screenshotted. The "What it is" / "How it is held" panel copy was written as principles, not new claims; Damon should review it |
+| `/lab/paper/` | Plan 04 | **Done.** Plain WebGL2, no three.js. All three "Done when" items met: reversibility checked by pixel diff (second transition only), mesh-to-DOM handoff pixel-close, crease shading ≤2.5% and masked under small text. Contact sheet looked at by Claude |
 | `/lab/concepts/*.html` | — | Eight static concept boards (mountain, parcels, agent, paper, typist, shadow, receipt, city) |
 
-Only `/lab/pill/`, `/lab/bento/` and `/lab/night/` are linked from the chooser; **`/lab/agent/` and `/lab/parcels/` still need entries in `src/pages/Chooser.jsx`** (entries accept an `href`).
+All standalone studies (pill, bento, night, parcels, agent, paper) and the eight concept boards are linked from the chooser at `/lab`.
 
 ### The plan and how far it got
 
@@ -31,10 +32,10 @@ Plan: `docs/plans/2026-11-15-six-studies-plan.md` (shared rules, then one sectio
 | --- | --- |
 | 02 Every link is a parcel | Done |
 | 03 The site behaves like his agent | Done |
-| 04 Crumpled paper | **Not started.** Largest of the six (needs WebGL, a crumpled mesh and a texture/DOM swap). Next to build |
-| 05 Typing machine | Exists in Damon's commit as `/typist` (React). Not compared against the plan yet |
-| 07 Receipt | Exists in Damon's commit as `/receipt` (React). Not compared against the plan yet |
-| 08 City | Exists in Damon's commit as `/city` (React). Not compared against the plan yet |
+| 04 Crumpled paper | Done (`/lab/paper/`) |
+| 05 Typing machine | Exists in Damon's commit as `/typist`. Reviewed: see `docs/reviews/2026-11-15-typist-receipt-city.md` |
+| 07 Receipt | Exists in Damon's commit as `/receipt`. Reviewed (same file) |
+| 08 City | Exists in Damon's commit as `/city`. Reviewed (same file) |
 
 ### Agent study: details worth knowing
 
@@ -45,10 +46,12 @@ Plan: `docs/plans/2026-11-15-six-studies-plan.md` (shared rules, then one sectio
 
 ### Next steps, in order
 
-1. Add chooser links for `/lab/agent/` and `/lab/parcels/`.
-2. Build 04 crumpled paper from the plan.
-3. Compare Damon's `/typist`, `/receipt` and `/city` against plan sections 05, 07 and 08 and list the gaps (do not rebuild them).
-4. Ask Damon which studies, or parts of them, go into the home page.
+All need Damon first.
+
+1. **Invented numbers in typist, receipt and city.** The review found figures shown as measurements that are not résumé facts: typist's `R = +2.65 · VERIFIED`, `KL = 0.84` and token logits; receipt's "20-step reliability" box and "VERIFIED PRODUCTION METRIC"; city's ≈90% plotted as a count of 90, two ≈90% figures merged, and percentages on an invented 0–600 scale. Typist and receipt also print "2025– · Alibaba" as the current stop. Line references are in the review (some approximate). Options: remove them, label them illustrative, or keep. Claude did not touch Damon's code.
+2. **Which studies go into the home page**, and as what (whole-site direction vs. a chapter). Likely candidates: parcels as the Work section's case-study navigation, city as a short chapter, agent or receipt as an alternative whole-site direction.
+3. **Copy to review:** the parcels "What it is" / "How it is held" panels (written as principles, not his words); the paper study's Contact page shows GitHub and LinkedIn from `src/content.js`.
+4. **Known rough edges, if worth fixing:** parcels shelf labels tiny on phones; agent tilt gentler than the board; paper's half-opened sheet is a lumpy blob rather than the board's tidy half-open sheet, a large empty band on the desktop Statement page, and off-screen sections hidden from screen readers in WebGL mode.
 
 ### Still open from Damon
 
