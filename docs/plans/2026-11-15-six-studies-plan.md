@@ -1,6 +1,8 @@
 # Six approved studies — build plans
 
-Status: **plans only.** Damon approved these six concepts from their boards on 2026-11-15. Three builds were started and stopped at his request before any file was written, so nothing below exists as a working page yet.
+Status: **plans only, written by Claude.** Damon approved these six concepts from their boards on 2026-11-15. Claude's own builds of 02, 07 and 03 were started and stopped at his request before any file was written.
+
+**Read this first.** While this plan was being written, Damon pushed commit `0e712cf` from another session. It adds React studies under `src/directions/` for **typist, receipt, city, shadow, bento and arena**, and changes the home page, the chooser and the base styles. So 05, 07 and 08 below already have a working version that this plan did not take into account, and Claude has not reviewed that code or seen it rendered. Before building any of those three, look at what exists and treat the matching section here as a checklist to compare against, not as a brief to start from. 02 parcels, 03 agent and 04 crumpled paper have no build anywhere.
 
 Already built and approved, not covered here: the ink hero (`/ink`, and the home page hero), `/lab/bento/`, `/lab/night/`, `/lab/pill/`.
 
