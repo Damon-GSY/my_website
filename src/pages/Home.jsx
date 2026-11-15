@@ -7,6 +7,30 @@ import ParcelFilm from '../directions/parcel/ParcelFilm.jsx';
 import './home.css';
 
 const D20Chapter = lazy(() => import('../directions/d20/D20Chapter.jsx'));
+const BentoOpening = lazy(() => import('../directions/bento/Opening.jsx'));
+const TypistOpening = lazy(() => import('../directions/typist/Opening.jsx'));
+const ShadowOpening = lazy(() => import('../directions/shadow/Opening.jsx'));
+const ReceiptOpening = lazy(() => import('../directions/receipt/Opening.jsx'));
+const CityOpening = lazy(() => import('../directions/city/Opening.jsx'));
+const ArenaOpening = lazy(() => import('../directions/arena/Opening.jsx'));
+
+const HERO_LENSES = [
+  { id: 'ink', label: { en: '01 · Wet Ink', zh: '01 · 湿墨揭幕' }, short: { en: '01 Ink', zh: '01 湿墨' } },
+  { id: 'shadow', label: { en: '10 · 318° Shadow', zh: '10 · 318° 光影' }, short: { en: '10 Shadow', zh: '10 光影' } },
+  { id: 'typist', label: { en: '09 · Token Typist', zh: '09 · 策略逐词' }, short: { en: '09 Typist', zh: '09 逐词' } },
+];
+
+const WORK_LENSES = [
+  { id: 'parcel', label: { en: '02 · Parcel Box', zh: '02 · 快递拆盒' }, short: { en: '02 Parcel', zh: '02 快递' } },
+  { id: 'bento', label: { en: '08 · Bento Cards', zh: '08 · Bento 卡片' }, short: { en: '08 Bento', zh: '08 卡片' } },
+  { id: 'receipt', label: { en: '11 · Thermal Receipt', zh: '11 · 实证小票' }, short: { en: '11 Receipt', zh: '11 小票' } },
+  { id: 'city', label: { en: '12 · Metric City', zh: '12 · 尺度天际线' }, short: { en: '12 City', zh: '12 建筑' } },
+];
+
+const EVAL_LENSES = [
+  { id: 'd20', label: { en: '05 · D20 Die', zh: '05 · 二十面骰' }, short: { en: '05 D20', zh: '05 骰子' } },
+  { id: 'arena', label: { en: '13 · Agent Arena', zh: '13 · 对抗沙盒' }, short: { en: '13 Arena', zh: '13 沙盒' } },
+];
 
 const NAV = [
   { href: '#work', label: { en: 'Work', zh: '作品' } },
@@ -258,41 +282,226 @@ function Bar() {
   );
 }
 
-export default function Home() {
+function ChapterLensBar({ label, options, value, onChange, href }) {
   const { t } = useLang();
+  return (
+    <div className="h-chapter-bar">
+      <div className="h-lens-tabs" role="group" aria-label={label}>
+        {options.map((opt) => (
+          <button
+            key={opt.id}
+            type="button"
+            className={value === opt.id ? 'is-active' : undefined}
+            aria-pressed={value === opt.id}
+            onClick={() => onChange(opt.id)}
+          >
+            {t(opt.label)}
+          </button>
+        ))}
+      </div>
+      {href && (
+        <a className="mono" href={href}>
+          {t({ en: 'Open standalone', zh: '独立全屏体验' })} →
+        </a>
+      )}
+    </div>
+  );
+}
+
+export default function Home() {
+  const { lang, setLang, t } = useLang();
+  const [heroLens, setHeroLens] = useState('ink');
+  const [workLens, setWorkLens] = useState('parcel');
+  const [evalLens, setEvalLens] = useState('d20');
+
+  const workAside =
+    workLens === 'bento'
+      ? { en: 'Six live Bento cards & Agent Cockpit', zh: '六张动态档案卡与智能体驾驶舱' }
+      : workLens === 'receipt'
+        ? { en: 'Thermal evidence ledger', zh: '热敏实证小票' }
+        : workLens === 'city'
+          ? { en: 'Logarithmic metric skyline', zh: '对数尺度建筑天际线' }
+          : { en: 'Six projects, packed', zh: '六个项目，装箱' };
+
+  const evalAside =
+    evalLens === 'arena'
+      ? { en: 'Live RL & Tier-3 sandbox', zh: '实时 RL 与三级确认护栏沙盒' }
+      : { en: 'One die, twenty rolls', zh: '一枚骰子，二十次' };
+
+  const workHead = (
+    <SectionHead n="02" aside={t(workAside)}>
+      {t({ en: 'Work', zh: '作品' })}
+    </SectionHead>
+  );
+
+  const evalHead = (
+    <SectionHead n="03" aside={t(evalAside)}>
+      {t({ en: 'Evaluate', zh: '评测' })}
+    </SectionHead>
+  );
+
+  const jumpTo = (targetId) => {
+    window.requestAnimationFrame(() => {
+      document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  };
+
+  const resetLenses = () => {
+    setHeroLens('ink');
+    setWorkLens('parcel');
+    setEvalLens('d20');
+  };
+
+  const isCustomLens = heroLens !== 'ink' || workLens !== 'parcel' || evalLens !== 'd20';
+
   return (
     <div className="home">
       <Bar />
       <main>
-        <InkHero flow nav={NAV} />
-        <Statement />
-        <ParcelFilm
-          paper
-          id="work"
-          label={
-            <div className="h-film-label">
-              <SectionHead n="02" aside={t({ en: 'Six projects, packed', zh: '六个项目，装箱' })}>
-                {t({ en: 'Work', zh: '作品' })}
-              </SectionHead>
+        {heroLens === 'ink' ? (
+          <InkHero flow nav={NAV} />
+        ) : (
+          <div id="top" className="h-alt-hero">
+            <div className="h-alt-hero-nav">
+              <a className="h-alt-hero-brand" href="#top">
+                {profile.name}
+              </a>
+              <nav aria-label={t({ en: 'Sections', zh: '章节' })}>
+                {NAV.map((item) => (
+                  <a key={item.href} href={item.href}>
+                    {t(item.label)}
+                  </a>
+                ))}
+                <a href="/lab">{t({ en: 'Studies', zh: '研究' })}</a>
+                <button type="button" onClick={() => setLang(lang === 'en' ? 'zh' : 'en')}>
+                  {lang === 'en' ? '中文' : 'EN'}
+                </button>
+              </nav>
             </div>
-          }
-        />
-        <div id="evaluate" className="h-evaluate">
-          <Suspense fallback={null}>
-            <D20Chapter
-              id={null}
-              head={
-                <SectionHead n="03" aside={t({ en: 'One die, twenty rolls', zh: '一枚骰子，二十次' })}>
-                  {t({ en: 'Evaluate', zh: '评测' })}
-                </SectionHead>
+            <Suspense
+              fallback={
+                <div className="h-embed-fallback mono">
+                  {t({ en: 'Loading opening study…', zh: '正在加载开场方案…' })}
+                </div>
               }
-            />
+            >
+              {heroLens === 'shadow' ? <ShadowOpening embedded /> : <TypistOpening embedded />}
+            </Suspense>
+          </div>
+        )}
+
+        <Statement />
+
+        <div id="work" className="h-work-host">
+          <ChapterLensBar
+            label={t({ en: 'Work chapter mode', zh: '作品章节呈现方式' })}
+            options={WORK_LENSES}
+            value={workLens}
+            onChange={setWorkLens}
+            href={`/${workLens}`}
+          />
+          {workLens === 'parcel' ? (
+            <ParcelFilm paper id={null} label={<div className="h-film-label">{workHead}</div>} />
+          ) : (
+            <Suspense
+              fallback={
+                <div className="h-embed-fallback mono">
+                  {t({ en: 'Loading work chapter…', zh: '正在加载作品章节…' })}
+                </div>
+              }
+            >
+              {workLens === 'bento' ? (
+                <BentoOpening standalone={false} head={workHead} />
+              ) : workLens === 'receipt' ? (
+                <ReceiptOpening embedded head={workHead} />
+              ) : (
+                <CityOpening embedded head={workHead} />
+              )}
+            </Suspense>
+          )}
+        </div>
+
+        <div id="evaluate" className="h-evaluate">
+          <ChapterLensBar
+            label={t({ en: 'Evaluation chapter mode', zh: '评测章节呈现方式' })}
+            options={EVAL_LENSES}
+            value={evalLens}
+            onChange={setEvalLens}
+            href={`/${evalLens}`}
+          />
+          <Suspense
+            fallback={
+              <div className="h-embed-fallback mono">
+                {t({ en: 'Loading evaluation chapter…', zh: '正在加载评测章节…' })}
+              </div>
+            }
+          >
+            {evalLens === 'arena' ? <ArenaOpening embedded head={evalHead} /> : <D20Chapter id={null} head={evalHead} />}
           </Suspense>
         </div>
+
         <Path />
         <Notes />
         <Contact />
       </main>
+
+      <aside className="h-lens-dock" aria-label={t({ en: 'Chapter lens switcher', zh: '整站多视角章节切换坞' })}>
+        <span className="h-lens-dock-title">{t({ en: 'Studio Lens', zh: '章节透镜' })}</span>
+        <div className="h-lens-group">
+          <span>{t({ en: 'Hero', zh: '开场' })}</span>
+          {HERO_LENSES.map((opt) => (
+            <button
+              key={opt.id}
+              type="button"
+              className={heroLens === opt.id ? 'is-active' : undefined}
+              onClick={() => {
+                setHeroLens(opt.id);
+                jumpTo('top');
+              }}
+            >
+              {t(opt.short)}
+            </button>
+          ))}
+        </div>
+        <div className="h-lens-group">
+          <span>{t({ en: 'Work', zh: '作品' })}</span>
+          {WORK_LENSES.map((opt) => (
+            <button
+              key={opt.id}
+              type="button"
+              className={workLens === opt.id ? 'is-active' : undefined}
+              onClick={() => {
+                setWorkLens(opt.id);
+                jumpTo('work');
+              }}
+            >
+              {t(opt.short)}
+            </button>
+          ))}
+        </div>
+        <div className="h-lens-group">
+          <span>{t({ en: 'Eval', zh: '评测' })}</span>
+          {EVAL_LENSES.map((opt) => (
+            <button
+              key={opt.id}
+              type="button"
+              className={evalLens === opt.id ? 'is-active' : undefined}
+              onClick={() => {
+                setEvalLens(opt.id);
+                jumpTo('evaluate');
+              }}
+            >
+              {t(opt.short)}
+            </button>
+          ))}
+        </div>
+        {isCustomLens && (
+          <button type="button" className="h-lens-reset" onClick={resetLenses}>
+            {t({ en: 'Reset', zh: '恢复默认' })}
+          </button>
+        )}
+      </aside>
+
       <footer className="h-foot mono">
         <span>© 2026 Damon Guan</span>
         <a href="/lab">{t({ en: 'Design studies', zh: '设计研究' })} →</a>

@@ -31,7 +31,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .stage{position:absolute;left:50%;top:50%;width:1440px;height:960px;
   transform:translate(-50%,-50%) scale(var(--s));transform-origin:50% 50%}
 .stage > *, .grid > .card{position:absolute}
-html.anim [data-rise]{opacity:0}
+html.anim [data-rise]{opacity:1}
 
 .toplinks{top:36px;right:76px;display:flex;gap:22px;font-size:13.5px;color:var(--sec);letter-spacing:-.005em}
 .toplinks a{text-decoration:none}
@@ -305,7 +305,7 @@ html.anim [data-rise]{opacity:0}
 
   /* ---- entrance ---- */
   const rise = [...document.querySelectorAll('[data-rise]')];
-  const riseEnd = rise.length * 80 + 700;
+  const riseEnd = rise.length * 24 + 180;
 
   /* ---- voice pill: one 20-step episode ---- */
   let seed = 20250417;
@@ -440,8 +440,9 @@ html.anim [data-rise]{opacity:0}
     // entrance
     if (!rised && !reduced) {
       rise.forEach((el, i) => {
-        const p = ease(clamp((t - i * 80) / 700));
-        el.style.opacity = p; el.style.translate = `0 ${(14 * (1 - p)).toFixed(2)}px`;
+        const p = ease(clamp((t - i * 24) / 180));
+        el.style.opacity = (0.35 + 0.65 * p).toFixed(3);
+        el.style.translate = `0 ${(10 * (1 - p)).toFixed(2)}px`;
       });
       if (t > riseEnd) { rised = true; rise.forEach(el => { el.style.opacity = ''; el.style.translate = ''; }); root.classList.remove('anim'); }
     }

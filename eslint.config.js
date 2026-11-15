@@ -5,7 +5,7 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist', 'tools', '.omc']),
+  globalIgnores(['dist', 'tools', '.omc', 'my_website']),
   js.configs.recommended,
   reactHooks.configs['recommended-latest'],
   reactRefresh.configs.vite,
