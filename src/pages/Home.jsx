@@ -3,11 +3,11 @@ import { useLang } from '../i18n.jsx';
 import { path, profile } from '../content.js';
 import { notes } from '../notes.js';
 import InkHero from '../directions/ink/InkHero.jsx';
-import WorkFilm from './WorkFilm.jsx';
 import MoreWays from './MoreWays.jsx';
 import Evidence from '../directions/home-evidence/Evidence.jsx';
 import './home.css';
 
+const WorkFilm = lazy(() => import('./WorkFilm.jsx'));
 const D20Chapter = lazy(() => import('../directions/d20/D20Chapter.jsx'));
 const BentoOpening = lazy(() => import('../directions/bento/Opening.jsx'));
 const TypistOpening = lazy(() => import('../directions/typist/Opening.jsx'));
@@ -48,6 +48,41 @@ const STATEMENT = {
 };
 
 const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// The films only pin and animate with motion allowed and WebGL available; otherwise they render
+// their short static fallback, so there is nothing heavy to defer and no tall track to stand in for.
+let staticCache;
+const staticFilms = () => {
+  if (staticCache === undefined) {
+    let gl = null;
+    try {
+      gl = document.createElement('canvas').getContext('webgl');
+    } catch {
+      gl = null;
+    }
+    gl?.getExtension('WEBGL_lose_context')?.loseContext();
+    staticCache = reduced() || !gl || typeof IntersectionObserver === 'undefined';
+  }
+  return staticCache;
+};
+
+// Below-the-fold WebGL chapters (three.js) mount about one viewport before they scroll in. Until then a
+// blank block of the film's own scroll length holds their place, so the page does not jump and the
+// #work / #evaluate anchors land where they will once the film is there.
+function Deferred({ height, children }) {
+  const ref = useRef(null);
+  const [near, setNear] = useState(staticFilms);
+  useEffect(() => {
+    if (near) return undefined;
+    const io = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && setNear(true), {
+      rootMargin: '100% 0px',
+    });
+    io.observe(ref.current);
+    return () => io.disconnect();
+  }, [near]);
+  const hold = <div ref={ref} className="h-defer" style={{ height }} aria-hidden="true" />;
+  return near ? <Suspense fallback={hold}>{children}</Suspense> : hold;
+}
 
 // A blank that the owner fills in later: a long rule, read out as "to be filled in".
 function Blank({ wide }) {
@@ -408,7 +443,9 @@ export default function Home() {
             />
           )}
           {workLens === 'parcel' ? (
-            <WorkFilm label={<div className="h-film-label">{workHead}</div>} />
+            <Deferred height="700vh">
+              <WorkFilm label={<div className="h-film-label">{workHead}</div>} />
+            </Deferred>
           ) : (
             <Suspense
               fallback={
@@ -445,7 +482,13 @@ export default function Home() {
               </div>
             }
           >
-            {evalLens === 'arena' ? <ArenaOpening embedded head={evalHead} /> : <D20Chapter id={null} head={evalHead} />}
+            {evalLens === 'arena' ? (
+              <ArenaOpening embedded head={evalHead} />
+            ) : (
+              <Deferred height="600svh">
+                <D20Chapter id={null} head={evalHead} />
+              </Deferred>
+            )}
           </Suspense>
         </div>
 

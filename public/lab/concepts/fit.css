@@ -1,0 +1,4 @@
+/* Shared by the concept boards: the 1600x1000 board is scaled to fit the window (see fit.js). */
+html,body{width:auto;height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto}
+body{margin:0;position:relative}
+body>.board{position:absolute;left:0;top:0;transform-origin:0 0}
