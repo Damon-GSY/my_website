@@ -235,7 +235,7 @@ function buildShelf(c){
     a.addEventListener('mouseleave',()=>{a.classList.remove('lift');if(document.activeElement!==a)hideTip()});
     a.addEventListener('blur',()=>{a.classList.remove('lift');hideTip()});
     shelfScene.append(a); cartons.push(a);
-    const st=el('a','strip',null,`<span class="ln mono"><span>No. ${p.n} / 06</span><b>${p.fig}</b></span><span class="sn">${esc(p.name)}</span>`);
+    const st=el('a','strip',null,`<span class="ln mono"><span>No. ${p.n}</span><b>${p.fig}</b></span><span class="sn">${esc(p.name)}</span>`);
     st.href='#'+p.slug; st.tabIndex=-1; st.setAttribute('aria-hidden','true');
     st.addEventListener('click',e=>{e.preventDefault();go(p.slug)});
     a._strip=st; strips.push(st);
