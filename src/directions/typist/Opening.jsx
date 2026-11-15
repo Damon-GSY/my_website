@@ -421,20 +421,20 @@ const POLICIES = {
   pi_grpo: {
     id: 'pi_grpo',
     badge: 'π_GRPO',
-    label: { en: 'RL Verified · Ours', zh: 'RL 实证 · 当前策略' },
-    rewardCode: 'R = +2.65 · VERIFIED',
+    label: { en: 'RL Policy · Ours', zh: 'RL 策略 · 当前策略' },
+    rewardCode: 'R = +2.65 · ILLUSTRATIVE',
     rewardTone: 'verified',
     summary: {
       en: 'GRPO group-relative advantage locks onto verifiable engineering claims and production telemetry.',
       zh: 'GRPO 组相对优势锁定可验证的工程主张与真实生产数据。',
     },
     ledgerStatus: {
-      en: 'VERIFIED POLICY LOCKED · PRODUCTION TELEMETRY GROUNDED',
-      zh: '实证策略已锁定 · 真实生产遥测对齐',
+      en: 'ILLUSTRATIVE POLICY REWARD · RÉSUMÉ FIGURES SHOWN AS CHIPS',
+      zh: '示意策略奖励 · 芯片为简历事实',
     },
     ledgerChips: {
-      en: ['≈90% fewer misoperations', '100+ tools', '530 samples', 'R = +2.65 · VERIFIED'],
-      zh: ['误操作约减少 90%', '100+ 工具', '530 条样本', 'R = +2.65 · VERIFIED'],
+      en: ['≈90% fewer misoperations', '100+ tools', '530 samples', 'R = +2.65 · ILLUSTRATIVE'],
+      zh: ['误操作约减少 90%', '100+ 工具', '530 条样本', 'R = +2.65 · 示意'],
     },
     tokens: {
       en: [
@@ -807,6 +807,7 @@ function PolicyBar({ policyId, onSelectPolicy, t }) {
           );
         })}
       </div>
+      <p className="ty-illus mono">{t({ en: 'Illustrative values — not measurements.', zh: '示意数值，并非实测。' })}</p>
     </section>
   );
 }
@@ -849,6 +850,7 @@ function TypistStage({
             H(p) = <strong>{distribution.entropy.toFixed(2)} bits</strong>
           </span>
         </div>
+        <p className="ty-illus mono">{t({ en: 'Illustrative values — not measurements.', zh: '示意数值，并非实测。' })}</p>
       </div>
 
       {/* Upper 3D Perspective Rejected-Token Cloud */}
@@ -1273,6 +1275,7 @@ function LogitInspector({
           </div>
         )}
       </div>
+      <p className="ty-illus ty-illus-wide mono">{t({ en: 'Illustrative values — not measurements.', zh: '示意数值，并非实测。' })}</p>
     </section>
   );
 }

@@ -284,6 +284,14 @@
   color: var(--city-orange);
 }
 
+.city-illus {
+  margin: 0;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--city-muted);
+}
+
 .city-formula-note {
   font-family: var(--serif);
   font-size: 0.96rem;

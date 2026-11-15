@@ -634,6 +634,14 @@
   background: var(--magenta);
 }
 
+.receipt-illus {
+  margin: 0;
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--receipt-muted);
+}
+
 .receipt-delta-row {
   display: flex;
   justify-content: space-between;

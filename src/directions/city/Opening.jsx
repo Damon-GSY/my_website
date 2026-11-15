@@ -63,8 +63,8 @@ const COPY = {
   eyebrow: { en: '12 · city — Architectural Scale Study', zh: '12 · city — 建筑尺度研究' },
   title: { en: 'Every tower is a real figure.', zh: '每一座高楼，都是真实数据。' },
   subtitle: {
-    en: 'Six verified engineering scales built to log₁₀ elevation. Flatten the skyline into an orthographic bar chart—or toggle linear scale to see why logs matter.',
-    zh: '六项经过验证的工程尺度按 log₁₀ 比例建造。拉平镜头化作正交柱状图，或切换至线性比例，直观看见对数坐标的意义。',
+    en: 'Six engineering figures built to log₁₀ elevation. Flatten the skyline into an orthographic bar chart—or toggle linear scale to see why logs matter.',
+    zh: '六项工程数据按 log₁₀ 比例建造。拉平镜头化作正交柱状图，或切换至线性比例，直观看见对数坐标的意义。',
   },
   paperVellum: { en: 'Vellum #f2efe8', zh: '牛皮图纸 #f2efe8' },
   paperBlueprint: { en: 'Blueprint Grid', zh: '蓝图网格' },
@@ -162,8 +162,8 @@ function buildMonoliths() {
         zh: '在持续变化的工具池上做 Agentic RL，人工工单处理约减少 90%。',
       },
       rationale: {
-        en: 'Instead of hardcoding static prompt schemas, policy optimization trains the model to inspect and bind 100+ evolving runtime tools on demand.',
-        zh: '不靠静态提示词硬编码工具列表，而通过 Agentic RL 让策略在运行时按需检索并绑定 100+ 持续变更的工具接口。',
+        en: 'Instead of hardcoding static prompt schemas, policy optimization trains the model to inspect and bind 100+ evolving runtime tools on demand. Its ≈90% less manual ticket handling is a different figure from the ≈90% fewer misoperations at tower 04.',
+        zh: '不靠静态提示词硬编码工具列表，而通过 Agentic RL 让策略在运行时按需检索并绑定 100+ 持续变更的工具接口。其「人工工单处理约减少 90%」与第 04 塔的「误操作约减少 90%」是两项不同的数据。',
       },
       workRef: tools,
     },
@@ -174,8 +174,8 @@ function buildMonoliths() {
       display: agent?.metric ?? '≈90%',
       title: agent?.title ?? 'Supply Chain Agent System',
       shortTitle: { en: ['Agent', 'System'], zh: ['供应链', '智能体'] },
-      unit: { en: 'fewer misoperations & tickets', zh: '误操作与工单双降' },
-      shortUnit: { en: 'REDUCTION', zh: '降幅' },
+      unit: { en: '≈90% fewer misoperations (a rate, shown for scale)', zh: '误操作约减少 90%（这是比率，仅为比例示意）' },
+      shortUnit: { en: 'RATE · FOR SCALE', zh: '比率·示意' },
       source: joinParts([agent?.where, agent?.year]) || 'Alibaba · 2025',
       axis: { en: 'Production · Reliability & Guardrails', zh: '生产轴 · 稳定性与护栏' },
       summary: agent?.line ?? {
@@ -183,8 +183,8 @@ function buildMonoliths() {
         zh: '在 12 个供应链场景中，按风险分级做多轮决策与渐进式确认。',
       },
       rationale: {
-        en: 'Internal production outcome linking policy training with interface constraints: bounding tool authority cut both operational mistakes and manual ticket escalations by ~90%.',
-        zh: '将后训练与权限边界结合的生产实测结果：误操作与人工工单升级率同时降低约 90%。',
+        en: 'This tower is the ≈90% fewer misoperations figure (Supply Chain Agent System, 12 scenarios, internal). It is a rate, not a count: the height of 90 is plotted for scale only. The separate ≈90% less manual ticket handling belongs to Dynamic Tool Resolution.',
+        zh: '本塔为「误操作约减少 90%」（供应链智能体系统，12 个场景，内部数据）。这是比率而非计数，90 的高度仅为比例示意。「人工工单处理约减少 90%」是动态工具解析的另一项数据。',
       },
       workRef: agent,
     },
@@ -740,6 +740,7 @@ export default function CityOpening({ embedded = false, head = null }) {
             </div>
 
             <p className="city-formula-note">{t(scaleMode === 'log' ? COPY.formulaLog : COPY.formulaLinear)}</p>
+            <p className="city-illus mono">{t({ en: 'Illustrative values — not measurements.', zh: '示意数值，并非实测。' })}</p>
           </div>
         </div>
 
@@ -1200,7 +1201,7 @@ export default function CityOpening({ embedded = false, head = null }) {
                   {t(COPY.canvasHint)}
                 </text>
                 <text x={SVG_W - 28} y={SVG_H - 26} textAnchor="end">
-                  DATUM Z = 0.00 · UNITS: VERIFIED SCALE
+                  DATUM Z = 0.00 · UNITS: ILLUSTRATIVE SCALE
                 </text>
               </g>
             </svg>
@@ -1262,6 +1263,7 @@ export default function CityOpening({ embedded = false, head = null }) {
                 </div>
                 <span className="mono city-meter-val">{inspectedLinPct.toFixed(1)}%</span>
               </div>
+              <p className="city-illus mono">{t({ en: 'Illustrative values — not measurements.', zh: '示意数值，并非实测。' })}</p>
             </div>
           </aside>
         </div>

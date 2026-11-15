@@ -28,7 +28,7 @@ const WORK_AUDIT_NOTES = {
       v: { en: 'Risk-tiered gating + progressive confirmation', zh: '按风险分级门控 + 渐进式人工确认' },
     },
     {
-      k: { en: 'VERIFIED', zh: '验证' },
+      k: { en: 'RESULT', zh: '结果' },
       v: { en: '≈90% fewer production misoperations (internal)', zh: '内部生产环境误操作率降低约 90%' },
     },
   ],
@@ -42,7 +42,7 @@ const WORK_AUDIT_NOTES = {
       v: { en: 'Agentic RL over changing schemas & recovery', zh: '面向变化工具集的 Agentic RL 与错误恢复' },
     },
     {
-      k: { en: 'VERIFIED', zh: '验证' },
+      k: { en: 'RESULT', zh: '结果' },
       v: { en: '≈90% reduction in manual ticket handling', zh: '人工工单处理量约减少 90%' },
     },
   ],
@@ -56,7 +56,7 @@ const WORK_AUDIT_NOTES = {
       v: { en: 'Domain knowledge QA × multi-step tool use', zh: '双维度评测：领域知识问答 × 工具调用' },
     },
     {
-      k: { en: 'VERIFIED', zh: '验证' },
+      k: { en: 'RESULT', zh: '结果' },
       v: { en: 'Internal dual-axis benchmark SOTA', zh: '内部双维度基准达到 SOTA' },
     },
   ],
@@ -70,7 +70,7 @@ const WORK_AUDIT_NOTES = {
       v: { en: 'Fulfillment, bundle consolidation & HS Code', zh: '履约决策、合包优化与海关 HS Code' },
     },
     {
-      k: { en: 'VERIFIED', zh: '验证' },
+      k: { en: 'RESULT', zh: '结果' },
       v: { en: 'Stabilised convergence across competing metrics', zh: '多目标冲突下保持稳定收敛' },
     },
   ],
@@ -84,7 +84,7 @@ const WORK_AUDIT_NOTES = {
       v: { en: 'Long-context email retrieval & multi-turn eval', zh: '邮件工作流长上下文检索与多轮一致性评测' },
     },
     {
-      k: { en: 'VERIFIED', zh: '验证' },
+      k: { en: 'RESULT', zh: '结果' },
       v: { en: 'Utility evaluated without irrelevant leakage', zh: '验证记忆增益并抑制无关上下文泄漏' },
     },
   ],
@@ -252,7 +252,7 @@ function StampSeal({ stamp }) {
     >
       <div className="receipt-stamp-inner">
         <strong>PAID IN EVIDENCE</strong>
-        <span>{'// VERIFIED PRODUCTION METRIC'}</span>
+        <span>{'// ILLUSTRATIVE STAMP'}</span>
       </div>
     </div>
   );
@@ -602,6 +602,9 @@ export default function ReceiptOpening({ embedded = false, head = null }) {
                     <span>{t(COPY.mathMisops)}</span>
                     <strong>-90%</strong>
                   </div>
+                  <p className="receipt-illus mono">
+                    {t({ en: 'Illustrative values — not measurements.', zh: '示意数值，并非实测。' })}
+                  </p>
                 </section>
 
                 <div className="receipt-rule" aria-hidden="true" />
