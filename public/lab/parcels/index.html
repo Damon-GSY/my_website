@@ -61,6 +61,12 @@ a{color:inherit}
 .bc{display:block;width:40px;height:13px;background:repeating-linear-gradient(90deg,#0d0d0d 0 1px,transparent 1px 3px,#0d0d0d 3px 5px,transparent 5px 6px,#0d0d0d 6px 7px,transparent 7px 9px)}
 .tip{position:absolute;z-index:6;background:var(--ink);color:#fff;font-size:11px;padding:6px 9px;transform:translateX(-50%);pointer-events:none;white-space:nowrap;opacity:0;transition:opacity .15s}
 .tip.on{opacity:1}
+.strip{position:absolute;z-index:4;display:none;flex-direction:column;gap:5px;padding:8px 10px 9px;background:#fff;box-shadow:0 0 0 1px rgba(13,13,13,.16),0 10px 18px -14px rgba(0,0,0,.35);text-decoration:none;cursor:pointer}
+.strip:before{content:'';position:absolute;left:calc(50% - 9px);top:-6px;width:18px;height:6px;background:var(--accent)}
+.strip .ln{display:flex;justify-content:space-between;align-items:baseline;gap:8px;color:#6d6d6b;font-size:10px}
+.strip .ln b{font-family:'Archivo',sans-serif;font-weight:900;font-size:19px;letter-spacing:-.04em;line-height:.9;color:var(--ink);text-transform:none}
+.strip .sn{font-weight:740;font-size:14px;line-height:1.12;letter-spacing:-.015em;color:var(--ink)}
+.strip.on{box-shadow:0 0 0 1.5px var(--ink)}
 /* opener: one carton built at page size */
 .olayer[hidden]{display:none}
 .ocarton{position:absolute;left:calc(var(--W) / -2);top:calc(var(--D) / -2);width:var(--W);height:var(--D)}
@@ -83,20 +89,20 @@ a{color:inherit}
 .lid>.in{background:#f0efeb}
 .sw{position:absolute;left:0;top:0;transform-origin:0 0;transform:scale(3.3333)}
 /* inside print = the case study */
-.pin{background:#fbfbf9;box-shadow:inset 0 0 0 1px var(--hair);padding:26px 30px;font-size:16.5px;line-height:1.5;color:#2b2b2a;user-select:text;-webkit-user-select:text;cursor:auto}
+.pin{background:#fbfbf9;box-shadow:inset 0 0 0 1px var(--hair);padding:26px 30px;font-size:17.5px;line-height:1.48;color:#2b2b2a;user-select:text;-webkit-user-select:text;cursor:auto}
 .pin h2{font-weight:760;font-size:24px;letter-spacing:-.025em;line-height:1.1;color:var(--ink);margin:14px 0 10px}
 .pin .mono{font-size:11.5px}
 .pbase{background:#fff;box-shadow:0 0 0 1px var(--hair),0 40px 80px -50px rgba(0,0,0,.45);display:flex;flex-direction:column;justify-content:space-between;padding:28px 34px 30px}
 .pbase h1{font-weight:880;font-size:50px;line-height:.93;letter-spacing:-.045em;color:var(--ink);max-width:430px;outline:none}
 .met{display:flex;align-items:flex-end;justify-content:space-between;gap:20px}
 .met b{font-weight:900;font-size:124px;letter-spacing:-.06em;line-height:.78;color:var(--ink)}
-.met span{font-size:15px;color:#555;text-align:right;line-height:1.4}
+.met span{font-size:16.5px;color:#555;text-align:right;line-height:1.4}
 .ptop{display:flex;flex-direction:column;justify-content:space-between}
 .ptop .row,.pbot .row{display:flex;justify-content:space-between;align-items:baseline}
-.slip{display:grid;grid-template-columns:140px 1fr;gap:6px 18px;font-size:15.5px;margin-top:6px}
+.slip{display:grid;grid-template-columns:140px 1fr;gap:6px 18px;font-size:16.5px;margin-top:6px}
 .slip dt{font-family:'Cartograph CF',ui-monospace,monospace;text-transform:uppercase;letter-spacing:.06em;font-size:11px;color:var(--muted);padding-top:4px}
 .slip dd{color:var(--ink)}
-.fn{font-size:13px;color:#6d6d6b;line-height:1.4}
+.fn{font-size:14px;color:#6d6d6b;line-height:1.4}
 .go{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:780;font-size:22px;letter-spacing:-.025em;color:var(--ink);padding:4px 0;border-bottom:2px solid var(--ink);align-self:flex-start}
 .go:hover{color:var(--accent);border-color:var(--accent)}
 .ptop .end{display:flex;align-items:flex-end;justify-content:space-between}
@@ -107,19 +113,19 @@ a{color:inherit}
 .nextcard b{font-weight:900;font-size:52px;letter-spacing:-.05em;line-height:.8;grid-row:1 / span 2;grid-column:2}
 .nextcard .mono{grid-column:1}
 .nextcard:hover .nm,.nextcard:focus-visible .nm{color:var(--accent)}
-.torn{position:absolute;left:calc(50% - 40px);width:80px;height:70px;bottom:0;background:linear-gradient(90deg,#ff2d8a,#ff4b9b 50%,#e81f7a);clip-path:polygon(0 100%,0 30%,22% 8%,40% 34%,62% 0,80% 26%,100% 12%,100% 100%);opacity:.95}
 /* phone */
 @media (max-width:759px){
   .nav{padding:0 16px}
   .nav .brand{font-size:17px}
   .copy{left:16px;right:16px;top:28px}
   .copy .lede{font-size:15px}
+  .strip{display:flex}
   .foot{left:16px;right:16px;bottom:16px}
   .olayer{position:relative;inset:auto;perspective:none;padding:20px 16px 40px}
   .oscene,.ocarton{position:static;width:auto;height:auto;transform:none}
   .oscene,.ocarton,.flap,.pnl{transform-style:flat}
   .ocarton{display:flex;flex-direction:column;gap:0}
-  .oshadow,.out,.lid,.torn{display:none}
+  .oshadow,.out,.lid{display:none}
   .pnl,.flap{position:relative;left:auto;top:auto;width:auto;height:auto;transform-origin:50% 0}
   .in{position:relative;inset:auto}
   .pin{padding:20px 20px 22px;font-size:16px}
@@ -190,7 +196,7 @@ const P=[
   held:['Evaluate before training','The benchmark is the measure: build it first, then train against it.']}
 ];
 const FOOT='Production figures are internal measurements, not public benchmarks.';
-const K=0.3, W=168, D=102, H=90, LZ=70, LR=-6;           // shelf carton = open carton x 0.3
+const K=0.3, W=168, D=102, H=90, LZ=70, LR=-6, GYM=196, RXM=44;           // shelf carton = open carton x 0.3
 const NET_W=1160, NET_H=940, DUR=900, DUR_CLOSE=700;
 const $=id=>document.getElementById(id);
 const stage=$('stage'), shelfLayer=$('shelfLayer'), olayer=$('olayer'), oscene=$('oscene'), ocarton=$('ocarton'),
@@ -198,14 +204,14 @@ const stage=$('stage'), shelfLayer=$('shelfLayer'), olayer=$('olayer'), oscene=$
 const fl={fb:$('fb'),ff:$('ff'),fl:$('fl'),fr:$('fr'),lid:$('lid'),base:$('base')};
 const RM=matchMedia('(prefers-reduced-motion: reduce)');
 const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
-let mobile=false, cols=0, cartons=[], shelfScene=null, G={}, cur=-1, busy=false, anims=[];
+let mobile=false, cols=0, cartons=[], strips=[], shelfScene=null, G={}, cur=-1, busy=false, anims=[];
 
 function el(tag,cls,style,html){const e=document.createElement(tag);if(cls)e.className=cls;if(style)e.style.cssText=style;if(html!=null)e.innerHTML=html;return e}
 const labelHTML=p=>`<div class="tape fr"></div><div class="label"><div class="ln mono"><span>Parcel ${p.n}/06</span><span>Fragile</span></div><div class="nm">${esc(p.name)}</div><div class="big"><span>${p.fig}</span><span class="bc"></span></div></div>`;
 
 function buildShelf(c){
-  cols=c; shelfLayer.innerHTML=''; cartons=[];
-  const rows=Math.ceil(P.length/c), GX=c===3?44:30, GY=c===3?56:44;
+  cols=c; shelfLayer.innerHTML=''; cartons=[]; strips=[];
+  const rows=Math.ceil(P.length/c), GX=c===3?44:30, GY=c===3?56:GYM;
   const gw=c*W+(c-1)*GX, gd=rows*D+(rows-1)*GY;
   shelfScene=el('div','scene');
   shelfScene.append(el('div','floor',`left:${-gw/2-200}px;top:${-gd/2-160}px;width:${gw+400}px;height:${gd+320}px`));
@@ -229,29 +235,42 @@ function buildShelf(c){
     a.addEventListener('mouseleave',()=>{a.classList.remove('lift');if(document.activeElement!==a)hideTip()});
     a.addEventListener('blur',()=>{a.classList.remove('lift');hideTip()});
     shelfScene.append(a); cartons.push(a);
+    const st=el('a','strip',null,`<span class="ln mono"><span>Parcel ${p.n}/06</span><b>${p.fig}</b></span><span class="sn">${esc(p.name)}</span>`);
+    st.href='#'+p.slug; st.tabIndex=-1; st.setAttribute('aria-hidden','true');
+    st.addEventListener('click',e=>{e.preventDefault();go(p.slug)});
+    a._strip=st; strips.push(st);
   });
-  shelfLayer.append(shelfScene);
+  shelfLayer.append(shelfScene,...strips);
 }
 function showTip(i){
   if(cur>=0||busy)return;
+  if(mobile){strips.forEach((s,k)=>s.classList.toggle('on',k===i));return}
   const r=cartons[i].querySelector('.front').getBoundingClientRect(), s=stage.getBoundingClientRect();
   tip.textContent=`Open ${P[i].n} · ${P[i].name}`;
   tip.style.left=Math.min(Math.max(r.left+r.width/2-s.left,130),s.width-130)+'px';
   tip.style.top=(r.bottom-s.top+18)+'px'; tip.classList.add('on');
 }
-function hideTip(){tip.classList.remove('on')}
+function hideTip(){tip.classList.remove('on');strips.forEach(s=>s.classList.remove('on'))}
 
 function layout(){
   mobile=innerWidth<760;
   if(cols!==(mobile?2:3)){buildShelf(mobile?2:3); if(cur>=0) cartons[cur].classList.add('gone')}
-  const navH=56, sw=stage.clientWidth, sh=Math.max(mobile?720:600,innerHeight-navH);
-  const sx=mobile?sw/2:sw*0.6, sy=mobile?190+(sh-190)/2:sh*0.55;
-  const ss=mobile?Math.min(sw*0.92/560,(sh-230)/400):Math.max(.55,Math.min(1.3,sw*0.58/650,sh*0.72/400));
-  const fs=Math.max(.5,Math.min(1,(sw-48)/NET_W,(innerHeight-navH-56)/NET_H));
-  G={sw,sh,sx,sy,ss,fs,fx:sw/2,fy:28+fs*NET_H/2,openH:56+fs*NET_H};
-  G.SH=`translate(${sx}px,${sy}px) scale(${ss}) rotateX(57deg) rotateZ(34deg)`;
+  const navH=56, sw=stage.clientWidth, top=copy.offsetHeight+28;
+  // phone: two straight columns, each carton with a readable label strip below it
+  const ss=mobile?Math.min(1,(sw-48)/2/(W+30)):Math.max(.55,Math.min(1.3,sw*0.58/650,(innerHeight-navH)*0.72/400));
+  const gridH=mobile?3*(D+GYM)*ss*Math.cos(RXM*Math.PI/180)+H*ss:0;
+  const sh=mobile?Math.max(innerHeight-navH,top+gridH+130):Math.max(600,innerHeight-navH);
+  const sx=mobile?sw/2:sw*0.6, sy=mobile?top+30+gridH/2:sh*0.55;
+  // open net: never shrink the side-panel type below ~16px; let the page scroll a little instead
+  const fs=Math.max(.5,Math.min(1,(sw-48)/NET_W,Math.max(.92,(innerHeight-navH-40)/NET_H)));
+  G={sw,sh,sx,sy,ss,fs,fx:sw/2,fy:28+fs*NET_H/2,openH:84+fs*NET_H};
+  G.SH=mobile?`translate(${sx}px,${sy}px) scale(${ss}) rotateX(${RXM}deg) rotateZ(0deg)`:`translate(${sx}px,${sy}px) scale(${ss}) rotateX(57deg) rotateZ(34deg)`;
   shelfScene.style.transform=G.SH;
-  const po=`${sw/2}px ${sh*0.2}px`;
+  if(mobile){stage.style.height=sh+'px';const s=stage.getBoundingClientRect(),cw=Math.min(190,(sw-44)/2);
+    cartons.forEach(a=>{const r=a.querySelector('.front').getBoundingClientRect(),st=a._strip;
+      st.style.width=cw+'px';st.style.left=Math.round(Math.min(Math.max(r.left+r.width/2-s.left-cw/2,16),sw-16-cw))+'px';st.style.top=Math.round(r.bottom-s.top+16)+'px'})}
+  const po=mobile?`${sw/2}px ${sy}px`:`${sw/2}px ${sh*0.2}px`;
+  shelfLayer.style.perspective=mobile?'2600px':'';
   shelfLayer.style.perspectiveOrigin=po; olayer.style.perspectiveOrigin=po;
   setStatic(cur>=0);
 }
