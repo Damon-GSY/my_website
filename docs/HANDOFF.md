@@ -2,7 +2,7 @@
 
 ## Start here (2026-11-15, stopped at the 75% usage line)
 
-Work stopped because the 5-hour usage window reached Damon's stop line (73% when this was written, with one build still running). Everything below is on `claude/serene-cori-mookmf`. Sections further down are older and partly superseded; this one is current.
+Work stopped because the 5-hour usage window reached Damon's stop line (73% when this was written; the parcels build finished just after). Everything below is on `claude/serene-cori-mookmf`. Sections further down are older and partly superseded; this one is current.
 
 ### What exists now
 
@@ -18,7 +18,7 @@ Work stopped because the 5-hour usage window reached Damon's stop line (73% when
 | `/lab/bento/` | Damon's "Maya Lind" bento prompt | Done; Damon's commit edited it slightly |
 | `/lab/night/` | Damon's "Helion Dispatch" prompt | Done, checked desktop + phone |
 | `/lab/agent/` | Plan 03 | **Done this session.** All "Done when" items met by script at `?speed=3`; contact sheet looked at |
-| `/lab/parcels/` | Plan 02 | **Build was still running when this was written.** Check `git log -- public/lab/parcels` and open the page before trusting it |
+| `/lab/parcels/` | Plan 02 | **Done this session.** All four "Done when" items met by script; contact sheet looked at by the build agent. One last fix (a tape stub over the "Next parcel" card) was not re-screenshotted. The "What it is" / "How it is held" panel copy was written as principles, not new claims; Damon should review it |
 | `/lab/concepts/*.html` | — | Eight static concept boards (mountain, parcels, agent, paper, typist, shadow, receipt, city) |
 
 Only `/lab/pill/`, `/lab/bento/` and `/lab/night/` are linked from the chooser; **`/lab/agent/` and `/lab/parcels/` still need entries in `src/pages/Chooser.jsx`** (entries accept an `href`).
@@ -29,7 +29,7 @@ Plan: `docs/plans/2026-11-15-six-studies-plan.md` (shared rules, then one sectio
 
 | Study | Status |
 | --- | --- |
-| 02 Every link is a parcel | In progress at stop (see above) |
+| 02 Every link is a parcel | Done |
 | 03 The site behaves like his agent | Done |
 | 04 Crumpled paper | **Not started.** Largest of the six (needs WebGL, a crumpled mesh and a texture/DOM swap). Next to build |
 | 05 Typing machine | Exists in Damon's commit as `/typist` (React). Not compared against the plan yet |
@@ -45,11 +45,10 @@ Plan: `docs/plans/2026-11-15-six-studies-plan.md` (shared rules, then one sectio
 
 ### Next steps, in order
 
-1. Look at `/lab/parcels/` and finish it against plan 02 if the build stopped short.
-2. Add chooser links for `/lab/agent/` and `/lab/parcels/`.
-3. Build 04 crumpled paper from the plan.
-4. Compare Damon's `/typist`, `/receipt` and `/city` against plan sections 05, 07 and 08 and list the gaps (do not rebuild them).
-5. Ask Damon which studies, or parts of them, go into the home page.
+1. Add chooser links for `/lab/agent/` and `/lab/parcels/`.
+2. Build 04 crumpled paper from the plan.
+3. Compare Damon's `/typist`, `/receipt` and `/city` against plan sections 05, 07 and 08 and list the gaps (do not rebuild them).
+4. Ask Damon which studies, or parts of them, go into the home page.
 
 ### Still open from Damon
 
