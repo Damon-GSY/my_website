@@ -160,3 +160,10 @@ Built from this list already: the d20 chapter (`/d20`, and `#evaluate` on the ho
 - Current employer and city: blank on purpose; fill in `src/content.js` (`org`, `city`).
 - Contact email: `hello@damon.ai` is a stand-in he will change, also in `src/content.js`.
 - Usage: resuming a long idle session re-reads the whole conversation and costs about 20 points of the 5-hour limit in one request. Prefer a fresh session that starts from this file, and use subagents for build work.
+
+## Update 2026-11-15
+
+- Concept boards for all eight unbuilt ideas are in `public/lab/concepts/` (one HTML board each: mountain, parcels, agent, paper, typist, shadow, receipt, city).
+- Damon approved: ink, bento, night, pill (all built) and concepts 02 parcels, 03 agent, 04 paper, 05 typist, 07 receipt, 08 city. He did not pick 01 mountain or 06 shadow.
+- Builds of 02, 07 and 03 were started and stopped at his request before any file was written. Detailed build plans for the six approved concepts are in `docs/plans/2026-11-15-six-studies-plan.md`.
+- Next step is his call: which of the six to build, in what order. His stop line for subagent work is 75% of the 5-hour usage window.
