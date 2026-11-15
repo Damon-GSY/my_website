@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1600">
+<title>Concept 04 · Crumpled paper</title>
+<style>
+@font-face{font-family:'Archivo';src:url('archivo.woff2') format('woff2-variations');font-weight:100 900;font-stretch:62% 125%}
+@font-face{font-family:'Cartograph CF';src:url('/fonts/CartographCF-Regular.woff2') format('woff2');font-weight:400}
+:root{--bg:#f4f4f2;--ink:#0d0d0d;--muted:#8a8a88;--hair:#d9d9d5;--accent:#ff2d8a;--cobalt:#1a3cff;--magenta:#ff2d8a;--tangerine:#ff7a1a}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1600px;height:1000px;overflow:hidden;background:var(--bg);color:var(--ink)}
+body{font-family:'Archivo',system-ui,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
+.mono{font-family:'Cartograph CF',ui-monospace,monospace;text-transform:uppercase;letter-spacing:.06em;font-size:11px}
+.board{position:relative;width:1600px;height:1000px;padding:0 30px 30px;display:flex;flex-direction:column}
+/* header */
+.hd{height:170px;padding-top:34px;display:grid;grid-template-columns:auto 1fr auto;align-items:end;gap:26px;padding-bottom:20px;border-bottom:1px solid var(--ink)}
+.hd .no{font-weight:900;font-size:128px;line-height:.76;letter-spacing:-.06em;color:var(--accent);font-stretch:100%}
+.hd h1{font-weight:850;font-size:60px;line-height:.95;letter-spacing:-.04em;font-stretch:96%}
+.hd p{margin-top:12px;font-size:19px;line-height:1.35;color:#3b3b3a;letter-spacing:-.005em;max-width:880px}
+.hd .rt{text-align:right;display:flex;flex-direction:column;gap:7px;align-items:flex-end}
+.hd .rt .dim{font-weight:900;font-size:30px;letter-spacing:-.04em;line-height:1}
+.hd .rt .dim span{color:var(--accent)}
+.hd .rt .fr{display:flex;gap:14px;color:var(--muted)}
+.hd .rt .fr b{color:var(--ink);font-weight:400}
+/* frames */
+.frames{margin-top:auto;display:grid;grid-template-columns:repeat(3,500px);gap:20px}
+.fw{position:relative}
+.frame{position:relative;width:500px;height:312.5px;overflow:hidden;background:var(--bg);outline:1px solid var(--hair);box-shadow:0 1px 0 rgba(0,0,0,.03),0 18px 40px -24px rgba(0,0,0,.25)}
+.vp{position:absolute;left:0;top:0;width:960px;height:600px;transform:scale(.520833);transform-origin:0 0;overflow:hidden;background:var(--bg)}
+.arrow{position:absolute;top:146px;right:-17px;z-index:3;width:14px;height:14px;color:var(--ink)}
+.cap{margin-top:16px;display:grid;grid-template-columns:78px 1fr;column-gap:12px;row-gap:4px}
+.cap .k{color:var(--accent);padding-top:3px}
+.cap h3{font-weight:750;font-size:19px;letter-spacing:-.02em;line-height:1.15}
+.cap p{grid-column:2;font-size:14.5px;line-height:1.42;color:#4a4a48}
+/* rail */
+.rail{margin-top:30px;position:relative;height:44px}
+.rail .tk{position:absolute;left:0;right:0;top:26px;height:6px;background:repeating-linear-gradient(90deg,rgba(13,13,13,.3) 0 1px,transparent 1px 13px);-webkit-mask-image:linear-gradient(90deg,#000 0%,rgba(0,0,0,.25) 100%)}
+.rail .tk2{position:absolute;left:0;right:0;top:22px;height:18px;background:repeating-linear-gradient(90deg,#0d0d0d 0 1px,transparent 1px 520px)}
+.rail .ln{position:absolute;left:0;right:0;top:14px;height:1px;background:linear-gradient(90deg,var(--ink),var(--ink) 50%,var(--hair))}
+.rail .t{position:absolute;top:0;background:var(--bg);padding:0 10px;color:var(--muted)}
+.rail .t b{color:var(--ink);font-weight:400}
+/* notes */
+.notes{margin-top:auto;margin-bottom:26px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;border-top:1px solid var(--hair);padding-top:20px}
+.notes .n .mono{color:var(--muted);margin-bottom:9px;display:flex;gap:10px}
+.notes .n .mono i{font-style:normal;color:var(--accent)}
+.notes .n p{font-size:19px;line-height:1.42;letter-spacing:-.01em;max-width:470px}
+.foot{position:absolute;left:30px;right:30px;bottom:12px;display:flex;justify-content:space-between;color:#b2b2ae;font-size:9.5px}
+/* site chrome used inside viewports */
+.chrome{position:absolute;left:0;right:0;top:0;height:30px;background:#ebebe8;border-bottom:1px solid var(--hair);display:flex;align-items:center;gap:7px;padding:0 14px;z-index:20}
+.chrome i{width:9px;height:9px;border-radius:50%;background:#cfcfcb;display:block}
+.chrome .url{margin-left:14px;height:18px;flex:0 0 340px;border-radius:9px;background:#f7f7f5;display:flex;align-items:center;padding:0 10px;font-size:10px;color:#7c7c7a}
+.nav{position:absolute;left:0;right:0;top:30px;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;z-index:19;font-size:15px}
+.nav .brand{font-weight:850;letter-spacing:-.035em;font-size:19px}
+.nav .brand em{font-style:normal;color:var(--muted);font-weight:500}
+.nav .links{display:flex;gap:6px;color:#222}
+.nav .links span{color:#b4b4b0}
+.vp canvas{position:absolute;left:0;top:0;width:960px;height:600px}
+.hint{position:absolute;z-index:25;font-size:11px;color:#7a7a78}
+.hint b{font-weight:400;color:#ff2d8a}
+</style>
+</head>
+<body>
+<div class="board">
+  <header class="hd">
+    <div class="no">04</div>
+    <div>
+      <h1>Crumpled paper</h1>
+      <p>The whole site is one printed sheet. Between sections it crumples into a ball, rolls on, and smooths flat again with its creases still faintly there.</p>
+    </div>
+    <div class="rt">
+      <div class="dim">3D <span>&#8644;</span> 2D</div>
+      <div class="fr mono"><span>1 <b>Ball</b></span><span>2 <b>Smoothing</b></span><span>3 <b>Creased page</b></span></div>
+    </div>
+  </header>
+  <section class="frames">
+    <div class="fw">
+      <div class="frame"><div class="vp" id="vp1"><div class="chrome"><i></i><i></i><i></i><div class="url mono" style="text-transform:none;letter-spacing:.02em">damonguan.com/work</div></div><div class="nav"><div class="brand">Damon Guan <em>&mdash;</em></div><div class="links">Work <span>&middot;</span> Evaluate <span>&middot;</span> Path <span>&middot;</span> Notes <span>&middot;</span> Contact</div></div>
+<canvas id="c1" width="1920" height="1200"></canvas>
+<div class="hint mono" style="left:40px;top:104px">Section 01 &rarr; 02 &middot; <b>the page rolls on</b></div>
+<div class="hint mono" style="right:40px;bottom:30px;text-align:right">Scroll to open</div></div></div>
+      <svg class="arrow" viewBox="0 0 14 14"><path d="M1 7h11M8 3l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+      <div class="cap"><div class="k mono">Frame 1</div><h3>The site, crumpled into a ball</h3><p>Leaving a section balls up the sheet. Faceted, shaded, with fragments of the printed Work page still legible on the folds.</p></div>
+    </div>
+    <div class="fw">
+      <div class="frame"><div class="vp" id="vp2"><div class="chrome"><i></i><i></i><i></i><div class="url mono" style="text-transform:none;letter-spacing:.02em">damonguan.com/work</div></div><div class="nav"><div class="brand">Damon Guan <em>&mdash;</em></div><div class="links">Work <span>&middot;</span> Evaluate <span>&middot;</span> Path <span>&middot;</span> Notes <span>&middot;</span> Contact</div></div>
+<canvas id="c2" width="1920" height="1200"></canvas>
+<div class="hint mono" style="left:40px;top:104px">Smoothing &middot; <b>55%</b></div></div></div>
+      <svg class="arrow" viewBox="0 0 14 14"><path d="M1 7h11M8 3l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+      <div class="cap"><div class="k mono">Frame 2</div><h3>Half-open: facets unfold, type returns</h3><p>The sheet relaxes toward flat. Facets open, edges still curl, and the list of projects becomes readable again across the creases.</p></div>
+    </div>
+    <div class="fw">
+      <div class="frame"><div class="vp" id="vp3"><div class="chrome"><i></i><i></i><i></i><div class="url mono" style="text-transform:none;letter-spacing:.02em">damonguan.com/work</div></div><div class="nav"><div class="brand">Damon Guan <em>&mdash;</em></div><div class="links">Work <span>&middot;</span> Evaluate <span>&middot;</span> Path <span>&middot;</span> Notes <span>&middot;</span> Contact</div></div>
+<canvas id="c3" width="1920" height="1200"></canvas></div></div>
+      <div class="cap"><div class="k mono">Frame 3</div><h3>Flat page, creases kept</h3><p>The Work section, plain and readable. Faint crease lines stay across it, so each visit leaves the page slightly handled.</p></div>
+    </div>
+  </section>
+  <div class="rail mono"><div class="ln" style="top:32px"></div><div class="tk"></div><div class="tk2"></div>
+    <span class="t" style="left:0;padding-left:0"><b>Crumpled &middot; 1,280 facets</b></span>
+    <span class="t" style="left:520px"><b>Unfolding &middot; 55% flat</b></span>
+    <span class="t" style="left:1040px"><b>Flat &middot; creases at 6%</b></span>
+  </div>
+  <section class="notes">
+    <div class="n"><div class="mono"><i>A</i>What the visitor does</div><p>Scrolls past the end of a section; the page balls up, rolls aside and opens flat as the next one. Every section carries the creases of the last transition.</p></div>
+    <div class="n"><div class="mono"><i>B</i>Why it is his</div><p>A printed sheet that has been worked on: notes, drafts and evaluations rather than a polished brochure. It reads as someone who prints things and marks them up.</p></div>
+    <div class="n"><div class="mono"><i>C</i>Main risk</div><p>Reading comfort. Crease shading on body text can look like a rendering bug; it must stay under a few percent and never cross small type.</p></div>
+  </section>
+  <div class="foot mono"><span>Damon Guan · site concepts · board 04 / 08</span><span>Static concept still · not a build</span></div>
+</div>
+<script>
+const READY=()=>{document.body.dataset.ready='1'};
+const fontsReady=Promise.all([document.fonts.load("900 100px Archivo"),document.fonts.load("400 20px Archivo"),document.fonts.load("700 20px Archivo"),document.fonts.load("400 12px 'Cartograph CF'")]).then(()=>document.fonts.ready);
+const PS=2, TW=960*PS, TH=514*PS, PAPER='#f9f8f4';
+let seed=7;const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646};
+function makeTexture(){
+  const c=document.createElement('canvas');c.width=TW;c.height=TH;const g=c.getContext('2d');g.scale(PS,PS);
+  g.fillStyle=PAPER;g.fillRect(0,0,960,514);
+  g.fillStyle='#ff2d8a';g.font="400 11px 'Cartograph CF'";g.letterSpacing='0.6px';g.fillText('01 — SELECTED WORK',40,34);
+  g.fillStyle='#8a8a88';g.fillText('SIX PROJECTS · 2026',300,34);
+  g.fillStyle='#0d0d0d';g.font='900 112px Archivo';g.letterSpacing='-5px';g.fillText('Work',34,140);
+  g.font='500 17px Archivo';g.letterSpacing='-0.2px';g.fillStyle='#1d1d1c';
+  ['I train language agents, then measure','whether they hold up on real work.'].forEach((t,i)=>g.fillText(t,560,92+i*23));
+  g.fillStyle='#8a8a88';g.font="400 10px 'Cartograph CF'";g.letterSpacing='0.6px';g.fillText('EVALUATE BEFORE TRAINING',560,148);
+  const rows=[['01','Supply Chain Agent System','AGENTS · 12 SCENARIOS','≈90%'],['02','Dynamic Tool Resolution','TOOLS','100+'],['03','Supply-Chain Domain LLM','MODEL · INTERNAL','SOTA'],
+    ['04','Multi-Objective Attribute RL','RL','GRPO'],['05','M365 Copilot Memory','MEMORY LAYERS','3'],['06','SupChain-Bench','ACL FINDINGS 2026','530']];
+  rows.forEach((r,i)=>{const y=190+i*52;
+    g.fillStyle='#0d0d0d';g.fillRect(40,y,880,i?0.6:1.2);
+    g.fillStyle='#8a8a88';g.font="400 11px 'Cartograph CF'";g.letterSpacing='0.6px';g.fillText(r[0],40,y+32);g.fillText(r[2],520,y+32);
+    g.fillStyle='#0d0d0d';g.font='650 22px Archivo';g.letterSpacing='-0.5px';g.fillText(r[1],90,y+34);
+    g.font='850 28px Archivo';g.letterSpacing='-1.2px';g.textAlign='right';g.fillText(r[3],920,y+36);g.textAlign='left';
+  });
+  g.fillStyle='#0d0d0d';g.fillRect(40,502,880,0.6);
+  return c;
+}
+function affine(g,tex,s,d,sx){ // map texture triangle s -> screen triangle d
+  const [s0,s1,s2]=s,[d0,d1,d2]=d;
+  const den=s0[0]*(s1[1]-s2[1])+s1[0]*(s2[1]-s0[1])+s2[0]*(s0[1]-s1[1]);if(Math.abs(den)<1e-6)return;
+  const a=(d0[0]*(s1[1]-s2[1])+d1[0]*(s2[1]-s0[1])+d2[0]*(s0[1]-s1[1]))/den;
+  const b=(d0[1]*(s1[1]-s2[1])+d1[1]*(s2[1]-s0[1])+d2[1]*(s0[1]-s1[1]))/den;
+  const c=(d0[0]*(s2[0]-s1[0])+d1[0]*(s0[0]-s2[0])+d2[0]*(s1[0]-s0[0]))/den;
+  const dd=(d0[1]*(s2[0]-s1[0])+d1[1]*(s0[0]-s2[0])+d2[1]*(s1[0]-s0[0]))/den;
+  const e=(d0[0]*(s1[0]*s2[1]-s2[0]*s1[1])+d1[0]*(s2[0]*s0[1]-s0[0]*s2[1])+d2[0]*(s0[0]*s1[1]-s1[0]*s0[1]))/den;
+  const f=(d0[1]*(s1[0]*s2[1]-s2[0]*s1[1])+d1[1]*(s2[0]*s0[1]-s0[0]*s2[1])+d2[1]*(s0[0]*s1[1]-s1[0]*s0[1]))/den;
+  g.save();
+  const cx=(d0[0]+d1[0]+d2[0])/3,cy=(d0[1]+d1[1]+d2[1])/3;const inf=p=>{const dx=p[0]-cx,dy=p[1]-cy,l=Math.hypot(dx,dy)||1;return [p[0]+dx/l*0.9,p[1]+dy/l*0.9]};
+  const q=[inf(d0),inf(d1),inf(d2)];
+  g.beginPath();g.moveTo(q[0][0],q[0][1]);g.lineTo(q[1][0],q[1][1]);g.lineTo(q[2][0],q[2][1]);g.closePath();g.clip();
+  g.setTransform(a,b,c,dd,e,f);g.drawImage(tex,0,0);
+  g.restore();
+}
+function tri(g,d,fill){g.beginPath();g.moveTo(d[0][0],d[0][1]);g.lineTo(d[1][0],d[1][1]);g.lineTo(d[2][0],d[2][1]);g.closePath();g.fillStyle=fill;g.fill()}
+const norm=v=>{const l=Math.hypot(v[0],v[1],v[2]);return [v[0]/l,v[1]/l,v[2]/l]};
+const sub=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]],cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+const LIGHT=norm([-0.55,-0.7,0.65]);
+function shadeFace(g,d,n,extra){
+  let l=dot(n,LIGHT); // -1..1
+  l=l+extra;
+  if(l<0.55){g.globalAlpha=Math.min(.62,(0.55-l)*0.78);tri(g,d,'#2a2620')}
+  else{g.globalAlpha=Math.min(.55,(l-0.55)*0.9);tri(g,d,'#ffffff')}
+  g.globalAlpha=1;
+}
+// ---------- crumpled ball ----------
+function icosphere(n){
+  const t=(1+Math.sqrt(5))/2;let V=[[-1,t,0],[1,t,0],[-1,-t,0],[1,-t,0],[0,-1,t],[0,1,t],[0,-1,-t],[0,1,-t],[t,0,-1],[t,0,1],[-t,0,-1],[-t,0,1]].map(norm);
+  let F=[[0,11,5],[0,5,1],[0,1,7],[0,7,10],[0,10,11],[1,5,9],[5,11,4],[11,10,2],[10,7,6],[7,1,8],[3,9,4],[3,4,2],[3,2,6],[3,6,8],[3,8,9],[4,9,5],[2,4,11],[6,2,10],[8,6,7],[9,8,1]];
+  for(let k=0;k<n;k++){const cache={};const mid=(a,b)=>{const key=a<b?a+'_'+b:b+'_'+a;if(cache[key]!=null)return cache[key];V.push(norm([(V[a][0]+V[b][0])/2,(V[a][1]+V[b][1])/2,(V[a][2]+V[b][2])/2]));return cache[key]=V.length-1};
+    const NF=[];for(const [a,b,c] of F){const ab=mid(a,b),bc=mid(b,c),ca=mid(c,a);NF.push([a,ab,ca],[b,bc,ab],[c,ca,bc],[ab,bc,ca])}F=NF}
+  return {V,F};
+}
+function drawBall(cv,tex){
+  const g=cv.getContext('2d');g.fillStyle='#f4f4f2';g.fillRect(0,0,cv.width,cv.height);
+  const S=2,cx=470*S,cy=318*S,R=172*S;
+  // shadow
+  g.save();g.translate(cx+30*S,cy+R*0.93);g.scale(1,0.2);
+  let sg=g.createRadialGradient(0,0,0,0,0,R*1.25);sg.addColorStop(0,'rgba(30,25,18,.42)');sg.addColorStop(.55,'rgba(30,25,18,.16)');sg.addColorStop(1,'rgba(30,25,18,0)');g.fillStyle=sg;g.beginPath();g.arc(0,0,R*1.25,0,7);g.fill();g.restore();
+  seed=11;
+  const {V:V0,F}=icosphere(3);const V=V0.map(v=>norm([v[0]+(rnd()-.5)*.09,v[1]+(rnd()-.5)*.09,v[2]+(rnd()-.5)*.09]));
+  // big crumple: a few random "push" directions + per-vertex jitter
+  const pushes=Array.from({length:26},()=>[norm([rnd()-.5,rnd()-.5,rnd()-.5]),(rnd()-.5)*0.34]);
+  const radius=V.map(v=>{let r=1;for(const [d,a] of pushes){const k=Math.max(0,dot(v,d)-0.7)/0.3;r+=a*k}return r+(rnd()-.5)*0.11});
+  const uv=V.map(v=>[(.5-Math.atan2(v[2],v[0])/(2*Math.PI))*TW+(rnd()-.5)*22,Math.acos(Math.max(-1,Math.min(1,v[1])))/Math.PI*TH+(rnd()-.5)*22]);
+  // rotation
+  const ry=0.9,rx=-0.5,rz=0.3;
+  const rot=v=>{let [x,y,z]=v;let X=x*Math.cos(ry)+z*Math.sin(ry),Z=-x*Math.sin(ry)+z*Math.cos(ry);x=X;z=Z;
+    let Y=y*Math.cos(rx)-z*Math.sin(rx);Z=y*Math.sin(rx)+z*Math.cos(rx);y=Y;z=Z;X=x*Math.cos(rz)-y*Math.sin(rz);Y=x*Math.sin(rz)+y*Math.cos(rz);return [X,Y*0.96,z]};
+  const P=V.map((v,i)=>{const r=rot(v.map(c=>c*radius[i]));return r});
+  const scr=P.map(p=>{const persp=1/(1-p[2]*0.12);return [cx+p[0]*R*persp,cy+p[1]*R*persp,p[2]]});
+  const faces=F.map(f=>({f,z:(P[f[0]][2]+P[f[1]][2]+P[f[2]][2])/3})).sort((a,b)=>a.z-b.z);
+  // patches: each crumple facet group shows a different, rotated piece of the printed sheet
+  const POI=[[180,95],[300,60],[700,100],[240,224],[230,276],[230,328],[250,380],[220,432],[200,484],[860,224],[870,276],[870,328],[880,380],[600,250],[620,350],[140,120],[880,484]];
+  const patches=Array.from({length:34},(_,k)=>{const n=norm([rnd()-.5,rnd()-.5,rnd()-.5]);const up=Math.abs(n[1])<.9?[0,1,0]:[1,0,0];
+    const t1=norm(cross(up,n)),t2=cross(n,t1);const ang=(rnd()-.5)*2.6;const p=POI[k%POI.length];
+    return {n,t1,t2,c:Math.cos(ang),s:Math.sin(ang),ox:(p[0]+(rnd()-.5)*60)*PS,oy:(p[1]+(rnd()-.5)*30)*PS}});
+  for(const {f} of faces){
+    const d=f.map(i=>scr[i]);
+    const area=(d[1][0]-d[0][0])*(d[2][1]-d[0][1])-(d[2][0]-d[0][0])*(d[1][1]-d[0][1]);
+    const n=norm(cross(sub(P[f[1]],P[f[0]]),sub(P[f[2]],P[f[0]])));
+    let nn=[n[0],n[1],n[2]];if(dot(nn,P[f[0]])<0)nn=nn.map(c=>-c);
+    if(nn[2]<-0.05)continue;
+    const c0=norm([V[f[0]][0]+V[f[1]][0]+V[f[2]][0],V[f[0]][1]+V[f[1]][1]+V[f[2]][1],V[f[0]][2]+V[f[1]][2]+V[f[2]][2]]);
+    let best=0,bd=-9;for(let k=0;k<patches.length;k++){const q=dot(c0,patches[k].n);if(q>bd){bd=q;best=k}}
+    const pa=patches[best];
+    const s=f.map(i=>{const v=V[i];const a=dot(v,pa.t1)*R*1.05,b=dot(v,pa.t2)*R*1.05;return [pa.ox+a*pa.c-b*pa.s,pa.oy+a*pa.s+b*pa.c]});
+    affine(g,tex,s,d);
+    const ao=(1-(radius[f[0]]+radius[f[1]]+radius[f[2]])/3)*1.4;
+    // rim darkening toward silhouette
+    const rim=(1-nn[2])*0.35;
+    shadeFace(g,d,[nn[0],nn[1],nn[2]],-ao-rim+ (rnd()-.5)*0.12);
+    g.globalAlpha=.07;g.strokeStyle='#3a342a';g.lineWidth=0.6;g.beginPath();g.moveTo(d[0][0],d[0][1]);g.lineTo(d[1][0],d[1][1]);g.lineTo(d[2][0],d[2][1]);g.closePath();g.stroke();g.globalAlpha=1;
+  }
+}
+// ---------- sheet mesh (shared by frames 2 & 3) ----------
+const GX=16,GY=10;
+function sheetMesh(){
+  seed=29;const verts=[];
+  for(let j=0;j<=GY;j++)for(let i=0;i<=GX;i++){
+    const edge=(i===0||i===GX||j===0||j===GY);
+    const jx=edge&&(i===0||i===GX)?0:(rnd()-.5)*0.6, jy=edge&&(j===0||j===GY)?0:(rnd()-.5)*0.6;
+    verts.push({u:(i+jx)/GX,v:(j+jy)/GY,r:rnd(),r2:rnd()});
+  }
+  const tris=[];
+  for(let j=0;j<GY;j++)for(let i=0;i<GX;i++){const a=j*(GX+1)+i,b=a+1,c=a+GX+1,d=c+1;
+    if(rnd()<.5){tris.push([a,b,d],[a,d,c])}else{tris.push([a,b,c],[b,d,c])}}
+  return {verts,tris};
+}
+function drawSheet(cv,tex,mesh){
+  const g=cv.getContext('2d');g.fillStyle='#f4f4f2';g.fillRect(0,0,cv.width,cv.height);const S=2;
+  const SW=700,SH=SW*514/960;
+  // 3D positions: crumple field, curling edges, slight inward pull
+  const P=mesh.verts.map(p=>{
+    const x=(p.u-.5),y=(p.v-.5);
+    const ed=Math.max(Math.abs(x)/.5,Math.abs(y)/.5);
+    let z=(p.r-.5)*30+ (p.r2-.5)*12 + Math.pow(ed,3)*44*(0.6+p.r2*0.8) + Math.sin(x*9+1)*6;
+    const pull=0.93+0.05*(1-ed);
+    return [x*SW*pull,y*SH*pull,z];
+  });
+  // camera: tilt back about X, slight yaw
+  const tx=0.72,yw=-0.14,dist=1500,cx=480*S,cy=340*S;
+  const cam=p=>{let [x,y,z]=p;let X=x*Math.cos(yw)-y*Math.sin(yw),Y=x*Math.sin(yw)+y*Math.cos(yw);
+    const Y2=Y*Math.cos(tx)-z*Math.sin(tx),Z2=Y*Math.sin(tx)+z*Math.cos(tx);return [X,Y2,Z2]};
+  const C=P.map(cam);
+  const scr=C.map(p=>{const k=dist/(dist-p[2]);return [cx+p[0]*k*S*1.12,cy+p[1]*k*S*1.12,p[2]]});
+  // shadow
+  g.save();g.translate(cx+20*S,cy+80*S);g.scale(1,0.32);const sg=g.createRadialGradient(0,0,0,0,0,SW*0.75*S);sg.addColorStop(0,'rgba(30,25,18,.22)');sg.addColorStop(1,'rgba(30,25,18,0)');g.fillStyle=sg;g.beginPath();g.arc(0,0,SW*0.75*S,0,7);g.fill();g.restore();
+  const faces=mesh.tris.map(t=>({t,z:(C[t[0]][2]+C[t[1]][2]+C[t[2]][2])/3})).sort((a,b)=>a.z-b.z);
+  for(const {t} of faces){
+    const d=t.map(i=>[scr[i][0],scr[i][1]]);
+    const s=t.map(i=>[mesh.verts[i].u*TW,mesh.verts[i].v*TH]);
+    affine(g,tex,s,d);
+    let n=norm(cross(sub(C[t[1]],C[t[0]]),sub(C[t[2]],C[t[0]])));if(n[2]<0)n=n.map(c=>-c);
+    const nScreen=[n[0],n[1],n[2]];
+    shadeFace(g,d,nScreen,0.08);
+    g.globalAlpha=.08;g.strokeStyle='#3a342a';g.lineWidth=0.6;g.beginPath();g.moveTo(d[0][0],d[0][1]);g.lineTo(d[1][0],d[1][1]);g.lineTo(d[2][0],d[2][1]);g.closePath();g.stroke();g.globalAlpha=1;
+  }
+}
+function drawFlat(cv,tex,mesh){
+  const g=cv.getContext('2d');const S=2;g.fillStyle=PAPER;g.fillRect(0,0,cv.width,cv.height);
+  const oy=86*S;g.drawImage(tex,0,oy);
+  const pt=i=>[mesh.verts[i].u*TW,oy+mesh.verts[i].v*TH];
+  seed=91;
+  for(const t of mesh.tris){const d=t.map(pt);const k=rnd();g.globalAlpha=0.018+k*0.03;tri(g,d,k<.5?'#3a342a':'#ffffff');}
+  g.globalAlpha=1;
+  // crease lines: only a subset of edges, faint, with a light twin for the ridge
+  seed=93;
+  for(const t of mesh.tris){for(let e=0;e<3;e++){if(rnd()>.42)continue;const a=pt(t[e]),b=pt(t[(e+1)%3]);
+    g.strokeStyle='rgba(58,52,42,.075)';g.lineWidth=1.1;g.beginPath();g.moveTo(a[0],a[1]);g.lineTo(b[0],b[1]);g.stroke();
+    g.strokeStyle='rgba(255,255,255,.7)';g.lineWidth=1;g.beginPath();g.moveTo(a[0]+1.4,a[1]+1.4);g.lineTo(b[0]+1.4,b[1]+1.4);g.stroke();}}
+}
+fontsReady.then(()=>{
+  const tex=makeTexture();const mesh=sheetMesh();
+  drawBall(document.getElementById('c1'),tex);
+  drawSheet(document.getElementById('c2'),tex,mesh);
+  drawFlat(document.getElementById('c3'),tex,mesh);
+  READY();
+});
+</script>
+</body>
+</html>
