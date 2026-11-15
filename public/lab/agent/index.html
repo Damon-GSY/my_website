@@ -28,18 +28,20 @@ code i{font-style:normal;color:var(--accent)}
 .nav .links .sec{color:var(--muted)}
 
 /* world: three sheets */
-.world{position:fixed;left:0;right:0;top:var(--navh);bottom:0;perspective:2000px;perspective-origin:30% 20%;transform-style:preserve-3d}
+.world{position:fixed;left:0;right:0;top:var(--navh);bottom:0;perspective:1700px;perspective-origin:36% 30%;transform-style:preserve-3d}
 .page,.curLayer{position:absolute;left:24px;top:16px;right:368px;bottom:16px}
 .page{overflow:auto;background:var(--sheet);box-shadow:0 0 0 1px rgba(13,13,13,.08),0 30px 50px -30px rgba(10,20,80,.35);overscroll-behavior:contain}
 .curLayer{pointer-events:none;overflow:hidden}
 .log{position:absolute;right:24px;top:16px;width:320px;bottom:16px;background:#fff;box-shadow:0 0 0 1px rgba(13,13,13,.08),0 30px 50px -30px rgba(10,20,80,.35);display:flex;flex-direction:column}
-.page,.curLayer,.log{transform:rotateX(0) rotateY(0) translateZ(0);transition:transform .9s cubic-bezier(.2,.7,.2,1),filter .6s}
-body.driving .page{transform:rotateX(5deg) rotateY(-9deg) translateZ(-70px) scale(.97)}
-body.driving .curLayer{transform:rotateX(5deg) rotateY(-9deg) translateZ(-10px) scale(.97)}
-body.driving .log{transform:rotateX(5deg) rotateY(-9deg) translateZ(40px)}
-body.gate .page{transform:rotateX(6deg) rotateY(-6deg) translateZ(-260px) scale(.97);filter:saturate(.5) brightness(.95)}
-body.gate .curLayer{transform:rotateX(6deg) rotateY(-6deg) translateZ(-200px) scale(.97)}
-body.gate .log{transform:rotateX(6deg) rotateY(-6deg) translateZ(-120px);filter:saturate(.6)}
+.page,.curLayer,.log{transform:translateX(0) rotateX(0) rotateY(0) translateZ(0) scale(1);transition:transform .9s cubic-bezier(.2,.7,.2,1),filter .6s,box-shadow .9s}
+/* agent driving: three clearly separate sheets (page at the back, cursor sheet floating on it, log in front) */
+body.driving .page{transform:translateX(10px) rotateX(10deg) rotateY(-17deg) translateZ(-120px) scale(.96);box-shadow:0 0 0 1px rgba(13,13,13,.08),0 50px 70px -40px rgba(10,20,80,.45)}
+body.driving .curLayer{transform:translateX(10px) rotateX(10deg) rotateY(-17deg) translateZ(-85px) scale(.96)}
+body.driving .log{transform:translateX(-40px) rotateX(10deg) rotateY(-17deg) translateZ(90px) scale(.88);box-shadow:0 0 0 1px rgba(13,13,13,.08),-30px 60px 80px -40px rgba(10,20,80,.5)}
+body.driving .cursor svg{filter:drop-shadow(10px 22px 10px rgba(10,20,90,.22))}
+body.gate .page{transform:translateX(10px) rotateX(10deg) rotateY(-12deg) translateZ(-360px) scale(.93);filter:saturate(.5) brightness(.95)}
+body.gate .curLayer{transform:translateX(10px) rotateX(10deg) rotateY(-12deg) translateZ(-320px) scale(.93)}
+body.gate .log{transform:translateX(-46px) rotateX(10deg) rotateY(-12deg) translateZ(-180px) scale(.93);filter:saturate(.6)}
 
 /* page content */
 .content{position:relative;padding:44px 56px 150px;max-width:980px}

@@ -384,18 +384,17 @@ body:has(.note) {
 .h-lens-dock {
   position: fixed;
   z-index: 40;
-  left: 50%;
-  bottom: 14px;
-  transform: translateX(-50%);
+  right: 16px;
+  bottom: 16px;
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
   gap: 8px;
   max-width: calc(100vw - 24px);
   overflow-x: auto;
-  padding: 6px 10px 6px 12px;
+  padding: 4px;
   border-radius: 999px;
-  background: rgba(17, 17, 17, 0.9);
+  background: rgba(13, 13, 13, 0.92);
   color: #f4f4f2;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -404,13 +403,44 @@ body:has(.note) {
   white-space: nowrap;
 }
 .h-lens-dock-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  border-radius: 999px;
   font-family: var(--mono);
   font-size: 10px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--tangerine);
-  padding-right: 6px;
-  border-right: 1px solid rgba(255, 255, 255, 0.16);
+  color: #f4f4f2;
+}
+.h-lens-dock-title > span {
+  font-size: 13px;
+  line-height: 1;
+  opacity: 0.7;
+}
+.h-lens-dock-title:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.h-lens-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--tangerine);
+}
+.h-lens-groups {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 6px 0 8px;
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
+}
+.h-lens-groups[hidden] {
+  display: none;
+}
+.home .h-lens-dock :focus-visible {
+  outline-color: #f4f4f2;
+  outline-offset: 2px;
 }
 .h-lens-group {
   display: inline-flex;
@@ -439,8 +469,8 @@ body:has(.note) {
   background: rgba(255, 255, 255, 0.1);
 }
 .h-lens-group button.is-active {
-  background: #ff5a1f;
-  color: #111;
+  background: var(--tangerine);
+  color: #0d0d0d;
   font-weight: 600;
 }
 .h-lens-reset {
@@ -459,11 +489,154 @@ body:has(.note) {
 }
 @media (max-width: 760px) {
   .h-lens-dock {
+    right: 10px;
     bottom: 10px;
-    padding: 6px 8px 6px 10px;
-    gap: 8px;
+    max-width: calc(100vw - 20px);
   }
-  .h-lens-dock-title {
+}
+
+/* ---------- 02 work: each landed card opens its parcel ---------- */
+.home .h-workfilm .h-card {
+  position: relative;
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+.home .h-workfilm .h-card-open {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 7px;
+  border-top: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.home .h-workfilm .h-card:hover,
+.home .h-workfilm .h-card:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px -18px rgba(13, 13, 13, 0.5);
+}
+.home .h-workfilm .h-card:hover .h-card-open,
+.home .h-workfilm .h-card:focus-visible .h-card-open {
+  color: var(--cobalt);
+  border-top-color: var(--cobalt);
+}
+.home .h-workfilm .h-card:focus-visible {
+  outline-offset: 3px;
+}
+
+/* ---------- 07 more ways in ---------- */
+.h-more-title {
+  margin: clamp(24px, 4vh, 48px) 0 clamp(28px, 4vh, 48px) -0.03em;
+  font-weight: 900;
+  font-size: clamp(44px, 6.4vw, 112px);
+  line-height: 0.86;
+  letter-spacing: -0.05em;
+}
+.h-doors {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 18px;
+}
+.h-door {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.h-door-shot {
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #e6e6e2;
+  outline: 1px solid var(--rule);
+  outline-offset: -1px;
+}
+.h-door-shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.05);
+  transition: filter 0.4s, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.h-door:hover .h-door-shot img,
+.h-door:focus-visible .h-door-shot img {
+  filter: none;
+  transform: scale(1.04);
+}
+.h-door-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--ink);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.h-door-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font-weight: 750;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+}
+.h-door-title svg {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  transition: transform 0.25s;
+}
+.h-door:hover .h-door-title,
+.h-door:focus-visible .h-door-title {
+  color: var(--cobalt);
+}
+.h-door:hover .h-door-title svg,
+.h-door:focus-visible .h-door-title svg {
+  transform: translate(2px, -2px);
+}
+.h-door-line {
+  margin-top: 4px;
+  font-size: 13px;
+  line-height: 1.35;
+  color: color-mix(in srgb, var(--ink) 66%, transparent);
+}
+@media (max-width: 1100px) {
+  .h-doors {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px 18px;
+  }
+}
+@media (max-width: 760px) {
+  .h-doors {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 12px;
+  }
+  .h-door-title {
+    font-size: 16px;
+  }
+  .h-door-line {
+    font-size: 12px;
+  }
+  .home .h-workfilm .h-card-open {
+    position: absolute;
+    top: 7%;
+    right: 7%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  .home .h-workfilm .h-card-open-text {
     display: none;
   }
 }
@@ -738,4 +911,10 @@ body:has(.note) {
     border-top: 0;
     padding-top: 0;
   }
+}
+/* keyboard users reaching a card before the carton has unpacked still see what they focus */
+.home .h-workfilm .p-work:not(.is-in) .h-card:focus-visible,
+.home .h-workfilm .p-work:not(.is-in) .h-card:focus-visible .p-card-in {
+  opacity: 1;
+  transform: none;
 }
