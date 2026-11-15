@@ -50,6 +50,20 @@ const directions = [
     glyph: 'M6 8h26v22H6zM38 8h28v22H38zM6 36h18v20H6zM30 36h16v20H30zM52 36h14v20H52z',
   },
   {
+    id: 'parcels',
+    href: '/lab/parcels/',
+    badge: { en: 'New · Live', zh: '全新 · 可交互' },
+    line: { en: 'Six cartons on a shelf; each unfolds into its case study.', zh: '架上六只纸箱，每只展开就是一个案例。' },
+    glyph: 'M8 24l14-8 14 8v16l-14 8-14-8zM36 24l14-8 14 8v16l-14 8-14-8zM22 16v32M50 16v32',
+  },
+  {
+    id: 'agent',
+    href: '/lab/agent/',
+    badge: { en: 'New · Live', zh: '全新 · 可交互' },
+    line: { en: 'The page drives itself and asks before anything risky.', zh: '页面自己操作，遇到有风险的动作先问你。' },
+    glyph: 'M10 10l18 44 6-18 18-6zM44 44h18v12H44z',
+  },
+  {
     id: 'typist',
     badge: { en: 'New · Live', zh: '全新 · 可交互' },
     line: {
