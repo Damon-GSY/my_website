@@ -243,6 +243,17 @@ export function initInk(hero) {
     cursor?.classList.add('is-out');
   };
   const tryPlay = () => videos[cur].play().catch(() => {});
+  // The twin used for the cross-fade loop starts loading only once the first copy can play through,
+  // so the hero fetches the video once at first paint instead of twice in parallel.
+  const twin = videos[1];
+  const wakeTwin = () => {
+    if (twin && twin.preload === 'none') {
+      twin.preload = 'auto';
+      twin.load();
+    }
+  };
+  if (videos[0]?.readyState >= 4) wakeTwin();
+  else videos[0]?.addEventListener('canplaythrough', wakeTwin, { once: true });
   hero.addEventListener('pointermove', onPointerMove);
   hero.addEventListener('pointerleave', onLeave);
   hero.addEventListener('touchstart', onTouch, { passive: true });
@@ -388,6 +399,7 @@ export function initInk(hero) {
     cancelAnimationFrame(raf);
     io.disconnect();
     window.removeEventListener('resize', fit);
+    videos[0]?.removeEventListener('canplaythrough', wakeTwin);
     hero.removeEventListener('pointermove', onPointerMove);
     hero.removeEventListener('pointerleave', onLeave);
     hero.removeEventListener('touchstart', onTouch);

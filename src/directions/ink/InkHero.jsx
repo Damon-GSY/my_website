@@ -79,7 +79,8 @@ export default function InkHero({ flow = false, nav = STUDIES }) {
         <video className="ink-video" muted playsInline autoPlay preload="auto" aria-hidden="true">
           {SOURCES}
         </video>
-        <video className="ink-video" muted playsInline preload="auto" aria-hidden="true">
+        {/* the loop's twin waits until the first copy can play through (see ink.js), so first paint fetches one */}
+        <video className="ink-video" muted playsInline preload="none" aria-hidden="true">
           {SOURCES}
         </video>
       </section>
