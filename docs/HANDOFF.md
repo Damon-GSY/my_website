@@ -1,5 +1,70 @@
 # Handoff — dimensional site
 
+## Start here (2026-11-15, stopped at the 75% usage line)
+
+Work stopped because the 5-hour usage window reached Damon's stop line (73% when this was written, with one build still running). Everything below is on `claude/serene-cori-mookmf`. Sections further down are older and partly superseded; this one is current.
+
+### What exists now
+
+**The site (`/`, React + Vite in `src/`).** One continuous home page: ink hero, statement, Work (the box film as a white carton), Evaluate (the d20 die), Path, Notes, Contact. Damon's commit `0e712cf` (pushed from another session) then changed `Home.jsx`, `home.css`, `base.css`, `App.jsx` and `Chooser.jsx` and added React studies. Claude has not reviewed that commit or seen the home page rendered since, so the descriptions of `/` further down may be out of date.
+
+**React studies (routes in `src/App.jsx`):** `/ink`, `/parcel`, `/descent`, `/rollout`, `/d20`, and from Damon's commit `/bento`, `/typist`, `/shadow`, `/receipt`, `/city`, `/arena`. `/lab` is the chooser.
+
+**Standalone studies (`public/lab/<name>/index.html`, served as-is):**
+
+| Page | Built from | State |
+| --- | --- | --- |
+| `/lab/pill/` | Damon's "Wild" pill prompt | Done, checked desktop + phone |
+| `/lab/bento/` | Damon's "Maya Lind" bento prompt | Done; Damon's commit edited it slightly |
+| `/lab/night/` | Damon's "Helion Dispatch" prompt | Done, checked desktop + phone |
+| `/lab/agent/` | Plan 03 | **Done this session.** All "Done when" items met by script at `?speed=3`; contact sheet looked at |
+| `/lab/parcels/` | Plan 02 | **Build was still running when this was written.** Check `git log -- public/lab/parcels` and open the page before trusting it |
+| `/lab/concepts/*.html` | — | Eight static concept boards (mountain, parcels, agent, paper, typist, shadow, receipt, city) |
+
+Only `/lab/pill/`, `/lab/bento/` and `/lab/night/` are linked from the chooser; **`/lab/agent/` and `/lab/parcels/` still need entries in `src/pages/Chooser.jsx`** (entries accept an `href`).
+
+### The plan and how far it got
+
+Plan: `docs/plans/2026-11-15-six-studies-plan.md` (shared rules, then one section per study with storyboard, technique, risks and a "Done when" list).
+
+| Study | Status |
+| --- | --- |
+| 02 Every link is a parcel | In progress at stop (see above) |
+| 03 The site behaves like his agent | Done |
+| 04 Crumpled paper | **Not started.** Largest of the six (needs WebGL, a crumpled mesh and a texture/DOM swap). Next to build |
+| 05 Typing machine | Exists in Damon's commit as `/typist` (React). Not compared against the plan yet |
+| 07 Receipt | Exists in Damon's commit as `/receipt` (React). Not compared against the plan yet |
+| 08 City | Exists in Damon's commit as `/city` (React). Not compared against the plan yet |
+
+### Agent study: details worth knowing
+
+- Script runs `open → scroll → read → summarize → email (Tier 3) → end`; first step after 2 s, then every 2.5 s. `?speed=N` speeds it up for testing.
+- Any wheel, touch, scroll key, pointerdown or nav click pauses it ("You took over"). Only wheel and the button were tested by script.
+- Tier 3 is a native modal dialog: focus starts on Deny, Escape = Deny, focus returns afterwards. Approve opens a `mailto:` draft.
+- Rough edges: the desktop tilt is gentle (5°/−9°) and reads less 3D than the board; the page scrolls inside its own sheet, so keyboard scrolling needs the page focused; the phone cursor-label fix was measured, not re-screenshotted.
+
+### Next steps, in order
+
+1. Look at `/lab/parcels/` and finish it against plan 02 if the build stopped short.
+2. Add chooser links for `/lab/agent/` and `/lab/parcels/`.
+3. Build 04 crumpled paper from the plan.
+4. Compare Damon's `/typist`, `/receipt` and `/city` against plan sections 05, 07 and 08 and list the gaps (do not rebuild them).
+5. Ask Damon which studies, or parts of them, go into the home page.
+
+### Still open from Damon
+
+- Current employer and city: blank on purpose (`src/content.js`).
+- Contact email: `hello@damon.ai` is a stand-in he will change (`src/content.js`; the agent study also uses it).
+- "PAID IN EVIDENCE" stamp wording on the receipt concept was the drawing agent's, not his.
+- Nothing has been checked on a real GPU, Safari or a physical phone.
+
+### Working within the usage limit
+
+- Damon's rule: stop and write this file when the 5-hour window reaches 75%.
+- The meter is read with the `list_events` tool (kinds `rate_limit_event`) on this session; it only updates as requests are made, and running subagents cannot be stopped at the line automatically.
+- Resuming a long idle session re-reads the whole conversation and costs a lot in one request. Start the next round in a fresh session from this file, and give each build to one subagent with a tight brief.
+
+
 ## Polish pass (2026-11-14, latest)
 
 - **Evaluate** now opens with the shared ruled head `(03) EVALUATE ... ONE DIE, TWENTY ROLLS` (Home passes it to `D20Chapter` as `head`; `/d20` alone keeps its own small label). Sections run 01-06 without gaps. The heading is larger (5.6vw, 10.4vw on phones), and the closing line "That gap is my job." is set like the other display type (11vw, weight 900, balanced onto two lines). The duplicate `id="evaluate"` (wrapper and chapter) is gone.
