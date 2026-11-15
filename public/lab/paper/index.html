@@ -197,7 +197,7 @@ void main(){
   vec3 ball=vec3(uSheet.xy+uBall.xy,uBall.z)+r*uR;
   vec3 p=mix(flatP,ball,a);
   p.z+=pow(aE,2.5)*uCurl*sin(3.14159*a);
-  vP=p;vUV=aUV;vCr=mix(aC.x,aC.y,uCSel);vAO=a*clamp((1.-length(t))*2.5,0.,1.)*.35;
+  vP=p;vUV=aUV;vCr=mix(aC.x,aC.y,uCSel);vAO=a*clamp((1.-length(t))*2.5,0.,1.)*.22;
   float w=(uF-p.z)/uF;
   gl_Position=vec4(p.x/(uView.x*.5),-p.y/(uView.y*.5),-p.z/4000.*w,w);
 }`;
@@ -215,8 +215,8 @@ void main(){
   vec3 col=mix(texture(uTex0,vUV).rgb,texture(uTex1,vUV).rgb,uMix);
   if(!gl_FrontFacing)col=mix(uPaper*.985,col,.06);
   float s=dot(n,uL)-uL.z;
-  col*=1.+1.15*min(s,0.)-vAO;
-  col=mix(col,vec3(1.),clamp(s,0.,1.)*.75);
+  col*=1.+.62*max(min(s,0.),-1.)-vAO;
+  col=mix(col,vec3(1.),clamp(s,0.,1.)*.45);
   o=vec4(col*(1.-ov.a)+ov.rgb,1.);
 }`;
 const SVS=`#version 300 es
