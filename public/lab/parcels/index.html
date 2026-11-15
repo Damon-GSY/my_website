@@ -284,7 +284,7 @@ function fill(i){
    <dl class="slip"><dt>Contents</dt><dd>${esc(p.name)}</dd><dt>Declared figure</dt><dd>${p.fig} ${p.cap}${p.prod?'<span class="fn"> &mdash; '+FOOT+'</span>':''}</dd></dl>
    <div class="end"><a class="go" href="#shelf" data-go="">&larr; Back to the shelf</a><span class="bcl" aria-hidden="true"></span></div>`;
   $('pBot').innerHTML=`<div class="row"><span class="mono acc">03 &middot; Next parcel</span><span class="mono mut">Esc closes</span></div>
-   <a class="nextcard" href="#${nx.slug}" data-go="${nx.slug}"><span class="mono mut">Parcel ${nx.n} / 06 &middot; Next parcel</span><span class="nm">${esc(nx.name)}</span><b>${nx.fig}</b></a><div class="torn" aria-hidden="true"></div>`;
+   <a class="nextcard" href="#${nx.slug}" data-go="${nx.slug}"><span class="mono mut">Parcel ${nx.n} / 06 &middot; Next parcel</span><span class="nm">${esc(nx.name)}</span><b>${nx.fig}</b></a>`;
   $('oLabel').innerHTML=labelHTML(p);
   ocarton.querySelectorAll('[data-go]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();go(a.dataset.go)}));
   document.title=`${p.name} · Parcels · Damon Guan`;
