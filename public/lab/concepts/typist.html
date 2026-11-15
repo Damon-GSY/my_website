@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1600">
+<title>05 Typist — concept board</title>
+<style>
+@font-face{font-family:'Archivo';src:url('archivo.woff2') format('woff2-variations');font-weight:100 900;font-stretch:62% 125%}
+@font-face{font-family:'Cartograph CF';src:url('/fonts/CartographCF-Regular.woff2') format('woff2')}
+:root{--bg:#f4f4f2;--ink:#0d0d0d;--mut:#8a8a88;--hair:#d9d9d5;--acc:#1a3cff}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);width:1600px;height:1000px;overflow:hidden}
+body{font-family:'Archivo',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+.board{position:relative;width:1600px;height:1000px;padding:0 36px}
+.mono{font-family:'Cartograph CF',ui-monospace,monospace;text-transform:uppercase;font-size:11px;letter-spacing:.07em;line-height:1.5}
+.top{height:124px;display:flex;align-items:flex-end;justify-content:space-between;border-bottom:1px solid var(--ink);padding-bottom:18px}
+.top .l{display:flex;align-items:flex-end;gap:22px}
+.idn{font-weight:900;font-size:76px;letter-spacing:-.06em;line-height:.74;color:var(--acc)}
+.name{font-weight:850;font-size:44px;letter-spacing:-.04em;line-height:.9}
+.pitch{font-size:16px;font-weight:450;color:#3a3a39;margin-top:9px;letter-spacing:-.005em}
+.top .r{text-align:right}
+.swap{font-weight:800;font-size:30px;letter-spacing:-.03em;line-height:1}
+.swap b{color:var(--acc);font-weight:800}
+.top .r .mono{margin-top:8px;color:var(--mut)}
+.frames{display:flex;justify-content:space-between;margin-top:52px}
+.fr{width:496px}
+.fl{display:flex;justify-content:space-between;margin-bottom:8px}
+.fl span:last-child{color:var(--mut)}
+.br{border:1px solid #cfcfcb;border-radius:9px;overflow:hidden;background:#fbfbfa;box-shadow:0 1px 0 #fff inset,0 18px 40px -22px rgba(13,13,13,.35)}
+.chrome{height:22px;display:flex;align-items:center;gap:5px;padding:0 9px;border-bottom:1px solid var(--hair);background:#efefec}
+.chrome i{width:7px;height:7px;border-radius:50%;background:#d0d0cc;display:block}
+.chrome .url{margin-left:14px;font-family:'Cartograph CF',monospace;font-size:8.5px;letter-spacing:.06em;color:var(--mut);background:#f8f8f6;border:1px solid var(--hair);border-radius:4px;padding:1px 10px;flex:1;text-align:center;max-width:250px;margin-right:auto}
+.vp{width:494px;height:308.75px;display:block}
+.cap{margin-top:12px;display:grid;grid-template-columns:62px 1fr;gap:4px 10px}
+.cap .k{color:var(--acc)}
+.cap .v{color:var(--ink)}
+.rail{position:relative;height:40px;margin-top:56px}
+.rail .line{position:absolute;left:0;right:0;top:19px;height:1px;background:var(--ink)}
+.rail .dot{position:absolute;top:14px;width:11px;height:11px;border-radius:50%;background:var(--bg);border:1.5px solid var(--ink)}
+.rail .dot.on{background:var(--acc);border-color:var(--acc)}
+.rail .t{position:absolute;top:0;background:var(--bg);padding:0 8px}
+.rail .arrow{position:absolute;right:-2px;top:14px;width:0;height:0;border-left:9px solid var(--ink);border-top:5.5px solid transparent;border-bottom:5.5px solid transparent}
+.notes{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:60px}
+.note{border-top:1px solid var(--hair);padding-top:16px}
+.note .mono{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.note .mono:before{content:'';width:8px;height:8px;background:var(--acc);display:block}
+.note p{font-size:22px;line-height:1.3;font-weight:480;letter-spacing:-.012em;max-width:470px}
+.note p em{font-style:normal;font-weight:750}
+.foot{position:absolute;left:36px;right:36px;bottom:22px;display:flex;justify-content:space-between;color:var(--mut)}
+svg text{font-family:'Archivo',sans-serif}
+svg .m{font-family:'Cartograph CF',monospace;text-transform:uppercase;letter-spacing:.07em}
+</style>
+</head>
+<body>
+<div class="board">
+  <div class="top">
+    <div class="l">
+      <div class="idn">05</div>
+      <div>
+        <div class="name">A machine that types the site</div>
+        <div class="pitch">The page starts empty. A language model writes it word by word, and you can see every word it almost chose.</div>
+      </div>
+    </div>
+    <div class="r">
+      <div class="swap">3D <b>⇄</b> 2D</div>
+      <div class="mono">Candidate cloud · Settling · Statement</div>
+    </div>
+  </div>
+
+  <div class="frames">
+    <div class="fr">
+      <div class="fl mono"><span>Frame 1 — 3D</span><span>Scroll 18%</span></div>
+      <div class="br"><div class="chrome"><i></i><i></i><i></i><div class="url">damonguan.com</div></div><svg class="vp" id="f1" viewBox="0 0 960 600"></svg></div>
+      <div class="cap mono"><span class="k">Frame 1</span><span class="v">Candidate cloud. Half the sentence is set; the next token is picked from alternatives that recede in depth, size and blur by probability.</span></div>
+    </div>
+    <div class="fr">
+      <div class="fl mono"><span>Frame 2 — Mid-transition</span><span>Scroll 56%</span></div>
+      <div class="br"><div class="chrome"><i></i><i></i><i></i><div class="url">damonguan.com</div></div><svg class="vp" id="f2" viewBox="0 0 960 600"></svg></div>
+      <div class="cap mono"><span class="k">Frame 2</span><span class="v">Settling. The last token lands; the runners-up sink behind their words and flatten into the baseline.</span></div>
+    </div>
+    <div class="fr">
+      <div class="fl mono"><span>Frame 3 — 2D</span><span>Scroll 100%</span></div>
+      <div class="br"><div class="chrome"><i></i><i></i><i></i><div class="url">damonguan.com</div></div><svg class="vp" id="f3" viewBox="0 0 960 600"></svg></div>
+      <div class="cap mono"><span class="k">Frame 3</span><span class="v">Statement. A flat, finished section. Only one cobalt mark remains: the word the model was least sure of.</span></div>
+    </div>
+  </div>
+
+  <div class="rail mono">
+    <div class="line"></div><div class="arrow"></div>
+    <div class="dot on" style="left:242px"></div><div class="dot" style="left:758px"></div><div class="dot" style="left:1276px"></div>
+    <span class="t" style="left:0">Scroll down = write</span>
+    <span class="t" style="left:640px">Scroll up = un-write, token by token</span>
+    <span class="t" style="right:14px">Page is plain text at rest</span>
+  </div>
+
+  <div class="notes">
+    <div class="note"><div class="mono">What the visitor does</div><p>Scrolls. Each notch commits one token; the <em>alternatives hover in depth</em> with their odds, then press flat. Scrolling back un-writes the page.</p></div>
+    <div class="note"><div class="mono">Why it is his</div><p>He trains language agents. Showing the <em>choices behind every word</em> is a portfolio that is also a lesson in how a model decides.</p></div>
+    <div class="note"><div class="mono">Main risk</div><p>Reads as a gimmick if slow. Text must be <em>instantly complete</em> for skimmers and screen readers; the generation is a layer, never a gate.</p></div>
+  </div>
+  <div class="foot mono"><span>Damon Guan — Lab · concept board 05 / 08</span><span>Static mock-up · drawn in SVG · accent cobalt = chosen token</span></div>
+</div>
+
+<script>
+const INK='#0d0d0d',MUT='#8a8a88',HAIR='#d9d9d5',ACC='#1a3cff',BG='#f4f4f2';
+const NS='http://www.w3.org/2000/svg';
+function nav(){return `
+<rect width="960" height="600" fill="${BG}"/>
+<text x="44" y="44" font-size="19" font-weight="800" letter-spacing="-0.5">Damon Guan —</text>
+<text x="916" y="43" text-anchor="end" class="m" font-size="12.5" fill="${INK}">Work · Evaluate · Path · Notes · Contact</text>
+<line x1="44" x2="916" y1="64" y2="64" stroke="${HAIR}"/>`}
+function measure(svg,txt,size,weight){const t=document.createElementNS(NS,'text');t.setAttribute('font-size',size);t.setAttribute('font-weight',weight);t.setAttribute('letter-spacing',(-0.04*size)+'');t.setAttribute('style','white-space:pre');t.textContent=txt;svg.appendChild(t);const w=t.getComputedTextLength();t.remove();return w}
+function word(x,y,txt,size,o={}){return `<text x="${x}" y="${y}" font-size="${size}" font-weight="${o.w||850}" letter-spacing="${-0.04*size}" fill="${o.fill||INK}" ${o.op!=null?`opacity="${o.op}"`:''} ${o.filter?`filter="url(#${o.filter})"`:''} ${o.extra||''}>${txt}</text>`}
+
+function f1(){
+  const s=document.getElementById('f1');
+  const FS=80, LH=80, X=44;
+  const w1=measure(s,'agents, then ',FS,850);
+  let g=nav();
+  g+=`<defs>${[1,2,3,4,5,6].map(i=>`<filter id="b${i}" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="${(i*0.85).toFixed(2)}"/></filter>`).join('')}
+  <linearGradient id="fog" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${BG}" stop-opacity="1"/><stop offset=".6" stop-color="${BG}" stop-opacity="0"/></linearGradient>
+  <radialGradient id="glow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="${ACC}" stop-opacity=".10"/><stop offset="1" stop-color="${ACC}" stop-opacity="0"/></radialGradient></defs>`;
+  g+=`<text x="44" y="104" class="m" font-size="12" fill="${MUT}">01 — Statement · generating</text>
+      <text x="916" y="104" text-anchor="end" class="m" font-size="12" fill="${MUT}">token 06 / 16 · T = 0.7</text>`;
+  const b1=184,b2=b1+LH;
+  const vp={x:600,y:300};
+  let floor='';
+  for(let i=-12;i<=12;i++){const xb=vp.x+i*95;floor+=`<line x1="${vp.x}" y1="${vp.y}" x2="${xb}" y2="600" stroke="${INK}" stroke-opacity="${(0.13-Math.abs(i)*0.005).toFixed(3)}"/>`}
+  for(let k=1;k<12;k++){const t=Math.pow(k/11,2.2);const y=vp.y+(600-vp.y)*t;floor+=`<line x1="0" x2="960" y1="${y}" y2="${y}" stroke="${INK}" stroke-opacity="${(0.03+0.10*t).toFixed(3)}"/>`}
+  g+=`<g>${floor}<rect x="0" y="${vp.y}" width="960" height="140" fill="url(#fog)"/></g>`;
+  g+=word(X,b1,'I train language',FS);
+  g+=word(X,b2,'agents, then',FS);
+  const slotX=X+w1;
+  const C=[
+    {t:'evaluate',p:.17,x:330,y:470,s:.62,k:1},
+    {t:'test',p:.11,x:830,y:420,s:.46,k:2},
+    {t:'ship',p:.06,x:150,y:404,s:.38,k:3},
+    {t:'deploy',p:.04,x:620,y:376,s:.31,k:4},
+    {t:'train',p:.02,x:820,y:358,s:.25,k:5},
+    {t:'study',p:.01,x:380,y:350,s:.21,k:6},
+    {t:'scale',p:.01,x:700,y:338,s:.17,k:6},
+  ];
+  let cl='';
+  C.slice().reverse().forEach(c=>{
+    const fs=FS*c.s, ww=measure(s,c.t,fs,850);
+    const op=Math.max(.18,1-c.k*.13);
+    const blur=c.k>=2?`b${Math.min(6,c.k-1)}`:null;
+    const lift=fs*0.9; const gy=c.y+lift;
+    cl+=`<ellipse cx="${c.x+ww/2}" cy="${gy}" rx="${ww*0.52}" ry="${fs*0.10}" fill="${INK}" opacity="${(0.13*op).toFixed(3)}" filter="url(#b${Math.min(6,c.k+1)})"/>`;
+    cl+=`<line x1="${c.x+ww/2}" x2="${c.x+ww/2}" y1="${c.y+fs*0.18}" y2="${gy}" stroke="${INK}" stroke-opacity="${(0.35*op).toFixed(3)}" stroke-dasharray="2 3"/>`;
+    cl+=`<g ${blur?`filter="url(#${blur})"`:''} opacity="${op.toFixed(2)}">`;
+    cl+=word(c.x,c.y,c.t,fs,{fill:'#4d4d4b'});
+    const ms=Math.max(8,24*c.s), ty=c.y-fs*0.84;
+    cl+=`<text x="${c.x}" y="${ty}" class="m" font-size="${ms}" fill="${INK}">${c.p.toFixed(2)}</text>`;
+    cl+=`<rect x="${c.x+ms*3.3}" y="${ty-ms*0.62}" width="${Math.max(6,c.p*520*c.s)}" height="${Math.max(2,ms*0.42)}" fill="${INK}"/>`;
+    cl+=`</g>`;
+  });
+  g+=cl;
+  const ch='measure', wch=measure(s,ch,FS,850);
+  g+=`<ellipse cx="${slotX+wch/2}" cy="${b2-FS*0.3}" rx="${wch*0.85}" ry="${FS*0.95}" fill="url(#glow)"/>`;
+  // the empty place in the cloud the winner was lifted from
+  const ew=measure(s,ch,FS*.62,850), ex=660, ey=540;
+  g+=`<rect x="${ex-8}" y="${ey-FS*.62*0.8}" width="${ew+16}" height="${FS*.62*1.0}" fill="none" stroke="${ACC}" stroke-width="1.4" stroke-dasharray="4 4"/>`;
+  g+=`<text x="${ex}" y="${ey}" font-size="${FS*.62}" font-weight="850" letter-spacing="${-0.04*FS*.62}" fill="none" stroke="${ACC}" stroke-width="1" stroke-dasharray="3 2" opacity=".7">${ch}</text>`;
+  g+=`<text x="${ex-8}" y="${ey-FS*.62*0.8-8}" class="m" font-size="12" fill="${ACC}">lifted · 0.58</text>`;
+  g+=`<ellipse cx="${ex+ew/2}" cy="${ey+50}" rx="${ew*0.5}" ry="6" fill="${ACC}" opacity=".10" filter="url(#b2)"/>`;
+  g+=`<path d="M ${ex+ew*0.25} ${ey-FS*.62*0.8-26} C ${ex+ew*0.2} ${ey-120}, ${slotX+wch*0.35} ${b2+90}, ${slotX+wch*0.35} ${b2+22}" fill="none" stroke="${ACC}" stroke-width="1.6" stroke-dasharray="2 4"/>`;
+  g+=`<path d="M ${slotX+wch*0.35-8} ${b2+34} L ${slotX+wch*0.35} ${b2+20} L ${slotX+wch*0.35+7} ${b2+35}" fill="none" stroke="${ACC}" stroke-width="1.6"/>`;
+  g+=word(slotX,b2,ch,FS,{fill:ACC});
+  g+=`<rect x="${slotX+wch+8}" y="${b2-FS*0.74}" width="7" height="${FS*0.84}" fill="${ACC}"/>`;
+  g+=`<g transform="translate(${slotX+wch-116},${b2-FS-20})"><rect width="124" height="24" fill="${ACC}"/><text x="10" y="16.5" class="m" font-size="12" fill="#fff">measure 0.58</text></g>`;
+  g+=`<text x="44" y="574" class="m" font-size="12" fill="${MUT}">p( next | “… agents, then” )</text>`;
+  g+=`<text x="916" y="574" text-anchor="end" class="m" font-size="12" fill="${MUT}">depth ∝ 1 − p</text>`;
+  s.innerHTML=g;
+}
+
+function f2(){
+  const s=document.getElementById('f2');
+  const FS=66, LH=80, X=44;
+  let g=nav();
+  g+=`<defs>${[1,2,3].map(i=>`<filter id="c${i}" x="-20%" y="-80%" width="140%" height="260%"><feGaussianBlur stdDeviation="${i*0.9}"/></filter>`).join('')}</defs>`;
+  g+=`<text x="44" y="104" class="m" font-size="12" fill="${MUT}">01 — Statement · settling</text>
+      <text x="916" y="104" text-anchor="end" class="m" font-size="12" fill="${MUT}">token 16 / 16</text>`;
+  const lines=['I train language','agents, then measure','whether they hold up','on real'];
+  const B=[172,172+LH,172+2*LH,172+3*LH];
+  // the floor, almost flat now
+  let fl='';const hy=B[3]+30;
+  for(let i=-12;i<=12;i++){fl+=`<line x1="${480+i*44}" y1="${hy}" x2="${480+i*110}" y2="600" stroke="${INK}" stroke-opacity=".07"/>`}
+  [0,.15,.35,.62,1].forEach(t=>{fl+=`<line x1="0" x2="960" y1="${hy+(600-hy)*t}" y2="${hy+(600-hy)*t}" stroke="${INK}" stroke-opacity="${(.04+.07*t).toFixed(3)}"/>`});
+  g+=fl;
+  // flattened runners-up lying above earlier words (older = flatter, fainter)
+  const E=[
+    {l:1,pre:'agents, then ',alts:'evaluate 0.17 · test 0.11',sq:.30,op:.36},
+    {l:2,pre:'',alts:'if 0.22 · how 0.08',sq:.36,op:.44},
+    {l:2,pre:'whether they ',alts:'stand 0.19 · scale 0.07',sq:.42,op:.46},
+    {l:3,pre:'on ',alts:'actual 0.14',sq:.5,op:.55},
+  ];
+  E.forEach(e=>{
+    const x=X+measure(s,e.pre,FS,850);
+    const y=B[e.l]-FS*0.78-5;
+    g+=`<g opacity="${e.op}" filter="url(#c1)" transform="translate(${x},${y}) scale(1,${e.sq})"><text x="0" y="0" font-size="30" font-weight="800" letter-spacing="-1" fill="#55554f">${e.alts}</text></g>`;
+  });
+  lines.forEach((l,i)=>{g+=word(X,B[i],l,FS)});
+  const x4=X+measure(s,'on real ',FS,850);
+  const wW=measure(s,'work.',FS,850);
+  g+=word(x4,B[3],'work.',FS,{fill:ACC});
+  g+=`<rect x="${x4}" y="${B[3]+10}" width="${wW-16}" height="4" fill="${ACC}"/>`;
+  // the final token's runners-up, dropped onto the floor and pressed flat
+  const drops=[{t:'tasks',p:'0.21',x:x4+wW+30,y:hy+36,sc:.95,sq:.32,op:.45,b:1},{t:'data',p:'0.09',x:x4+wW+230,y:hy+84,sc:.8,sq:.24,op:.3,b:2}];
+  drops.forEach(d=>{
+    g+=`<path d="M ${x4+wW-10} ${B[3]-30} Q ${d.x-10} ${B[3]-30}, ${d.x+30} ${d.y-16}" fill="none" stroke="${INK}" stroke-opacity=".35" stroke-dasharray="2 4"/>`;
+    g+=`<g opacity="${d.op}" filter="url(#c${d.b})" transform="translate(${d.x},${d.y}) scale(${d.sc},${d.sq})">${word(0,0,d.t,FS*1.1,{fill:INK})}</g>`;
+    g+=`<text x="${d.x}" y="${d.y+22}" class="m" font-size="12" fill="${INK}" opacity="${d.op+.3}">${d.t} ${d.p} ↓ z → 0</text>`;
+  });
+  g+=`<text x="${x4}" y="${B[3]+36}" class="m" font-size="12.5" fill="${ACC}">work 0.62 · settled</text>`;
+  g+=`<text x="44" y="574" class="m" font-size="12" fill="${MUT}">↑ scroll up un-writes</text>`;
+  s.innerHTML=g;
+}
+
+function f3(){
+  const s=document.getElementById('f3');
+  const FS=60, LH=60, X=44;
+  let g=nav();
+  g+=`<text x="44" y="112" class="m" font-size="12" fill="${MUT}">01 — Statement</text>
+      <text x="916" y="112" text-anchor="end" class="m" font-size="12" fill="${MUT}">LLM algorithm engineer</text>`;
+  const lines=['I train language agents, then','measure whether they hold','up on real work.'];
+  const B=[184,184+LH,184+2*LH];
+  lines.forEach((l,i)=>{g+=word(X,B[i],l,FS)});
+  const xw=X+measure(s,'up on real ',FS,850), ww=measure(s,'work',FS,850);
+  g+=`<rect x="${xw}" y="${B[2]+10}" width="${ww}" height="5" fill="${ACC}"/>`;
+  g+=`<line x1="44" x2="916" y1="${B[2]+64}" y2="${B[2]+64}" stroke="${INK}"/>`;
+  const P=[['01','Evaluate before','training'],['02','Bound the','authority'],['03','Read the','trace']];
+  P.forEach((p,i)=>{const x=44+i*296;const y=B[2]+100;
+    g+=`<text x="${x}" y="${y}" class="m" font-size="12" fill="${MUT}">Principle ${p[0]}</text>`;
+    g+=`<text x="${x}" y="${y+40}" font-size="32" font-weight="800" letter-spacing="-1.3">${p[1]}</text>`;
+    g+=`<text x="${x}" y="${y+74}" font-size="32" font-weight="800" letter-spacing="-1.3">${p[2]}</text>`;
+    if(i)g+=`<line x1="${x-20}" x2="${x-20}" y1="${y-14}" y2="${y+84}" stroke="${HAIR}"/>`;
+  });
+  g+=`<text x="44" y="574" class="m" font-size="12" fill="${MUT}">Next ↓ Work: Supply Chain Agent System · SupChain-Bench · M365 Copilot Memory</text>`;
+  s.innerHTML=g;
+}
+document.fonts.ready.then(()=>{f1();f2();f3();});
+</script>
+</body>
+</html>
