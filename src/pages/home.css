@@ -912,6 +912,10 @@ body:has(.note) {
     padding-top: 0;
   }
 }
+/* the case study holds the long line; the landed card keeps title, figure, label and the way in */
+.home .h-workfilm .p-card p {
+  display: none;
+}
 /* keyboard users reaching a card before the carton has unpacked still see what they focus */
 .home .h-workfilm .p-work:not(.is-in) .h-card:focus-visible,
 .home .h-workfilm .p-work:not(.is-in) .h-card:focus-visible .p-card-in {

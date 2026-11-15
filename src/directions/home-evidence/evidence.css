@@ -3,23 +3,24 @@
   --ev-line: var(--ink, #0d0d0d);
 }
 .ev-lead {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 0 24px;
-  align-items: end;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px 32px;
+  align-items: flex-end;
   margin: clamp(28px, 5vh, 64px) 0 clamp(36px, 6vh, 72px);
 }
 .ev-title {
-  grid-column: 1 / span 8;
+  flex: none;
   margin-left: -0.04em;
   font-weight: 900;
-  font-size: clamp(76px, 14.5vw, 260px);
+  font-size: clamp(76px, 12vw, 220px);
   line-height: 0.78;
   letter-spacing: -0.055em;
 }
 .ev-intro {
-  grid-column: 9 / span 4;
-  max-width: 26em;
+  max-width: 22em;
+  padding-bottom: 0.4em;
   font-size: 15px;
   line-height: 1.4;
   color: color-mix(in srgb, var(--ink) 72%, transparent);
@@ -41,7 +42,7 @@
 .ev-flap {
   display: flex;
   flex-direction: column;
-  min-height: clamp(220px, 30vh, 300px);
+  min-height: clamp(180px, 23vh, 250px);
   padding: 14px clamp(14px, 1.6vw, 24px) 22px;
   transform-origin: 50% 0;
   backface-visibility: hidden;
@@ -60,7 +61,7 @@
   margin-top: auto;
   padding-top: 28px;
   font-weight: 900;
-  font-size: clamp(54px, 6.6vw, 118px);
+  font-size: clamp(52px, 6vw, 108px);
   line-height: 0.82;
   letter-spacing: -0.055em;
   font-variant-numeric: tabular-nums;
