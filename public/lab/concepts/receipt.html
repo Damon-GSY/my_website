@@ -170,7 +170,8 @@ function scene(cam,opt){
   // shadow of paper on the desk under the curl and along the strip
   const ps=[];PATH.forEach(([y,z])=>{if(y<SLOT-10&&z<170)ps.push([y-z*0.35,z])});
   const shadowPoly=[...ps.map(([y,z])=>[PAPW+z*0.55,y-z*0.3,0]),...ps.slice().reverse().map(([y,z])=>[-PAPW+z*0.55,y-z*0.3,0])];
-  g+=`<polygon points="${pts(shadowPoly.map(P))}" fill="#000" opacity=".16" filter="url(#bl${opt.id})"/>`;
+  if(!opt.noPS)g+=`<polygon points="${pts(shadowPoly.map(P))}" fill="#000" opacity=".16" filter="url(#bl${opt.id})"/>`;
+  else{const e=[[PAPW+6,FLAT0+40,0],[PAPW+10,-1400,0],[-PAPW+4,-1400,0],[-PAPW+2,FLAT0+40,0]];g+=`<polygon points="${pts(e.map(P))}" fill="#000" opacity=".10" filter="url(#bs${opt.id})"/>`}
   // ---- printer sides
   const base=roundedRect(0,0),topR=roundedRect(0,PH-8),ins=roundedRect(7,PH);
   const faces=[];
@@ -243,11 +244,13 @@ function f1(){
   return g;
 }
 function f2(){
-  const cam=camera([0,-520,1000],[0,-40,0],980,560,300);
+  const cam=camera([0,-540,1000],[0,-70,0],1180,560,290);
   let g=`<rect width="960" height="600" fill="${BG}"/>`;
-  g+=scene(cam,{id:2,minY:-1400,sb:12,rise:6,R:30,vOff:40});
+  g+=scene(cam,{id:2,minY:-1400,sb:12,rise:6,R:30,vOff:40,noPS:1});
   g+=`<rect width="960" height="66" fill="${BG}"/>`+nav();
   g+=`<text x="44" y="104" class="m" font-size="12" fill="${MUT}">01 — Work</text>`;
+  g+=`<text x="44" y="150" font-size="40" font-weight="850" letter-spacing="-1.6">Work,</text><text x="44" y="190" font-size="40" font-weight="850" letter-spacing="-1.6">itemised.</text>`;
+  g+=`<text x="44" y="226" class="m" font-size="11.5" fill="${MUT}">6 items printed · total pending</text>`;
   g+=`<text x="44" y="574" class="m" font-size="12" fill="${MUT}">Line 16 of 26</text>`;
   g+=`<text x="916" y="574" text-anchor="end" class="m" font-size="12" fill="${MUT}">↓ keep scrolling to tear</text>`;
   return g;
@@ -278,16 +281,15 @@ function f3(){
   // barcode
   let bx=X+22,seed=11;const bc=[];while(bx<X+W-22){seed=(seed*9301+49297)%233280;const w=1+Math.floor(seed/233280*3.2);if(seed%3)bc.push(`<rect x="${bx}" y="${y}" width="${w}" height="34" fill="${INK}"/>`);bx+=w+1}
   g+=bc.join('');y+=48;
-  g+=`<text x="${cx}" y="${y-2}" text-anchor="middle" class="m" font-size="9" fill="${MUT}">EVALUATE BEFORE TRAINING · BOUND THE AUTHORITY · READ THE TRACE</text>`;y+=14;
+  g+=`<text x="${cx}" y="${y-2}" text-anchor="middle" class="m" font-size="8" letter-spacing=".2" fill="${MUT}">EVALUATE BEFORE TRAINING · BOUND THE AUTHORITY · READ THE TRACE</text>`;y+=14;
   // perforation + stub
   g+=`<line x1="${X}" x2="${X+W}" y1="${y}" y2="${y}" stroke="${MUT}" stroke-dasharray="2 4"/>`;
   for(let x=X+6;x<X+W;x+=12)g+=`<circle cx="${x}" cy="${y}" r="1.4" fill="${BG}"/>`;
-  g+=`<text x="${X+W-14}" y="${y-5}" text-anchor="end" class="m" font-size="9" fill="${MUT}">TEAR HERE</text>`;
+  g+=`<text x="${X+W-14}" y="${y+14}" text-anchor="end" class="m" font-size="9" fill="${MUT}">TEAR HERE</text>`;
   y+=30;g+=`<text x="${X+22}" y="${y}" class="m" font-size="10" fill="${MUT}">CONTACT STUB</text>`;
   g+=`<text x="${X+22}" y="${y+28}" font-size="26" font-weight="850" letter-spacing="-1">hello@damon.ai</text>`;
-  g+=`<text x="${X+W-22}" y="${y+26}" text-anchor="end" class="m" font-size="10">KEEP THIS PART →</text>`;
   // stamp
-  g+=`<g transform="translate(${X+W-150},${T+312}) rotate(-9)" opacity=".86" style="mix-blend-mode:multiply"><rect x="-86" y="-27" width="172" height="54" rx="5" fill="none" stroke="${ACC}" stroke-width="3"/><rect x="-80" y="-21" width="160" height="42" rx="3" fill="none" stroke="${ACC}" stroke-width="1"/><text x="0" y="-1" text-anchor="middle" font-size="19" font-weight="900" font-stretch="72%" fill="${ACC}" letter-spacing=".5">PAID IN EVIDENCE</text><text x="0" y="13" text-anchor="middle" class="m" font-size="8" fill="${ACC}">VERIFIED · TRACE READ</text></g>`;
+  g+=`<g transform="translate(${X+W-116},${y+70}) rotate(-7)" opacity=".86" style="mix-blend-mode:multiply"><rect x="-86" y="-27" width="172" height="54" rx="5" fill="none" stroke="${ACC}" stroke-width="3"/><rect x="-80" y="-21" width="160" height="42" rx="3" fill="none" stroke="${ACC}" stroke-width="1"/><text x="0" y="-1" text-anchor="middle" font-size="19" font-weight="900" font-stretch="72%" fill="${ACC}" letter-spacing=".5">PAID IN EVIDENCE</text><text x="0" y="13" text-anchor="middle" class="m" font-size="8" fill="${ACC}">VERIFIED · TRACE READ</text></g>`;
   return g;
 }
 document.fonts.ready.then(()=>{
