@@ -67,7 +67,7 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
   .rows li{grid-template-columns:26px 1fr auto;grid-template-areas:"n nm m" "n tg m";align-content:center;gap:3px 10px}
   .rows .n{grid-area:n;align-self:start;padding-top:4px}.rows .nm{grid-area:nm}.rows .tg{grid-area:tg;font-size:10px}.rows .m{grid-area:m}
   .cols{grid-template-columns:1fr;gap:28px}
-  .cols .rows li{grid-template-columns:1fr auto;grid-template-areas:none}
+  .cols .rows li{grid-template-columns:1fr auto;grid-template-areas:none}.cols .rows .nm,.cols .rows .m{grid-area:auto}
   .end{flex-direction:column;gap:6px}
 }
 #spacer{width:1px}

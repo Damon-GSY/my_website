@@ -487,11 +487,18 @@ body:has(.note) {
   border-color: #fff;
   color: #fff;
 }
+/* the hero's bottom-right hint sits where the dock button is; lift it clear */
+.home .ink-br {
+  bottom: 64px;
+}
 @media (max-width: 760px) {
   .h-lens-dock {
     right: 10px;
     bottom: 10px;
     max-width: calc(100vw - 20px);
+  }
+  .home .ink-br {
+    bottom: 56px;
   }
 }
 

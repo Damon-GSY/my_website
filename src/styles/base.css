@@ -122,6 +122,10 @@ button {
   overflow: visible;
   padding: 120px var(--gutter) 64px;
 }
+/* in the static fallback the page scrolls under the fixed header, so give it the page colour */
+.film.static > .chrome {
+  background: var(--bg);
+}
 
 .chrome {
   position: fixed;
