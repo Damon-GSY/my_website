@@ -203,7 +203,9 @@ dialog.ask::backdrop{background:rgba(13,13,30,.16)}
   .row .tm{grid-area:tm}
   .row .tc{grid-area:t}
   .row .out{grid-area:o;font-size:13.5px}
-  .toast{top:calc(var(--navh) + 10px)}
+  .toast{top:calc(var(--navh) + 10px);left:16px;right:16px;transform:translateY(-12px);flex-wrap:wrap;max-width:none}
+  .toast.on{transform:none}
+  .ask .k{flex-direction:column;gap:4px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*:before,*:after{transition:none!important;animation:none!important}
@@ -341,7 +343,7 @@ function syncTrack(){track.style.transform=`translateY(${-page.scrollTop}px)`}
 page.addEventListener('scroll',syncTrack,{passive:true});
 function scrollToEl(el,off=28){page.scrollTo({top:Math.max(0,local(el).y-off),behavior:RM?'auto':'smooth'})}
 function stopScroll(){page.scrollTo({top:page.scrollTop,behavior:'auto'})}
-function point(el,label,dx,dy){const r=local(el);cur.style.transform=`translate(${Math.round(r.x+(dx??Math.min(r.w*.5,220)))}px,${Math.round(r.y+(dy??r.h*.5))}px)`;cur.classList.add('on');chip.textContent='Agent · '+label}
+function point(el,label,dx,dy){const r=local(el);const x=Math.max(12,Math.min(r.x+(dx??Math.min(r.w*.5,220)),content.clientWidth-270));cur.style.transform=`translate(${Math.round(x)}px,${Math.round(r.y+(dy??r.h*.5))}px)`;cur.classList.add('on');chip.textContent='Agent · '+label}
 
 let toastT=0;
 function toast(text,tierKey){const t=$('toast');t.firstElementChild.className='tier mono '+TIER[tierKey][0];t.firstElementChild.textContent=TIER[tierKey][1];$('toastText').textContent=text;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),Math.max(1800,3600/SPEED))}
