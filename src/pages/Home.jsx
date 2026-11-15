@@ -17,19 +17,26 @@ const ArenaOpening = lazy(() => import('../directions/arena/Opening.jsx'));
 const HERO_LENSES = [
   { id: 'ink', label: { en: '01 · Wet Ink', zh: '01 · 湿墨揭幕' }, short: { en: '01 Ink', zh: '01 湿墨' } },
   { id: 'shadow', label: { en: '10 · 318° Shadow', zh: '10 · 318° 光影' }, short: { en: '10 Shadow', zh: '10 光影' } },
-  { id: 'typist', label: { en: '09 · Token Typist', zh: '09 · 策略逐词' }, short: { en: '09 Typist', zh: '09 逐词' } },
-];
-
-const WORK_LENSES = [
-  { id: 'parcel', label: { en: '02 · Parcel Box', zh: '02 · 快递拆盒' }, short: { en: '02 Parcel', zh: '02 快递' } },
-  { id: 'bento', label: { en: '08 · Bento Cards', zh: '08 · Bento 卡片' }, short: { en: '08 Bento', zh: '08 卡片' } },
-  { id: 'receipt', label: { en: '11 · Thermal Receipt', zh: '11 · 实证小票' }, short: { en: '11 Receipt', zh: '11 小票' } },
-  { id: 'city', label: { en: '12 · Metric City', zh: '12 · 尺度天际线' }, short: { en: '12 City', zh: '12 建筑' } },
 ];
 
 const EVAL_LENSES = [
   { id: 'd20', label: { en: '05 · D20 Die', zh: '05 · 二十面骰' }, short: { en: '05 D20', zh: '05 骰子' } },
   { id: 'arena', label: { en: '13 · Agent Arena', zh: '13 · 对抗沙盒' }, short: { en: '13 Arena', zh: '13 沙盒' } },
+];
+
+const PATH_LENSES = [
+  { id: 'receipt', label: { en: '11 · Thermal Résumé Slip', zh: '11 · 热敏履历凭条' }, short: { en: '11 Receipt', zh: '11 小票' } },
+  { id: 'table', label: { en: 'Editorial Résumé Table', zh: '档案排印表' }, short: { en: 'Table', zh: '列表' } },
+];
+
+const CHAPTER_JUMPS = [
+  { id: 'top', label: { en: '00 Ink', zh: '00 湿墨' } },
+  { id: 'statement-policy', label: { en: '01 Policy', zh: '01 逐词' } },
+  { id: 'work', label: { en: '02 Bento', zh: '02 卡片' } },
+  { id: 'work-parcel', label: { en: '02 Box', zh: '02 拆盒' } },
+  { id: 'work-city', label: { en: '02 City 3D', zh: '02 建筑' } },
+  { id: 'evaluate', label: { en: '03 D20', zh: '03 骰子' } },
+  { id: 'path', label: { en: '04 Receipt', zh: '04 履历' } },
 ];
 
 const NAV = [
@@ -110,7 +117,7 @@ function Statement() {
   const last = list.length - 1;
   return (
     <section id="statement" className="h-section h-statement">
-      <SectionHead n="01" aside={t({ en: 'Thesis', zh: '主张' })}>
+      <SectionHead n="01" aside={t({ en: 'Thesis & Sampled Policy', zh: '主张与策略采样' })}>
         {t({ en: 'Statement', zh: '自述' })}
       </SectionHead>
       <h2 className="h-sentence" ref={ref} aria-label={t(STATEMENT)}>
@@ -133,17 +140,27 @@ function Statement() {
           </li>
         ))}
       </ul>
+
+      <div id="statement-policy" className="h-statement-policy">
+        <Suspense
+          fallback={
+            <div className="h-embed-fallback mono">
+              {t({ en: 'Loading policy sampler…', zh: '正在加载逐词策略采样舞台…' })}
+            </div>
+          }
+        >
+          <TypistOpening embedded compact />
+        </Suspense>
+      </div>
     </section>
   );
 }
 
-function Path() {
+function Path({ headOverride }) {
   const { t } = useLang();
   return (
-    <section id="path" className="h-section h-path">
-      <SectionHead n="04" aside={t({ en: 'Newest first', zh: '由近及远' })}>
-        {t({ en: 'Path', zh: '经历' })}
-      </SectionHead>
+    <div className="h-section h-path-editorial">
+      {headOverride}
       <h2 className="h-display">{t({ en: 'Path', zh: '经历' })}</h2>
       <ol className="h-table">
         <li className="h-row h-row-head mono" aria-hidden="true">
@@ -171,7 +188,7 @@ function Path() {
           );
         })}
       </ol>
-    </section>
+    </div>
   );
 }
 
@@ -311,32 +328,51 @@ function ChapterLensBar({ label, options, value, onChange, href }) {
 export default function Home() {
   const { lang, setLang, t } = useLang();
   const [heroLens, setHeroLens] = useState('ink');
-  const [workLens, setWorkLens] = useState('parcel');
   const [evalLens, setEvalLens] = useState('d20');
-
-  const workAside =
-    workLens === 'bento'
-      ? { en: 'Six live Bento cards & Agent Cockpit', zh: '六张动态档案卡与智能体驾驶舱' }
-      : workLens === 'receipt'
-        ? { en: 'Thermal evidence ledger', zh: '热敏实证小票' }
-        : workLens === 'city'
-          ? { en: 'Logarithmic metric skyline', zh: '对数尺度建筑天际线' }
-          : { en: 'Six projects, packed', zh: '六个项目，装箱' };
+  const [pathLens, setPathLens] = useState('receipt');
 
   const evalAside =
     evalLens === 'arena'
-      ? { en: 'Live RL & Tier-3 sandbox', zh: '实时 RL 与三级确认护栏沙盒' }
-      : { en: 'One die, twenty rolls', zh: '一枚骰子，二十次' };
+      ? { en: 'Live RL & Tier-3 sandbox · 13', zh: '实时 RL 与三级确认护栏沙盒 · 13' }
+      : { en: 'One die, twenty rolls · 05', zh: '一枚骰子，二十次 · 05' };
 
-  const workHead = (
-    <SectionHead n="02" aside={t(workAside)}>
-      {t({ en: 'Work', zh: '作品' })}
+  const workBentoHead = (
+    <SectionHead n="02.1" aside={t({ en: 'Overview & Agent Cockpit · 08', zh: '全景档案卡与智能体驾驶舱 · 08' })}>
+      {t({ en: 'Work · Bento Overview', zh: '工作 · Bento 全景' })}
+    </SectionHead>
+  );
+
+  const workParcelHead = (
+    <SectionHead n="02.2" aside={t({ en: 'Six shipped systems, unpacked · 02', zh: '六个已交付系统，拆箱检视 · 02' })}>
+      {t({ en: 'Work · Parcel Box', zh: '工作 · 快递拆盒' })}
+    </SectionHead>
+  );
+
+  const workCityHead = (
+    <SectionHead
+      n="02.3"
+      aside={t({ en: 'Scroll 3D skyline → 2D chart · 12', zh: '随滚动 3D 天际线 → 2D 图表 · 12' })}
+    >
+      {t({ en: 'Work · Metric City', zh: '工作 · 尺度天际线' })}
     </SectionHead>
   );
 
   const evalHead = (
     <SectionHead n="03" aside={t(evalAside)}>
       {t({ en: 'Evaluate', zh: '评测' })}
+    </SectionHead>
+  );
+
+  const pathHead = (
+    <SectionHead
+      n="04"
+      aside={t(
+        pathLens === 'receipt'
+          ? { en: 'Thermal Résumé & Audit Slip · 11', zh: '热敏履历与实证凭条 · 11' }
+          : { en: 'Newest first', zh: '由近及远' },
+      )}
+    >
+      {t({ en: 'Résumé & Path', zh: '履历与经历' })}
     </SectionHead>
   );
 
@@ -348,11 +384,11 @@ export default function Home() {
 
   const resetLenses = () => {
     setHeroLens('ink');
-    setWorkLens('parcel');
     setEvalLens('d20');
+    setPathLens('receipt');
   };
 
-  const isCustomLens = heroLens !== 'ink' || workLens !== 'parcel' || evalLens !== 'd20';
+  const isCustomLens = heroLens !== 'ink' || evalLens !== 'd20' || pathLens !== 'receipt';
 
   return (
     <div className="home">
@@ -385,41 +421,42 @@ export default function Home() {
                 </div>
               }
             >
-              {heroLens === 'shadow' ? <ShadowOpening embedded /> : <TypistOpening embedded />}
+              <ShadowOpening embedded />
             </Suspense>
           </div>
         )}
 
         <Statement />
 
-        <div id="work" className="h-work-host">
-          <ChapterLensBar
-            label={t({ en: 'Work chapter mode', zh: '作品章节呈现方式' })}
-            options={WORK_LENSES}
-            value={workLens}
-            onChange={setWorkLens}
-            href={`/${workLens}`}
-          />
-          {workLens === 'parcel' ? (
-            <ParcelFilm paper id={null} label={<div className="h-film-label">{workHead}</div>} />
-          ) : (
+        <section id="work" className="h-work-host" aria-label={t({ en: 'Work & Systems', zh: '工作与系统' })}>
+          <div id="work-bento" className="h-work-act h-work-act-bento">
             <Suspense
               fallback={
                 <div className="h-embed-fallback mono">
-                  {t({ en: 'Loading work chapter…', zh: '正在加载作品章节…' })}
+                  {t({ en: 'Loading Bento work overview…', zh: '正在加载 Bento 作品概览…' })}
                 </div>
               }
             >
-              {workLens === 'bento' ? (
-                <BentoOpening standalone={false} head={workHead} />
-              ) : workLens === 'receipt' ? (
-                <ReceiptOpening embedded head={workHead} />
-              ) : (
-                <CityOpening embedded head={workHead} />
-              )}
+              <BentoOpening standalone={false} head={workBentoHead} />
             </Suspense>
-          )}
-        </div>
+          </div>
+
+          <div id="work-parcel" className="h-work-act h-work-act-parcel">
+            <ParcelFilm paper id={null} label={<div className="h-film-label">{workParcelHead}</div>} />
+          </div>
+
+          <div id="work-city" className="h-work-act h-work-act-city">
+            <Suspense
+              fallback={
+                <div className="h-embed-fallback mono">
+                  {t({ en: 'Loading 3D → 2D metric city…', zh: '正在加载 3D → 2D 尺度天际线…' })}
+                </div>
+              }
+            >
+              <CityOpening embedded scrollTransition head={workCityHead} />
+            </Suspense>
+          </div>
+        </section>
 
         <div id="evaluate" className="h-evaluate">
           <ChapterLensBar
@@ -440,13 +477,43 @@ export default function Home() {
           </Suspense>
         </div>
 
-        <Path />
+        <section id="path" className="h-path-host" aria-label={t({ en: 'Résumé & Career Path', zh: '个人履历与路径' })}>
+          <ChapterLensBar
+            label={t({ en: 'Résumé chapter mode', zh: '履历章节呈现方式' })}
+            options={PATH_LENSES}
+            value={pathLens}
+            onChange={setPathLens}
+            href="/receipt"
+          />
+          {pathLens === 'receipt' ? (
+            <Suspense
+              fallback={
+                <div className="h-embed-fallback mono">
+                  {t({ en: 'Loading thermal résumé receipt…', zh: '正在加载热敏履历小票…' })}
+                </div>
+              }
+            >
+              <ReceiptOpening embedded resumeMode head={<div className="h-path-embed-head">{pathHead}</div>} />
+            </Suspense>
+          ) : (
+            <Path headOverride={pathHead} />
+          )}
+        </section>
+
         <Notes />
         <Contact />
       </main>
 
-      <aside className="h-lens-dock" aria-label={t({ en: 'Chapter lens switcher', zh: '整站多视角章节切换坞' })}>
-        <span className="h-lens-dock-title">{t({ en: 'Studio Lens', zh: '章节透镜' })}</span>
+      <aside className="h-lens-dock" aria-label={t({ en: 'Chapter jump and lens dock', zh: '整站章节快速跳转与视角切换坞' })}>
+        <span className="h-lens-dock-title">{t({ en: 'Journey', zh: '章节导览' })}</span>
+        <div className="h-lens-group">
+          {CHAPTER_JUMPS.map((ch) => (
+            <button key={ch.id} type="button" onClick={() => jumpTo(ch.id)}>
+              {t(ch.label)}
+            </button>
+          ))}
+        </div>
+        <span className="h-lens-sep" aria-hidden="true" />
         <div className="h-lens-group">
           <span>{t({ en: 'Hero', zh: '开场' })}</span>
           {HERO_LENSES.map((opt) => (
@@ -457,22 +524,6 @@ export default function Home() {
               onClick={() => {
                 setHeroLens(opt.id);
                 jumpTo('top');
-              }}
-            >
-              {t(opt.short)}
-            </button>
-          ))}
-        </div>
-        <div className="h-lens-group">
-          <span>{t({ en: 'Work', zh: '作品' })}</span>
-          {WORK_LENSES.map((opt) => (
-            <button
-              key={opt.id}
-              type="button"
-              className={workLens === opt.id ? 'is-active' : undefined}
-              onClick={() => {
-                setWorkLens(opt.id);
-                jumpTo('work');
               }}
             >
               {t(opt.short)}
@@ -497,7 +548,7 @@ export default function Home() {
         </div>
         {isCustomLens && (
           <button type="button" className="h-lens-reset" onClick={resetLenses}>
-            {t({ en: 'Reset', zh: '恢复默认' })}
+            {t({ en: 'Reset', zh: '恢复' })}
           </button>
         )}
       </aside>

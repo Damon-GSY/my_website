@@ -168,6 +168,34 @@
   font-variant-numeric: tabular-nums;
 }
 
+.city-head-right {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.city-scroll-badge {
+  padding: 2px 8px;
+  border: 1px solid var(--city-rule);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--city-muted);
+  transition: border-color 0.18s ease, color 0.18s ease, background-color 0.18s ease;
+}
+
+.city-scroll-badge.is-linked {
+  border-color: var(--city-orange);
+  color: var(--city-orange);
+  background: rgba(255, 90, 31, 0.08);
+}
+
+.city-scroll-badge:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
 .city-formula-tag {
   padding: 2px 8px;
   border: 1px solid var(--city-cobalt);
@@ -473,10 +501,14 @@
 
 .city-meter-row {
   display: grid;
-  grid-template-columns: 78px minmax(0, 1fr) 44px;
+  grid-template-columns: 96px minmax(0, 1fr) 44px;
   align-items: center;
   gap: 8px;
   font-size: 10.5px;
+}
+
+.city-meter-row > span:first-child {
+  white-space: nowrap;
 }
 
 .city-meter-track {

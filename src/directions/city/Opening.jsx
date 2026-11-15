@@ -404,7 +404,7 @@ function usePrefersReducedMotion() {
   return reduced;
 }
 
-export default function CityOpening({ embedded = false, head = null }) {
+export default function CityOpening({ embedded = false, scrollTransition = false, head = null }) {
   const { lang, t } = useLang();
   const reducedMotion = usePrefersReducedMotion();
 
@@ -419,14 +419,50 @@ export default function CityOpening({ embedded = false, head = null }) {
   const [targetMorph, setTargetMorph] = useState(0);
   const [renderedMorph, setRenderedMorph] = useState(0);
   const [renderedBlend, setRenderedBlend] = useState(0);
+  const [scrollLinked, setScrollLinked] = useState(() => Boolean(scrollTransition || embedded));
 
   const [selectedId, setSelectedId] = useState('supchain-bench');
   const [hoveredId, setHoveredId] = useState(null);
 
+  const workspaceRef = useRef(null);
   const morphRef = useRef(0);
   const blendRef = useRef(0);
 
   const targetBlend = scaleMode === 'log' ? 0 : 1;
+
+  // Scroll-driven 3D -> 2D orthographic morph when embedded / scrollTransition is enabled.
+  useEffect(() => {
+    if (!scrollLinked || reducedMotion) return undefined;
+    const el = workspaceRef.current;
+    if (!el) return undefined;
+
+    let raf = 0;
+    const updateFromScroll = () => {
+      raf = 0;
+      const rect = el.getBoundingClientRect();
+      const startTop = window.innerHeight * 0.62;
+      const endTop = 64;
+      const span = Math.max(120, startTop - endTop);
+      const rawP = Math.min(1, Math.max(0, (startTop - rect.top) / span));
+      const smoothP = rawP * rawP * (3 - 2 * rawP);
+      if (Math.abs(smoothP - morphRef.current) > 0.001) {
+        morphRef.current = smoothP;
+        setRenderedMorph(smoothP);
+        setTargetMorph(smoothP);
+      }
+    };
+    const onScroll = () => {
+      if (!raf) raf = window.requestAnimationFrame(updateFromScroll);
+    };
+    updateFromScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [scrollLinked, reducedMotion]);
 
   // Animate camera morph smoothly when triggered via preset pills.
   useEffect(() => {
@@ -490,6 +526,7 @@ export default function CityOpening({ embedded = false, head = null }) {
   const scaleBlend = reducedMotion ? targetBlend : renderedBlend;
 
   const handleSliderChange = (event) => {
+    setScrollLinked(false);
     const next = Number(event.target.value) / 100;
     morphRef.current = next;
     setRenderedMorph(next);
@@ -497,6 +534,7 @@ export default function CityOpening({ embedded = false, head = null }) {
   };
 
   const handlePresetClick = (presetMorph) => {
+    setScrollLinked(false);
     setTargetMorph(presetMorph);
   };
 
@@ -673,9 +711,23 @@ export default function CityOpening({ embedded = false, head = null }) {
           <div className="city-control-block city-morph-block">
             <div className="city-control-head mono">
               <span>{t(COPY.morphLabel)}</span>
-              <span className="city-telemetry">
-                {morphPct}% · YAW {cam.yawDeg.toFixed(1)}° · PITCH {cam.pitchDeg.toFixed(1)}°
-              </span>
+              <div className="city-head-right">
+                {(scrollTransition || embedded) && !reducedMotion && (
+                  <button
+                    type="button"
+                    className={`city-scroll-badge${scrollLinked ? ' is-linked' : ''}`}
+                    onClick={() => setScrollLinked((v) => !v)}
+                    aria-pressed={scrollLinked}
+                  >
+                    {scrollLinked
+                      ? t({ en: 'Scroll-linked 3D → 2D', zh: '随滚动实时 3D → 2D' })
+                      : t({ en: 'Re-link scroll 3D → 2D', zh: '恢复随滚动 3D → 2D' })}
+                  </button>
+                )}
+                <span className="city-telemetry">
+                  {morphPct}% · YAW {cam.yawDeg.toFixed(1)}° · PITCH {cam.pitchDeg.toFixed(1)}°
+                </span>
+              </div>
             </div>
 
             <div className="city-presets" role="group" aria-label={t(COPY.morphLabel)}>
@@ -743,7 +795,7 @@ export default function CityOpening({ embedded = false, head = null }) {
           </div>
         </div>
 
-        <div className="city-workspace">
+        <div className="city-workspace" ref={workspaceRef}>
           <div className="city-viewport-card">
             <svg
               className="city-svg"

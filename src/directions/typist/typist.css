@@ -55,6 +55,15 @@
   padding-top: clamp(92px, 12vh, 124px);
 }
 
+.typist.is-embedded {
+  background: transparent;
+}
+
+.typist.is-compact .typist-wrap {
+  max-width: none;
+  padding: clamp(28px, 4vh, 44px) 0 0;
+}
+
 .typist-head {
   margin-bottom: 4px;
 }
@@ -67,6 +76,12 @@
   padding-bottom: 18px;
   border-bottom: 1px solid var(--ink);
   align-items: end;
+}
+
+.ty-mast.is-compact {
+  grid-template-columns: minmax(0, 1fr);
+  padding-top: 22px;
+  border-top: 1px solid var(--hair);
 }
 
 .ty-kicker {

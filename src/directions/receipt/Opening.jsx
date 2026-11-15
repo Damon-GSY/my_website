@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Header, Outro } from '../../components/Chrome.jsx';
 import { useLang } from '../../i18n.jsx';
-import { footnote, joinParts, profile, route, work } from '../../content.js';
+import { footnote, joinParts, path, profile, route, work } from '../../content.js';
 import './receipt.css';
 
 const STAMP_ANGLES = [-7, 4, -4, 5, -6, 2, -3, 5];
@@ -117,8 +117,10 @@ const COPY = {
   btnStamp: { en: 'Stamp "PAID IN EVIDENCE"', zh: '加盖 "PAID IN EVIDENCE"' },
   btnReset: { en: 'Reset Tear & Paper', zh: '重置纸卷与存根' },
   receiptTag: { en: 'THERMAL AUDIT LEDGER · NO. RL-2026-06', zh: '热敏审计总账 · 编号 RL-2026-06' },
-  routeLabel: { en: 'TRAJECTORY', zh: '履历路径' },
-  colItem: { en: 'ITEM / PROJECT', zh: '项目明细' },
+  resumeTag: { en: 'RÉSUMÉ & EVIDENCE SLIP · NO. RL-2026-CV', zh: '履历与实证热敏凭条 · 编号 RL-2026-CV' },
+  routeLabel: { en: 'TRAJECTORY', zh: '城市轨迹' },
+  careerLabel: { en: '01 // CAREER & EDUCATION PATH', zh: '01 // 职业与教育履历' },
+  colItem: { en: '02 // SHIPPED EVIDENCE', zh: '02 // 已交付项目与实证' },
   colMetric: { en: 'EVIDENCE', zh: '验证指标' },
   expandHint: { en: '+ TRACE', zh: '+ 详情' },
   collapseHint: { en: '− HIDE', zh: '− 收起' },
@@ -258,7 +260,7 @@ function StampSeal({ stamp }) {
   );
 }
 
-export default function ReceiptOpening({ embedded = false, head = null }) {
+export default function ReceiptOpening({ embedded = false, resumeMode = false, head = null }) {
   const { t } = useLang();
   const [printedCount, setPrintedCount] = useState(work.length);
   const [isPrintingAll, setIsPrintingAll] = useState(false);
@@ -268,9 +270,11 @@ export default function ReceiptOpening({ embedded = false, head = null }) {
   const [copyStatus, setCopyStatus] = useState('idle');
   const [pulseAction, setPulseAction] = useState(false);
 
+  const rootRef = useRef(null);
   const paperRef = useRef(null);
   const stampSeqRef = useRef(1);
   const pulseTimerRef = useRef(0);
+  const scrollFedRef = useRef(false);
 
   const triggerLedPulse = useCallback(() => {
     setPulseAction(true);
@@ -285,6 +289,33 @@ export default function ReceiptOpening({ embedded = false, head = null }) {
       window.clearTimeout(pulseTimerRef.current);
     };
   }, []);
+
+  useEffect(() => {
+    if (!embedded && !resumeMode) return undefined;
+    const node = rootRef.current;
+    if (!node || typeof IntersectionObserver === 'undefined') return undefined;
+    const reduced =
+      typeof window !== 'undefined' &&
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) return undefined;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (scrollFedRef.current) return;
+        if (entries.some((entry) => entry.isIntersecting)) {
+          scrollFedRef.current = true;
+          triggerLedPulse();
+          setPrintedCount(0);
+          setIsPrintingAll(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.16 },
+    );
+    io.observe(node);
+    return () => io.disconnect();
+  }, [embedded, resumeMode, triggerLedPulse]);
 
   useEffect(() => {
     if (!isPrintingAll) return undefined;
@@ -416,7 +447,7 @@ export default function ReceiptOpening({ embedded = false, head = null }) {
         : null;
 
   return (
-    <RootTag className={`receipt${embedded ? ' is-embedded' : ''}`}>
+    <RootTag ref={rootRef} className={`receipt${embedded ? ' is-embedded' : ''}${resumeMode ? ' is-resume' : ''}`}>
       {!embedded && <Header />}
 
       {embedded && head && <div className="receipt-embed-head">{head}</div>}
@@ -508,8 +539,37 @@ export default function ReceiptOpening({ embedded = false, head = null }) {
                     </ol>
                   </div>
 
+                  <div className="receipt-career-box mono" aria-label={t(COPY.careerLabel)}>
+                    <div className="receipt-route-summary">
+                      <span>{t(COPY.careerLabel)}</span>
+                      <strong>{`${pad2(path.length)} ENTRIES`}</strong>
+                    </div>
+                    <ol className="receipt-career-rows">
+                      {path.map((row) => {
+                        const org = t(row.org);
+                        const place = row.place ? t(row.place) : '';
+                        return (
+                          <li key={typeof row.when === 'string' ? row.when : 'now'} className={row.now ? 'is-now' : undefined}>
+                            <span className="receipt-career-when">
+                              {t(row.when)}
+                              <em>{t(row.kind)}</em>
+                            </span>
+                            <span className="receipt-career-org">
+                              <strong>{org || <span className="receipt-blank" aria-hidden="true" />}</strong>
+                              {row.short && <small>{row.short}</small>}
+                              <span>{t(row.role)}</span>
+                            </span>
+                            <span className="receipt-career-place">
+                              {place || (row.now ? <span className="receipt-blank is-short" aria-hidden="true" /> : '—')}
+                            </span>
+                          </li>
+                        );
+                      })}
+                    </ol>
+                  </div>
+
                   <div className="receipt-meta mono">
-                    <span>{t(COPY.receiptTag)}</span>
+                    <span>{t(resumeMode ? COPY.resumeTag : COPY.receiptTag)}</span>
                     <span>{`#0${printedCount}/0${work.length}`}</span>
                   </div>
                 </header>

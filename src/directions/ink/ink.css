@@ -12,11 +12,59 @@
 }
 /* home: the hero is the first screen of a scrolling page */
 .ink.is-flow {
+  --ink-scroll: 0;
   position: relative;
   inset: auto;
   height: 100vh;
   height: 100svh;
   touch-action: pan-y;
+}
+.ink.is-flow .ink-canvas {
+  transform: scale(calc(1 + var(--ink-scroll, 0) * 0.08)) translateY(calc(var(--ink-scroll, 0) * -28px));
+  opacity: calc(1 - var(--ink-scroll, 0) * 0.52);
+  filter: blur(calc(var(--ink-scroll, 0) * 4px));
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+.ink.is-flow .ink-word {
+  transform: translateY(calc(-50% - var(--ink-scroll, 0) * 44px)) scale(calc(1 - var(--ink-scroll, 0) * 0.05));
+  opacity: calc(1 - var(--ink-scroll, 0) * 0.85);
+  will-change: transform, opacity;
+}
+.ink.is-flow .ink-ui {
+  opacity: max(0, calc(1 - var(--ink-scroll, 0) * 1.45));
+  transform: translateY(calc(var(--ink-scroll, 0) * -12px));
+}
+.ink-transition-bridge {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: clamp(110px, 18vh, 180px);
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(244, 244, 242, 0) 0%, rgba(242, 239, 232, 0.74) 62%, #f2efe8 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+.ink-transition-drop {
+  width: 1.5px;
+  height: clamp(52px, 9vh, 96px);
+  background: linear-gradient(180deg, rgba(13, 13, 13, 0) 0%, #0d0d0d 70%, #ee6a1f 100%);
+  transform-origin: top center;
+  transform: scaleY(calc(0.24 + var(--ink-scroll, 0) * 0.76));
+  opacity: calc(0.42 + var(--ink-scroll, 0) * 0.58);
+}
+.ink-transition-dot {
+  width: 7px;
+  height: 7px;
+  margin-bottom: -3px;
+  border-radius: 50%;
+  background: #141413;
+  box-shadow: 0 0 0 3px rgba(238, 106, 31, 0.22);
+  transform: scale(calc(0.65 + var(--ink-scroll, 0) * 0.35));
 }
 .ink-ui a:focus-visible,
 .ink-ui button:focus-visible {

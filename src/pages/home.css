@@ -1,13 +1,13 @@
 /* ---------- home: one system, derived from the ink hero ---------- */
 .home,
 .note {
-  --bg: #f4f4f2;
-  --ink: #0d0d0d;
-  --muted: #8a8a88;
-  --rule: #d9d9d5;
+  --bg: #f2efe8;
+  --ink: #111111;
+  --muted: #78736a;
+  --rule: rgba(17, 17, 17, 0.14);
   --cobalt: #1a3cff;
   --magenta: #ff2d8a;
-  --tangerine: #ff7a1a;
+  --tangerine: #ee6a1f;
   --unlit: #bdbdba;
   background: var(--bg);
   color: var(--ink);
@@ -15,7 +15,7 @@
 }
 body:has(.home),
 body:has(.note) {
-  background: #f4f4f2;
+  background: #f2efe8;
 }
 @media (prefers-reduced-motion: no-preference) {
   html:has(.home) {
@@ -61,12 +61,14 @@ body:has(.note) {
 
 /* 01 statement */
 .h-statement {
-  min-height: 100svh;
+  min-height: auto;
   display: flex;
   flex-direction: column;
+  padding-top: clamp(52px, 8vh, 92px);
+  padding-bottom: clamp(56px, 8vh, 104px);
 }
 .h-sentence {
-  margin: clamp(40px, 9vh, 120px) 0 0 -0.03em;
+  margin: clamp(32px, 7vh, 88px) 0 0 -0.03em;
   font-weight: 850;
   font-size: clamp(46px, 8.6vw, 168px);
   line-height: 0.86;
@@ -84,8 +86,8 @@ body:has(.note) {
   color: var(--cobalt);
 }
 .h-facets {
-  margin-top: auto;
-  padding-top: clamp(56px, 10vh, 120px);
+  margin-top: clamp(40px, 7vh, 84px);
+  padding-top: 0;
   display: flex;
   flex-wrap: wrap;
   gap: 12px clamp(28px, 5vw, 72px);
@@ -94,6 +96,10 @@ body:has(.note) {
 .h-facets span {
   margin-right: 10px;
   color: var(--muted);
+}
+.h-statement-policy {
+  margin-top: clamp(40px, 7vh, 84px);
+  scroll-margin-top: 72px;
 }
 
 /* 02 work: the label rides on the pinned film viewport */
@@ -107,8 +113,55 @@ body:has(.note) {
 .home .parcel.static .h-film-label {
   top: 40px;
 }
+.home .parcel.paper {
+  --bg: #f2efe8;
+  --ink: #111111;
+}
 .home .parcel.paper .p-work small {
   color: var(--ink);
+}
+.home .d20 {
+  --d20-bg: #f2efe8;
+  --d20-ink: #111111;
+  --d20-muted: #78736a;
+  --d20-face: #faf8f3;
+}
+.home .bento-dir.is-embedded:not(.is-cockpit) {
+  --b-page: #f2efe8;
+  border-top: 1px solid var(--rule);
+  border-bottom: 0;
+}
+.home .bento-dir.is-embedded .bento-shell {
+  max-width: none;
+  padding: clamp(56px, 8vh, 96px) var(--gutter) clamp(56px, 8vh, 88px);
+}
+.home .city.is-embedded {
+  border-top: 1px solid var(--rule);
+}
+.home .city.is-embedded .city-sheet {
+  max-width: none;
+  padding: clamp(56px, 8vh, 96px) var(--gutter);
+}
+.home .receipt.is-embedded .receipt-embed-head {
+  max-width: none;
+  padding: clamp(48px, 7vh, 80px) var(--gutter) 0;
+}
+.home .receipt-floating-stub {
+  bottom: 84px;
+  z-index: 35;
+}
+.h-work-act {
+  scroll-margin-top: 56px;
+}
+.h-work-act-parcel {
+  border-top: 1px solid var(--rule);
+}
+.h-path-host {
+  border-top: 1px solid var(--rule);
+  scroll-margin-top: 56px;
+}
+.h-path-editorial {
+  padding-top: clamp(56px, 8vh, 96px);
 }
 
 /* 03 evaluate: holds the d20 chapter */
@@ -411,6 +464,12 @@ body:has(.note) {
   color: var(--tangerine);
   padding-right: 6px;
   border-right: 1px solid rgba(255, 255, 255, 0.16);
+}
+.h-lens-sep {
+  width: 1px;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.18);
+  flex: none;
 }
 .h-lens-group {
   display: inline-flex;

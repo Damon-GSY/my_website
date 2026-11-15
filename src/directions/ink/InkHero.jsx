@@ -19,6 +19,40 @@ export default function InkHero({ flow = false, nav = STUDIES }) {
   const hero = useRef(null);
   const { lang, setLang, t } = useLang();
   useEffect(() => initInk(hero.current), []);
+
+  useEffect(() => {
+    if (!flow) return undefined;
+    const el = hero.current;
+    if (!el) return undefined;
+    const reduced =
+      typeof window !== 'undefined' &&
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) {
+      el.style.setProperty('--ink-scroll', '0');
+      return undefined;
+    }
+
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const denom = Math.max(1, window.innerHeight * 0.85);
+      const progress = Math.min(1, Math.max(0, window.scrollY / denom));
+      el.style.setProperty('--ink-scroll', progress.toFixed(3));
+    };
+    const onScroll = () => {
+      if (!raf) raf = window.requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [flow]);
+
   return (
     <>
       <section className={`ink${flow ? ' is-flow' : ''}`} ref={hero} id={flow ? 'top' : undefined}>
@@ -82,6 +116,12 @@ export default function InkHero({ flow = false, nav = STUDIES }) {
         <video className="ink-video" muted playsInline preload="auto" aria-hidden="true">
           {SOURCES}
         </video>
+        {flow && (
+          <div className="ink-transition-bridge" aria-hidden="true">
+            <span className="ink-transition-drop" />
+            <span className="ink-transition-dot" />
+          </div>
+        )}
       </section>
       <div className="ink-cursor" data-ink-cursor />
     </>

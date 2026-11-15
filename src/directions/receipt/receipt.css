@@ -26,7 +26,7 @@
 }
 
 .receipt.is-embedded {
-  --bg: #f4f4f2;
+  --bg: #f2efe8;
   min-height: auto;
   background: var(--bg);
 }
@@ -391,6 +391,98 @@
 .receipt-route-stops li span:first-child {
   font-weight: 600;
   color: var(--receipt-ink);
+}
+
+.receipt-career-box {
+  margin-top: 10px;
+  padding: 8px 10px 9px;
+  border: 1px dashed var(--receipt-rule);
+  background: rgba(20, 21, 23, 0.025);
+}
+
+.receipt-career-rows {
+  margin-top: 7px;
+  display: grid;
+  gap: 6px;
+  font-size: 10px;
+}
+
+.receipt-career-rows li {
+  display: grid;
+  grid-template-columns: 102px minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 8px;
+  padding-top: 5px;
+  border-top: 1px dotted rgba(23, 24, 27, 0.14);
+}
+
+.receipt-career-rows li:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.receipt-career-when {
+  color: var(--receipt-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  font-size: 9.5px;
+}
+
+.receipt-career-when em {
+  font-style: normal;
+  font-size: 8.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+
+.receipt-career-rows li.is-now .receipt-career-when {
+  color: var(--magenta);
+  font-weight: 600;
+}
+
+.receipt-career-org {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 6px;
+}
+
+.receipt-career-org strong {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--receipt-ink);
+}
+
+.receipt-career-org small {
+  font-size: 9px;
+  color: var(--receipt-muted);
+}
+
+.receipt-career-org > span:last-child {
+  width: 100%;
+  font-size: 9.5px;
+  color: var(--receipt-muted);
+}
+
+.receipt-career-place {
+  font-size: 9.5px;
+  color: var(--receipt-muted);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.receipt-blank {
+  display: inline-block;
+  width: 5.5em;
+  height: 0.85em;
+  border-bottom: 1.5px solid var(--receipt-ink);
+  vertical-align: baseline;
+}
+
+.receipt-blank.is-short {
+  width: 3.4em;
 }
 
 .receipt-meta {
@@ -917,6 +1009,11 @@
   color: var(--receipt-ink);
   filter: drop-shadow(0 18px 30px rgba(17, 19, 22, 0.22));
   animation: receiptStubFloatIn 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.receipt.is-embedded .receipt-floating-stub {
+  bottom: clamp(76px, 9.5vh, 92px);
+  z-index: 35;
 }
 
 @keyframes receiptStubFloatIn {

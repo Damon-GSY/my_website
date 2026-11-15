@@ -1355,7 +1355,7 @@ function WorkTokenGrid({
   );
 }
 
-export default function TypistOpening({ embedded = false, head = null }) {
+export default function TypistOpening({ embedded = false, compact = false, head = null }) {
   const { lang, t } = useLang();
   const [policyId, setPolicyId] = useState('pi_grpo');
   const [temperature, setTemperature] = useState(0.7);
@@ -1486,13 +1486,13 @@ export default function TypistOpening({ embedded = false, head = null }) {
   const WrapTag = embedded ? 'section' : 'main';
 
   return (
-    <div className={`typist${embedded ? ' is-embedded' : ' is-standalone'}`}>
+    <div className={`typist${embedded ? ' is-embedded' : ' is-standalone'}${compact ? ' is-compact' : ''}`}>
       {!embedded && <Header />}
 
       <WrapTag className="typist-wrap">
         {embedded && head && <div className="typist-head">{head}</div>}
 
-        <header className="ty-mast">
+        <header className={`ty-mast${compact ? ' is-compact' : ''}`}>
           <div>
             <p className="ty-kicker mono">
               <span className="ty-kicker-dot" aria-hidden="true" />
@@ -1500,12 +1500,21 @@ export default function TypistOpening({ embedded = false, head = null }) {
                 09 · TYPIST — {joinParts([profile.name, subtitleParts], ' · ')}
               </span>
             </p>
-            <h1 className="ty-title">
-              {t({
-                en: 'Every word is a sampled policy.',
-                zh: '每个词元，都是一次策略采样。',
-              })}
-            </h1>
+            {embedded ? (
+              <h3 className="ty-title">
+                {t({
+                  en: 'Every word is a sampled policy.',
+                  zh: '每个词元，都是一次策略采样。',
+                })}
+              </h3>
+            ) : (
+              <h1 className="ty-title">
+                {t({
+                  en: 'Every word is a sampled policy.',
+                  zh: '每个词元，都是一次策略采样。',
+                })}
+              </h1>
+            )}
             <p className="ty-sub">
               {t({
                 en: 'Switch checkpoints, adjust temperature T, and inspect the 3D cloud of rejected tokens and GAE advantages behind the thesis.',
@@ -1514,20 +1523,22 @@ export default function TypistOpening({ embedded = false, head = null }) {
             </p>
           </div>
 
-          <div className="ty-ctx" aria-label={t({ en: 'Context prefix trajectory', zh: '上下文轨迹前缀' })}>
-            <div className="ty-ctx-head mono">
-              <span>{t({ en: 'ctx[trajectory]', zh: '上下文[履历轨迹]' })}</span>
-              <span>{route.length} stops</span>
+          {!compact && (
+            <div className="ty-ctx" aria-label={t({ en: 'Context prefix trajectory', zh: '上下文轨迹前缀' })}>
+              <div className="ty-ctx-head mono">
+                <span>{t({ en: 'ctx[trajectory]', zh: '上下文[履历轨迹]' })}</span>
+                <span>{route.length} stops</span>
+              </div>
+              <div className="ty-ctx-stops">
+                {route.map((stop, idx) => (
+                  <span key={`${stop.years}-${idx}`} className="ty-ctx-stop">
+                    <strong>{stop.code || <span className="ty-blank" aria-hidden="true" />}</strong>
+                    <span>{joinParts([stop.years, stop.what, t(stop.city)])}</span>
+                  </span>
+                ))}
+              </div>
             </div>
-            <div className="ty-ctx-stops">
-              {route.map((stop, idx) => (
-                <span key={`${stop.years}-${idx}`} className="ty-ctx-stop">
-                  <strong>{stop.code || <span className="ty-blank" aria-hidden="true" />}</strong>
-                  <span>{joinParts([stop.years, stop.what, t(stop.city)])}</span>
-                </span>
-              ))}
-            </div>
-          </div>
+          )}
         </header>
 
         <PolicyBar policyId={policyId} onSelectPolicy={handleSelectPolicy} t={t} />
@@ -1572,15 +1583,17 @@ export default function TypistOpening({ embedded = false, head = null }) {
           t={t}
         />
 
-        <WorkTokenGrid
-          policyId={policyId}
-          grpoTokens={grpoTokens}
-          activeWorkId={activeWorkId}
-          selectedWorkId={selectedWorkId}
-          onHoverWork={setHoveredWorkId}
-          onToggleWork={handleToggleWork}
-          t={t}
-        />
+        {!compact && (
+          <WorkTokenGrid
+            policyId={policyId}
+            grpoTokens={grpoTokens}
+            activeWorkId={activeWorkId}
+            selectedWorkId={selectedWorkId}
+            onHoverWork={setHoveredWorkId}
+            onToggleWork={handleToggleWork}
+            t={t}
+          />
+        )}
       </WrapTag>
 
       {!embedded && <Outro current="typist" />}
