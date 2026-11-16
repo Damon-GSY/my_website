@@ -39,6 +39,10 @@ The finishing pass of 2026-11-16 (phone polish, full section bar, fresh previews
 
 Numbers and details: `docs/reviews/2026-11-15-site-qa.md`, "Quality pass".
 
+### Assembly plan (2026-11-16)
+
+`docs/plans/2026-11-16-one-site-assembly-plan.md` proposes how to turn all the studies into one site: an eight-chapter run (Arrival, Claim, Work, Test, Evidence, Path, Notes, Close), one device per chapter, a single magenta mark handed from chapter to chapter, three site-wide modes (Guided, Short, Night), a chapter contract, budgets, phases A–I and the decisions needed. Plan only; nothing in it is built.
+
 ### Next steps (Damon decides)
 
 1. Judge the composed home page; keep, change, or pick another direction (night, pill, bento, agent, receipt as whole-site options).
