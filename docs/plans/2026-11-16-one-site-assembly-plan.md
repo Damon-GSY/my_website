@@ -132,6 +132,18 @@ Suggested order: A, B, C first. Those three alone turn the current page into a s
 5. The receipt stamp: "PAID IN EVIDENCE", other wording, or none.
 6. Still open from before: current employer and city, the real email, the domain and host.
 
+## 9a. Decisions made (2026-11-16)
+
+Damon answered: 1 and 2 "try to impress me" (Claude chooses), 3 yes, 4 Night stays a separate study, 5 "impress me" (Claude chooses).
+
+| # | Decision |
+| --- | --- |
+| 1 | The eight-chapter run in section 3 stands as the spine. |
+| 2 | The mark is **magenta** `#ff2d8a`. It is already the carton's sticker and the die's failing face, so two handoffs exist before any new work; tangerine stays out of the site. |
+| 3 | Typist, City and Receipt may be adapted: scroll-driven, system colours, résumé values only. Damon's originals stay at their routes. |
+| 4 | **Night is not a mode.** It stays at `/lab/night/`. Section 3's mode table is now Guided and Short only, and phase H is Guided only. |
+| 5 | The receipt stamp reads **"HELD UP ON REAL WORK"**, the last words of his own sentence, so the site ends by stamping the claim it opened with. It is the mark's final form. |
+
 ## 10. Size
 
 Phases A–C are roughly the size of one earlier round (three subagent builds). D–G are one build each. H is two. I is one pass. At the pace so far that is three to four working sessions under the 70% usage rule, with a judgement point for Damon after A–C and after each of D–G.
