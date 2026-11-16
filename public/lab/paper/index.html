@@ -58,6 +58,14 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 .big a{display:inline-flex;flex-direction:column;align-self:flex-start}
 .big a span:first-child{font-weight:850;font-size:clamp(26px,min(4cqw,6cqh),52px);letter-spacing:-.04em;line-height:1;padding-bottom:4px;border-bottom:2px solid var(--ink)}
 .big a .mono{color:var(--muted);margin-top:8px;text-transform:none;letter-spacing:.02em}
+/* the last sheet carries the same scale as the first: a large title, then the two columns set big enough to fill it */
+.p2 .disp{font-size:min(19cqw,26cqh);margin-top:6cqh;margin-left:-.04em}
+.p2 .cols{margin-top:auto;padding-top:5cqh}
+.p2 .cols .rows li{min-height:clamp(52px,13cqh,112px)}
+.p2 .cols .rows .nm{font-size:clamp(16px,min(2.8cqw,4.2cqh),34px)}
+.p2 .cols .rows .m{font-size:clamp(20px,min(4cqw,6cqh),52px)}
+.p2 .big{gap:clamp(12px,4cqh,36px)}
+.p2 .big a span:first-child{font-size:clamp(26px,min(6cqw,9cqh),76px)}
 .end{margin-top:3cqh;display:flex;justify-content:space-between;gap:16px;border-top:1px solid var(--hair);padding-top:12px}
 @container (max-width:640px){
   .pr{grid-template-columns:1fr;gap:12px}
@@ -111,7 +119,7 @@ html.static .pg{position:relative;visibility:visible;height:max(640px,calc(100sv
   </div></section>
   <section class="pg p2" aria-label="Research and contact"><div class="in">
     <div class="top"><span class="lbl mono">03 &mdash; Research &amp; contact</span><span class="meta mono">Last sheet</span></div>
-    <h2 class="disp" style="margin-top:3cqh">Contact</h2>
+    <h2 class="disp">Contact</h2>
     <div class="cols">
       <div><h3 class="mono">Research</h3>
         <ul class="rows">

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { createStage } from './stage.js';
 import { createTimeline } from './timeline.js';
+import { hasWebGL2 } from './webgl.js';
 
 // Wires a canvas and a scroll track to a film: build(stage, root) -> { frame(p), resize?(), dispose?() }.
 // Falls back to 'static' with reduced motion or without WebGL.
@@ -11,7 +12,7 @@ export function useFilm(build) {
   const [mode, setMode] = useState('film');
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !hasWebGL2()) {
       setMode('static');
       return undefined;
     }

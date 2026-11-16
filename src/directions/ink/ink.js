@@ -1,3 +1,4 @@
+import { hasWebGL } from '../../engine/webgl.js';
 // Ink reveal: the pointer paints a gooey trail that uncovers a moving ink layer under the page.
 // Raw WebGL, no libraries. The ink is a local video when /ink/ink.mp4 exists, otherwise generated.
 const TRAIL_SCALE = 0.25;
@@ -91,6 +92,7 @@ export function initInk(hero) {
   const canvas = $('canvas');
   const videos = [...hero.querySelectorAll('video')];
   const cursor = document.querySelector('[data-ink-cursor]');
+  if (!hasWebGL()) return () => {};
   const gl = canvas.getContext('webgl', { premultipliedAlpha: true, alpha: true, antialias: false });
   if (!gl) return () => {};
   gl.getExtension('OES_standard_derivatives');

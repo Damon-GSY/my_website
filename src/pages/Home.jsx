@@ -5,6 +5,7 @@ import { notes } from '../notes.js';
 import InkHero from '../directions/ink/InkHero.jsx';
 import MoreWays from './MoreWays.jsx';
 import Evidence from '../directions/home-evidence/Evidence.jsx';
+import { hasWebGL2 } from '../engine/webgl.js';
 import './home.css';
 
 const WorkFilm = lazy(() => import('./WorkFilm.jsx'));
@@ -42,6 +43,18 @@ const NAV = [
   { href: '#contact', label: { en: 'Contact', zh: '联系' } },
 ];
 
+// The fixed bar lists every section; on phones it becomes a scrolling strip (see home.css).
+const BAR_NAV = [
+  { href: '#statement', label: { en: 'Statement', zh: '自述' } },
+  NAV[0],
+  NAV[1],
+  { href: '#evidence', label: { en: 'Evidence', zh: '证据' } },
+  NAV[2],
+  NAV[3],
+  { href: '#more', label: { en: 'More ways in', zh: '更多入口' } },
+  NAV[4],
+];
+
 const STATEMENT = {
   en: 'I train language agents, then measure whether they hold up on real work.',
   zh: '我训练语言智能体，再检验它们在真实工作中是否站得住。',
@@ -53,16 +66,7 @@ const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matc
 // their short static fallback, so there is nothing heavy to defer and no tall track to stand in for.
 let staticCache;
 const staticFilms = () => {
-  if (staticCache === undefined) {
-    let gl = null;
-    try {
-      gl = document.createElement('canvas').getContext('webgl');
-    } catch {
-      gl = null;
-    }
-    gl?.getExtension('WEBGL_lose_context')?.loseContext();
-    staticCache = reduced() || !gl || typeof IntersectionObserver === 'undefined';
-  }
+  if (staticCache === undefined) staticCache = reduced() || !hasWebGL2() || typeof IntersectionObserver === 'undefined';
   return staticCache;
 };
 
@@ -274,6 +278,14 @@ function Bar() {
   const [past, setPast] = useState(false);
   const [down, setDown] = useState(false);
   const [active, setActive] = useState('');
+  const navRef = useRef(null);
+  // on the phone strip, keep the section in view centred
+  useEffect(() => {
+    const nav = navRef.current;
+    const link = nav?.querySelector('[aria-current]');
+    if (!link || nav.scrollWidth <= nav.clientWidth) return;
+    nav.scrollTo({ left: link.offsetLeft - (nav.clientWidth - link.offsetWidth) / 2, behavior: reduced() ? 'auto' : 'smooth' });
+  }, [active]);
   useEffect(() => {
     // it steps aside while you read downwards and comes back when you scroll up
     let lastY = window.scrollY;
@@ -291,7 +303,7 @@ function Bar() {
       (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
       { rootMargin: '-50% 0px -50% 0px' },
     );
-    ['statement', 'work', 'evaluate', 'path', 'notes', 'contact'].forEach((id) => {
+    BAR_NAV.map((item) => item.href.slice(1)).forEach((id) => {
       const el = document.getElementById(id);
       if (el) io.observe(el);
     });
@@ -305,16 +317,21 @@ function Bar() {
       <a className="h-bar-name" href="#top">
         Damon Guan
       </a>
-      <nav aria-label={t({ en: 'Sections', zh: '章节' })}>
-        {NAV.map((item) => (
+      <nav ref={navRef} aria-label={t({ en: 'Sections', zh: '章节' })}>
+        {BAR_NAV.map((item) => (
           <a key={item.href} href={item.href} aria-current={active === item.href.slice(1) || undefined}>
             {t(item.label)}
           </a>
         ))}
-        <button type="button" onClick={() => setLang(lang === 'en' ? 'zh' : 'en')} aria-label="Switch language">
-          {lang === 'en' ? '中文' : 'EN'}
-        </button>
       </nav>
+      <button
+        type="button"
+        className="h-bar-lang"
+        onClick={() => setLang(lang === 'en' ? 'zh' : 'en')}
+        aria-label="Switch language"
+      >
+        {lang === 'en' ? '中文' : 'EN'}
+      </button>
     </header>
   );
 }

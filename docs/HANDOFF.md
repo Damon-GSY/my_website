@@ -14,10 +14,11 @@ Work stopped because the 5-hour usage window reached Damon's stop line (62% at t
 
 ### Known open items
 
-- "More ways in" previews are screenshots (`src/pages/more/*.jpg`) and will go stale as studies change.
-- The fixed top bar does not list Evidence or More ways in.
-- With WebGL off, three.js logs "could not create a WebGL context" (fallbacks still render).
-- Parcels phone cartons face front (flatter); paper's desktop Contact page has an empty band; `/d20` opens on a near-empty "Scroll ↓" screen by design.
+The finishing pass of 2026-11-16 (phone polish, full section bar, fresh previews, quiet WebGL fallback, paper Contact) is written up in `docs/reviews/2026-11-15-site-qa.md`, "Finishing pass".
+
+
+- Parcels phone cartons face front (flatter); `/d20` opens on a near-empty "Scroll ↓" screen by design.
+- "More ways in" previews were re-captured on 2026-11-16; they are still static screenshots and need re-capturing when a study changes.
 - Nothing checked on a real GPU, Safari or a physical phone.
 - Some history contains automatic "wip" snapshot commits (made to satisfy a commit-on-stop hook while agents were mid-work); the final state is clean.
 

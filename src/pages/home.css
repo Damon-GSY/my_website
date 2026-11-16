@@ -656,8 +656,8 @@ body:has(.note) {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
-  padding: 18px var(--gutter);
+  gap: 22px;
+  padding: 3px var(--gutter);
   /* solid, so scrolling text never runs through the links; every section below shares --bg */
   background: var(--bg);
   border-bottom: 1px solid var(--rule);
@@ -674,6 +674,8 @@ body:has(.note) {
   pointer-events: auto;
 }
 .h-bar-name {
+  flex: none;
+  padding: 13px 0;
   font-weight: 750;
   font-size: 16px;
   letter-spacing: -0.02em;
@@ -682,10 +684,26 @@ body:has(.note) {
   display: flex;
   align-items: center;
   gap: 22px;
+  min-width: 0;
+  margin-left: auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.h-bar nav::-webkit-scrollbar {
+  display: none;
+}
+.h-bar nav a,
+.h-bar-lang {
+  flex: none;
+  padding: 15px 0;
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  white-space: nowrap;
+}
+.h-bar-lang {
+  flex: none;
 }
 .h-bar nav a[aria-current] {
   text-decoration: underline;
@@ -766,14 +784,37 @@ body:has(.note) {
   .h-bar-name {
     display: none;
   }
+  /* phones: every section in a strip that scrolls sideways; the section in view is centred and underlined */
   .h-bar {
-    padding: 14px var(--gutter);
+    padding: 0;
+    gap: 0;
   }
   .h-bar nav {
-    width: 100%;
-    justify-content: space-between;
-    gap: 10px;
-    font-size: 10px;
+    flex: 1;
+    gap: 0;
+    margin-left: 0;
+    padding: 0 calc(var(--gutter) - 10px);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 22px), transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 22px), transparent);
+  }
+  .h-bar nav a,
+  .h-bar-lang {
+    display: inline-flex;
+    align-items: center;
+    min-height: 46px;
+    padding: 0 10px;
+  }
+  .h-bar nav a:not([aria-current]) {
+    color: color-mix(in srgb, var(--ink) 62%, transparent);
+  }
+  .h-bar nav a[aria-current] {
+    text-decoration-thickness: 2px;
+  }
+  .h-bar-lang {
+    justify-content: center;
+    min-width: 52px;
+    padding: 0 var(--gutter) 0 12px;
+    border-left: 1px solid var(--rule);
   }
 }
 
@@ -928,4 +969,56 @@ body:has(.note) {
 .home .h-workfilm .p-work:not(.is-in) .h-card:focus-visible .p-card-in {
   opacity: 1;
   transform: none;
+}
+
+/* ---------- phones: tap targets, type and rhythm (finishing pass) ---------- */
+@media (max-width: 760px) {
+  .h-section {
+    padding-top: clamp(84px, 13vh, 128px);
+  }
+  /* hero: section list, "Get in touch" and "Scroll" reach 44px without moving the composition */
+  .home .ink-nav li {
+    margin-bottom: 0;
+  }
+  .home .ink-nav a,
+  .home .ink-nav button {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .home .ink-pill {
+    min-height: 44px;
+    padding: 0 16px 0 18px;
+  }
+  .home .ink-bl {
+    padding: 15px 0;
+    bottom: 9px;
+  }
+  .h-lens-dock {
+    padding: 0;
+  }
+  .h-lens-dock-title {
+    min-height: 44px;
+    padding: 0 16px;
+    font-size: 11px;
+  }
+  .home .d20-seed button {
+    min-height: 44px;
+    padding: 0 8px;
+  }
+  .h-email {
+    padding: 4px 0;
+  }
+  .h-foot {
+    gap: 0 24px;
+    padding-top: 12px;
+  }
+  .h-foot a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .h-door-line {
+    font-size: 13px;
+  }
 }

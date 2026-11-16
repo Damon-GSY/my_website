@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLang } from '../../i18n.jsx';
 import { createStage } from '../../engine/stage.js';
+import { hasWebGL2 } from '../../engine/webgl.js';
 import { createTimeline } from '../../engine/timeline.js';
 import { failSteps, initialSeed, newSeed, pct, rollsFromSeed, seedLabel, STEPS } from './dice.js';
 import { buildD20 } from './Scene.js';
@@ -64,7 +65,7 @@ function useRows() {
 export default function D20Chapter({ id = 'evaluate', head = null }) {
   const { t, lang } = useLang();
   const [mode, setMode] = useState(() =>
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'static' : 'film',
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches || !hasWebGL2() ? 'static' : 'film',
   );
   const [seed, setSeed] = useState(initialSeed);
   const rolls = useMemo(() => rollsFromSeed(seed), [seed]);
