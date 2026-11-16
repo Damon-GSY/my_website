@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { langSwitchLabel, useLang } from '../i18n.jsx';
-import { notes } from '../notes.js';
+import { noteCategory, noteMinutes, notes } from '../notes.js';
 import './home.css';
 
 export default function Note() {
@@ -40,7 +40,7 @@ export default function Note() {
                   {t({ en: 'Field note', zh: '笔记' })} {String(index + 1).padStart(2, '0')}/
                   {String(notes.length).padStart(2, '0')}
                 </span>
-                <span className="h-label">{note.category}</span>
+                <span className="h-label">{noteCategory(note, lang)}</span>
                 <span className="h-aside">{note.date.replaceAll('-', '.')}</span>
               </p>
               <h1>{note.title}</h1>
@@ -48,7 +48,7 @@ export default function Note() {
             </header>
             <div className="n-body">
               <aside className="n-side mono">
-                <span>{note.readingTime}</span>
+                <span>{noteMinutes(note, lang, true)}</span>
                 <b>{note.tags.join(' · ')}</b>
                 {lang === 'zh' && <span>{t({ en: '', zh: '本文仅有英文版。' })}</span>}
               </aside>

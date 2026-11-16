@@ -21,8 +21,9 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 .nav .lab{color:#222}
 #gl{position:fixed;left:0;top:0;z-index:5;pointer-events:none}
 #sheet{position:fixed;z-index:2;background:var(--paper);box-shadow:inset 0 0 0 1px var(--hair)}
-.pg{position:absolute;inset:0;container-type:size;visibility:hidden}
-.pg.on{visibility:visible}
+.pg{position:absolute;inset:0;container-type:size;opacity:0;pointer-events:none}
+.pg.on{opacity:1;pointer-events:auto}
+/* off-screen sections stay readable by assistive tech (opacity, not visibility); only the canvas is aria-hidden */
 .in{position:absolute;inset:0;padding:clamp(16px,4.5cqh,40px) clamp(16px,4cqw,48px);display:flex;flex-direction:column}
 .top{display:flex;justify-content:space-between;gap:16px;align-items:baseline}
 .lbl{color:var(--accent)}
@@ -82,7 +83,7 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 /* static: reduced motion or no WebGL */
 html.static #gl,html.static #spacer{display:none}
 html.static #sheet{position:static;background:none;box-shadow:none;padding:80px 16px 24px;max-width:1180px;margin:0 auto}
-html.static .pg{position:relative;visibility:visible;height:max(640px,calc(100svh - 104px));margin-bottom:24px;background:var(--paper);box-shadow:inset 0 0 0 1px var(--hair)}
+html.static .pg{position:relative;opacity:1;pointer-events:auto;height:max(640px,calc(100svh - 104px));margin-bottom:24px;background:var(--paper);box-shadow:inset 0 0 0 1px var(--hair)}
 @media (max-width:700px){.nav{padding:0 16px}.nav .brand{font-size:17px}html.static #sheet{padding:68px 12px 12px}html.static .pg{height:max(700px,calc(100svh - 80px))}}
 </style>
 </head>
@@ -292,7 +293,7 @@ function buildTextures(){tex.forEach(t=>gl.deleteTexture(t));masks.forEach(t=>gl
 // ---------- scroll state -> frame (pure function of scroll position) ----------
 const ease=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2,sstep=(a,b,x)=>{x=Math.max(0,Math.min(1,(x-a)/(b-a)));return x*x*(3-2*x)};
 const CAMT=.016;
-function showDom(sec){sheet.style.visibility=sec<0?'hidden':'visible';pages.forEach((p,i)=>p.classList.toggle('on',i===sec))}
+function showDom(sec){sheet.style.opacity=sec<0?'0':'1';pages.forEach((p,i)=>{const on=i===sec;p.classList.toggle('on',on);p.querySelectorAll('a,button').forEach(a=>on?a.removeAttribute('tabindex'):a.setAttribute('tabindex','-1'))})}
 function bindTex(unit,t,u){gl.activeTexture(gl.TEXTURE0+unit);gl.bindTexture(gl.TEXTURE_2D,t);gl.uniform1i(u,unit)}
 function draw(){
   raf=0;const y=Math.max(0,window.scrollY),p=Math.min(2,y/(K*vh)),i=Math.min(1,Math.floor(p)),t=p-i;

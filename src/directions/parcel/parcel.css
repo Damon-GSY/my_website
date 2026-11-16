@@ -8,7 +8,7 @@
   --ink: #0d0d0d;
 }
 .parcel.paper .p-route li.is-on b {
-  color: #ff2d8a;
+  color: #d6136c; /* small text: 4.6:1 on #f4f4f2 (#ff2d8a is 3.2:1) */
 }
 .parcel.paper.static .p-card {
   background: #e9e9e5;

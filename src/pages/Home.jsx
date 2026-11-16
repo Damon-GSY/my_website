@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { langSwitchLabel, useLang } from '../i18n.jsx';
 import { path, profile } from '../content.js';
-import { notes } from '../notes.js';
+import { noteCategory, noteMinutes, notes } from '../notes.js';
 import InkHero from '../directions/ink/InkHero.jsx';
 import MoreWays from './MoreWays.jsx';
 import Evidence from '../directions/home-evidence/Evidence.jsx';
@@ -217,7 +217,7 @@ function Path() {
 }
 
 function Notes() {
-  const { t } = useLang();
+  const { lang, t } = useLang();
   return (
     <section id="notes" className="h-section h-notes">
       <SectionHead n="06" aside={`${String(notes.length).padStart(2, '0')} ${t({ en: 'entries', zh: '篇' })}`}>
@@ -230,8 +230,8 @@ function Notes() {
             <a href={`/notes/${note.slug}`}>
               <span className="h-date mono">{note.date.replaceAll('-', '.')}</span>
               <span className="h-title">{note.title}</span>
-              <span className="h-cat mono">{note.category}</span>
-              <span className="h-time mono">{note.readingTime.replace(' read', '')}</span>
+              <span className="h-cat mono">{noteCategory(note, lang)}</span>
+              <span className="h-time mono">{noteMinutes(note, lang)}</span>
               <svg className="h-arrow" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M6 18L18 6M8 6h10v10" />
               </svg>

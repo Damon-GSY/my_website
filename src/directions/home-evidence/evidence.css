@@ -20,6 +20,7 @@
 }
 .ev-intro {
   max-width: 22em;
+  text-wrap: pretty;
   padding-bottom: 0.4em;
   font-size: 15px;
   line-height: 1.4;

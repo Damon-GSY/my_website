@@ -1,3 +1,12 @@
+// UI labels for notes in Chinese mode (titles and bodies stay English).
+const CATEGORY_ZH = { Research: '研究', Engineering: '工程', 'Post-Training': '后训练' };
+export const noteCategory = (note, lang) => (lang === 'zh' ? CATEGORY_ZH[note.category] ?? note.category : note.category);
+export const noteMinutes = (note, lang, withRead = false) => {
+  const n = parseInt(note.readingTime, 10);
+  if (lang === 'zh') return withRead ? `阅读约 ${n} 分钟` : `${n} 分钟`;
+  return withRead ? note.readingTime : `${n} min`;
+};
+
 // Field notes, moved from main:src/data/posts.js. Content is trusted HTML written by Damon (English only).
 export const notes = [
   {

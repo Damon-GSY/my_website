@@ -17,7 +17,7 @@ Work stopped because the 5-hour usage window reached Damon's stop line (62% at t
 The finishing pass of 2026-11-16 (phone polish, full section bar, fresh previews, quiet WebGL fallback, paper Contact) is written up in `docs/reviews/2026-11-15-site-qa.md`, "Finishing pass".
 
 
-- Parcels phone cartons face front (flatter); `/d20` opens on a near-empty "Scroll ↓" screen by design.
+- `/d20` opens on a near-empty "Scroll ↓" screen by design.
 - "More ways in" previews were re-captured on 2026-11-16; they are still static screenshots and need re-capturing when a study changes.
 - Nothing checked on a real GPU, Safari or a physical phone.
 - Some history contains automatic "wip" snapshot commits (made to satisfy a commit-on-stop hook while agents were mid-work); the final state is clean.
@@ -28,18 +28,16 @@ The finishing pass of 2026-11-16 (phone polish, full section bar, fresh previews
 - Launch readiness: title, description, share tags, `public/og.png`, a "DG" favicon, `public/_redirects` (Netlify), `vercel.json` (Vercel; `/lab/` with a trailing slash now also rewrites), `public/robots.txt`, and a "Deploy" section in `README.md` with the pre-launch checklist. Nothing deployed; host not chosen.
 - Remaining work needs Damon's decisions; there is no further unblocked build work queued.
 
-### Quality pass, stopped part-way (2026-11-16)
-
-Damon stopped the session while a quality-pass agent was mid-work. Its partial changes are committed because they lint, build and pass a smoke test, but only item 1 is confirmed.
+### Quality pass (2026-11-16, finished)
 
 | Item | State |
 | --- | --- |
-| 1. Per-route titles and a real 404 | **Done and smoke-tested.** `/lab` → "Design studies — Damon Guan", studies and notes get their own titles, unknown paths show `src/pages/NotFound.jsx` ("Not found — Damon Guan"). Checked at 1440 and 390 on `/`, `/lab`, an unknown path, a note, `/d20`, `/ink`: no console errors, no horizontal overflow, one h1 each except `/d20` standalone (0) |
-| 2. Accessibility on `/` and notes | **Partly applied, not verified.** Edits exist in `Home.jsx`, `home.css`, `base.css`, `Note.jsx`, `InkHero.jsx`, `ink.css`, `D20Chapter.jsx`, `d20.css`, `evidence.css`, `i18n.jsx` (e.g. an accessible label for the language switch). The agent was about to run its audit script (h1 count, heading order, unnamed buttons/links, contrast) when stopped, so nothing here was measured. Not done: the paper study's screen-reader text |
-| 3. Chinese mode on phones | **Not started** |
-| 4. Parcels phone cartons back to light 3D | **Not started** |
+| 1. Per-route titles and a real 404 | **Done.** `/lab` → "Design studies — Damon Guan", studies and notes get their own titles, unknown paths show `src/pages/NotFound.jsx` |
+| 2. Accessibility on `/` and notes | **Done, measured.** One h1, no skipped heading levels, skip link works, 0 unnamed buttons/links, 3/3 canvases aria-hidden, 0 small-text colour pairs below 4.5:1 (muted #6f6f6c, active route code #d6136c). `/lab/paper/` keeps all three sections readable by assistive tech in WebGL mode. Open: no banner landmark on `/` until the top bar appears |
+| 3. Chinese mode on phones | **Done.** Note categories and reading times translated; Evidence intro wraps without an orphan; no overflow at 360/390/1440 |
+| 4. Parcels phone cartons back to light 3D | **Done.** 16° turn + mild perspective; strips placed after the perspective is applied; no overlap at 360/390; open/close/hash/keyboard checked |
 
-To finish: re-run items 2–4 from the brief (accessibility audit with numbers, zh walk at 390 and 1440, parcels phone tilt), and look at `/` on a phone once more, since the accessibility edits touched shared styles and were never screenshot-checked.
+Numbers and details: `docs/reviews/2026-11-15-site-qa.md`, "Quality pass".
 
 ### Next steps (Damon decides)
 
