@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useLang } from '../i18n.jsx';
+import { langSwitchLabel, useLang } from '../i18n.jsx';
 import { notes } from '../notes.js';
 import './home.css';
 
@@ -17,19 +17,22 @@ export default function Note() {
 
   return (
     <div className="note">
+      <a className="skip-link" href="#content">
+        {t({ en: 'Skip to content', zh: '跳到正文' })}
+      </a>
       <header className="n-top mono">
         <a className="n-brand" href="/">
           Damon Guan
         </a>
-        <nav>
+        <nav aria-label={t({ en: 'Site', zh: '站点' })}>
           <a href="/#notes">← {t({ en: 'All notes', zh: '全部笔记' })}</a>
-          <button type="button" onClick={() => setLang(lang === 'en' ? 'zh' : 'en')} aria-label="Switch language">
+          <button type="button" onClick={() => setLang(lang === 'en' ? 'zh' : 'en')} aria-label={langSwitchLabel(lang)}>
             {lang === 'en' ? '中文' : 'EN'}
           </button>
         </nav>
       </header>
       {note ? (
-        <main>
+        <main id="content">
           <article>
             <header className="n-head">
               <p className="h-head mono">
@@ -61,7 +64,7 @@ export default function Note() {
           )}
         </main>
       ) : (
-        <main className="n-head">
+        <main id="content" className="n-head">
           <p className="h-head mono">
             <span className="h-num">404</span>
             <span className="h-label">{t({ en: 'Not found', zh: '未找到' })}</span>

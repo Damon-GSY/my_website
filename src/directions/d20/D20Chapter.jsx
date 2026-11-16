@@ -256,8 +256,8 @@ function Seed({ seed, onRoll, t }) {
   return (
     <span className="d20-seed">
       {t(copy.seed)} {seedLabel(seed)}
-      <button type="button" onClick={onRoll}>
-        {t(copy.reroll)} ↻
+      <button type="button" onClick={onRoll} aria-label={t({ en: 'Re-roll the dice', zh: '重新掷骰' })}>
+        {t(copy.reroll)} <span aria-hidden="true">↻</span>
       </button>
     </span>
   );

@@ -2,7 +2,7 @@
 .d20 {
   --d20-bg: #f4f4f2;
   --d20-ink: #0d0d0d;
-  --d20-muted: #8a8a88;
+  --d20-muted: #6f6f6c;
   --d20-accent: #ff2d8a;
   --d20-face: #fbfbf9;
   --d20-g: clamp(18px, 4vw, 56px);
@@ -400,7 +400,7 @@
   font-size: 12px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #8a8a88;
+  color: #6f6f6c;
 }
 .d20-standalone .d20-spacer + .d20 + .d20-spacer {
   align-items: flex-start;

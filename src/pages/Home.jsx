@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
-import { useLang } from '../i18n.jsx';
+import { langSwitchLabel, useLang } from '../i18n.jsx';
 import { path, profile } from '../content.js';
 import { notes } from '../notes.js';
 import InkHero from '../directions/ink/InkHero.jsx';
@@ -251,6 +251,7 @@ function Contact() {
       <SectionHead n="08" aside={t({ en: 'Email is best', zh: '邮件最快' })}>
         {t({ en: 'Contact', zh: '联系' })}
       </SectionHead>
+      <h2 className="sr-only">{t({ en: 'Contact', zh: '联系' })}</h2>
       <a className="h-email" href={`mailto:${profile.email}`}>
         {user}
         <span className="h-at">@</span>
@@ -328,7 +329,7 @@ function Bar() {
         type="button"
         className="h-bar-lang"
         onClick={() => setLang(lang === 'en' ? 'zh' : 'en')}
-        aria-label="Switch language"
+        aria-label={langSwitchLabel(lang)}
       >
         {lang === 'en' ? '中文' : 'EN'}
       </button>
@@ -413,8 +414,11 @@ export default function Home() {
 
   return (
     <div className="home">
+      <a className="skip-link" href="#statement">
+        {t({ en: 'Skip to content', zh: '跳到正文' })}
+      </a>
       <Bar />
-      <main>
+      <main id="content">
         {heroLens === 'ink' ? (
           <InkHero flow nav={NAV} />
         ) : (
@@ -430,7 +434,7 @@ export default function Home() {
                   </a>
                 ))}
                 <a href="/lab">{t({ en: 'Studies', zh: '研究' })}</a>
-                <button type="button" onClick={() => setLang(lang === 'en' ? 'zh' : 'en')}>
+                <button type="button" onClick={() => setLang(lang === 'en' ? 'zh' : 'en')} aria-label={langSwitchLabel(lang)}>
                   {lang === 'en' ? '中文' : 'EN'}
                 </button>
               </nav>
@@ -537,10 +541,11 @@ export default function Home() {
           className="h-lens-dock-title"
           aria-expanded={dockOpen}
           aria-controls="h-lens-groups"
+          aria-label={t({ en: 'Studio Lens: switch how each chapter is shown', zh: '章节透镜：切换各章节的呈现方式' })}
           onClick={() => setDockOpen((v) => !v)}
         >
           {t({ en: 'Studio Lens', zh: '章节透镜' })}
-          {isCustomLens && <i className="h-lens-dot" aria-label={t({ en: '(custom)', zh: '（已自定义）' })} />}
+          {isCustomLens && <i className="h-lens-dot" aria-hidden="true" />}
           <span aria-hidden="true">{dockOpen ? '×' : '+'}</span>
         </button>
         <div id="h-lens-groups" className="h-lens-groups" hidden={!dockOpen}>

@@ -516,3 +516,33 @@ button {
     height: 43px;
   }
 }
+
+/* accessibility helpers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 1000;
+  padding: 10px 14px;
+  background: #0d0d0d;
+  color: #f4f4f2;
+  font: 500 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+.skip-link:focus {
+  transform: none;
+  outline: 2px solid #1a3cff;
+  outline-offset: 2px;
+}

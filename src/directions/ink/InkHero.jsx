@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useLang } from '../../i18n.jsx';
+import { langSwitchLabel, useLang } from '../../i18n.jsx';
 import { joinParts, profile } from '../../content.js';
 import { initInk } from './ink.js';
 import './ink.css';
@@ -56,7 +56,12 @@ export default function InkHero({ flow = false, nav = STUDIES }) {
             ))}
             <li>
               <i />
-              <button type="button" data-big onClick={() => setLang(lang === 'en' ? 'zh' : 'en')}>
+              <button
+                type="button"
+                data-big
+                onClick={() => setLang(lang === 'en' ? 'zh' : 'en')}
+                aria-label={langSwitchLabel(lang)}
+              >
                 {lang === 'en' ? '中文' : 'EN'}
               </button>
             </li>

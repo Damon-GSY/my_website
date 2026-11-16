@@ -3,7 +3,7 @@
 .note {
   --bg: #f4f4f2;
   --ink: #0d0d0d;
-  --muted: #8a8a88;
+  --muted: #6f6f6c;
   --rule: #d9d9d5;
   --cobalt: #1a3cff;
   --magenta: #ff2d8a;
@@ -1021,4 +1021,31 @@ body:has(.note) {
   .h-door-line {
     font-size: 13px;
   }
+}
+
+/* ---------- not found ---------- */
+.nf {
+  display: flex;
+  flex-direction: column;
+}
+.nf-main {
+  flex: 1;
+  padding: clamp(64px, 14vh, 180px) var(--gutter) clamp(40px, 7vh, 88px);
+}
+.nf-main .h-display {
+  margin-bottom: clamp(8px, 2vh, 24px);
+}
+.nf-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 32px;
+  margin-top: clamp(28px, 5vh, 56px);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.nf-links a {
+  display: inline-block;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--ink);
 }

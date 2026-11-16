@@ -32,5 +32,9 @@ export function LangProvider({ children }) {
   return <LangContext.Provider value={value}>{children}</LangContext.Provider>;
 }
 
+// Accessible name for the language toggle; keeps the visible text in the name.
+// eslint-disable-next-line react-refresh/only-export-components
+export const langSwitchLabel = (lang) => (lang === 'en' ? '中文 — switch to Chinese' : 'EN — 切换到英文');
+
 // eslint-disable-next-line react-refresh/only-export-components
 export const useLang = () => useContext(LangContext);
