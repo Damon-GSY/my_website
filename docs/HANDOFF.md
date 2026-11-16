@@ -22,6 +22,12 @@ The finishing pass of 2026-11-16 (phone polish, full section bar, fresh previews
 - Nothing checked on a real GPU, Safari or a physical phone.
 - Some history contains automatic "wip" snapshot commits (made to satisfy a commit-on-stop hook while agents were mid-work); the final state is clean.
 
+### Since then (2026-11-16)
+
+- Home finishing pass: phone tap targets ≥44px, Evidence fits at 360px, the top bar lists all eight sections (scrolling strip on phones, active section marked), More ways in previews re-captured, WebGL availability checked up front so WebGL-off pages log no errors, paper's Contact page rebalanced. Details in `docs/reviews/2026-11-15-site-qa.md` ("Finishing pass").
+- Launch readiness: title, description, share tags, `public/og.png`, a "DG" favicon, `public/_redirects` (Netlify), `vercel.json` (Vercel; `/lab/` with a trailing slash now also rewrites), `public/robots.txt`, and a "Deploy" section in `README.md` with the pre-launch checklist. Nothing deployed; host not chosen.
+- Remaining work needs Damon's decisions; there is no further unblocked build work queued.
+
 ### Next steps (Damon decides)
 
 1. Judge the composed home page; keep, change, or pick another direction (night, pill, bento, agent, receipt as whole-site options).
