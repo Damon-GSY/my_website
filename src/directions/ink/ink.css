@@ -226,3 +226,27 @@
     display: none;
   }
 }
+/* arrival (home, first load of a session; see arrival.js): the mark appears first, the corner UI
+   comes in as the ink drains back into it. Removing the classes is the final state, instantly. */
+.ink.is-arriving .ink-stop {
+  clip-path: circle(0);
+}
+.ink.is-arriving.is-go .ink-stop {
+  clip-path: circle(50%);
+  transition: clip-path 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.ink.is-arriving .ink-ui {
+  opacity: 0;
+  transform: translateY(-14px);
+}
+.ink.is-arriving :is(.ink-bl, .ink-br) {
+  transform: translateY(14px);
+}
+.ink.is-arriving.is-ui .ink-ui {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.3s ease, transform 0.34s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+body:has(.ink.is-arriving) .h-lens-dock {
+  opacity: 0;
+}

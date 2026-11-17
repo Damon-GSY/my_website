@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { langSwitchLabel, useLang } from '../../i18n.jsx';
 import { joinParts, profile } from '../../content.js';
 import { initInk } from './ink.js';
+import { wantArrival } from './arrival.js';
 import './ink.css';
 
 // The ink video in two encodings; if neither plays, the ink is generated in the shader instead.
@@ -14,12 +15,18 @@ const STUDIES = ['parcel', 'descent', 'rollout'].map((name) => ({ href: `/${name
 
 // One ink hero, two settings. Standalone (/ink): fixed full screen, corner links to the studies.
 // Home (`flow`): first 100svh of the page in normal flow, corner links are the page's anchors,
-// and vertical swipes scroll the page while still painting.
-export default function InkHero({ flow = false, nav = STUDIES }) {
+// and vertical swipes scroll the page while still painting. `arrival` (home only): the first load of a
+// session opens with the hairline-to-pill intro (arrival.js); decided before first paint.
+export default function InkHero({ flow = false, nav = STUDIES, arrival = false }) {
   const hero = useRef(null);
   const { lang, setLang, t } = useLang();
   const stop = useRef(null);
-  useEffect(() => initInk(hero.current), []);
+  const arrive = useRef(false);
+  useLayoutEffect(() => {
+    arrive.current = arrival && wantArrival();
+    if (arrive.current) hero.current.classList.add('is-arriving');
+  }, [arrival]);
+  useEffect(() => initInk(hero.current, { arrive: arrive.current }), []);
   // Home: the travelling mark starts as the full stop after the wordmark. The wordmark itself is drawn
   // in the ink canvas from the DOM word's position, so the stop is placed from the same measurements.
   useEffect(() => {
@@ -44,6 +51,7 @@ export default function InkHero({ flow = false, nav = STUDIES }) {
       raf = requestAnimationFrame(place);
     };
     window.addEventListener('resize', onResize);
+    document.fonts?.load('900 100px "Archivo Variable"').then(onResize); // the wordmark's font: place the stop early
     document.fonts?.ready.then(onResize);
     return () => {
       cancelAnimationFrame(raf);

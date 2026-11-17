@@ -506,7 +506,7 @@ export default function Home() {
       <Bar />
       <main id="content">
         {heroLens === 'ink' ? (
-          <InkHero flow nav={NAV} />
+          <InkHero flow arrival nav={NAV} />
         ) : (
           <div id="top" className="h-alt-hero">
             <div className="h-alt-hero-nav">

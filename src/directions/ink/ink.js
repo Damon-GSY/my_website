@@ -1,4 +1,5 @@
 import { hasWebGL } from '../../engine/webgl.js';
+import { arrival } from './arrival.js';
 // Ink reveal: the pointer paints a gooey trail that uncovers a moving ink layer under the page.
 // Raw WebGL, no libraries. The ink is a local video when /ink/ink.mp4 exists, otherwise generated.
 const TRAIL_SCALE = 0.25;
@@ -85,16 +86,20 @@ void main(){
   gl_FragColor = vec4(vid * mask + rimCol * rim * 0.55, mask + rim * 0.55);
 }`;
 
-export function initInk(hero) {
+export function initInk(hero, { arrive = false } = {}) {
   const $ = (sel) => hero.querySelector(sel);
   const wordSpan = $('[data-word] span');
   const baselineEl = $('[data-baseline]');
   const canvas = $('canvas');
   const videos = [...hero.querySelectorAll('video')];
   const cursor = document.querySelector('[data-ink-cursor]');
-  if (!hasWebGL()) return () => {};
+  const none = () => {
+    hero.classList.remove('is-arriving');
+    return () => {};
+  };
+  if (!hasWebGL()) return none();
   const gl = canvas.getContext('webgl', { premultipliedAlpha: true, alpha: true, antialias: false });
-  if (!gl) return () => {};
+  if (!gl) return none();
   gl.getExtension('OES_standard_derivatives');
 
   const compile = (type, src) => {
@@ -285,6 +290,7 @@ export function initInk(hero) {
   let last = performance.now();
   let raf = 0;
   const start = last;
+  const intro = arrive ? arrival(hero, canvas, TRAIL_SCALE) : null;
 
   // when the hero is scrolled out of view (home page), stop drawing and pause the video
   let visible = true;
@@ -368,6 +374,7 @@ export function initInk(hero) {
         mix = 0;
       }
     }
+    intro?.paint(tctx, trail, now, hasVideo);
     upload(0, trail);
     const now0 = videos[cur];
     if (hasVideo) {
@@ -399,6 +406,7 @@ export function initInk(hero) {
 
   return () => {
     cancelAnimationFrame(raf);
+    intro?.stop();
     io.disconnect();
     window.removeEventListener('resize', fit);
     videos[0]?.removeEventListener('canplaythrough', wakeTwin);

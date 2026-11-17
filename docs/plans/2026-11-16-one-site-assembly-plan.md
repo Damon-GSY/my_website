@@ -1,6 +1,6 @@
 # One site — assembly plan
 
-Status: **Phases A, B and C built (2026-11-17)**; D–I not started. It describes how to turn the twelve working studies, plus Damon's six, into a single website that reads as one piece of work, not a gallery.
+Status: **Phases A, B, C and D built (2026-11-17)**; E–I not started. It describes how to turn the twelve working studies, plus Damon's six, into a single website that reads as one piece of work, not a gallery.
 
 ## 1. The problem
 
@@ -95,7 +95,7 @@ Each phase ends with something to look at, and the site stays shippable after ev
 | A. Skeleton ✅ done 2026-11-17 | Chapter contract, the mark as a DOM element docking through the *existing* home page, the store, `/short` route pointing at Bento | Small | The mark travels hero → statement → carton sticker → die → Evidence → Path → Contact with no jumps, forward and back |
 | B. Work in place ✅ done 2026-11-17 | Parcels shelf and case studies inside `/`; `/work/<slug>` deep links | Medium | All six parcels open and close in the page by mouse, keyboard and URL; the standalone `/lab/parcels/` still works |
 | C. Close ✅ done 2026-11-17 | Receipt as the last chapter, printing the real visit (chapters seen, d20 result) with the email stub | Medium | The receipt's lines match what the visitor actually did; no invented values |
-| D. Arrival | Pill reveal handing over to the ink hero | Small | One continuous opening under 2.5 s, skippable, shown once per session |
+| D. Arrival ✅ done 2026-11-17 | Pill reveal handing over to the ink hero | Small | One continuous opening under 2.5 s, skippable, shown once per session |
 | E. Claim | The typed sentence replaces the grey-to-black statement | Medium | Written within 1.5 screens of scroll; plain text at rest; un-writes on scroll back |
 | F. Evidence | Type board → towers → chart | Medium | The final frame is a correct labelled chart; the axis is visible in every state |
 | G. Notes | Crumpled-sheet transition on note pages | Medium | Opening and leaving a note are reversible; text is real DOM at rest |
