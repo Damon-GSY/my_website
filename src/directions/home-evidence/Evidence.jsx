@@ -117,7 +117,7 @@ export default function Evidence({ head }) {
   }, []);
 
   return (
-    <section id="evidence" className="h-section ev">
+    <section id="evidence" className="h-section ev" data-pv="0 0.9">
       {head}
       <div className="ev-lead">
         <h2 className="ev-title">{t({ en: 'Evidence', zh: '证据' })}</h2>
@@ -128,9 +128,9 @@ export default function Evidence({ head }) {
           })}
         </p>
       </div>
-      <ol className="ev-board" ref={ref}>
+      <ol className="ev-board" ref={ref} data-pv="0 cover">
         {FIGURES.map((f, i) => (
-          <li key={f.id} className="ev-tile" style={{ '--i': i }}>
+          <li key={f.id} className="ev-tile" style={{ '--i': i, '--dz': [0, 2, 1][i % 3] }}>
             <div className="ev-flap">
               <span className="ev-meta mono">
                 <span>E{i + 1}</span>
@@ -141,7 +141,12 @@ export default function Evidence({ head }) {
                   {f.figure}
                 </span>
                 {f.dagger && (
-                  <sup className="ev-dagger" aria-label={t({ en: 'see footnote', zh: '见脚注' })}>
+                  <sup
+                    className="ev-dagger"
+                    aria-label={t({ en: 'see footnote', zh: '见脚注' })}
+                    data-mark={i === 0 ? 'evidence' : undefined}
+                    data-mark-r="0.8"
+                  >
                     †
                   </sup>
                 )}

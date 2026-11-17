@@ -10,10 +10,10 @@ const CENTRES = [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1], [2, 0]];
 const CARD_OF_FACE = [4, 3, 2, 1, 5, 0];
 const LIGHT = new THREE.Vector3(0.3, 0.45, 0.84).normalize();
 
-function canvasTexture(draw, index, theme) {
+function canvasTexture(draw, index, theme, opts) {
   const canvas = document.createElement('canvas');
   canvas.width = canvas.height = TEX;
-  draw(canvas.getContext('2d'), TEX, index, theme);
+  draw(canvas.getContext('2d'), TEX, index, theme, opts);
   const make = (mirror) => {
     const t = new THREE.CanvasTexture(canvas);
     t.colorSpace = THREE.SRGBColorSpace;
@@ -28,7 +28,7 @@ function canvasTexture(draw, index, theme) {
   return { canvas, make };
 }
 
-export async function buildParcel(stage, root, theme = KRAFT) {
+export async function buildParcel(stage, root, theme = KRAFT, opts = {}) {
   await Promise.all([
     document.fonts.load('800 64px "Archivo Variable"'),
     document.fonts.load('400 20px "Cartograph CF"'),
@@ -54,7 +54,7 @@ export async function buildParcel(stage, root, theme = KRAFT) {
   const disposables = [geo];
 
   CENTRES.forEach((_, face) => {
-    const out = canvasTexture(drawOutside, face, theme);
+    const out = canvasTexture(drawOutside, face, theme, { noSticker: Boolean(opts.mark) });
     const inn = canvasTexture(drawInside, CARD_OF_FACE[face], theme);
     const front = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ map: out.make(false) }));
     const back = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ map: inn.make(true), side: THREE.BackSide }));
@@ -101,12 +101,49 @@ export async function buildParcel(stage, root, theme = KRAFT) {
   stage.scene.add(shadow);
   disposables.push(shadow.material, shadow.material.map);
 
+  // Home page: the sticker is the travelling mark (src/engine/mark.js). It is a mesh of its own on the
+  // east face, shown only while the page's mark is docked on it (the DOM dot hides at the same pixel).
+  // It peels off as the carton starts to fold, waits, marks each stop of the route, then lands on the
+  // first card. `markEl` is the dock the page's mark follows, placed here in frame pixels.
+  const markEl = opts.mark ? root.querySelector('[data-mark="work"]') : null;
+  const PEEL = 0.08;
+  let sticker = null;
+  let markOn = false;
+  let lastP = 0;
+  const onDock = (e) => {
+    markOn = e.detail;
+    sticker.visible = markOn && lastP < PEEL;
+    stage.render();
+  };
+  if (markEl) {
+    const sGeo = new THREE.CircleGeometry(62 / TEX, 48);
+    const sMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(theme.sticker), polygonOffset: true, polygonOffsetFactor: -2 });
+    sticker = new THREE.Mesh(sGeo, sMat);
+    sticker.position.set(0.5 - 106 / TEX, -(0.5 - 106 / TEX), 0.002); // the printed sticker's centre
+    sticker.visible = false;
+    faces[1].holder.add(sticker);
+    disposables.push(sGeo, sMat);
+    markEl.addEventListener('markdock', onDock);
+  }
+
   let s = 100;
   let docks = [];
+  let stops = [];
+  let cardDot = { x: 0, y: 0 };
   function resize() {
     const { w, h } = stage.size();
     s = Math.min(h * 0.26, w * 0.22);
     docks = cards.map((card) => dockRect(card, frameEl));
+    if (markEl) {
+      const f = frameEl.getBoundingClientRect();
+      stops = routeItems.map((li) => {
+        const r = li.getBoundingClientRect();
+        return { x: Math.max(6, r.left - f.left - 12), y: r.top - f.top + r.height / 2 };
+      });
+      const c = cards[0].getBoundingClientRect();
+      const inset = Math.max(10, c.width * 0.09);
+      cardDot = { x: c.right - f.left - inset, y: c.top - f.top + inset };
+    }
   }
   resize();
 
@@ -165,12 +202,41 @@ export async function buildParcel(stage, root, theme = KRAFT) {
     routeEl.style.opacity = span(p, 0.36, 0.42) * (1 - span(p, 0.68, 0.74));
     const stop = Math.min(routeItems.length - 1, Math.floor(travel * routeItems.length));
     routeItems.forEach((item, i) => item.classList.toggle('is-on', i <= stop));
+    if (markEl) placeMark(p, w, h, travel);
+  }
+
+  function placeMark(p, w, h, travel) {
+    lastP = p;
+    // where the printed sticker sits while the carton is still flat (frame px, y down)
+    const st = { x: w / 2 + (0.5 + 0.5 - 106 / TEX) * s, y: h / 2 + h * 0.02 + (0.5 - 106 / TEX) * s, d: (124 / TEX) * s };
+    const n = stops.length;
+    const along = (a, b, k, d0, d1) => {
+      const e = ease(k);
+      const bow = Math.sin(Math.PI * e) * Math.min(120, Math.hypot(b.x - a.x, b.y - a.y) * 0.2);
+      return { x: lerp(a.x, b.x, e) + bow, y: lerp(a.y, b.y, e) - bow, d: lerp(d0, d1, e) };
+    };
+    let m;
+    if (p < 0.28 || !n) m = st;
+    else if (p < 0.4) m = along(st, stops[0], span(p, 0.28, 0.4), st.d, 9);
+    else if (p < 0.72) {
+      const i = clamp(travel * n - 0.5, 0, n - 1);
+      const a = stops[Math.floor(i)];
+      const b = stops[Math.ceil(i)];
+      const k = ease(i - Math.floor(i));
+      m = { x: lerp(a.x, b.x, k), y: lerp(a.y, b.y, k), d: 9 };
+    } else m = along(stops[n - 1], cardDot, span(p, 0.72, 0.97), 9, 14);
+    markEl.style.transform = `translate(${(m.x - m.d / 2).toFixed(2)}px, ${(m.y - m.d / 2).toFixed(2)}px)`;
+    markEl.style.width = markEl.style.height = `${m.d.toFixed(2)}px`;
+    markEl.dataset.markVis = p < PEEL ? '0' : '1';
+    sticker.visible = markOn && p < PEEL;
+    markEl.dispatchEvent(new Event('markmove', { bubbles: true }));
   }
 
   return {
     frame,
     resize,
     dispose() {
+      markEl?.removeEventListener('markdock', onDock);
       stage.scene.remove(pivot, shadow, ...tiles);
       disposables.forEach((d) => d.dispose());
     },
@@ -179,3 +245,5 @@ export async function buildParcel(stage, root, theme = KRAFT) {
 
 // The same film printed on white paper, for the home page.
 export const buildParcelPaper = (stage, root) => buildParcel(stage, root, PAPER);
+// ... and with the sticker handed over to the page's travelling mark.
+export const buildParcelHome = (stage, root) => buildParcel(stage, root, PAPER, { mark: true });

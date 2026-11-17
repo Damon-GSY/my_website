@@ -10,6 +10,7 @@ const NotFound = lazy(() => import('./pages/NotFound.jsx'));
 const routes = {
   '/': [Home, null],
   '/lab': [Chooser, 'Design studies'],
+  '/short': [lazy(() => import('./pages/Short.jsx')), 'The short version'],
   '/parcel': [lazy(() => import('./directions/parcel/Opening.jsx')), 'Parcel Box'],
   '/descent': [lazy(() => import('./directions/descent/Opening.jsx')), 'Descent'],
   '/ink': [lazy(() => import('./directions/ink/Opening.jsx')), 'Wet Ink'],

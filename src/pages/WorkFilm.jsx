@@ -1,21 +1,23 @@
 import { useFilm } from '../engine/useFilm.js';
 import { useLang } from '../i18n.jsx';
 import { footnote, joinParts, profile, route, work } from '../content.js';
-import { buildParcelPaper } from '../directions/parcel/Scene.js';
+import { buildParcelHome } from '../directions/parcel/Scene.js';
 import '../directions/parcel/parcel.css';
 
 // The home page's Work chapter: the white-carton Parcel film (same scene as /parcel), except that each
 // landed card is a link that opens its own parcel in the Parcels study (/lab/parcels/#<slug>).
 // Kept as a fork so the /parcel study stays untouched.
 export default function WorkFilm({ label }) {
-  const { root, canvas, track, mode } = useFilm(buildParcelPaper);
+  const { root, canvas, track, mode } = useFilm(buildParcelHome);
   const { t } = useLang();
   const open = t({ en: 'Open the parcel', zh: '拆开这只箱子' });
   return (
     <div ref={root} className={`film parcel paper h-workfilm ${mode}`}>
-      <section ref={track} className="track" style={{ '--len': 7 }}>
+      <section ref={track} className="track" style={{ '--len': 7 }} data-mark-track>
         <div className="sticky">
           <canvas ref={canvas} className="stage" aria-hidden="true" />
+          {/* the travelling mark's dock: the carton's sticker, then the route, then the first card */}
+          <i className="h-mark-film" data-mark="work" data-mark-kind="gl" data-mark-in="-0.5 0" aria-hidden="true" />
           {label}
           <h2 className="sr">{t({ en: 'Selected work', zh: '代表工作' })}</h2>
           <div className="p-fallback">

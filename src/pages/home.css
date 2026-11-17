@@ -5,9 +5,7 @@
   --ink: #0d0d0d;
   --muted: #6f6f6c;
   --rule: #d9d9d5;
-  --cobalt: #1a3cff;
-  --magenta: #ff2d8a;
-  --tangerine: #ff7a1a;
+  --magenta: #ff2d8a; /* the travelling mark only (assembly plan §2-4) */
   --unlit: #bdbdba;
   background: var(--bg);
   color: var(--ink);
@@ -36,9 +34,19 @@ body:has(.note) {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 0 24px;
-  padding-top: 12px;
-  border-top: 1px solid var(--ink);
+  position: relative;
+  padding-top: 13px;
   font-size: 11px;
+}
+/* the rule is its own layer so openers can move it at its own rate (see "depth") */
+.h-head::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: var(--ink);
 }
 .h-num {
   grid-column: span 2;
@@ -74,14 +82,73 @@ body:has(.note) {
   max-width: 15ch;
 }
 .h-sentence [data-w] {
+  display: inline-block;
   color: var(--unlit);
   transition: color 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 .h-sentence [data-w].is-lit {
   color: var(--ink);
 }
-.h-sentence .is-lit .h-stop {
-  color: var(--cobalt);
+/* the mark's docks: each glyph turns magenta while it holds the mark (--mk, from src/engine/mark.js);
+   without the travelling mark (reduced motion, no WebGL) each simply shows its magenta glyph */
+[data-mark] {
+  --mk: 1;
+}
+.mark-live [data-mark] {
+  --mk: 0;
+}
+.h-stop,
+.h-at,
+.home .d20-heading em[data-mark] {
+  color: color-mix(in srgb, #ff2d8a calc(var(--mk) * 100%), currentColor);
+}
+.home .ev-dagger[data-mark] {
+  color: color-mix(in srgb, #ff2d8a calc(var(--mk) * 100%), var(--muted));
+}
+.h-now-dot,
+.h-note-dot,
+.ink-stop {
+  display: inline-block;
+  border-radius: 50%;
+  background: color-mix(in srgb, #ff2d8a calc(var(--mk) * 100%), #0d0d0d);
+}
+.h-now-dot {
+  width: 9px;
+  height: 9px;
+  margin-right: 8px;
+  vertical-align: 0;
+}
+.h-note-dot {
+  width: 8px;
+  height: 8px;
+  margin-right: 8px;
+  vertical-align: 1px;
+}
+.ink-stop {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+}
+.h-mark {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 30;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ff2d8a;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.h-mark-film {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
 }
 .h-facets {
   margin-top: auto;
@@ -170,16 +237,6 @@ body:has(.note) {
 .is-now .h-when {
   font-weight: 600;
 }
-.is-now .h-when::before {
-  content: '';
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  margin-right: 8px;
-  border-radius: 50%;
-  background: var(--ink);
-  vertical-align: 1px;
-}
 .h-blank {
   display: inline-block;
   width: 7em;
@@ -265,9 +322,6 @@ body:has(.note) {
 .h-email:hover,
 .h-email:focus-visible {
   background-size: 100% 3px;
-}
-.h-at {
-  color: var(--tangerine);
 }
 .h-links {
   display: grid;
@@ -372,7 +426,8 @@ body:has(.note) {
 }
 .h-alt-hero-nav nav a:hover,
 .h-alt-hero-nav nav button:hover {
-  color: var(--tangerine);
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 .h-embed-fallback {
   min-height: 55vh;
@@ -426,7 +481,7 @@ body:has(.note) {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--tangerine);
+  background: #f4f4f2;
 }
 .h-lens-groups {
   display: flex;
@@ -469,7 +524,7 @@ body:has(.note) {
   background: rgba(255, 255, 255, 0.1);
 }
 .h-lens-group button.is-active {
-  background: var(--tangerine);
+  background: #f4f4f2;
   color: #0d0d0d;
   font-weight: 600;
 }
@@ -528,8 +583,8 @@ body:has(.note) {
 }
 .home .h-workfilm .h-card:hover .h-card-open,
 .home .h-workfilm .h-card:focus-visible .h-card-open {
-  color: var(--cobalt);
-  border-top-color: var(--cobalt);
+  color: var(--ink);
+  border-top-color: var(--ink);
 }
 .home .h-workfilm .h-card:focus-visible {
   outline-offset: 3px;
@@ -606,7 +661,8 @@ body:has(.note) {
 }
 .h-door:hover .h-door-title,
 .h-door:focus-visible .h-door-title {
-  color: var(--cobalt);
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 .h-door:hover .h-door-title svg,
 .h-door:focus-visible .h-door-title svg {
@@ -1048,4 +1104,149 @@ body:has(.note) {
   display: inline-block;
   padding: 12px 0;
   border-bottom: 1px solid var(--ink);
+}
+
+/* ---------- kinetic band: between Evaluate and Evidence ---------- */
+.h-band {
+  overflow: clip;
+  padding: clamp(40px, 8vh, 96px) 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  user-select: none;
+}
+.h-band-row {
+  width: max-content;
+  white-space: nowrap;
+  font-weight: 900;
+  font-size: clamp(56px, 11vw, 200px);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: transparent;
+  -webkit-text-stroke: 1.25px var(--ink);
+  translate: -10vw 0;
+}
+.h-band-row.is-b {
+  -webkit-text-stroke-color: var(--unlit);
+  translate: -90vw 0;
+}
+
+/* ---------- depth: scroll-driven parallax (src/engine/parallax.js) ----------
+   --pv runs 0 -> 1 over each [data-pv] element's range. Natively it is a scroll-driven animation;
+   otherwise the script writes it. Transform and opacity only; nothing here applies with reduced motion,
+   because .pv-on is never set then. */
+@property --pv {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 1;
+}
+@keyframes pv-run {
+  from {
+    --pv: 0;
+  }
+  to {
+    --pv: 1;
+  }
+}
+.pv-native [data-pv] {
+  animation: pv-run linear both;
+  animation-timeline: view();
+}
+.home {
+  --rise: 60px;
+}
+
+/* hero: three planes. The corner UI leaves faster than the page, the ink canvas (which draws the
+   wordmark) slower, sinking and scaling down as the statement rises over it; a fine pointer tilts them. */
+.pv-on .ink.is-flow canvas {
+  translate: calc(var(--mx, 0) * 4px) calc(var(--pv) * 72px + var(--my, 0) * 4px);
+  scale: calc(1 - var(--pv) * 0.05);
+}
+.pv-on .ink.is-flow .ink-stop {
+  translate: calc(var(--mx, 0) * 4px - var(--dx) * var(--pv) * 0.05px)
+    calc(var(--pv) * 72px + var(--my, 0) * 4px - var(--dy) * var(--pv) * 0.05px);
+}
+.pv-on .ink.is-flow :is(.ink-tl, .ink-nav) {
+  translate: calc(var(--mx, 0) * -7px) calc(var(--pv) * -36px + var(--my, 0) * -7px);
+}
+.pv-on .ink.is-flow :is(.ink-bl, .ink-br) {
+  translate: calc(var(--mx, 0) * -12px) calc(var(--pv) * -80px + var(--my, 0) * -12px);
+}
+
+/* section openers: rule, mono label and title arrive at different rates; titles settle in width */
+.pv-on .h-section > .h-head::before {
+  translate: 0 calc((1 - var(--pv)) * 14px);
+}
+.pv-on .h-section > .h-head > * {
+  translate: 0 calc((1 - var(--pv)) * 34px);
+}
+.pv-on :is(.h-display, .ev-title, .h-more-title) {
+  translate: 0 calc((1 - var(--pv)) * var(--rise));
+  scale: calc(1 + (1 - var(--pv)) * 0.045) 1;
+  transform-origin: 0 100%;
+}
+
+/* statement: alternate lines drift against each other */
+.pv-on .h-sentence [data-w] {
+  translate: calc((var(--pv) - 0.5) * var(--dir, 0) * 36px) 0;
+}
+
+/* band: the two rows run in opposite directions, as far as the reader scrolls */
+.pv-on .h-band-row {
+  translate: calc(-10vw - var(--pv) * 60vw) 0;
+}
+.pv-on .h-band-row.is-b {
+  translate: calc(-90vw + var(--pv) * 60vw) 0;
+}
+
+/* evidence: the figures sit on three planes */
+.pv-on .ev-fig {
+  translate: 0 calc(var(--pv) * var(--dz, 0) * -14px);
+}
+
+/* path: rows slide in from alternating sides and depths */
+.pv-on .h-path .h-row[data-pv] {
+  --dx: 44px;
+  --ds: -0.03;
+  translate: calc((1 - var(--pv)) * var(--dx)) 0;
+  scale: calc(1 + (1 - var(--pv)) * var(--ds));
+  opacity: calc(0.12 + var(--pv) * 0.88);
+}
+.pv-on .h-path .h-row[data-pv]:nth-child(odd) {
+  --dx: -44px;
+  --ds: 0.02;
+}
+
+/* notes: each row is uncovered from the top while its contents rise */
+.pv-on .h-list li[data-pv] {
+  clip-path: inset(0 0 calc((1 - var(--pv)) * 100%) 0);
+}
+.pv-on .h-list li[data-pv] > a {
+  translate: 0 calc((1 - var(--pv)) * 28px);
+}
+
+/* more ways in: each preview moves inside its frame */
+.pv-on .h-door-shot img {
+  scale: 1.12;
+  translate: 0 calc((0.5 - var(--pv)) * 9%);
+}
+
+/* contact: the address grows to full size as the page ends */
+.pv-on .h-email {
+  scale: calc(0.82 + var(--pv) * 0.18);
+  transform-origin: 0 60%;
+}
+
+@media (max-width: 640px) {
+  .home {
+    --rise: 30px;
+  }
+  .pv-on .ev-fig {
+    translate: 0 calc(var(--pv) * var(--dz, 0) * -8px);
+  }
+  .pv-on .h-path .h-row[data-pv] {
+    --dx: 24px;
+  }
+  .pv-on .h-path .h-row[data-pv]:nth-child(odd) {
+    --dx: -24px;
+  }
 }

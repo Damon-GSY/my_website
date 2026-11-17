@@ -1,6 +1,19 @@
 # Handoff — dimensional site
 
-## Start here (2026-11-15, latest — stopped at the 70% usage line)
+## Start here (2026-11-17, latest): Phase A, parallax, /short
+
+**Built:**
+- **The travelling mark** (`src/engine/mark.js`). It is one fixed magenta dot that docks to `[data-mark]` targets in document order. Its position is a pure function of scroll and the live dock rects, so it is exactly reversible. Docks, in order: hero full stop after the wordmark (`ink-stop`) → the statement's full stop (the cobalt stop is gone) → the carton sticker (`work`, a WebGL mesh that swaps with the DOM dot at the same pixel) → the sticker peels off, marks each route stop, then lands on the first card → the d20 heading's "1" → the tally strip's magenta "1" triangle → Evidence E1's dagger → the Path "Now" dot → the newest note's bullet → the "@" of the email. At rest the dot fades into the target glyph, which turns magenta through `--mk`. During long hand-offs it waits in the left margin. It is off with reduced motion or without WebGL; then each target shows its own magenta glyph. Tangerine and cobalt have been removed from the home page.
+- **Store** (`src/engine/store.js`, sessionStorage): which chapters the mark reached, and the d20 seed plus the step where the run first failed. The receipt (phase C) reads it.
+- **`/short`** (`src/pages/Short.jsx`) shows `/lab/bento/` full window. It is linked from the hero ("Short version") and the end of the top bar.
+- **Depth layer** (`src/engine/parallax.js`): `data-pv="a b"` gives each element a scroll progress `--pv`. It uses a native `view()` scroll-driven animation, with a scroll-listener fallback for Safari. The effects are in `home.css` under "depth", use transform and opacity only, and are off with reduced motion. They cover: hero planes (corner UI faster, ink canvas and wordmark slower, sinking and scaling down) plus a pointer tilt; section openers (rule, label and title move at different rates, and titles settle in width); statement lines drifting against each other; a kinetic outlined band between Evaluate and Evidence; Evidence figures on three planes; Path rows sliding in from alternate sides; Notes rows clipping up into place; More-ways-in images moving inside their frames; and the contact email growing as the page ends.
+- Deferred films now mount 0.9 viewport ahead instead of 1.0. On phones the Work film began exactly 2 screens down, so three.js used to load at the top.
+
+**Verified** (scripts and sheets were kept out of the repo): 18 scroll positions down the page and back give identical mark x/y/size at 1440 and 390. At every rest the mark is 0 px from its dock. There is no horizontal scroll at 360, 390 or 1440. Console errors: 0. Reduced motion and WebGL-off render no travelling dot, and their targets are magenta. three.js does not load at the top. First-paint JS grew by about 3.2 kB gzip.
+
+**Open / rough edges:** the wordmark is drawn inside the ink canvas, so "wordmark" and "ink" share one depth plane (the corner UI is the faster plane). The die's own "1" face is not tracked in 3D; the mark sits on the heading's "1" while the die rolls. Path and Notes rows near the bottom of the viewport are mid-reveal, and so still faint. Not checked in Safari (fallback path) or on real devices.
+
+## Earlier: 2026-11-15 (stopped at the 70% usage line)
 
 Work stopped because the 5-hour usage window reached Damon's stop line (62% at the last reading, with the final task finishing after it). Everything is committed and pushed on `claude/serene-cori-mookmf`.
 

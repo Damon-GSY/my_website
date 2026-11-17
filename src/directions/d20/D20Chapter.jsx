@@ -7,6 +7,7 @@ import { failSteps, initialSeed, newSeed, pct, rollsFromSeed, seedLabel, STEPS }
 import { buildD20 } from './Scene.js';
 import { stripLayout } from './strip.js';
 import Strip from './Strip.jsx';
+import { setVisit } from '../../engine/store.js';
 import './d20.css';
 
 const PHONE = '(max-width: 640px)';
@@ -72,6 +73,8 @@ export default function D20Chapter({ id = 'evaluate', head = null }) {
   const rows = useRows();
   const layout = useMemo(() => stripLayout(rows), [rows]);
   const [hud, setHud] = useState({ step: 0, revealed: 0 });
+  // the visit store (for the receipt, phase C): this visitor's seed and where their run first failed
+  useEffect(() => setVisit({ d20: { seed: seedLabel(seed), firstFail: failSteps(rolls)[0] ?? null } }), [seed, rolls]);
 
   const refs = {
     track: useRef(null),
@@ -179,7 +182,7 @@ export default function D20Chapter({ id = 'evaluate', head = null }) {
 
   return (
     <section id={id ?? undefined} className={`d20 ${mode}${head ? ' has-head' : ''}`}>
-      <div ref={track} className="d20-track">
+      <div ref={track} className="d20-track" data-mark-track>
         <div ref={view} className="d20-view">
           <canvas ref={canvas} className="d20-canvas" aria-hidden="true" />
           {head && <div className="d20-head">{head}</div>}
@@ -187,7 +190,7 @@ export default function D20Chapter({ id = 'evaluate', head = null }) {
             {!head && <p className="d20-label">{t(copy.label)}</p>}
             <h2 className="d20-heading">
               {heading[0]}
-              <em>{heading[1]}</em>
+              <em data-mark="evaluate" data-mark-in="-0.6 0" data-mark-r="0.42">{heading[1]}</em>
               {heading[2]}
             </h2>
             <p className="d20-sub">{t(copy.sub)}</p>

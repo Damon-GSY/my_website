@@ -1,6 +1,6 @@
 # One site — assembly plan
 
-Status: **plan only.** Nothing here is built. It describes how to turn the twelve working studies, plus Damon's six, into a single website that reads as one piece of work, not a gallery.
+Status: **Phase A built (2026-11-17)**; B–I not started. It describes how to turn the twelve working studies, plus Damon's six, into a single website that reads as one piece of work, not a gallery.
 
 ## 1. The problem
 
@@ -92,7 +92,7 @@ Each phase ends with something to look at, and the site stays shippable after ev
 
 | Phase | What gets built | Size | Done when |
 | --- | --- | --- | --- |
-| A. Skeleton | Chapter contract, the mark as a DOM element docking through the *existing* home page, the store, `/short` route pointing at Bento | Small | The mark travels hero → statement → carton sticker → die → Evidence → Path → Contact with no jumps, forward and back |
+| A. Skeleton ✅ done 2026-11-17 | Chapter contract, the mark as a DOM element docking through the *existing* home page, the store, `/short` route pointing at Bento | Small | The mark travels hero → statement → carton sticker → die → Evidence → Path → Contact with no jumps, forward and back |
 | B. Work in place | Parcels shelf and case studies inside `/`; `/work/<slug>` deep links | Medium | All six parcels open and close in the page by mouse, keyboard and URL; the standalone `/lab/parcels/` still works |
 | C. Close | Receipt as the last chapter, printing the real visit (chapters seen, d20 result) with the email stub | Medium | The receipt's lines match what the visitor actually did; no invented values |
 | D. Arrival | Pill reveal handing over to the ink hero | Small | One continuous opening under 2.5 s, skippable, shown once per session |

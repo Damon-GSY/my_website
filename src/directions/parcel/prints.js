@@ -110,7 +110,7 @@ function arrowUp(c, x, y, s) {
 }
 
 // face: 0 base, 1 east, 2 west, 3 north, 4 south, 5 lid
-export function drawOutside(c, S, face, theme = KRAFT) {
+export function drawOutside(c, S, face, theme = KRAFT, opts = {}) {
   INK = theme.ink;
   board(c, S, theme.board, 7 + face * 13, theme.fibre);
   dieline(c, S, theme.dieline, theme === KRAFT ? 1.5 : 1.2);
@@ -134,10 +134,13 @@ export function drawOutside(c, S, face, theme = KRAFT) {
     small(c, 'AGENTIC RL · POST-TRAINING · EVALUATION', m, S - 48, 17);
   } else if (role === 0) {
     headline(c, ['THAT', 'SHIP.'], m - 4, 60, S - m * 2, 220);
-    c.fillStyle = theme.sticker;
-    c.beginPath();
-    c.arc(S - m - 62, S - m - 62, 62, 0, Math.PI * 2);
-    c.fill();
+    // on the home page the sticker is a mesh of its own: it is the travelling mark (see Scene.js)
+    if (!opts.noSticker) {
+      c.fillStyle = theme.sticker;
+      c.beginPath();
+      c.arc(S - m - 62, S - m - 62, 62, 0, Math.PI * 2);
+      c.fill();
+    }
     small(c, 'HANDLE WITH', m, S - 76, 19, 600);
     small(c, 'EVALUATION', m, S - 48, 19, 600);
   } else if (role === 1) {

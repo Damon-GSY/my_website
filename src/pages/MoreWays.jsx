@@ -68,14 +68,14 @@ const DOORS = [
 export default function MoreWays({ head }) {
   const { t } = useLang();
   return (
-    <section id="more" className="h-section h-more">
+    <section id="more" className="h-section h-more" data-pv="0 0.9">
       {head}
       <h2 className="h-more-title">{t({ en: 'More ways in', zh: '换一种方式进入' })}</h2>
       <ul className="h-doors">
         {DOORS.map((d, i) => (
           <li key={d.href}>
             <a href={d.href} className="h-door">
-              <span className="h-door-shot">
+              <span className="h-door-shot" data-pv="0 cover">
                 <img src={d.img} alt="" loading="lazy" decoding="async" width="640" height="400" />
               </span>
               <span className="h-door-meta mono">

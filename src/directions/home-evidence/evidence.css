@@ -69,7 +69,7 @@
   white-space: nowrap;
 }
 .ev-dagger {
-  color: var(--cobalt, #1a3cff);
+  color: var(--muted, #6f6f6c);
   font-family: var(--mono);
   font-weight: 400;
   letter-spacing: 0;
@@ -121,7 +121,7 @@
   right: 0;
   bottom: -1px;
   height: 2px;
-  background: var(--cobalt, #1a3cff);
+  background: var(--ink, #0d0d0d);
   transform: scaleX(0);
   transform-origin: 0 50%;
   transition: transform 0.35s;

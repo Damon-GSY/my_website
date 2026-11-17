@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { langSwitchLabel, useLang } from '../i18n.jsx';
 import { path, profile } from '../content.js';
 import { noteCategory, noteMinutes, notes } from '../notes.js';
@@ -6,6 +6,8 @@ import InkHero from '../directions/ink/InkHero.jsx';
 import MoreWays from './MoreWays.jsx';
 import Evidence from '../directions/home-evidence/Evidence.jsx';
 import { hasWebGL2 } from '../engine/webgl.js';
+import { startMark } from '../engine/mark.js';
+import { startParallax } from '../engine/parallax.js';
 import './home.css';
 
 const WorkFilm = lazy(() => import('./WorkFilm.jsx'));
@@ -78,8 +80,10 @@ function Deferred({ height, children }) {
   const [near, setNear] = useState(staticFilms);
   useEffect(() => {
     if (near) return undefined;
+    // 90%, not 100%: on phones the Work film starts exactly two screens down, and three.js should
+    // not load before the visitor has scrolled at all
     const io = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && setNear(true), {
-      rootMargin: '100% 0px',
+      rootMargin: '90% 0px',
     });
     io.observe(ref.current);
     return () => io.disconnect();
@@ -138,11 +142,26 @@ function Statement() {
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(update);
     };
+    // the lines drift sideways in turn as the sentence passes (home.css, "depth"): number them
+    const lines = () => {
+      let top = null;
+      let line = -1;
+      spans.forEach((s) => {
+        if (top === null || Math.abs(s.offsetTop - top) > 4) {
+          top = s.offsetTop;
+          line += 1;
+        }
+        s.style.setProperty('--dir', line % 2 ? 1 : -1);
+      });
+    };
+    const ro = new ResizeObserver(lines);
+    ro.observe(el);
     update();
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
     return () => {
       cancelAnimationFrame(raf);
+      ro.disconnect();
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
     };
@@ -150,19 +169,25 @@ function Statement() {
 
   const last = list.length - 1;
   return (
-    <section id="statement" className="h-section h-statement">
+    <section id="statement" className="h-section h-statement" data-pv="0 0.9">
       <SectionHead n="01" aside={t({ en: 'Thesis', zh: '主张' })}>
         {t({ en: 'Statement', zh: '自述' })}
       </SectionHead>
-      <h2 className="h-sentence" ref={ref} aria-label={t(STATEMENT)}>
+      <h2 className="h-sentence" ref={ref} aria-label={t(STATEMENT)} data-pv="0.2 cover">
         {list.map((w, i) => {
           const stop = i === last && /[.。]$/.test(w);
           return (
-            <span key={`${lang}-${i}`} data-w aria-hidden="true">
-              {stop ? w.slice(0, -1) : w}
-              {stop && <span className="h-stop">{w.slice(-1)}</span>}
+            <Fragment key={`${lang}-${i}`}>
+              <span data-w aria-hidden="true">
+                {stop ? w.slice(0, -1) : w}
+                {stop && (
+                  <span className="h-stop" data-mark="statement" data-mark-r="0.62" data-mark-y="0.74">
+                    {w.slice(-1)}
+                  </span>
+                )}
+              </span>
               {lang !== 'zh' && i < last ? ' ' : ''}
-            </span>
+            </Fragment>
           );
         })}
       </h2>
@@ -181,7 +206,7 @@ function Statement() {
 function Path() {
   const { t } = useLang();
   return (
-    <section id="path" className="h-section h-path">
+    <section id="path" className="h-section h-path" data-pv="0 0.9">
       <SectionHead n="05" aside={t({ en: 'Newest first', zh: '由近及远' })}>
         {t({ en: 'Path', zh: '经历' })}
       </SectionHead>
@@ -197,8 +222,13 @@ function Path() {
           const org = t(row.org);
           const place = row.place ? t(row.place) : '';
           return (
-            <li key={typeof row.when === 'string' ? row.when : 'now'} className={`h-row${row.now ? ' is-now' : ''}`}>
+            <li
+              key={typeof row.when === 'string' ? row.when : 'now'}
+              className={`h-row${row.now ? ' is-now' : ''}`}
+              data-pv="0 0.22"
+            >
               <span className="h-when mono">
+                {row.now && <span className="h-now-dot" data-mark="path" data-mark-kind="dot" aria-hidden="true" />}
                 {t(row.when)}
                 <i>{t(row.kind)}</i>
               </span>
@@ -216,19 +246,27 @@ function Path() {
   );
 }
 
+// the newest note carries the mark as its bullet
+const latest = notes.reduce((a, b) => (b.date > a.date ? b : a), notes[0])?.slug;
+
 function Notes() {
   const { lang, t } = useLang();
   return (
-    <section id="notes" className="h-section h-notes">
+    <section id="notes" className="h-section h-notes" data-pv="0 0.9">
       <SectionHead n="06" aside={`${String(notes.length).padStart(2, '0')} ${t({ en: 'entries', zh: '篇' })}`}>
         {t({ en: 'Field notes', zh: '笔记' })}
       </SectionHead>
       <h2 className="h-display">{t({ en: 'Notes', zh: '笔记' })}</h2>
       <ol className="h-list">
         {notes.map((note) => (
-          <li key={note.slug}>
+          <li key={note.slug} data-pv="0 0.22">
             <a href={`/notes/${note.slug}`}>
-              <span className="h-date mono">{note.date.replaceAll('-', '.')}</span>
+              <span className="h-date mono">
+                {note.slug === latest && (
+                  <span className="h-note-dot" data-mark="notes" data-mark-kind="dot" aria-hidden="true" />
+                )}
+                {note.date.replaceAll('-', '.')}
+              </span>
               <span className="h-title">{note.title}</span>
               <span className="h-cat mono">{noteCategory(note, lang)}</span>
               <span className="h-time mono">{noteMinutes(note, lang)}</span>
@@ -247,14 +285,16 @@ function Contact() {
   const { t } = useLang();
   const [user, domain] = profile.email.split('@');
   return (
-    <section id="contact" className="h-section h-contact">
+    <section id="contact" className="h-section h-contact" data-pv="0 end">
       <SectionHead n="08" aside={t({ en: 'Email is best', zh: '邮件最快' })}>
         {t({ en: 'Contact', zh: '联系' })}
       </SectionHead>
       <h2 className="sr-only">{t({ en: 'Contact', zh: '联系' })}</h2>
       <a className="h-email" href={`mailto:${profile.email}`}>
         {user}
-        <span className="h-at">@</span>
+        <span className="h-at" data-mark="contact" data-mark-r="0.42" data-mark-y="0.56">
+          @
+        </span>
         {domain}
       </a>
       <ul className="h-links">
@@ -324,6 +364,9 @@ function Bar() {
             {t(item.label)}
           </a>
         ))}
+        <a className="h-bar-short" href="/short">
+          {t({ en: 'Short version', zh: '简短版' })}
+        </a>
       </nav>
       <button
         type="button"
@@ -334,6 +377,21 @@ function Bar() {
         {lang === 'en' ? '中文' : 'EN'}
       </button>
     </header>
+  );
+}
+
+// Between Evaluate and Evidence: two rows of outlined type that slide in opposite directions as the
+// page scrolls (position follows scroll, so they move only, and as fast, as the reader scrolls).
+function KineticBand() {
+  const rows = ['AGENTIC RL · POST-TRAINING · EVALUATION · ', 'TRAIN · DEPLOY · MEASURE · '];
+  return (
+    <div className="h-band" data-pv="0 cover" aria-hidden="true">
+      {rows.map((text, i) => (
+        <p key={text} className={`h-band-row${i ? ' is-b' : ''}`}>
+          {text.repeat(i ? 6 : 4)}
+        </p>
+      ))}
+    </div>
   );
 }
 
@@ -412,8 +470,13 @@ export default function Home() {
   // the per-chapter lens bars only appear once a lens other than the default is chosen.
   const [dockOpen, setDockOpen] = useState(false);
 
+  // the travelling mark (only where the films run: motion allowed and WebGL), and the depth layer
+  const homeRef = useRef(null);
+  useEffect(() => (staticFilms() ? undefined : startMark()), []);
+  useEffect(() => startParallax(homeRef.current), []);
+
   return (
-    <div className="home">
+    <div className="home" ref={homeRef}>
       <a className="skip-link" href="#statement">
         {t({ en: 'Skip to content', zh: '跳到正文' })}
       </a>
@@ -513,6 +576,7 @@ export default function Home() {
           </Suspense>
         </div>
 
+        <KineticBand />
         <Evidence
           head={
             <SectionHead n="04" aside={t({ en: 'Eight figures, each labelled', zh: '八个数字，各有注明' })}>

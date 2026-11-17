@@ -34,6 +34,11 @@ export default function Strip({ ref, layout, rolls }) {
             <polygon
               points={tri.pts.join(' ')}
               className={one ? 'd20-tile is-one' : 'd20-tile'}
+              // the travelling mark lands here on the home page as the die's "1" face flattens (p 0.64-0.9)
+              data-mark={one ? 'tally' : undefined}
+              data-mark-in={one ? '3.2 4.5' : undefined}
+              data-mark-r={one ? '0.4' : undefined}
+              data-mark-y={one ? '0.66' : undefined}
               clipPath={`url(#${uid}t${tri.v})`}
             />
             <text
