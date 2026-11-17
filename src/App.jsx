@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { LangProvider } from './i18n.jsx';
 import Chooser from './pages/Chooser.jsx';
+import { work } from './content.js';
 
 const Home = lazy(() => import('./pages/Home.jsx'));
 const Note = lazy(() => import('./pages/Note.jsx'));
@@ -27,8 +28,11 @@ const routes = {
 export default function App() {
   const path = window.location.pathname.replace(/\/+$/, '') || '/';
   const isNote = path.startsWith('/notes/');
+  // /work/<slug>: the home page with that parcel's case study open over the Work chapter
+  const parcel = path.startsWith('/work/') && work.find((item) => path === `/work/${item.id}`);
   // notes set their own title (note title, or their own not-found state)
-  const [Page, title] = routes[path] || (isNote ? [Note, undefined] : [NotFound, 'Not found']);
+  const [Page, title] =
+    routes[path] || (parcel ? [Home, parcel.title] : isNote ? [Note, undefined] : [NotFound, 'Not found']);
   useEffect(() => {
     if (title) document.title = `${title} — Damon Guan`;
   }, [title]);

@@ -8,9 +8,40 @@ import Evidence from '../directions/home-evidence/Evidence.jsx';
 import { hasWebGL2 } from '../engine/webgl.js';
 import { startMark } from '../engine/mark.js';
 import { startParallax } from '../engine/parallax.js';
+import { adoptDeepLink, getCase, scrollToWork, useCase } from './work/caseRoute.js';
 import './home.css';
 
 const WorkFilm = lazy(() => import('./WorkFilm.jsx'));
+const CaseStudy = lazy(() => import('./work/CaseStudy.jsx'));
+
+// Phase B, "Work in place": a Work card opens its case study over the page (a lazy chunk), and a deep
+// link /work/<slug> lands here with the Work chapter scrolled to its cards and that parcel open.
+function WorkCase() {
+  const slug = useCase();
+  const [ever, setEver] = useState(Boolean(slug));
+  if (slug && !ever) setEver(true);
+  useEffect(() => {
+    const id = getCase();
+    if (!id) return undefined;
+    // scroll now (that brings the deferred film in), again once the cards exist, then fix the history
+    scrollToWork(id);
+    let raf = 0;
+    const t0 = performance.now();
+    const settle = () => {
+      if (document.querySelector('[data-case]') || performance.now() - t0 > 4000) {
+        scrollToWork(id);
+        adoptDeepLink();
+      } else raf = requestAnimationFrame(settle);
+    };
+    raf = requestAnimationFrame(settle);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+  return ever ? (
+    <Suspense fallback={null}>
+      <CaseStudy />
+    </Suspense>
+  ) : null;
+}
 const D20Chapter = lazy(() => import('../directions/d20/D20Chapter.jsx'));
 const BentoOpening = lazy(() => import('../directions/bento/Opening.jsx'));
 const TypistOpening = lazy(() => import('../directions/typist/Opening.jsx'));
@@ -539,6 +570,7 @@ export default function Home() {
               )}
             </Suspense>
           )}
+          <WorkCase />
         </div>
 
         <div id="evaluate" className="h-evaluate">

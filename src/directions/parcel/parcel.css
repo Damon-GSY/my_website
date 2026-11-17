@@ -204,6 +204,7 @@
   position: static;
   padding: 0;
   align-items: flex-start;
+  pointer-events: auto; /* nothing lands in the static version: its cards (home: links) take clicks */
 }
 .parcel.static .p-work header,
 .parcel.static .p-card,
