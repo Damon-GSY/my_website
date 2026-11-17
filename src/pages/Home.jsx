@@ -1,8 +1,9 @@
-import { Fragment, lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { langSwitchLabel, useLang } from '../i18n.jsx';
 import { path, profile } from '../content.js';
 import { noteCategory, noteMinutes, notes } from '../notes.js';
 import InkHero from '../directions/ink/InkHero.jsx';
+import Claim from '../chapters/claim/Claim.jsx';
 import Close from '../chapters/close/Close.jsx';
 import Evidence from '../directions/home-evidence/Evidence.jsx';
 import { hasWebGL2 } from '../engine/webgl.js';
@@ -88,11 +89,6 @@ const BAR_NAV = [
   NAV[4],
 ];
 
-const STATEMENT = {
-  en: 'I train language agents, then measure whether they hold up on real work.',
-  zh: '我训练语言智能体，再检验它们在真实工作中是否站得住。',
-};
-
 const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // The films only pin and animate with motion allowed and WebGL available; otherwise they render
@@ -136,101 +132,6 @@ function SectionHead({ n, children, aside }) {
       <span className="h-label">{children}</span>
       {aside && <span className="h-aside">{aside}</span>}
     </header>
-  );
-}
-
-// Splits the sentence into words (Chinese by word segmentation), keeping punctuation on the word before.
-function words(text, lang) {
-  if (lang !== 'zh') return text.split(' ');
-  const seg = typeof Intl !== 'undefined' && Intl.Segmenter ? new Intl.Segmenter('zh', { granularity: 'word' }) : null;
-  const parts = seg ? [...seg.segment(text)].map((s) => s.segment) : [...text];
-  return parts.reduce((out, part) => {
-    if (/^[，。、；：！？,.]$/.test(part) && out.length) out[out.length - 1] += part;
-    else out.push(part);
-    return out;
-  }, []);
-}
-
-function Statement() {
-  const { lang, t } = useLang();
-  const ref = useRef(null);
-  const list = useMemo(() => words(STATEMENT[lang] ?? STATEMENT.en, lang), [lang]);
-
-  // words go from muted to ink as they pass the middle of the viewport
-  useEffect(() => {
-    const el = ref.current;
-    const spans = [...el.querySelectorAll('[data-w]')];
-    if (reduced()) {
-      spans.forEach((s) => s.classList.add('is-lit'));
-      return undefined;
-    }
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      const line = window.innerHeight * 0.6;
-      spans.forEach((s) => s.classList.toggle('is-lit', s.getBoundingClientRect().top < line));
-    };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update);
-    };
-    // the lines drift sideways in turn as the sentence passes (home.css, "depth"): number them
-    const lines = () => {
-      let top = null;
-      let line = -1;
-      spans.forEach((s) => {
-        if (top === null || Math.abs(s.offsetTop - top) > 4) {
-          top = s.offsetTop;
-          line += 1;
-        }
-        s.style.setProperty('--dir', line % 2 ? 1 : -1);
-      });
-    };
-    const ro = new ResizeObserver(lines);
-    ro.observe(el);
-    update();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    return () => {
-      cancelAnimationFrame(raf);
-      ro.disconnect();
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-    };
-  }, [list]);
-
-  const last = list.length - 1;
-  return (
-    <section id="statement" className="h-section h-statement" data-pv="0 0.9">
-      <SectionHead n="01" aside={t({ en: 'Thesis', zh: '主张' })}>
-        {t({ en: 'Statement', zh: '自述' })}
-      </SectionHead>
-      <h2 className="h-sentence" ref={ref} aria-label={t(STATEMENT)} data-pv="0.2 cover">
-        {list.map((w, i) => {
-          const stop = i === last && /[.。]$/.test(w);
-          return (
-            <Fragment key={`${lang}-${i}`}>
-              <span data-w aria-hidden="true">
-                {stop ? w.slice(0, -1) : w}
-                {stop && (
-                  <span className="h-stop" data-mark="statement" data-mark-r="0.62" data-mark-y="0.74">
-                    {w.slice(-1)}
-                  </span>
-                )}
-              </span>
-              {lang !== 'zh' && i < last ? ' ' : ''}
-            </Fragment>
-          );
-        })}
-      </h2>
-      <ul className="h-facets mono">
-        {['Agentic RL', 'Post-training', 'Evaluation'].map((f, i) => (
-          <li key={f}>
-            <span>0{i + 1}</span>
-            {f}
-          </li>
-        ))}
-      </ul>
-    </section>
   );
 }
 
@@ -537,7 +438,13 @@ export default function Home() {
           </div>
         )}
 
-        <Statement />
+        <Claim
+          head={
+            <SectionHead n="01" aside={t({ en: 'Thesis', zh: '主张' })}>
+              {t({ en: 'Statement', zh: '自述' })}
+            </SectionHead>
+          }
+        />
 
         <div id="work" className="h-work-host">
           {isCustomLens && (

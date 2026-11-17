@@ -1,0 +1,134 @@
+/* (01) Claim: the thesis typed token by token (Claim.jsx). The static layout is .h-statement /
+   .h-sentence in home.css; this file adds the pin, the depth layer and the cursor. */
+.cl-stage {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+.cl-sentence {
+  position: relative;
+}
+.cl-w {
+  display: inline-block;
+}
+
+/* with motion: the section is the scroll track and the stage is pinned inside it */
+.cl.is-live {
+  display: block;
+  min-height: 0;
+  height: calc(100svh * (1 + var(--pin)));
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.cl.is-live .cl-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  box-sizing: border-box;
+  padding: clamp(84px, 15vh, 176px) 0 clamp(24px, 5vh, 56px);
+}
+/* the whole sentence must fit the pinned screen */
+.cl.is-live .h-sentence {
+  font-size: min(clamp(46px, 8.6vw, 168px), 12.5svh);
+}
+.cl .cl-t {
+  will-change: opacity;
+}
+
+/* the depth layer: candidates stand in perspective around the cursor (the vanishing point) */
+.cl-depth {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: -60vw;
+  height: 100%; /* set to the three-term line in JS: the deck stands on that floor and sinks into it */
+  perspective: 5.5em;
+  pointer-events: none;
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 0.75em), transparent);
+}
+.cl-alt,
+.cl-ghost {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  line-height: var(--lh, 1.2);
+  transform-origin: 0 50%;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.cl-alt {
+  color: transparent;
+  -webkit-text-stroke: max(1px, 0.012em) var(--muted);
+}
+.cl-ghost {
+  color: rgb(13 13 13 / var(--fill, 0));
+  -webkit-text-stroke: calc(max(1px, 0.012em) * (1 - var(--fill, 0))) var(--muted);
+}
+.cl-caret {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  background: color-mix(in srgb, #ff2d8a calc(var(--mk) * 100%), transparent);
+}
+
+.cl-cap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin: 0;
+  font-size: 11px;
+  color: var(--muted);
+  opacity: 0;
+}
+.cl-cap b {
+  font-weight: inherit;
+  color: var(--ink);
+}
+/* the caption hangs under the head's right end, in the margin above the sentence */
+.cl.is-live .cl-cap {
+  position: absolute;
+  right: 0;
+  top: calc(clamp(84px, 15vh, 176px) + 34px);
+  justify-content: flex-end;
+  text-align: right;
+}
+.cl.is-live .cl-stage {
+  position: sticky;
+}
+.cl.is-live .h-facets {
+  padding-top: 0;
+}
+@media (max-width: 760px) {
+  .cl.is-live .cl-cap {
+    left: 0;
+    justify-content: flex-start;
+    text-align: left;
+    font-size: 10px;
+    gap: 2px 14px;
+  }
+}
+
+/* section opener rates, as for the other sections (home.css "depth"): the head sits in the stage here */
+.pv-on .cl-stage > .h-head::before {
+  translate: 0 calc((1 - var(--pv)) * 14px);
+}
+.pv-on .cl-stage > .h-head > * {
+  translate: 0 calc((1 - var(--pv)) * 34px);
+}
+
+/* Chinese: the full stop's ring sits in the left half of its em box; trimming the box to that half puts
+   the mark's dock (the box centre) on the ring. Outlined CJK shows its overlapping strokes, so the
+   words not chosen are drawn as pale solid type instead. */
+.home:lang(zh) .cl .h-stop {
+  letter-spacing: -0.5em;
+}
+.home:lang(zh) .cl-alt {
+  color: #c4c4c0;
+  -webkit-text-stroke: 0;
+}
+.home:lang(zh) .cl-ghost {
+  color: color-mix(in srgb, #0d0d0d calc(var(--fill, 0) * 100%), #a9a9a5);
+  -webkit-text-stroke: 0;
+}

@@ -81,14 +81,6 @@ body:has(.note) {
   letter-spacing: -0.045em;
   max-width: 15ch;
 }
-.h-sentence [data-w] {
-  display: inline-block;
-  color: var(--unlit);
-  transition: color 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-.h-sentence [data-w].is-lit {
-  color: var(--ink);
-}
 /* the mark's docks: each glyph turns magenta while it holds the mark (--mk, from src/engine/mark.js);
    without the travelling mark (reduced motion, no WebGL) each simply shows its magenta glyph */
 [data-mark] {
@@ -1183,11 +1175,6 @@ body:has(.note) {
   translate: 0 calc((1 - var(--pv)) * var(--rise));
   scale: calc(1 + (1 - var(--pv)) * 0.045) 1;
   transform-origin: 0 100%;
-}
-
-/* statement: alternate lines drift against each other */
-.pv-on .h-sentence [data-w] {
-  translate: calc((var(--pv) - 0.5) * var(--dir, 0) * 36px) 0;
 }
 
 /* band: the two rows run in opposite directions, as far as the reader scrolls */
