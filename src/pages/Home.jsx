@@ -3,7 +3,7 @@ import { langSwitchLabel, useLang } from '../i18n.jsx';
 import { path, profile } from '../content.js';
 import { noteCategory, noteMinutes, notes } from '../notes.js';
 import InkHero from '../directions/ink/InkHero.jsx';
-import MoreWays from './MoreWays.jsx';
+import Close from '../chapters/close/Close.jsx';
 import Evidence from '../directions/home-evidence/Evidence.jsx';
 import { hasWebGL2 } from '../engine/webgl.js';
 import { startMark } from '../engine/mark.js';
@@ -281,34 +281,26 @@ function Notes() {
   );
 }
 
-function Contact() {
+// (07) More ways in, cut to one line (assembly plan §7): the best studies are now in the page itself.
+function MoreLine() {
   const { t } = useLang();
-  const [user, domain] = profile.email.split('@');
   return (
-    <section id="contact" className="h-section h-contact" data-pv="0 end">
-      <SectionHead n="08" aside={t({ en: 'Email is best', zh: '邮件最快' })}>
-        {t({ en: 'Contact', zh: '联系' })}
+    <section id="more" className="h-section h-more-line">
+      <SectionHead n="07" aside={t({ en: 'Other doors', zh: '其他入口' })}>
+        {t({ en: 'More ways in', zh: '更多入口' })}
       </SectionHead>
-      <h2 className="sr-only">{t({ en: 'Contact', zh: '联系' })}</h2>
-      <a className="h-email" href={`mailto:${profile.email}`}>
-        {user}
-        <span className="h-at" data-mark="contact" data-mark-r="0.42" data-mark-y="0.56">
-          @
+      <h2 className="sr-only">{t({ en: 'More ways in', zh: '更多入口' })}</h2>
+      <a className="h-more-link" href="/lab">
+        <span>
+          {t({ en: 'The design studies behind this page', zh: '这一页背后的设计研究' })}
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 18L18 6M8 6h10v10" />
+          </svg>
         </span>
-        {domain}
+        <small className="mono">
+          {t({ en: 'Each one another way through the same facts', zh: '每一个都是走进同一组事实的另一条路' })}
+        </small>
       </a>
-      <ul className="h-links">
-        {profile.links.map((link) => (
-          <li key={link.href}>
-            <a href={link.href} target="_blank" rel="noreferrer">
-              {link.label}
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M6 18L18 6M8 6h10v10" />
-              </svg>
-            </a>
-          </li>
-        ))}
-      </ul>
     </section>
   );
 }
@@ -586,14 +578,14 @@ export default function Home() {
         />
         <Path />
         <Notes />
-        <MoreWays
+        <MoreLine />
+        <Close
           head={
-            <SectionHead n="07" aside={t({ en: 'Other doors', zh: '其他入口' })}>
-              {t({ en: 'More ways in', zh: '更多入口' })}
+            <SectionHead n="08" aside={t({ en: 'A record of this visit', zh: '本次来访的记录' })}>
+              {t({ en: 'Contact', zh: '联系' })}
             </SectionHead>
           }
         />
-        <Contact />
       </main>
 
       <aside

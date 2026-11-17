@@ -1,0 +1,543 @@
+/* ---------- (07) more ways in, shrunk to one line (assembly plan §7) ---------- */
+.h-more-line {
+  padding-bottom: 0;
+}
+.h-more-link {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px 32px;
+  margin-top: 22px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--rule);
+  font-weight: 750;
+  font-size: clamp(22px, 2.6vw, 40px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+.h-more-link small {
+  flex: none;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--muted);
+}
+.h-more-link svg {
+  width: 0.7em;
+  height: 0.7em;
+  margin-left: 0.2em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  vertical-align: -0.04em;
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.h-more-link:hover svg,
+.h-more-link:focus-visible svg {
+  transform: translate(3px, -3px);
+}
+
+/* ---------- (08) close: the visit, printed ---------- */
+.cl {
+  --paper: #fdfdfb;
+  --dash: #c4c4c0;
+  padding-bottom: clamp(40px, 6vh, 72px);
+}
+.cl-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 0 24px;
+  margin-top: clamp(40px, 8vh, 96px);
+}
+.cl-side {
+  grid-column: 1 / span 6;
+  align-self: start;
+  position: sticky;
+  top: 18vh;
+}
+.cl-title {
+  margin: 0 0 clamp(28px, 4vh, 48px) -0.04em;
+  font-weight: 900;
+  font-size: clamp(64px, 9.4vw, 172px);
+  line-height: 0.82;
+  letter-spacing: -0.055em;
+}
+.cl-title span {
+  display: block;
+}
+.cl-lede {
+  max-width: 34ch;
+  margin: 0;
+  font-size: clamp(16px, 1.25vw, 19px);
+  line-height: 1.45;
+  color: var(--muted);
+}
+.cl-keep {
+  margin: 22px 0 0;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* the roll: the paper in normal flow, the printer sticky at the bottom of the viewport. The paper
+   below the printer's slot is covered (the printer's ::after), so scrolling feeds it out. */
+.cl-roll {
+  grid-column: 8 / span 5;
+  justify-self: center;
+  position: relative;
+  width: min(100%, 384px);
+  overflow-x: visible;
+  overflow-y: clip;
+  padding-top: 12px; /* room for the leading edge's teeth */
+}
+.cl-paper {
+  position: relative;
+  color: var(--ink);
+  filter: drop-shadow(0 1px 0 rgba(13, 13, 13, 0.07)) drop-shadow(0 14px 22px rgba(13, 13, 13, 0.07));
+}
+.cl-body,
+.cl-stub {
+  background: var(--paper);
+}
+/* the leading edge, torn on teeth */
+.cl-body::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -8px;
+  height: 8px;
+  background:
+    linear-gradient(135deg, transparent 5.6px, var(--paper) 6px) 0 0 / 12px 8px repeat-x,
+    linear-gradient(225deg, transparent 5.6px, var(--paper) 6px) 0 0 / 12px 8px repeat-x;
+}
+.cl-body {
+  position: relative;
+  padding: 22px 24px 18px;
+}
+.cl-name {
+  margin: 0;
+  font-weight: 900;
+  font-stretch: 78%;
+  font-size: 34px;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+.cl-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 12px;
+  margin: 10px 0 0;
+  padding-bottom: 12px;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.cl-block {
+  padding: 12px 0;
+  border-top: 1px dashed var(--dash);
+  font-size: 12px;
+  line-height: 1.75;
+}
+.cl-block dl {
+  margin: 0;
+}
+.cl-cols {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 4px;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.cl-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.cl-row dt,
+.cl-item {
+  display: flex;
+  flex: 1;
+  gap: 8px;
+  min-width: 0;
+}
+/* dotted leaders between a label and its value */
+.cl-row dt::after,
+.cl-item::after {
+  content: '';
+  flex: 1;
+  min-width: 12px;
+  border-bottom: 1px dotted #a9a9a5;
+  translate: 0 -0.32em;
+}
+.cl-row dd {
+  margin: 0;
+  text-align: right;
+}
+.cl-items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cl-items li {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.cl-n {
+  width: 2.2ch;
+  color: var(--muted);
+}
+.cl-time {
+  font-variant-numeric: tabular-nums;
+}
+.cl-none {
+  margin: 0;
+  color: var(--muted);
+}
+
+.cl-totals {
+  position: relative;
+  padding: 14px 0 8px;
+  border-top: 3px double var(--ink);
+}
+.cl-totals .cl-row {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+.cl-totals dt {
+  text-transform: uppercase;
+}
+.cl-totals .cl-row.is-strong {
+  margin-bottom: 4px;
+  font-family: var(--display);
+  font-weight: 900;
+  font-stretch: 78%;
+  font-size: 24px;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+.cl-totals .is-strong dt::after {
+  border-bottom-style: solid;
+  border-color: var(--rule);
+}
+
+/* the stamp: the mark's final form. The travelling dot lands in its centre; --mk (src/engine/mark.js)
+   presses the ring in. Without the mark, --mk is 1 and the stamp is simply there. */
+.cl-stampzone {
+  position: relative;
+  height: 172px;
+  border-top: 1px dashed var(--dash);
+}
+.cl-zone-k {
+  position: absolute;
+  left: 0;
+  top: 12px;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.cl-seal {
+  position: absolute;
+  left: calc(50% - 75px);
+  top: 11px;
+  width: 150px;
+  height: 150px;
+  color: var(--magenta);
+  pointer-events: none;
+}
+.cl-seal-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  mix-blend-mode: multiply;
+  rotate: -12deg;
+  opacity: calc(var(--mk) * 0.92);
+  scale: calc(1.3 - var(--mk) * 0.3);
+  scale: calc(1 + (1 - var(--mk)) * 0.3 - sin(var(--mk) * 180deg) * 0.05);
+}
+.cl-seal-top {
+  font-family: var(--display);
+  font-weight: 850;
+  font-stretch: 82%;
+  font-size: 12px;
+  fill: currentColor;
+}
+.cl-seal-top.is-zh {
+  font-weight: 700;
+  font-size: 10.5px;
+}
+.cl-seal-bot {
+  font-family: var(--mono);
+  font-size: 7.5px;
+  letter-spacing: 0.12em;
+  fill: currentColor;
+}
+.cl-seal-dot {
+  position: absolute;
+  left: 43.333%;
+  top: 43.333%;
+  width: 13.333%;
+  height: 13.333%;
+  border-radius: 50%;
+  background: var(--magenta);
+  opacity: var(--mk);
+}
+
+.cl-foot {
+  padding-top: 14px;
+  border-top: 1px dashed var(--dash);
+  text-align: center;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+}
+.cl-bars {
+  display: block;
+  width: 72%;
+  height: 34px;
+  margin: 0 auto 6px;
+  fill: var(--ink);
+}
+.cl-foot p {
+  margin: 0;
+}
+.cl-local {
+  margin-top: 8px !important;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+/* perforation: a dashed seam with a notch at each edge */
+.cl-perf {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  height: 22px;
+  background:
+    radial-gradient(circle at 0 50%, transparent 7px, var(--paper) 7.5px) left / 51% 100% no-repeat,
+    radial-gradient(circle at 100% 50%, transparent 7px, var(--paper) 7.5px) right / 51% 100% no-repeat;
+  font-size: 9.5px;
+  line-height: 22px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.cl-perf::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 50%;
+  border-top: 1.5px dashed #9e9e9a;
+}
+.cl-perf span {
+  position: relative;
+  padding: 0 8px;
+  background: var(--paper);
+}
+
+/* the stub: the contact block */
+.cl-stub {
+  padding: 14px 24px 46px; /* the bottom stays blank: it is where the slot's fade sits */
+}
+.cl-stub-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.cl-email-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+  margin: 14px 0 16px;
+}
+.cl-email {
+  font-weight: 850;
+  font-size: clamp(27px, 8vw, 34px);
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+  white-space: nowrap;
+  user-select: text;
+  -webkit-user-select: text;
+  background: linear-gradient(var(--ink), var(--ink)) 0 100% / 0 2px no-repeat;
+  transition: background-size 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.cl-email:hover,
+.cl-email:focus-visible {
+  background-size: 100% 2px;
+}
+.cl-copy {
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+.cl-copy:hover,
+.cl-copy:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+}
+.cl-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cl-links a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 44px;
+  border-top: 1px solid var(--ink);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+}
+.cl-links svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.cl-links a:hover svg,
+.cl-links a:focus-visible svg {
+  transform: translate(3px, -3px);
+}
+
+/* the printer: sticky at the bottom of the viewport while the paper feeds out of its slot */
+.cl-printer {
+  position: sticky;
+  bottom: 68px; /* clear of the Studio Lens button */
+  z-index: 2;
+  margin: 0 -18px;
+}
+.cl-printer-bar {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 32px;
+  padding: 5px 16px 0;
+  border-radius: 3px 3px 9px 9px;
+  background: var(--ink);
+  font-family: var(--mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #9a9a96;
+  box-shadow: 0 10px 24px -14px rgba(13, 13, 13, 0.6);
+}
+/* the slot */
+.cl-printer-bar::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 0;
+  height: 4px;
+  border-radius: 0 0 2px 2px;
+  background: #000;
+  box-shadow: 0 1px 0 #2b2b2a;
+}
+.cl-printer-bar i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #6f6f6c;
+}
+/* fresh lines are still developing as they leave the slot */
+.cl-printer::before {
+  content: '';
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 100%;
+  height: 34px;
+  background: linear-gradient(rgba(253, 253, 251, 0), rgba(253, 253, 251, 0.82));
+  pointer-events: none;
+}
+/* covers the paper that has not come out yet (clipped by the roll at its end) */
+.cl-printer::after {
+  content: '';
+  position: absolute;
+  left: -40px;
+  right: -40px;
+  top: 100%;
+  height: 400vh;
+  background: var(--bg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cl-printer {
+    position: relative;
+    bottom: auto;
+  }
+  .cl-printer::before {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .cl-grid {
+    display: block;
+    margin-top: 28px;
+  }
+  .cl-side {
+    position: static;
+  }
+  .cl-title {
+    font-size: clamp(64px, 19vw, 132px);
+  }
+  .cl-roll {
+    margin: 44px auto 0;
+  }
+}
+@media (max-width: 420px) {
+  .cl-body {
+    padding: 20px 18px 16px;
+  }
+  .cl-stub {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+  .cl-stampzone {
+    height: 150px;
+  }
+  .cl-seal {
+    left: calc(50% - 64px);
+    width: 128px;
+    height: 128px;
+  }
+  .cl-printer {
+    margin: 0 -10px;
+  }
+  .h-more-link {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
