@@ -253,3 +253,322 @@ body:has(.ar) {
     padding: 0;
   }
 }
+
+/* ---------- /lab: the archive of studies ---------- */
+.lab {
+  padding: clamp(40px, 8vh, 96px) var(--gutter) 0;
+}
+.lab-intro {
+  margin-bottom: clamp(64px, 12vh, 140px);
+}
+.lab-title {
+  margin: clamp(24px, 4vh, 48px) 0 clamp(28px, 5vh, 56px) -0.04em;
+  font-weight: 900;
+  font-size: clamp(72px, 15vw, 248px);
+  line-height: 0.8;
+  letter-spacing: -0.055em;
+}
+.ar:lang(zh) .lab-title {
+  letter-spacing: 0;
+  line-height: 0.95;
+}
+/* the mark is the title's full stop: a dot, the same in both languages */
+.lab-stop {
+  display: inline-block;
+  width: 0.15em;
+  height: 0.15em;
+  margin-left: 0.04em;
+  border-radius: 50%;
+  background: var(--magenta);
+}
+.lab-lede {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 20px 24px;
+}
+.lab-lede p:first-child {
+  grid-column: 1 / span 7;
+  font-weight: 700;
+  font-size: clamp(24px, 2.6vw, 38px);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+.lab-lede-sub {
+  grid-column: 1 / span 5;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.45;
+}
+.lab-jump {
+  grid-column: 7 / span 6;
+  align-self: end;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 4px 24px;
+  font-size: 11px;
+}
+.lab-jump a {
+  padding: 10px 0;
+}
+.ar:lang(zh) .lab-lede p:first-child {
+  letter-spacing: 0;
+  line-height: 1.3;
+}
+
+.lab-sec {
+  margin-bottom: clamp(72px, 13vh, 160px);
+}
+.lab-sec > .ar-head {
+  margin: 0 0 clamp(24px, 4vh, 40px);
+  font-weight: 400;
+}
+
+/* (A): one row per chapter, the chapter on the left, its studies on the right */
+.lab-row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 24px;
+  padding: clamp(28px, 4vh, 44px) 0;
+  border-top: 1px solid var(--rule);
+  scroll-margin-top: 60px;
+}
+.lab-row:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+.lab-chapter {
+  grid-column: 1 / span 4;
+  padding-right: clamp(0px, 2vw, 32px);
+}
+.lab-ch-n {
+  font-size: 11px;
+  color: var(--muted);
+}
+.lab-ch-name {
+  margin: 6px 0 10px;
+  font-weight: 800;
+  font-size: clamp(30px, 3.4vw, 52px);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+}
+.ar:lang(zh) .lab-ch-name {
+  letter-spacing: 0;
+}
+.lab-ch-does {
+  max-width: 26em;
+  margin-bottom: 18px;
+  font-size: 15px;
+  line-height: 1.4;
+}
+.lab-ch-go {
+  margin-top: 4px;
+  font-size: 11px;
+}
+.lab-ch-go a {
+  display: inline-block;
+  padding: 10px 0 6px;
+  border-bottom: 1px solid var(--ink);
+}
+.lab-from {
+  grid-column: 5 / span 8;
+}
+.lab-from-label {
+  margin-bottom: 10px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.lab-grid {
+  display: grid;
+  gap: clamp(28px, 4vh, 44px) 24px;
+}
+.lab-grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.lab-grid-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.lab-card {
+  min-width: 0;
+  scroll-margin-top: 60px;
+}
+.lab-shot {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  background: #e9e9e6;
+}
+.lab-shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .lab-card:hover .lab-shot img,
+  .lab-chapter:hover .lab-shot img {
+    transform: scale(1.025);
+  }
+}
+.lab-shot-tag {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 6px 9px 5px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 10px;
+}
+.lab-chapter .lab-shot {
+  margin-bottom: 4px;
+}
+.lab-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 12px 0 6px;
+  font-size: 10.5px;
+  color: var(--muted);
+  text-transform: none;
+}
+.lab-meta span:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lab-credit {
+  flex: none;
+  color: var(--ink);
+  text-transform: uppercase;
+}
+.lab-card h3 {
+  font-weight: 750;
+  font-size: 21px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.lab-line,
+.lab-why {
+  margin-top: 6px;
+  font-size: 14px;
+  line-height: 1.42;
+  color: var(--muted);
+}
+.lab-why {
+  margin-top: 4px;
+}
+.lab-alt,
+.lab-became {
+  margin-top: 10px;
+  font-size: 10.5px;
+  line-height: 1.6;
+}
+.lab-alt a,
+.lab-became a {
+  border-bottom: 1px solid currentColor;
+}
+.lab-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0 24px;
+  border-top: 1px solid var(--ink);
+  font-size: 11px;
+}
+
+/* a chapter made from one study: the study lies on its side and fills the row */
+.lab-grid-1 .lab-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  grid-auto-rows: min-content;
+  column-gap: 24px;
+}
+.lab-grid-1 .lab-card > .lab-shot {
+  grid-row: 1 / span 8;
+}
+.lab-grid-1 .lab-card > :not(.lab-shot) {
+  grid-column: 2;
+}
+.lab-grid-1 .lab-meta {
+  margin-top: 0;
+}
+
+@media (max-width: 1100px) {
+  .lab-grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 760px) {
+  .lab-lede p:first-child,
+  .lab-lede-sub,
+  .lab-jump {
+    grid-column: 1 / -1;
+  }
+  .lab-jump {
+    justify-content: flex-start;
+    gap: 0 20px;
+  }
+  .lab-row {
+    display: block;
+  }
+  .lab-chapter {
+    margin-bottom: 28px;
+    padding-right: 0;
+  }
+  .lab-from-label {
+    margin-bottom: 12px;
+  }
+  .lab-grid-2 {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+  /* phones: every study in (A) lies on its side, thumbnail left */
+  .lab-from .lab-card {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+    grid-auto-rows: min-content;
+    column-gap: 14px;
+  }
+  .lab-from .lab-card > .lab-shot {
+    grid-row: 1 / span 8;
+  }
+  .lab-from .lab-card > :not(.lab-shot) {
+    grid-column: 2;
+  }
+  .lab-from .lab-meta {
+    margin-top: 0;
+  }
+  .lab-from .lab-card h3 {
+    font-size: 18px;
+  }
+  .lab-from .lab-line {
+    font-size: 13px;
+  }
+  .lab-sec > .ar-head .ar-aside {
+    display: none;
+  }
+  .lab-grid-4 {
+    gap: 28px 14px;
+  }
+  .lab-grid-4 .lab-card h3 {
+    font-size: 17px;
+  }
+  .lab-grid-4 .lab-line,
+  .lab-grid-4 .lab-why {
+    font-size: 13px;
+  }
+  .lab-meta {
+    flex-direction: column;
+    gap: 2px;
+  }
+}
+@media (min-width: 761px) {
+  .ar:lang(zh) .lab-lede p:first-child {
+    grid-column: 1 / span 8;
+  }
+}

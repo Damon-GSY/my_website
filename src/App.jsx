@@ -11,7 +11,7 @@ const NotFound = lazy(() => import('./pages/NotFound.jsx'));
 // path → [component, document title]. A null title keeps the one from index.html.
 const routes = {
   '/': [Home, null],
-  '/lab': [Chooser, 'Design studies'],
+  '/lab': [Chooser, 'The studies'],
   '/short': [lazy(() => import('./pages/Short.jsx')), 'The short version'],
   '/parcel': [lazy(() => import('./directions/parcel/Opening.jsx')), 'Parcel Box'],
   '/descent': [lazy(() => import('./directions/descent/Opening.jsx')), 'Descent'],
