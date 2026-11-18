@@ -461,7 +461,17 @@ export function createFold() {
     canvas.remove();
   }
 
-  return { canvas, setEnds, draw, pose: (t) => (ends ? pose(t) : null), dispose };
+  // The top of the ball on screen at time t, through the same perspective as the shader (the pin rides
+  // it), with that perspective's scale k and how balled up the paper is (c).
+  function ballTop(t) {
+    if (!ends) return null;
+    const P = pose(t);
+    const F = 2.4 * Math.max(vw, vh);
+    const k = F / Math.max(1, F - P.z);
+    return { x: vw / 2 + (P.x - vw / 2) * k, y: vh / 2 + (P.y - 0.86 * P.R - vh / 2) * k, k, c: P.c };
+  }
+
+  return { canvas, setEnds, draw, pose: (t) => (ends ? pose(t) : null), ballTop, dispose };
 }
 
 // ---------- a reversible clock ----------

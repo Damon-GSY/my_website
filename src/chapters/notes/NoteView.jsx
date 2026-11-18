@@ -236,18 +236,37 @@ export default function NoteView({ mode }) {
     await run(1, DUR.open, 'open');
   }
 
-  // the pin's way from the mark to the top of the sheet (and back, played backwards)
+  // The pin's way from `from` (the mark, or the old sheet's pin) to `to` (the new sheet's pin), and back
+  // when played backwards. It rides the paper (polish pass, 2026-11-18): it hops onto the top of the ball
+  // as the sheet balls up, travels on it (projected from the ball's pose each frame), slides with the
+  // paper as it opens, and presses in once the sheet is flat. Without a ball, it flies its own arc.
   function flight(from, to) {
     const dist = Math.hypot(to.x - from.x, to.y - from.y);
-    return (tt) => {
+    const press = (tt) => sstep(0.88, 0.94, tt) - sstep(0.94, 1, tt);
+    const free = (tt) => {
       const u = ease(clamp((tt - 0.1) / 0.72));
       const arc = Math.sin(Math.PI * u) * Math.min(180, dist * 0.3);
-      const press = sstep(0.8, 0.9, tt) - sstep(0.9, 1, tt);
       return {
         x: lerp(from.x, to.x, u),
         y: lerp(from.y, to.y, u) - arc,
-        size: lerp(from.size, to.size, u) * (1 + 0.4 * Math.sin(Math.PI * u) + 0.18 * press),
-        lift: Math.sin(Math.PI * u) + 0.3 * press,
+        size: lerp(from.size, to.size, u) * (1 + 0.4 * Math.sin(Math.PI * u) + 0.18 * press(tt)),
+        lift: Math.sin(Math.PI * u) + 0.3 * press(tt),
+      };
+    };
+    return (tt) => {
+      const top = ctl.current.fold?.ballTop(tt);
+      if (!top) return free(tt);
+      // how much it is on the ball: hopping on while the first sheet balls up, then held by the paper
+      // until it has opened (c falls to 0 as the second sheet lies flat)
+      const first = tt < 0.5;
+      const on = first ? ease(clamp((tt - 0.04) / 0.3)) : sstep(0.06, 0.7, top.c);
+      const end = first ? from : to;
+      const hop = first ? Math.sin(Math.PI * on) * Math.min(120, Math.hypot(top.x - from.x, top.y - from.y) * 0.3) : 0;
+      return {
+        x: lerp(end.x, top.x, on),
+        y: lerp(end.y, top.y, on) - hop,
+        size: lerp(end.size, to.size * top.k, on) * (1 + 0.18 * press(tt)),
+        lift: 0.35 * on + (hop ? 0.4 * Math.sin(Math.PI * on) : 0) + 0.3 * press(tt),
       };
     };
   }
