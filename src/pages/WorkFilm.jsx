@@ -2,15 +2,16 @@ import { useEffect } from 'react';
 import { useFilm } from '../engine/useFilm.js';
 import { useLang } from '../i18n.jsx';
 import { footnote, joinParts, profile, route, work } from '../content.js';
-import { buildParcelHome } from '../directions/parcel/Scene.js';
+import { buildParcelHome, homeUnwarp } from '../directions/parcel/Scene.js';
 import '../directions/parcel/parcel.css';
 import { openCase } from './work/caseRoute.js';
 
 const loadCase = () => import('./work/CaseStudy.jsx');
 
 // One live WebGL context on the page (src/engine/gl.js): the film needs it until the six tiles have
-// landed on their cards (p 0.985); after that the cards are DOM and the canvas is blank.
-const SHARE = { until: 0.985 };
+// landed on their cards (scene p 0.985, read back through the home film's clock); after that the cards
+// are DOM and the canvas is blank.
+const SHARE = { until: homeUnwarp(0.985) };
 
 // A plain click opens the parcel in place; a modified click (new tab, new window) follows the link.
 function onCard(e) {

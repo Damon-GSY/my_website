@@ -151,7 +151,8 @@ export async function buildParcel(stage, root, theme = KRAFT, opts = {}) {
   const n = new THREE.Vector3();
   const shade = (d) => clamp(0.5 + (0.5 * Math.max(d, 0)) / LIGHT.z, 0.5, 1.06);
 
-  function frame(p) {
+  function frame(pIn) {
+    const p = opts.warp ? opts.warp(pIn) : pIn;
     const { w, h } = stage.size();
     const foldLin = span(p, 0.14, 0.42) * (1 - span(p, 0.66, 0.86));
     const persp = ease(span(p, 0.08, 0.3)) * (1 - ease(span(p, 0.7, 0.88)));
@@ -197,7 +198,7 @@ export async function buildParcel(stage, root, theme = KRAFT, opts = {}) {
       tile.scale.setScalar(lerp(s, dock.w, k));
     });
     workEl.classList.toggle('is-in', landed);
-    headEl.style.opacity = span(p, 0.9, 0.97);
+    headEl.style.opacity = span(p, ...(opts.headIn || [0.9, 0.97]));
     hintEl.style.opacity = 1 - span(p, 0.03, 0.1);
     routeEl.style.opacity = span(p, 0.36, 0.42) * (1 - span(p, 0.68, 0.74));
     const stop = Math.min(routeItems.length - 1, Math.floor(travel * routeItems.length));
@@ -245,5 +246,27 @@ export async function buildParcel(stage, root, theme = KRAFT, opts = {}) {
 
 // The same film printed on white paper, for the home page.
 export const buildParcelPaper = (stage, root) => buildParcel(stage, root, PAPER);
-// ... and with the sticker handed over to the page's travelling mark.
-export const buildParcelHome = (stage, root) => buildParcel(stage, root, PAPER, { mark: true });
+// ... and with the sticker handed over to the page's travelling mark, on the home page's own clock.
+// The home film (finish pass, 2026-11-18) is shorter than /parcel and spends it differently: the carton
+// starts to fold 0.16 screens after it pins (not 0.7), the unfold to the flat net takes half a screen
+// (not a whole one), and "Selected work · 06 / Unpacked." comes up as the box opens, so the grey net
+// reads as the box being unpacked rather than as an empty stretch. [home p, scene p] keys, piecewise
+// linear; the scene's own timings (and so /parcel) are untouched.
+const HOME_KEYS = [
+  [0, 0],
+  [0.04, 0.14],
+  [0.7, 0.68],
+  [0.82, 0.885],
+  [1, 1],
+];
+const piecewise = (keys, a, b) => (x) => {
+  for (let i = 1; i < keys.length; i++) {
+    const [x0, x1] = [keys[i - 1][a], keys[i][a]];
+    if (x <= x1 || i === keys.length - 1) return lerp(keys[i - 1][b], keys[i][b], clamp((x - x0) / (x1 - x0)));
+  }
+  return x;
+};
+export const homeWarp = piecewise(HOME_KEYS, 0, 1);
+export const homeUnwarp = piecewise(HOME_KEYS, 1, 0);
+export const buildParcelHome = (stage, root) =>
+  buildParcel(stage, root, PAPER, { mark: true, warp: homeWarp, headIn: [0.72, 0.84] });

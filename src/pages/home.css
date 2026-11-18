@@ -188,12 +188,13 @@ body:has(.note) {
 }
 
 /* film lengths (assembly pass, 2026-11-18: the page's scroll budget is 30 screens on desktop, 22 on
-   phones). The Deferred placeholders hold exactly the films' track heights, so nothing jumps. */
+   phones). The Deferred placeholders hold exactly the films' track heights, so nothing jumps. Work 6 -> 5
+   (5.5 -> 4.6 on phones) in the finish pass: the flat carton and the unfold were cut, not the fold. */
 .home .h-workfilm .track {
-  --len: 6;
+  --len: 5;
 }
 .h-defer-work {
-  height: 600vh;
+  height: 500vh;
 }
 .home .d20.film .d20-track,
 .h-defer-d20 {
@@ -201,10 +202,10 @@ body:has(.note) {
 }
 @media (max-width: 760px) {
   .home .h-workfilm .track {
-    --len: 5.5;
+    --len: 4.6;
   }
   .h-defer-work {
-    height: 550vh;
+    height: 460vh;
   }
   .home .d20.film .d20-track,
   .h-defer-d20 {
