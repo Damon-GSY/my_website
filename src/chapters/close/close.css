@@ -498,3 +498,94 @@
     margin: 0 -10px;
   }
 }
+
+/* phones (polish pass, 2026-11-18): a denser receipt, so that once it is printed it can be read whole.
+   Date, time and language share one line, the chapters stand in two columns, lines sit closer, and the
+   printer sits low (the Studio Lens button is in the bar's menu on phones, so nothing needs clearing).
+   The last stretch of scroll then eases the paper into a whole-receipt view (Close.jsx, "overview"). */
+@media (max-width: 760px) {
+  .cl {
+    padding-bottom: 24px;
+  }
+  .cl-block {
+    padding: 9px 0;
+    line-height: 1.55;
+  }
+  .cl-meta {
+    padding-bottom: 8px;
+  }
+  .cl-when {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: space-between;
+    gap: 0 12px;
+  }
+  .cl-when .cl-row {
+    display: block;
+  }
+  .cl-when dt {
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .cl-when dt::after {
+    display: none;
+  }
+  .cl-when dd {
+    text-align: left;
+  }
+  .cl-items {
+    columns: 2;
+    column-gap: 18px;
+  }
+  .cl-items li {
+    break-inside: avoid;
+  }
+  .cl-totals {
+    padding: 10px 0 6px;
+  }
+  .cl-foot {
+    padding-top: 10px;
+  }
+  .cl-bars {
+    height: 24px;
+  }
+  .cl-local {
+    margin-top: 4px !important;
+  }
+  .cl-email-row {
+    margin: 10px 0 8px;
+  }
+  .cl-stub {
+    padding-bottom: 36px;
+  }
+  .cl-printer {
+    bottom: 14px;
+  }
+  .cl-paper {
+    transform-origin: 50% 100%;
+  }
+  /* the paper's developing fade belongs to paper in the slot: it goes as the paper eases off */
+  .cl-printer::before {
+    opacity: calc(1 - var(--ov, 0));
+  }
+  .cl-stampzone {
+    height: 124px;
+  }
+  .cl-seal {
+    left: calc(50% - 56px);
+    top: 7px;
+    width: 112px;
+    height: 112px;
+  }
+}
+@media (max-width: 400px) {
+  .cl-email {
+    font-size: 25px;
+  }
+  .cl-items {
+    column-gap: 14px;
+    font-size: 11px;
+  }
+}

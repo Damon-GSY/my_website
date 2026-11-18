@@ -923,6 +923,8 @@ body:has(.note) {
   .h-foot {
     gap: 0 24px;
     padding-top: 12px;
+    /* no floating Studio Lens button to clear on phones (it is in the bar's menu) */
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
   }
   .h-foot a {
     display: inline-flex;
