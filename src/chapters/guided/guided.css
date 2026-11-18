@@ -1,0 +1,330 @@
+/* Phase H, Guided: the trace panel (an ink console docked bottom-left; a strip along the bottom on
+   phones) and the agent's ink cursor. Magenta stays the mark's alone. */
+.gd {
+  --gd-ink: #0d0d0d;
+  --gd-paper: #f4f4f2;
+  --gd-dim: #a6a6a2; /* small text on ink: 8:1 */
+  --gd-line: rgba(244, 244, 242, 0.14);
+  position: fixed;
+  z-index: 120;
+  left: 16px;
+  bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  width: min(360px, calc(100vw - 32px));
+  max-height: calc(100svh - 32px);
+  background: var(--gd-ink);
+  color: var(--gd-paper);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  line-height: 1.45;
+  border: 1px solid #2a2a29;
+  box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.45);
+  animation: gd-in 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@keyframes gd-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+.gd :focus-visible {
+  outline: 2px solid var(--gd-paper);
+  outline-offset: 2px;
+}
+
+.gd-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px 9px;
+  border-bottom: 1px solid var(--gd-line);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gd-dim);
+}
+.gd-state {
+  color: var(--gd-paper);
+}
+.gd-count {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+.gd-led {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #5c5c5a;
+}
+.gd.is-running .gd-led,
+.gd.is-asking .gd-led {
+  background: var(--gd-paper);
+  animation: gd-blink 1.1s steps(2, jump-none) infinite;
+}
+.gd.is-paused .gd-led {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--gd-paper);
+}
+.gd.is-done .gd-led {
+  background: var(--gd-paper);
+}
+@keyframes gd-blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.gd-intro {
+  margin: 0;
+  padding: 12px 14px 2px;
+  font-family: var(--display);
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: #e4e4e0;
+}
+
+.gd-log {
+  flex: 0 1 auto;
+  min-height: 0;
+  max-height: 158px;
+  margin: 0;
+  padding: 4px 14px;
+  list-style: none;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #3a3a39 transparent;
+  /* the line scrolled half out at the top fades instead of being cut */
+  -webkit-mask-image: linear-gradient(transparent, #000 12px);
+  mask-image: linear-gradient(transparent, #000 12px);
+}
+.gd-e {
+  display: grid;
+  grid-template-columns: 2.4ch minmax(0, 1fr) auto;
+  column-gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(244, 244, 242, 0.08);
+}
+.gd-e:last-child {
+  border-bottom: 0;
+}
+.gd-e:not(:nth-last-child(-n + 3)) {
+  opacity: 0.55;
+}
+.gd-n {
+  color: var(--gd-dim);
+}
+.gd-call {
+  min-width: 0;
+  overflow: hidden;
+  font: inherit;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.gd-call b {
+  font-weight: 600;
+}
+.gd-st {
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gd-dim);
+}
+.gd-e.is-wait .gd-st {
+  color: var(--gd-paper);
+}
+.gd-e.is-run .gd-st {
+  color: var(--gd-paper);
+  animation: gd-blink 1.1s steps(2, jump-none) infinite;
+}
+.gd-out {
+  grid-column: 2 / -1;
+  margin-top: 2px;
+  font-size: 11px;
+  color: #cfcfcb;
+  overflow-wrap: anywhere;
+}
+.gd-out::before {
+  content: '→ ';
+  color: var(--gd-dim);
+}
+.gd-e.is-you {
+  color: var(--gd-dim);
+}
+.gd-you {
+  grid-column: 2 / -1;
+}
+
+.gd-ask {
+  padding: 12px 14px 2px;
+  border-top: 1px solid var(--gd-line);
+}
+.gd-ask p,
+.gd-note {
+  margin: 0;
+  font-family: var(--display);
+  color: var(--gd-paper);
+}
+.gd-ask p {
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.3;
+}
+.gd-ask .gd-row {
+  padding: 10px 0 0;
+}
+.gd-note {
+  padding: 10px 14px 0;
+  border-top: 1px solid var(--gd-line);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.gd-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.gd-ctl {
+  padding: 10px 14px 12px;
+}
+.gd-btn {
+  min-height: 36px;
+  padding: 0 13px;
+  border: 1px solid rgba(244, 244, 242, 0.34);
+  font-family: var(--display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--gd-paper);
+  white-space: nowrap;
+}
+.gd-btn:hover {
+  background: rgba(244, 244, 242, 0.1);
+}
+.gd-btn.is-pri {
+  background: var(--gd-paper);
+  border-color: var(--gd-paper);
+  color: var(--gd-ink);
+}
+.gd-btn.is-pri:hover {
+  background: #ffffff;
+}
+.gd-hint {
+  margin-left: auto;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--gd-dim);
+}
+
+/* the agent's cursor: an ink ring with a paper halo (readable on ink and on paper) and a mono tag */
+.gd-cursor {
+  position: fixed;
+  z-index: 121;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 0.2s,
+    transform var(--gd-travel, 0.6s) cubic-bezier(0.3, 0.7, 0.2, 1);
+}
+.gd-cursor.is-on {
+  opacity: 1;
+}
+.gd-cursor i {
+  position: absolute;
+  left: -11px;
+  top: -11px;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--gd-ink, #0d0d0d);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 1.5px #f4f4f2,
+    inset 0 0 0 1.5px #f4f4f2;
+  transition: transform 0.18s;
+}
+.gd-cursor i::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
+  border-radius: 50%;
+  background: #0d0d0d;
+}
+.gd-cursor.is-press i {
+  transform: scale(0.72);
+}
+.gd-cursor span {
+  position: absolute;
+  left: 14px;
+  top: 12px;
+  padding: 3px 6px;
+  background: #0d0d0d;
+  color: #f4f4f2;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* while the agent scrolls, the browser should not re-anchor the page under it */
+html.gd-on {
+  overflow-anchor: none;
+}
+
+@media (max-width: 760px) {
+  .gd {
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    width: auto;
+    font-size: 11px;
+  }
+  .gd-head {
+    padding: 8px 12px 7px;
+  }
+  .gd-intro {
+    padding: 10px 12px 0;
+    font-size: 13px;
+  }
+  .gd-log {
+    max-height: 96px;
+    padding: 2px 12px;
+  }
+  .gd-e {
+    padding: 4px 0;
+  }
+  .gd-ask,
+  .gd-note {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .gd-ctl {
+    padding: 8px 12px 10px;
+  }
+  .gd-btn {
+    min-height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gd,
+  .gd-led,
+  .gd-e.is-run .gd-st {
+    animation: none !important;
+  }
+  .gd-cursor,
+  .gd-cursor i {
+    transition: none;
+  }
+}

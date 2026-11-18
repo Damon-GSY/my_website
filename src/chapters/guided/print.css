@@ -1,0 +1,10 @@
+/* Phase H: the guided trace on the receipt; the rest is the receipt's own .cl-* line styles */
+.gd-print .cl-item > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.gd-print dl {
+  margin-top: 4px;
+}

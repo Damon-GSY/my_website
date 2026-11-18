@@ -11,6 +11,7 @@ import { startMark } from '../engine/mark.js';
 import { startParallax } from '../engine/parallax.js';
 import { adoptDeepLink, getCase, scrollToWork, useCase } from './work/caseRoute.js';
 import { RETURN_KEY, openNote, plainClick, useNote } from '../chapters/notes/noteRoute.js';
+import GuidedButton from '../chapters/guided/GuidedButton.jsx';
 import './home.css';
 
 const WorkFilm = lazy(() => import('./WorkFilm.jsx'));
@@ -334,6 +335,7 @@ function Bar() {
           {t({ en: 'Short version', zh: '简短版' })}
         </a>
       </nav>
+      <GuidedButton />
       <button
         type="button"
         className="h-bar-lang"
