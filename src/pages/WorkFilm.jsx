@@ -32,7 +32,7 @@ export default function WorkFilm({ label }) {
   }, []);
   return (
     <div ref={root} className={`film parcel paper h-workfilm ${mode}`}>
-      <section ref={track} className="track" style={{ '--len': 7 }} data-mark-track>
+      <section ref={track} className="track" data-mark-track>
         <div className="sticky">
           <canvas ref={canvas} className="stage" aria-hidden="true" />
           {/* the travelling mark's dock: the carton's sticker, then the route, then the first card */}

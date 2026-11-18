@@ -101,9 +101,9 @@ const staticFilms = () => {
 };
 
 // Below-the-fold WebGL chapters (three.js) mount about one viewport before they scroll in. Until then a
-// blank block of the film's own scroll length holds their place, so the page does not jump and the
+// blank block of the film's own scroll length (home.css, "film lengths") holds their place, so the page does not jump and the
 // #work / #evaluate anchors land where they will once the film is there.
-function Deferred({ height, children }) {
+function Deferred({ size, children }) {
   const ref = useRef(null);
   const [near, setNear] = useState(staticFilms);
   useEffect(() => {
@@ -116,7 +116,7 @@ function Deferred({ height, children }) {
     io.observe(ref.current);
     return () => io.disconnect();
   }, [near]);
-  const hold = <div ref={ref} className="h-defer" style={{ height }} aria-hidden="true" />;
+  const hold = <div ref={ref} className={`h-defer h-defer-${size}`} aria-hidden="true" />;
   return near ? <Suspense fallback={hold}>{children}</Suspense> : hold;
 }
 
@@ -356,21 +356,6 @@ function Bar() {
   );
 }
 
-// Between Evaluate and Evidence: two rows of outlined type that slide in opposite directions as the
-// page scrolls (position follows scroll, so they move only, and as fast, as the reader scrolls).
-function KineticBand() {
-  const rows = ['AGENTIC RL · POST-TRAINING · EVALUATION · ', 'TRAIN · DEPLOY · MEASURE · '];
-  return (
-    <div className="h-band" data-pv="0 cover" aria-hidden="true">
-      {rows.map((text, i) => (
-        <p key={text} className={`h-band-row${i ? ' is-b' : ''}`}>
-          {text.repeat(i ? 6 : 4)}
-        </p>
-      ))}
-    </div>
-  );
-}
-
 function ChapterLensBar({ label, options, value, onChange, href }) {
   const { t } = useLang();
   return (
@@ -509,7 +494,7 @@ export default function Home() {
             />
           )}
           {workLens === 'parcel' ? (
-            <Deferred height="700vh">
+            <Deferred size="work">
               <WorkFilm label={<div className="h-film-label">{workHead}</div>} />
             </Deferred>
           ) : (
@@ -552,14 +537,13 @@ export default function Home() {
             {evalLens === 'arena' ? (
               <ArenaOpening embedded head={evalHead} />
             ) : (
-              <Deferred height="600svh">
+              <Deferred size="d20">
                 <D20Chapter id={null} head={evalHead} shared />
               </Deferred>
             )}
           </Suspense>
         </div>
 
-        <KineticBand />
         <Evidence
           head={
             <SectionHead n="04" aside={t({ en: 'Eight figures, each labelled', zh: '八个数字，各有注明' })}>

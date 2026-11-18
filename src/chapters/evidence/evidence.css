@@ -8,7 +8,7 @@
   --ev-plot: clamp(200px, 46svh, 440px);
   --ev-vfs: clamp(26px, 2.6vw, 44px); /* chart value labels */
   --ev-ffs: clamp(52px, 6vw, 108px); /* board figures */
-  --travel: 2.4;
+  --travel: 2; /* assembly pass: 2.4 -> 2 (the scroll-length budget) */
 }
 .ev-lead {
   display: flex;
@@ -434,7 +434,7 @@
 
 @media (max-width: 760px) {
   .ev {
-    --travel: 1.7;
+    --travel: 1.4;
     --ev-axw: 34px;
     --ev-vfs: clamp(22px, 7vw, 30px);
     --ev-ffs: clamp(30px, 9.5vw, 46px);
