@@ -1,14 +1,19 @@
 # Handoff — dimensional site
 
-## Next session, read this first (2026-11-17, end of session)
+## Next session, read this first (2026-11-18, end of session)
 
-**State:** assembly phases **A–E are built and pushed** (`9aedd23` mark + parallax + `/short`, `d6df224` receipt close, `ed4011f` case studies in place + `/work/<slug>`, `dfeccb3` pill→ink arrival, `0e3c0e7` typed claim). Each phase's notes are below, newest first. Plan: `docs/plans/2026-11-16-one-site-assembly-plan.md` (A–E ticked).
+**State:** assembly phases **A–G are built and pushed**: `9aedd23` mark + parallax + `/short`, `d6df224` receipt close, `ed4011f` case studies in place + `/work/<slug>`, `dfeccb3` pill→ink arrival, `0e3c0e7` typed claim, `6954dd5` evidence board → towers → chart (CSS 3D), `0e501d2` notes un-crumple (WebGL paper). Each phase's notes are below, newest first. Plan: `docs/plans/2026-11-16-one-site-assembly-plan.md` (A–G ticked).
 
-**Next, in order:** F (Evidence: type board → City towers → labelled chart; résumé figures only, log axis labelled), G (Notes: crumpled-sheet transition on `/notes/<slug>`, from `public/lab/paper/`), H (Guided mode from `public/lab/agent/`, off by default, "Take over" always visible), I (whole-site QA + accessibility + phone pass + performance, against `docs/reviews/2026-11-15-site-qa.md`). Two background agents in parallel worked well when they touch separate sections of `Home.jsx` and commit only their own files by path.
+**Next, in order (Damon asked that the pieces be assembled "in a good way" — do the assembly pass before anything new):**
+1. **Assembly / director's pass on `/` as one run.** (a) **WebGL contexts:** the ink hero, Work film and d20 never release, so the page holds 3 live contexts by Notes and 4 during a note transition (plan budget: 1). Make InkHero, WorkFilm/useFilm and D20Chapter release their renderer when more than ~2 viewports away and restore on return; verify with a context counter. (b) **Scroll length:** phones are ~25 screens (budget 22; was 23.4 before F added ~2); desktop budget 30. Trim pins (Claim 1.3, Evidence 2.4/1.7, Work, d20) and remove dead space. (c) **Pacing and seams:** one device per chapter, calm chapters between heavy ones; check each handoff of the mark reads as intentional; decide whether the kinetic band before Evidence still earns its place; make the top bar's chapter highlight match the new chapters. Record a full-page scroll video/contact sheet at 1440 and 390 and judge it as one piece.
+2. **H, Guided mode** (from `public/lab/agent/`): off by default, "Take over" always visible; can now narrate the real chapters and end on the receipt.
+3. **I, finish:** whole-site QA, accessibility, phone pass, performance, against `docs/reviews/2026-11-15-site-qa.md`.
 
-**Known rough edges to sweep in I:** arrival ink wobbles ~20 px around the mark at the end; claim's last-line candidate deck is squeezed; case sheet drawn at ~0.9 scale on 900 px tall screens; receipt top scrolls away on phones; Bar "Contact" highlight follows the section not the stub; `src/pages/MoreWays.jsx` + `src/pages/more/*.jpg` now unused. Nothing checked in Safari, on a real GPU or a real phone.
+Two background agents in parallel work well when they touch separate sections of `Home.jsx` and commit only their own files by path (the G agent committed through a temporary index when the tree held the other's hunks).
 
-**Still open for Damon:** employer and city (blank in `src/content.js`), real email (stand-in `hello@damon.ai`), domain/host, "2025– · Alibaba" in typist/receipt studies, review of Claude-written copy (incl. the zh case-study translations and the claim's invented candidate words, captioned illustrative), whether to open a PR into main.
+**Known rough edges to sweep:** arrival ink wobbles ~20 px around the mark at the end; claim's last-line candidate deck is squeezed; case sheet drawn at ~0.9 scale on 900 px tall screens; Evidence tower labels overlap briefly at 50–60% of the film (worst on phones) and are not occluded by nearer towers; notes: the pin flies its own arc rather than riding the ball, tightest balls look slightly foil-like, "Next note" from the end of a long note makes a small ball; receipt top scrolls away on phones; Bar "Contact" highlight follows the section not the stub; `src/pages/MoreWays.jsx` + `src/pages/more/*.jpg` unused. Nothing checked in Safari, Firefox, on a real GPU or a real phone (notes text drawing needs Safari 17+).
+
+**Still open for Damon:** employer and city (blank in `src/content.js`), real email (stand-in `hello@damon.ai`), domain/host, "2025– · Alibaba" in typist/receipt studies, review of Claude-written copy (zh case-study translations, the claim's invented candidate words captioned illustrative), whether to open a PR into main.
 
 ## Start here (2026-11-18): Phase F, Evidence
 
