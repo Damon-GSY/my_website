@@ -16,9 +16,10 @@ import './case.css';
 
 const W = 560; // base (title + figure)
 const D = 340;
-const H = 300; // depth of the walls: the four flaps
-const NET_W = W + 2 * H;
-const NET_H = D + 2 * H;
+// Depth of the walls (the four flaps): 300, or less on a short screen, so that the flat net fits the
+// height at its own size (finish pass, 2026-11-18: at 1440x900 it used to be drawn at 0.91 scale, soft).
+// Down to 240; below that the net is scaled as before. case.css reads it as --wh.
+const wallH = () => Math.round(Math.min(300, Math.max(240, (window.innerHeight - 48 - D) / 2)));
 const DUR = 900;
 const DUR_STACK = 820;
 const DUR_FADE = 180;
@@ -32,7 +33,10 @@ const FOLD = { ff: [0.22, 0.8], fl: [0.28, 0.86], fr: [0.3, 0.9], fb: [0.36, 0.9
 
 const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const layoutFor = () => (window.innerWidth >= 900 && window.innerHeight >= 560 ? 'net' : 'stack');
-const netScale = () => Math.min(1, (window.innerWidth - 48) / NET_W, Math.max(0.8, (window.innerHeight - 48) / NET_H));
+const netScale = () => {
+  const h = wallH();
+  return Math.min(1, (window.innerWidth - 48) / (W + 2 * h), Math.max(0.8, (window.innerHeight - 48) / (D + 2 * h)));
+};
 const scene = (x, y, z, k, rx, rz) =>
   `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${z.toFixed(1)}px) scale3d(${k}, ${k}, ${k}) rotateX(${rx}deg) rotateZ(${rz}deg)`;
 const frames = (n) => new Promise((done) => {
@@ -59,6 +63,7 @@ export default function CaseStudy() {
   const [shown, setShown] = useState(null);
   const [mode, setMode] = useState(layoutFor);
   const [fs, setFs] = useState(netScale);
+  const [wh, setWh] = useState(wallH);
   const ref = useRef({});
   const r = ref.current; // elements
   const ctl = useRef({ anims: [], token: 0, cur: null, state: 'closed', card: null });
@@ -94,7 +99,7 @@ export default function CaseStudy() {
       A(
         r.scene,
         [
-          { transform: scene(dx, dy, -H * k, k, 0, 0), easing: OUT },
+          { transform: scene(dx, dy, -wallH() * k, k, 0, 0), easing: OUT },
           { transform: scene(dx * 0.5, dy * 0.5, 40, kMid, 52, -24), offset: 0.32, easing: EZ },
           { transform: scene(0, 0, 0, k1, 0, 0) },
         ],
@@ -310,6 +315,7 @@ export default function CaseStudy() {
     const onResize = () => {
       setMode(layoutFor());
       setFs(netScale());
+      setWh(wallH());
     };
     document.addEventListener('keydown', onKey);
     window.addEventListener('resize', onResize);
@@ -363,7 +369,7 @@ export default function CaseStudy() {
     if (e.target === r.scroll || e.target === r.stage) closeCase();
   };
   const net = mode === 'net';
-  const stageStyle = net ? { height: `${Math.max(window.innerHeight, Math.ceil(NET_H * fs + 48))}px` } : undefined;
+  const stageStyle = net ? { height: `${Math.max(window.innerHeight, Math.ceil((D + 2 * wh) * fs + 48))}px`, '--wh': `${wh}px` } : undefined;
   const sceneStyle = net ? { transform: scene(0, 0, 0, fs, 0, 0) } : undefined;
 
   return createPortal(

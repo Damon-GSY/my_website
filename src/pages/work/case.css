@@ -71,7 +71,8 @@
   opacity: 0;
 }
 
-/* the net: base W x D, walls of depth H = 300 (the same proportions as /lab/parcels/) */
+/* the net: base W x D, walls of depth --wh = 300 (the same proportions as /lab/parcels/), less on short
+   screens (CaseStudy.jsx, wallH) so the flat net fits at its own size */
 .wc-pnl,
 .wc-flap {
   position: absolute;
@@ -84,29 +85,29 @@
 }
 .wc-fb {
   left: 0;
-  top: -300px;
+  top: calc(-1 * var(--wh, 300px));
   width: 560px;
-  height: 300px;
+  height: var(--wh, 300px);
   transform-origin: 50% 100%;
 }
 .wc-ff {
   left: 0;
   top: 340px;
   width: 560px;
-  height: 300px;
+  height: var(--wh, 300px);
   transform-origin: 50% 0;
 }
 .wc-fl {
-  left: -300px;
+  left: calc(-1 * var(--wh, 300px));
   top: 0;
-  width: 300px;
+  width: var(--wh, 300px);
   height: 340px;
   transform-origin: 100% 50%;
 }
 .wc-fr {
   left: 560px;
   top: 0;
-  width: 300px;
+  width: var(--wh, 300px);
   height: 340px;
   transform-origin: 0 50%;
 }
