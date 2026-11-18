@@ -13,7 +13,7 @@ const FRAG = `
 precision highp float;
 varying vec2 vUv;
 uniform sampler2D uTrail, uVideo, uVideoNext, uText;
-uniform float uMix, uTime, uHasVideo;
+uniform float uMix, uTime, uHasVideo, uWarp;
 uniform vec2 uRes, uVideoRes, uTextOff;
 
 vec3 mod289(vec3 x){ return x - floor(x * (1.0 / 289.0)) * 289.0; }
@@ -66,7 +66,7 @@ void main(){
   float t = uTime * 0.25;
   vec2 n  = vec2(snoise(uv * asp * 3.2 + vec2(t, -t)), snoise(uv * asp * 3.2 + vec2(-t, t) + 17.0));
   vec2 n2 = vec2(snoise(uv * asp * 9.0 + t * 2.0), snoise(uv * asp * 9.0 - t * 2.0 + 5.0));
-  vec2 wuv = uv + n * 0.03 + n2 * 0.006;
+  vec2 wuv = uv + (n * 0.03 + n2 * 0.006) * uWarp;
   float v = trailAt(wuv);
   float mask = smoothstep(0.42, 0.445, v);
   float vg = trailAt(wuv + vec2(-0.008, 0.010));
@@ -129,7 +129,7 @@ export function initInk(hero, { arrive = false, share = null } = {}) {
     gl.enableVertexAttribArray(loc);
     gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
     U = {};
-    ['uTrail', 'uVideo', 'uVideoNext', 'uText', 'uMix', 'uRes', 'uVideoRes', 'uTime', 'uHasVideo', 'uTextOff'].forEach(
+    ['uTrail', 'uVideo', 'uVideoNext', 'uText', 'uMix', 'uRes', 'uVideoRes', 'uTime', 'uHasVideo', 'uTextOff', 'uWarp'].forEach(
       (name) => (U[name] = gl.getUniformLocation(prog, name)),
     );
     tex = [0, 1, 2, 3].map((unit) => {
@@ -414,6 +414,7 @@ export function initInk(hero, { arrive = false, share = null } = {}) {
     gl.uniform2f(U.uVideoRes, now0.videoWidth || 16, now0.videoHeight || 9);
     gl.uniform1f(U.uTime, (now - start) / 1000);
     gl.uniform1f(U.uHasVideo, hasVideo);
+    gl.uniform1f(U.uWarp, intro?.warp ?? 1); // the arrival calms the edge as the ink closes on the mark
     gl.uniform2f(U.uTextOff, offX / W, offY / H);
     gl.clearColor(0, 0, 0, 0);
     gl.clear(gl.COLOR_BUFFER_BIT);

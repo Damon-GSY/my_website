@@ -36,13 +36,14 @@ export function arrival(hero, canvas, scale) {
   const born = performance.now();
   let t0 = 0;
   let hold = -1; // verification: a fixed time to show
-  const intro = { live: true, wipe: false };
+  const intro = { live: true, wipe: false, warp: 1 };
   hero.classList.add('is-go'); // the mark appears first
 
   const finish = () => {
     if (!intro.live) return;
     intro.live = false;
     intro.wipe = true; // the next frame clears the mask, so a skip lands on the final state at once
+    intro.warp = 1;
     canvas.style.clipPath = '';
     hero.classList.remove('is-arriving', 'is-go', 'is-ui');
     EVENTS.forEach((e) => window.removeEventListener(e, finish, true));
@@ -148,6 +149,10 @@ export function arrival(hero, canvas, scale) {
       const d = phase(t, 1370, END - 1390);
       const R = g.far * 1.08 * (1 - out(d) * 0.35 - d * 0.65) * scale;
       const s = R * 0.3 + 2;
+      // the shader's noise warp (up to ~3% of the width) would make a small blob wobble around the mark:
+      // it fades out as the ink closes in, so the last of it shrinks exactly onto the mark (polish pass)
+      const rc = R / scale;
+      intro.warp = clamp((rc - 16) / 300);
       tctx.fillStyle = '#000';
       tctx.fillRect(0, 0, trail.width, trail.height);
       if (R > 0.5) {
