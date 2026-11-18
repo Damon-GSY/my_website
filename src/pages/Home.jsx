@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { langSwitchLabel, useLang } from '../i18n.jsx';
-import { path, profile } from '../content.js';
+import { path } from '../content.js';
 import { noteCategory, noteMinutes, notes } from '../notes.js';
 import InkHero from '../directions/ink/InkHero.jsx';
 import Claim from '../chapters/claim/Claim.jsx';
@@ -47,8 +47,6 @@ function WorkCase() {
 }
 const D20Chapter = lazy(() => import('../directions/d20/D20Chapter.jsx'));
 const BentoOpening = lazy(() => import('../directions/bento/Opening.jsx'));
-const TypistOpening = lazy(() => import('../directions/typist/Opening.jsx'));
-const ShadowOpening = lazy(() => import('../directions/shadow/Opening.jsx'));
 const ReceiptOpening = lazy(() => import('../directions/receipt/Opening.jsx'));
 const CityOpening = lazy(() => import('../directions/city/Opening.jsx'));
 const ArenaOpening = lazy(() => import('../directions/arena/Opening.jsx'));
@@ -57,6 +55,7 @@ const ArenaOpening = lazy(() => import('../directions/arena/Opening.jsx'));
 const loadLens = () => import('./lens/Lens.jsx');
 const LensGroups = lazy(loadLens);
 const ChapterLensBar = lazy(() => loadLens().then((m) => ({ default: m.ChapterLensBar })));
+const AltHero = lazy(() => loadLens().then((m) => ({ default: m.AltHero })));
 
 // The run's chapters, in page order (the hero, (00), opens it). The section heads, the hero's corner
 // list and the fixed bar all take their numbers and names from here, so they always agree.
@@ -416,7 +415,7 @@ function Bar({ onLens }) {
 }
 
 export default function Home() {
-  const { lang, setLang, t } = useLang();
+  const { t } = useLang();
   const [heroLens, setHeroLens] = useState('ink');
   const [workLens, setWorkLens] = useState('parcel');
   const [evalLens, setEvalLens] = useState('d20');
@@ -465,6 +464,19 @@ export default function Home() {
   const homeRef = useRef(null);
   useEffect(() => (staticFilms() ? undefined : startMark()), []);
   useEffect(() => startParallax(homeRef.current), []);
+  // a fresh load of /#<chapter> (Notes and Close land their own anchors): src/pages/land.js, fetched
+  // only when the page is opened at one of these
+  useEffect(() => {
+    const id = window.location.hash.slice(1);
+    if (!['statement', 'work', 'evaluate', 'evidence', 'path'].includes(id)) return undefined;
+    let stop;
+    let gone = false;
+    import('./land.js').then((m) => !gone && (stop = m.default(id)));
+    return () => {
+      gone = true;
+      stop?.();
+    };
+  }, []);
 
   return (
     <div className="home" ref={homeRef}>
@@ -476,33 +488,9 @@ export default function Home() {
         {heroLens === 'ink' ? (
           <InkHero flow arrival nav={NAV} />
         ) : (
-          <div id="top" className="h-alt-hero">
-            <div className="h-alt-hero-nav">
-              <a className="h-alt-hero-brand" href="#top">
-                {profile.name}
-              </a>
-              <nav aria-label={t({ en: 'Sections', zh: '章节' })}>
-                {NAV.map((item) => (
-                  <a key={item.href} href={item.href}>
-                    {t(item.label)}
-                  </a>
-                ))}
-                <a href="/lab">{t({ en: 'Studies', zh: '研究' })}</a>
-                <button type="button" onClick={() => setLang(lang === 'en' ? 'zh' : 'en')} aria-label={langSwitchLabel(lang)}>
-                  {lang === 'en' ? '中文' : 'EN'}
-                </button>
-              </nav>
-            </div>
-            <Suspense
-              fallback={
-                <div className="h-embed-fallback mono">
-                  {t({ en: 'Loading opening study…', zh: '正在加载开场方案…' })}
-                </div>
-              }
-            >
-              {heroLens === 'shadow' ? <ShadowOpening embedded /> : <TypistOpening embedded />}
-            </Suspense>
-          </div>
+          <Suspense fallback={<div id="top" className="h-alt-hero" />}>
+            <AltHero lens={heroLens} nav={NAV} />
+          </Suspense>
         )}
 
         <Claim

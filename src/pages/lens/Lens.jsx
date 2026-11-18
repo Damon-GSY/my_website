@@ -1,4 +1,9 @@
-import { useLang } from '../../i18n.jsx';
+import { lazy, Suspense } from 'react';
+import { langSwitchLabel, useLang } from '../../i18n.jsx';
+import { profile } from '../../content.js';
+
+const TypistOpening = lazy(() => import('../../directions/typist/Opening.jsx'));
+const ShadowOpening = lazy(() => import('../../directions/shadow/Opening.jsx'));
 
 // Studio Lens: the dock's choices and the per-chapter lens bars. A lazy chunk, fetched when the dock is
 // pointed at or opened (polish pass, 2026-11-18: it kept the phone bar's menu out of first-paint JS).
@@ -75,6 +80,36 @@ export function ChapterLensBar({ kind, label, value, onChange }) {
       <a className="mono" href={`/${value}`}>
         {t({ en: 'Open standalone', zh: '独立全屏体验' })} →
       </a>
+    </div>
+  );
+}
+
+// the hero when Studio Lens shows another opening study: its own corner nav, then the study
+export function AltHero({ lens, nav }) {
+  const { lang, setLang, t } = useLang();
+  return (
+    <div id="top" className="h-alt-hero">
+      <div className="h-alt-hero-nav">
+        <a className="h-alt-hero-brand" href="#top">
+          {profile.name}
+        </a>
+        <nav aria-label={t({ en: 'Sections', zh: '章节' })}>
+          {nav.map((item) => (
+            <a key={item.href} href={item.href}>
+              {t(item.label)}
+            </a>
+          ))}
+          <a href="/lab">{t({ en: 'Studies', zh: '研究' })}</a>
+          <button type="button" onClick={() => setLang(lang === 'en' ? 'zh' : 'en')} aria-label={langSwitchLabel(lang)}>
+            {lang === 'en' ? '中文' : 'EN'}
+          </button>
+        </nav>
+      </div>
+      <Suspense
+        fallback={<div className="h-embed-fallback mono">{t({ en: 'Loading opening study…', zh: '正在加载开场方案…' })}</div>}
+      >
+        {lens === 'shadow' ? <ShadowOpening embedded /> : <TypistOpening embedded />}
+      </Suspense>
     </div>
   );
 }
