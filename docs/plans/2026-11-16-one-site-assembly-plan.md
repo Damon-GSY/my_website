@@ -1,6 +1,6 @@
 # One site — assembly plan
 
-Status: **Phases A–E built (2026-11-17)**; F–I not started. It describes how to turn the twelve working studies, plus Damon's six, into a single website that reads as one piece of work, not a gallery.
+Status: **Phases A–E built (2026-11-17), G built (2026-11-18)**; F, H, I not started. It describes how to turn the twelve working studies, plus Damon's six, into a single website that reads as one piece of work, not a gallery.
 
 ## 1. The problem
 
@@ -98,7 +98,7 @@ Each phase ends with something to look at, and the site stays shippable after ev
 | D. Arrival ✅ done 2026-11-17 | Pill reveal handing over to the ink hero | Small | One continuous opening under 2.5 s, skippable, shown once per session |
 | E. Claim ✅ done 2026-11-17 | The typed sentence replaces the grey-to-black statement | Medium | Written within 1.5 screens of scroll; plain text at rest; un-writes on scroll back |
 | F. Evidence | Type board → towers → chart | Medium | The final frame is a correct labelled chart; the axis is visible in every state |
-| G. Notes | Crumpled-sheet transition on note pages | Medium | Opening and leaving a note are reversible; text is real DOM at rest |
+| G. Notes ✅ done 2026-11-18 | Crumpled-sheet transition on note pages | Medium | Opening and leaving a note are reversible; text is real DOM at rest |
 | H. Modes | Guided (agent) and Night | Medium each | Guided never moves before the visitor has oriented and always shows "Take over"; Night passes the same contrast audit as day |
 | I. Finish | Whole-site check, accessibility audit, phone pass, performance | Small | The checks in `docs/reviews/2026-11-15-site-qa.md` pass on the assembled site |
 

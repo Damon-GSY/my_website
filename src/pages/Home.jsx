@@ -10,6 +10,7 @@ import { hasWebGL2 } from '../engine/webgl.js';
 import { startMark } from '../engine/mark.js';
 import { startParallax } from '../engine/parallax.js';
 import { adoptDeepLink, getCase, scrollToWork, useCase } from './work/caseRoute.js';
+import { RETURN_KEY, openNote, plainClick, useNote } from '../chapters/notes/noteRoute.js';
 import './home.css';
 
 const WorkFilm = lazy(() => import('./WorkFilm.jsx'));
@@ -178,13 +179,59 @@ function Path() {
   );
 }
 
-// the newest note carries the mark as its bullet
+// the newest note carries the mark as its bullet: a pin (opened, the note is a sheet it holds)
 const latest = notes.reduce((a, b) => (b.date > a.date ? b : a), notes[0])?.slug;
+
+// Phase G: a row opens its note over the page (src/chapters/notes/, a lazy chunk fetched when the
+// list is near or pointed at); the URL becomes /notes/<slug>, and Back, Esc or "All notes" return here.
+const NoteView = lazy(() => import('../chapters/notes/NoteView.jsx'));
+const loadNotes = () => import('../chapters/notes/NoteView.jsx');
 
 function Notes() {
   const { lang, t } = useLang();
+  const slug = useNote();
+  const [ever, setEver] = useState(Boolean(slug));
+  if (slug && !ever) setEver(true);
+  const ref = useRef(null);
+  useEffect(() => {
+    const io = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && loadNotes(), {
+      rootMargin: '100% 0px',
+    });
+    io.observe(ref.current);
+    // back from a note page loaded on its own: land on the list with that note's row focused
+    let from = null;
+    try {
+      from = sessionStorage.getItem(RETURN_KEY);
+      sessionStorage.removeItem(RETURN_KEY);
+    } catch {
+      /* ignore */
+    }
+    const timers = [];
+    if (window.location.hash === '#notes') {
+      const land = () => {
+        const row = from && ref.current.querySelector(`[data-note="${CSS.escape(from)}"]`);
+        const el = row || ref.current;
+        const r = el.getBoundingClientRect();
+        const y = row ? r.top + r.height / 2 - window.innerHeight / 2 : r.top;
+        window.scrollTo({ top: Math.max(0, Math.round(window.scrollY + y)), behavior: 'instant' });
+        row?.focus({ preventScroll: true });
+      };
+      // now, and again once fonts and the films above have laid out
+      timers.push(requestAnimationFrame(land), window.setTimeout(land, 450));
+    }
+    return () => {
+      io.disconnect();
+      cancelAnimationFrame(timers[0]);
+      window.clearTimeout(timers[1]);
+    };
+  }, []);
+  const onRow = (e) => {
+    if (!plainClick(e)) return;
+    e.preventDefault();
+    openNote(e.currentTarget.dataset.note, e.currentTarget);
+  };
   return (
-    <section id="notes" className="h-section h-notes" data-pv="0 0.9">
+    <section id="notes" className="h-section h-notes" data-pv="0 0.9" ref={ref} onPointerOver={loadNotes} onFocus={loadNotes}>
       <SectionHead n="06" aside={`${String(notes.length).padStart(2, '0')} ${t({ en: 'entries', zh: '篇' })}`}>
         {t({ en: 'Field notes', zh: '笔记' })}
       </SectionHead>
@@ -192,10 +239,10 @@ function Notes() {
       <ol className="h-list">
         {notes.map((note) => (
           <li key={note.slug} data-pv="0 0.22">
-            <a href={`/notes/${note.slug}`}>
+            <a href={`/notes/${note.slug}`} data-note={note.slug} onClick={onRow}>
               <span className="h-date mono">
                 {note.slug === latest && (
-                  <span className="h-note-dot" data-mark="notes" data-mark-kind="dot" aria-hidden="true" />
+                  <span className="h-note-dot" data-mark="notes" data-mark-kind="dot" data-raster="skip" aria-hidden="true" />
                 )}
                 {note.date.replaceAll('-', '.')}
               </span>
@@ -209,6 +256,11 @@ function Notes() {
           </li>
         ))}
       </ol>
+      {ever && (
+        <Suspense fallback={null}>
+          <NoteView mode="layer" />
+        </Suspense>
+      )}
     </section>
   );
 }

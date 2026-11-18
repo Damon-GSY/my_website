@@ -1,0 +1,385 @@
+/* ---------- Notes (phase G): a printed sheet, pinned to the table by the mark ---------- */
+/* the system's colours come from `.note` in src/pages/home.css; the sheet is the Paper study's paper */
+.note {
+  --paper: #f9f8f4;
+}
+
+/* over the home page */
+.nt-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: none;
+}
+.nt-back {
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+}
+.nt-scroll {
+  position: absolute;
+  inset: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.nt-page {
+  min-height: 100svh;
+}
+/* the paper in motion, and the pin in flight; both exist only during a transition */
+.nt-gl {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 41;
+  pointer-events: none;
+}
+.nt-fly {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 42;
+  display: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ff2d8a;
+  pointer-events: none;
+  will-change: transform;
+}
+/* while the paper moves, the DOM sheet waits underneath, laid out but unseen */
+.is-gl .nt-desk,
+.is-gl .nt-foot {
+  opacity: 0;
+}
+
+/* the home page while a note is open: the mark has become the pin, its row is out on the table */
+.note-open .h-mark {
+  opacity: 0 !important;
+}
+.note-open .h-note-dot {
+  --mk: 0 !important;
+}
+.h-list a.is-out {
+  opacity: 0;
+}
+
+/* the same bar as the home page's */
+.nt-bar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 22px;
+  padding: 3px var(--gutter);
+  background: var(--bg);
+  border-bottom: 1px solid var(--rule);
+}
+.nt-brand {
+  flex: none;
+  padding: 13px 0;
+  font-weight: 750;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+}
+.nt-bar nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  min-width: 0;
+}
+.nt-bar nav a,
+.nt-bar nav button,
+.nt-count {
+  flex: none;
+  padding: 15px 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.nt-count {
+  color: var(--muted);
+}
+.nt-bar a:hover,
+.nt-bar button:hover {
+  color: var(--muted);
+}
+
+/* the table and the sheet on it */
+.nt-desk {
+  padding: clamp(24px, 5vh, 64px) clamp(10px, 3vw, 40px) 0;
+}
+.nt-sheet {
+  position: relative;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: clamp(64px, 10vh, 112px) clamp(18px, 5vw, 72px) clamp(24px, 4vh, 44px);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+}
+/* the pin: the mark, holding the top of the sheet; its shadow says it stands off the paper */
+.nt-pin {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: clamp(22px, 3.6vh, 34px);
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
+  border-radius: 50%;
+  background: #ff2d8a;
+  box-shadow: 1.5px 2.5px 2.5px rgba(13, 13, 13, 0.22);
+}
+.nt-pin::after,
+.nt-fly::after {
+  /* the needle's shadow, falling away from the light */
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 9px;
+  top: 10px;
+  width: 1.5px;
+  height: 10px;
+  border-radius: 1px;
+  background: rgba(13, 13, 13, 0.16);
+  transform: rotate(-42deg);
+  transform-origin: 50% 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* a note loaded on its own is flat at once; only the pin presses in */
+  .nt-page .nt-pin {
+    animation: nt-press 0.5s 0.25s cubic-bezier(0.3, 0.7, 0.3, 1.3) both;
+  }
+}
+@keyframes nt-press {
+  from {
+    transform: translate(-3px, -10px) scale(1.5);
+    box-shadow: 8px 12px 10px rgba(13, 13, 13, 0.12);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+
+.nt-sheet .h-head {
+  /* a real border, not the home page's ::before rule, so the paper's picture carries it too */
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+}
+.nt-sheet .h-head::before {
+  display: none;
+}
+.nt-sheet h1 {
+  margin: clamp(28px, 5vh, 56px) 0 0 -0.04em;
+  max-width: 13ch;
+  font-weight: 880;
+  font-size: clamp(44px, 7.4vw, 132px);
+  line-height: 0.86;
+  letter-spacing: -0.05em;
+}
+.nt-sheet h1:focus {
+  outline: none;
+}
+.nt-sheet h1:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 6px;
+}
+.nt-excerpt {
+  margin-top: clamp(24px, 4.5vh, 52px);
+  max-width: 34ch;
+  font-size: clamp(20px, 1.9vw, 28px);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: #3a3a3a;
+}
+.nt-body {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 0 24px;
+  margin-top: clamp(48px, 9vh, 104px);
+}
+.nt-side {
+  grid-column: 1 / span 3;
+  padding-top: 24px;
+  border-top: 1px solid var(--ink);
+  font-size: 11px;
+  line-height: 1.9;
+  color: var(--muted);
+}
+.nt-side span,
+.nt-side b {
+  display: block;
+}
+.nt-side b {
+  margin-top: 16px;
+  font-weight: 400;
+  color: var(--ink);
+}
+.nt-prose {
+  grid-column: 5 / span 8;
+  max-width: 62ch;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+  font-size: clamp(18px, 1.35vw, 20px);
+  line-height: 1.62;
+}
+.nt-prose p + p {
+  margin-top: 1.1em;
+}
+.nt-prose h2 {
+  margin: 2.2em 0 0.7em;
+  font-weight: 800;
+  font-size: clamp(26px, 2.2vw, 34px);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+}
+.nt-prose > :first-child {
+  margin-top: 0;
+}
+.nt-end {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: clamp(56px, 10vh, 120px);
+  padding-top: 13px;
+  border-top: 1px solid var(--ink);
+  font-size: 11px;
+  color: var(--muted);
+}
+.nt-end a {
+  color: var(--ink);
+}
+.nt-end a:hover,
+.nt-next:hover strong {
+  color: var(--muted);
+}
+
+/* under the sheet: the next one, waiting */
+.nt-after {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: clamp(40px, 8vh, 96px) 0 clamp(48px, 9vh, 104px);
+}
+.nt-next {
+  display: block;
+  padding-top: 13px;
+  border-top: 1px solid var(--ink);
+}
+.nt-next .mono {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+}
+.nt-next strong {
+  display: block;
+  margin-top: 20px;
+  max-width: 18ch;
+  font-weight: 850;
+  font-size: clamp(34px, 5.2vw, 88px);
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.2s;
+}
+.nt-next-ex {
+  display: block;
+  max-width: 44ch;
+  margin-top: 18px;
+  font-size: 17px;
+  line-height: 1.35;
+  color: var(--muted);
+}
+.nt-next:hover strong,
+.nt-next:focus-visible strong {
+  transform: translateX(14px);
+}
+.nt-hint {
+  margin-top: 28px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.nt-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px var(--gutter) 32px;
+  border-top: 1px solid var(--rule);
+  font-size: 11px;
+  color: var(--muted);
+}
+.nt-missing {
+  min-height: 60svh;
+}
+
+@media (hover: none) {
+  .nt-hint {
+    display: none;
+  }
+}
+@media (max-width: 760px) {
+  .nt-brand {
+    display: none;
+  }
+  .nt-bar {
+    padding: 0 var(--gutter);
+  }
+  .nt-bar nav {
+    flex: 1;
+    justify-content: space-between;
+  }
+  .nt-bar nav a,
+  .nt-bar nav button,
+  .nt-count {
+    display: inline-flex;
+    align-items: center;
+    min-height: 46px;
+    padding: 0;
+  }
+  .nt-sheet .h-head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 14px;
+  }
+  .nt-sheet .h-head span {
+    white-space: nowrap;
+  }
+  .nt-sheet .h-aside {
+    margin-left: auto;
+  }
+  .nt-side,
+  .nt-prose {
+    grid-column: 1 / -1;
+  }
+  .nt-side {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    padding: 14px 0;
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+  .nt-side b {
+    margin-top: 0;
+  }
+  .nt-prose {
+    border-top: 0;
+    padding-top: 0;
+  }
+  .nt-after {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  .nt-end {
+    flex-wrap: wrap;
+  }
+  .nt-end a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin: -14px 0;
+  }
+}

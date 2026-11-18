@@ -111,10 +111,28 @@ body:has(.note) {
   vertical-align: 0;
 }
 .h-note-dot {
+  position: relative;
+  z-index: 0;
   width: 8px;
   height: 8px;
   margin-right: 8px;
   vertical-align: 1px;
+  /* a pin seen from above: its head stands off the page, so it casts a short shadow, and the needle's
+     shadow falls away from the light. Opened, the note is a sheet this pin holds (src/chapters/notes/). */
+  box-shadow: 1px 1.5px 1.5px rgba(13, 13, 13, 0.24);
+}
+.h-note-dot::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 4.5px;
+  top: 5px;
+  width: 1px;
+  height: 6px;
+  border-radius: 1px;
+  background: rgba(13, 13, 13, 0.2);
+  transform: rotate(-42deg);
+  transform-origin: 50% 0;
 }
 .ink-stop {
   position: absolute;
@@ -866,148 +884,6 @@ body:has(.note) {
   }
 }
 
-/* ---------- note reading page ---------- */
-.note {
-  min-height: 100svh;
-}
-.n-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  padding: 20px var(--gutter);
-  font-size: 11px;
-}
-.n-top nav {
-  display: flex;
-  gap: 22px;
-  align-items: center;
-}
-.n-top a:hover,
-.n-top button:hover {
-  color: var(--muted);
-}
-.n-brand {
-  font-family: var(--display);
-  font-weight: 750;
-  font-size: 16px;
-  letter-spacing: -0.02em;
-  text-transform: none;
-}
-.n-head {
-  padding: clamp(64px, 14vh, 180px) var(--gutter) clamp(40px, 7vh, 88px);
-}
-.n-head h1 {
-  margin: clamp(28px, 5vh, 56px) 0 0 -0.04em;
-  max-width: 13ch;
-  font-weight: 880;
-  font-size: clamp(48px, 8.2vw, 148px);
-  line-height: 0.86;
-  letter-spacing: -0.05em;
-}
-.n-excerpt {
-  margin-top: clamp(28px, 5vh, 56px);
-  max-width: 34ch;
-  font-size: clamp(20px, 1.9vw, 28px);
-  line-height: 1.25;
-  letter-spacing: -0.015em;
-  color: #3a3a3a;
-}
-.n-body {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 0 24px;
-  padding: 0 var(--gutter) clamp(80px, 14vh, 160px);
-}
-.n-side {
-  grid-column: 1 / span 3;
-  padding-top: 28px;
-  border-top: 1px solid var(--ink);
-  font-size: 11px;
-  line-height: 1.9;
-  color: var(--muted);
-}
-.n-side b {
-  display: block;
-  margin-top: 18px;
-  font-weight: 400;
-  color: var(--ink);
-}
-.n-prose {
-  grid-column: 5 / span 7;
-  padding-top: 24px;
-  border-top: 1px solid var(--rule);
-  font-size: clamp(18px, 1.35vw, 20px);
-  line-height: 1.62;
-  max-width: 62ch;
-}
-.n-prose p + p {
-  margin-top: 1.1em;
-}
-.n-prose h2 {
-  margin: 2.2em 0 0.7em;
-  font-weight: 800;
-  font-size: clamp(26px, 2.2vw, 34px);
-  line-height: 1.02;
-  letter-spacing: -0.03em;
-}
-.n-prose > :first-child {
-  margin-top: 0;
-}
-.n-next {
-  display: block;
-  padding: clamp(40px, 8vh, 96px) var(--gutter) clamp(48px, 9vh, 112px);
-  border-top: 1px solid var(--ink);
-}
-.n-next span {
-  display: block;
-  font-size: 11px;
-  color: var(--muted);
-}
-.n-next strong {
-  display: block;
-  margin-top: 20px;
-  max-width: 18ch;
-  font-weight: 850;
-  font-size: clamp(36px, 5.6vw, 96px);
-  line-height: 0.9;
-  letter-spacing: -0.045em;
-  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-.n-next:hover strong,
-.n-next:focus-visible strong {
-  transform: translateX(14px);
-}
-.n-foot {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 24px var(--gutter) 32px;
-  border-top: 1px solid var(--rule);
-  font-size: 11px;
-  color: var(--muted);
-}
-@media (max-width: 760px) {
-  .n-side,
-  .n-prose {
-    grid-column: 1 / -1;
-  }
-  .n-side {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px 16px;
-    padding: 14px 0;
-    margin-bottom: 28px;
-    line-height: 1.5;
-  }
-  .n-side b {
-    margin-top: 0;
-  }
-  .n-prose {
-    border-top: 0;
-    padding-top: 0;
-  }
-}
 /* the case study holds the long line; the landed card keeps title, figure, label and the way in */
 .home .h-workfilm .p-card p {
   display: none;
