@@ -11,6 +11,8 @@ const SOURCES = [
   <source key="mp4" src="/ink/ink.mp4" type="video/mp4" />,
 ];
 
+const openGuided = () => document.querySelector('.h-bar-guided')?.click();
+
 const STUDIES = ['parcel', 'descent', 'rollout'].map((name) => ({ href: `/${name}`, label: name }));
 
 // One ink hero, two settings. Standalone (/ink): fixed full screen, corner links to the studies.
@@ -90,9 +92,16 @@ export default function InkHero({ flow = false, nav = STUDIES, arrival = false }
             </svg>
           </a>
           {flow && (
-            <a className="ink-short" href="/short" data-big>
-              {t({ en: 'Short version', zh: '简短版' })} →
-            </a>
+            <p className="ink-ways">
+              <a className="ink-short" href="/short" data-big>
+                {t({ en: 'Short version', zh: '简短版' })} →
+              </a>
+              {/* the top bar's Guided switch (src/chapters/guided/) is the one control; this is a way to it
+                  from the first screen, before the bar has appeared */}
+              <button type="button" className="ink-short" data-big onClick={openGuided}>
+                {t({ en: 'Guided', zh: '导览' })} →
+              </button>
+            </p>
           )}
         </div>
         <nav className="ink-ui ink-nav" aria-label={flow ? t({ en: 'Sections', zh: '章节' }) : undefined}>

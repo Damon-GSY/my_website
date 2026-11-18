@@ -1,9 +1,10 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { LangProvider } from './i18n.jsx';
-import Chooser from './pages/Chooser.jsx';
 import { work } from './content.js';
 
 const Home = lazy(() => import('./pages/Home.jsx'));
+// /lab is its own chunk: the home page's first paint does not carry the studies' index
+const Chooser = lazy(() => import('./pages/Chooser.jsx'));
 const Note = lazy(() => import('./pages/Note.jsx'));
 const NotFound = lazy(() => import('./pages/NotFound.jsx'));
 

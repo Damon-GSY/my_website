@@ -833,6 +833,15 @@ body:has(.note) {
     min-height: 44px;
     padding: 0 16px 0 18px;
   }
+  .home .ink-ways {
+    margin-top: 2px;
+  }
+  .home .ink-short {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: 0;
+  }
   .home .ink-bl {
     padding: 15px 0;
     bottom: 9px;
