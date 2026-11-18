@@ -112,7 +112,14 @@ function Deferred({ size, children }) {
       rootMargin: '90% 0px',
     });
     io.observe(ref.current);
-    return () => io.disconnect();
+    // a keyboard visitor tabs past chapters without scrolling to them: the first Tab mounts them all, so
+    // the Work cards and the d20's controls are in the tab order (finish pass QA, 2026-11-18)
+    const onKey = (e) => e.key === 'Tab' && setNear(true);
+    window.addEventListener('keydown', onKey);
+    return () => {
+      io.disconnect();
+      window.removeEventListener('keydown', onKey);
+    };
   }, [near]);
   const hold = <div ref={ref} className={`h-defer h-defer-${size}`} aria-hidden="true" />;
   return near ? <Suspense fallback={hold}>{children}</Suspense> : hold;
