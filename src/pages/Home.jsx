@@ -375,15 +375,12 @@ function Bar({ onLens }) {
           t({ en: 'Sections', zh: '章节' })
         )}
         <svg viewBox="0 0 12 12" aria-hidden="true">
-          <path d={menu ? 'M3 7.5L6 4.5L9 7.5' : 'M3 4.5L6 7.5L9 4.5'} />
+          <path d="M3 4.5L6 7.5L9 4.5" />
         </svg>
       </button>
       <nav id="h-bar-nav" aria-label={t({ en: 'Sections', zh: '章节' })} onClick={(e) => e.target.closest('a') && setMenu(false)}>
         {BAR_NAV.map((item) => (
           <a key={item.href} href={item.href} aria-current={active === item.href.slice(1) || undefined}>
-            <span className="h-bar-menu-n" aria-hidden="true">
-              ({byId[item.href.slice(1)].n})
-            </span>
             {t(item.label)}
           </a>
         ))}
@@ -468,7 +465,7 @@ export default function Home() {
   // only when the page is opened at one of these
   useEffect(() => {
     const id = window.location.hash.slice(1);
-    if (!['statement', 'work', 'evaluate', 'evidence', 'path'].includes(id)) return undefined;
+    if (!CHAPTERS.slice(0, 5).some((c) => c.id === id)) return undefined;
     let stop;
     let gone = false;
     import('./land.js').then((m) => !gone && (stop = m.default(id)));
