@@ -277,8 +277,32 @@ export function startEvidence(root) {
     const y2 = dy * Math.cos(th) - z1 * Math.sin(th);
     const z2 = dy * Math.sin(th) + z1 * Math.cos(th);
     const w = 1 - z2 / st.P;
-    return { x: st.pan.x + (st.zoom * x1) / w, y: st.pan.y + (st.zoom * y2) / w };
+    return { x: st.pan.x + (st.zoom * x1) / w, y: st.pan.y + (st.zoom * y2) / w, d: z2 };
   }
+
+  // a box's outline on screen and its depth (larger d = nearer the viewer)
+  function shadowOf(st, b) {
+    let x0 = Infinity;
+    let y0 = Infinity;
+    let x1 = -Infinity;
+    let y1 = -Infinity;
+    let d = 0;
+    for (const x of [b.x0, b.x0 + b.w])
+      for (const y of [b.base, b.base - b.h])
+        for (const z of [b.z0, b.z1]) {
+          const q = project(st, { x, y, z });
+          x0 = Math.min(x0, q.x);
+          y0 = Math.min(y0, q.y);
+          x1 = Math.max(x1, q.x);
+          y1 = Math.max(y1, q.y);
+          d += q.d / 8;
+        }
+    return { x0, y0, x1, y1, d };
+  }
+  // the share of rect a covered by rect b
+  const cover = (a, b) =>
+    (Math.max(0, Math.min(a.x1, b.x1) - Math.max(a.x0, b.x0)) * Math.max(0, Math.min(a.y1, b.y1) - Math.max(a.y0, b.y0))) /
+    Math.max(1, (a.x1 - a.x0) * (a.y1 - a.y0));
 
   // a box's back-left top corner: the roof's for a tower, the plate's far edge as it stands up
   const backLeft = (b) => ({
@@ -329,6 +353,7 @@ export function startEvidence(root) {
 
     // labels: attached to the geometry, crossing from their board offset to their chart offset;
     // the plaques step aside while the rows form
+    const vals = [];
     for (const m of movers) {
       const a = project(st, anchor(m, st));
       const w = weight(m, st);
@@ -339,6 +364,13 @@ export function startEvidence(root) {
       // in flight, a label is kept on screen (at the rests every label is already inside)
       const lx = clamp(x, 6 - m.N.x, geo.S.w - 6 - m.N.x - m.wN * s);
       T(m.el, Math.abs(lx) + Math.abs(y) < 0.01 && s === 1 ? '' : `translate(${px(lx)}, ${px(y)})${s !== 1 ? ` scale(${s.toFixed(4)})` : ''}`);
+      if (m.type === 'val') {
+        const cx = m.N.x + lx + m.wN / 2;
+        const cy = m.N.y - m.hN + y + m.hN / 2;
+        const hw = (m.wN * s) / 2;
+        const hh = (m.hN * s) / 2;
+        vals.push({ m, i: indexOf[Number(m.a)], r: { x0: cx - hw, y0: cy - hh, x1: cx + hw, y1: cy + hh } });
+      }
       // what a figure measures, and its number, step aside while the towers stand and come back
       // under its bar; on the board they are as wide as their cell, in the chart as their column
       if (m.type === 'cat' || m.type === 'meta') {
@@ -356,6 +388,25 @@ export function startEvidence(root) {
         const n = project(st, anchor({ ...m, b: m.b + 1 }, st));
         O(m.el, clamp((Math.hypot(n.x - a.x, n.y - a.y) - 11) / 6));
       }
+    }
+
+    // a figure whose tower stands behind a nearer tower (or under a nearer figure) gives way while the
+    // towers stand, instead of printing over it (finish pass, 2026-11-18); at the rests every figure is
+    // clear, so this only acts in between
+    const between = !atBoard && !atChart && st.r > 0.05 && st.c < 0.95;
+    const shadows = between ? st.box.map((b) => shadowOf(st, b)) : null;
+    for (const v of vals) {
+      let hide = 0;
+      if (between) {
+        const mine = shadows[v.i];
+        for (const u of vals) {
+          if (u === v) continue;
+          const other = shadows[u.i];
+          if (other.d <= mine.d + 1) continue; // only nearer boxes hide a figure
+          hide = Math.max(hide, cover(v.r, other), cover(v.r, u.r));
+        }
+      }
+      O(v.m.el, 1 - clamp((hide - 0.12) / 0.28));
     }
 
     const live = !atBoard && !atChart;
