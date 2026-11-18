@@ -285,7 +285,8 @@ export async function buildD20(stage, el, onStep) {
     el.intro.style.transform = `translateY(${(-24 * introOut).toFixed(1)}px)`;
     const hudIn = span(p, 0.05, 0.09) * (1 - span(p, 0.62, 0.66));
     el.hud.style.opacity = hudIn;
-    el.hud.style.visibility = hudIn > 0 ? 'visible' : 'hidden';
+    // not hidden: its Roll control stays in the tab order at every p (d20.css shows it while focused)
+    el.hud.style.pointerEvents = hudIn > 0.5 ? '' : 'none';
     el.end.style.visibility = p >= 0.86 ? 'visible' : 'hidden';
     el.endItems.forEach((item, k) => {
       const o = span(p, 0.92 + k * 0.016, 0.95 + k * 0.016);

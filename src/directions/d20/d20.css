@@ -314,6 +314,10 @@
 .d20.film .d20-hud {
   opacity: 0;
 }
+/* the HUD's Roll control is reachable by keyboard at any point of the film: focused, the HUD shows */
+.d20.film .d20-hud:has(:focus-visible) {
+  opacity: 1 !important;
+}
 
 /* static: reduced motion or no WebGL. No pinned track, no die. */
 .d20.static .d20-track {

@@ -21,6 +21,11 @@ const copy = {
   },
   sub: { en: '95% per step sounds safe. Roll twenty times.', zh: '单步 95% 听起来很安全。那就掷二十次。' },
   reroll: { en: 'Re-roll', zh: '重掷' },
+  roll: (k) => ({ en: `Roll · step ${pad(k)}`, zh: `掷骰 · 第 ${k} 步` }),
+  said: (k, v) => ({
+    en: `Step ${k} of ${STEPS}: rolled ${v}${v === 1 ? ', a failure' : ''}. ${pct(k)} chance of no failure yet.`,
+    zh: `第 ${k} / ${STEPS} 步：掷出 ${v}${v === 1 ? '，失败' : ''}。尚未失败的概率 ${pct(k)}。`,
+  }),
   seed: { en: 'seed', zh: '种子' },
   rolling: { en: 'rolling', zh: '掷骰中' },
   rolled: { en: 'rolled', zh: '掷出' },
@@ -76,6 +81,7 @@ export default function D20Chapter({ id = 'evaluate', head = null, shared = fals
   const rows = useRows();
   const layout = useMemo(() => stripLayout(rows), [rows]);
   const [hud, setHud] = useState({ step: 0, revealed: 0 });
+  const [say, setSay] = useState('');
   // the visit store (for the receipt, phase C): this visitor's seed and where their run first failed
   useEffect(() => setVisit({ d20: { seed: seedLabel(seed), firstFail: failSteps(rolls)[0] ?? null } }), [seed, rolls]);
 
@@ -191,6 +197,48 @@ export default function D20Chapter({ id = 'evaluate', head = null, shared = fals
     film.current?.relayout();
   }, [rolls, layout, lang]);
 
+  // Keyboard (polish pass, 2026-11-18): "Roll" is a real control from the start. It does not roll by
+  // itself; it scrolls the film to where the next die has landed (the film stays a function of scroll).
+  // After the twentieth, it re-rolls the seed. Results are announced briefly, the verdict at the end.
+  const want = useRef({ k: 0, at: 0 });
+  const progress = () => {
+    const r = track.current.getBoundingClientRect();
+    return { top: r.top + window.scrollY, len: Math.max(1, r.height - window.innerHeight), p: -r.top / Math.max(1, r.height - window.innerHeight) };
+  };
+  const goTo = (p, smooth) => {
+    const { top, len } = progress();
+    window.scrollTo({ top: Math.round(top + p * len), behavior: smooth ? 'smooth' : 'instant' });
+  };
+  // the die at rest on face k (steps = k - 0.2 sits past the landing, before the next roll)
+  const restAt = (k) => T.stepsFrom + ((k - 0.2) / STEPS) * (T.stepsTo - T.stepsFrom);
+  const onRoll = () => {
+    const now = performance.now();
+    const from = now - want.current.at < 1200 ? Math.max(want.current.k, hud.revealed) : hud.revealed;
+    if (from >= STEPS) {
+      want.current = { k: 0, at: 0 };
+      setSeed(newSeed());
+      return;
+    }
+    want.current = { k: from + 1, at: now };
+    goTo(restAt(from + 1), true);
+  };
+  // focused from far away (Tab from the Work cards, or back up from below): bring the run's readout in
+  const onRollFocus = () => {
+    const { p } = progress();
+    if (p < T.stepsFrom) goTo(T.stepsFrom, false);
+    else if (p > T.foldFrom) goTo(restAt(Math.max(1, hud.revealed)), false);
+  };
+  useEffect(() => {
+    if (mode !== 'film') return undefined;
+    const k = hud.revealed;
+    const id = window.setTimeout(() => {
+      if (!k) setSay('');
+      else if (k < STEPS) setSay(t(copy.said(k, rolls[k - 1])));
+      else setSay(t(verdict(failSteps(rolls)[0])).join(''));
+    }, 450);
+    return () => window.clearTimeout(id);
+  }, [hud.revealed, rolls, mode, t]);
+
   const fails = failSteps(rolls, hud.revealed);
   const first = failSteps(rolls)[0];
   const rolling = hud.step > hud.revealed;
@@ -215,7 +263,7 @@ export default function D20Chapter({ id = 'evaluate', head = null, shared = fals
             <p className="d20-sub">{t(copy.sub)}</p>
           </div>
           <div ref={slot} className="d20-slot" aria-hidden="true" />
-          <div ref={hudRef} className="d20-hud" aria-live="polite">
+          <div ref={hudRef} className="d20-hud">
             <p className="d20-read">
               <span>
                 {t(copy.step)} <b>{pad(hud.step)}</b> / {STEPS}
@@ -244,8 +292,17 @@ export default function D20Chapter({ id = 'evaluate', head = null, shared = fals
               })}
             </ol>
             <p className="d20-fail">{fails.length ? t(failLine(fails)) : ''}</p>
-            <Seed seed={seed} onRoll={() => setSeed(newSeed())} t={t} />
+            <Seed seed={seed} onRoll={() => setSeed(newSeed())} t={t}>
+              {mode === 'film' && (
+                <button type="button" className="d20-roll" onClick={onRoll} onFocus={onRollFocus}>
+                  {k < STEPS ? t(copy.roll(k + 1)) : t(copy.reroll)} <span aria-hidden="true">{k < STEPS ? '↓' : '↻'}</span>
+                </button>
+              )}
+            </Seed>
           </div>
+          <p className="sr-only" role="status">
+            {say}
+          </p>
           <div ref={end} className="d20-end">
             <div className="d20-end-head" data-end>
               <span>{t(copy.run)}</span>
@@ -274,13 +331,15 @@ export default function D20Chapter({ id = 'evaluate', head = null, shared = fals
   );
 }
 
-function Seed({ seed, onRoll, t }) {
+function Seed({ seed, onRoll, t, children }) {
   return (
     <span className="d20-seed">
       {t(copy.seed)} {seedLabel(seed)}
-      <button type="button" onClick={onRoll} aria-label={t({ en: 'Re-roll the dice', zh: '重新掷骰' })}>
-        {t(copy.reroll)} <span aria-hidden="true">↻</span>
-      </button>
+      {children || (
+        <button type="button" onClick={onRoll} aria-label={t({ en: 'Re-roll the dice', zh: '重新掷骰' })}>
+          {t(copy.reroll)} <span aria-hidden="true">↻</span>
+        </button>
+      )}
     </span>
   );
 }
