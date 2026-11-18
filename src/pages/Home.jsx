@@ -53,23 +53,10 @@ const ReceiptOpening = lazy(() => import('../directions/receipt/Opening.jsx'));
 const CityOpening = lazy(() => import('../directions/city/Opening.jsx'));
 const ArenaOpening = lazy(() => import('../directions/arena/Opening.jsx'));
 
-const HERO_LENSES = [
-  { id: 'ink', label: { en: '01 · Wet Ink', zh: '01 · 湿墨揭幕' }, short: { en: '01 Ink', zh: '01 湿墨' } },
-  { id: 'shadow', label: { en: '10 · 318° Shadow', zh: '10 · 318° 光影' }, short: { en: '10 Shadow', zh: '10 光影' } },
-  { id: 'typist', label: { en: '09 · Token Typist', zh: '09 · 策略逐词' }, short: { en: '09 Typist', zh: '09 逐词' } },
-];
-
-const WORK_LENSES = [
-  { id: 'parcel', label: { en: '02 · Parcel Box', zh: '02 · 快递拆盒' }, short: { en: '02 Parcel', zh: '02 快递' } },
-  { id: 'bento', label: { en: '08 · Bento Cards', zh: '08 · Bento 卡片' }, short: { en: '08 Bento', zh: '08 卡片' } },
-  { id: 'receipt', label: { en: '11 · Thermal Receipt', zh: '11 · 实证小票' }, short: { en: '11 Receipt', zh: '11 小票' } },
-  { id: 'city', label: { en: '12 · Metric City', zh: '12 · 尺度天际线' }, short: { en: '12 City', zh: '12 建筑' } },
-];
-
-const EVAL_LENSES = [
-  { id: 'd20', label: { en: '05 · D20 Die', zh: '05 · 二十面骰' }, short: { en: '05 D20', zh: '05 骰子' } },
-  { id: 'arena', label: { en: '13 · Agent Arena', zh: '13 · 对抗沙盒' }, short: { en: '13 Arena', zh: '13 沙盒' } },
-];
+// Studio Lens (the dock's choices and the per-chapter lens bars) is its own lazy chunk
+const loadLens = () => import('./lens/Lens.jsx');
+const LensGroups = lazy(loadLens);
+const ChapterLensBar = lazy(() => loadLens().then((m) => ({ default: m.ChapterLensBar })));
 
 // The run's chapters, in page order (the hero, (00), opens it). The section heads, the hero's corner
 // list and the fixed bar all take their numbers and names from here, so they always agree.
@@ -285,39 +272,60 @@ function Notes() {
 // Slim fixed bar once the hero has scrolled away: the name, the seven chapters (the one being read is
 // underlined), "Short version", then the slot for the Guided mode button (phase H, src/chapters/guided/:
 // it sits between the chapter list and the language switch), then the language switch.
-function Bar() {
+// Phones (polish pass, 2026-11-18): the chapter list folds behind one button that names the chapter being
+// read and opens the list (plus "Short version" and Studio Lens) under the bar. The bar stays away while
+// you read down and while a pinned chapter fills the screen, and comes back on a deliberate scroll up.
+const PHONE = '(max-width: 760px)';
+
+// a pinned chapter fills the screen: a scroll track whose sticky viewport is stuck right now
+function pinnedNow(H) {
+  for (const el of document.querySelectorAll('#root [data-mark-track]')) {
+    const r = el.getBoundingClientRect();
+    if (r.top > 1 || r.bottom < H - 1) continue;
+    for (const c of el.children) if (getComputedStyle(c).position === 'sticky') return true;
+  }
+  return false;
+}
+
+function Bar({ onLens }) {
   const { lang, setLang, t } = useLang();
   const [past, setPast] = useState(false);
-  const [down, setDown] = useState(false);
+  const [show, setShow] = useState(false);
   const [active, setActive] = useState('');
-  const navRef = useRef(null);
-  // on the phone strip, keep the section in view centred
+  const [menu, setMenu] = useState(false);
+  const barRef = useRef(null);
+  const menuRef = useRef(false);
+  menuRef.current = menu;
   useEffect(() => {
-    const nav = navRef.current;
-    const link = nav?.querySelector('[aria-current]');
-    if (!link || nav.scrollWidth <= nav.clientWidth) return;
-    nav.scrollTo({ left: link.offsetLeft - (nav.clientWidth - link.offsetWidth) / 2, behavior: reduced() ? 'auto' : 'smooth' });
-  }, [active]);
-  useEffect(() => {
-    // it steps aside while you read downwards and comes back when you scroll up
+    // desktop: it steps aside while you read downwards and comes back when you scroll up. Phones: it
+    // comes back only after ~60 px of scrolling up between chapters, or half a screen inside a pinned one
+    const phone = window.matchMedia(PHONE);
     let lastY = window.scrollY;
+    let up = 0;
+    let on = false;
     const onScroll = () => {
       const y = window.scrollY;
       const H = window.innerHeight;
       setPast(y > H * 0.8);
-      if (Math.abs(y - lastY) > 6) {
-        setDown(y > lastY);
+      const dy = y - lastY;
+      if (Math.abs(dy) > 6) {
+        up = dy < 0 ? up - dy : 0;
         lastY = y;
+        if (!phone.matches) on = dy < 0;
+        else if (dy > 0) on = false;
+        else if (up > (pinnedNow(H) ? H * 0.5 : 60)) on = true;
+        if (dy > 0 && menuRef.current) setMenu(false);
+        setShow(on);
       }
       // the chapter being read: the last one whose top has passed the middle of the screen; at the very
       // end of the page, Contact (its stub is the last thing on it, whatever the window's height)
-      let on = '';
+      let cur = '';
       for (const c of CHAPTERS) {
         const el = document.getElementById(c.id);
-        if (el && el.getBoundingClientRect().top <= H * 0.5) on = c.id;
+        if (el && el.getBoundingClientRect().top <= H * 0.5) cur = c.id;
       }
-      if (y + H >= document.documentElement.scrollHeight - 4) on = 'contact';
-      setActive(on);
+      if (y + H >= document.documentElement.scrollHeight - 4) cur = 'contact';
+      setActive(cur);
     };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -327,20 +335,72 @@ function Bar() {
       window.removeEventListener('resize', onScroll);
     };
   }, []);
+  // the phone menu closes on Esc (focus back on its button) and on a press outside the bar
+  useEffect(() => {
+    if (!menu) return undefined;
+    const onKey = (e) => {
+      if (e.key !== 'Escape') return;
+      setMenu(false);
+      barRef.current?.querySelector('.h-bar-menu')?.focus();
+    };
+    const onDown = (e) => !barRef.current?.contains(e.target) && setMenu(false);
+    window.addEventListener('keydown', onKey);
+    window.addEventListener('pointerdown', onDown);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('pointerdown', onDown);
+    };
+  }, [menu]);
+  const cur = byId[active];
   return (
-    <header className={`h-bar${past ? ' is-past' : ''}${past && !down ? ' is-on' : ''}`} inert={!past || undefined}>
+    <header
+      ref={barRef}
+      className={`h-bar${past ? ' is-past' : ''}${past && (show || menu) ? ' is-on' : ''}${menu ? ' is-menu' : ''}`}
+      inert={!past || undefined}
+    >
       <a className="h-bar-name" href="#top">
         Damon Guan
       </a>
-      <nav ref={navRef} aria-label={t({ en: 'Sections', zh: '章节' })}>
+      <button
+        type="button"
+        className="h-bar-menu mono"
+        aria-expanded={menu}
+        aria-controls="h-bar-nav"
+        onClick={() => setMenu((v) => !v)}
+      >
+        {cur ? (
+          <>
+            <span className="h-bar-menu-n">({cur.n})</span> {t(cur.label)}
+          </>
+        ) : (
+          t({ en: 'Sections', zh: '章节' })
+        )}
+        <svg viewBox="0 0 12 12" aria-hidden="true">
+          <path d={menu ? 'M3 7.5L6 4.5L9 7.5' : 'M3 4.5L6 7.5L9 4.5'} />
+        </svg>
+      </button>
+      <nav id="h-bar-nav" aria-label={t({ en: 'Sections', zh: '章节' })} onClick={(e) => e.target.closest('a') && setMenu(false)}>
         {BAR_NAV.map((item) => (
           <a key={item.href} href={item.href} aria-current={active === item.href.slice(1) || undefined}>
+            <span className="h-bar-menu-n" aria-hidden="true">
+              ({byId[item.href.slice(1)].n})
+            </span>
             {t(item.label)}
           </a>
         ))}
         <a className="h-bar-short" href="/short">
           {t({ en: 'Short version', zh: '简短版' })}
         </a>
+        <button
+          type="button"
+          className="h-bar-lens"
+          onClick={() => {
+            setMenu(false);
+            onLens();
+          }}
+        >
+          {t({ en: 'Studio Lens', zh: '章节透镜' })}
+        </button>
       </nav>
       <GuidedButton />
       <button
@@ -352,32 +412,6 @@ function Bar() {
         {lang === 'en' ? '中文' : 'EN'}
       </button>
     </header>
-  );
-}
-
-function ChapterLensBar({ label, options, value, onChange, href }) {
-  const { t } = useLang();
-  return (
-    <div className="h-chapter-bar">
-      <div className="h-lens-tabs" role="group" aria-label={label}>
-        {options.map((opt) => (
-          <button
-            key={opt.id}
-            type="button"
-            className={value === opt.id ? 'is-active' : undefined}
-            aria-pressed={value === opt.id}
-            onClick={() => onChange(opt.id)}
-          >
-            {t(opt.label)}
-          </button>
-        ))}
-      </div>
-      {href && (
-        <a className="mono" href={href}>
-          {t({ en: 'Open standalone', zh: '独立全屏体验' })} →
-        </a>
-      )}
-    </div>
   );
 }
 
@@ -420,6 +454,12 @@ export default function Home() {
   // The default view reads as one site: the lens controls stay folded into a small dock button and
   // the per-chapter lens bars only appear once a lens other than the default is chosen.
   const [dockOpen, setDockOpen] = useState(false);
+  // phones: the dock button lives in the bar's menu, so the open dock takes focus from it
+  const dockRef = useRef(null);
+  const openLens = () => {
+    setDockOpen(true);
+    window.requestAnimationFrame(() => dockRef.current?.focus());
+  };
 
   // the travelling mark (only where the films run: motion allowed and WebGL), and the depth layer
   const homeRef = useRef(null);
@@ -431,7 +471,7 @@ export default function Home() {
       <a className="skip-link" href="#statement">
         {t({ en: 'Skip to content', zh: '跳到正文' })}
       </a>
-      <Bar />
+      <Bar onLens={openLens} />
       <main id="content">
         {heroLens === 'ink' ? (
           <InkHero flow arrival nav={NAV} />
@@ -471,13 +511,14 @@ export default function Home() {
 
         <div id="work" className="h-work-host" data-pv="0 0.9">
           {isCustomLens && (
-            <ChapterLensBar
-              label={t({ en: 'Work chapter mode', zh: '作品章节呈现方式' })}
-              options={WORK_LENSES}
-              value={workLens}
-              onChange={setWorkLens}
-              href={`/${workLens}`}
-            />
+            <Suspense fallback={null}>
+              <ChapterLensBar
+                kind="work"
+                label={t({ en: 'Work chapter mode', zh: '作品章节呈现方式' })}
+                value={workLens}
+                onChange={setWorkLens}
+              />
+            </Suspense>
           )}
           {workLens === 'parcel' ? (
             <Deferred size="work">
@@ -505,13 +546,14 @@ export default function Home() {
 
         <div id="evaluate" className="h-evaluate" data-pv="0 0.9">
           {isCustomLens && (
-            <ChapterLensBar
-              label={t({ en: 'Evaluation chapter mode', zh: '评测章节呈现方式' })}
-              options={EVAL_LENSES}
-              value={evalLens}
-              onChange={setEvalLens}
-              href={`/${evalLens}`}
-            />
+            <Suspense fallback={null}>
+              <ChapterLensBar
+                kind="eval"
+                label={t({ en: 'Evaluation chapter mode', zh: '评测章节呈现方式' })}
+                value={evalLens}
+                onChange={setEvalLens}
+              />
+            </Suspense>
           )}
           <Suspense
             fallback={
@@ -545,70 +587,32 @@ export default function Home() {
         aria-label={t({ en: 'Chapter lens switcher', zh: '整站多视角章节切换坞' })}
       >
         <button
+          ref={dockRef}
           type="button"
           className="h-lens-dock-title"
           aria-expanded={dockOpen}
           aria-controls="h-lens-groups"
           aria-label={t({ en: 'Studio Lens: switch how each chapter is shown', zh: '章节透镜：切换各章节的呈现方式' })}
           onClick={() => setDockOpen((v) => !v)}
+          onPointerEnter={loadLens}
+          onFocus={loadLens}
         >
           {t({ en: 'Studio Lens', zh: '章节透镜' })}
           {isCustomLens && <i className="h-lens-dot" aria-hidden="true" />}
           <span aria-hidden="true">{dockOpen ? '×' : '+'}</span>
         </button>
         <div id="h-lens-groups" className="h-lens-groups" hidden={!dockOpen}>
-          <div className="h-lens-group">
-            <span>{t({ en: 'Hero', zh: '开场' })}</span>
-            {HERO_LENSES.map((opt) => (
-              <button
-                key={opt.id}
-                type="button"
-                className={heroLens === opt.id ? 'is-active' : undefined}
-                onClick={() => {
-                  setHeroLens(opt.id);
-                  jumpTo('top');
+          {dockOpen && (
+            <Suspense fallback={null}>
+              <LensGroups
+                value={{ hero: heroLens, work: workLens, eval: evalLens }}
+                onPick={(kind, id) => {
+                  ({ hero: setHeroLens, work: setWorkLens, eval: setEvalLens })[kind](id);
+                  jumpTo({ hero: 'top', work: 'work', eval: 'evaluate' }[kind]);
                 }}
-              >
-                {t(opt.short)}
-              </button>
-            ))}
-          </div>
-          <div className="h-lens-group">
-            <span>{t({ en: 'Work', zh: '作品' })}</span>
-            {WORK_LENSES.map((opt) => (
-              <button
-                key={opt.id}
-                type="button"
-                className={workLens === opt.id ? 'is-active' : undefined}
-                onClick={() => {
-                  setWorkLens(opt.id);
-                  jumpTo('work');
-                }}
-              >
-                {t(opt.short)}
-              </button>
-            ))}
-          </div>
-          <div className="h-lens-group">
-            <span>{t({ en: 'Eval', zh: '评测' })}</span>
-            {EVAL_LENSES.map((opt) => (
-              <button
-                key={opt.id}
-                type="button"
-                className={evalLens === opt.id ? 'is-active' : undefined}
-                onClick={() => {
-                  setEvalLens(opt.id);
-                  jumpTo('evaluate');
-                }}
-              >
-                {t(opt.short)}
-              </button>
-            ))}
-          </div>
-          {isCustomLens && (
-            <button type="button" className="h-lens-reset" onClick={resetLenses}>
-              {t({ en: 'Reset', zh: '恢复默认' })}
-            </button>
+                onReset={resetLenses}
+              />
+            </Suspense>
           )}
         </div>
       </aside>
