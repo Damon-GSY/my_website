@@ -221,6 +221,64 @@
   color: var(--gd-dim);
 }
 
+/* the strip (finish pass): while the agent drives through a pinned chapter the panel is one line, the
+   current call, the count and "Take over", so the chapter has the screen. Moving the pointer over it
+   (Guided.jsx: a pointer resting where Start was does not count) or keyboard focus opens it. The log is clipped to nothing, not hidden, so it stays a live region. */
+.gd-now {
+  display: none;
+}
+.gd.is-strip:not(:has(:focus-visible)) {
+  flex-direction: row;
+  align-items: center;
+}
+.gd.is-strip:not(:has(:focus-visible)) .gd-head {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-right: 10px;
+  border-bottom: 0;
+}
+.gd.is-strip:not(:has(:focus-visible)) .gd-state,
+.gd.is-strip:not(:has(:focus-visible)) .gd-hint {
+  display: none;
+}
+.gd.is-strip:not(:has(:focus-visible)) .gd-now {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  font: inherit;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--gd-paper);
+}
+.gd.is-strip:not(:has(:focus-visible)) .gd-now b {
+  font-weight: 600;
+}
+.gd.is-strip:not(:has(:focus-visible)) .gd-log {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.gd.is-strip:not(:has(:focus-visible)) .gd-count {
+  flex: none;
+  white-space: nowrap;
+}
+.gd.is-strip:not(:has(:focus-visible)) .gd-ctl {
+  flex: none;
+  padding: 6px 8px 6px 0;
+}
+@media (min-width: 761px) {
+  .gd.is-strip:not(:has(:focus-visible)) .gd-btn {
+    min-height: 30px;
+    padding: 0 11px;
+  }
+}
+
 /* the agent's cursor: an ink ring with a paper halo (readable on ink and on paper) and a mono tag */
 .gd-cursor {
   position: fixed;

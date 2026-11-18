@@ -11,7 +11,21 @@ import './guided.css';
 //   Esc ends the run and closes the panel. A hidden tab pauses it too.
 // - The panel lives outside #root (a portal on body), so it stays usable while a case study or a note
 //   holds the page inert. The log is a polite live region; buttons are real buttons.
+// - While the agent runs and a pinned chapter (the Work film, the d20, Evidence) fills the screen, the
+//   panel folds to one line: the current call, the count and "Take over". It opens again between
+//   chapters, on hover, on keyboard focus, and whenever it asks or is paused (finish pass, 2026-11-18).
 // The script and controller are in agent.js.
+
+// a pinned chapter fills the screen: a scroll track whose sticky viewport is stuck right now
+function pinnedNow() {
+  const H = window.innerHeight;
+  for (const el of document.querySelectorAll('#root [data-mark-track]')) {
+    const r = el.getBoundingClientRect();
+    if (r.top > 1 || r.bottom < H - 1) continue;
+    for (const c of el.children) if (getComputedStyle(c).position === 'sticky') return true;
+  }
+  return false;
+}
 
 const C = {
   region: { en: 'Guided mode', zh: '导览模式' },
@@ -209,8 +223,40 @@ export default function Guided({ opener, onClose }) {
     if (el) el.scrollTop = el.scrollHeight;
   }, [s.entries.length, s.phase]);
 
+  // fold to a strip while the agent drives through a pinned chapter
+  // "peek": the pointer moved over the strip (a pointer merely resting where Start was does not count)
+  const [pinned, setPinned] = useState(false);
+  const [peek, setPeek] = useState(false);
+  if (!pinned && peek) setPeek(false);
+  useEffect(() => {
+    let raf = 0;
+    const check = () => {
+      raf = 0;
+      setPinned(pinnedNow());
+    };
+    const on = () => {
+      if (!raf) raf = requestAnimationFrame(check);
+    };
+    check();
+    window.addEventListener('scroll', on, { passive: true });
+    window.addEventListener('resize', on);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', on);
+      window.removeEventListener('resize', on);
+    };
+  }, []);
+
   const act = (fn, ...args) => () => agent.current?.[fn](...args);
   const { phase } = s;
+  const strip = pinned && phase === 'running';
+  const peekProps = strip
+    ? {
+        onPointerMove: (e) => !peek && (e.movementX || e.movementY) && setPeek(true),
+        onPointerLeave: () => setPeek(false),
+      }
+    : null;
+  const now = [...s.entries].reverse().find((e) => e.kind === 'step');
   const n = phase === 'ready' ? 0 : Math.min(s.at + 1, s.total);
   const btn = (act, label, onClick, pri) => (
     <button type="button" data-act={act} className={pri ? 'gd-btn is-pri' : 'gd-btn'} onClick={onClick}>
@@ -220,10 +266,15 @@ export default function Guided({ opener, onClose }) {
 
   return createPortal(
     <>
-      <section ref={root} className={`gd is-${phase}`} aria-label={t(C.region)}>
+      <section ref={root} className={`gd is-${phase}${strip && !peek ? ' is-strip' : ''}`} aria-label={t(C.region)} {...peekProps}>
         <header className="gd-head">
           <span className="gd-led" aria-hidden="true" />
           <span className="gd-state">{t(C.state[phase])}</span>
+          {strip && !peek && now && (
+            <code className="gd-now" aria-hidden="true">
+              <b>{now.fn}</b>({now.arg ? `"${t(now.arg)}"` : ''})
+            </code>
+          )}
           {phase !== 'ready' && (
             <span className="gd-count">
               {pad(n)} / {pad(s.total)}
