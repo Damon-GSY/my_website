@@ -15,6 +15,18 @@ Two background agents in parallel work well when they touch separate sections of
 
 **Still open for Damon:** employer and city (blank in `src/content.js`), real email (stand-in `hello@damon.ai`), domain/host, "2025– · Alibaba" in typist/receipt studies, review of Claude-written copy (zh case-study translations, the claim's invented candidate words captioned illustrative), whether to open a PR into main.
 
+## Around the run (2026-11-18)
+
+The pages around `/`, so the whole site reads as one piece. Commits `3260afd` 404, `84b23ae` /lab, `c076555` /short, `6333692` OG + meta, `ad2d874` 404 settle. Shared code in `src/pages/around/` (`Bar.jsx` the run's bar for these pages, `run.js` chapter list + study/assembly/board data, `wire.js` the 404 geometry, `around.css`).
+
+- **404** (`NotFound.jsx`): a bent wire hangs in front of the page, lit by the mark (the magenta dot is the lamp, on a cord). Damon's Shadow technique: glyph points on the wall lifted towards the light, P = Q + u(S − Q), so only the settled pose casts "404". Arrives turned away, swings on its threads (damped, reads as 404 in ~2 s, stops drawing at ~2.7 s); drag/wheel turns it and it swings back; "turn it again" button. Canvas 2D, no WebGL. Reduced motion / no canvas: the settled frame as SVG. Unknown `/notes/<slug>` now get this 404 too (`Note.jsx`), like `/work/<slug>`. Line: "This page isn't on the record." with Back to the start, the seven chapters and /lab.
+- **/lab** (`Chooser.jsx`): the archive. (A) each chapter (with a frame of it in the run) beside the studies it came from, links both ways; (B) studies kept as studies, and why; (C) the eight concept boards and what each became. Damon's six studies credited as his; pill/ink/bento/night "From Damon's brief". Thumbs are real 1440×900 screenshots, `public/lab/thumbs/*.webp` (31 files, 525 KiB, lazy). The old chooser's CSS left `base.css` (−1.3 kB gzip first-paint CSS).
+- **/short**: the bento unchanged (own orange palette), inside the run's bar as "The 60-second version" (mark = the bar's dot), Full site / Studies / 中文. Bento links now open at the top level, not inside the iframe.
+- **OG** `public/og.png` composed from the run's own screenshots (wordmark + carton, die, chart, stamped receipt); description rewritten without new facts; `og:image:alt`.
+- **Budget:** entry JS 1 byte smaller than without these changes (routes set their own titles); everything new is lazy.
+
+**Open:** `/#statement`, `/#work`, `/#evaluate`, `/#evidence`, `/#path` do not scroll on a fresh load (Home lands only `#notes` and `#contact` itself; the native fragment scroll fires before the lazy home renders), so the 404's and /lab's chapter links open at the top for those five. Fix belongs in `Home.jsx`. /lab is not linked from `/` beyond the existing Notes line. The bento is English only. Thumbs and the OG are snapshots of 2026-11-18; regenerate if chapters change.
+
 ## Finish pass (2026-11-18)
 
 Phase I, part 1. Commits on `claude/serene-cori-mookmf`, in order: `304ee89` note bodies out of first paint, `325f5f1` Work film dead air, `a3f7d8e` Guided strip, `ec1081e` claim deck, `f05ab4d` case sheet 1:1, `ab172ce` Evidence occlusion, `1281183` keyboard path into Work, then the docs.
