@@ -26,7 +26,7 @@ export default function InkHero({ flow = false, nav = STUDIES, arrival = false }
     arrive.current = arrival && wantArrival();
     if (arrive.current) hero.current.classList.add('is-arriving');
   }, [arrival]);
-  useEffect(() => initInk(hero.current, { arrive: arrive.current }), []);
+  useEffect(() => initInk(hero.current, { arrive: arrive.current, share: flow }), [flow]);
   // Home: the travelling mark starts as the full stop after the wordmark. The wordmark itself is drawn
   // in the ink canvas from the DOM word's position, so the stop is placed from the same measurements.
   useEffect(() => {

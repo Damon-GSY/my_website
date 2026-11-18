@@ -1,5 +1,6 @@
 import { hasWebGL } from '../../engine/webgl.js';
 import { arrival } from './arrival.js';
+import { claimGL, onScreen } from '../../engine/gl.js';
 // Ink reveal: the pointer paints a gooey trail that uncovers a moving ink layer under the page.
 // Raw WebGL, no libraries. The ink is a local video when /ink/ink.mp4 exists, otherwise generated.
 const TRAIL_SCALE = 0.25;
@@ -86,11 +87,10 @@ void main(){
   gl_FragColor = vec4(vid * mask + rimCol * rim * 0.55, mask + rim * 0.55);
 }`;
 
-export function initInk(hero, { arrive = false } = {}) {
+export function initInk(hero, { arrive = false, share = null } = {}) {
   const $ = (sel) => hero.querySelector(sel);
   const wordSpan = $('[data-word] span');
   const baselineEl = $('[data-baseline]');
-  const canvas = $('canvas');
   const videos = [...hero.querySelectorAll('video')];
   const cursor = document.querySelector('[data-ink-cursor]');
   const none = () => {
@@ -98,10 +98,15 @@ export function initInk(hero, { arrive = false } = {}) {
     return () => {};
   };
   if (!hasWebGL()) return none();
-  const gl = canvas.getContext('webgl', { premultipliedAlpha: true, alpha: true, antialias: false });
-  if (!gl) return none();
-  gl.getExtension('OES_standard_derivatives');
 
+  // The GL side lives in attach(): on the home page the hero gives its context back when the page's
+  // one-context arbiter (src/engine/gl.js) hands the GPU to a film further down, and makes a new one, on
+  // a fresh canvas, when it is needed again. The trail, the video and the pointer state are plain JS and
+  // canvases, so a woken hero carries on from where it was.
+  let canvas = hero.querySelector('canvas');
+  let gl = null;
+  let U = {};
+  let tex = [];
   const compile = (type, src) => {
     const s = gl.createShader(type);
     gl.shaderSource(s, src);
@@ -109,36 +114,53 @@ export function initInk(hero, { arrive = false } = {}) {
     if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s));
     return s;
   };
-  const prog = gl.createProgram();
-  gl.attachShader(prog, compile(gl.VERTEX_SHADER, VERT));
-  gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FRAG));
-  gl.linkProgram(prog);
-  gl.useProgram(prog);
-  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]), gl.STATIC_DRAW);
-  const loc = gl.getAttribLocation(prog, 'p');
-  gl.enableVertexAttribArray(loc);
-  gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-  const U = {};
-  ['uTrail', 'uVideo', 'uVideoNext', 'uText', 'uMix', 'uRes', 'uVideoRes', 'uTime', 'uHasVideo', 'uTextOff'].forEach(
-    (name) => (U[name] = gl.getUniformLocation(prog, name)),
-  );
-  const tex = [0, 1, 2, 3].map((unit) => {
-    const t = gl.createTexture();
-    gl.activeTexture(gl.TEXTURE0 + unit);
-    gl.bindTexture(gl.TEXTURE_2D, t);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 0, 0]));
-    return t;
-  });
-  gl.uniform1i(U.uTrail, 0);
-  gl.uniform1i(U.uVideo, 1);
-  gl.uniform1i(U.uText, 2);
-  gl.uniform1i(U.uVideoNext, 3);
+  function attach() {
+    gl = canvas.getContext('webgl', { premultipliedAlpha: true, alpha: true, antialias: false });
+    if (!gl) return false;
+    gl.getExtension('OES_standard_derivatives');
+    const prog = gl.createProgram();
+    gl.attachShader(prog, compile(gl.VERTEX_SHADER, VERT));
+    gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FRAG));
+    gl.linkProgram(prog);
+    gl.useProgram(prog);
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]), gl.STATIC_DRAW);
+    const loc = gl.getAttribLocation(prog, 'p');
+    gl.enableVertexAttribArray(loc);
+    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+    U = {};
+    ['uTrail', 'uVideo', 'uVideoNext', 'uText', 'uMix', 'uRes', 'uVideoRes', 'uTime', 'uHasVideo', 'uTextOff'].forEach(
+      (name) => (U[name] = gl.getUniformLocation(prog, name)),
+    );
+    tex = [0, 1, 2, 3].map((unit) => {
+      const t = gl.createTexture();
+      gl.activeTexture(gl.TEXTURE0 + unit);
+      gl.bindTexture(gl.TEXTURE_2D, t);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 0, 0]));
+      return t;
+    });
+    gl.uniform1i(U.uTrail, 0);
+    gl.uniform1i(U.uVideo, 1);
+    gl.uniform1i(U.uText, 2);
+    gl.uniform1i(U.uVideoNext, 3);
+    return true;
+  }
+  // lose the context and drop the canvas for a blank copy (a lost canvas cannot get a new context)
+  function detach() {
+    if (!gl) return;
+    gl.getExtension('WEBGL_lose_context')?.loseContext();
+    gl = null;
+    const fresh = canvas.cloneNode(false);
+    canvas.replaceWith(fresh);
+    canvas = fresh;
+  }
+  if (!share && !attach()) return none();
   const upload = (unit, source) => {
+    if (!gl) return;
     gl.activeTexture(gl.TEXTURE0 + unit);
     gl.bindTexture(gl.TEXTURE_2D, tex[unit]);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, source);
@@ -193,7 +215,7 @@ export function initInk(hero, { arrive = false } = {}) {
     wordSpan.style.fontSize = `${(100 * W * 0.9) / w}px`;
     canvas.width = textCanvas.width = Math.round(W * DPR);
     canvas.height = textCanvas.height = Math.round(H * DPR);
-    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl?.viewport(0, 0, canvas.width, canvas.height);
     const next = document.createElement('canvas');
     next.width = Math.max(1, Math.round(W * TRAIL_SCALE));
     next.height = Math.max(1, Math.round(H * TRAIL_SCALE));
@@ -305,7 +327,7 @@ export function initInk(hero, { arrive = false } = {}) {
 
   function frame(now) {
     raf = requestAnimationFrame(frame);
-    if (!visible) return;
+    if (!visible || !gl) return;
     const dt = Math.min(48, now - last) / 16.667;
     last = now;
     tctx.globalCompositeOperation = 'source-over';
@@ -402,9 +424,29 @@ export function initInk(hero, { arrive = false } = {}) {
   window.addEventListener('resize', fit);
   document.fonts.load('900 100px "Archivo Variable"').then(fit);
   document.fonts.ready.then(fit);
+  // home: asleep until the page's arbiter gives the hero the GPU (at once, at the top of the page)
+  const release = share
+    ? claimGL({
+        range: () => onScreen(hero),
+        wake: () => {
+          if (gl) return true;
+          if (!attach()) {
+            gl = null;
+            hero.classList.remove('is-arriving');
+            return false;
+          }
+          fit();
+          last = performance.now();
+          return true;
+        },
+        sleep: detach,
+      })
+    : null;
   raf = requestAnimationFrame(frame);
 
   return () => {
+    release?.();
+    detach();
     cancelAnimationFrame(raf);
     intro?.stop();
     io.disconnect();

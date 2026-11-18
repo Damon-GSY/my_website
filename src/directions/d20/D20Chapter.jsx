@@ -3,8 +3,9 @@ import { useLang } from '../../i18n.jsx';
 import { createStage } from '../../engine/stage.js';
 import { hasWebGL2 } from '../../engine/webgl.js';
 import { createTimeline } from '../../engine/timeline.js';
+import { claimGL, onScreen } from '../../engine/gl.js';
 import { failSteps, initialSeed, newSeed, pct, rollsFromSeed, seedLabel, STEPS } from './dice.js';
-import { buildD20 } from './Scene.js';
+import { buildD20, T } from './Scene.js';
 import { stripLayout } from './strip.js';
 import Strip from './Strip.jsx';
 import { setVisit } from '../../engine/store.js';
@@ -62,8 +63,10 @@ function useRows() {
 }
 
 // `head` replaces the small label with the host page's own section head; `id` can be dropped when
-// the host already carries the anchor.
-export default function D20Chapter({ id = 'evaluate', head = null }) {
+// the host already carries the anchor. `shared` (the home page): the die holds a WebGL context only
+// while the page's one-context arbiter (src/engine/gl.js) gives it one, from the die coming on screen
+// to the hand-off to the tally (T.handoff); the film's DOM and scene graph follow scroll while asleep.
+export default function D20Chapter({ id = 'evaluate', head = null, shared = false }) {
   const { t, lang } = useLang();
   const [mode, setMode] = useState(() =>
     window.matchMedia('(prefers-reduced-motion: reduce)').matches || !hasWebGL2() ? 'static' : 'film',
@@ -96,7 +99,7 @@ export default function D20Chapter({ id = 'evaluate', head = null }) {
     if (mode !== 'film') return undefined;
     let stage;
     try {
-      stage = createStage(canvas.current);
+      stage = createStage(canvas.current, { asleep: shared });
     } catch {
       setMode('static');
       return undefined;
@@ -105,12 +108,7 @@ export default function D20Chapter({ id = 'evaluate', head = null }) {
     let stop;
     let scene;
     const size = () => {
-      const s = stage.size();
-      s.w = view.current.clientWidth;
-      s.h = view.current.clientHeight;
-      stage.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      stage.renderer.setSize(s.w, s.h, false);
-      stage.camera.aspect = s.w / s.h;
+      stage.resize(view.current.clientWidth, view.current.clientHeight);
     };
     const el = {
       view: view.current,
@@ -146,7 +144,25 @@ export default function D20Chapter({ id = 'evaluate', head = null }) {
         relayout();
         window.addEventListener('resize', relayout);
         const stopTimeline = createTimeline(track.current, draw);
+        const release = shared
+          ? claimGL({
+              // the die is below the pinned head: it comes on screen ~0.2 screens after the track does
+              range: () => onScreen(track.current, T.handoff, 0.8),
+              wake: () => {
+                try {
+                  stage.wake();
+                } catch {
+                  setMode('static');
+                  return false;
+                }
+                if (last >= 0) draw(last, true);
+                return true;
+              },
+              sleep: () => stage.sleep(),
+            })
+          : null;
         stop = () => {
+          release?.();
           stopTimeline();
           window.removeEventListener('resize', relayout);
         };
@@ -161,7 +177,7 @@ export default function D20Chapter({ id = 'evaluate', head = null }) {
       film.current = null;
       stop?.();
       scene?.dispose();
-      stage.renderer.dispose();
+      stage.sleep();
     };
     // refs are stable; the stage is built once per mode
     // eslint-disable-next-line react-hooks/exhaustive-deps

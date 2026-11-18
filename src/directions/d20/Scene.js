@@ -100,7 +100,7 @@ export async function buildD20(stage, el, onStep) {
   const faces = buildFaces();
   const geo = triangleGeometry();
   const light = new THREE.Vector3(-0.42, 0.62, 0.66).normalize();
-  const dpr = () => stage.renderer.getPixelRatio();
+  const dpr = () => stage.dpr();
 
   const group = new THREE.Group();
   stage.scene.add(group);

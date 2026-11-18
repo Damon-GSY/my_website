@@ -553,7 +553,7 @@ export default function Home() {
               <ArenaOpening embedded head={evalHead} />
             ) : (
               <Deferred height="600svh">
-                <D20Chapter id={null} head={evalHead} />
+                <D20Chapter id={null} head={evalHead} shared />
               </Deferred>
             )}
           </Suspense>

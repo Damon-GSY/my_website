@@ -8,6 +8,10 @@ import { openCase } from './work/caseRoute.js';
 
 const loadCase = () => import('./work/CaseStudy.jsx');
 
+// One live WebGL context on the page (src/engine/gl.js): the film needs it until the six tiles have
+// landed on their cards (p 0.985); after that the cards are DOM and the canvas is blank.
+const SHARE = { until: 0.985 };
+
 // A plain click opens the parcel in place; a modified click (new tab, new window) follows the link.
 function onCard(e) {
   if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
@@ -19,7 +23,7 @@ function onCard(e) {
 // landed card opens its own parcel in place (src/pages/work/CaseStudy.jsx; its link is /work/<slug>).
 // Kept as a fork so the /parcel study stays untouched.
 export default function WorkFilm({ label }) {
-  const { root, canvas, track, mode } = useFilm(buildParcelHome);
+  const { root, canvas, track, mode } = useFilm(buildParcelHome, SHARE);
   const { t } = useLang();
   const open = t({ en: 'Open the parcel', zh: '拆开这只箱子' });
   const study = t({ en: 'Open the case study', zh: '打开案例' });

@@ -3,6 +3,7 @@ import { createPortal, flushSync } from 'react-dom';
 import { langSwitchLabel, useLang } from '../../i18n.jsx';
 import { noteCategory, noteMinutes, notes } from '../../notes.js';
 import { hasWebGL2 } from '../../engine/webgl.js';
+import { lockGL, unlockGL } from '../../engine/gl.js';
 import { createClock, createFold, ease, sstep } from './fold.js';
 import { blank, raster } from './raster.js';
 import { RETURN_KEY, closeNote, getNote, noteOrigin, plainClick, releaseScroll, subscribeNote, switchNote } from './noteRoute.js';
@@ -135,8 +136,22 @@ export default function NoteView({ mode }) {
   function startFold() {
     const s = ctl.current;
     s.fold?.dispose();
-    s.fold = createFold();
-    if (!s.fold) return null;
+    // the page holds one WebGL context (src/engine/gl.js): the film that has it sleeps first
+    lockGL();
+    const fold = createFold();
+    if (!fold) {
+      unlockGL();
+      s.fold = null;
+      return null;
+    }
+    const dispose = fold.dispose;
+    let held = true;
+    fold.dispose = () => {
+      dispose.call(fold);
+      if (held) unlockGL();
+      held = false;
+    };
+    s.fold = fold;
     (layer ? el.root : document.body).appendChild(s.fold.canvas);
     if (!s.clock) s.clock = createClock(frame);
     return s.fold;
