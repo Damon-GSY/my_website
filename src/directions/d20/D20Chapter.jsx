@@ -158,7 +158,10 @@ export default function D20Chapter({ id = 'evaluate', head = null, shared = fals
                 if (last >= 0) draw(last, true);
                 return true;
               },
-              sleep: () => stage.sleep(),
+              sleep: () => {
+                stopTimeline.settle();
+                stage.sleep();
+              },
             })
           : null;
         stop = () => {

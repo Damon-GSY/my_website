@@ -1,43 +1,4 @@
-/* ---------- (07) more ways in, shrunk to one line (assembly plan §7) ---------- */
-.h-more-line {
-  padding-bottom: 0;
-}
-.h-more-link {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px 32px;
-  margin-top: 22px;
-  padding: 18px 0;
-  border-bottom: 1px solid var(--rule);
-  font-weight: 750;
-  font-size: clamp(22px, 2.6vw, 40px);
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-}
-.h-more-link small {
-  flex: none;
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 0;
-  color: var(--muted);
-}
-.h-more-link svg {
-  width: 0.7em;
-  height: 0.7em;
-  margin-left: 0.2em;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  vertical-align: -0.04em;
-  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-.h-more-link:hover svg,
-.h-more-link:focus-visible svg {
-  transform: translate(3px, -3px);
-}
-
-/* ---------- (08) close: the visit, printed ---------- */
+/* ---------- (07) close: the visit, printed ---------- */
 .cl {
   --paper: #fdfdfb;
   --dash: #c4c4c0;
@@ -535,9 +496,5 @@
   }
   .cl-printer {
     margin: 0 -10px;
-  }
-  .h-more-link {
-    flex-direction: column;
-    gap: 8px;
   }
 }

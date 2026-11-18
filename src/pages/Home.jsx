@@ -70,25 +70,22 @@ const EVAL_LENSES = [
   { id: 'arena', label: { en: '13 · Agent Arena', zh: '13 · 对抗沙盒' }, short: { en: '13 Arena', zh: '13 沙盒' } },
 ];
 
-const NAV = [
-  { href: '#work', label: { en: 'Work', zh: '作品' } },
-  { href: '#evaluate', label: { en: 'Evaluate', zh: '评测' } },
-  { href: '#path', label: { en: 'Path', zh: '经历' } },
-  { href: '#notes', label: { en: 'Notes', zh: '笔记' } },
-  { href: '#contact', label: { en: 'Contact', zh: '联系' } },
+// The run's chapters, in page order (the hero, (00), opens it). The section heads, the hero's corner
+// list and the fixed bar all take their numbers and names from here, so they always agree.
+const CHAPTERS = [
+  { id: 'statement', n: '01', label: { en: 'Statement', zh: '自述' } },
+  { id: 'work', n: '02', label: { en: 'Work', zh: '作品' } },
+  { id: 'evaluate', n: '03', label: { en: 'Evaluate', zh: '评测' } },
+  { id: 'evidence', n: '04', label: { en: 'Evidence', zh: '证据' } },
+  { id: 'path', n: '05', label: { en: 'Path', zh: '经历' } },
+  { id: 'notes', n: '06', label: { en: 'Notes', zh: '笔记' } },
+  { id: 'contact', n: '07', label: { en: 'Contact', zh: '联系' } },
 ];
-
-// The fixed bar lists every section; on phones it becomes a scrolling strip (see home.css).
-const BAR_NAV = [
-  { href: '#statement', label: { en: 'Statement', zh: '自述' } },
-  NAV[0],
-  NAV[1],
-  { href: '#evidence', label: { en: 'Evidence', zh: '证据' } },
-  NAV[2],
-  NAV[3],
-  { href: '#more', label: { en: 'More ways in', zh: '更多入口' } },
-  NAV[4],
-];
+const byId = Object.fromEntries(CHAPTERS.map((c) => [c.id, c]));
+const link = (c) => ({ href: `#${c.id}`, label: c.label });
+// the hero's corner list starts after the statement, which is the next screen anyway
+const NAV = CHAPTERS.slice(1).map(link);
+const BAR_NAV = CHAPTERS.map(link);
 
 const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -126,11 +123,15 @@ function Blank({ wide }) {
   return <span className={`h-blank${wide ? ' is-wide' : ''}`} role="img" aria-label={t({ en: 'to be filled in', zh: '待填写' })} />;
 }
 
-function SectionHead({ n, children, aside }) {
+// Every chapter opens the same way: a ruled mono head, "(NN)  Name ... aside", which rises in at its own
+// rate as the chapter enters (home.css, "depth"), then the chapter's own title or device.
+function SectionHead({ ch, aside }) {
+  const { t } = useLang();
+  const c = byId[ch];
   return (
     <header className="h-head mono">
-      <span className="h-num">({n})</span>
-      <span className="h-label">{children}</span>
+      <span className="h-num">({c.n})</span>
+      <span className="h-label">{t(c.label)}</span>
       {aside && <span className="h-aside">{aside}</span>}
     </header>
   );
@@ -140,9 +141,7 @@ function Path() {
   const { t } = useLang();
   return (
     <section id="path" className="h-section h-path" data-pv="0 0.9">
-      <SectionHead n="05" aside={t({ en: 'Newest first', zh: '由近及远' })}>
-        {t({ en: 'Path', zh: '经历' })}
-      </SectionHead>
+      <SectionHead ch="path" aside={t({ en: 'Newest first', zh: '由近及远' })} />
       <h2 className="h-display">{t({ en: 'Path', zh: '经历' })}</h2>
       <ol className="h-table">
         <li className="h-row h-row-head mono" aria-hidden="true">
@@ -158,7 +157,6 @@ function Path() {
             <li
               key={typeof row.when === 'string' ? row.when : 'now'}
               className={`h-row${row.now ? ' is-now' : ''}`}
-              data-pv="0 0.22"
             >
               <span className="h-when mono">
                 {row.now && <span className="h-now-dot" data-mark="path" data-mark-kind="dot" aria-hidden="true" />}
@@ -232,13 +230,14 @@ function Notes() {
   };
   return (
     <section id="notes" className="h-section h-notes" data-pv="0 0.9" ref={ref} onPointerOver={loadNotes} onFocus={loadNotes}>
-      <SectionHead n="06" aside={`${String(notes.length).padStart(2, '0')} ${t({ en: 'entries', zh: '篇' })}`}>
-        {t({ en: 'Field notes', zh: '笔记' })}
-      </SectionHead>
+      <SectionHead
+        ch="notes"
+        aside={t({ en: `Field notes · ${String(notes.length).padStart(2, '0')} entries`, zh: `${String(notes.length).padStart(2, '0')} 篇` })}
+      />
       <h2 className="h-display">{t({ en: 'Notes', zh: '笔记' })}</h2>
       <ol className="h-list">
         {notes.map((note) => (
-          <li key={note.slug} data-pv="0 0.22">
+          <li key={note.slug}>
             <a href={`/notes/${note.slug}`} data-note={note.slug} onClick={onRow}>
               <span className="h-date mono">
                 {note.slug === latest && (
@@ -256,6 +255,16 @@ function Notes() {
           </li>
         ))}
       </ol>
+      {/* "More ways in", cut to one quiet line (assembly plan §7): the best studies are in the page now */}
+      <p className="h-studies mono">
+        <a href="/lab">
+          {t({ en: 'The design studies behind this page', zh: '这一页背后的设计研究' })}
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 18L18 6M8 6h10v10" />
+          </svg>
+        </a>
+        <span>{t({ en: 'Each one another way through the same facts', zh: '每一个都是走进同一组事实的另一条路' })}</span>
+      </p>
       {ever && (
         <Suspense fallback={null}>
           <NoteView mode="layer" />
@@ -265,31 +274,9 @@ function Notes() {
   );
 }
 
-// (07) More ways in, cut to one line (assembly plan §7): the best studies are now in the page itself.
-function MoreLine() {
-  const { t } = useLang();
-  return (
-    <section id="more" className="h-section h-more-line">
-      <SectionHead n="07" aside={t({ en: 'Other doors', zh: '其他入口' })}>
-        {t({ en: 'More ways in', zh: '更多入口' })}
-      </SectionHead>
-      <h2 className="sr-only">{t({ en: 'More ways in', zh: '更多入口' })}</h2>
-      <a className="h-more-link" href="/lab">
-        <span>
-          {t({ en: 'The design studies behind this page', zh: '这一页背后的设计研究' })}
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M6 18L18 6M8 6h10v10" />
-          </svg>
-        </span>
-        <small className="mono">
-          {t({ en: 'Each one another way through the same facts', zh: '每一个都是走进同一组事实的另一条路' })}
-        </small>
-      </a>
-    </section>
-  );
-}
-
-// Slim fixed bar once the hero has scrolled away; it marks the section in view.
+// Slim fixed bar once the hero has scrolled away: the name, the seven chapters (the one being read is
+// underlined), "Short version", then the slot for the Guided mode button (phase H, src/chapters/guided/:
+// it sits between the chapter list and the language switch), then the language switch.
 function Bar() {
   const { lang, setLang, t } = useLang();
   const [past, setPast] = useState(false);
@@ -308,25 +295,28 @@ function Bar() {
     let lastY = window.scrollY;
     const onScroll = () => {
       const y = window.scrollY;
-      setPast(y > window.innerHeight * 0.8);
+      const H = window.innerHeight;
+      setPast(y > H * 0.8);
       if (Math.abs(y - lastY) > 6) {
         setDown(y > lastY);
         lastY = y;
       }
+      // the chapter being read: the last one whose top has passed the middle of the screen; at the very
+      // end of the page, Contact (its stub is the last thing on it, whatever the window's height)
+      let on = '';
+      for (const c of CHAPTERS) {
+        const el = document.getElementById(c.id);
+        if (el && el.getBoundingClientRect().top <= H * 0.5) on = c.id;
+      }
+      if (y + H >= document.documentElement.scrollHeight - 4) on = 'contact';
+      setActive(on);
     };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
-      { rootMargin: '-50% 0px -50% 0px' },
-    );
-    BAR_NAV.map((item) => item.href.slice(1)).forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) io.observe(el);
-    });
+    window.addEventListener('resize', onScroll);
     return () => {
       window.removeEventListener('scroll', onScroll);
-      io.disconnect();
+      window.removeEventListener('resize', onScroll);
     };
   }, []);
   return (
@@ -402,17 +392,8 @@ export default function Home() {
       ? { en: 'Live RL & Tier-3 sandbox', zh: '实时 RL 与三级确认护栏沙盒' }
       : { en: 'One die, twenty rolls', zh: '一枚骰子，二十次' };
 
-  const workHead = (
-    <SectionHead n="02" aside={t(workAside)}>
-      {t({ en: 'Work', zh: '作品' })}
-    </SectionHead>
-  );
-
-  const evalHead = (
-    <SectionHead n="03" aside={t(evalAside)}>
-      {t({ en: 'Evaluate', zh: '评测' })}
-    </SectionHead>
-  );
+  const workHead = <SectionHead ch="work" aside={t(workAside)} />;
+  const evalHead = <SectionHead ch="evaluate" aside={t(evalAside)} />;
 
   const jumpTo = (targetId) => {
     window.requestAnimationFrame(() => {
@@ -476,14 +457,10 @@ export default function Home() {
         )}
 
         <Claim
-          head={
-            <SectionHead n="01" aside={t({ en: 'Thesis', zh: '主张' })}>
-              {t({ en: 'Statement', zh: '自述' })}
-            </SectionHead>
-          }
+          head={<SectionHead ch="statement" aside={t({ en: 'Thesis', zh: '主张' })} />}
         />
 
-        <div id="work" className="h-work-host">
+        <div id="work" className="h-work-host" data-pv="0 0.9">
           {isCustomLens && (
             <ChapterLensBar
               label={t({ en: 'Work chapter mode', zh: '作品章节呈现方式' })}
@@ -517,7 +494,7 @@ export default function Home() {
           <WorkCase />
         </div>
 
-        <div id="evaluate" className="h-evaluate">
+        <div id="evaluate" className="h-evaluate" data-pv="0 0.9">
           {isCustomLens && (
             <ChapterLensBar
               label={t({ en: 'Evaluation chapter mode', zh: '评测章节呈现方式' })}
@@ -545,21 +522,12 @@ export default function Home() {
         </div>
 
         <Evidence
-          head={
-            <SectionHead n="04" aside={t({ en: 'Eight figures, each labelled', zh: '八个数字，各有注明' })}>
-              {t({ en: 'Evidence', zh: '证据' })}
-            </SectionHead>
-          }
+          head={<SectionHead ch="evidence" aside={t({ en: 'Eight figures, each labelled', zh: '八个数字，各有注明' })} />}
         />
         <Path />
         <Notes />
-        <MoreLine />
         <Close
-          head={
-            <SectionHead n="08" aside={t({ en: 'A record of this visit', zh: '本次来访的记录' })}>
-              {t({ en: 'Contact', zh: '联系' })}
-            </SectionHead>
-          }
+          head={<SectionHead ch="contact" aside={t({ en: 'A record of this visit', zh: '本次来访的记录' })} />}
         />
       </main>
 

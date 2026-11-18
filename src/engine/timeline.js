@@ -24,9 +24,19 @@ export function createTimeline(track, onFrame, damping = 0.14, snap = 0.3) {
   window.addEventListener('scroll', read, { passive: true });
   window.addEventListener('resize', read);
   read();
-  return () => {
+  const stop = () => {
     window.removeEventListener('scroll', read);
     window.removeEventListener('resize', read);
     cancelAnimationFrame(raf);
   };
+  // land on the scroll position's frame now, without the damping (a film about to lose its renderer
+  // shows its resting DOM at once instead of a frame that needs the canvas)
+  stop.settle = () => {
+    if (current === target) return;
+    cancelAnimationFrame(raf);
+    raf = 0;
+    current = target;
+    onFrame(current);
+  };
+  return stop;
 }

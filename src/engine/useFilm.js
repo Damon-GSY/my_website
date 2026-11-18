@@ -66,7 +66,10 @@ export function useFilm(build, share = null) {
                 stage.render();
                 return true;
               },
-              sleep: () => stage.sleep(),
+              sleep: () => {
+                stopTimeline.settle();
+                stage.sleep();
+              },
             })
           : null;
         stop = () => {

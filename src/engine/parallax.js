@@ -4,6 +4,10 @@
 // element has left at the top). Children read --pv in CSS (home.css, "depth") and move with transform
 // and opacity only; --pv is inherited, so one timeline drives a whole opener.
 //
+// Since the assembly pass it does two things only, so it never competes with a chapter's own device:
+// the hero's exit (its planes sink at different rates) and the one opener move every chapter shares
+// (its ruled head and title rise in at their own rates).
+//
 // Native: a scroll-driven animation of --pv on a view() timeline (the range is set here, in px).
 // Fallback (Safari): one passive scroll listener writes --pv from positions measured on resize.
 // Off with reduced motion: nothing is added and every effect is written for `.pv-on` only.
