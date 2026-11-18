@@ -13,9 +13,13 @@ const FLAT = 0.34;
 // The candidates stand as a deck in depth under the cursor, in the empty lines the sentence has not
 // reached yet: place 0 (nearest) is the chosen token, the words not chosen stand behind it, each one
 // deeper, smaller and fainter (rank, not a probability). Units: em, from the token's own slot.
-// `ys` is the row step, squeezed for the last lines so the deck stays above the three-term line.
+// `ys` is the row step, squeezed for the last lines so the deck stays above the three-term line. Where
+// a line has too little room under it for that (the last line, "work"), the deck stands in a row on the
+// token's own line instead, to its right, where the sentence has not been written yet (finish pass,
+// 2026-11-18: it used to be stacked over the three-term line).
 const DECK = (k, ys = 0.9) => ({ x: 0.06 + 0.5 * k, y: 0.95 + ys * k, z: -0.35 - 1.05 * k, ry: -6 - 6 * k, rx: 8 });
 const DECK_OP = [1, 0.8, 0.55, 0.34];
+const P_EM = 5.5; // the depth layer's perspective (claim.css)
 
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const span = (p, a, b) => clamp((p - a) / (b - a));
@@ -78,7 +82,23 @@ export function startClaim({ lang, sec, h2, depth, caret, count, cap, facets, U0
     // room under each line, down to the three-term line, sets how far the deck may step down
     const floor = facets.current.getBoundingClientRect().top - o.top - 0.1 * em;
     const ys = rects.map((r) => clamp((floor - r.y - r.h) / em / 2.2, 0.32, 0.9));
-    geo = { em, rects, size, ends, ys, start: end(-1) };
+    const right = window.innerWidth - o.left - 16;
+    const rows = rects.map((r, i) => {
+      if ((floor - r.y - r.h) / em > 1.4) return null;
+      // laid out in screen space (em from the slot), then pushed back out by each word's depth, since
+      // the perspective (5.5em, vanishing at the cursor, near the slot's left) draws it nearer the slot
+      let x = r.w / em + 0.5;
+      const xs = alts
+        .filter((a) => a.i === i)
+        .map((a) => {
+          const k = (P_EM - DECK(a.r + 1).z) / P_EM;
+          const at = x * k;
+          x += a.el.offsetWidth / em / k + 0.45;
+          return at;
+        });
+      return r.x + (x - 0.45) * em <= right ? xs : null;
+    });
+    geo = { em, rects, size, ends, ys, rows, start: end(-1) };
     depth.current.style.setProperty('--lh', `${stop.h}px`);
     depth.current.style.height = `${Math.max(floor, rects[last].y + rects[last].h)}px`;
     caret.current.style.width = `${size}px`;
@@ -93,7 +113,7 @@ export function startClaim({ lang, sec, h2, depth, caret, count, cap, facets, U0
     const H = window.innerHeight;
     const u = -sec.current.getBoundingClientRect().top / H;
     const p = span(u, U0, U1);
-    const { em, rects, size, ends, ys, start } = geo;
+    const { em, rects, size, ends, ys, rows, start } = geo;
     const fs = rects.map((_, i) => span(p, i * step, i * step + L));
 
     // the cursor: slides to the end of the token being flattened; a new line starts at its left
@@ -129,7 +149,7 @@ export function startClaim({ lang, sec, h2, depth, caret, count, cap, facets, U0
       const e = ease(span(f, 0, 0.32));
       const k = 1 - g;
       const r = rects[i];
-      const d = DECK(0);
+      const d = rows[i] ? { ...DECK(0), y: 0 } : DECK(0);
       put(
         el,
         'tf',
@@ -146,7 +166,7 @@ export function startClaim({ lang, sec, h2, depth, caret, count, cap, facets, U0
         put(el, 'op', '0');
         return;
       }
-      const s = DECK(r + 1, ys[i]);
+      const s = rows[i] ? { ...DECK(r + 1), x: rows[i][r], y: 0.04 * (r + 1) } : DECK(r + 1, ys[i]);
       const e = ease(span(f, 0, 0.38));
       const o = ease(span(f, 0.5, 1));
       const z = s.z + (1 - e) * -3 + o * -4;
