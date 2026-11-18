@@ -11,9 +11,9 @@ import './around/around.css';
 // drawn once as SVG.
 
 const START = { yaw: -1.05, pitch: 0.42 };
-// a damped torsion pendulum: ~16% overshoot, at rest in about two seconds
-const OMEGA = 3.3;
-const ZETA = 0.5;
+// a damped torsion pendulum: ~8% overshoot, reads as "404" after about two seconds
+const OMEGA = 3.6;
+const ZETA = 0.62;
 
 const reducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
@@ -58,7 +58,7 @@ export default function NotFound() {
           s.pitch += s.vp * h;
         }
       }
-      const resting = !s.drag && Math.abs(s.yaw) + Math.abs(s.pitch) < 4e-4 && Math.abs(s.vy) + Math.abs(s.vp) < 2e-3;
+      const resting = !s.drag && Math.abs(s.yaw) + Math.abs(s.pitch) < 2.5e-3 && Math.abs(s.vy) + Math.abs(s.vp) < 1.5e-2;
       if (resting) {
         s.yaw = 0;
         s.pitch = 0;
