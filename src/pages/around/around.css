@@ -572,3 +572,67 @@ body:has(.ar) {
     grid-column: 1 / span 8;
   }
 }
+
+/* ---------- /short: the bento, framed by the run's bar ---------- */
+.ar-short {
+  display: flex;
+  flex-direction: column;
+  height: 100svh;
+  min-height: 0;
+}
+.ar-short .ar-bar {
+  flex: none;
+}
+.sh-what {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  margin: 0;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.ar-short .ar-bar-name + .sh-what {
+  padding-left: 22px;
+  border-left: 1px solid var(--rule);
+}
+.sh-mark {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--magenta);
+}
+.sh-full {
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 1px;
+}
+.sh-arrow {
+  margin-left: 0.5em;
+}
+.sh-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+.sh-stage iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: var(--bg);
+}
+@media (max-width: 760px) {
+  .ar-short .ar-bar-name {
+    display: none;
+  }
+  .sh-what {
+    flex: 1;
+  }
+  .ar-short .ar-bar-name + .sh-what {
+    padding-left: 0;
+    border-left: 0;
+  }
+}

@@ -1,30 +1,62 @@
-// /short: the sixty-second version (assembly plan §3, "Short" mode). The static bento study, full window.
+import { useEffect } from 'react';
+import { langSwitchLabel, useLang } from '../i18n.jsx';
+import './around/around.css';
+
+// /short: the sixty-second version (assembly plan §3, "Short" mode). The bento study (built from Damon's
+// brief, public/lab/bento/) runs as it is, in its own palette, inside the run's bar: the bar names it
+// and holds the way back to the full site, with the mark as its one accent.
+
 export default function Short() {
+  const { lang, setLang, t } = useLang();
+  useEffect(() => {
+    document.title = `${t({ en: 'The short version', zh: '简短版' })} — Damon Guan`;
+  }, [t]);
+  // the bento's own links (home, /lab, a note) open in the page, not inside the frame
+  const onLoad = (e) => {
+    try {
+      const d = e.currentTarget.contentDocument;
+      if (d && !d.querySelector('base')) {
+        const base = d.createElement('base');
+        base.target = '_top';
+        d.head.appendChild(base);
+      }
+    } catch {
+      /* not same-origin: leave it */
+    }
+  };
   return (
-    <>
-      <iframe
-        src="/lab/bento/"
-        title="Damon Guan, the short version"
-        style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', border: 0, background: '#f4f4f2' }}
-      />
-      <a
-        href="/"
-        style={{
-          position: 'fixed',
-          right: 12,
-          bottom: 12,
-          zIndex: 2,
-          padding: '8px 12px',
-          borderRadius: 999,
-          background: '#0d0d0d',
-          color: '#f4f4f2',
-          font: '600 11px/1 "Cartograph CF", ui-monospace, monospace',
-          letterSpacing: '0.04em',
-          textTransform: 'uppercase',
-        }}
-      >
-        ← Full site
-      </a>
-    </>
+    <div className="ar ar-short">
+      <header className="ar-bar">
+        <a className="ar-bar-name ar-wide" href="/">
+          Damon Guan
+        </a>
+        <p className="sh-what mono">
+          <span className="sh-mark" aria-hidden="true" />
+          {t({ en: 'The 60-second version', zh: '60 秒版本' })}
+        </p>
+        <nav aria-label={t({ en: 'Site', zh: '站点' })}>
+          <a className="sh-full" href="/">
+            {t({ en: 'Full site', zh: '完整网站' })}
+            <span className="sh-arrow" aria-hidden="true">
+              →
+            </span>
+          </a>
+          <a className="ar-wide" href="/lab">
+            {t({ en: 'Studies', zh: '研究' })}
+          </a>
+        </nav>
+        <button
+          type="button"
+          className="ar-bar-lang"
+          onClick={() => setLang(lang === 'en' ? 'zh' : 'en')}
+          aria-label={langSwitchLabel(lang)}
+        >
+          {lang === 'en' ? '中文' : 'EN'}
+        </button>
+      </header>
+      <main id="content" className="sh-stage">
+        <iframe src="/lab/bento/" title={t({ en: 'Damon Guan, the short version', zh: 'Damon Guan 简短版' })} onLoad={onLoad} />
+      </main>
+    </div>
   );
 }
