@@ -1061,11 +1061,6 @@ body:has(.note) {
   translate: calc(-90vw + var(--pv) * 60vw) 0;
 }
 
-/* evidence: the figures sit on three planes */
-.pv-on .ev-fig {
-  translate: 0 calc(var(--pv) * var(--dz, 0) * -14px);
-}
-
 /* path: rows slide in from alternating sides and depths */
 .pv-on .h-path .h-row[data-pv] {
   --dx: 44px;
@@ -1102,9 +1097,6 @@ body:has(.note) {
 @media (max-width: 640px) {
   .home {
     --rise: 30px;
-  }
-  .pv-on .ev-fig {
-    translate: 0 calc(var(--pv) * var(--dz, 0) * -8px);
   }
   .pv-on .h-path .h-row[data-pv] {
     --dx: 24px;

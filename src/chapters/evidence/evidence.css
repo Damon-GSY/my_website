@@ -1,0 +1,546 @@
+/* Evidence (phase F): type board -> paper towers -> labelled chart, in the home page's system.
+   The film (film.js) moves the labels ([data-mv]) with transforms and builds the 3D world; everything
+   here is also the static chart (reduced motion, no WebGL). */
+.ev {
+  --ev-gap: clamp(28px, 4vw, 64px);
+  --ev-axw: 44px; /* the tick-label gutter left of each axis */
+  --ev-cap-h: 14px; /* the open top on a lower bound (100+) */
+  --ev-plot: clamp(200px, 46svh, 440px);
+  --ev-vfs: clamp(26px, 2.6vw, 44px); /* chart value labels */
+  --ev-ffs: clamp(52px, 6vw, 108px); /* board figures */
+  --travel: 2.4;
+}
+.ev-lead {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px 32px;
+  align-items: flex-end;
+  margin: clamp(28px, 5vh, 64px) 0 clamp(20px, 3vh, 40px);
+}
+.ev-title {
+  flex: none;
+  margin-left: -0.04em;
+  font-weight: 900;
+  font-size: clamp(76px, 12vw, 220px);
+  line-height: 0.78;
+  letter-spacing: -0.055em;
+}
+.ev-intro {
+  max-width: 22em;
+  text-wrap: pretty;
+  padding-bottom: 0.4em;
+  font-size: 15px;
+  line-height: 1.4;
+  color: color-mix(in srgb, var(--ink) 72%, transparent);
+}
+.home:lang(zh) .ev-title {
+  letter-spacing: 0;
+  line-height: 0.95;
+}
+
+/* ---------- the stage: pinned while the film runs, plain flow otherwise ---------- */
+.ev-stage {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+.ev.is-live .ev-track {
+  height: calc(100svh * (1 + var(--travel)));
+}
+.ev.is-live .ev-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  margin-inline: calc(-1 * var(--gutter));
+  padding: clamp(18px, 4svh, 40px) var(--gutter) clamp(14px, 2.4svh, 24px);
+  overflow: clip;
+}
+.ev-cap {
+  display: flex;
+  gap: 0.6em;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--unlit);
+}
+.ev-cap span + span::before {
+  content: '→';
+  margin-right: 0.6em;
+  color: var(--unlit);
+}
+.ev-cap .is-on {
+  color: var(--ink);
+}
+.ev-field {
+  position: relative;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  align-items: center;
+  min-height: 0;
+}
+.ev-field > * {
+  grid-area: 1 / 1;
+}
+.ev-foot {
+  display: grid;
+  gap: 4px;
+  padding-top: 14px;
+  font-size: 10.5px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--ink) 70%, transparent);
+}
+.ev-dagger {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+/* ---------- labels shared by the board and the chart ---------- */
+.ev-meta {
+  display: block;
+  font-size: 10.5px;
+  line-height: 1.3;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.ev-cat {
+  display: block;
+}
+.ev-measures {
+  display: block;
+  margin-top: 8px;
+  font-size: 11px;
+  line-height: 1.3;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.ev-source {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 1.25;
+  color: color-mix(in srgb, var(--ink) 62%, transparent);
+}
+.ev-val,
+.ev-fig {
+  display: flex;
+  align-items: flex-start;
+  width: max-content;
+  font-weight: 900;
+  line-height: 0.82;
+  letter-spacing: -0.055em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.ev-val {
+  font-size: var(--ev-vfs);
+}
+.ev-fig {
+  font-size: var(--ev-ffs);
+}
+:is(.ev-val, .ev-fig) .ev-dagger {
+  margin-left: 0.1em;
+  font-size: 0.28em;
+  line-height: 1;
+}
+.ev-atitle {
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ---------- the type board (film only): what the chapter opens on ---------- */
+.ev-cells {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--ink);
+}
+.ev-cell {
+  display: flex;
+  flex-direction: column;
+  min-height: clamp(150px, 25svh, 250px);
+  padding: 14px clamp(14px, 1.6vw, 24px) 18px;
+  border-bottom: 1px solid var(--rule);
+}
+.ev-cell:not(:nth-child(4n + 1)) {
+  border-left: 1px solid var(--rule);
+}
+.ev-cell .ev-fig {
+  padding-top: 8px;
+}
+.ev-cell .ev-meta {
+  margin-top: 12px;
+}
+.ev-cell .ev-cat {
+  margin-top: auto;
+  padding-top: 16px;
+}
+.ev-keys {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 18px clamp(28px, 5vw, 72px);
+  margin-top: 22px;
+}
+.ev-key {
+  display: flex;
+  align-items: flex-start;
+  gap: 22px;
+}
+.ev-keyline {
+  position: relative;
+  flex: none;
+  width: clamp(110px, 13vw, 190px);
+  height: 1px;
+  margin: 6px 12px 22px;
+  background: var(--ink);
+}
+.ev-keytick {
+  position: absolute;
+  left: calc(var(--f) * 100%);
+  bottom: 0;
+  width: 1px;
+  height: 6px;
+  background: var(--ink);
+}
+.ev-keytick > span {
+  position: absolute;
+  top: 12px;
+  left: 0;
+  translate: -50% 0;
+  font-size: 10px;
+  white-space: nowrap;
+}
+.ev-key .ev-atitle {
+  padding-top: 0;
+}
+
+/* ---------- the chart: what the chapter rests on, and the static version ---------- */
+.ev-chart {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 2.5fr) minmax(0, 2fr);
+  gap: 32px var(--ev-gap);
+  align-items: end;
+}
+.ev-plot .ev-atitle {
+  margin: 0 0 calc(var(--ev-vfs) * 0.6 + 26px) var(--ev-axw);
+  translate: -12px 0;
+}
+.ev-area {
+  position: relative;
+  height: var(--ev-plot);
+  margin-left: var(--ev-axw);
+  border-left: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+.ev-tick {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--f) * 100%);
+  height: 0;
+  border-top: 1px solid var(--rule);
+}
+.ev-tick::before {
+  content: '';
+  position: absolute;
+  right: 100%;
+  top: -1px;
+  width: 6px;
+  height: 1px;
+  background: var(--ink);
+}
+.ev-tl {
+  position: absolute;
+  right: calc(100% + 10px);
+  top: -0.5em;
+  font-size: 10px;
+  line-height: 1;
+  white-space: nowrap;
+}
+.ev-cols,
+.ev-cats {
+  display: grid;
+  grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  column-gap: clamp(12px, 1.6vw, 24px);
+  padding-left: clamp(12px, 1.4vw, 22px);
+}
+.ev-cols {
+  position: absolute;
+  inset: 0;
+}
+.ev-col {
+  position: relative;
+}
+.ev-bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: min(100%, 120px, max(56%, 44px));
+  height: calc(var(--f) * 100%);
+  background: var(--ink);
+}
+.ev-bar.is-lower::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: var(--ev-cap-h);
+  border: 1px dashed var(--ink);
+  border-bottom: 0;
+}
+.ev-col .ev-val {
+  position: absolute;
+  left: 0;
+  bottom: calc(var(--f) * 100% + 10px);
+}
+.ev-col:has(.is-lower) .ev-val {
+  bottom: calc(var(--f) * 100% + 10px + var(--ev-cap-h));
+}
+.ev-cats {
+  margin-left: var(--ev-axw);
+  padding-top: 14px;
+}
+.ev-cats .ev-measures {
+  margin-top: 6px;
+}
+.ev-words {
+  align-self: end;
+}
+.ev-words ol {
+  display: grid;
+  gap: 22px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+}
+.ev-words .ev-val {
+  margin-bottom: 10px;
+}
+
+/* ---------- the film: labels move, the 3D world shows only between the rests ---------- */
+.ev [data-mv] {
+  transform-origin: 0 0;
+}
+.ev .ev-val[data-mv] {
+  transform-origin: 0 100%;
+}
+.ev.is-live .ev-board [data-ph] {
+  visibility: hidden;
+}
+.ev-stage.is-film:not(.at-board) .ev-board {
+  visibility: hidden;
+}
+.ev-stage.is-film:not(.at-chart) :is(.ev-area, .ev-tick) {
+  border-color: transparent;
+}
+.ev-stage.is-film:not(.at-chart) .ev-bar {
+  visibility: hidden;
+}
+.ev-stage.is-film:not(.at-chart) .ev-tick::before {
+  background: transparent;
+}
+.ev-stage.is-film:not(.at-chart) .ev-words ol {
+  border-color: transparent;
+}
+.ev-stage:not(.is-film) .ev-board {
+  visibility: hidden;
+}
+
+.ev-world {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  transform-origin: 0 0;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+.ev-world > * {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  box-sizing: border-box;
+}
+.ev-face {
+  backface-visibility: hidden;
+  border: 1px solid rgb(13 13 13 / calc(var(--edge, 1) * 0.9));
+}
+.ev-roof {
+  background: color-mix(in srgb, #fbfbf9 calc(var(--r, 0) * 100%), #f4f4f2);
+  border-color: rgb(13 13 13 / calc(var(--r, 0) * 0.9));
+}
+.ev-front {
+  background: color-mix(in srgb, #0d0d0d calc(var(--inked, 0) * 100%), #ecece8);
+}
+.ev-right {
+  background: color-mix(in srgb, #0d0d0d calc(var(--inked, 0) * 100%), #d9d9d4);
+}
+.ev-left {
+  background: #e4e4e0;
+}
+.ev-capface {
+  border: 1px dashed #0d0d0d;
+  border-bottom: 0;
+  background: transparent;
+}
+.ev-plate {
+  background: #fbfbf9;
+  border-color: rgb(13 13 13 / 0.9);
+}
+.ev-shadow {
+  border-radius: 6px;
+  background: rgb(13 13 13 / 0.09);
+  filter: blur(9px);
+}
+.ev-ground {
+  margin: 0;
+  backface-visibility: hidden;
+}
+.ev-ground * {
+  visibility: hidden;
+}
+.ev-rule3 {
+  height: 1px;
+  background: #0d0d0d;
+}
+.ev-rule3 i {
+  position: absolute;
+  left: calc(var(--f) * 100%);
+  width: 1px;
+}
+.ev-rule3 .mk {
+  bottom: 0;
+  height: 6px;
+  background: #0d0d0d;
+}
+.ev-rule3 .gl {
+  top: 1px;
+  height: var(--gl, 0px);
+  background: #d9d9d5;
+}
+.ev-base3 {
+  height: 1px;
+  background: #0d0d0d;
+}
+
+@media (max-width: 760px) {
+  .ev {
+    --travel: 1.7;
+    --ev-axw: 34px;
+    --ev-vfs: clamp(22px, 7vw, 30px);
+    --ev-ffs: clamp(30px, 9.5vw, 46px);
+    --ev-plot: clamp(96px, 16.5svh, 180px);
+  }
+  .ev-lead {
+    display: block;
+  }
+  .ev-title {
+    font-size: clamp(56px, 18.5vw, 76px);
+  }
+  .ev-intro {
+    margin-top: 20px;
+  }
+  .ev-cells {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ev-cell:not(:nth-child(4n + 1)) {
+    border-left: 0;
+  }
+  .ev-cell:nth-child(2n) {
+    border-left: 1px solid var(--rule);
+  }
+  .ev-cell {
+    min-height: clamp(108px, 14svh, 160px);
+    padding: 8px 10px 10px;
+  }
+  .ev-cell .ev-fig {
+    padding-top: 2px;
+  }
+  .ev-cell .ev-meta {
+    margin-top: 6px;
+  }
+  .ev-cell .ev-cat {
+    padding-top: 8px;
+  }
+  .ev-foot {
+    font-size: 9.5px;
+  }
+  .ev-words .ev-atitle {
+    white-space: normal;
+  }
+  .ev-source {
+    font-size: 12px;
+  }
+  .ev-measures {
+    font-size: 9.5px;
+  }
+  .ev-chart {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 26px 18px;
+  }
+  .ev-plot.is-count {
+    grid-column: 1 / -1;
+  }
+  .ev-plot.is-rate {
+    --ev-plot: clamp(70px, 10.5svh, 120px);
+  }
+  .ev-keys {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px 16px;
+    margin-top: 12px;
+  }
+  .ev-key {
+    flex-direction: column;
+    gap: 0;
+  }
+  .ev-key:last-child {
+    grid-column: 1 / -1;
+  }
+  .ev-keyline {
+    width: calc(100% - 28px);
+    margin: 6px 14px 20px;
+  }
+  .ev-words ol {
+    gap: 14px;
+  }
+}
+
+/* short phones: the board and the chart still fit between the caption and the footnote */
+@media (max-width: 760px) and (max-height: 780px) {
+  .ev {
+    --ev-plot: clamp(80px, 13svh, 120px);
+    --ev-ffs: clamp(28px, 8.4vw, 40px);
+  }
+  .ev-cell {
+    padding-block: 6px 8px;
+  }
+  .ev-plot.is-rate {
+    --ev-plot: clamp(56px, 8.5svh, 90px);
+  }
+  .ev-chart {
+    row-gap: 18px;
+  }
+  .ev-cats .ev-source,
+  .ev-words .ev-source {
+    font-size: 11px;
+  }
+  .ev-cats {
+    padding-top: 10px;
+  }
+  .ev-cell {
+    min-height: 0;
+  }
+  .ev.is-live .ev-stage {
+    padding-top: 14px;
+  }
+}

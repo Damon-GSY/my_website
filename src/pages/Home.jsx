@@ -5,7 +5,7 @@ import { noteCategory, noteMinutes, notes } from '../notes.js';
 import InkHero from '../directions/ink/InkHero.jsx';
 import Claim from '../chapters/claim/Claim.jsx';
 import Close from '../chapters/close/Close.jsx';
-import Evidence from '../directions/home-evidence/Evidence.jsx';
+import Evidence from '../chapters/evidence/Evidence.jsx';
 import { hasWebGL2 } from '../engine/webgl.js';
 import { startMark } from '../engine/mark.js';
 import { startParallax } from '../engine/parallax.js';
