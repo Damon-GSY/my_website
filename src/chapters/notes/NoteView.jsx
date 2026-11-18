@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal, flushSync } from 'react-dom';
 import { langSwitchLabel, useLang } from '../../i18n.jsx';
 import { noteCategory, noteMinutes, notes } from '../../notes.js';
+import { bodies } from './bodies.js';
 import { hasWebGL2 } from '../../engine/webgl.js';
 import { lockGL, unlockGL } from '../../engine/gl.js';
 import { createClock, createFold, ease, sstep } from './fold.js';
@@ -552,7 +553,7 @@ export default function NoteView({ mode }) {
                 {lang === 'zh' && <span>{t({ en: 'This note is in English only.', zh: '本文仅有英文版。' })}</span>}
               </aside>
               {/* trusted, author-written HTML from src/notes.js */}
-              <div className="nt-prose" dangerouslySetInnerHTML={{ __html: note.content }} />
+              <div className="nt-prose" dangerouslySetInnerHTML={{ __html: bodies[note.slug] }} />
             </div>
             <footer className="nt-end mono">
               <span>
