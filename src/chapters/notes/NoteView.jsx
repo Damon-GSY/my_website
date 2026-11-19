@@ -259,6 +259,20 @@ export default function NoteView({ mode }) {
       // how much it is on the ball: hopping on while the first sheet balls up, then held by the paper
       // until it has opened (c falls to 0 as the second sheet lies flat)
       const first = tt < 0.5;
+      // a sheet (edges pass, 2026-11-19): the pin stays in its own point of the paper as the wad gathers in
+      // or opens out, and goes over to the ball's top as that point is balled up. The row a note opens
+      // from is not pinned: from there the pin hops onto the ball (below).
+      const sheet = !first || ctl.current.kind === 'next';
+      const pt = sheet ? ctl.current.fold.paperAt(tt, first ? from.x : to.x, first ? from.y : to.y) : null;
+      if (pt) {
+        const w = pt.a2;
+        return {
+          x: lerp(pt.x, top.x, w),
+          y: lerp(pt.y, top.y, w),
+          size: (first ? from.size : to.size) * lerp(pt.k, top.k, w) * (1 + 0.18 * press(tt)),
+          lift: 0.35 * Math.max(pt.a1, w) + 0.3 * press(tt),
+        };
+      }
       const on = first ? ease(clamp((tt - 0.04) / 0.3)) : sstep(0.06, 0.7, top.c);
       const end = first ? from : to;
       const hop = first ? Math.sin(Math.PI * on) * Math.min(120, Math.hypot(top.x - from.x, top.y - from.y) * 0.3) : 0;

@@ -471,7 +471,66 @@ export function createFold() {
     return { x: vw / 2 + (P.x - vw / 2) * k, y: vh / 2 + (P.y - 0.86 * P.R - vh / 2) * k, k, c: P.c };
   }
 
-  return { canvas, setEnds, draw, pose: (t) => (ends ? pose(t) : null), ballTop, dispose };
+  // Where a point of the paper is on screen at time t (edges pass, 2026-11-19): (x, y) is a point of the
+  // flat sheet at P.end, in viewport px; the mesh vertex nearest to it is run through the vertex shader's
+  // own sums, so the pin can ride the loose wad itself, not the ball's centre, while the sheet folds in
+  // or opens out. Also returns the perspective scale k there and how far that vertex is into the loose
+  // (a1) and ball (a2) shapes.
+  const near = new Map();
+  let nearOf = null;
+  function paperAt(t, x, y) {
+    if (!ends || !mesh) return null;
+    const P = pose(t);
+    const e = P.end;
+    const u = clamp((x - e.x) / e.w);
+    const v = clamp((y - e.y) / e.h);
+    if (nearOf !== mesh) near.clear();
+    nearOf = mesh;
+    const key = `${u.toFixed(3)}:${v.toFixed(3)}`;
+    let o = near.get(key);
+    if (o === undefined) {
+      let best = Infinity;
+      for (let i = 0; i < mesh.buf.length; i += 18) {
+        const d = (mesh.buf[i] - u) ** 2 + (mesh.buf[i + 1] - v) ** 2;
+        if (d < best) {
+          best = d;
+          o = i;
+        }
+      }
+      near.set(key, o);
+    }
+    const B = mesh.buf;
+    const sx = e.cx - vw / 2;
+    const sy = e.cy - vh / 2;
+    const bx = P.x - vw / 2;
+    const by = P.y - vh / 2;
+    const a = clamp((P.c - 0.3 * B[o + 10]) / 0.7);
+    const s01 = (x) => x * x * (3 - 2 * x);
+    const a1 = s01(clamp(a / 0.55));
+    const a2 = s01(clamp((a - 0.55) / 0.45));
+    const mix = (p, q, w) => p + (q - p) * w;
+    const T = [0, 1, 2].map((j) => mix(B[o + 2 + j], B[o + 5 + j], which));
+    const L = [0, 1, 2].map((j) => mix(B[o + 12 + j], B[o + 15 + j], which));
+    const cy = Math.cos(P.rotY);
+    const sy2 = Math.sin(P.rotY);
+    const cx = Math.cos(P.rotX);
+    const sx2 = Math.sin(P.rotX);
+    let r = [T[0] * cy + T[2] * sy2, T[1], -T[0] * sy2 + T[2] * cy];
+    r = [r[0], r[1] * cx - r[2] * sx2, r[1] * sx2 + r[2] * cx];
+    const flat = [sx + (B[o] - 0.5) * e.w, sy + (B[o + 1] - 0.5) * e.h, 0];
+    const ball = [bx + r[0] * P.R, by + r[1] * P.R, P.z + r[2] * P.R];
+    const loose = [mix(sx, bx, 0.5) + L[0] * e.loose, mix(sy, by, 0.5) + L[1] * e.loose, L[2] * e.loose];
+    const p = [0, 1, 2].map((j) => mix(mix(flat[j], loose[j], a1), ball[j], a2));
+    p[2] += B[o + 11] ** 2.5 * 0.16 * Math.min(e.w, e.h) * Math.sin(Math.PI * a1) * (1 - a2);
+    const F = 2.4 * Math.max(vw, vh);
+    const k = F / Math.max(1, F - p[2]);
+    // the vertex is near, not on, (u, v): on the flat sheet the difference is put back exactly
+    const du = (u - B[o]) * e.w * (1 - a1);
+    const dv = (v - B[o + 1]) * e.h * (1 - a1);
+    return { x: vw / 2 + p[0] * k + du, y: vh / 2 + p[1] * k + dv, k, a1, a2 };
+  }
+
+  return { canvas, setEnds, draw, pose: (t) => (ends ? pose(t) : null), ballTop, paperAt, dispose };
 }
 
 // ---------- a reversible clock ----------
