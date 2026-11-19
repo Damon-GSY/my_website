@@ -13,6 +13,8 @@ Two background agents in parallel work well when they touch separate sections of
 
 **Known rough edges to sweep:** notes: tightest balls look slightly foil-like, "Next note" from the end of a long note makes a small ball; at 375×667 the phone receipt's whole view hits its 0.5 floor and the name is cut at the top. Fixed in the edges + a11y pass (2026-11-19, below): the phone receipt stub's small tap targets, the notes pin off the loose wad, Evidence's +8.2% / SOTA touch on phones, the Work film's long-lived pale "01–06", plus an accessibility tree pass. Fixed in the finish pass: the claim's squeezed last-line deck, the case sheet's 0.9 scale at 900 px, Evidence label overlap behind nearer towers, the Work film's flat-carton and unpack dead air, the Guided panel over the Evidence chart, the 1.5 kB first-paint overrun. Fixed in the polish pass (below): the arrival wobble, the pin's own arc, the phone receipt's lost top, the phone chrome over content and the 360 strip, the d20's missing keyboard control, chapter anchors on a fresh load.
 
+**Still open for Damon:** employer and city (blank in `src/content.js`), real email (stand-in `hello@damon.ai`), domain/host, "2025– · Alibaba" in typist/receipt studies, review of Claude-written copy (zh case-study translations, the claim's invented candidate words captioned illustrative), whether to open a PR into main.
+
 ## Edges + a11y pass (2026-11-19)
 
 Commits on `claude/serene-cori-mookmf`: `9ed693e` receipt stub, `e63b578` + `1c416e6` accessibility, `b9429ff` notes pin, `d7e8b7e` Evidence, `8e4fa6c` Work film.
@@ -24,8 +26,6 @@ Commits on `claude/serene-cori-mookmf`: `9ed693e` receipt stub, `e63b578` + `1c4
 - **Work film** (home clock keys in `Scene.js`; `/parcel` unchanged). Unfold ~0.4 screens (was 0.6), no wait on the flat net, tiles land by home p 0.9 (was ~0.98): pale numerals on screen ~0.8 screens (was ~1.2) and they read as the cards' numbers; the cards rest, readable, for the last half screen. GL range follows (`homeUnwarp(0.985)` = 0.9). Mark on its dock at 0.00 px at 13 checkpoints, down and up, 1440 and 390.
 
 **Verified** (isolated build of HEAD, `vite preview`, SwiftShader; scratchpad `edges2/`): before/after frames and sheets for each item (`sheet-receipt-end.png`, `notes/sheet-nc-*-1440.png`, `notes/sheet-nc-390.png`, `notes/sheet-nn-after-1440.png`, `ev/sheet-ev-*-390.png`, `ev/sheet-ev-*-360.png`, `work/sheet-wk-*-390.png`, `work/sheet-wk-after-1440.png`, ARIA snapshots in `a11y/`), all looked at. Full scroll down and up: 0 console errors, 0 px overflow, max 1 live WebGL context at 1440, 390, 360 (en, zh at 390), reduced motion and no-WebGL. `npx eslint .` and `npm run build` pass.
-
-**Still open for Damon:** employer and city (blank in `src/content.js`), real email (stand-in `hello@damon.ai`), domain/host, "2025– · Alibaba" in typist/receipt studies, review of Claude-written copy (zh case-study translations, the claim's invented candidate words captioned illustrative), whether to open a PR into main.
 
 ## Polish pass (2026-11-18)
 
