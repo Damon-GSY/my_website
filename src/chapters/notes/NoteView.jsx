@@ -456,6 +456,18 @@ export default function NoteView({ mode }) {
     const first = setTimeout(sync, 0); // a note asked for before this chunk had loaded
     const onKey = (e) => {
       const s = ctl.current;
+      // over the page, Tab cycles inside the sheet (the page under it is inert) instead of leaving for the browser
+      if (layer && e.key === 'Tab' && s.cur && el.root) {
+        const items = [...el.root.querySelectorAll('a[href], button:not([disabled])')].filter((n) => n.offsetParent !== null);
+        const a = document.activeElement;
+        const at = items.indexOf(a);
+        const edge = e.shiftKey ? at <= 0 : at === items.length - 1;
+        if (items.length && (edge || !el.root.contains(a))) {
+          e.preventDefault();
+          items[e.shiftKey ? items.length - 1 : 0].focus();
+        }
+        return;
+      }
       if (e.key !== 'Escape' || !s.cur || e.defaultPrevented) return;
       e.preventDefault();
       if (layer) closeNote();

@@ -167,6 +167,10 @@ body:has(.note) {
   gap: 12px clamp(28px, 5vw, 72px);
   font-size: 11px;
 }
+/* the skip link's target takes focus (tabindex -1) so the next Tab starts there; no ring on a whole chapter */
+.h-statement:focus {
+  outline: none;
+}
 .h-facets span {
   margin-right: 10px;
   color: var(--muted);

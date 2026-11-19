@@ -231,12 +231,20 @@ export default function D20Chapter({ id = 'evaluate', head = null, shared = fals
   useEffect(() => {
     if (mode !== 'film') return undefined;
     const k = hud.revealed;
+    let gone = 0;
     const id = window.setTimeout(() => {
       if (!k) setSay('');
       else if (k < STEPS) setSay(t(copy.said(k, rolls[k - 1])));
-      else setSay(t(verdict(failSteps(rolls)[0])).join(''));
+      else {
+        setSay(t(verdict(failSteps(rolls)[0])).join(''));
+        // once said, the verdict is the paragraph under the strip: the status line empties so it is not read twice
+        gone = window.setTimeout(() => setSay(''), 6000);
+      }
     }, 450);
-    return () => window.clearTimeout(id);
+    return () => {
+      window.clearTimeout(id);
+      window.clearTimeout(gone);
+    };
   }, [hud.revealed, rolls, mode, t]);
 
   const fails = failSteps(rolls, hud.revealed);
@@ -281,7 +289,7 @@ export default function D20Chapter({ id = 'evaluate', head = null, shared = fals
             <p className="d20-read d20-p">
               {t(copy.pNone)} = 0.95<sup>{k}</sup> = <b>{pct(k)}</b>
             </p>
-            <ol className="d20-cells">
+            <ol className="d20-cells" aria-label={t({ en: 'Rolls so far', zh: '已掷点数' })}>
               {rolls.map((v, i) => {
                 const state = i < k ? (v === 1 ? 'fail' : 'done') : i === hud.step - 1 ? 'now' : 'todo';
                 return (
@@ -314,9 +322,9 @@ export default function D20Chapter({ id = 'evaluate', head = null, shared = fals
               {said[2]}
             </p>
             <Strip ref={strip} layout={layout} rolls={rolls} />
-            <h2 className="d20-gap" data-end>
+            <h3 className="d20-gap" data-end>
               {t(copy.gap)}
-            </h2>
+            </h3>
             <ul className="d20-principles" data-end>
               {copy.principles.map((line, i) => (
                 <li key={i}>

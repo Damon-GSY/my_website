@@ -82,6 +82,7 @@ export default function Claim({ head }) {
     <section
       id="statement"
       ref={sec}
+      tabIndex={-1}
       className={`h-section h-statement cl${live ? ' is-live' : ''}`}
       style={live ? { '--pin': PIN } : undefined}
       data-pv="0 0.9"
@@ -147,7 +148,7 @@ export default function Claim({ head }) {
         <ul className="h-facets mono" ref={facets}>
           {['Agentic RL', 'Post-training', 'Evaluation'].map((f, i) => (
             <li key={f}>
-              <span>0{i + 1}</span>
+              <span aria-hidden="true">0{i + 1}</span>
               {f}
             </li>
           ))}

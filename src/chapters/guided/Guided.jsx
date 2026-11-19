@@ -98,6 +98,8 @@ export default function Guided({ opener, onClose }) {
   const cursor = useRef(null);
   const agent = useRef(null);
   const closeRef = useRef(onClose);
+  // what had focus when the panel opened (the hero's "Guided" button when the bar is not there yet)
+  const [prior] = useState(() => document.activeElement);
   useLayoutEffect(() => {
     closeRef.current = onClose;
   });
@@ -208,13 +210,14 @@ export default function Guided({ opener, onClose }) {
     if (want && (first || here || p === 'asking')) root.current?.querySelector(`[data-act="${want}"]`)?.focus({ preventScroll: true });
   }, [s.phase]);
 
-  // leaving: focus back to the bar's switch if it can take it
+  // leaving: focus back to the bar's switch if it can take it, else to what had focus before
   useEffect(
     () => () => {
-      const b = opener?.current;
-      if (b && !b.closest('[inert]') && b.checkVisibility?.({ visibilityProperty: true, opacityProperty: true })) b.focus({ preventScroll: true });
+      const ok = (b) => b?.isConnected && !b.closest('[inert]') && b.checkVisibility?.({ visibilityProperty: true, opacityProperty: true });
+      const b = [opener?.current, prior].find(ok);
+      b?.focus({ preventScroll: true });
     },
-    [opener],
+    [opener, prior],
   );
 
   // keep the newest line in view

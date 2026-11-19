@@ -44,20 +44,22 @@ export default function WorkFilm({ label }) {
             <p className="eyebrow">{joinParts([t(profile.role), t(profile.org)])}</p>
             <p className="p-fallback-title">{t({ en: 'Six projects, packed.', zh: '六个项目，装箱。' })}</p>
           </div>
-          <p className="p-hint mono" data-hint>
+          <p className="p-hint mono" data-hint aria-hidden="true">
             {t({ en: 'Scroll to pack ↓', zh: '向下滚动，开始打包 ↓' })}
           </p>
-          <ol className="p-route mono" data-route>
+          <ol className="p-route mono" data-route aria-label={t({ en: 'Route', zh: '路线' })}>
             {route.map((stop) => (
               <li key={stop.years}>
-                <b>{stop.code || <i className="p-blank" aria-label={t({ en: 'to be filled in', zh: '待填写' })} />}</b>
+                <b>{stop.code || <i className="p-blank" role="img" aria-label={t({ en: 'to be filled in', zh: '待填写' })} />}</b>
                 <span>{joinParts([stop.years, stop.what, t(stop.city)])}</span>
               </li>
             ))}
           </ol>
           <div className="p-work" data-work>
             <header data-work-head>
-              <p className="eyebrow">{t({ en: 'Selected work · 06', zh: '代表工作 · 06' })}</p>
+              <p className="eyebrow" aria-hidden="true">
+                {t({ en: 'Selected work · 06', zh: '代表工作 · 06' })}
+              </p>
               <h2 aria-hidden="true">{t({ en: 'Unpacked.', zh: '开箱。' })}</h2>
             </header>
             <div className="p-grid">
