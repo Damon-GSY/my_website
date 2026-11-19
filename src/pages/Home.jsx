@@ -155,25 +155,13 @@ function Path() {
               <span className="h-when mono">
                 {row.now && <span className="h-now-dot" data-mark="path" data-mark-kind="dot" aria-hidden="true" />}
                 {t(row.when)}
-                <span className="sr-only">, </span>
                 <i>{t(row.kind)}</i>
-                <span className="sr-only">. </span>
               </span>
               <span className="h-org">
                 {org || (row.now ? <Blank wide /> : null)}
-                {row.short && (
-                  <small className="mono">
-                    <span className="sr-only"> (</span>
-                    {row.short}
-                    <span className="sr-only">)</span>
-                  </small>
-                )}
-                <span className="sr-only">. </span>
+                {row.short && <small className="mono">{row.short}</small>}
               </span>
-              <span className="h-role">
-                {t(row.role)}
-                {place || row.now ? <span className="sr-only">. </span> : null}
-              </span>
+              <span className="h-role">{t(row.role)}</span>
               <span className="h-place mono">{place || (row.now ? <Blank /> : '')}</span>
             </li>
           );
@@ -377,7 +365,6 @@ function Bar({ onLens }) {
         className="h-bar-menu mono"
         aria-expanded={menu}
         aria-controls="h-bar-nav"
-        aria-label={cur ? `(${cur.n}) ${t(cur.label)} · ${t({ en: 'chapter menu', zh: '章节菜单' })}` : undefined}
         onClick={() => setMenu((v) => !v)}
       >
         {cur ? (
@@ -391,7 +378,7 @@ function Bar({ onLens }) {
           <path d="M3 4.5L6 7.5L9 4.5" />
         </svg>
       </button>
-      <nav id="h-bar-nav" aria-label={t({ en: 'Site', zh: '站点' })} onClick={(e) => e.target.closest('a') && setMenu(false)}>
+      <nav id="h-bar-nav" onClick={(e) => e.target.closest('a') && setMenu(false)}>
         {BAR_NAV.map((item) => (
           <a key={item.href} href={item.href} aria-current={active === item.href.slice(1) || undefined}>
             {t(item.label)}

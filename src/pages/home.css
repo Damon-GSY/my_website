@@ -171,6 +171,16 @@ body:has(.note) {
 .h-statement:focus {
   outline: none;
 }
+/* "01. Agentic RL" to a screen reader, not "01Agentic RL" (hidden generated text; no JS) */
+.h-facets span::after {
+  content: '. ';
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
 .h-facets span {
   margin-right: 10px;
   color: var(--muted);
@@ -258,6 +268,50 @@ body:has(.note) {
   font-size: clamp(26px, 3.3vw, 54px);
   line-height: 0.95;
   letter-spacing: -0.035em;
+}
+/* the phone bar's menu button names what it opens: "(07) Contact · Sections" (generated text, visually
+   hidden, so first-paint JS stays as it was; accessibility pass, 2026-11-19) */
+.h-bar-menu:has(.h-bar-menu-n)::after {
+  content: ' · Sections';
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.home:lang(zh) .h-bar-menu:has(.h-bar-menu-n)::after {
+  content: ' · 章节';
+}
+/* a row reads as one line to a screen reader: "2024.09–2025.02, Work. Microsoft Research Asia (MSRA).
+   LLM Intern. Beijing" (accessibility pass, 2026-11-19). Visually hidden generated text, so the row's
+   look and the page's JS are unchanged. */
+.h-row:not(.h-row-head) .h-when i::before,
+.h-row:not(.h-row-head) .h-when::after,
+.h-row:not(.h-row-head) .h-org::after,
+.h-row:not(.h-row-head) .h-role::after,
+.h-org small::before,
+.h-org small::after {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.h-row:not(.h-row-head) .h-when i::before {
+  content: ', ';
+}
+.h-row:not(.h-row-head) .h-when::after,
+.h-row:not(.h-row-head) .h-org::after,
+.h-row:not(.h-row-head) .h-role:not(:has(+ .h-place:empty))::after {
+  content: '. ';
+}
+.h-org small::before {
+  content: ' (';
+}
+.h-org small::after {
+  content: ')';
 }
 .h-org small {
   margin-left: 12px;

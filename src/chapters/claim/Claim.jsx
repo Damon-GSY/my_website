@@ -148,7 +148,7 @@ export default function Claim({ head }) {
         <ul className="h-facets mono" ref={facets}>
           {['Agentic RL', 'Post-training', 'Evaluation'].map((f, i) => (
             <li key={f}>
-              <span aria-hidden="true">0{i + 1}</span>
+              <span>0{i + 1}</span>
               {f}
             </li>
           ))}
