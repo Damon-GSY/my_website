@@ -338,6 +338,20 @@
   background: linear-gradient(var(--ink), var(--ink)) 0 100% / 0 2px no-repeat;
   transition: background-size 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+.cl-email,
+.cl-copy {
+  position: relative;
+}
+/* tap targets of at least 44 px without moving the stub's lines */
+.cl-email::after,
+.cl-copy::after {
+  content: '';
+  position: absolute;
+  inset: -9px -4px;
+}
+.cl-copy::after {
+  inset: -6px -4px;
+}
 .cl-email:hover,
 .cl-email:focus-visible {
   background-size: 100% 2px;
@@ -563,8 +577,21 @@
   .cl-printer {
     bottom: 14px;
   }
-  .cl-paper {
+  /* the overview's tear (overview.js): the record scales from its bottom edge, the stub stays 1:1 */
+  .cl-body {
     transform-origin: 50% 100%;
+  }
+  .cl-body::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    height: 6px;
+    background:
+      linear-gradient(45deg, transparent 4.1px, var(--paper) 4.5px) 0 0 / 9px 6px repeat-x,
+      linear-gradient(-45deg, transparent 4.1px, var(--paper) 4.5px) 0 0 / 9px 6px repeat-x;
+    opacity: var(--ov, 0);
   }
   /* the paper's developing fade belongs to paper in the slot: it goes as the paper eases off */
   .cl-printer::before {
