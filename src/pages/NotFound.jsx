@@ -43,7 +43,7 @@ export default function NotFound() {
     let raf = 0;
     let last = 0;
 
-    const draw = () => paint(ctx, layers, lay, pose(lay, wire, s.yaw, s.pitch), dpr);
+    const draw = () => lay && wall.offsetWidth > 0 && paint(ctx, layers, lay, pose(lay, wire, s.yaw, s.pitch), dpr);
     const frame = (now) => {
       raf = 0;
       const dt = Math.min(0.034, (now - (last || now)) / 1000);
@@ -78,6 +78,7 @@ export default function NotFound() {
     const copy = copyRef.current;
     const measure = () => {
       const r = wall.getBoundingClientRect();
+      if (r.width < 1 || r.height < 1) return; // hidden (a page change is leaving it)
       lay = layout(r.width, r.height, copy.offsetTop - 12);
       wire = buildWire(lay);
       setL(lay);
@@ -95,7 +96,8 @@ export default function NotFound() {
     measure();
     const ro = new ResizeObserver(() => {
       const r = wall.getBoundingClientRect();
-      if (Math.abs(r.width - lay.W) > 1 || Math.abs(r.height - lay.H) > 1 || Math.abs(copy.offsetTop - 12 - lay.avail) > 1)
+      if (!lay) measure();
+      else if (Math.abs(r.width - lay.W) > 1 || Math.abs(r.height - lay.H) > 1 || Math.abs(copy.offsetTop - 12 - lay.avail) > 1)
         measure();
     });
     ro.observe(wall);

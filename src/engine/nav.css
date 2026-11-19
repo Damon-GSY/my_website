@@ -1,0 +1,93 @@
+/* ---------- the page change (src/engine/navMove.js) ---------- */
+
+/* the stand-in mark: the only magenta on screen while it flies */
+.nav-mark {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 2147483000;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ff2d8a;
+  pointer-events: none;
+  view-transition-name: mark;
+  will-change: transform;
+}
+
+/* while it flies, the pages' own marks give it the stage (they come back exactly under it) */
+html.nav-run .h-mark {
+  opacity: 0 !important;
+}
+html.nav-run [data-mark] {
+  --mk: 0 !important;
+}
+html.nav-run :is(.lab-stop, .nf-light, .sh-mark, .nt-page .nt-pin) {
+  visibility: hidden;
+}
+
+/* the bar holds still between pages that have one */
+html.nav-run :is(.ar-bar, .nt-page .nt-bar, .h-bar.is-on) {
+  view-transition-name: chrome;
+}
+
+/* the transition never holds input: presses go through to the new page */
+::view-transition {
+  pointer-events: none;
+}
+html.nav-run::view-transition-old(root) {
+  animation: nav-out 150ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+html.nav-run::view-transition-new(root) {
+  animation: nav-in 300ms cubic-bezier(0.2, 0, 0, 1) 150ms both;
+}
+html.nav-run::view-transition-group(chrome) {
+  animation-duration: 320ms;
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+/* the mark's group follows the stand-in, which the script moves every frame; the hold keeps the
+   transition alive for the whole flight */
+html.nav-run::view-transition-group(mark) {
+  animation: none;
+}
+html.nav-run::view-transition-old(mark) {
+  animation: none;
+  opacity: 0;
+}
+html.nav-run::view-transition-new(mark) {
+  animation: nav-hold 520ms linear both;
+}
+@keyframes nav-out {
+  to {
+    opacity: 0;
+    translate: 0 -12px;
+  }
+}
+@keyframes nav-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes nav-hold {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* a heading focused for screen readers after a page change is not a control */
+html [data-nav-focus]:is(:focus, :focus-visible) {
+  outline: none;
+}
+
+.nav-say {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
