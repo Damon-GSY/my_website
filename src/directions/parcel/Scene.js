@@ -252,11 +252,17 @@ export const buildParcelPaper = (stage, root) => buildParcel(stage, root, PAPER)
 // (not a whole one), and "Selected work · 06 / Unpacked." comes up as the box opens, so the grey net
 // reads as the box being unpacked rather than as an empty stretch. [home p, scene p] keys, piecewise
 // linear; the scene's own timings (and so /parcel) are untouched.
+// Edges pass (2026-11-19): the net's pale inside numerals were on screen for over a screen before they
+// became the cards' numbers. The unfold now takes ~0.4 screens (was 0.6), the flat net does not wait
+// (scene 0.86 -> 0.885, where the tiles start to leave, is 0.05 screens), and the tiles land on their
+// cards by home p 0.9 (was ~0.98), so the six cards rest, readable, for the last half screen.
 const HOME_KEYS = [
   [0, 0],
   [0.04, 0.14],
   [0.7, 0.68],
-  [0.82, 0.885],
+  [0.778, 0.86],
+  [0.788, 0.885],
+  [0.9, 0.985],
   [1, 1],
 ];
 const piecewise = (keys, a, b) => (x) => {
