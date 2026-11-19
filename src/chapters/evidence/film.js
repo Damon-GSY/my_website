@@ -369,7 +369,7 @@ export function startEvidence(root) {
         const cy = m.N.y - m.hN + y + m.hN / 2;
         const hw = (m.wN * s) / 2;
         const hh = (m.hN * s) / 2;
-        vals.push({ m, i: indexOf[Number(m.a)], r: { x0: cx - hw, y0: cy - hh, x1: cx + hw, y1: cy + hh } });
+        vals.push({ m, i: indexOf[Number(m.a)], lx, y, s, r: { x0: cx - hw, y0: cy - hh, x1: cx + hw, y1: cy + hh } });
       }
       // what a figure measures, and its number, step aside while the towers stand and come back
       // under its bar; on the board they are as wide as their cell, in the chart as their column
@@ -406,7 +406,39 @@ export function startEvidence(root) {
           hide = Math.max(hide, cover(v.r, other), cover(v.r, u.r));
         }
       }
-      O(v.m.el, 1 - clamp((hide - 0.12) / 0.28));
+      v.o = 1 - clamp((hide - 0.12) / 0.28);
+      O(v.m.el, v.o);
+    }
+
+    // Two figures that are both in view and still touch (on phones, "+8.2%" and SOTA as the rows form;
+    // edges pass, 2026-11-19): the lesser one (a figure that is not a quantity, else the farther one)
+    // steps sideways, away from the other, by as much as they overlap plus a gap. Continuous in their
+    // positions, so still a pure function of scroll; at the rests every figure is clear and nothing moves.
+    if (between) {
+      const GAP = 8;
+      const push = new Map();
+      for (const a of vals)
+        for (const b of vals) {
+          if (a === b || a.o < 0.3 || b.o < 0.3) continue;
+          const qa = Boolean(items[a.i].g);
+          const qb = Boolean(items[b.i].g);
+          const lesser = qa !== qb ? !qb : shadows[b.i].d < shadows[a.i].d || (shadows[b.i].d === shadows[a.i].d && b.i > a.i);
+          if (!lesser) continue; // b gives way to a
+          const oy = Math.min(a.r.y1, b.r.y1) - Math.max(a.r.y0, b.r.y0);
+          const fy = clamp((oy + GAP) / GAP);
+          if (!fy) continue;
+          const right = b.r.x0 + b.r.x1 >= a.r.x0 + a.r.x1;
+          const need = (right ? a.r.x1 + GAP - b.r.x0 : b.r.x1 + GAP - a.r.x0) * fy;
+          if (need > 0) push.set(b, Math.max(push.get(b) || 0, need) * (right ? 1 : -1));
+        }
+      for (const [v, dx] of push) {
+        const m = v.m;
+        const lx = clamp(v.lx + dx, 6 - m.N.x, geo.S.w - 6 - m.N.x - m.wN * v.s);
+        T(m.el, `translate(${px(lx)}, ${px(v.y)})${v.s !== 1 ? ` scale(${v.s.toFixed(4)})` : ''}`);
+        // held by the screen's edge short of clear: it fades by what is left
+        const short = Math.abs(dx) - Math.abs(lx - v.lx);
+        if (short > 0) O(m.el, v.o * (1 - 0.75 * clamp(short / (2 * GAP))));
+      }
     }
 
     const live = !atBoard && !atChart;
